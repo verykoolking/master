@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cm_plm.publishInAltamira">
+  <activity name="start" type="seqActivity">
+    <guid>{2c9d11f7-6900-4e67-8cf6-44ffd4bb48e5}</guid>
+    <label>Start</label>
+    <x>30.0</x>
+    <y>97.40234</y>
+    <childList>
+      <child name="sendToQueue" type="scriptActivity">
+        <guid>{65d68d81-212e-4e6a-9d3d-ae3207062ac8}</guid>
+        <label>Send To Queue</label>
+        <x>144.0</x>
+        <y>86.40234</y>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              var doc = cm_plm.fillPublishData(process, document);
+
+              if( process.processDocument.sendToAltamira == "PRD" )
+                  Process.sendMessageToQueue("cm_aaca.publishAltamiraProductionGlobalProc", "publishProduction", doc, process.processDocument.cwOrderId);
+              else if( process.processDocument.sendToAltamira == "TST" )
+                  Process.sendMessageToQueue("cm_aaca.publishAltamiraTestingGlobalProc", "publishTesting", doc, process.processDocument.cwOrderId);
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+      <child name="getPublishReply" type="opActivity">
+        <element>iface_cm_aaca.publishAltamiraInt/oper_publishReply</element>
+        <guid>{afee67e9-1f2b-41e2-a529-9cdd43ba1343}</guid>
+        <invokeDirectly>true</invokeDirectly>
+        <label>Get Publish Reply</label>
+        <participant>part_cm_aaca.publishAltamiraPart</participant>
+        <x>319.0</x>
+        <y>116.40234</y>
+        <methodList>
+          <method name="cwOnProcActAfter" type="action">
+            <category>script</category>
+            <system>true</system>
+            <script>cm_plm.readPublishReply(process, document);</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="errorOnCA" type="switchActivity">
+        <guid>{124d75b9-d04a-4aab-85a4-a9322c223b61}</guid>
+        <label>Error On Configuration Adapter?</label>
+        <x>655.0</x>
+        <y>75.40234</y>
+        <childList>
+          <child name="yes" type="caseActivity">
+            <guid>{9b0b980d-4b5d-411b-be16-584c4d71df1a}</guid>
+            <label>Yes</label>
+            <x>818.0</x>
+            <y>240.40234</y>
+            <childList>
+              <child name="sendError" type="exceptActivity">
+                <element>excp_cm_plm.errorException</element>
+                <guid>{5c47fbbc-e515-4d92-8f89-4d71b1c5f5bb}</guid>
+                <label>Error</label>
+                <x>674.0</x>
+                <y>-67.59766</y>
+                <methodList>
+                  <method name="cwOnProcActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script><![CDATA[cm_plm.setProcessOrderState(process, 'ERR');]]></script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnProcActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[return (process.processDocument.caReturnType == 'ERROR');]]></script>
+              </method>
+            </methodList>
+          </child>
+          <child name="no" type="caseActivity">
+            <guid>{0ced8a7f-6163-4643-a421-a79ccf2fd5bc}</guid>
+            <label>No</label>
+            <x>833.0</x>
+            <y>80.40234</y>
+          </child>
+          <child name="yesOnMS" type="caseActivity">
+            <guid>{eb46644e-e7f0-4c78-a650-73111f180daf}</guid>
+            <label>Yes On MS</label>
+            <x>669.0</x>
+            <y>252.40234</y>
+            <childList>
+              <child name="alertEndUser" type="subflowActivity">
+                <element>proc_cm_plm.alertEndUserSubFlow</element>
+                <guid>{e38d3f0b-9ef9-45db-8e3f-69ecc23abfd4}</guid>
+                <label>Alert End User</label>
+                <x>666.0</x>
+                <y>241.40234</y>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnProcActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[return (process.processDocument.caReturnType == 'ERROR_MS')]]></script>
+              </method>
+            </methodList>
+          </child>
+        </childList>
+      </child>
+      <child name="aacaPublishAltamiraPart" type="participantActivity">
+        <guid>{4f3dc449-8b4f-497e-92c6-fa5c2bcdf0c3}</guid>
+        <label>CM-AACA Publish In Altamira Participant</label>
+        <participant>part_cm_aaca.publishAltamiraPart</participant>
+        <x>382.0</x>
+        <y>-39.0</y>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{b27a9bce-6cf5-494c-920a-bfc901c25869}</guid>
+  <label>CM-PLM Publish in Altamira</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <type>Sub-flow</type>
+</process>

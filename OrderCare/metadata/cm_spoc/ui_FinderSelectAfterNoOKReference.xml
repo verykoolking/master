@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.FinderSelectAfterNoOKReference">
+  <label>Select Item</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="modelCallback" type="leaf">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+    </variable>
+    <variable name="showButton" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="referenceInput" type="leaf">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+    </variable>
+    <variable name="parentUI" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="FinderBaseItemCode" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="itemList" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dstruct_cm_spoc.FinderSelectReferenceDS</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <alignment>center,center</alignment>
+              <height>200px</height>
+              <width>300px</width>
+              <elementList>
+                <element name="LayoutSpacer" type="ellsp">
+                  <height>20px</height>
+                </element>
+                <element name="Table" type="eltabl">
+                  <height>90%</height>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.FinderSelectAfterNoOKReference/leaf_itemList</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>90%</width>
+                  <elementList>
+                    <element name="itemCode" type="elfld">
+                      <label>Code</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.FinderSelectAfterNoOKReference/leaf_itemList</variablePath>
+                          <variablePath>dstruct_cm_spoc.FinderSelectReferenceDS/dstruct_itemCode</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>50%</width>
+                    </element>
+                    <element name="description" type="elfld">
+                      <label>Description</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.FinderSelectAfterNoOKReference/leaf_itemList</variablePath>
+                          <variablePath>dstruct_cm_spoc.FinderSelectReferenceDS/dstruct_description</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>50%</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="Separator" type="elsep">
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.FinderSelectAfterNoOKReference/permMethod_ShowButtonUI</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="HorizontalLayout" type="elhlt">
+                  <alignment>center,center</alignment>
+                  <height>10%</height>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.FinderSelectAfterNoOKReference/permMethod_ShowButtonUI</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="Accept" type="elbtn">
+                      <cellAlignment>right,center</cellAlignment>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.FinderSelectAfterNoOKReference/uimthd_onClickAccept</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Accept</label>
+                      <width>60px</width>
+                    </element>
+                    <element name="Cancel" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.FinderSelectAfterNoOKReference/uimthd_onClickCancel</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Cancel</label>
+                      <width>60px</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$showButton" type="laction">
+      <path>ui_cm_spoc.FinderSelectAfterNoOKReference/leaf_showButton</path>
+      <type>initializer</type>
+      <script>return true;</script>
+    </method>
+    <method name="setBaseItemCode" type="uimthd">
+      <parameterList>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var list = new DataObjectList();
+        var itemFinder = new Finder("cm_spoc.commonWalletUsageRuleFinder");
+
+        itemFinder.searchDocument.baseItemCode = "base_CALifeCycleStatus";
+        itemFinder.searchDocument.itemFirstAttribute = "InactivityStatus";
+
+
+        var result = itemFinder.search();
+
+        for(var i=0;i<result.length;i++){
+            //if(result[i].msgToDisp == 0){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.itemCode = result[i].itemCode;
+                item.description = result[i].label;
+                list.addLast(item);
+            //}
+        }
+
+        this.itemList=list;
+      ]]></script>
+    </method>
+    <method name="onClickAccept" type="uimthd">
+      <valueType>dstruct_common.v2.AddressType/dstruct_locality</valueType>
+      <script><![CDATA[
+        if(this.itemList.selected != null){
+            var selected = this.itemList.selected[0];
+            if(this.modelCallback) this.modelCallback(selected);
+            this.parentUI.referenceAfterNoOKCallback(selected.itemCode,this.FinderBaseItemCode);
+            this.parent.cwDialogClose();
+        }
+      ]]></script>
+    </method>
+    <method name="onClickCancel" type="uimthd">
+      <script>this.parent.cwDialogClose();</script>
+    </method>
+    <method name="ShowButtonUI" type="permMethod">
+      <script>return this.showButton;</script>
+    </method>
+  </methodList>
+</userInterface>

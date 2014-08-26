@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cm_plm.plmNotes">
+  <dbSchema>ORDER</dbSchema>
+  <extends>doc_com.conceptwave.system.Document</extends>
+  <generatedKey>true</generatedKey>
+  <guid>{bcc5138c-f216-4e0d-a5eb-9092286aa108}</guid>
+  <label>plmNotes</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="id" type="leaf">
+      <column>ID</column>
+      <key>1</key>
+      <table>CM_PLMNOTES</table>
+      <valueType>dtype_cwf.cwDocId</valueType>
+    </variable>
+    <variable name="projectCode" type="leaf">
+      <column>PROJECTCODE</column>
+      <table>CM_PLMNOTES</table>
+      <valueType>dtype_cwt_pcdd.catalogCode</valueType>
+    </variable>
+    <variable name="notes" type="leaf">
+      <column>NOTES</column>
+      <table>CM_PLMNOTES</table>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="cwCreated" type="leaf">
+      <column>CWCREATED</column>
+      <table>CM_PLMNOTES</table>
+      <valueType>dtype_cwf.cwCreated</valueType>
+    </variable>
+    <variable name="cwOrderId" type="leaf">
+      <column>CWORDERID</column>
+      <table>CM_PLMNOTES</table>
+      <valueType>dtype_cwf.cwOrderId</valueType>
+    </variable>
+    <variable name="cwParentId" type="leaf">
+      <column>CWPARENTID</column>
+      <table>CM_PLMNOTES</table>
+      <valueType>dtype_cwf.cwParentId</valueType>
+    </variable>
+    <variable name="lastUpdatedDate" type="leaf">
+      <column>LASTUPDATEDDATE</column>
+      <table>CM_PLMNOTES</table>
+      <valueType>dtype_cwf.lastUpdatedDate</valueType>
+    </variable>
+    <variable name="cwCreatedBy" type="leaf">
+      <column>CWCREATEDBY</column>
+      <table>CM_PLMNOTES</table>
+      <valueType>dtype_cwf.cwCreatedBy</valueType>
+    </variable>
+    <variable name="updatedBy" type="leaf">
+      <column>UPDATEDBY</column>
+      <table>CM_PLMNOTES</table>
+      <valueType>dtype_cwf.updatedBy</valueType>
+    </variable>
+    <variable name="addNotePerm" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="setNotes" type="uimthd">
+      <parameterList>
+        <parameter name="notes" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script>this.notes = notes;</script>
+    </method>
+    <method name="getNotes" type="uimthd">
+      <script>return this.notes;</script>
+    </method>
+    <method name="setAddNotePermission" type="uimthd">
+      <parameterList>
+        <parameter name="permission" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.Boolean</type>
+        </parameter>
+      </parameterList>
+      <script>this.addNotePerm = permission;</script>
+    </method>
+    <method name="cwOnDocInit" type="action">
+      <system>true</system>
+      <script>this.addNotePerm = true;</script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_com.conceptwave.system.Document/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cm_plm.plmNotes</valueType>
+      </variable>
+      <variable name="newNote" type="leaf">
+        <valueType>dtype_com.conceptwave.system.String</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Notes" type="vform">
+            <label>Notes</label>
+            <root name="VerticalLayout" type="elvlt">
+              <width>100%</width>
+              <elementList>
+                <element name="notes" type="eltxtArea">
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <height>250px</height>
+                  <label>Notes:</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmNotes/ui_UserInterface/uivar_model</variablePath>
+                      <variablePath>doc_cm_plm.plmNotes/leaf_notes</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>400px</width>
+                </element>
+                <element name="LayoutSpacer" type="ellsp">
+                  <height>20px</height>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="VerticalLayout" type="elvlt">
+                <width>100%</width>
+                <elementList>
+                  <element name="FormFrame" type="elovf">
+                    <formReference type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_plm.plmNotes/ui_UserInterface/frmui_Forms</variablePath>
+                        <variablePath>doc_cm_plm.plmNotes/ui_UserInterface/frmui_Forms/vform_addNote</variablePath>
+                      </variablePathList>
+                    </formReference>
+                    <height>50%</height>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                      </variablePathList>
+                    </visible>
+                    <width>100%</width>
+                  </element>
+                  <element name="FormFrame1" type="elovf">
+                    <formReference type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_plm.plmNotes/ui_UserInterface/frmui_Forms</variablePath>
+                        <variablePath>doc_cm_plm.plmNotes/ui_UserInterface/frmui_Forms/vform_Notes</variablePath>
+                      </variablePathList>
+                    </formReference>
+                    <height>50%</height>
+                    <width>100%</width>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="addNote" type="vform">
+            <label>addNote</label>
+            <root name="VerticalLayout" type="elvlt">
+              <width>100%</width>
+              <elementList>
+                <element name="newNote" type="eltxtArea">
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <label>New Note:</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmNotes/ui_UserInterface/leaf_newNote</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>400px</width>
+                </element>
+                <element name="Button" type="elbtn">
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmNotes/ui_UserInterface/uimthd_addNote</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <label>Add</label>
+                </element>
+                <element name="LayoutSpacer" type="ellsp">
+                  <height>30px</height>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="Menu" type="exov">
+            <base>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms/exov_Menu</base>
+            <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms/exov_Menu</extends>
+            <label>Menu</label>
+            <overrideList>
+              <override name="cwfSave" type="eldel"/>
+              <override name="hl1" type="elext">
+                <elementList>
+                  <element name="ok" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_plm.plmNotes/ui_UserInterface/usrActionMethod_ok</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconOK.gif</icon>
+                    <label>Ok</label>
+                    <showDown>true</showDown>
+                    <tooltip>Save</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="close" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_plm.plmNotes/ui_UserInterface/usrActionMethod_close</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/BasicCloseIcon.gif</icon>
+                    <label>Cancel</label>
+                    <showDown>true</showDown>
+                    <tooltip>Save</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="addNote" type="uimthd">
+        <script><![CDATA[
+          if(!this.newNote || this.newNote.trim() == "")
+              return;
+          if(this.model.notes)
+              this.model.notes += new Date() + " - " + UserProfile.userId() + ":\n";
+          else
+              this.model.notes = new Date() + " - " + UserProfile.userId() + ":\n";
+
+          this.model.notes += this.newNote + "\n";
+          this.model.notes += "------------------------------------------" + "\n";
+
+          //reset the new Note
+          this.newNote = "";
+        ]]></script>
+      </method>
+      <method name="addNotePermission" type="permMethod">
+        <script>return this.model.addNotePerm == null ? false : this.model.addNotePerm;</script>
+      </method>
+      <method name="close" type="usrActionMethod">
+        <allowInvalidObject>true</allowInvalidObject>
+        <validate>true</validate>
+        <script>return Global.STOP_UI;</script>
+      </method>
+      <method name="ok" type="usrActionMethod">
+        <script>Global.confirmOK();</script>
+      </method>
+    </methodList>
+  </UserInterface>
+</document>

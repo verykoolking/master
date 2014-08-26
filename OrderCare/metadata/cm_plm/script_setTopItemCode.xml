@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.setTopItemCode">
+  <label>CM -PLM - Sets the Top Item for all the Child Items Present in the PLM Project</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="topItemCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var projectItems = cm_plm.getAllProjectItems(projectCode);
+    var topItemDoc = new Document('cm_plm.cwt_item', topItemCode);
+
+    setTopItem(topItemDoc, topItemCode, null);
+
+    return;
+
+
+    function setTopItem(itemDoc, topItemCode, parentRelationType) {
+
+        if(isInProject(itemDoc.itemCode) && itemDoc.topItemCode == null) {
+            itemDoc.topItemCode = topItemCode;
+            itemDoc.save();
+        }
+
+        var itemDocRelations = cm_common.catalogGetItemRelationsDoc(itemDoc.itemCode, null, true);
+        for (var i = 0; i < itemDocRelations.length; i++) {
+
+            var relationItemDoc = new Document('cm_plm.cwt_item', itemDocRelations[i].itemRelationTarget);
+
+            if(itemDocRelations[i].type == 'contains' ||
+                cm_common.getArrayType(relationItemDoc.itemCode) ||
+               (cm_common.getArrayType(itemDoc.itemCode) && parentRelationType!=null && parentRelationType=='contains')
+              )
+            {
+                  setTopItem(relationItemDoc, topItemCode, itemDocRelations[i].type);
+            }
+        }
+    }
+
+    function isInProject(itemCode) {
+        for(var i = 0; i < projectItems.length; i++)
+            if(projectItems[i].itemCode == itemCode)
+                return true;
+        return false;
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initPriceGuidingContainerUI">
+  <group>ui_scripts.Common.Price.Init</group>
+  <label>initPriceGuidingContainerUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * This script initialize the model for the Price Guidings array and its interfaces
+     */
+
+    var baseItemCode = ui.model.baseSpecificationCode ? ui.model.baseSpecificationCode : ui.model.catalogEntity;
+    var nameArray = cm_spoc.getBasePriceGuidingArrayName(baseItemCode);
+    var nameArrayDS = nameArray+"DS";
+    var basePriceEvent = cm_spoc.getBasePriceEvent(baseItemCode);
+
+
+    //Model initialization
+    ui.model.BasePriceEvent = basePriceEvent;
+    cm_spoc.initPriceGuiding(ui.model, baseItemCode, nameArray, nameArrayDS);
+
+
+
+    //Container Initialization
+    var PriceGuidingContainerUI = new cm_spoc.forms.PriceGuidingContainerUI(ui.model,ui); //(model,parent)
+
+
+
+
+    PriceGuidingContainerUI.BaseEvent = basePriceEvent;
+
+
+    ui.PriceGuidingContainerUI = PriceGuidingContainerUI;
+
+
+    //Price Guiding Iteratos initialization
+    cm_spoc.initPriceGuidingUI(ui,nameArrayDS);
+  ]]></script>
+</script>

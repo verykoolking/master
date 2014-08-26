@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initCyclicActionSpecification">
+  <group>ui_scripts.CyclicActions</group>
+  <label>initCyclicActionSpecification</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+       var caGenericSpecification =  cm_spoc.initInnerDS("base_CAGenericSpecification");
+       model.CAGenericSpecificationDS = caGenericSpecification;
+
+       var caCycleChangeSpecification = cm_spoc.initInnerDS("base_CACycleChangeSpecification");
+       model.CACycleChangeSpecificationDS = caCycleChangeSpecification;
+
+       var caConditionedSpecification = cm_spoc.initInnerDS("base_CAConditionedSpecification");
+       model.CAConditionedSpecificationDS = caConditionedSpecification;
+
+       var itemFinder = new Finder("cm_spoc.MessageFinder");
+       var result = itemFinder.search();
+       /*if(result.length>0){
+           var btCode=result[0].itemCode;
+           model.MessageEnum = btCode;
+           model.Message = btCode;
+       }*/
+
+       itemFinder = new Finder("cm_spoc.CyclicActionLifeCycleFinder");
+       var result2 = itemFinder.search();
+       /*if(result2.length>0){
+           var btCode=result2[0].itemCode;
+           model.CyclicActionLifeCycleEnum=btCode;
+           model.CyclicActionLifeCycle = btCode;
+       }
+    */
+
+     }else{
+
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+
+       s.specificationCode = model.CAGenericSpecification;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.CAGenericSpecificationDS=r;
+       }
+
+        s.specificationCode = model.CACycleChangeSpecification;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.CACycleChangeSpecificationDS=r;
+       }
+
+        s.specificationCode = model.CAConditionedSpecification;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.CAConditionedSpecificationDS=r;
+       }
+
+       //Assign the values of the model to the proper select field
+       model.MessageEnum = model.Message;
+       model.CyclicActionLifeCycleEnum = model.CyclicActionLifeCycle;
+
+
+    }
+    return model;
+  ]]></script>
+</script>

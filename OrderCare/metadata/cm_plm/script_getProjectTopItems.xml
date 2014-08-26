@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.getProjectTopItems">
+  <label>CM - PLM - Get Project or Order Top Items</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="orderId" type="rifp">
+      <type>dtype_cwf.cwOrderId</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Retrieves all itens from a given Catalog Project
+     *
+     * @author  Luis Barreira
+     * @date    29-05-2014
+     *
+     * @param {cwt_pc.cwt_project} project    The Catalog Project Document
+     * @return {cwt_pc.cwt_itemNew}     The Array of Top Items in this Project
+     */
+    var itensFinder = new Finder("cm_plm.plmOrderItemFinder");
+    itensFinder.searchDocument.projectCode = projectCode;
+    itensFinder.searchDocument.cwOrderId = orderId;
+    var result = itensFinder.search();
+
+    var topItemsList = new Array();
+    for(var i=0; i<result.length; i++)
+        topItemsList[i] = new Document('cm_plm.cwt_item', result[i].itemCode);
+
+    return result;
+  ]]></script>
+</script>

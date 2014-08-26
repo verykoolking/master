@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.removeAppBoltonTypeGroupListByKey">
+  <group>applicabilityCondition.api</group>
+  <label>removeAppBoltonTypeGroupListByKey</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="AppBoltonTypeGroupList" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.AppBoltonTypeGroupList</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        if(!cm_plm.isModificationAllowed(AppBoltonTypeGroupList))
+            return api_common.createFault("ERR", "This modality is being maintained in another project.");
+
+        if(cm_plm.isProjectActive(AppBoltonTypeGroupList.projectCode))
+            return api_common.createFault("ERR", "Item cannot be removed for projects in ACT status.");
+
+        if(cm_plm.isObjectActive(AppBoltonTypeGroupList)){
+            AppBoltonTypeGroupList.endDate = new Date();
+            return cm_plm.endDateObject(AppBoltonTypeGroupList);
+        }else{
+            return cm_plm.deleteObject(AppBoltonTypeGroupList, "cm_plm.AppBoltonTypeGroupListDoc");
+        }
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

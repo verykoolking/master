@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.caReadAndCheckREStatus">
+  <highlight>10</highlight>
+  <label>CM-AACA Read And Check RE Status</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="pDoc" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="pData" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var resNumber = cm_aaca.caGetAvaiableRatingEngines(pDoc);
+    var service = cm_aaca.caGetCurrentService(pDoc, pData);
+    var delayForquery = pDoc.delayForQueryCommand;
+    var user = 'ABC';
+    var reNumber = resNumber[pDoc.currentREIndex];
+    var env = cm_aaca.caGetEnvironment(pDoc);
+    var endpoint = Global.getConfigVariable("AACA_" + env + "_ENDPOINT_RE" + reNumber);
+    var addInfo = env + ' - ' + reNumber + ' - ' + service.ID;
+    var phId = cm_plm.startPlmControlPhase(pDoc.projectCode, 'REVL', addInfo);
+
+    var ret = cm_pws.altamiraConfiguration.executeCommand('relectura', user, endpoint, service.ID, service.TABLE, delayForquery, pDoc.projectCode);
+    if (!ret) {
+        pDoc.errorOccurred = true;
+        pDoc.errorDescription = "Error en la relectura del RE";
+    }
+
+    cm_plm.endPlmControlPhase(phId);
+  ]]></script>
+</script>

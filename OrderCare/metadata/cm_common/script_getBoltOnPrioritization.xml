@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.getBoltOnPrioritization">
+  <group>scripts</group>
+  <label>getBoltOnPrioritization</label>
+  <metaVersion>4</metaVersion>
+  <script><![CDATA[
+    var cacheDuration = 1; //hour
+    var result = Global.getSessionParameter("BoltOnPrioritization");
+    var cacheTime = Global.getSessionParameter("BoltOnPrioritization_Time");    //just in case we want to refresh the cache after some time
+    if(result /*&& cacheTime && Date.now() < cacheTime + cacheDuration*/){
+            return result;
+    }
+
+    var DS = new cm_spoc.data.BoltOnPrioritization();
+    DS.specificationCode = "BoltOnPrioritization";
+    var result = cm_common.getSpecificationByKey(DS);
+    if(api_common.isFault(result))
+        return result;
+
+    Global.setSessionParameter("BoltOnPrioritization", result);
+    Global.setSessionParameter("BoltOnPrioritization_Time", Date.now());
+
+    return result;
+  ]]></script>
+</script>

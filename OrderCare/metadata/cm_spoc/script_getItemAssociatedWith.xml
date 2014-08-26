@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getItemAssociatedWith">
+  <group>ui_scripts.utils</group>
+  <label>getItemAssociatedWith</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="result" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="filter" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /* By taking result, a data object list, and filter, the code of the item with want to filter against
+     * this script remove from the result the items that are not associated with "filter"
+     */
+
+    for (var i = 0; i < result.length; i++){
+
+    var associationsFinder =  new cm_spoc.itemRelationFinder();
+    associationsFinder.searchDocument.itemCode = result[i].itemCode;
+    var associations = associationsFinder.search();
+
+
+    for (var l = 0; l < associations.length; l++ ) {
+        if ( associations.length == 0 ) {
+            result.delete(i);
+            i--;
+        }
+       else  if ( associations[l].itemCode != filter) {
+            result.delete(i);
+            i--;
+        }
+    }
+
+    }
+  ]]></script>
+</script>

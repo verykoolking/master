@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cw_etltool.common.actionsUI">
+  <extends>ui_com.conceptwave.system.WLTaskOperationsUserInterface</extends>
+  <label>actionsUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="ownerUI" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.WLTaskOperationsUserInterface/frmui_Forms</extends>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwAction" type="usrActionMethod">
+      <allowInvalidObject>true</allowInvalidObject>
+      <autosave>true</autosave>
+      <confirmation>ui_com.conceptwave.system.WLTaskOperationsUserInterface/uimthd_cwActionConfirm</confirmation>
+      <validate>true</validate>
+      <script><![CDATA[
+        this.cw$super_cwAction();
+        this.ownerUI.parent.goToHome();
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

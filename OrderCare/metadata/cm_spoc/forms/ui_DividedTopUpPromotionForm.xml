@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.DividedTopUpPromotionForm">
+  <group>Promotion</group>
+  <label>DividedTopUpPromotionForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.DividedTopUpPromotion</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <visibilityMode>multiple</visibilityMode>
+                  <width>750px</width>
+                  <elementList>
+                    <element name="SectionCharacteristics" type="elsect">
+                      <cellAlignment>center,center</cellAlignment>
+                      <removeLabelLine>true</removeLabelLine>
+                      <elementList>
+                        <element name="DividedTopUpPromotionCharacteristicsHeader" type="elsecth">
+                          <label>Divided Top Up Promotion</label>
+                        </element>
+                        <element name="layoutCharacteristics" type="elvlt">
+                          <alignment>right,center</alignment>
+                          <elementList>
+                            <element name="LayoutSpacer" type="ellsp">
+                              <height>10px</height>
+                            </element>
+                            <element name="PromotionalProfileEnum" type="elslct">
+                              <labeAlign>left</labeAlign>
+                              <label>Promotional Profile</label>
+                              <labelOrientation>left</labelOrientation>
+                              <multiselect>false</multiselect>
+                              <onChangeMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/uimthd_setPromotionalProfile</variablePath>
+                                </variablePathList>
+                              </onChangeMethod>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_PromotionalProfileEnum</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="LayoutSpacer2" type="ellsp">
+                              <height>10px</height>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="SectionInitialTopUp" type="elsect">
+                      <elementList>
+                        <element name="InitialTopUpHeader" type="elsecth">
+                          <label>Initial Top Up</label>
+                        </element>
+                        <element name="layoutInitialTopUpOptions" type="elvlt">
+                          <width>500px</width>
+                          <elementList>
+                            <element name="InitialTopUpLayout" type="elgrd">
+                              <alignment>left,center</alignment>
+                              <colWidths>100px</colWidths>
+                              <fixedColWidths>true</fixedColWidths>
+                              <numOfCols>5</numOfCols>
+                              <width>750px</width>
+                              <elementList>
+                                <element name="RowSpacer" type="elrsp"/>
+                                <element name="WorkingDays" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <columnSpan>2</columnSpan>
+                                  <labeAlign>right</labeAlign>
+                                  <label>Working Days</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <startRow>true</startRow>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_InitialTopUpQualificationDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.InitialTopUpQualification/dstruct_WorkingDays</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="TopUpOriginEnum" type="elslct">
+                                  <columnSpan>1</columnSpan>
+                                  <label>It is awarded a  top-up from top-up origin</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <multiselect>false</multiselect>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/uimthd_setInitialTUQualificationTopUpOrigin</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_InitialTopUpQualificationDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.InitialTopUpQualification/dstruct_TopUpOriginEnum</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="StartDate" type="eldate">
+                                  <columnSpan>2</columnSpan>
+                                  <displayFormat>dd/MM/yyyy</displayFormat>
+                                  <hint>dd/MM/yyyy</hint>
+                                  <labeAlign>right</labeAlign>
+                                  <label>Start Date</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_InitialTopUpQualificationDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.InitialTopUpQualification/dstruct_StartDate</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="MinimumTopUpThreshold" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <columnSpan>1</columnSpan>
+                                  <labeAlign>right</labeAlign>
+                                  <label>Minimum Top Up Threshold</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_InitialTopUpQualificationDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.InitialTopUpQualification/dstruct_MinimumTopUpThreshold</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="EndDate" type="eldate">
+                                  <columnSpan>2</columnSpan>
+                                  <displayFormat>dd/MM/yyyy</displayFormat>
+                                  <hint>dd/MM/yyyy</hint>
+                                  <labeAlign>right</labeAlign>
+                                  <label>End Date</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_InitialTopUpQualificationDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.InitialTopUpQualification/dstruct_EndDate</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="MaximumTopUpThreshold" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <columnSpan>1</columnSpan>
+                                  <labeAlign>right</labeAlign>
+                                  <label>Maximum Top Up Threshold</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_InitialTopUpQualificationDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.InitialTopUpQualification/dstruct_MaximumTopUpThreshold</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="ValidityPeriod" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <columnSpan>2</columnSpan>
+                                  <labeAlign>right</labeAlign>
+                                  <label>Validity Period (days)</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_InitialTopUpQualificationDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.InitialTopUpQualification/dstruct_ValidityPeriod</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="TopUpAmount" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <columnSpan>1</columnSpan>
+                                  <labeAlign>right</labeAlign>
+                                  <label>Top up amount in each execution</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_InitialTopUpQualificationDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.InitialTopUpQualification/dstruct_TopUpAmount</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="RowSpacer2" type="elrsp"/>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="SectionStackDailyScheduleRange" type="elsectnstck">
+                          <visibilityMode>multiple</visibilityMode>
+                          <width>280px</width>
+                          <elementList>
+                            <element name="DailyScheduleRange" type="elsect">
+                              <cellAlignment>right,center</cellAlignment>
+                              <elementList>
+                                <element name="VerticalLayout1" type="elvlt">
+                                  <alignment>right,center</alignment>
+                                  <width>280px</width>
+                                  <elementList>
+                                    <element name="LayoutSpacer1" type="ellsp">
+                                      <height>10px</height>
+                                    </element>
+                                    <element name="StartTime" type="eldatetime">
+                                      <autoFocusNextField>false</autoFocusNextField>
+                                      <columnSpan>1</columnSpan>
+                                      <displayFormat>HH:mm:SS</displayFormat>
+                                      <hint>HH:mm:SS</hint>
+                                      <labeAlign>right</labeAlign>
+                                      <label>Starting Time</label>
+                                      <labelOrientation>left</labelOrientation>
+                                      <variable type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                          <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_InitialTopUpQualificationDS</variablePath>
+                                          <variablePath>dstruct_cm_spoc.data.InitialTopUpQualification/dstruct_StartTime</variablePath>
+                                        </variablePathList>
+                                      </variable>
+                                      <width>150px</width>
+                                    </element>
+                                    <element name="EndTime" type="eldatetime">
+                                      <autoFocusNextField>false</autoFocusNextField>
+                                      <columnSpan>1</columnSpan>
+                                      <displayFormat>HH:mm:SS</displayFormat>
+                                      <hint>HH:mm:SS</hint>
+                                      <labeAlign>right</labeAlign>
+                                      <label>Ending Time</label>
+                                      <labelOrientation>left</labelOrientation>
+                                      <variable type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                          <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_InitialTopUpQualificationDS</variablePath>
+                                          <variablePath>dstruct_cm_spoc.data.InitialTopUpQualification/dstruct_EndTime</variablePath>
+                                        </variablePathList>
+                                      </variable>
+                                      <width>150px</width>
+                                    </element>
+                                    <element name="LayoutSpacer3" type="ellsp">
+                                      <height>10px</height>
+                                    </element>
+                                  </elementList>
+                                </element>
+                                <element name="DailyScheduleRangeHeader" type="elsecth">
+                                  <label>Daily Schedule Range</label>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="Separator2" type="elsep"/>
+                      </elementList>
+                    </element>
+                    <element name="SectionRestOfTopUp" type="elsect">
+                      <elementList>
+                        <element name="RestOfTopUpHeader" type="elsecth">
+                          <label>Rest of Top Up</label>
+                        </element>
+                        <element name="layoutRestOfTopUpOptions" type="elvlt">
+                          <width>500px</width>
+                          <elementList>
+                            <element name="RestOfTopUpLayout" type="elgrd">
+                              <alignment>left,center</alignment>
+                              <colWidths>100px</colWidths>
+                              <fixedColWidths>true</fixedColWidths>
+                              <numOfCols>5</numOfCols>
+                              <width>750px</width>
+                              <elementList>
+                                <element name="RowSpacer1" type="elrsp"/>
+                                <element name="WorkingDays1" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <columnSpan>2</columnSpan>
+                                  <labeAlign>right</labeAlign>
+                                  <label>Working Days</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <startRow>true</startRow>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_FollowingTopUpsQualificatioDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.FollowingTopUpsQualificatio/dstruct_WorkingDays</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="TopUpOriginEnum2" type="elslct">
+                                  <columnSpan>1</columnSpan>
+                                  <label>It is awarded a  top-up from top-up origin</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <multiselect>false</multiselect>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/uimthd_setFollowingTUQualificationTopUpOrigin</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_FollowingTopUpsQualificatioDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.FollowingTopUpsQualificatio/dstruct_TopUpOriginEnum</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="StartDate1" type="eldate">
+                                  <columnSpan>2</columnSpan>
+                                  <labeAlign>right</labeAlign>
+                                  <label>Start Date</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_FollowingTopUpsQualificatioDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.FollowingTopUpsQualificatio/dstruct_StartDate</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="MinimumTopUpThreshold1" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <columnSpan>1</columnSpan>
+                                  <labeAlign>right</labeAlign>
+                                  <label>Minimum Top Up Threshold</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_FollowingTopUpsQualificatioDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.FollowingTopUpsQualificatio/dstruct_MinimumTopUpThreshold</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="EndDate1" type="eldate">
+                                  <columnSpan>2</columnSpan>
+                                  <labeAlign>right</labeAlign>
+                                  <label>End Date</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_FollowingTopUpsQualificatioDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.FollowingTopUpsQualificatio/dstruct_EndDate</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="MaximumTopUpThreshold1" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <columnSpan>1</columnSpan>
+                                  <labeAlign>right</labeAlign>
+                                  <label>Maximum Top Up Threshold</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_FollowingTopUpsQualificatioDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.FollowingTopUpsQualificatio/dstruct_MaximumTopUpThreshold</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="ValidityPeriod1" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <columnSpan>2</columnSpan>
+                                  <labeAlign>right</labeAlign>
+                                  <label>Validity Period (days)</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_FollowingTopUpsQualificatioDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.FollowingTopUpsQualificatio/dstruct_ValidityPeriod</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="TopUpAmount2" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <columnSpan>1</columnSpan>
+                                  <labeAlign>right</labeAlign>
+                                  <label>Top up amount in each execution</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_FollowingTopUpsQualificatioDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.FollowingTopUpsQualificatio/dstruct_TopUpAmount</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="NumberOfDividesTopUps" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <columnSpan>2</columnSpan>
+                                  <labeAlign>right</labeAlign>
+                                  <label>Number of divides top Ups</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_FollowingTopUpsQualificatioDS</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.FollowingTopUpsQualificatio/dstruct_NumberOfDividesTopUps</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="RowSpacer21" type="elrsp"/>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="SectionStackDailyScheduleRange1" type="elsectnstck">
+                          <visibilityMode>multiple</visibilityMode>
+                          <width>300px</width>
+                          <elementList>
+                            <element name="DailyScheduleRange1" type="elsect">
+                              <cellAlignment>right,center</cellAlignment>
+                              <elementList>
+                                <element name="VerticalLayout11" type="elvlt">
+                                  <alignment>right,center</alignment>
+                                  <width>300px</width>
+                                  <elementList>
+                                    <element name="LayoutSpacer11" type="ellsp">
+                                      <height>10px</height>
+                                    </element>
+                                    <element name="StartTime2" type="eldatetime">
+                                      <autoFocusNextField>false</autoFocusNextField>
+                                      <columnSpan>1</columnSpan>
+                                      <labeAlign>right</labeAlign>
+                                      <label>Starting Time</label>
+                                      <labelOrientation>left</labelOrientation>
+                                      <variable type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                          <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_FollowingTopUpsQualificatioDS</variablePath>
+                                          <variablePath>dstruct_cm_spoc.data.FollowingTopUpsQualificatio/dstruct_StartTime</variablePath>
+                                        </variablePathList>
+                                      </variable>
+                                      <width>150px</width>
+                                    </element>
+                                    <element name="EndTime1" type="eldatetime">
+                                      <autoFocusNextField>false</autoFocusNextField>
+                                      <columnSpan>1</columnSpan>
+                                      <labeAlign>right</labeAlign>
+                                      <label>Ending Time</label>
+                                      <labelOrientation>left</labelOrientation>
+                                      <variable type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</variablePath>
+                                          <variablePath>dstruct_cm_spoc.data.DividedTopUpPromotion/dstruct_FollowingTopUpsQualificatioDS</variablePath>
+                                          <variablePath>dstruct_cm_spoc.data.FollowingTopUpsQualificatio/dstruct_EndTime</variablePath>
+                                        </variablePathList>
+                                      </variable>
+                                      <width>150px</width>
+                                    </element>
+                                    <element name="LayoutSpacer31" type="ellsp">
+                                      <height>10px</height>
+                                    </element>
+                                  </elementList>
+                                </element>
+                                <element name="DailyScheduleRangeHeader1" type="elsecth">
+                                  <label>Daily Schedule Range</label>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="Separator" type="elsep"/>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.DividedTopUpPromotionForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initDividedTopUpPromotion(this.model);
+        return m;
+      ]]></script>
+    </method>
+    <method name="setInitialTUQualificationTopUpOrigin" type="uimthd">
+      <script>this.model.InitialTopUpQualificationDS.TopUpOrigin = this.model.InitialTopUpQualificationDS.TopUpOriginEnum;</script>
+    </method>
+    <method name="setFollowingTUQualificationTopUpOrigin" type="uimthd">
+      <script><![CDATA[
+        this.model.FollowingTopUpsQualificatioDS.TopUpOrigin = this.model.FollowingTopUpsQualificatioDS.TopUpOriginEnum;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="setPromotionalProfile" type="uimthd">
+      <script>this.model.PromotionalProfile = this.model.PromotionalProfileEnum;</script>
+    </method>
+  </methodList>
+</userInterface>

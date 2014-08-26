@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.altamiraConfiguration.sendNotification">
+  <label>CM-PWS - Send Notification</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="appId" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="reference" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="userCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="notifiedSessionId" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="configExecutionDate" type="rifp">
+      <array>true</array>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errorOcurred" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="errorText" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="errorCode" type="rifp">
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+    <parameter name="relatedCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <valueType>nmeta_com.conceptwave.system.Object</valueType>
+  <script><![CDATA[
+    /*
+     *
+     * Returns true if callings to the interface succeeds, false otherwise
+     *
+     */
+
+    var inter = 'cm_pws.client.OCSConfigurationClientPort';
+    var command = 'sendNotification';
+
+    var sendNotification = new DataStructure("OCSConfigurationOperation.v1.types.SendNotification");
+    var notificationCommonInfo = new OCSOperation.v1.types.NotificationCommonInfoType();
+
+    notificationCommonInfo.appId = appId;
+    notificationCommonInfo.reference = reference;
+    notificationCommonInfo.userCode = userCode;
+    notificationCommonInfo.notifiedSessionId = notifiedSessionId;//projectID
+    notificationCommonInfo.configExecutionDate = Date();
+
+    if(errorOcurred){
+        var serviceException = new OCSOperation.v1.types.ServiceExceptionType();
+        serviceException.errorCode = errorCode;
+        serviceException.errorType = "PERMANENT";
+        serviceException.text = errorText;
+        //serviceException.variables = "-1";
+
+        notificationCommonInfo.serviceException = serviceException;
+    }
+    sendNotification.notificationCommonInfo = notificationCommonInfo;
+
+
+    try {
+        var ret = Global.invokeInterface(inter, command, sendNotification)[0];
+        cm_common.setLastInterfaceMessageCode(relatedCode);
+
+        if (ret && ret.has("code")) { // Error accessing the interface
+            Global.logDebug("Error accesing the interface (" + inter + " - " + command + "): " + ret.message);
+            return false;
+        }
+        if (ret.has("resultCode") && ret.resultCode < 0) {   // interface returns an error
+            Global.logDebug("Interface (" + inter + " - " + command + ") has returned an error: " + ret.resultDescription);
+            return false;
+        }
+
+    } catch(E) {
+        Global.logDebug("Interface (" + inter + " - " + command + ") has launched an exception. Command " + command + " - " + "\n" + E.toString());
+        cm_common.setLastInterfaceMessageCode(relatedCode);
+        return false;
+    }
+
+    if(api_common.isFault(ret)) {
+        Global.logDebug("Interface (" + inter + " - " + command + ") has returned an error: " + ret.resultDescription);
+        return false;
+    }
+    else {
+        if(ret != null &&ret.notificationCommonInfoResult != null){
+            Global.logDebug("Calling to interface (" + inter + ") succeded " + "opExecutionDate: " + ret.notificationCommonInfoResult.opExecutionDate);
+            return true;
+        }
+    }
+    return false;
+  ]]></script>
+</script>

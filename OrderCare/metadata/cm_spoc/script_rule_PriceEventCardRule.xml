@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_PriceEventCardRule">
+  <group>rules_scripts.Common.Price</group>
+  <label>rule_PriceEventCardRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (data.specificationCode) {
+
+        var priceRel = getPriceRel();
+        var nodes = data.getNodeNames();
+        var mark = 0;
+
+
+        for (var l=0;l<priceRel.length;l++) {
+
+            try {
+                if (data[priceRel[l].itemCode.substr(5)]) {
+
+                    mark = mark +1;
+                }
+            }
+            catch (e ) {}
+
+        }
+
+
+        if (mark > 1 ) {
+            errList.addErrorMessage(data,[data.specificationCode,"Cannot Associate Price to more than one item"],"NGAA_EPC_002","E");
+        } else if (mark < 1 ) {
+            errList.addErrorMessage(data,[data.specificationCode,"Cannot Create a Price without price event"],"NGAA_EPC_002","E");
+        }
+    }
+
+    return false;
+
+    function getPriceRel() {
+
+        var associationsFinder =  new cm_spoc.itemRelationFinder();
+        associationsFinder.searchDocument.itemCode ="type_Price";
+        var associations = associationsFinder.search();
+        return associations;
+    }
+  ]]></script>
+</script>

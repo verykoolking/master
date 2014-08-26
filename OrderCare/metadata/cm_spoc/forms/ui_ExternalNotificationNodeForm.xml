@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ExternalNotificationNodeForm">
+  <group>Operation</group>
+  <label>ExternalNotificationNodeForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="IpAddressAndPortsIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ExternalNotificationNode</valueType>
+    </variable>
+    <variable name="UsersAllowedDeliveryIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="CommunicationErrorPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="GeneralParameters" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/frmui_Forms/vform_GeneralParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                </element>
+                <element name="IpAddressAndPorts" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/frmui_Forms/vform_IpAddressAndPorts</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Ip adresses and connection Ports to the node</label>
+                </element>
+                <element name="UsersAllowedDelivery" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/frmui_Forms/vform_UsersAllowedDelivery</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Users with allowed delivery to node</label>
+                </element>
+                <element name="CommunicationError" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/frmui_Forms/vform_CommunicationError</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Re-scheduled errors for the node</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="IpAddressAndPorts" type="vform">
+          <label>IpAddressAndPorts</label>
+          <root name="VerticalLayout2" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>800px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Ip Address And Ports</label>
+                      </element>
+                      <element name="buttonsLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/uimthd_addIpAddressAndPorts</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                            <width>40px</width>
+                          </element>
+                          <element name="deleteButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/uimthd_deleteIpAddressAndPorts</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                            <width>40px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="BoltOnInPhasesHeaders2" type="elgrd">
+                        <numOfCols>11</numOfCols>
+                        <width>800px</width>
+                        <elementList>
+                          <element name="Select" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <width>30px</width>
+                          </element>
+                          <element name="CellSpacer" type="elcsp">
+                            <width>5px</width>
+                          </element>
+                          <element name="Priority" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <fontProperties type="pfnt">
+                              <bold>true</bold>
+                              <color>#003366</color>
+                            </fontProperties>
+                            <label>Priority*</label>
+                            <width>60px</width>
+                          </element>
+                          <element name="CellSpacer1" type="elcsp">
+                            <width>5px</width>
+                          </element>
+                          <element name="IPAddress" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <fontProperties type="pfnt">
+                              <bold>true</bold>
+                              <color>#003366</color>
+                            </fontProperties>
+                            <label>IP*</label>
+                            <width>120px</width>
+                          </element>
+                          <element name="CellSpacer2" type="elcsp">
+                            <width>5px</width>
+                          </element>
+                          <element name="Port" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <fontProperties type="pfnt">
+                              <bold>true</bold>
+                              <color>#003366</color>
+                            </fontProperties>
+                            <label>Port*</label>
+                            <width>120px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="ConditionsVL" type="elvlt">
+                        <height>200px</height>
+                        <overflow>auto</overflow>
+                        <width>800px</width>
+                        <elementList>
+                          <element name="ConditionsIterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/leaf_IpAddressAndPortsIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="ConditionsHL" type="elhlt">
+                                <width>800px</width>
+                                <elementList>
+                                  <element name="ConditionsFormFrame" type="elovf">
+                                    <fillSpace>false</fillSpace>
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/leaf_IpAddressAndPortsIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                    <width>800px</width>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="UsersAllowedDelivery" type="vform">
+          <label>UsersAllowedDelivery</label>
+          <root name="VerticalLayout2" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>800px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Users Allowed Delivery</label>
+                      </element>
+                      <element name="buttonsLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/uimthd_addUsersAllowedDelivery</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                            <width>40px</width>
+                          </element>
+                          <element name="deleteButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/uimthd_deleteUsersAllowedDelivery</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                            <width>40px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="BoltOnInPhasesHeaders2" type="elgrd">
+                        <numOfCols>11</numOfCols>
+                        <width>800px</width>
+                        <elementList>
+                          <element name="Select" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <width>30px</width>
+                          </element>
+                          <element name="CellSpacer" type="elcsp">
+                            <width>5px</width>
+                          </element>
+                          <element name="User" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <fontProperties type="pfnt">
+                              <bold>true</bold>
+                              <color>#003366</color>
+                            </fontProperties>
+                            <label>User*</label>
+                            <width>200px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="ConditionsVL" type="elvlt">
+                        <height>200px</height>
+                        <overflow>auto</overflow>
+                        <width>800px</width>
+                        <elementList>
+                          <element name="ConditionsIterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/leaf_UsersAllowedDeliveryIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="ConditionsHL" type="elhlt">
+                                <width>800px</width>
+                                <elementList>
+                                  <element name="ConditionsFormFrame" type="elovf">
+                                    <fillSpace>false</fillSpace>
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/leaf_UsersAllowedDeliveryIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                    <width>800px</width>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="GeneralParameters" type="vform">
+          <label>GeneralParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="VerticalLayout1" type="elvlt">
+                <alignment>right,center</alignment>
+                <elementList>
+                  <element name="NodeIdentifier" type="elfld">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/permMethod_setIsPrimaryKey</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>Node Identifier</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ExternalNotificationNode/dstruct_NodeIdentifier</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="NodeDescription" type="eltxtArea">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <dataLength>80</dataLength>
+                    <label>Node description</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ExternalNotificationNode/dstruct_NodeDescription</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="MaximumTime" type="elfld">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <label>Maximum time</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ExternalNotificationNode/dstruct_MaximumTime</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="MaximumNumberOfReschedulings" type="elfld">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <label>Maximum number of reschedulings</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ExternalNotificationNode/dstruct_MaximumNumberOfReschedulings</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="Interval" type="elfld">
+                    <label>Interval</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ExternalNotificationNode/dstruct_Interval</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="CommunicationError" type="vform">
+          <label>CommunicationError</label>
+          <root name="VerticalLayout2" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>800px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="VerticalLayout" type="elvlt">
+                        <width>600px</width>
+                        <elementList>
+                          <element name="Label" type="ellab">
+                            <cellAlignment>center,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <bold>true</bold>
+                              <color>#003366</color>
+                            </fontProperties>
+                            <label>Communication Errors*</label>
+                          </element>
+                          <element name="FormFrame" type="elovf">
+                            <fillSpace>false</fillSpace>
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/leaf_CommunicationErrorPickList</variablePath>
+                                <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                                <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                              </variablePathList>
+                            </formReference>
+                            <height>300px</height>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ExternalNotificationNodeForm/leaf_CommunicationErrorPickList</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>600px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$CommunicationErrorPickList" type="laction">
+      <path>ui_cm_spoc.forms.ExternalNotificationNodeForm/leaf_CommunicationErrorPickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.BoltOnForm/leaf_TariffPlanPickList</valueType>
+      <script><![CDATA[
+        var pl = new cm_spoc.PickList(null,this);
+        pl.modelCallback = this.setModel;
+        pl.availableItems = new DataObjectList();
+
+        var itemFinder = new Finder("cm_spoc.CommunicationErrorFinder");
+        var result = itemFinder.search();
+
+        var ComErrorsSelected = this.model.ExtNotCommErrorArrDS.List;
+        pl.loadItemsSelectedPreviously(pl,result,ComErrorsSelected);/*
+        var itemSelected = false;
+        for(var i=0;i<result.length;i++){
+            var item = new cm_spoc.PickListDS();
+            item.id = result[i].itemCode;
+            item.description = result[i].itemCode;
+            itemSelected = false;
+            if(ComErrorsSelected.length!=0){
+                for(var j=0;j<ComErrorsSelected.length;j++)
+                {
+                    if(ComErrorsSelected[j] == item.id){
+                        pl.selectedItems.addLast(item);
+                        itemSelected = true;
+                        break;
+                    }
+                }
+            }
+            if(itemSelected == false){
+                pl.availableItems.addLast(item);
+            }
+        }*/
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.ExternalNotificationNodeForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initIpAddressAndPorts(this.model);
+        cm_spoc.initIpAddressAndPortsIteratorUI(this);
+
+        m = cm_spoc.initUsersAllowedDelivery(m);
+        cm_spoc.initUsersAllowedDeliveryIteratorUI(this);
+
+        m = cm_spoc.initCommunicationError(m);
+
+        return m;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script>//return true;</script>
+    </method>
+    <method name="deleteIpAddressAndPorts" type="uimthd">
+      <script><![CDATA[
+        this.model.IpAddressAndPortsArrDS = cm_spoc.removeListElements(this ,this.model.IpAddressAndPortsArrDS,"List","IpAddressAndPortsIterator");
+      ]]></script>
+    </method>
+    <method name="addIpAddressAndPorts" type="uimthd">
+      <script><![CDATA[
+        var model=this.model.IpAddressAndPortsArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.IpAddressAndPortsIteratorUI",'base_IpAddressAndPorts',"IpAddressAndPortsIterator");
+      ]]></script>
+    </method>
+    <method name="addUsersAllowedDelivery" type="uimthd">
+      <script><![CDATA[
+        var model=this.model.UsersAllowedDeliveryArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.UsersAllowedDeliveryIteratorUI",'base_UsersAllowedDelivery',"UsersAllowedDeliveryIterator");
+      ]]></script>
+    </method>
+    <method name="deleteUsersAllowedDelivery" type="uimthd">
+      <script><![CDATA[
+        this.model.UsersAllowedDeliveryArrDS = cm_spoc.removeListElements(this ,this.model.UsersAllowedDeliveryArrDS,"List","UsersAllowedDeliveryIterator");
+      ]]></script>
+    </method>
+    <method name="addCommunicationError" type="uimthd">
+      <script><![CDATA[
+        var model=this.model.ExtNotCommErrorArrDS.ListDS;
+        cm_spoc.addListElementNotEntity(this, model,"cm_spoc.forms.CommunicationErrorIteratorUI",'base_CommunicationError',"CommunicationErrorIterator");
+      ]]></script>
+    </method>
+    <method name="deleteCommunicationError" type="uimthd">
+      <script><![CDATA[
+        this.model.ExtNotCommErrorArrDS = cm_spoc.removeListElements(this ,this.modelExtNotCommErrorArrDS,"List","CommunicationErrorIterator");
+      ]]></script>
+    </method>
+    <method name="setModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.ExtNotCommErrorArrDS.List = null;
+        this.parent.model.ExtNotCommErrorArrDS.ListDS = null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.ExtNotCommErrorArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+  </methodList>
+</userInterface>

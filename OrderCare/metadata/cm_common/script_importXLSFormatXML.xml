@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.importXLSFormatXML">
+  <group>overridden.itemAttributeChanges</group>
+  <label>importXLSFormatXML</label>
+  <metaVersion>4</metaVersion>
+  <overrides>script_cwt_pcmaintapi.importXLSFormatXML</overrides>
+  <parameterList>
+    <parameter name="reader" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="option" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //convert from input xml to worksheet data structure format
+    var numObjects = 0;
+    var numErrors = 0;
+    var ds;
+    var deleteProjectBeforeImport = option.getOption("deleteProjectBeforeImport");
+    var validateDates =  option.getOption("validateDates");
+    var newEffectiveDate = option.getOption("newProjectEffectiveDate");
+    var effectiveEndDate =  option.getOption("effectiveEndDate");
+    var newStatus = option.getOption("newStatus");
+    var maintainOffset = option.getOption("maintainOffset");
+    var updateFutureDates = option.getOption("updateFutureDates");
+    var moveEndDatedObjects = option.getOption("moveEndDatedObjects");
+    var respMsg = "";
+    var msg = "";
+    //var ownerId=UserProfile.userProfile().positionId;
+    var excludeBefore = option.getOption("excludeBefore");
+    if (excludeBefore != null) {
+          excludeBefore = Calendar.formatDate(excludeBefore, "yyyy-MM-dd");
+    }
+
+    var logFileDir = option.getOption("logFileDir");
+    if (logFileDir != null) {
+        var logAPI = new DataStructure("cwt_pcmaintapi:logAPI");
+        option.addOption("logAPI", null,"logAPI");
+        option.setOption("logAPI", logAPI);
+    }
+
+    var includeDomains = option.getOption("includeDomains");
+
+    if (reader != null) {
+            var fileName = reader.getFileName();
+            if (fileName) {
+                option.addOption("fileName", null, "fileName");
+                option.setOption("fileName", fileName);
+            }
+            var ndex = fileName.search(/.xml/);
+          if(ndex <= 0){
+               Global.throwException("CWTPC0232");
+          }
+
+          ds = reader.getItemsFromXML("cwt_pcmaintimport:Workbook");
+    }
+
+    if (ds == null || ds[0] == null) {
+          Global.throwException("CWTPC0233");
+    }
+
+    ds = ds[0];
+    if (ds.Worksheet == null) {
+          return [0,0];
+    }
+
+    //parse the worksheet ds and create api import ds
+    var resDs = new DataStructure("cwt_pcmaintapi:importCatalogAPI"); //result data structure
+
+    var o=0; //object counter
+
+    for (var i = 0; i<ds.Worksheet.length; i++) {  //sheets
+          var sheet = ds.Worksheet[i];
+
+          if (sheet.Name == "Summary"){
+                continue;
+          }
+
+          if( !includeDomains && (sheet.Name == "cwt_catalogDomain") ){
+                      continue; //skip domains when required
+          }
+
+          var typeName = "cwt_pc:"+sheet.Name;
+          var fieldHeaders = new Array();
+          var v = 0;
+          debugPrintln("Book " + i+ ": " + ds.Worksheet[i].Name);
+          debugPrintln("** # of Objects to import = " +(sheet.Table.Row.length-1));
+
+          var indexOfUpdateDate=null, indexOfOrgChartName=null, indexOfStartDate=null, indexOfEndDate=null;
+
+          for (var j=0; j<sheet.Table.Row.length; j++) { //rows
+                //within one row
+                var row = sheet.Table.Row[j];
+                if (row.Index != null) {
+                      //Global.logError("WorkSheet: "+ ds.Worksheet[i].Name + " Row Index: "+  row.Index + " illegal format found, please inspect, skipping....");
+                     msg = Global.translateText("CWTPC0347", null, [ds.Worksheet[i].Name,row.Index]);
+                     Global.storeInEventLog(option,"ERROR",msg);
+                      continue;
+                }
+                var rowColumnLength = row.Cell.length;
+
+                      var excluded = false;
+                      var kIndex = 0;
+
+                      for (var colIndex = 0; colIndex < rowColumnLength; colIndex++) {
+                            var index = row.Cell[colIndex].Index;
+                            if(index != null){
+                                  kIndex = index - 1; // get the real index when some columns in the row does not have value in the spreadSheet
+                            }
+
+                            if(j == 0){
+                                    //init header indexes
+                                  if(row.Cell[colIndex].Data.Data == "updateDate"){
+                                        indexOfUpdateDate = kIndex;
+                                  }else if(row.Cell[colIndex].Data.Data == "orgChartName"){
+                                        indexOfOrgChartName = kIndex;
+                                  }else if(row.Cell[colIndex].Data.Data == "startDate"){
+                                        indexOfStartDate = kIndex;
+                                  }else if(row.Cell[colIndex].Data.Data == "endDate"){
+                                        indexOfEndDate = kIndex;
+                                  }else if(row.Cell[colIndex].Data.Data == "objectStartDate"){ // for projectAssignment sheet
+                                        indexOfStartDate = kIndex;
+                                  }else if(row.Cell[colIndex].Data.Data == "sourceTaxModelStartDate"){ // for taxModelItem sheet
+                                              indexOfStartDate = kIndex;
+                                  }
+                            }else{
+                                  if(kIndex == indexOfOrgChartName){
+                                    if(!includeDomains){
+                                          row.Cell[colIndex].Data.Data = null; // skip the input orgChartName in the spreadSheet
+                                    }
+                                  }else if(kIndex == indexOfUpdateDate){
+                                        if (excludeBefore != null && row.Cell[colIndex].Data.Data < excludeBefore) {
+                                        excluded = true; // excludeBefore
+                                        break;
+                                        }
+                                  }else if(kIndex == indexOfStartDate || kIndex == indexOfEndDate){
+                                        //startDate and endDate were using system.Date type before, in order to be compatible to previous versions, we need some adjustments
+                                        //Also, for current versions, we need to add minutes and seconds information
+                                    var myRegExp = /T/; //T is the timezone constant charactor
+                                    if(row.Cell[colIndex].Data.Data != null && row.Cell[colIndex].Data.Data.length<20){ //current format should be yyyy-MM-dd'T'HH:mm:ss'Z', which is 20 charactors
+                                          if(row.Cell[colIndex].Data.Data.search(myRegExp) != -1){ //accommodate for previous version, which uses format yyyy-MM-dd'T'HH'Z', add minutes and seconds infomation to the end
+                                            row.Cell[colIndex].Data.Data = row.Cell[colIndex].Data.Data.substr(0, row.Cell[colIndex].Data.Data.length-1) + ":00:00Z";
+                                          }else{ //accommodate for previous version, which uses format yyyy-MM-dd for startDate/endDate
+                                            try{
+                                                var localDateTime = Calendar.parseDate(row.Cell[colIndex].Data.Data+"T00:00:00", "yyyy-MM-dd'T'HH:mm:ss"); // make imported time 00:00:00 for local timezone
+                                                var gmtDifference = localDateTime.getTimezoneOffset()*60*1000; // getTimezoneOffset() returns minutes
+                                                var gmtDateTime = new Date(localDateTime.getTime()+gmtDifference);
+                                                row.Cell[colIndex].Data.Data = Calendar.formatDate(gmtDateTime, "yyyy-MM-dd'T'HH:mm:ss'Z'");
+                                             }catch(e){
+                                                   msg = Global.translateText("CWTPC0348", null, [row.Cell[colIndex].Data.Data, sheet.Name ]);
+                                                   cwt_pcmaintapi.storeInEventLog(option, "ERROR", msg);
+                                                   continue;
+                                             }
+                                          }
+                                    }
+                                  }
+                            }
+
+                            kIndex++;
+                      }
+
+                      if (excluded) {
+                              continue;
+                      }
+
+
+                //Map according to typeName
+                var fields = "";
+                //resDs.object[o].type=typeName;
+
+                if (sheet.Name.startsWith("cwt_")){
+                     sheet.Name = sheet.Name.substring(4);
+                }
+
+                var objDs;
+                try{
+                      objDs = resDs[sheet.Name];
+                }catch(e) {
+                      msg =  Global.translateText("CWTPC0349", null, [sheet.Name ]);
+                      cwt_pcmaintapi.storeInEventLog(option, "ERROR", msg);
+                      continue;
+                }
+
+                var obj;
+                if (j!=0) {
+                      obj = objDs[objDs.length];
+                }
+
+                //var obj = new DataStructure("cwt_pcmaintapi:" + sheet.Name);
+                var colNum = row.Cell.length;
+                var fieldIndex = 0;
+                var k=0;
+
+                while (fieldIndex < colNum) {
+                      //process fields
+                      var index = row.Cell[fieldIndex].Index;
+                      var field = row.Cell[fieldIndex].Data.Data;
+                      if (index != null) {
+                            k = (index-1);
+                      }
+
+                      if (j==0) {
+                            //init headers
+                            fieldHeaders[k] = field;
+                      } else {
+                                  /*
+                            if (fieldHeaders[k] == "project") {
+                                  //TODO!
+                            } else if (fieldHeaders[k].charAt(0) == '[') {
+                                  //skip optional input field
+                                  k++;
+                                  fieldIndex++;
+                                  continue;
+                            } else {
+                                  //normal field
+                            }
+                            */
+                                  try {
+                                        obj[fieldHeaders[k]] = field;
+                                  } catch (e) {
+                                        //leaf does not exist in the ds
+                                        msg = Global.translateText("CWTPC0350", null, [fieldHeaders[k],sheet.Name ]);
+                                        cwt_pcmaintapi.storeInEventLog(option, "ERROR", msg);
+                                        k++;
+                                        fieldIndex++;
+                                        continue;
+                                  }
+                      }
+                      k++;
+                      fieldIndex++;
+                }//while
+
+                //increment object counter only if it's not prossesing header
+                o = (j==0)?o:o+1;
+          }//for rows
+    }//for sheets
+
+    //read projects in target Environment
+    var codes="";
+    var projDocs = null;
+    var param;
+    var moveDatesStatus = false;
+    var moveDatesStatusAllowed = true;
+    var delProjSuccess = true;
+    var importActiveProjects = false;
+    var initialStatuses = null;
+    var projDocs1=new Array();
+    //var projDocs;
+
+    // ******************GET PROJECT DOCS FROM TARGET ENV************************************************
+    if(newStatus!=null || newEffectiveDate || effectiveEndDate || deleteProjectBeforeImport || validateDates){
+        param = new Array();
+        initialStatuses = new Array();
+        for (var c=0; c < resDs.project.length; c++) {
+            if(c==0)
+                codes+="'"+resDs.project[c].projectCode+"'";
+            else
+                codes+=", '"+resDs.project[c].projectCode+"'";
+            if (resDs.project[c].status == "ACT")
+                 importActiveProjects = true;
+            initialStatuses[c]=resDs.project[c].status;
+            var finder = new Finder("cwt_pc:cwt_projectFinder");
+            finder.searchDocument.projectCode =  resDs.project[c].projectCode;
+            var projList = new Array();
+            var param = ['project', projList];
+            finder.extractAndProcess(finder.searchDocument, null, "cwt_pc:processSearchResult", null, param);
+            if(projList!=null && projList.length>0)
+                projDocs1[c]=projList[0];
+            else
+                projDocs1[c]==null;
+        }
+        if(resDs.project.length!=0){
+            param[0] = ["projectCode", "", "in("+codes+")"];
+        }
+       // projDocs = Document._searchByFieldContent("cwt_pc:cwt_project",param[0],9999,true);
+    }
+    // ******************GET PROJECT DOCS FROM TARGET ENV - ENDS********************************************
+
+    //*******************VALIDATE IF STATUS OR DATES CHANGE IS ALLOWED**************************************
+    //validate newState: if new State is not valid abort Import
+    //validate state of project in target Env: if one or more projects active and deleteProjectBeforeImport == false abort import as date change or state change not allowed
+    var shiftStatus = false;
+    var isNewStatusValid = true;
+    if(newStatus!=null || newEffectiveDate!=null || effectiveEndDate!=null){
+        moveDatesStatus = true;
+        if(deleteProjectBeforeImport || projDocs1.length ==0){
+            if(newStatus!=null)
+                isNewStatusValid = isStateValid(newStatus);
+            if(!isNewStatusValid){
+                moveDatesStatusAllowed = false;
+                var message = Global.translateText("CWTPC0285", null, null);
+                cwt_pcmaintapi.storeInEventLog(option, "ERROR", message);
+                try {
+                    cwt_pcmaintapi.exportLogContent(option);
+                } catch (ex) {
+                    cwt_pcmaintapi.storeInEventLog(option, "ERROR", ex.message);
+                }
+                Global.throwException("CWTPC0285");
+            }
+        }
+        else{
+           /* for (var i=0; projDocs!=null && i<projDocs.length; i++) {
+                if(projDocs[i].status =="ACT" && !deleteProjectBeforeImport){
+                    moveDatesStatusAllowed = false;
+                    Global.throwException("CWTPC0290");
+                    //return option;
+                }
+                if(newStatus!=null){
+                    isNewStatusValid = isStateValid(newStatus,projDocs[i]);
+                    if(!isNewStatusValid){
+                        moveDatesStatusAllowed = false;
+                        Global.throwException("CWTPC0285");
+                        //return option;
+                    }
+                }
+            }// for*/
+            for (var i=0; i<resDs.project.length; i++) {
+                if(projDocs1[i]!=null && projDocs1[i].status =="ACT" && !deleteProjectBeforeImport && resDs.project[i].status != "ACT"){
+                    moveDatesStatusAllowed = false;
+                    var message = Global.translateText("CWTPC0290", null, null);
+                    cwt_pcmaintapi.storeInEventLog(option, "ERROR", message);
+                    try {
+                        cwt_pcmaintapi.exportLogContent(option);
+                    } catch (ex) {
+                        cwt_pcmaintapi.storeInEventLog(option, "ERROR", ex.message);
+                    }
+                    Global.throwException("CWTPC0290");
+                    //return option;
+                }
+                if(newStatus!=null){
+                    isNewStatusValid = isStateValid(newStatus,projDocs1[i]);
+                    if(!isNewStatusValid){
+                        moveDatesStatusAllowed = false;
+                        var message = Global.translateText("CWTPC0285", null, null);
+                        cwt_pcmaintapi.storeInEventLog(option, "ERROR", message);
+                        try {
+                            cwt_pcmaintapi.exportLogContent(option);
+                        } catch (ex) {
+                            cwt_pcmaintapi.storeInEventLog(option, "ERROR", ex.message);
+                        }
+                        Global.throwException("CWTPC0285");
+                        //return option;
+                    }
+                }
+            }
+        }//else
+        if(isNewStatusValid && newStatus!="ACT" && moveDatesStatusAllowed)
+            shiftStatus = true;
+    }
+    //*******************VALIDATE IF STATUS OR DATES CHANGE IS ALLOWED - ENDS**********************************
+
+    //*******************DELETE PROJECTS BEFORE IMPORT*********************************************************
+    //delete project in target Environment : if delete has error abort Import
+        if(deleteProjectBeforeImport && moveDatesStatusAllowed){
+            for (var i=0; i<resDs.project.length; i++) {
+               /* var projectDeleteDS = new DataStructure("cwt_pcmaintapi:projectDeleteDS");
+                projectDeleteDS.projectCode = resDs.project[i].projectCode;
+                projectDeleteDS.cascadeDelete = true;
+                var response = cwt_pcmaintapi.projectDelete(projectDeleteDS);
+                if(!(response.metadataType=="cwt_pcmaintapi:Fault" && response.code == "DATA_NOT_FOUND")){
+                    cwt_pcmaintapi.storeInEventLog(option, "SUMMARY", response.message);
+                    for(var j = 0; response.errorList!= null && j<response.errorList.length; j++){
+                         cwt_pcmaintapi.storeInEventLog(option, "ERROR", response.errorList[j].message);
+                         if(delProjSuccess)
+                             delProjSuccess = false;
+                    }
+                }*/
+
+                var ds = new DataStructure("cwt_pcmaintapi.multipleProjectsDelete");
+                for (var i=0; i<resDs.project.length; i++) {
+                    ds.projectCodes[ds.projectCodes.length]=  resDs.project[i].projectCode;
+                    ds.cascadeDelete = true;
+                }
+                var response = cwt_pcmaintapi.projectDelete(ds,true);
+                 if(!(response.metadataType=="cwt_pcmaintapi:Fault" && response.code == "DATA_NOT_FOUND")){
+                    cwt_pcmaintapi.storeInEventLog(option, "SUMMARY", response.message);
+                    for(var j = 0; response.errorList!= null && j<response.errorList.length; j++){
+                         cwt_pcmaintapi.storeInEventLog(option, "ERROR", response.errorList[j].message);
+                         if(delProjSuccess)
+                             delProjSuccess = false;
+                    }
+                }
+                if(!delProjSuccess){
+                    var message = Global.translateText("CWTPC0284", null, null);
+                    cwt_pcmaintapi.storeInEventLog(option, "ERROR", message);
+                    try {
+                        cwt_pcmaintapi.exportLogContent(option);
+                    } catch (ex) {
+                        cwt_pcmaintapi.storeInEventLog(option, "ERROR", ex.message);
+                    }
+                    Global.throwException("CWTPC0284");
+                }
+            }
+        }
+
+
+    //*******************DELETE PROJECTS BEFORE IMPORT - ENDS**********************************************
+    if(moveDatesStatusAllowed && delProjSuccess){
+        //*********************SHIFT DATES AND STATUS******************************************************
+        if(newEffectiveDate != null || newStatus != null || effectiveEndDate!=null){
+                if(!deleteProjectBeforeImport){
+                        for (var i=0; projDocs1!=null && i<projDocs1.length; i++) {
+                            try{
+                                cwt_pcmaintapi.shiftProjectEffectiveDate_Status(projDocs1[i], newEffectiveDate, effectiveEndDate, maintainOffset, updateFutureDates, moveEndDatedObjects,shiftStatus,newStatus);
+                            }catch(e){
+                                  var params = new Array();
+                                  params[0] =e.message;
+                                  var message = Global.translateText("CWTPC0250", null, params);
+                                  cwt_pcmaintapi.storeInEventLog(option, "ERROR", message);
+                                  Global.throwException("CWTPC0293");
+                            }
+                        }
+
+                }
+                cwt_pcmaintapi.shiftProjectEffectiveDate_StatusOnImport(resDs, option,shiftStatus,projDocs1);
+        }
+        //*********************SHIFT DATES AND STATUS - ENDS***********************************************
+
+        //*****************EXISTING FUNCTIONALITY - PURE IMPORT********************************************
+        //rearrange the data in the DS
+        cwt_pcmaintapi.rearrangeDataInDS( resDs, option );
+
+
+        try {
+            cwt_pcmaintapi.parseDeletedObjectRecords(resDs.deletedObjectRecord, option);
+        } catch (ex) {
+            cwt_pcmaintapi.storeInEventLog(option, "ERROR", ex.message);
+        }
+
+        //parse the importapi ds and perform the corresponding api calls - separate function
+        //Disable the constraints for itemRelation target, so itemRelations can always be created successfully
+
+        Global.runDBStoredProcedure("CATALOG", "call DISABLECONSTRAINTS()", null);
+        cwt_pcmaintapi.parseImportCatalogAPI(resDs, option);
+        Global.runDBStoredProcedure("CATALOG", "call ENABLECONSTRAINTS()", null);
+
+        //log the summary
+        var successNum = option.getOption("successNum");
+        var failNum = option.getOption("failNum");
+        var totalNum = successNum + failNum;
+        msg = Global.translateText("CWTPC0351", null, [totalNum,successNum,failNum ]);
+        var projDocs = null;
+        //*****************EXISTING FUNCTIONALITY - PURE IMPORT ENDS***************************************
+        if(moveDatesStatus && (newEffectiveDate!=null || effectiveEndDate!=null))
+            respMsg +=  Global.translateText("CWTPC0292",null,null);
+        if(moveDatesStatus && (newStatus!=null && newStatus!="ACT"))
+            respMsg +=  Global.translateText("CWTPC0288",null,null);
+        var projectIds = null;
+        if(validateDates || (newStatus!=null && newStatus == "ACT")|| (importActiveProjects && (newEffectiveDate!=null || effectiveEndDate!=null))){
+             projectIds = new Array();
+             projDocs = new Array();
+             for (var c=0, j=0; c < resDs.project.length; c++) {
+                var finder = new Finder("cwt_pc:cwt_projectFinder");
+                finder.searchDocument.projectCode =  resDs.project[c].projectCode;
+                var projList = new Array();
+                var param = ['project', projList];
+                finder.extractAndProcess(finder.searchDocument, null, "cwt_pc:processSearchResult", null, param);
+                if(projList!=null && projList.length>0){
+                    projDocs[c]=projList[0];
+                    projectIds[j++] = projDocs[c].projectId;
+                }
+                else{
+                    projDocs[c]==null;
+                }
+            }
+        }
+        //*****************VALIDATE DATES******************************************************************
+        var areDatesValid = true;
+        if(validateDates){
+                for(var i = 0; projDocs!=null && i<projDocs.length; i++){
+                    if(projDocs[i]==null)
+                        continue;
+                    var response = projDocs[i].validateObject(projectIds,false);
+                    for(var j = 0; response.errorList!= null && j<response.errorList.length; j++){
+                         areDatesValid = false;
+                         msg =  Global.translateText("CWTPC0352",null,[projDocs[i].projectCode,response.errorList[j].message]);
+                         cwt_pcmaintapi.storeInEventLog(option, "ERROR", msg);
+                    }
+                    cwt_pcmaintapi.storeInEventLog(option, "SUMMARY", projDocs[i].projectCode +" "+response.message);
+                }
+            if(!areDatesValid){
+                if(newStatus!=null && newStatus == "ACT")
+                    respMsg += Global.translateText("CWTPC0287",null,null);
+                else
+                    respMsg += Global.translateText("CWTPC0286",null,null);
+            }
+            else
+             respMsg += Global.translateText("CWTPC0291",null,null);
+        }
+
+         //*****************VALIDATE DATES - ENDS******************************************************
+
+        //*************STATUS CHANGE*******************************************************************
+        //validate status change
+        var areStatesValid=true;
+        var projects;
+        if(((newStatus!=null && newStatus == "ACT")|| (importActiveProjects && (newEffectiveDate!=null || effectiveEndDate!=null))) && areDatesValid){
+            if(newStatus == null){
+               // var projectIds1 = projectIds;
+                projects = new Array();
+                var j = 0;
+                for(var c = 0; c<resDs.project.length && projDocs!=null; c++){
+                    if(initialStatuses[c]=="ACT" && projDocs[c]!=null && projDocs[c].status!="ACT")
+                        projects[j++] =  projDocs[c];
+                }
+            }
+          //for(var i = 0; i<projectIds.length; i++){
+          if(projects!=null && projects.length>0){
+              var errorList = cwt_pc.validateStatusChange(projects, "ACT");
+               for(var j = 0; errorList!= null && j<errorList.length; j++){
+                  msg = Global.translateText("CWTPC0353",null,[errorList[j]]);
+                 cwt_pcmaintapi.storeInEventLog(option, "ERROR", msg);
+                }
+                if(errorList!=null && errorList.length>0){
+                    areStatesValid = false;
+                     msg = Global.translateText("CWTPC0354");
+                    cwt_pcmaintapi.storeInEventLog(option, "SUMMARY", msg);
+                }
+          }
+          if(!areStatesValid){
+            respMsg += Global.translateText("CWTPC0289",null,null);
+          }
+          if(areStatesValid){
+            //project Activation
+             if(projDocs!=null && projDocs.length>0){
+                 for(var i = 0; i<projDocs.length; i++){
+                     if(projDocs[i]==null || projDocs[i].status=="ACT")
+                         continue;
+                     projDocs[i].status = "ACT";
+
+                    cwt_pc.propagateProjectChanges(projDocs[i], null);
+                    projDocs[i].save();
+                 }
+             }
+             respMsg += Global.translateText("CWTPC0288",null,null);
+          }
+        }
+        //******************STATUS CHANGE ENDS***********************************************************
+    }//deleteProjSuccess && moveDatesStatusAllowed
+
+    try {
+        cwt_pcmaintapi.exportLogContent(option);
+    } catch (ex) {
+        cwt_pcmaintapi.storeInEventLog(option, "ERROR", ex.getMessage);
+    }
+    option.setOption("responseMsg",respMsg);
+
+    return option;
+
+
+    //TODO - logs
+
+    function isStateValid(newState,projDoc){
+        var isValid = false;
+        var lc = cwt_pc.getCustomizedLifeCycle();
+        var r = null;
+        if (lc == null || lc == "")
+            lc = "cwt_pc:catalogLifeCycle";
+        if(projDoc!=null){
+            if(newState!= projDoc.status)
+                r = projDoc.getAllAllowedStates(projDoc.status,lc);
+            else
+            isValid = true;
+        }
+        else{
+            if(newState!="DEF"){
+                projDoc = new Document("cwt_pc:cwt_project");
+                r = projDoc.getAllAllowedStates("DEF",lc);
+            }
+            else
+                return true;
+        }
+        if(r!=null){
+            for(var i = 0; i<r.length;i++){
+                if(newState == r[i]){
+                    isValid = true;
+                    break;
+                }
+            }
+        }
+    return isValid;
+    }
+  ]]></script>
+</script>

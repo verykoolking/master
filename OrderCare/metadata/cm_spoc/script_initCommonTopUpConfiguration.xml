@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initCommonTopUpConfiguration">
+  <group>ui_scripts.TopUp</group>
+  <label>initCommonTopUpConfiguration</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+       var itemFinder = new Finder("cm_spoc.topUpFinder");
+       var result = itemFinder.search();
+       /*if(result.length>0){
+           var btCode=result[0].itemCode;
+           model.DefaultOriginForBalanceTransferEnum=btCode;
+           model.DefaultOriginForBalanceTransfer = btCode;
+           model.DefaultOriginForPromotionEnum = btCode;
+           model.DefaultOriginForPromotion = btCode;
+       }*/
+     }else{
+       //Assign the values of the model to the proper select field
+       model.DefaultOriginForBalanceTransferEnum =  model.DefaultOriginForBalanceTransfer;
+       model.DefaultOriginForPromotionEnum = model.DefaultOriginForPromotion;
+    }
+    return model;
+  ]]></script>
+</script>

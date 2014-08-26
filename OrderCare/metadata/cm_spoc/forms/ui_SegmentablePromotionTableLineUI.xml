@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.SegmentablePromotionTableLineUI">
+  <group>Promotion</group>
+  <label>SegmentablePromotionTableLineUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.SegmentablePromotionActivat</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="GridLayout" type="elgrd">
+              <cellBorderStyle>CgCellDark</cellBorderStyle>
+              <cellPadding>10</cellPadding>
+              <numOfCols>7</numOfCols>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionTableLineUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>10px</width>
+                </element>
+                <element name="Operation" type="ellab">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>1</columnSpan>
+                  <label>Operation</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionTableLineUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SegmentablePromotionActivat/dstruct_Operation</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>220px</width>
+                </element>
+                <element name="SubOperationType" type="elslct">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>1</columnSpan>
+                  <label>Sub-Operation</label>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionTableLineUI/uimthd_setSubOperation</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <removeLabelLine>true</removeLabelLine>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionTableLineUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SegmentablePromotionActivat/dstruct_SubOperationType</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="MinimumAmount" type="elspnr">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>1</columnSpan>
+                  <label>Minimum Amount</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionTableLineUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SegmentablePromotionActivat/dstruct_MinimumAmount</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="MaximumAmount" type="elspnr">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>1</columnSpan>
+                  <label>Maximum Amount</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionTableLineUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SegmentablePromotionActivat/dstruct_MaximumAmount</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="DestinationTariffPlanType" type="elslct">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>1</columnSpan>
+                  <label>Destination TariffPlan</label>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionTableLineUI/uimthd_setDestinationTariffPlan</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <removeLabelLine>true</removeLabelLine>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionTableLineUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SegmentablePromotionActivat/dstruct_DestinationTariffPlanType</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="SPARPromAwardArr" type="elslct">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>1</columnSpan>
+                  <label>Prize</label>
+                  <multiselect>false</multiselect>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionTableLineUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SegmentablePromotionActivat/dstruct_SPARPromAwardArr</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="setSubOperation" type="uimthd">
+      <script>cm_spoc.setSubOperationScript(this);</script>
+    </method>
+    <method name="setDestinationTariffPlan" type="uimthd">
+      <script>cm_spoc.setDestinationTariffPlanScript(this);</script>
+    </method>
+  </methodList>
+</userInterface>

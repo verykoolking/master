@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" xmlns:base="http://www.tmforum.org/xml/tip/cbe/base" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.resource.res.log
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      The Resource ABE contains entities that are used to represent the various aspects of a Resource.
+
+LogicalResource entities are sets of entities that represent the logical aspects of a Resource. This is important to enable the SID to build a set of reusable managed entities that can be used to model the logical aspects of different types of Resources.
+      Package data summary information:
+            entities: 2
+ Association Classes: 1
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/cbe/base" schemaLocation="common_cbe_base.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="logicalResource" type="tns:LogicalResource"/>
+   <xsd:complexType name="LogicalResource" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract base class for describing different logical aspects of devices (e.g., DeviceInterfaces) that constitute a Product. It has two main purposes: (1) to collect common attributes and relationships for all logical entities, and (2) to provide a convenient, single point where relationships with other managed objects can be defined.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfLogicalResource">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:LogicalResource" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="replacementSet" type="tns:ReplacementSet"/>
+   <xsd:complexType name="ReplacementSet">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class is used to define a set of ManagedPhysicalEntities that must be replaced as a unit. This is conceptually a set of FRUs.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfReplacementSet">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ReplacementSet" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* -->
+   <xsd:element name="resourceRolePartyRoleDetails" type="tns:ResourceRolePartyRoleDetails"/>
+   <xsd:complexType name="ResourceRolePartyRoleDetails">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class defines the semantics of the ResourceRolesManagedByPartyRole association.
+
+The ResourceRolesManagedByPartyRole association defines the set of ResourceRoles that are managed by a particular PartyRole. Oftentimes, there are important functional differences between different types of Resources that require very different skill sets, methods, and so forth to be used by the PartyRole that is managing that Resource. For example, different management personnel may be assigned to manage core routers compared to edge routers. This applies not just to the router as a whole, but to its physical (e.g., line cards) and logical (e.g., DeviceInterfaces) components as well. This class captures these semantics.</p>
+            <p>This association class  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="requisiteSkillSet" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute is an array of integers, and is used to define a set of skills that are required for this PartyRole to possess in order to manage this Resource. The values appear as a comma separated list.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="validForManagingResourceRols" type="base:TimePeriod" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute defines a starting and ending time period for which it is permissible for this PartyRole to manage this Resource.
+
+TimePeriod is a complex data structure, that consists of a DateStamp and a TimeStamp to define its starting time and ending time.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfResourceRolePartyRoleDetails">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ResourceRolePartyRoleDetails" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.RecurrentTopUpForm">
+  <group>CyclicActions</group>
+  <label>RecurrentTopUpForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="RechargedAmountIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.RecurrentTopUp</valueType>
+    </variable>
+    <variable name="PriceGuidingContainerUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.PriceGuidingContainerUI</valueType>
+    </variable>
+    <variable name="ChargingModeGuidingContainerUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.ChargingModeGuidingContainerUI</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>650px</width>
+              <elementList>
+                <element name="TabFrame1" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/frmui_Forms/vform_GeneralParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                  <width>100px</width>
+                </element>
+                <element name="TabFrame2" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/frmui_Forms/vform_price</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Price</label>
+                </element>
+                <element name="TabFrame3" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/frmui_Forms/vform_chargingMode</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Charge Mode</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="GeneralParameters" type="vform">
+          <label>GeneralParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="VerticalLayout1" type="elvlt">
+                <alignment>right,center</alignment>
+                <elementList>
+                  <element name="TopUpOriginEnum" type="elslct">
+                    <label>Top Up Code</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/usrActionMethod_TopUpOriginSelected</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <optional type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </optional>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.RecurrentTopUp/dstruct_TopUpOriginEnum</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="RecurrentTopUpSpecEnum" type="elslct">
+                    <label>Recurrent Top Up Specification</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/usrActionMethod_specSelected</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <optional type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </optional>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.RecurrentTopUp/dstruct_RecurrentTopUpSpecEnum</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </element>
+              <element name="SectionStack" type="elsectnstck">
+                <width>700px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Recharged Amount</label>
+                      </element>
+                      <element name="buttonsLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/uimthd_addRechargedAmount</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                            <width>40px</width>
+                          </element>
+                          <element name="deleteButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/uimthd_deleteRechargedAmount</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                            <width>40px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="RechargedAmountHeaders2" type="elgrd">
+                        <numOfCols>7</numOfCols>
+                        <width>700px</width>
+                        <elementList>
+                          <element name="Select" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <width>30px</width>
+                          </element>
+                          <element name="CellSpacer" type="elcsp">
+                            <width>5px</width>
+                          </element>
+                          <element name="PhaseNumber" type="ellab">
+                            <canSort>false</canSort>
+                            <columnSpan>1</columnSpan>
+                            <fontProperties type="pfnt">
+                              <bold>true</bold>
+                              <color>#003366</color>
+                            </fontProperties>
+                            <label>Phase Number</label>
+                            <width>60px</width>
+                          </element>
+                          <element name="CellSpacer1" type="elcsp">
+                            <width>5px</width>
+                          </element>
+                          <element name="TopUpAmountInEachExecution" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <label>Top up amount in each execution</label>
+                            <width>60px</width>
+                          </element>
+                          <element name="CellSpacer2" type="elcsp">
+                            <width>5px</width>
+                          </element>
+                          <element name="PercentageOverTheTopUpAmount" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <label>It is a percentage over the top up amount</label>
+                            <width>60px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="ConditionsVL" type="elvlt">
+                        <height>200px</height>
+                        <overflow>auto</overflow>
+                        <width>700px</width>
+                        <elementList>
+                          <element name="ConditionsIterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/leaf_RechargedAmountIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="ConditionsHL" type="elhlt">
+                                <width>700px</width>
+                                <elementList>
+                                  <element name="ConditionsFormFrame" type="elovf">
+                                    <fillSpace>false</fillSpace>
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/leaf_RechargedAmountIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                    <showResizeBar>true</showResizeBar>
+                                    <width>700px</width>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="chargingMode" type="vform">
+          <label>chargingMode</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>right,center</alignment>
+            <elementList>
+              <element name="ChargingMode" type="elovf">
+                <fillSpace>false</fillSpace>
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/leaf_ChargingModeGuidingContainerUI</variablePath>
+                    <variablePath>ui_cm_spoc.forms.ChargingModeGuidingContainerUI/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.forms.ChargingModeGuidingContainerUI/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>400px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/leaf_ChargingModeGuidingContainerUI</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>100%</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="price" type="vform">
+          <label>price</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>left,center</alignment>
+            <elementList>
+              <element name="PriceEventEnum" type="elslct">
+                <canSort>false</canSort>
+                <label>Price Event</label>
+                <multiselect>false</multiselect>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/uimthd_onSelectPriceEventTrigger</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <showEmpty>false</showEmpty>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.RecurrentTopUp/dstruct_PGRecurrentTopUpArrDS</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.PGRecurrentTopUpArr/dstruct_PriceEventEnum</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>400px</width>
+              </element>
+              <element name="Price" type="elovf">
+                <fillSpace>false</fillSpace>
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/leaf_PriceGuidingContainerUI</variablePath>
+                    <variablePath>ui_cm_spoc.forms.PriceGuidingContainerUI/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.forms.PriceGuidingContainerUI/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>400px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.RecurrentTopUpForm/leaf_PriceGuidingContainerUI</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>100%</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$PriceGuidingContainerUI" type="laction">
+      <path>ui_cm_spoc.forms.RecurrentTopUpForm/leaf_PriceGuidingContainerUI</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.BoltOnForm/leaf_PriceGuidingContainerUI</valueType>
+      <script>return cm_spoc.initPriceGuidingContainerUI(this);</script>
+    </method>
+    <method name="cwLeafInitAction$ChargingModeGuidingContainerUI" type="laction">
+      <path>ui_cm_spoc.forms.RecurrentTopUpForm/leaf_ChargingModeGuidingContainerUI</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.RecurrentTopUpForm/leaf_ChargingModeGuidingContainerUI</valueType>
+      <script>return cm_spoc.initChargingModeGuidingContainerUI(this);</script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.RecurrentTopUpForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initRecurrentTopUp(this.model);
+        cm_spoc.initRechargedAmountIteratorUI(this);
+        if(m.RecurrentTopUpSpecEnum == null)
+        {
+            m.RecurrentTopUpSpecEnum = m.RecurrentTopUpSpecification;
+        }
+        if(m.TopUpOriginEnum == null)
+        {
+            m.TopUpOriginEnum = m.TopUpOrigin;
+        }
+        return m;
+      ]]></script>
+    </method>
+    <method name="addRechargedAmount" type="uimthd">
+      <script><![CDATA[
+        var model=this.model.RechargedAmountArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.RechargedAmountIteratorUI","base_RechargedAmount","RechargedAmountIterator");
+      ]]></script>
+    </method>
+    <method name="deleteRechargedAmount" type="uimthd">
+      <script><![CDATA[
+        this.model.RechargedAmountArrDS = cm_spoc.removeListElements(this ,this.model.RechargedAmountArrDS,"List","RechargedAmountIterator");
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script>return true;</script>
+    </method>
+    <method name="specSelected" type="usrActionMethod">
+      <script>this.model.RecurrentTopUpSpecification  = this.model.RecurrentTopUpSpecEnum;</script>
+    </method>
+    <method name="TopUpOriginSelected" type="usrActionMethod">
+      <script>this.model.TopUpOrigin  = this.model.TopUpOriginEnum;</script>
+    </method>
+    <method name="onSelectPriceEventTrigger" type="uimthd">
+      <script>return cm_spoc.onSelectPriceEvent(this);</script>
+    </method>
+  </methodList>
+</userInterface>

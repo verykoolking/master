@@ -1,0 +1,103 @@
+<OCSEntityType>
+	<oCSProductSpecification>
+		<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+		<!-- Attributes inherited from SID EntityBase: identifier -->
+		<!-- Attributes inherited from SID ProductSpecification: name; description; productNumber; validFor; lifeCycleStatus -->
+		<!-- Compulsory SID attributes -->
+		<identifier>
+			<context>
+				<valuePairs/>
+				<scheme>Testing</scheme>
+			</context>
+			<dn>
+				<valuePairs/>
+				<scheme>UsageControlSpecification_TC</scheme>
+			</dn>
+			<entityType>UsageControlSpecification</entityType>
+		</identifier>
+		<!-- NGAA attributes -->
+		<type>UsageControlSpecification</type>
+		<oCSProductSpecCharacteristic>
+			<!-- <xsd:annotation> <xsd:documentation><p>CPS: select des_literal
+      from web_conf_literales
+     where tip_codigo  = 'tip_controlconsu'</annotation> -->
+			<characteristic  type="xsd:string" enumValues="0;1;2;3;4;5;6;7;8;9;10" defaultValue="0" isOverride="true">
+				<name>UsageRuleCode</name>
+				<value>0</value>
+			</characteristic>
+			<complexCharacteristic minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+				<name>CustomizedAndCyclicUsageControlSpecification</name>
+				<item>
+					<!-- <xsd:annotation> <xsd:documentation><p>Periodicity</annotation> -->
+					<characteristic  type="xsd:string" enumValues="D;S;M">
+						<name>Periodicity</name>
+					</characteristic>
+					<!-- <xsd:annotation> <xsd:documentation><p>Type of Day</annotation> -->
+					<characteristic  type="xsd:string" enumValues="LD;SD;CD">
+						<name>UCTypeOfDay</name>
+					</characteristic>
+					<!-- <xsd:annotation> <xsd:documentation><p>Day</annotation> -->
+					<characteristic  type="xsd:long" minValue="0" maxValue="99">
+						<name>Day</name>
+					</characteristic>
+					<!-- <xsd:annotation> <xsd:documentation><p>The usage control will continue adding even in deactivated status</annotation> -->
+					<characteristic  type="xsd:boolean">
+						<name>UCContinueAddingInOffStatus</name>
+					</characteristic>
+
+				</item>
+			</complexCharacteristic>
+		</oCSProductSpecCharacteristic>
+		<relations>
+			<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+			<relation name="UsageControlApplicabilityConditi" oCSTargetEntityType="UsageControlAppConditionsSpec_TC" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+				<item>
+					<target>
+						<context>
+							<valuePairs/>
+							<scheme>String</scheme>
+						</context>
+						<dn>
+							<valuePairs/>
+							<scheme>UsageControlAppConditionsSpec_TC</scheme>
+						</dn>
+						<entityType>UsageControlApplicabilityConditi</entityType>
+					</target>
+				</item>
+			</relation>
+			<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+			<relation name="UsageControlBoltOnAssociationSpe" oCSTargetEntityType="UsageControlBoltOnAssociaSpec_TC" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+				<item>
+					<target>
+						<context>
+							<valuePairs/>
+							<scheme>String</scheme>
+						</context>
+						<dn>
+							<valuePairs/>
+							<scheme>UsageControlBoltOnAssociaSpec_TC</scheme>
+						</dn>
+						<entityType>UsageControlBoltOnAssociationSpe</entityType>
+					</target>
+				</item>
+			</relation>
+			<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+			<relation name="UsageControlThresholdSetSpecific" oCSTargetEntityType="UsageControlThresholdSetSpec_TC" minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+				<item>
+					<target>
+						<context>
+							<valuePairs/>
+							<scheme>String</scheme>
+						</context>
+						<dn>
+							<valuePairs/>
+							<scheme>UsageControlThresholdSetSpec_TC</scheme>
+						</dn>
+						<entityType>UsageControlThresholdSetSpecific</entityType>
+					</target>
+				</item>
+			</relation>
+		</relations>
+	</oCSProductSpecification>
+
+</OCSEntityType>

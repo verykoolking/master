@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.plmRemoveProject">
+  <group>api</group>
+  <label>plmRemoveProject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="removeOrder" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var projectDeleteDS = new cwt_pcmaintapi.projectDeleteDS();
+    projectDeleteDS.projectCode = projectCode;
+    var response = cwt_pcmaintapi.projectDelete(projectDeleteDS);
+
+    if(response instanceof cwt_pcmaintapi.Fault)
+        return response;
+
+    if(removeOrder) {
+        var ord = cm_plm.getPLMOrderFromProjectCode(projectCode);
+        if(ord!=null)
+            ord.deleteOrder();
+    }
+
+    return response;
+  ]]></script>
+</script>

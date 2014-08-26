@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_HBRCLongDistanceReductionValueCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_HBRCLongDistanceReductionValueCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var attr1=data.HappyBoltOnSpecificationDS.ReductionCoefficientDS.LongDistanceReductionValue;
+    var attr2=data.HappyBoltOnSpecificationDS.ReductionCoefficientDS.ApplyReductionInLongDistance;
+
+    if( attr1 && attr2==false ){
+    errList.addErrorMessage(data,["ApplyReductionInLongDistance must be set"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

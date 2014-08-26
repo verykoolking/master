@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<decisionTree name="cm_aaca.transactionManagerDecTree">
+  <activity name="startTransaction" type="dtSeqActivity">
+    <guid>{cca74e55-c584-4192-af74-6fdab7368968}</guid>
+    <label>Start Transaction</label>
+    <x>-135.54843</x>
+    <y>80.75293</y>
+    <childList>
+      <child name="createRETransactions" type="dtScriptActivity">
+        <guid>{921fbd8e-d34c-4b3f-857d-d6eff5c94d1e}</guid>
+        <label>Create RE&apos;s Transactions</label>
+        <x>-12.605469</x>
+        <y>58.0</y>
+        <methodList>
+          <method name="cwOnDTActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script>cm_aaca.caCreateRETransactions(this.processDocument, this.processData);</script>
+          </method>
+          <method name="cwOnDTActCond" type="action">
+            <category>cond</category>
+            <system>true</system>
+            <script>return this.processData.reData.configurationRequired;</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="createMSTransaction" type="dtScriptActivity">
+        <guid>{5f580a45-e76d-46f4-94cb-2c0ac5bf4114}</guid>
+        <label>Create MS Transaction</label>
+        <x>147.48438</x>
+        <y>67.20117</y>
+        <methodList>
+          <method name="cwOnDTActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script>cm_aaca.caCreateMSTransaction(this.processDocument, this.processData);</script>
+          </method>
+          <method name="cwOnDTActCond" type="action">
+            <category>cond</category>
+            <system>true</system>
+            <script>return this.processData.msData.configurationRequired;</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="reConfiguration" type="dtSeqActivity">
+        <guid>{214df1b4-ba19-4a25-a3ae-68d8c1a9ef19}</guid>
+        <label>RE Configuration</label>
+        <x>-133.84216</x>
+        <y>219.92822</y>
+        <childList>
+          <child name="forEachItemRE" type="dtWhileActivity">
+            <guid>{aef3d51d-a83f-4ec2-aa14-73cc8e4897e8}</guid>
+            <label>For Each Entity RE</label>
+            <x>-39.820312</x>
+            <y>208.22705</y>
+            <childList>
+              <child name="resetNode" type="dtScriptActivity">
+                <guid>{7e957a85-cc37-4fdd-8aba-ee92a1571167}</guid>
+                <label>Reset Node</label>
+                <x>45.157837</x>
+                <y>212.92822</y>
+                <methodList>
+                  <method name="cwOnDTActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script>this.processDocument.currentREIndex = -1;</script>
+                  </method>
+                </methodList>
+              </child>
+              <child name="forEachRE" type="dtWhileActivity">
+                <guid>{a285b247-ee17-49a8-8c68-32279a249d1e}</guid>
+                <label>For Each RE Node</label>
+                <x>88.259766</x>
+                <y>211.20117</y>
+                <childList>
+                  <child name="applyREConfiguration" type="dtScriptActivity">
+                    <guid>{d036a972-69d0-4d33-9356-561c46aef3ea}</guid>
+                    <label>Apply RE&apos;s Configurations</label>
+                    <x>172.94531</x>
+                    <y>211.20117</y>
+                    <methodList>
+                      <method name="cwOnDTActBefore" type="action">
+                        <category>before</category>
+                        <system>true</system>
+                        <script>cm_aaca.caApplyREConfigurations(this.processDocument, this.processData);</script>
+                      </method>
+                    </methodList>
+                  </child>
+                  <child name="errorManagement" type="dtSubtreeActivity">
+                    <element>dtree_cm_aaca.transactionManagerErroHandlerDecTree</element>
+                    <guid>{900d37f3-14af-4a56-804a-6ece20cecae7}</guid>
+                    <label>Error Management</label>
+                    <parameterMapList>
+                      <parameterMap type="dtParamMap">
+                        <from>dtree_cm_aaca.transactionManagerErroHandlerDecTree/dtparameter_processData</from>
+                        <to>dtree_cm_aaca.transactionManagerDecTree/dtparameter_processData</to>
+                      </parameterMap>
+                      <parameterMap type="dtParamMap">
+                        <from>dtree_cm_aaca.transactionManagerErroHandlerDecTree/dtparameter_processDocument</from>
+                        <to>dtree_cm_aaca.transactionManagerDecTree/dtparameter_processDocument</to>
+                      </parameterMap>
+                    </parameterMapList>
+                    <x>291.33984</x>
+                    <y>210.20117</y>
+                    <methodList>
+                      <method name="cwOnDTActCond" type="action">
+                        <category>cond</category>
+                        <system>true</system>
+                        <script>return this.processDocument.errorOccurred;</script>
+                      </method>
+                    </methodList>
+                  </child>
+                  <child name="endError" type="dtCompleteActivity">
+                    <guid>{863beccb-e228-442a-9a33-61dbabcae6b7}</guid>
+                    <label>End in Error</label>
+                    <x>355.0</x>
+                    <y>187.10352</y>
+                    <methodList>
+                      <method name="cwOnDTActCond" type="action">
+                        <category>cond</category>
+                        <system>true</system>
+                        <script>return this.processDocument.errorOccurred;</script>
+                      </method>
+                    </methodList>
+                  </child>
+                </childList>
+                <methodList>
+                  <method name="cwOnDTActCond" type="action">
+                    <category>cond</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      var pDoc = this.processDocument;
+                      pDoc.currentREIndex++;
+                      var res = cm_aaca.caGetAvaiableRatingEngines(pDoc);
+                      return (res.length>pDoc.currentREIndex);
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnDTActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[
+                  this.processDocument.currentREEntityIndex++;
+                  return cm_aaca.caGetCurrentREEntityToConfigure(this.processDocument, this.processData) != null;
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnDTActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script>this.processDocument.currentREEntityIndex = -1;</script>
+          </method>
+          <method name="cwOnDTActCond" type="action">
+            <category>cond</category>
+            <system>true</system>
+            <script>return this.processData.reData.configurationRequired;</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="msConfiguration" type="dtSeqActivity">
+        <guid>{5302eb39-9798-4aff-b85a-be52cb935faf}</guid>
+        <label>MS Configuration</label>
+        <x>-131.54845</x>
+        <y>335.75293</y>
+        <childList>
+          <child name="forEachItemMS" type="dtWhileActivity">
+            <guid>{7a2bf22a-042f-4026-a082-31db29d8c508}</guid>
+            <label>For Each Entity MS</label>
+            <x>-20.820312</x>
+            <y>330.22705</y>
+            <childList>
+              <child name="applyMSConfiguration" type="dtScriptActivity">
+                <guid>{21e6333b-d20e-4687-a59b-a91433f29e15}</guid>
+                <label>Apply MS Configuration</label>
+                <x>78.77734</x>
+                <y>331.20117</y>
+                <methodList>
+                  <method name="cwOnDTActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script>cm_aaca.caApplyMSConfiguration(this.processDocument, this.processData);</script>
+                  </method>
+                </methodList>
+              </child>
+              <child name="errorManagementApMS" type="dtSubtreeActivity">
+                <element>dtree_cm_aaca.transactionManagerErroHandlerDecTree</element>
+                <guid>{bd21d8ba-896d-4323-a98f-d77507fadff3}</guid>
+                <label>Error Management</label>
+                <parameterMapList>
+                  <parameterMap type="dtParamMap">
+                    <from>dtree_cm_aaca.transactionManagerErroHandlerDecTree/dtparameter_processData</from>
+                    <to>dtree_cm_aaca.transactionManagerDecTree/dtparameter_processData</to>
+                  </parameterMap>
+                  <parameterMap type="dtParamMap">
+                    <from>dtree_cm_aaca.transactionManagerErroHandlerDecTree/dtparameter_processDocument</from>
+                    <to>dtree_cm_aaca.transactionManagerDecTree/dtparameter_processDocument</to>
+                  </parameterMap>
+                </parameterMapList>
+                <x>205.17188</x>
+                <y>330.22705</y>
+                <methodList>
+                  <method name="cwOnDTActCond" type="action">
+                    <category>cond</category>
+                    <system>true</system>
+                    <script>return this.processDocument.errorOccurred;</script>
+                  </method>
+                </methodList>
+              </child>
+              <child name="endErrorApMS" type="dtCompleteActivity">
+                <guid>{7f060b1a-2f7d-4973-9692-dec025a077ef}</guid>
+                <label>End in Error</label>
+                <x>268.0</x>
+                <y>299.10352</y>
+                <methodList>
+                  <method name="cwOnDTActCond" type="action">
+                    <category>cond</category>
+                    <system>true</system>
+                    <script>return this.processDocument.errorOccurred;</script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnDTActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[
+                  this.processDocument.currentMSEntityIndex++;
+                  return  cm_aaca.caGetCurrentMSEntityToConfigure(this.processDocument, this.processData) != null;
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnDTActCond" type="action">
+            <category>cond</category>
+            <system>true</system>
+            <script>return this.processData.msData.configurationRequired;</script>
+          </method>
+          <method name="cwOnDTActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script>this.processDocument.currentMSEntityIndex = -1;</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="reFinishTransaction" type="dtSeqActivity">
+        <guid>{9709160d-70e9-4fc6-b659-d62bb7580eba}</guid>
+        <label>RE Finish Transaction</label>
+        <x>-127.78516</x>
+        <y>473.37244</y>
+        <childList>
+          <child name="forEachRE" type="dtWhileActivity">
+            <guid>{eeed3c6d-e084-4c28-b85d-3199f567321a}</guid>
+            <label>For Each RE</label>
+            <x>-24.785156</x>
+            <y>470.05176</y>
+            <childList>
+              <child name="finishRETransaction" type="dtScriptActivity">
+                <guid>{2f441ae4-1c0c-4aa8-a9c7-24d935636889}</guid>
+                <label>Finish RE Transaction</label>
+                <x>66.29492</x>
+                <y>470.20117</y>
+                <methodList>
+                  <method name="cwOnDTActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      cm_aaca.caFinishRETransaction(this.processDocument);
+                      this.processDocument.currentEntityIndex = -1;
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+              <child name="errorManagement" type="dtSubtreeActivity">
+                <element>dtree_cm_aaca.transactionManagerErroHandlerDecTree</element>
+                <guid>{94c84ff7-120a-4b66-9896-6de16e92139f}</guid>
+                <label>Error Management</label>
+                <parameterMapList>
+                  <parameterMap type="dtParamMap">
+                    <from>dtree_cm_aaca.transactionManagerErroHandlerDecTree/dtparameter_processData</from>
+                    <to>dtree_cm_aaca.transactionManagerDecTree/dtparameter_processData</to>
+                  </parameterMap>
+                  <parameterMap type="dtParamMap">
+                    <from>dtree_cm_aaca.transactionManagerErroHandlerDecTree/dtparameter_processDocument</from>
+                    <to>dtree_cm_aaca.transactionManagerDecTree/dtparameter_processDocument</to>
+                  </parameterMap>
+                </parameterMapList>
+                <x>173.99023</x>
+                <y>470.20117</y>
+                <methodList>
+                  <method name="cwOnDTActCond" type="action">
+                    <category>cond</category>
+                    <system>true</system>
+                    <script>return this.processDocument.errorOccurred;</script>
+                  </method>
+                </methodList>
+              </child>
+              <child name="endError" type="dtCompleteActivity">
+                <guid>{87edc0e9-269d-46e5-b15c-3e6e119b040e}</guid>
+                <label>End in Error</label>
+                <x>237.0</x>
+                <y>441.10352</y>
+                <methodList>
+                  <method name="cwOnDTActCond" type="action">
+                    <category>cond</category>
+                    <system>true</system>
+                    <script>return this.processDocument.errorOccurred;</script>
+                  </method>
+                </methodList>
+              </child>
+              <child name="forEachService" type="dtWhileActivity">
+                <guid>{06b07517-44cb-48e9-95cd-7722fe923932}</guid>
+                <label>For Each Service</label>
+                <x>363.0332</x>
+                <y>471.20117</y>
+                <childList>
+                  <child name="readAndCheckREStatus" type="dtScriptActivity">
+                    <guid>{eee44edf-15ee-43fc-9e78-cc3a3f716c06}</guid>
+                    <label>Read And Check RE Status</label>
+                    <x>452.71875</x>
+                    <y>468.8506</y>
+                    <methodList>
+                      <method name="cwOnDTActBefore" type="action">
+                        <category>before</category>
+                        <system>true</system>
+                        <script>cm_aaca.caReadAndCheckREStatus(this.processDocument, this.processData);</script>
+                      </method>
+                    </methodList>
+                  </child>
+                  <child name="errorManagement" type="dtSubtreeActivity">
+                    <element>dtree_cm_aaca.transactionManagerErroHandlerDecTree</element>
+                    <guid>{d8c2a420-1dd9-48a1-a408-681609cfee17}</guid>
+                    <label>Error Management</label>
+                    <parameterMapList>
+                      <parameterMap type="dtParamMap">
+                        <from>dtree_cm_aaca.transactionManagerErroHandlerDecTree/dtparameter_processData</from>
+                        <to>dtree_cm_aaca.transactionManagerDecTree/dtparameter_processData</to>
+                      </parameterMap>
+                      <parameterMap type="dtParamMap">
+                        <from>dtree_cm_aaca.transactionManagerErroHandlerDecTree/dtparameter_processDocument</from>
+                        <to>dtree_cm_aaca.transactionManagerDecTree/dtparameter_processDocument</to>
+                      </parameterMap>
+                    </parameterMapList>
+                    <x>529.7363</x>
+                    <y>471.20117</y>
+                    <methodList>
+                      <method name="cwOnDTActCond" type="action">
+                        <category>cond</category>
+                        <system>true</system>
+                        <script>return this.processDocument.errorOccurred;</script>
+                      </method>
+                    </methodList>
+                  </child>
+                  <child name="endError" type="dtCompleteActivity">
+                    <guid>{7ad4fdb2-be83-4173-8a8f-e209e5b384cb}</guid>
+                    <label>End in Error</label>
+                    <x>594.0</x>
+                    <y>445.10352</y>
+                    <methodList>
+                      <method name="cwOnDTActCond" type="action">
+                        <category>cond</category>
+                        <system>true</system>
+                        <script>return this.processDocument.errorOccurred;</script>
+                      </method>
+                    </methodList>
+                  </child>
+                </childList>
+                <methodList>
+                  <method name="cwOnDTActCond" type="action">
+                    <category>cond</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      this.processDocument.currentEntityIndex++;
+                      return cm_aaca.caGetCurrentService(this.processDocument, this.processData) != null;
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnDTActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[
+                  var pDoc = this.processDocument;
+                  pDoc.currentREIndex++;
+                  var res = cm_aaca.caGetAvaiableRatingEngines(pDoc);
+                  return (res.length>pDoc.currentREIndex);
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnDTActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              this.processDocument.currentREIndex = -1;
+              this.processDocument.currentEntityIndex = -1;
+              this.processDocument.errorPhase = 'REVERT';
+            ]]></script>
+          </method>
+          <method name="cwOnDTActCond" type="action">
+            <category>cond</category>
+            <system>true</system>
+            <script>return this.processData.reData.configurationRequired;</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="msFinishTransaction" type="dtSeqActivity">
+        <guid>{2dd858e1-cea0-4cf7-b6e4-009c4144ec36}</guid>
+        <label>MS Finish Transaction</label>
+        <x>-122.920654</x>
+        <y>618.522</y>
+        <childList>
+          <child name="finishMSTransaction" type="dtScriptActivity">
+            <guid>{755c1924-d119-4e55-8480-a448a35ff179}</guid>
+            <label>Finish MS Transaction</label>
+            <x>-32.140625</x>
+            <y>613.2529</y>
+            <methodList>
+              <method name="cwOnDTActBefore" type="action">
+                <category>before</category>
+                <system>true</system>
+                <script><![CDATA[
+                  cm_aaca.caFinishMSTransaction(this.processDocument);
+                  this.processDocument.currentEntityIndex = -1;
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+          <child name="errorManagement" type="dtSubtreeActivity">
+            <element>dtree_cm_aaca.transactionManagerErroHandlerDecTree</element>
+            <guid>{101260f7-3eb6-4175-97b8-c99e64891ca9}</guid>
+            <label>Error Management</label>
+            <parameterMapList>
+              <parameterMap type="dtParamMap">
+                <from>dtree_cm_aaca.transactionManagerErroHandlerDecTree/dtparameter_processData</from>
+                <to>dtree_cm_aaca.transactionManagerDecTree/dtparameter_processData</to>
+              </parameterMap>
+              <parameterMap type="dtParamMap">
+                <from>dtree_cm_aaca.transactionManagerErroHandlerDecTree/dtparameter_processDocument</from>
+                <to>dtree_cm_aaca.transactionManagerDecTree/dtparameter_processDocument</to>
+              </parameterMap>
+            </parameterMapList>
+            <x>74.55469</x>
+            <y>614.2529</y>
+            <methodList>
+              <method name="cwOnDTActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script>return this.processDocument.errorOccurred;</script>
+              </method>
+            </methodList>
+          </child>
+          <child name="endError" type="dtCompleteActivity">
+            <guid>{072ec6e1-4282-4801-8ea4-969e595631f2}</guid>
+            <label>End in Error</label>
+            <x>136.0</x>
+            <y>587.1035</y>
+            <methodList>
+              <method name="cwOnDTActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script>return this.processDocument.errorOccurred;</script>
+              </method>
+            </methodList>
+          </child>
+          <child name="forEachMemoryZone" type="dtWhileActivity">
+            <guid>{d3ec41a4-6ded-436f-8d3f-d9a25bc7a296}</guid>
+            <label>For Each Memory Zone</label>
+            <x>225.17383</x>
+            <y>599.90234</y>
+            <childList>
+              <child name="readMSConfiguration" type="dtScriptActivity">
+                <guid>{d7d6d089-2e8f-4154-8755-de67c6776ddb}</guid>
+                <label>Read MS Configuration</label>
+                <x>331.59766</x>
+                <y>611.2529</y>
+                <methodList>
+                  <method name="cwOnDTActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script>cm_aaca.caReadMSConfiguration(this.processDocument, this.processData);</script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnDTActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[
+                  this.processDocument.currentEntityIndex++;
+                  return cm_aaca.caGetCurrentMemoryZone(this.processDocument, this.processData) != null;
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnDTActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              this.processDocument.currentEntityIndex = -1;
+              this.processDocument.errorPhase = 'ERROR_MS';
+            ]]></script>
+          </method>
+          <method name="cwOnDTActCond" type="action">
+            <category>cond</category>
+            <system>true</system>
+            <script>return this.processData.msData.configurationRequired;</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="end" type="dtCompleteActivity">
+        <guid>{4f72aaac-9b04-4ec3-a80e-2d25748f3aaf}</guid>
+        <label>End</label>
+        <x>-125.02344</x>
+        <y>721.57764</y>
+      </child>
+    </childList>
+    <methodList>
+      <method name="cwOnDTActBefore" type="action">
+        <category>before</category>
+        <system>true</system>
+        <script><![CDATA[this.processDocument.errorPhase = 'ROLLBACK';]]></script>
+      </method>
+    </methodList>
+  </activity>
+  <highlight>34</highlight>
+  <label>Transaction Manager Decision tree</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="processDocument" type="dtparameter">
+      <parameterElementType>doc_cm_aaca.globalPublishProcessDoc</parameterElementType>
+    </parameter>
+    <parameter name="processData" type="dtparameter">
+      <parameterElementType>dstruct_cm_aaca.aacaProcessData</parameterElementType>
+    </parameter>
+  </parameterList>
+</decisionTree>

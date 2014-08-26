@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.fillMapSuccessResponse">
+  <highlight>32</highlight>
+  <label>fillMapSuccessResponse</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Fill or Map Success Response to External System
+     * @author  Ramon Barrasa
+     * @date    20140514
+     */
+
+    try {
+
+        if (dtree.sendToAltamira)
+            return pm_wm.mapFromAltamira( dtree );
+        else
+            return pm_wm.mapFromSR( dtree );
+
+    }
+    catch (err)
+    {
+        dtree.errorcode.push("ER_WF_799");
+        dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_799", [err]));
+        return false;
+    }
+  ]]></script>
+</script>

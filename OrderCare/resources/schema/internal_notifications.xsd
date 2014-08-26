@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201206291233 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company/TIP_Soap_Generator(1.1) (1.1)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) 2010 Members of the TIP Open Source Community
+
+Licensed to Members of the TIP Open Source Community under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+Members of the TIP Open Source Community licences this file to You under the Apache License,
+Version 2.0 (the 'License'); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an 'AS IS' BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/tip/internal/notifications" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" targetNamespace="http://www.tmforum.org/xml/tip/internal/notifications" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.1">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: TIP_Generator_Internal_Model
+                        at version: 1.1
+      for all artifacts in package: org.tmforum.tip.internal.notifications
+      Model Description:
+      Internal Framework model used by Tigerstripe generators
+      Package Description:
+      
+      Package data summary information:
+            entities: 0
+ Association Classes: 0
+           datatypes: 1
+        enumerations: 0
+              events: 2
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** -->
+   <xsd:element name="subscriptionID" type="tns:SubscriptionID"/>
+   <xsd:complexType name="SubscriptionID">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The Subscription ID is used by implementations to pass subscription information including the heartbeat period when subscribing for notifications</p>
+            <p>This datatype  is  extendable</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="identifier" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>A unique reference to a given notification subscription.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="heartbeatPeriod" type="xsd:int" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>Defines the heartbeat period in seconds.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="extensionInfo" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>
+       a generic list of any type of elements. Used for vendor extensions or loose element encapsulation from other namespaces.
+      </xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfSubscriptionID">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:SubscriptionID" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Entity definitions --><!-- ************************** --><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** -->
+   <xsd:complexType name="CommonNotificationBase" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is the base (abstract) definition used for all TIP common notifications.
+This type is injected by the TIP Generators into all events inheriting from CommonNotification.</p>
+            <p>This notification  is  abstract</p>
+            <p>This notification  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:NotificationBase">
+            <xsd:sequence>
+               <xsd:element name="objectType" type="xsd:string" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>The type (class) of the object associated with the event. This attribute is needed to allow simple notification filtering based on the obj</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  mandatory</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="objectId" type="entity:EntityIdentifier" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>Entity Identifier of the object associated with the event. This attribute is needed to allow simple notification filtering based on the object id.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  mandatory</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="commonNotificationBase" type="tns:CommonNotificationBase"/>
+   <xsd:complexType name="NotificationBase" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is the base (abstract) definition used for all TIP notifications.
+This type is injected by the TIP Generators into code generated from Tigerstripe Event (i.e. notification) artifacts where the 'Extends' field has been left as an empty string.</p>
+            <p>This notification  is  abstract</p>
+            <p>This notification  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="sourceTime" type="xsd:dateTime" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>The time at which the event was reported by the source system (NE, EMS or OS).
+It is the current time on the system where the event is generated.
+If a system (like an EMS) is carrying forward an event generated on a NE, then the time of the source (NE in this case) should be kept.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  mandatory</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="notificationBase" type="tns:NotificationBase"/><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initVoiceAndMessageNumbering">
+  <group>ui_scripts.Numbering</group>
+  <label>initVoiceAndMessageNumbering</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (model.specificationCode){
+
+      var s = new epc.data.Specification();
+      s.project =  cwa_epc.getDefaultProj();
+
+      model.ServiceProviderEnum = model.ServiceProviderVoiceInputFor;
+      model.NpiEnum = model.NpiVoiceInputFor;
+      model.TonEnum = model.TonVoiceInputFor;
+      model.DestinationsTypeEnum = model.DestinationTypeVoiceOutputOf;
+      model.DestinationSubTypeEnum = model.DestinationSubTypeVoiceOutputOf;
+
+      var Pat=model.PatternOfNumber;
+      var Last=Pat.substring(Pat.length-1,Pat.length);
+      if (Last=="*"){
+          model.PatternOfNumberOptionEnum="Begins";
+          model.PatternOfNumberTemp=Pat.substring(0, Pat.length-1);
+      }
+      else{
+          model.PatternOfNumberOptionEnum="Exact";
+          model.PatternOfNumberTemp=Pat;
+      }
+    }
+        return model;
+  ]]></script>
+</script>

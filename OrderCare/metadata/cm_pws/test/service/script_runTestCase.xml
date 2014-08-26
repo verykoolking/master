@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.service.runTestCase">
+  <label>runTestCase</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="input" type="rifp">
+      <type>dstruct_cm_pws.test.service.input</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    input.testName = "cm_pws.test:" + input.testName;
+    var testCase = new TestCase(input.testName);
+
+    try{
+        var fileName = cm_pws.test.generateLogFileName();
+        var fileWriter;
+        if(input.appendResult)
+            fileWriter = new FileWriter(fileName, true);
+        else
+            fileWriter = new FileWriter(fileName, false);
+
+        fileWriter.close();
+    }
+    catch(exp){
+        Global.throwException("The log file could not be created: " + exp);
+    }
+
+    testCase.run();
+    var output = cm_pws.test.service.createOutput();
+    return output;
+  ]]></script>
+</script>

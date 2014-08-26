@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.createConfigSessionByValue">
+  <group>api</group>
+  <label>createConfigSessionByValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="configSession" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_pws.configSession</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cm_pws.configSession</valueType>
+  <script><![CDATA[
+    try
+    {
+        if(configSession.id)
+        {
+            var fault = api_common.createFault("E100", "The ConfigSession Entry already exists.");
+        }
+        var configSessionDoc = new cm_pws.configSessionDoc();
+        configSession.mapTo(configSessionDoc);
+        configSessionDoc.save();
+
+        //to get the generated Id back
+        configSessionDoc.mapTo(configSession);
+        return configSession;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

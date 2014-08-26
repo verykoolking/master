@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initSubOpFromCT">
+  <group>ui_scripts.Operation</group>
+  <label>initSubOpFromCT</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="subOp" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var s = new epc.data.Specification();
+    s.project =  cwa_epc.getDefaultProj();
+
+    if(!model.getValueByName(subOp)){
+        var SubOperation = cm_spoc.initInnerDS("base_"+subOp);
+        model.putValueByName(subOp+"DS",SubOperation);
+    }
+    else
+    {
+
+        s.specificationCode = model.getValueByName(subOp);
+        var c =  epc.getSpecificationByKey(s);
+        if(!api_common.isFault(c)){
+            model.putValueByName(subOp+"DS",c);
+        }
+    }
+  ]]></script>
+</script>

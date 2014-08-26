@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.filterByServiceProviderAndYear">
+  <group>ui_scripts.Calendars.Helpers</group>
+  <label>filterByServiceProviderAndYear</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="result" type="rifp"/>
+    <parameter name="serviceProvider" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="year" type="rifp">
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    for (var i = 0; i<result.length;i++) {
+
+         if (result[i].Date && result[i].Date.getFullYear() != year ) {
+            result.delete(i);
+                i--;
+         } else {
+
+            if ( deleteByServiceProvider(result[i],serviceProvider) ) {
+                result.delete(i);
+                i--;
+        }
+
+            }
+         }
+
+
+
+
+    function deleteByServiceProvider(specialDay,serviceProvider) {
+
+            var mark = true;
+             for (var l = 0 ; l<specialDay.SpDayServiceProviderArrDS.List.length;l++) {
+                 if (specialDay.SpDayServiceProviderArrDS.List[l] == serviceProvider || specialDay.SpDayServiceProviderArrDS.List[l] == "ServiceProvider_Default" ) {
+                      mark = false;
+                 }
+
+            }
+            return mark;
+    };
+  ]]></script>
+</script>

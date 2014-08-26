@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_RateSpecificationArrMandatoryCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_RateSpecificationArrMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var entity = data.HappyBoltOnSpecificationDS.RateSpecificationArrDS.ListDS;
+
+
+    if (data.BoltOnTypeModality == "PH" && data.HappyBoltOnSpecificationDS.RateOrReductionSwitch=="RATE" && entity.length==0){
+        errList.addErrorMessage(data,["If Rate is checked, the rate conditions are mandatories"],"NGAA_003","E");
+    }
+
+    var lg=entity.length;
+    var ResTemp=0;
+    var ResRate=0;
+
+    if (lg > 0 && data.BoltOnTypeModality == "PH") {
+        for (var i=0; i<lg; i++)
+        {
+            if(entity[i].TemporalAppCondition==null || entity[i].TemporalAppCondition=="")
+            {
+            ResTemp++;
+            }
+            if(entity[i].Rate==null || entity[i].Rate=="")
+            {
+            ResRate++;
+            }
+        }
+
+        if (ResTemp>0){
+        errList.addErrorMessage(data,["Temporal App Condition field must be filled if Rate is checked"],"NGAA_003","E");
+        }
+        if (ResRate>0){
+        errList.addErrorMessage(data,["Rates field must be filled if Rate is checked"],"NGAA_003","E");
+        }
+
+         for (var i=0; i<lg; i++)
+        {
+            if (lg>1){
+                for (var j=0; j<lg; j++)
+                {
+                    if ((entity[i].Rate==entity[j].Rate && entity[i].TemporalAppCondition==entity[j].TemporalAppCondition) && i != j){
+                        errList.addErrorMessage(data,["Rate fields duplicated"],"NGAA_003","E");
+                        return;
+                    }
+                }
+            }
+         }
+    }
+
+    return false;
+  ]]></script>
+</script>

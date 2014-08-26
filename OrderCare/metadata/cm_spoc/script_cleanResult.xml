@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.cleanResult">
+  <group>ui_scripts.Common.Price</group>
+  <label>cleanResult</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="result" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="filter" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*for (var i = 0; i < result.length; i++){
+
+        var associationsFinder =  new cm_spoc.itemRelationFinder();
+        associationsFinder.searchDocument.itemCode = result[i].itemCode;
+        var associations = associationsFinder.search();
+
+
+        for (var l = 0; l < associations.length; l++ ) {
+            if ( associations.length == 0 ) {
+                 if (i<0) i=0;
+                 if (i>=0 && i<=result.length) result.delete(i);
+                i--;
+            }
+            else  if ( associations[l].itemCode != filter) {
+                if (i<0) i=0;
+                if (i>=0 && i<=result.length) {
+                        result.delete(i);
+                }
+                i--;
+            }
+        }
+
+    } */
+
+    for (var i = 0; i < result.length; i++){
+        var remove;
+        var associationsFinder =  new cm_spoc.itemRelationFinder();
+        associationsFinder.searchDocument.itemCode = result[i].itemCode;
+        var associations = associationsFinder.search();
+
+        //If there are no associations the item should be removed from the set
+          if (associations.length==0)  {
+                if (i>=0 && i<=result.length) {
+                result.delete(i);
+                i--;
+            }
+          } else if (associations.length==1) {
+            if ( associations[0].itemCode != filter) {
+                if (i>=0 && i<=result.length) {
+                    result.delete(i);
+                    i--;
+                }
+            }
+          } else {
+                remove = true;
+                for (var l = 0; l < associations.length; l++ ) {
+                      if ( associations[l].itemCode == filter) remove = false;
+                }
+
+                if (remove) {
+                      if (i>=0 && i<=result.length) { result.delete(i); i--;}
+                }
+          }
+
+    }
+  ]]></script>
+</script>

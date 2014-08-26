@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.addActionScript">
+  <group>ui_scripts.Promotion.SegmentablePromotion</group>
+  <label>addActionScript</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    if(ui.model.OperationEnum != null ){
+    //ui.model[ui.model.length] = hp;
+    var segPromAct = cm_spoc.initInnerDS("base_SegmentablePromotionActivat");
+    segPromAct.Operation=ui.model.OperationEnum;
+
+    ui.model.SPSegmPromActRuleArrDS.ListDS[ui.model.SPSegmPromActRuleArrDS.ListDS.length]= segPromAct;
+
+
+    var tlUi = new cm_spoc.forms.SegmentablePromotionTableLineUI(segPromAct,ui);
+    if(!ui.tableLine) ui.tableLine= new Array();
+    ui.tableLine[ui.tableLine.length] = tlUi;
+
+
+    }
+  ]]></script>
+</script>

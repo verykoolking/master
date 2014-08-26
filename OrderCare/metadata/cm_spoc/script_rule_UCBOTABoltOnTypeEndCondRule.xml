@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_UCBOTABoltOnTypeEndCondRule">
+  <group>rules_scripts.UsageControl</group>
+  <label>rule_UCBOTABoltOnTypeEndCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var listDS = data.UCBOASUCBoltOnTypeAssArrDS.ListDS;
+    var s = new epc.data.Specification();
+    s.project =  cwa_epc.getDefaultProj();
+    var arrLen = listDS.length;
+
+    for ( var i = 0; i<listDS.length; i++ ) {
+        s.specificationCode = listDS[i].BoltOnType;
+        var r = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(r)){
+            var btm = cm_spoc.initModelForModification(r);
+            if ( listDS[i].BoltOnTypeEnd && !r.GeneralStartEndDateSpecDS.GeneralForBoltOn )
+
+            errList.addErrorMessage(data,["Invalid Bolt On Type End Value","General for Bolt On is validate"],"NGAA_EPC_002","E");
+        }
+    }
+    return false;
+  ]]></script>
+</script>

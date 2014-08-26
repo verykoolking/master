@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getTypeOfDayWeekDayDDefault">
+  <group>ui_scripts.Calendars.FinderScript</group>
+  <label>getTypeOfDayWeekDayDDefault</label>
+  <metaVersion>4</metaVersion>
+  <script><![CDATA[
+    var wddDefault = cm_spoc.getWeekDayDDefault();
+
+    var wddDefaultRelationFinder = new Finder("cwt_pc.cwt_itemRelationFinder");
+    var wddArrRelationFinder = new Finder("cwt_pc.cwt_itemRelationFinder");
+    var ddRelationFinder = new Finder("cwt_pc.cwt_itemRelationFinder");
+    var wddDayDefinitionRelation = "WDDDayDefinitionArr";
+    var typeOfDayRelation = "TypeOfDay";
+    var currentWddDefaultRelationCode = "";
+    var currentDDRelationCode = "";
+    var wddArrRelationResult;
+    var ddRelationResult;
+    var defaultTypeOfDayArr = new Array();
+    var n=0;
+    var wddDefaultRelationResult;
+
+    if(wddDefault && wddDefault.itemCode)
+    {
+        wddDefaultRelationFinder.searchDocument.itemCode = wddDefault.itemCode;
+        wddDefaultRelationResult = wddDefaultRelationFinder.search();
+
+        for (var j = 0; j < wddDefaultRelationResult.length; j++)
+        {
+            if (wddDefaultRelationResult[j].itemRelationCode == wddDayDefinitionRelation)
+            {
+                currentWddDefaultRelationCode = wddDefaultRelationResult[j].itemRelationTarget;
+                wddArrRelationFinder.searchDocument.itemCode = currentWddDefaultRelationCode;
+                wddArrRelationResult = wddArrRelationFinder.search();
+
+                for (var l = 0; l < wddArrRelationResult.length; l++)
+                {
+                    currentDDRelationCode = wddArrRelationResult[l].itemRelationTarget;
+                    ddRelationFinder.searchDocument.itemCode = currentDDRelationCode;
+                    ddRelationResult = ddRelationFinder.search();
+
+                    for (var i = 0; i < ddRelationResult.length; i++)
+                    {
+                        if (ddRelationResult[i].itemRelationCode == typeOfDayRelation)
+                        {
+                            defaultTypeOfDayArr[n] = ddRelationResult[i];
+                            n++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return defaultTypeOfDayArr;
+  ]]></script>
+</script>

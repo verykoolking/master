@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_TUOSPTopUpOriginSOSTopUpReferredForSOSCR">
+  <group>rules_scripts.TopUp</group>
+  <label>rule_TUOSPTopUpOriginSOSTopUpReferredForSOSCR</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**Conditional
+    TUOSPTopUpOriginSOSTopUpReferredForSOSCR
+
+    The attribute must be saved only if the related TopUpOriginSOSProperties attribute has the value shown in th e column H.
+
+    TopUpOriginSOSProperties
+    TopUpOriginSOSTopUpReferredForSOS
+
+    TopUpOriginSOSProperties
+    TopUpOriginSOSisSOS
+
+    FALSE
+
+
+     */
+
+
+    var entity=data.TopUpOriginSOSProperties;
+
+    if(entity.TopUpOriginSOSTopUpReferredForSOS && entity.TopUpOriginSOSisSOS)
+    {
+    errList.addErrorMessage(data,["TopUpOriginSOSTopUpReferredForSOS can be saved only if TopUpOriginSOSisSOS is FALSE"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.pwsMap_GenericItem">
+  <label>pwsMap_GenericItem</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="fromDs" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="toDs" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var simpleCharacteristics = fromDs.characteristic;
+    for(var i=0; i< simpleCharacteristics.length; i++) {
+        var characteristic = simpleCharacteristics[i];
+        //Check for mandatory tag 'name':
+        if(!characteristic.name) {
+            var fault = api_common.createFault("E100", "Missing tag name in the characteristic.");    //TODO: correct code
+            return fault;
+        }
+
+        var name = characteristic.name;
+        var value = characteristic.value;
+        //converting external to internal
+        name = cm_pws.services.getInternalName(name, toDs.metadataType);
+        toDs[name] = value;
+    }
+
+    var complexCharacteristics = fromDs.complexCharacteristic;
+    for(var i=0; i<complexCharacteristics.length; i++) {
+        var complexCharacteristic = complexCharacteristics[i];
+        //Check for mandatory tag 'name':
+        if(!complexCharacteristic.name) {
+            var fault = api_common.createFault("E100", "Missing tag name in the complex characteristic.");    //TODO: correct code
+            return fault;
+        }
+
+        var name = complexCharacteristic.name;
+        var item = complexCharacteristic.item;
+        //converting external to internal
+        name = cm_pws.services.getInternalName(name, toDs.metadataType);
+        var fieldName = name + "DS";
+        var index = name.indexOf("Arr");
+        if(toDs[fieldName].isCollection()) {
+            for (var x=0; x<item.length; x++) {
+                toDs[fieldName][x] = initializeDs(toDs[fieldName][x], name);
+                var res = cm_pws.services.pwsMap_GenericItem(item[x], toDs[fieldName][x]);
+                if(api_common.isFault(res)) {
+                    return res;
+                }
+                res = cm_pws.services.pwsMap_GenericRelations(item[x], toDs[fieldName][x]);
+                if(api_common.isFault(res)) {
+                    return res;
+                }
+
+            }
+        } else if(index > 0) {
+            var colonIndex, DSName, DSType;
+            if(item.length>0) {
+                toDs[fieldName] = initializeDs(toDs[fieldName], name);
+            }
+            for (var x=0; x<item.length; x++) {
+                DSType =  toDs[fieldName].ListDS[x].metadataType;
+                colonIndex = DSType.indexOf(":");
+                DSName = DSType.substring(colonIndex+1);
+                toDs[fieldName].ListDS[x] = initializeDs(toDs[fieldName].ListDS[x], DSName);
+                var res = cm_pws.services.pwsMap_GenericItem(item[x], toDs[fieldName].ListDS[x]);
+                if(api_common.isFault(res)) {
+                    return res;
+                }
+                res = cm_pws.services.pwsMap_GenericRelations(item[x], toDs[fieldName].ListDS[x]);
+                if(api_common.isFault(res)) {
+                    return res;
+                }
+            }
+        }
+        else {
+            toDs[fieldName] = initializeDs(toDs[fieldName], name);
+            var res = cm_pws.services.pwsMap_GenericItem(item[0], toDs[fieldName]);
+            if(api_common.isFault(res)) {
+                return res;
+            }
+            res = cm_pws.services.pwsMap_GenericRelations(item[0], toDs[fieldName]);
+            if(api_common.isFault(res)) {
+                return res;
+            }
+        }
+    }
+
+    /*
+    * ************************************************************************
+    * ************************************************************************
+    * ************************************************************************
+    */
+    function initializeDs(dataStruct, dsName) {
+        //initialize structure
+        if(dataStruct.specificationCode == null) {
+            var childDs = cm_spoc.initInnerDS("base_" + dsName);
+            cm_common.cmInitModelEntity(childDs);
+            return childDs;
+        }
+        return dataStruct;
+    }
+  ]]></script>
+</script>

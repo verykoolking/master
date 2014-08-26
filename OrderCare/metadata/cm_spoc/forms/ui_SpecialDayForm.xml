@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.SpecialDayForm">
+  <group>Calendars</group>
+  <label>SpecialDayForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.SpecialDay</valueType>
+    </variable>
+    <variable name="monthlyResultElement" type="leaf">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+    </variable>
+    <variable name="serviceProvider" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ServiceProvider</valueType>
+    </variable>
+    <variable name="year" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="ServiceProvidersPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="TariffPlansPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="monthsIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="SDFinderResult" type="leaf">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="SectionStack1" type="elsectnstck">
+                  <visibilityMode>multiple</visibilityMode>
+                  <width>652px</width>
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <cellAlignment>center,center</cellAlignment>
+                      <elementList>
+                        <element name="SectionHeader" type="elsecth">
+                          <label>Special Day</label>
+                        </element>
+                        <element name="VerticalLayout1" type="elvlt">
+                          <elementList>
+                            <element name="GridLayout1" type="elgrd">
+                              <alignment>left,center</alignment>
+                              <numOfCols>4</numOfCols>
+                              <width>600px</width>
+                              <elementList>
+                                <element name="Date" type="eldate">
+                                  <label>Date</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SpecialDayForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.SpecialDay/dstruct_Date</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                </element>
+                                <element name="SpecialDayType" type="elrgrp">
+                                  <label>Special Day Type</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SpecialDayForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.SpecialDay/dstruct_SpecialDayType</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                </element>
+                                <element name="isAnyPlans" type="elchk">
+                                  <label>For Any Plan</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SpecialDayForm/uimthd_onIsAnyPlansClick</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SpecialDayForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.SpecialDay/dstruct_isAnyPlans</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                </element>
+                                <element name="TypeOfDayEnum" type="elslct">
+                                  <label>Day Type</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <multiselect>false</multiselect>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SpecialDayForm/uimthd_onTypeOfDaySelection</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SpecialDayForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.SpecialDay/dstruct_TypeOfDayEnum</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="ServiceProviderPL" type="elvlt">
+                          <alignment>center,center</alignment>
+                          <width>400px</width>
+                          <elementList>
+                            <element name="LayoutSpacer" type="ellsp">
+                              <height>20px</height>
+                            </element>
+                            <element name="Header" type="ellab">
+                              <label>Service Providers</label>
+                            </element>
+                            <element name="FormFrame1" type="elovf">
+                              <cellAlignment>center,center</cellAlignment>
+                              <formReference type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SpecialDayForm/leaf_ServiceProvidersPickList</variablePath>
+                                  <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                                  <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                                </variablePathList>
+                              </formReference>
+                              <height>325px</height>
+                              <padding>0</padding>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SpecialDayForm/leaf_ServiceProvidersPickList</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>400px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="VerticalLayoutPick" type="elvlt">
+                          <alignment>center,center</alignment>
+                          <width>400px</width>
+                          <elementList>
+                            <element name="LayoutSpacer2" type="ellsp">
+                              <height>20px</height>
+                            </element>
+                            <element name="Label2" type="ellab">
+                              <label>Tariff Plan</label>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SpecialDayForm/permMethod_SDTariffPlanPickListVisRule</variablePath>
+                                </variablePathList>
+                              </visible>
+                            </element>
+                            <element name="FormFrame" type="elovf">
+                              <cellAlignment>center,center</cellAlignment>
+                              <formReference type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SpecialDayForm/leaf_TariffPlansPickList</variablePath>
+                                  <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                                  <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                                </variablePathList>
+                              </formReference>
+                              <height>325px</height>
+                              <padding>0</padding>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SpecialDayForm/leaf_TariffPlansPickList</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SpecialDayForm/permMethod_SDTariffPlanPickListVisRule</variablePath>
+                                </variablePathList>
+                              </visible>
+                              <width>400px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="SectionStack" type="elsectnstck">
+                  <visibilityMode>multiple</visibilityMode>
+                  <width>652px</width>
+                  <elementList>
+                    <element name="YearSPSection" type="elsect">
+                      <removeLabelLine>true</removeLabelLine>
+                      <elementList>
+                        <element name="YearSPHeader" type="elsecth">
+                          <expand>false</expand>
+                          <label>Year &amp; Service Provider</label>
+                        </element>
+                        <element name="YearSPVL" type="elvlt">
+                          <alignment>center,center</alignment>
+                          <width>652px</width>
+                          <elementList>
+                            <element name="GridLayout" type="elgrd">
+                              <alignment>left,center</alignment>
+                              <colWidths>150px</colWidths>
+                              <numOfCols>2</numOfCols>
+                              <width>300px</width>
+                              <elementList>
+                                <element name="Label" type="ellab">
+                                  <label>Select Year:</label>
+                                </element>
+                                <element name="year" type="elspnr">
+                                  <columnSpan>0</columnSpan>
+                                  <max>3000</max>
+                                  <min>1900</min>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SpecialDayForm/uimthd_setYear</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <showLabel>false</showLabel>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SpecialDayForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.SpecialDay/dstruct_year</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                                <element name="Label1" type="ellab">
+                                  <label>Select Service Provider:</label>
+                                </element>
+                                <element name="ServiceProviderEnum" type="elslct">
+                                  <multiselect>false</multiselect>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SpecialDayForm/uimthd_setServiceProvider</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <showLabel>false</showLabel>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SpecialDayForm/leaf_serviceProvider</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.ServiceProvider/dstruct_ServiceProviderEnum</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>150px</width>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="MonthsSection" type="elsect">
+                      <elementList>
+                        <element name="MonthsHeader" type="elsecth">
+                          <expand>false</expand>
+                          <label>Months</label>
+                        </element>
+                        <element name="MonthsVL" type="elvlt">
+                          <width>652px</width>
+                          <elementList>
+                            <element name="MonthsIterator" type="eliter">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SpecialDayForm/leaf_monthsIterator</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <elementList>
+                                <element name="MonthsHL" type="elhlt">
+                                  <alignment>center,center</alignment>
+                                  <width>652px</width>
+                                  <elementList>
+                                    <element name="MonthsFormFrame" type="elovf">
+                                      <cellAlignment>center,center</cellAlignment>
+                                      <formReference type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SpecialDayForm/leaf_monthsIterator</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                        </variablePathList>
+                                      </formReference>
+                                      <width>652px</width>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$ServiceProvidersPickList" type="laction">
+      <path>ui_cm_spoc.forms.SpecialDayForm/leaf_ServiceProvidersPickList</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_ServiceProvider";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.SpDayServiceProviderArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setPickListModelServiceProvider;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.SpecialDayForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initSpecialDay(this.model);
+        cm_spoc.initSpecialDayUI(this);
+        return m;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$TariffPlansPickList" type="laction">
+      <path>ui_cm_spoc.forms.SpecialDayForm/leaf_TariffPlansPickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.SpecialDayForm/leaf_TariffPlansPickList</valueType>
+      <script><![CDATA[
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TariffPlan";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.SpDayTariffPlanArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setPickListModelTariffPlan;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$serviceProvider" type="laction">
+      <path>ui_cm_spoc.forms.SpecialDayForm/leaf_serviceProvider</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.SpecialDayForm/leaf_serviceProvider</valueType>
+      <script>return cm_spoc.initServiceProvider(null);</script>
+    </method>
+    <method name="cwLeafInitAction$SDFinderResult" type="laction">
+      <path>ui_cm_spoc.forms.SpecialDayForm/leaf_SDFinderResult</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.SpecialDayForm/leaf_SDFinderResult</valueType>
+      <script>return cm_spoc.initSpecialDayFinder(this);</script>
+    </method>
+    <method name="setServiceProvider" type="uimthd">
+      <script><![CDATA[
+        this.model.serviceProvider = this.serviceProvider.ServiceProviderEnum;
+        cm_spoc.initSpecialDayFinder(this);
+      ]]></script>
+    </method>
+    <method name="setYear" type="uimthd">
+      <script>cm_spoc.initSpecialDayFinder(this);</script>
+    </method>
+    <method name="onIsAnyPlansClick" type="uimthd">
+      <script>cm_spoc.onIsAnyPlansClick(this);</script>
+    </method>
+    <method name="setPickListModelServiceProvider" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.SpDayServiceProviderArrDS.List =null;
+        this.parent.model.SpDayServiceProviderArrDS.ListDS =null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.SpDayServiceProviderArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="onServiceProviderSelection" type="uimthd">
+      <script><![CDATA[
+        this.model.SpDayServiceProviderArrDS.List[this.model.SpDayServiceProviderArrDS.List.length] = this.model.ServiceProviderEnum;
+      ]]></script>
+    </method>
+    <method name="onTypeOfDaySelection" type="uimthd">
+      <script>this.model.TypeOfDay = this.model.TypeOfDayEnum;</script>
+    </method>
+    <method name="setPickListModelTariffPlan" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.SpDayTariffPlanArrDS.List =null;
+        this.parent.model.SpDayTariffPlanArrDS.ListDS =null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.SpDayTariffPlanArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="SDTariffPlanPickListVisRule" type="permMethod">
+      <script><![CDATA[
+        var value = !(this.model.isAnyPlans);
+        return value;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

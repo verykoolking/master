@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BoltOnValidityOfferingHoursCondRule">
+  <group>rules_scripts.BoltOn</group>
+  <label>rule_BoltOnValidityOfferingHoursCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Conditional
+     *
+     * BoltOnValidityOfferingHoursCondRule
+     *
+     * The attribute  must be saved only if Days assumes a value greater than 0 .
+     * Otherwise, an error is to be arisen
+     *
+     * BoltOnValidityOffering
+     * Hours
+     *
+     * BoltOnValidityOffering
+     * Days      >0
+
+     *
+     */
+
+     var contr = data;
+
+     if ( contr.Hours && (!contr.Days || contr.Days <  1 )  )  {
+
+        // return true;
+        errList.addErrorMessage(data,["Hours", "Days are not set"],"NGAA_EPC_002","E");
+     }
+         return false;
+  ]]></script>
+</script>

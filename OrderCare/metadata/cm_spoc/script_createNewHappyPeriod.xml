@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.createNewHappyPeriod">
+  <group>ui_scripts.UsageControl.HappyPeriod</group>
+  <label>createNewHappyPeriod</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var hp = cm_spoc.initInnerDS("base_UCSApConHappyPeriod");
+    hp.Months="000000000000";
+    hp.Hours="000000000000000000000000";
+    hp.Days="0000000000000000000000000000000";
+    hp.WeekDays="0000000";
+
+    //ui.model[ui.model.length] = hp;
+    ui.model.UCSApConHappyPeriodArrDS.ListDS[ui.model.UCSApConHappyPeriodArrDS.ListDS.length]= hp;
+    var tlUi = new cm_spoc.forms.HappyPeriodPopUpTableLineUI(hp,ui);
+    if(!ui.tableIterator) ui.tableIterator= new Array();
+    ui.tableIterator[ui.tableIterator.length] = tlUi;
+
+
+    return hp;
+  ]]></script>
+</script>

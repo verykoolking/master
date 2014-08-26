@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.changeItemPos">
+  <group>ui_scripts.UsageControl.AccumulationConditions.FinderHelpers</group>
+  <label>changeItemPos</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="item" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="newPos" type="rifp">
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+    <parameter name="finderUi" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(newPos>finderUi.result.length-1){
+        newPos=finderUi.result.length-1;
+    }else if(newPos<0){
+        newPos = 0;
+    }
+
+    finderUi.inputIndex=newPos;
+    finderUi.result.remove(item);
+    finderUi.result.add(newPos,item);
+    finderUi.result.setSelected(item);
+    finderUi.result.updateList;
+    //finderUi.refreshPriorityValues();
+    if(finderUi.modelCallback) finderUi.modelCallback(finderUi.result);
+  ]]></script>
+</script>

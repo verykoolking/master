@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Apr 23, 2013 -->
+
+<wsdl:definitions 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/cyclicActionsManagement/v1/services"
+    xmlns:cans="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/cyclicActionsManagement/v1/types"
+    xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+    xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/04/secext"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    targetNamespace="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/cyclicActionsManagement/v1/services">
+    
+
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+            <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/cyclicActionsManagement/v1/types"
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_cyclicActionsManagement_types_v1_0.xsd"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                schemaLocation="addressing" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2002/04/secext"
+                schemaLocation="secext.xsd" />
+	        <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+  			    schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>	
+        </xsd:schema>
+    </wsdl:types>
+    
+    <!--
+        Header
+    -->
+    <wsdl:message name="OCSHeaderInfo">
+        <wsdl:part name="messageID" element="wsa:MessageID" />
+        <wsdl:part name="replyTo" element="wsa:ReplyTo" />
+        <wsdl:part name="security" element="wsse:Security" />
+    </wsdl:message>
+  
+    <!--
+        Messages
+    -->
+    <wsdl:message name="QueryCyclicBoltonsDetailsRequest">
+        <wsdl:part name="parameters" element="cans:queryCyclicBoltonsDetails" />
+    </wsdl:message>
+    <wsdl:message name="QueryCyclicBoltonsDetailsResponse">
+        <wsdl:part name="parameters" element="cans:queryCyclicBoltonsDetailsResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryCyclicChargingServicesDetailsRequest">
+        <wsdl:part name="parameters" element="cans:queryCyclicChargingServicesDetails" />
+    </wsdl:message>
+    <wsdl:message name="QueryCyclicChargingServicesDetailsResponse">
+        <wsdl:part name="parameters" element="cans:queryCyclicChargingServicesDetailsResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryCyclicTopUpsDetailsRequest">
+        <wsdl:part name="parameters" element="cans:queryCyclicTopUpsDetails" />
+    </wsdl:message>
+    <wsdl:message name="QueryCyclicTopUpsDetailsResponse">
+        <wsdl:part name="parameters" element="cans:queryCyclicTopUpsDetailsResponse" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeCyclicBoltonsRequest">
+        <wsdl:part name="parameters" element="cans:subscribeCyclicBoltons" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeCyclicBoltonsResponse">
+        <wsdl:part name="parameters" element="cans:subscribeCyclicBoltonsResponse" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeCyclicTopUpsRequest">
+        <wsdl:part name="parameters" element="cans:subscribeCyclicTopUps" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeCyclicTopUpsResponse">
+        <wsdl:part name="parameters" element="cans:subscribeCyclicTopUpsResponse" />
+    </wsdl:message>
+    <wsdl:message name="UnsubscribeCyclicServicesRequest">
+        <wsdl:part name="parameters" element="cans:unsubscribeCyclicServices" />
+    </wsdl:message>
+    <wsdl:message name="UnsubscribeCyclicServicesResponse">
+        <wsdl:part name="parameters" element="cans:unsubscribeCyclicServicesResponse" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeCyclicChargingServicesRequest">
+        <wsdl:part name="parameters" element="cans:subscribeCyclicChargingServices" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeCyclicChargingServicesResponse">
+        <wsdl:part name="parameters" element="cans:subscribeCyclicChargingServicesResponse" />
+    </wsdl:message>
+
+    <wsdl:message name="ServerException">
+      <wsdl:part name="ServerException" element="uct:serverException"/>
+    </wsdl:message>
+    <wsdl:message name="ClientException">
+      <wsdl:part name="ClientException" element="uct:clientException"/>
+    </wsdl:message>
+
+    <!--
+        Port
+    -->
+    <wsdl:portType name="CyclicActionsManagementPort_v1_0">
+        <wsdl:operation name="queryCyclicBoltonsDetails">
+            <wsdl:input message="tns:QueryCyclicBoltonsDetailsRequest" />
+            <wsdl:output message="tns:QueryCyclicBoltonsDetailsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryCyclicChargingServicesDetails">
+            <wsdl:input message="tns:QueryCyclicChargingServicesDetailsRequest" />
+            <wsdl:output message="tns:QueryCyclicChargingServicesDetailsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryCyclicTopUpsDetails">
+            <wsdl:input message="tns:QueryCyclicTopUpsDetailsRequest" />
+            <wsdl:output message="tns:QueryCyclicTopUpsDetailsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="subscribeCyclicBoltons">
+            <wsdl:input message="tns:SubscribeCyclicBoltonsRequest" />
+            <wsdl:output message="tns:SubscribeCyclicBoltonsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="subscribeCyclicTopUps">
+            <wsdl:input message="tns:SubscribeCyclicTopUpsRequest" />
+            <wsdl:output message="tns:SubscribeCyclicTopUpsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="unsubscribeCyclicServices">
+            <wsdl:input message="tns:UnsubscribeCyclicServicesRequest" />
+            <wsdl:output message="tns:UnsubscribeCyclicServicesResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="subscribeCyclicChargingServices">
+            <wsdl:input message="tns:SubscribeCyclicChargingServicesRequest" />
+            <wsdl:output message="tns:SubscribeCyclicChargingServicesResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!-- Binding -->
+
+    <wsdl:binding name="CyclicActionsManagementServiceSOAPBinding_v1_0" type="tns:CyclicActionsManagementPort_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+
+        <wsdl:operation name="queryCyclicBoltonsDetails">
+            <soap:operation soapAction="queryCyclicBoltonsDetails" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryCyclicChargingServicesDetails">
+            <soap:operation soapAction="queryCyclicChargingServicesDetails" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryCyclicTopUpsDetails">
+            <soap:operation soapAction="queryCyclicTopUpsDetails" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="subscribeCyclicBoltons">
+            <soap:operation soapAction="subscribeCyclicBoltons" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="subscribeCyclicTopUps">
+            <soap:operation soapAction="subscribeCyclicTopUps" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="unsubscribeCyclicServices">
+            <soap:operation soapAction="unsubscribeCyclicServices" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="subscribeCyclicChargingServices">
+            <soap:operation soapAction="subscribeCyclicChargingServices" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+    </wsdl:binding>
+    
+    <!--
+        Service
+    -->
+
+    <wsdl:service name="CyclicActionsManagementService_v1">
+        <wsdl:port name="CyclicActionsManagement_v1_0" binding="tns:CyclicActionsManagementServiceSOAPBinding_v1_0">
+            <soap:address location="http://localhost/UNICA/OCSProvisioning/CyclicActionsManagement_v1"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cw_etltool._export.instanceManagement">
+  <activity name="start" type="seqActivity">
+    <guid>{8815207e-dd0d-45d9-9964-3f6a3998b68e}</guid>
+    <label>start</label>
+    <x>21.0</x>
+    <y>161.0</y>
+    <childList>
+      <child name="isThereAnotherGrouptoLoad" type="switchActivity">
+        <guid>{42c9bc74-6779-42d3-a38e-c1781c025afb}</guid>
+        <label>Is There Another Group To Load ?</label>
+        <x>139.0</x>
+        <y>138.0</y>
+        <childList>
+          <child name="yes" type="caseActivity">
+            <guid>{4f3bbc79-ff85-484a-a2c5-6fe01fd41414}</guid>
+            <label>Yes</label>
+            <x>282.0</x>
+            <y>155.0</y>
+            <childList>
+              <child name="start" type="seqActivity">
+                <guid>{43b669b6-22b8-47cf-bce7-4d297812fa00}</guid>
+                <label>Start</label>
+                <x>142.0</x>
+                <y>307.0</y>
+                <childList>
+                  <child name="loadInstancesGroup" type="subflowActivity">
+                    <element>proc_cw_etltool._export.loadInstancesGroup_SF</element>
+                    <guid>{6fecd722-0cbb-48de-9354-176da13d1010}</guid>
+                    <label>Load Instances Group</label>
+                    <x>327.0</x>
+                    <y>291.0</y>
+                  </child>
+                  <child name="writeXMLFile" type="subflowActivity">
+                    <element>proc_cw_etltool._export.writeXMLFile_SF</element>
+                    <guid>{f660053d-b08e-46db-8b74-8af2d3d8f96c}</guid>
+                    <label>Write XML to File</label>
+                    <x>498.0</x>
+                    <y>298.0</y>
+                  </child>
+                  <child name="nextInstancesGroup" type="repeatActivity">
+                    <element>proc_cw_etltool._export.instanceManagement/seqActivity_start/switchActivity_isThereAnotherGrouptoLoad</element>
+                    <guid>{38627701-3e7a-429c-9560-58d2dddca563}</guid>
+                    <label>Next Instances Group</label>
+                    <x>501.0</x>
+                    <y>141.0</y>
+                    <methodList>
+                      <method name="cwOnProcActBefore" type="action">
+                        <category>before</category>
+                        <system>true</system>
+                        <script><![CDATA[
+                          Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$ Increment ProcessedEntitiesesCounter $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+                          process.processDocument.incrementProcessedEntitiesCount();
+                          process.processDocument.resetCurrentEntityID();
+                        ]]></script>
+                      </method>
+                    </methodList>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnProcActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script>return process.processDocument.isThereEntityToProcess();</script>
+              </method>
+            </methodList>
+          </child>
+          <child name="no" type="caseActivity">
+            <guid>{a76c041f-2878-4dde-b10f-ff1d46aed7a2}</guid>
+            <label>No</label>
+            <x>148.0</x>
+            <y>22.0</y>
+          </child>
+        </childList>
+      </child>
+    </childList>
+    <methodList>
+      <method name="cwOnProcActBefore" type="action">
+        <category>before</category>
+        <system>true</system>
+        <script><![CDATA[
+          var fileGroup = cw_etltool._import.getCurrentFile(process,document,process.processDocument.CurrentFileID);
+          fileGroup.fileDoc.FileStatus = cw_etltool._import.$CONSTANT().fileStatus.PROCESSING;
+          if(fileGroup.fileDoc.StartProcessDate == null )
+              fileGroup.fileDoc.StartProcessDate = new Date();
+          fileGroup.fileDoc.save();
+        ]]></script>
+      </method>
+    </methodList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{b939a443-e326-4fdb-a2fe-be72c53b0bef}</guid>
+  <label>Instance Management</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <type>Sub-flow</type>
+</process>

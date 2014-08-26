@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getAllVersions">
+  <group>overridden.scripts</group>
+  <label>getAllVersions</label>
+  <metaVersion>4</metaVersion>
+  <overrides>script_cwt_pcmaintapi.getAllVersions</overrides>
+  <parameterList>
+    <parameter name="doc" type="rifp">
+      <type>doc_com.conceptwave.system.Document</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //restriction : itemRule
+    //itemChargeTypeAttribute :restriction->condition
+    //chargeTypeAttribute : restriction->condition
+    //itemAttribute: restriction->condition
+    //itemChargeVersion: itemrule, itemChargeAttribute->Restriction (only for items not for groups and restrictions)
+    //itemGroup: itemCharge   //groups dont have attributes, group charges dont have attributes
+    //itemRelation:  itemCharge, itemAttribute, restriction, itemRule   //relation charges dont have attributes
+    //itemHierarchy: not versioned
+    //versionCodetable: ??
+    if(doc==null)
+        return null;
+    var mdType = doc.metadataType;
+    switch (mdType) {
+    case "cwt_pc:cwt_restriction":
+             var f = new Finder("cwt_pc:cwt_restrictionFinder");
+              f.searchDocument.itemCode = doc.itemCode;
+              f.searchDocument.catalogObjectCode = doc.catalogObjectCode;
+              f.searchDocument.catalogObjectType = doc.catalogObjectType;
+              f.searchDocument.restrictionName = doc.restrictionName;
+              var docList=f.search();
+              return docList;
+              break;
+
+    case "cwt_pc:cwt_itemRelation":
+    case "cwa_epc:cwt_itemRelation": /*NGAA*/
+              var f = new Finder("cwt_pc:cwt_itemRelationFinder");
+              f.searchDocument.itemCode = doc.itemCode;
+              f.searchDocument.itemRelationCode = doc.itemRelationCode;
+              f.searchDocument.itemRelationTarget = doc.itemRelationTarget;
+              var docList=f.search();
+              return docList;
+              break;
+    case "cwt_pc:cwt_itemGroup":
+             var f = new Finder("cwt_pc:cwt_itemGroupFinder");
+              f.searchDocument.itemCode = doc.itemCode;
+              f.searchDocument.itemGroupCode = doc.itemGroupCode;
+              var docList=f.search();
+              return docList;
+             break;
+    case "cwt_pc:cwt_itemAttachment":
+             var f = new Finder("cwt_pc:cwt_itemAttachmentFinder");
+              f.searchDocument.itemCode = doc.itemCode;
+              f.searchDocument.itemAttachmentCode = doc.itemAttachmentCode;
+              var docList=f.search();
+              return docList;
+             break;
+    case "cwt_pc:cwt_itemDescription":
+             var f = new Finder("cwt_pc:cwt_itemDescriptionFinder");
+              f.searchDocument.itemCode = doc.itemCode;
+              f.searchDocument.itemDescriptionCode = doc.itemDescriptionCode;
+              var docList=f.search();
+              return docList;
+             break;
+
+    case "cwt_pc:cwt_itemImage":
+             var f = new Finder("cwt_pc:cwt_itemDescriptionFinder");
+              f.searchDocument.itemCode = doc.itemCode;
+              f.searchDocument.itemImageCode = doc.itemImageCode;
+              var docList=f.search();
+              return docList;
+             break;
+    case "cwt_pc:cwt_itemAttribute":
+    case "cwt_pc:cwt:relationAttribute":
+    case "cm_common.cwt_itemAttribute": /*NGAA*/
+             //groups dont have attribute
+             var f = new Finder("cwt_pc:cwt_itemAttributeFinder");
+              f.searchDocument.itemCode = doc.itemCode;
+              f.searchDocument.itemAttributeCode = doc.itemAttributeCode;
+              f.searchDocument.itemRelationCode = doc.itemRelationCode;
+              f.searchDocument.catalogObjectType = doc.catalogObjectType;
+              var docList=f.search();
+              return docList;
+             break;
+    case "cwt_pc:cwt_itemChargeTypeAttribute":
+    // cannot use finder as finder does not search based on itemCode had to change the finder and search document
+              var f = new Finder("cwt_pc:cwt_itemChargeTypeAttributeFinder");
+              f.searchDocument.ictAttributeCode = doc.ictAttributeCode;
+              f.searchDocument.ictCode = doc.ictCode;
+              f.searchDocument.itemCode = doc.itemCode;
+              f.searchDocument.catalogObjectType = doc.catalogObjectType;
+              var docList=f.search();
+              return docList;
+              break;
+
+    case "cwt_pc:cwt_chargeTypeAttribute":
+              var f = new Finder("cwt_pc:cwt_chargeTypeAttributeFinder");
+              f.searchDocument.ctAttributeCode = doc.ctAttributeCode;
+              f.searchDocument.ctCode = doc.ctCode;
+              var docList=f.search();
+              return docList;
+
+    case "cwt_pc:cwt_ersionCodeTable":
+            if(doc.cttype=="-cwfCodeTableIndex"){
+                var docList = new Array();
+                docList.add(doc);
+                return docList;
+            }else{
+                 var f = new Finder("cwt_pc:cwt_versioncodesFinder");
+                 f.searchDocument.code = doc.code;
+                 f.searchDocument.ctType = doc.ctType;
+                 var docList = f.search();
+                 return docList;
+            }
+            break;
+
+    case "cwt_pc:cwt_itemChargeVersion":
+           // if(doc.catalogObjectType=="item"){
+            var f = new Finder("cwt_pc:cwt_itemChargeVersionFinder");
+            f.searchDocument.itemCode = doc.itemCode;
+            f.searchDocument.itemChargeCode = doc.itemChargeCode;
+            f.searchDocument.catalogObjectType = doc.catalogObjectType;
+            f.searchDocument.itemRelationCode = doc.itemRelationCode;
+            f.searchDocument.itemGroupCode = doc.itemGroupCode;
+
+            var docList=f.search();
+            return docList;
+            break;
+    case "cwt_pc:cwt_chargeTypeVersion":
+    case "cwt_pc:cwt_chargeType":
+            var f = new Finder("cwt_pc:cwt_chargeTypeVersionFinder");
+            f.searchDocument.chargeTypeCode = doc.chargeTypeCode;
+            var docList=f.search();
+            return docList;
+            break;
+
+    case "cwt_pc:cwt_catalogRuleVersion":
+    case "cwt_pc:cwt_catalogRule":
+            var f = new Finder("cwt_pc:cwt_catalogRuleVersionFinder");
+            f.searchDocument.ruleName = doc.ruleName;
+            var docList=f.search();
+            return docList;
+            break;
+
+    case "cwt_pc:cwt_taxVersion":
+    case "cwt_pc:cwt_tax":
+            var f = new Finder("cwt_pc:cwt_taxVersionFinder");
+            f.searchDocument.taxCode = doc.taxCode;
+            var docList=f.search();
+            return docList;
+            break;
+
+    case "cwt_pc:cwt_taxModelVersion":
+    case "cwt_pc:cwt_taxModel":
+            var f = new Finder("cwt_pc:cwt_taxModelVersionFinder");
+            f.searchDocument.taxModelCode = doc.taxModelCode;
+            var docList=f.search();
+            return docList;
+            break;
+    default:
+            var docList = new Array();
+            docList.push(doc);
+            return docList;
+    }//case
+  ]]></script>
+</script>

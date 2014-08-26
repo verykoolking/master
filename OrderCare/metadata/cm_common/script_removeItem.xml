@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.removeItem">
+  <group>scripts</group>
+  <label>removeItem</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="item" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cwt_pcmaintapi.item</type>
+    </parameter>
+    <parameter name="deleteTargetItems" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="relationType" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        var response, relatedItems;
+
+        if(deleteTargetItems)
+        {
+            relatedItems = cm_common.getRelatedItems(item, relationType);
+            if(api_common.isFault(relatedItems)){
+                return relatedItems;
+            }
+        }
+
+        //first delete the item
+        response = deleteItem(item);
+        if(cwt_pcmaintapi.isFault(response))
+            return response;
+
+        //now delete all the related items
+        if(relatedItems){
+            for(var i=0; i<relatedItems.items.length; i++)
+            {
+                response = deleteItem(relatedItems.items[i]);
+                if(cwt_pcmaintapi.isFault(response))
+                    return response;
+            }
+        }
+
+
+
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+
+    function deleteItem(item)
+    {
+        if(item.status != "ACT"){
+            response = cwt_pcmaintapi.itemDelete(item);
+            if(cwt_pcmaintapi.isFault(response))
+            {
+                var fault = api_common.createFault(response.code, response.message);
+                return fault;
+            }
+        }else{
+            //if the item is ACT then we delete all the relations, attributes etc which are in DEF
+            response = cm_common.removeItemAssociationsInProject(item, "DEF", projectCode);
+            if(api_common.isFault(response))
+                return response;
+        }
+    }
+  ]]></script>
+</script>

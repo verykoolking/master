@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.removeObjectByKey">
+  <group>applicabilityCondition.api</group>
+  <label>removeObjectByKey</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="object" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.baseObject</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        if(object instanceof cm_plm.AppBoltonTypeGroupLIst)
+            return cm_plm.removeAppBoltonTypeGroupListByKey(object);
+        else if(object instanceof cm_plm.DestTypeAssoTariffClassList)
+            return cm_plm.removeDestTypeAssoTariffClassListByKey(object);
+        else if(object instanceof cm_plm.Nx24AppBoltonType)
+            return cm_plm.removeNx24AppBoltonTypeByKey(object)
+        else if(object instanceof cm_plm.Nx24AppBoltonTypeList)
+            return cm_plm.removeNx24AppBoltonTypeListByKey(object);
+        else
+            return api_common.createFault("ERR", "The object type is not supported!");
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

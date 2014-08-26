@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_RBO_boltonLDMandatoryCondRule">
+  <group>rules_scripts.CyclicActions</group>
+  <label>rule_RBO_boltonLDMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var BoltOn = data.parent.parent.parent.parent.BoltOn;
+    var condition = false;
+    if(BoltOn)
+    {
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        s.specificationCode = BoltOn;
+        var b = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(b)){
+            s.specificationCode = b.BoltOnType;
+            var a = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(a)){
+            if(a.BoltOnTypeModality =="CR")
+                condition = true;
+            }
+        }
+    }
+    if(condition == true && !data.boltonLD)
+    {
+         errList.addErrorMessage(data,["The field % Reduction in long distance is mandatory when the BoltOn selected is a CR Bolt On"],"NGAA_003","E");
+    }
+    else return false;
+  ]]></script>
+</script>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.telefonica.com/schemas/SOAP/OCSOperation/v1/types" targetNamespace="http://www.telefonica.com/schemas/SOAP/OCSOperation/v1/types" elementFormDefault="qualified">
+
+	
+		<!-- <xsd:annotation><xsd:documentation><p>
+
+	XSD FOR OCS OPERATION
+	=====================
+	
+	Last changes (2014-07-16):
+	- currencyCode deleted (ActionCommonInfoType and QueryCommonInfoType)
+    - testingRequiredFlag and reviewRequiredFlag deleted (SessionCommonInfoType)
+    - ServiceExceptionType fields change
+    - ServiceExceptionType name changes to ServerExceptionType (NotificationCommonInfoType)
+    - balanceActivityInfo deleted (ActionCommonInfoResultType)
+    - ConfigurationResultType, CurrencyCodeType, UnitValueType, MonetaryType, BalanceActivityInfoType, WalletStatusType, WalletInfoType, WalletDetailedInfoType, NegativeBalanceInfoType, AttributeType, ErrorTypeType, PolicyExceptionType, SubscriberIdType, E164NumberType, Ipv4AddressType, Ipv6AddressType, IpAddressType deleted 
+    - Added ExceptionPersistenceType
+	- Added sessionTag in SessionCommonInfoType
+	- Telefonica namespaces URI corrected
+
+	</p></xsd:documentation></xsd:annotation> -->
+	
+	<!-- Element root that should be removed here, just for examples -->
+	<!-- xsd:element name="operationXMLData" type="OperationXMLDataType"/ -->
+	<!-- main type definition -->
+	
+	<xsd:complexType name="OperationXMLDataType">
+		<xsd:choice>
+			<xsd:element name="actionCommonInfo" type="ActionCommonInfoType"/>
+			<xsd:element name="queryCommonInfo" type="QueryCommonInfoType"/>
+			<xsd:element name="sessionCommonInfo" type="SessionCommonInfoType"/>
+			<xsd:element name="notificationCommonInfo" type="NotificationCommonInfoType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<!-- action attributes definitions -->
+	<xsd:complexType name="ActionCommonInfoType">
+		<xsd:sequence>
+			<xsd:element name="appId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="reference" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="userCode" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="sessionId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- query attributes definitions -->
+	<xsd:complexType name="QueryCommonInfoType">
+		<xsd:sequence>
+			<xsd:element name="token" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="numRegs" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- session attributes definitions -->
+	<xsd:complexType name="SessionCommonInfoType">
+		<xsd:sequence>
+			<xsd:element name="appId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="reference" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="userCode" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="sessionId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="sessionTag" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="doCommitFlag" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NotificationCommonInfoType">
+		<xsd:sequence>
+			<xsd:element name="appId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="reference" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="userCode" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="notifiedSessionId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="configExecutionDate" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="serverException" type="ServerExceptionType" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- Result type definition -->
+	<xsd:complexType name="OperationResultXMLDataType">
+		<xsd:choice>
+			<xsd:element name="actionCommonInfoResult" type="ActionCommonInfoResultType"/>
+			<xsd:element name="queryCommonInfoResult" type="QueryCommonInfoResultType"/>
+			<xsd:element name="sessionCommonInfoResult" type="SessionCommonInfoResultType"/>
+			<xsd:element name="notificationCommonInfoResult" type="NotificationCommonInfoResultType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<!-- action result attributes definitions -->
+	<xsd:complexType name="ActionCommonInfoResultType">
+		<xsd:sequence>
+			<xsd:element name="opReference" type="OpReferenceType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="opExecutionDate" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="sessionId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OpReferenceType">
+		<xsd:sequence>
+			<xsd:element name="opId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="subOpId" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- query result attributes definitions -->
+	<xsd:complexType name="QueryCommonInfoResultType">
+		<xsd:sequence>
+			<xsd:element name="token" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<!-- session result attributes definitions -->
+	<xsd:complexType name="SessionCommonInfoResultType">
+		<xsd:sequence>
+			<xsd:element name="opReference" type="OpReferenceType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="opExecutionDate" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="sessionId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- notification result attributes definitions -->	
+	<xsd:complexType name="NotificationCommonInfoResultType">
+		<xsd:sequence>
+			<xsd:element name="opExecutionDate" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<!-- Faults -->
+	<xsd:complexType name="ServerExceptionType">
+		<xsd:sequence>
+			<xsd:element name="exceptionCategory" type="xsd:string" minOccurs="1"/>
+			<xsd:element name="exceptionId" type="xsd:unsignedInt" minOccurs="1"/>
+			<xsd:element name="text" type="xsd:string" minOccurs="1"/>
+			<xsd:element name="variables" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="exceptionPersistence" type="ExceptionPersistenceType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="ExceptionPersistenceType">
+		<xsd:restriction base="xsd:string">
+            <xsd:enumeration value="PERMANENT"/>
+            <xsd:enumeration value="TEMPORARY"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+</xsd:schema>

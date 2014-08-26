@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.getSpecificationByCode">
+  <group>RatingTree</group>
+  <label>getSpecificationByCode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="code" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="dataStructure" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    dataStructure.specificationCode = code;
+    var result = cm_common.getSpecificationByKey(dataStructure);
+    if(api_common.isFault(result))
+        Global.throwException(result.toXML());
+    return result;
+  ]]></script>
+</script>

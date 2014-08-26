@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.getUltimateBaseObject">
+  <group>utilities</group>
+  <label>getUltimateBaseObject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    if ( !data || !data.metadata ) return null;
+    if ( !data.metadata.baseObject ) return data.metadata;
+
+    var iteration =0;
+    var baseObject;
+    var object = data.metadata.baseObject;
+    var  nextObject = data.metadata.baseObject.baseObject;
+
+    for (var i = 0 ; i<100; i++ ) {
+
+
+        if (nextObject) {
+                object = nextObject;
+                nextObject = nextObject["baseObject"];
+        } else {
+            break;
+        }
+    }
+
+    return object;
+  ]]></script>
+</script>

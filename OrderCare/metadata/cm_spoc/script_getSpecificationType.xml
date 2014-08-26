@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getSpecificationType">
+  <group>overridden.scripts</group>
+  <label>getSpecificationType</label>
+  <metaVersion>4</metaVersion>
+  <overrides>script_cwa_epc.getSpecificationType</overrides>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (model.isBasedOn("epc.data.ResourceSpecification")) {
+        return "ResourceSpecification";
+    } else if (model.isBasedOn("epc.data.ProductSpecification")) {
+        return "ProductSpecification";
+    } else if (model.isBasedOn("epc.data.ServiceSpecification")) {
+        return "ServiceSpecification";
+    } else if (model.isBasedOn("epc.data.ProductOffering")) {
+        return "ProductOffering";
+    } else if (model.isBasedOn("epc.data.ConsumptionSpecification")) {
+        return "ConsumptionSpecification";
+    } else if (model.isBasedOn("epc.data.BalanceSpecification")) {
+        return "BalanceSpecification";
+    } else if (model.isBasedOn("epc.data.ChargeTypeEpc")) {
+        return "PricePlan";
+    } else
+        return cm_spoc.getValue(model,"specificationType");
+
+    //return null;
+    //PricePlanType:
+    //BALINQ; BONUS; COMMUNITY; FAF; FLEXSVCFEE; INITRECURFEE; ONETIMEFEE; PERIODICADJ; RATING; RECURFEE; SVCCLSCHG; USAGEFEE
+  ]]></script>
+</script>

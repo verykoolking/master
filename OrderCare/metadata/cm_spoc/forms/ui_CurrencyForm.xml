@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.CurrencyForm">
+  <group>Rate</group>
+  <label>CurrencyForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.Currency</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <width>750px</width>
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <width>750px</width>
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <elementList>
+                        <element name="SectionHeader" type="elsecth">
+                          <label>Currency</label>
+                        </element>
+                        <element name="GridLayout" type="elgrd">
+                          <width>750px</width>
+                          <elementList>
+                            <element name="CurrencyCode" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <labeAlign>left</labeAlign>
+                              <label>Currency Code</label>
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.CurrencyForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.Currency/dstruct_CurrencyCode</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>150px</width>
+                            </element>
+                            <element name="Description" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <labeAlign>left</labeAlign>
+                              <label>Description</label>
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.CurrencyForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.Currency/dstruct_Description</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>150px</width>
+                            </element>
+                            <element name="ExchangeRate" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <labeAlign>left</labeAlign>
+                              <label>Exchange Rate</label>
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.CurrencyForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.Currency/dstruct_ExchangeRate</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>150px</width>
+                            </element>
+                            <element name="RefreshPeriod" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <dataLength>10</dataLength>
+                              <labeAlign>left</labeAlign>
+                              <label>Refresh Period (days)</label>
+                              <labelOrientation>left</labelOrientation>
+                              <onChangeMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.CurrencyForm/uimthd_RefreshPeriodTrigger</variablePath>
+                                </variablePathList>
+                              </onChangeMethod>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.CurrencyForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.Currency/dstruct_RefreshPeriod</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>150px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.CurrencyForm/leaf_model</path>
+      <type>initializer</type>
+      <script>return cm_spoc.initCurrency(this.model);</script>
+    </method>
+    <method name="RefreshPeriodTrigger" type="uimthd">
+      <script><![CDATA[
+        if (this.model.RefreshPeriod > 115740 ) {
+            this.model.RefreshPeriod = 86400;
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+  </methodList>
+</userInterface>

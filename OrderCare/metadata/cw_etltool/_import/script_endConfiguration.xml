@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.endConfiguration">
+  <label>End Configuration</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="process" type="rifp">
+      <mandatory>true</mandatory>
+      <type>doc_cwf_pm.CWPROCESS</type>
+    </parameter>
+    <parameter name="doCommitFlag" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+    var endConfiguration =  cw_etltool._import.endConfigurationDS(reference,sessionId);
+    endConfiguration.sessionCommonInfo.doCommitFlag = doCommitFlag;
+    var response =  cm_pws.services.inOut_endConfiguration(endConfiguration);
+    return response;
+    */
+
+
+
+    var endConfiguration = new DataStructure("OCSConfigurationOperation.v1.types.EndConfiguration");
+    endConfiguration.sessionCommonInfo.appId = Global.getAppName();
+    endConfiguration.sessionCommonInfo.userCode = UserProfile.userId();
+    endConfiguration.sessionCommonInfo.reference = "OrderId :" + process.processOrder.id;
+    endConfiguration.sessionCommonInfo.sessionId = process.processDocument.getSessionId();
+
+    endConfiguration.sessionCommonInfo.doCommitFlag = doCommitFlag;
+    var response =   cw_etltool._import.inOut_endConfiguration(endConfiguration, process.processDocument.getImportCommonInfo());
+    return response;
+  ]]></script>
+</script>

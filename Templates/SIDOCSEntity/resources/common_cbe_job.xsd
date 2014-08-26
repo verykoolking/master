@@ -1,0 +1,894 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201206291233 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company/TIP_Soap_Generator(1.1) (1.1)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) 2010-2012 Members of the TIP Open Source Community
+
+Licensed to Members of the TIP Open Source Community under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+Members of the TIP Open Source Community licences this file to You under the Apache License,
+Version 2.0 (the 'License'); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an 'AS IS' BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/tip/cbe/job" xmlns:notifications="http://www.tmforum.org/xml/tip/internal/notifications" xmlns:nrb="http://www.tmforum.org/xml/tip/resource/res/nrb" xmlns:notifications1="http://www.tmforum.org/xml/tip/common/notifications" xmlns:sched="http://www.tmforum.org/xml/tip/cbe/time/sched" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" xmlns:base="http://www.tmforum.org/xml/tip/cbe/base" targetNamespace="http://www.tmforum.org/xml/tip/cbe/job" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.1">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: TIP_Common_Model
+                        at version: 1.1
+      for all artifacts in package: org.tmforum.tip.cbe.job
+      Model Description:
+      TIP Framework Common Model
+      Package Description:
+      
+      Package data summary information:
+            entities: 1
+ Association Classes: 0
+           datatypes: 3
+        enumerations: 5
+              events: 4
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/notifications" schemaLocation="internal_notifications.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/resource/res/nrb" schemaLocation="common_resource_res_nrb.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/common/notifications" schemaLocation="common_notifications.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/cbe/time/sched" schemaLocation="common_cbe_time_sched.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/cbe/base" schemaLocation="common_cbe_base.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* -->
+   <xsd:simpleType name="CompressionType">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>
+               <p>Enumeration of supported compressions.</p>
+               <p>All extensions allowed. The value EXTENSION indicates that the compression type is defined in the extension info. </p>
+            </p>
+            <p>This enumeration  is  extendable</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="NO_COMPRESSION">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "NO_COMPRESSION"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="GZIP">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "GZIP"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="OTHER">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "OTHER"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfCompressionType">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:CompressionType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="ExecutionState">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>
+               <p>Defines the execution states of a management job. It is possible for an application to support only a subset of the values.</p>
+            </p>
+            <p>This enumeration  is  not extendable</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="Executing">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "Executing"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="ExecutingActive">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "ExecutingActive"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="ExecutingIdle">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "ExecutingIdle"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="Scheduled">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "Scheduled"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="Failed">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "Failed"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="Suspended">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "Suspended"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfExecutionState">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ExecutionState" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="FilePreparationErrorReason">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This datatype provides a set of reason to use in case of file preparation error.
+
+If the value OTHER is used, then the description of the preparation error should be provided in the description field of the event.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="ERROR_IN_PREPARATION">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "ERROR_IN_PREPARATION"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="HARD_DISK_FULL">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "HARD_DISK_FULL"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="HARD_DISK_FAILURE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "HARD_DISK_FAILURE"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="TOO_MANY_FILES">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "TOO_MANY_FILES"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="COLLECTION_TIMEOUT">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "COLLECTION_TIMEOUT"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="INCOMPLETE_TRUNCATED_FILE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "INCOMPLETE_TRUNCATED_FILE"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="CORRUPTED_FILE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "CORRUPTED_FILE"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="LOW_MEMORY">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "LOW_MEMORY"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="DATA_NOT_AVAILABLE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "DATA_NOT_AVAILABLE"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="OTHER">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "OTHER"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfFilePreparationErrorReason">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:FilePreparationErrorReason" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="FileTransferStatus">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This datatype indicates that if a File Transfer is partial/complete</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="PARTIAL">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "PARTIAL"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="COMPLETE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "COMPLETE"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfFileTransferStatus">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:FileTransferStatus" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="PackingType">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p/>
+            <p>This enumeration  is  extendable</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="NO_PACKING">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "NO_PACKING"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="ZIP">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "ZIP"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="TAR">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "TAR"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="OTHER">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "OTHER"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfPackingType">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PackingType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** -->
+   <xsd:element name="fileDescriptor" type="tns:FileDescriptor"/>
+   <xsd:complexType name="FileDescriptor">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>
+               <p>Provides information on file(s) being transferred.</p>
+            </p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="fileName" type="xsd:string" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>
+                     <p>Provides the file name(s) of the file being transferred.</p>
+                     <p>It is possible for the file name to contain a wildcard allowing specifying multiple files with one descriptor. However, the readyTime and expirationTime for all the files matching the wildcarded name should be identical. </p>
+                  </p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  mandatory</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="fileLocation" type="xsd:anyURI" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>
+                     <p>URI indicating the location of the file(s) being produced. The file location does not include the file name.</p>
+                  </p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  mandatory</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="readyTime" type="xsd:dateTime" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>
+                     <p>Indicates the time at which the file(s) is ready for data transfer. </p>
+                     <p>The file(s) should not be changed after this time. </p>
+                  </p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  mandatory</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="expirationTime" type="xsd:dateTime" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>
+                     <p>Indicates the time beyond which the file(s) may be deleted by the OS which made it available. </p>
+                     <p>By default, the expirationTime should be the readyTime + the retention period. </p>
+                  </p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfFileDescriptor">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:FileDescriptor" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="fileTransferData" type="tns:FileTransferData"/>
+   <xsd:complexType name="FileTransferData">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>
+               <p>Defines the information required for a file based data transfer.</p>
+            </p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:ProtocolTransferData">
+            <xsd:sequence>
+               <xsd:element name="fileLocation" type="xsd:anyURI" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>URI provided by the requesting OS indicating the rootname of the file(s) to be produced and location of where to place the retrieved file(s). </p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  mandatory</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="fileFormat" type="xsd:string" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>Defines the format of the files.</p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  mandatory</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="compressionType" type="tns:CompressionType" minOccurs="0" maxOccurs="1" default="NO_COMPRESSION">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>The type of compression to apply to the generated file(s).</p>
+                           <p>Default behavior (when request parameter is omitted) is NO_COMPRESSION.</p>
+                           <p>Implementation of this file processing instruction by the Target OS is optional, and any incompatible request shall be handled with the appropriate exception. Vendor extension of this attribute is permitted, the value OTHER is used to indicate it.</p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="retentionPeriod" type="base:Duration" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>The minimum duration the files produced by this job will be retained on the producing OS. </p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  mandatory</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="packingType" type="tns:PackingType" minOccurs="0" maxOccurs="1" default="NO_PACKING">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>The type of packing to apply to all the file(s) generated from the same request.</p>
+                           <p>Default behavior (when request parameter is omitted) is NO_ PACKING.</p>
+                           <p>Implementation of this file processing instruction by the Target OS is optional, and any incompatible request shall be handled with the appropriate exception. Vendor extension of this attribute is permitted, the value OTHER is used to indicate it.</p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfFileTransferData">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:FileTransferData" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="protocolTransferData" type="tns:ProtocolTransferData"/>
+   <xsd:complexType name="ProtocolTransferData" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>
+               <p>Defines the information required for a data transfer. It contains information needed for the data transfer, but it does not contain result information, i.e. the list of file produced is not part of this object nor of its descendants.</p>
+               <p>This class acts as a base class for all types of possible data transfers even if currently only File Transfer is supported.</p>
+            </p>
+            <p>This datatype  is  abstract</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="transportProtocol" type="xsd:string" minOccurs="1" maxOccurs="1" default="FILE_TRANSFER">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>
+                     <p>The protocol that is used to transfer the requested data between the participating applications.</p>
+                  </p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  mandatory</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfProtocolTransferData">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ProtocolTransferData" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="managementJob" type="tns:ManagementJob"/>
+   <xsd:complexType name="ManagementJob" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>
+               <p>A Management Job is a management activity that may consist of several steps but is performed as a single logical unit.</p>
+               <p>It can be a one time activity or a regular one. In the latter case , a schedule definition is attached to the management job.</p>
+            </p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  mandatory</p>
+            <p>This entity  is  extendable</p>
+            <p>This entity   does not generate Object Creation notifications (NA)</p>
+            <p>This entity   does not generate Object Deletion notifications (NA)</p>
+            <p>This entity   does not generate Object Discovery notifications (NA)</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="jobId" type="xsd:string" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>The ID of the management job. </p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  mandatory</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="creationTime" type="xsd:dateTime" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>The creation time of the management job</p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="lastModifiedTime" type="xsd:dateTime" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>Defines the time when the management job was last modified. </p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="adminState" type="nrb:AdministrativeState" minOccurs="0" maxOccurs="1" default="2">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>The administrative state of the management job</p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="jobPriority" type="xsd:int" minOccurs="0" maxOccurs="1" default="5">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>The priority of the management job.</p>
+                           <p>The way the management application will use the JobPriority to schedule job execution is application specific and outside of the scope. Integer, limited to a range of 1 to 10.</p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="executionState" type="tns:ExecutionState" minOccurs="0" maxOccurs="1" default="Executing">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>The execution state of the management job.</p>
+                           <p>It is used to indicate a failure in the execution of the job. </p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="scheduleDefinition" type="sched:ScheduleDefinition" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>If the management job is a regular one, then it will include a schedule definition.</p>
+                           <p>Not present for one-time jobs.</p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="protocolTransferData" type="tns:ProtocolTransferData" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>Defines the information required for a data transfer.</p>
+                           <p>Based on the transport protocol value(s), the corresponding information classes will be used. </p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  mandatory</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfManagementJob">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ManagementJob" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** -->
+   <xsd:complexType name="FilesPreparationError">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This notification is used for File Transfer.
+If the server encounters an error while generating the files, it will emit this notification to provide the information on the files in error. If the reason OTHER is used, then the description of the preparation error should be provided in the description field.
+This notification should not be considered as an alarm.
+The objectId attribute should contain the jobId associated with the ManagementJob to which this notification relates.</p>
+            <p>This notification  is  mandatory</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="notifications1:CommonNotification">
+            <xsd:sequence>
+               <xsd:element name="fileInfo" type="tns:FileDescriptor" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>Provides information on the file generating the error.
+In case no file could be generated, this attribute is empty.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  mandatory</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="reason" type="tns:FilePreparationErrorReason" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>Detailed reason for the generation failure.
+If OTHER is used, then the description of the error should be provided.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  mandatory</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>Description text for the file preparation failure.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="extensionInfo" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:documentation>
+       a generic list of any type of elements. Used for vendor extensions or loose element encapsulation from other namespaces.
+      </xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="filesPreparationError" type="tns:FilesPreparationError"/>
+   <xsd:complexType name="FilesReady">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This notification is used for File Transfer.
+Once the server has generated the files to be transfered, it will emit this notification to indicate that the files are available and can be downloaded.
+The objectId attribute should contain the jobId associated with the ManagementJob to which this notification relates.</p>
+            <p>This notification  is  mandatory</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="notifications1:CommonNotification">
+            <xsd:sequence>
+               <xsd:element name="fileFormat" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>Defines the format of the files.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="compressionType" type="tns:CompressionType" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>The type of compression to apply to the generated file(s).</p>
+                           <p>Default behavior (when request parameter is omitted) is NO_COMPRESSION.</p>
+                           <p>Implementation of this file processing instruction by the Target OS is optional, and any incompatible request shall be handled with the appropriate exception. Vendor extension of this attribute is permitted, the value OTHER is used to indicate it.</p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="packingType" type="tns:PackingType" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>
+                           <p>The type of packing to apply to all the file(s) generated from the same request.</p>
+                           <p>Default behavior (when request parameter is omitted) is NO_ PACKING.</p>
+                           <p>Implementation of this file processing instruction by the Target OS is optional, and any incompatible request shall be handled with the appropriate exception. Vendor extension of this attribute is permitted, the value OTHER is used to indicate it.</p>
+                        </p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="fileInfo" type="tns:ArrayOfFileDescriptor" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>Provides information on the files generated and available for download</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  mandatory</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="fileTransferStatus" type="tns:FileTransferStatus" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>Indicates that if this File Transfer is partial/complete
+Scheduled Job: 1 complete per schedule</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  mandatory</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="extensionInfo" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:documentation>
+       a generic list of any type of elements. Used for vendor extensions or loose element encapsulation from other namespaces.
+      </xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="filesReady" type="tns:FilesReady"/>
+   <xsd:complexType name="FilesUploadError">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This notification is used for File Transfer and only when uploading files to the server.
+If the server encounters an error while downloading the files, it will emit this notification to provide the information on the files that cannot be downloaded. If the reason OTHER is used, then the description of the preparation error should be provided in the description field.
+
+The objectId attribute should contain the jobId associated with the ManagementJob to which this notification relates.
+This notification is optional, but in case file upload is supported, it is required.</p>
+            <p>This notification  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="notifications1:CommonNotification">
+            <xsd:sequence>
+               <xsd:element name="fileInfo" type="tns:FileDescriptor" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>Provides information on the file generating the error.
+In case no file could be generated, this attribute is empty.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  mandatory</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="reason" type="tns:FilePreparationErrorReason" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>Detailed reason for the download failure.
+If OTHER is used, then the description of the error should be provided.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  mandatory</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>Description text for the download failure.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="extensionInfo" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:documentation>
+       a generic list of any type of elements. Used for vendor extensions or loose element encapsulation from other namespaces.
+      </xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="filesUploadError" type="tns:FilesUploadError"/>
+   <xsd:complexType name="FilesUploaded">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This notification is used for File Transfer and only when uploading files to the server.
+This notification indicates that the server has correctly downloaded the files.
+The objectId attribute should contain the jobId associated with the ManagementJob to which this notification relates.
+This notification is optional, but in case file upload is supported, it is required.</p>
+            <p>This notification  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="notifications1:CommonNotification">
+            <xsd:sequence>
+               <xsd:element name="fileInfo" type="tns:ArrayOfFileDescriptor" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>Provides information on the files downloaded by the server.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  mandatory</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="extensionInfo" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:documentation>
+       a generic list of any type of elements. Used for vendor extensions or loose element encapsulation from other namespaces.
+      </xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="filesUploaded" type="tns:FilesUploaded"/><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

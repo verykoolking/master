@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.getProjectChanges">
+  <group>applicabilityCondition.scripts</group>
+  <label>getProjectChanges</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        var projectAssignment = new cm_plm.projectAssignment();
+        projectAssignment.projectCode = projectCode;
+        var objects = cm_plm.queryProjectAssignment(projectAssignment);
+        if(api_common.isFault(objects))
+            return objects;
+
+        var object;
+        var result = new DataObjectList();
+        //now we need to see what is added and removed.
+        for(var i=0; i<objects.length; i++){
+            object = new DataStructure(objects[i].objectType);
+            object.objectId = objects[i].objectId;
+            object = cm_plm.getObjectByKey(object);
+
+            if(objects[i].endDate)
+                object.ArrayOperation = "D";    //if it is end dated, it means it is deleted
+            else
+                object.ArrayOperation = "A";
+
+            result[result.length] = object;
+
+        }
+
+    return result;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

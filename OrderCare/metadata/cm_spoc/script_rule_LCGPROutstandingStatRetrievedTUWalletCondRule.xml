@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_LCGPROutstandingStatRetrievedTUWalletCondRule">
+  <group>rules_scripts.LifeCycles</group>
+  <label>rule_LCGPROutstandingStatRetrievedTUWalletCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**Conditional
+     *
+     * LCGPROutstandingStatRetrievedTUWalletCondRule
+     *
+     * The attribute must be saved only if the related attribute in column H has at least one element checked.
+     *
+     * LifeCycleGracePeriodRule
+     * OutstandingStatRetrievedTUWallet
+     *
+     * RecoveryCondition
+     * RetrievablePC
+
+     *
+     * TRUE
+    */
+
+
+    var listArrayDS=data.RecoveryConditionArrDS.ListDS;
+    var checkedPC =false;
+    var dim = listArrayDS.length;
+     for (var i=0; i<dim; i++){
+         if (listArrayDS[i].RetrievablePC)
+             checkedPC = true;
+     }
+     if(checkedPC==false && data.OutstandingStatRetrievedTUWallet!=null)
+             errList.addErrorMessage(data,["Wallet not saved","RetrievablePC Invalid"],"NGAA_EPC_002","E");
+
+
+    return false;
+  ]]></script>
+</script>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productProvisioningManagement/v1/services"
+	xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productProvisioningManagement/v1/services"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:opo="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productProvisioningManagement/v1/types"
+	xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+	targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productProvisioningManagement/v1/services">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productProvisioningManagement/v1/services" elementFormDefault="qualified">
+			<xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productProvisioningManagement/v1/types"
+				schemaLocation="OCSProvisioning_productProvisioningManagement_types_v1.xsd"/>
+			<xsd:import namespace="http://schemas.xmlsoap.org/soap/envelope/" schemaLocation="http://schemas.xmlsoap.org/soap/envelope/"/>
+			<xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>	
+		</xsd:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="SubscribeProductOffering">
+		<wsdl:part name="parameters" element="opo:SubscribeProductOffering"/>
+	</wsdl:message>
+	<wsdl:message name="SubscribeProductOfferingResponse">
+		<wsdl:part name="parameters" element="opo:SubscribeProductOfferingResponse"/>
+	</wsdl:message>
+	<wsdl:message name="UnsubscribeProduct">
+		<wsdl:part name="parameters" element="opo:UnsubscribeProduct"/>
+	</wsdl:message>
+	<wsdl:message name="UnsubscribeProductResponse">
+		<wsdl:part name="parameters" element="opo:UnsubscribeProductResponse"/>
+	</wsdl:message>
+	<wsdl:message name="QueryProductSubscription">
+		<wsdl:part name="parameters" element="opo:QueryProductSubscription"/>
+	</wsdl:message>
+	<wsdl:message name="QueryProductSubscriptionResponse">
+		<wsdl:part name="parameters" element="opo:QueryProductSubscriptionResponse"/>
+	</wsdl:message>
+	<wsdl:message name="QueryProduct">
+		<wsdl:part name="parameters" element="opo:QueryProduct"/>
+	</wsdl:message>
+	<wsdl:message name="QueryProductResponse">
+		<wsdl:part name="parameters" element="opo:QueryProductResponse"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateProduct">
+		<wsdl:part name="parameters" element="opo:UpdateProduct"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateProductResponse">
+		<wsdl:part name="parameters" element="opo:UpdateProductResponse"/>
+	</wsdl:message>
+    <wsdl:message name="ServerException">
+      <wsdl:part name="ServerException" element="uct:serverException"/>
+    </wsdl:message>
+    <wsdl:message name="ClientException">
+      <wsdl:part name="ClientException" element="uct:clientException"/>
+    </wsdl:message>
+	<wsdl:portType name="OCSProvisioningPort_v1">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="subscribeProductOffering">
+			<wsdl:input message="SubscribeProductOffering"/>
+			<wsdl:output message="SubscribeProductOfferingResponse"/>
+            <wsdl:fault name="ClientException" message="ClientException"/>
+            <wsdl:fault name="ServerException" message="ServerException"/>
+		</wsdl:operation>
+		<wsdl:operation name="unsubscribeProduct">
+			<wsdl:input message="UnsubscribeProduct"/>
+			<wsdl:output message="UnsubscribeProductResponse"/>
+            <wsdl:fault name="ClientException" message="ClientException"/>
+            <wsdl:fault name="ServerException" message="ServerException"/>
+		</wsdl:operation>
+		<wsdl:operation name="queryProductSubscription">
+			<wsdl:input message="QueryProductSubscription"/>
+			<wsdl:output message="QueryProductSubscriptionResponse"/>
+            <wsdl:fault name="ClientException" message="ClientException"/>
+            <wsdl:fault name="ServerException" message="ServerException"/>
+		</wsdl:operation>
+		<wsdl:operation name="queryProduct">
+			<wsdl:input message="QueryProduct"/>
+			<wsdl:output message="QueryProductResponse"/>
+            <wsdl:fault name="ClientException" message="ClientException"/>
+            <wsdl:fault name="ServerException" message="ServerException"/>
+		</wsdl:operation>
+		<wsdl:operation name="updateProduct">
+			<wsdl:input message="UpdateProduct"/>
+			<wsdl:output message="UpdateProductResponse"/>
+            <wsdl:fault name="ClientException" message="ClientException"/>
+            <wsdl:fault name="ServerException" message="ServerException"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="OCSProvisioningSOAPBinding_v1" type="OCSProvisioningPort_v1">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="subscribeProductOffering">
+			<soap:operation soapAction="subscribeProductOffering" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ClientException">
+				<soap:fault name="ClientException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="ServerException">
+				<soap:fault name="ServerException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="unsubscribeProduct">
+			<soap:operation soapAction="unsubscribeProduct" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ClientException">
+				<soap:fault name="ClientException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="ServerException">
+				<soap:fault name="ServerException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="queryProductSubscription">
+			<soap:operation soapAction="queryProductSubscription" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ClientException">
+				<soap:fault name="ClientException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="ServerException">
+				<soap:fault name="ServerException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="queryProduct">
+			<soap:operation soapAction="queryProduct" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ClientException">
+				<soap:fault name="ClientException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="ServerException">
+				<soap:fault name="ServerException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="updateProduct">
+			<soap:operation soapAction="updateProduct" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ClientException">
+				<soap:fault name="ClientException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="ServerException">
+				<soap:fault name="ServerException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="OCSProvisioningService_v1">
+		<wsdl:port name="OCSProvisioningPort_v1" binding="tns:OCSProvisioningSOAPBinding_v1">
+			<soap:address location="http://localhost/UNICA/SOAP/OCSProvisioning/v1/services"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

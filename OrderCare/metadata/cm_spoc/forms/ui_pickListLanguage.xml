@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.pickListLanguage">
+  <group>MixedBolton</group>
+  <label>pickListLanguage</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="languageIterator" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="languages" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dstruct_cm_spoc.PickListDS</valueType>
+    </variable>
+    <variable name="parentUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.MixedBoltOnForm</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <alignment>center,bottom</alignment>
+              <height>200px</height>
+              <width>250px</width>
+              <elementList>
+                <element name="LayoutSpacer" type="ellsp">
+                  <height>2px</height>
+                </element>
+                <element name="Table" type="eltabl">
+                  <height>80%</height>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.pickListLanguage/leaf_languages</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>80%</width>
+                  <elementList>
+                    <element name="description" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <labeAlign>center</labeAlign>
+                      <label>Language</label>
+                      <startRow>true</startRow>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.pickListLanguage/leaf_languages</variablePath>
+                          <variablePath>dstruct_cm_spoc.PickListDS/dstruct_description</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100%</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="OK" type="elbtn">
+                  <canSort>false</canSort>
+                  <cellAlignment>center,center</cellAlignment>
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.pickListLanguage/uimthd_OnClick</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <label>OK</label>
+                </element>
+                <element name="LayoutSpacer1" type="ellsp">
+                  <height>2px</height>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="OnClick" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <type>ui_com.conceptwave.system.UserInterface</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(this.languages.selected!=null){
+            var item = this.languages.selected[0];
+            var ListDS=  this.parentUI.parentUI.model.IVRBoltOnDescriptionArrDS.ListDS;
+            ListDS[ListDS.length-1].Language= item.description;
+            if(this.parentUI.parentUI.numberLanguages == ListDS.length){
+                this.parentUI.parentUI.showLanguageAddButton=false;
+            }
+            this.parent.cwDialogClose();
+        }
+      ]]></script>
+    </method>
+    <method name="getParentUI" type="uimthd">
+      <script>return this.parentUI;</script>
+    </method>
+    <method name="setParentUI" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <mandatory>true</mandatory>
+          <type>ui_com.conceptwave.system.UserInterface</type>
+        </parameter>
+      </parameterList>
+      <script>this.parentUI = ui;</script>
+    </method>
+  </methodList>
+</userInterface>

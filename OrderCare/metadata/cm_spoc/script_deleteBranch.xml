@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.deleteBranch">
+  <group>ui_scripts.RatingTree.RTFinder</group>
+  <label>deleteBranch</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var result = ui.RTFinder.result;
+
+    var modelObj = ui.model.RTRatingTreeBranchArrDS;
+    result = updateResult(result);
+    var tmpModel = modelObj["ListDS"];
+    var tmpRelations = modelObj["List"];
+    modelObj["ListDS"] = null;
+    modelObj["List"] = null;
+    var len = tmpModel.length;
+    var count = 0;
+
+    for( var i = result.length-1; i>=0; i--) {
+        if(!result[i].selectItem){
+            for( var j = 0; j < len; j++ ) {
+                if( tmpModel[j].specificationCode == result[i].specificationCode ){
+                    modelObj["ListDS"][count] = tmpModel[j];
+                    modelObj["List"][count] = tmpRelations[j];
+                    count++;
+                    break;
+                }
+            }
+        }
+        else
+        result.remove(result[i]);
+    }
+    revertModel(modelObj);
+    ui.RTFinder.model.setList(result);
+    ui.RTFinder.model.updateUI();
+    ui.RTFinder.setTableState(cm_spoc.initTState(ui.RTFinder,null));
+
+
+    function updateResult(result){
+    var ratingTreeBranchNodeArrDS = modelObj;
+    var arrDS = modelObj["ListDS"];
+    var newRes = new DataObjectList();
+    var arrDSLen = arrDS.length;
+
+        for ( var i = 0; i <arrDSLen; i++ ) {
+            var doc = new cm_spoc.RatingTreeDoc();
+            doc.specificationCode = arrDS[i].specificationCode;
+            if(i < result.length)
+                doc.selectItem = result[i].selectItem;
+            newRes[i] = arrDS[i];
+            newRes[i]= newRes[i].mapTo(doc,"cm_spoc.RatingTreeCM")[0];
+        }
+    return newRes;
+    }
+
+    function revertModel(modelObj){
+     var tmpArr = modelObj["ListDS"];
+     var tmpArrRel = modelObj["List"];
+    modelObj["ListDS"] = null;
+    modelObj["List"] = null;
+     var count = 0;
+     for( var i = tmpArr.length-1; i >=0; i--){
+         modelObj["ListDS"][count] = tmpArr[i];
+         modelObj["List"][count] = tmpArrRel[i];
+         count++;
+     }
+    }
+  ]]></script>
+</script>

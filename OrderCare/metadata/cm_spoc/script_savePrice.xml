@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.savePrice">
+  <group>ui_scripts.Common.Price</group>
+  <label>savePrice</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var fault = api_common.createFault();
+    var model =  ui.model;
+    var priceEvent = ui.parent.priceEvent;
+
+    if(ui.PriceEvent)
+        priceEvent = ui.PriceEvent;
+
+    if (!priceEvent) {
+
+         fault.addFault(model,"NGAA_EPC_001","Price Event","E");
+         Global.showUserMessage(Global.translateText("NGAA_EPC_001",null,"Price Event"));
+    } else {
+
+        var fieldName = cm_spoc.getPriceEventFieldName(priceEvent);
+
+        if(!fieldName || fieldName == "" ) {
+             fault.addFault(model,"NGAA_EPC_001","Price Event Field","E");
+             Global.showUserMessage(Global.translateText("NGAA_EPC_001",null,"Price Event Field"));
+        } else {
+
+             model[fieldName] = priceEvent;
+        }
+
+    }
+
+
+      if(priceEvent == "ServiceTariffPlanSubscription" || priceEvent == "ServiceTariffPlanUnsubscription" ) {
+        model.UsageControlPriceEvent = priceEvent;
+     }
+
+
+    var eList = cm_common.validateDs(model);
+    var saveResp;
+    for (var i = 0; eList != null && i < eList.length; i+=2) {
+          fault.addFault(model,[ eList[i+1],null],eList[i],"E");
+    }
+    //Item Check
+    var createItem = false;
+    var project =  cwt_pc.getDefaultProject();
+    var existingItem = cm_spoc.getExistingItem(model.specificationCode);
+
+    if(!existingItem) createItem = true;
+
+
+
+    if (existingItem && existingItem.projectRef != project.id) {
+         fault.addFault(model,"Price Already exists in an another project","NGAA_003","E");
+         Global.showUserMessage(Global.translateText("NGAA_003",null,"Price Already exists in an another project"));
+    }
+
+    if(!fault || fault.message.length==0) {
+       saveResp = cm_spoc.saveModelRec(model,cwa_epc.getDefaultProj(),createItem); //recursively Saves or Modify the catalog entities
+
+
+       if(saveResp!=null && !api_common.isFault(saveResp) ){
+       Global.showUserMessage(Global.translateText("NGAA_003",null,"Price Saved Succesfully"));
+       } else if (api_common.isFault(saveResp)) {
+            Global.showUserMessage(Global.translateText(saveResp.message[0].code,null,saveResp.message[0].text));
+
+       }
+
+
+    } else {
+       // var output = cm_pws.services.pws_faultResponse(fault);
+        // return output;
+    }
+  ]]></script>
+</script>

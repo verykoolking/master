@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_OACDScriptHLRCondRule">
+  <group>rules_scripts.TariffPlan</group>
+  <label>rule_OACDScriptHLRCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    // The attribute must be saved in the catalog only if the related attribute assumes the value shown in the column H.
+    // AllowedChangeDefinition
+    // ScriptHLR
+    // AllowedChangeDefinition
+    // IVR
+    // TRUE
+
+    if( data.ScriptHLR && !data.AllowedThroughIVR)
+    {
+         errList.addErrorMessage(data,["Script HLR can be saved only if IVR is set"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

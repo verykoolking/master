@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.setDestTypeAssoTariffClassListByValue">
+  <group>applicabilityCondition.api</group>
+  <label>setDestTypeAssoTariffClassListByValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="DestTypeAssoTariffClassList" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.DestTypeAssoTariffClassList</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        if(!cm_plm.isModificationAllowed(DestTypeAssoTariffClassList))
+            return api_common.createFault("ERR", "This modality is being maintained in another project.");
+
+        if(cm_plm.isProjectActive(DestTypeAssoTariffClassList.projectCode))
+            return api_common.createFault("ERR", "Item cannot be created for projects in ACT status.");
+
+        var result;
+
+        if(cm_plm.isObjectActive(DestTypeAssoTariffClassList)){
+            DestTypeAssoTariffClassList.endDate = new Date();
+            result = cm_plm.endDateObject(DestTypeAssoTariffClassList);
+            if(api_common.isFault(result))
+                return result;
+
+            //now we create a new version for this object
+            DestTypeAssoTariffClassList.endDate = null;
+            DestTypeAssoTariffClassList.startDate = new Date();
+            result = cm_plm.createDestTypeAssoTariffClassListByValue(DestTypeAssoTariffClassList);
+        }else{
+
+            var doc = Document.readDoc("cm_plm:DestTypeAssoTariffClassListDoc", DestTypeAssoTariffClassList.id);
+            if(!doc)
+                return api_common.createFault("ERR", "The DestType was not found: " + DestTypeAssoTariffClassList.id);
+
+            DestTypeAssoTariffClassList.mapTo(doc);
+            doc.save();
+            doc.mapTo(DestTypeAssoTariffClassList);
+
+            result = cm_plm.updateProjectAssignmentForObject(DestTypeAssoTariffClassList);
+        }
+
+        if(api_common.isFault(result))
+            return result;
+
+        return DestTypeAssoTariffClassList;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

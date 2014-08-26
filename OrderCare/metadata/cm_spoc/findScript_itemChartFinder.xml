@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cm_spoc.itemChartFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <group>cwt_scriptOverride</group>
+  <highlight>34</highlight>
+  <input>doc_cwt_pc.cwt_itemNodalChartSearch</input>
+  <label>itemChartFinder</label>
+  <maxRowsLimit>9999</maxRowsLimit>
+  <metaVersion>4</metaVersion>
+  <output>doc_cwt_pc.itemNodalChart</output>
+  <overrides>findScript_cwa_epc.itemChartFinder</overrides>
+  <type>script</type>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        var relationArr = new Array();
+        var result = new DataObjectList();
+        if (this.searchDocument.itemCode == null)
+              return result;
+
+        // Check for circular dependency at the parents before go create the chart
+        var circularchecksql = 'select itemcode, itemrelationtarget from cwpc_itemrelation_v where CONNECT_BY_ISCYCLE=1 start with itemrelationtarget=? connect by nocycle prior itemcode=itemrelationtarget';
+        var searchArray = new Array();
+        searchArray[0] = this.searchDocument.itemCode;
+        var cres = Global.runSQLQuery("CATALOG", "cwt_pc:cwt_restriction", 1, searchArray, circularchecksql);
+        if (cres.size > 0) {
+        //    return result;
+        }
+
+        var item = Document.readDoc("cwt_pc:cwt_itemNew", this.searchDocument.itemCode);
+        //var item = Document.readDoc("cwt_pc:cwt_itemNew", "htc_droid");
+
+        //get all relation documents (including inherited relations)
+        var level = 0;
+        relationArr = this.getRelations(item.itemCode, relationArr, item.itemCode, level, this.searchDocument.itemCode);
+
+        var yFiller = 100/(relationArr.length+2);      //level of relations + original item + 1 buffer space
+        var yCoord = 0;
+
+        //rearrange data
+        var newRelations = this.rearrangeData(relationArr);
+
+        //add relations to result
+        for (var i=newRelations.length-1; i>=0; i--) {
+              yCoord = yCoord + yFiller;
+              result = this.createDocuments(newRelations[i], yCoord, result);
+        }
+
+        //add original item to result
+        yCoord = yCoord + yFiller;
+        result = this.createItemDocument(item, yCoord, result);
+
+        return result;
+      ]]></script>
+    </method>
+    <method name="getRelations" type="uimthd">
+      <parameterList>
+        <parameter name="itemCode" type="rifp">
+          <type>dtype_cwt_pcdd.catalogCode</type>
+        </parameter>
+        <parameter name="result" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+        <parameter name="parent" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="level" type="rifp">
+          <type>dtype_com.conceptwave.system.Integer</type>
+        </parameter>
+        <parameter name="nodePath" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="parentRelationType" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var finder = new Finder("cwt_pc:cwt_itemRelationNodeFinder");
+        finder.searchDocument.itemCode = itemCode;
+        var fr = finder.search();
+
+        var currentResult = new Array();
+        for (var i=0; i<fr.length; i++) {
+              var itemRel = fr[i];
+              //filter the item relations to remove versions
+              var flag = true;
+              for (var z=0; z<currentResult.length; z++) {
+                    if (itemRel.itemCode == currentResult[z].itemCode && itemRel.itemRelationCode == currentResult[z].itemRelationCode) {
+                          flag = false;
+                          break;
+                    }
+              }
+              if (flag) {
+                    var f = new Finder("cwt_pc:cwt_itemRelationFinder");
+                    f.searchDocument.itemCode = itemRel.itemCode;
+                    f.searchDocument.itemRelationCode = itemRel.itemRelationCode;
+                    f.search();
+                    var defaultVersion = cwt_pc.getDefaultVersionWithoutStatus(f.list);
+                    defaultVersion.parentNode = parent;
+                    currentResult.push(defaultVersion);
+              }
+        }
+        if (fr.length > 0) {
+              currentResult.push(level++);
+            result.push(currentResult);
+
+        }
+
+        for (var i=0; i<currentResult.length-1; i++) {
+              var code = currentResult[i].itemRelationTarget;
+              var relationCode = currentResult[i].itemRelationCode;
+
+              var spaceNodePath = " " + nodePath + " ";
+              var nextPath = nodePath + " (" + relationCode + ") " + code;
+
+              // *TL+if : loop detection
+              if (spaceNodePath.indexOf(" "+code+" ")>=0) {
+                  continue;  // *TL + 11-Sep-2013, for relationships like Service requires Services
+                  var rootNode = nodePath.substring(0, nextPath.indexOf(" "));
+                  Global.throwException("DW9287", [rootNode, nextPath, code]);
+              }
+
+              if(currentResult[i].type == 'contains' || currentResult[i].type == 'List' || (parentRelationType!=null && (parentRelationType == 'List' || parentRelationType == 'contains')))
+                  result = this.getRelations(code, result, parent + "_" + currentResult[i].itemRelationCode, level, nextPath, currentResult[i].type);
+        }
+
+        return result;
+      ]]></script>
+    </method>
+    <method name="createDocuments" type="uimthd">
+      <parameterList>
+        <parameter name="relationDocs" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+        <parameter name="yCoord" type="rifp">
+          <type>dtype_com.conceptwave.system.Integer</type>
+        </parameter>
+        <parameter name="result" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var relationCount = relationDocs.length;
+        var buffer = 0;
+        if (relationCount%2 != 0)      //if there are odd number of relations
+              buffer = 1;
+        var xFiller = 100/(relationCount+buffer+1);
+        var xCoord = 0;
+
+        for (var i=0; i<relationDocs.length; i++) {
+                xCoord = xCoord + xFiller;
+              var itemRel = relationDocs[i];
+              var doc = new Document("cwt_pc:itemNodalChart");
+              doc.id = itemRel.parentNode + "_" + itemRel.itemRelationCode;
+              doc.label = itemRel.name;
+              doc.connectTo = itemRel.parentNode;
+              doc.connectorLabel = itemRel.type.refData.visualKey;
+              //doc.imageUrl = "/images/chart/product_green.png";
+              doc.imageUrl = cwt_pc.getItemTreeNodeIcon(itemRel.itemRelationTarget.refData.itemType, 'L');
+              doc.trendName = itemRel.type.refData.relationTypeCode;
+              doc.height = 50;
+              //doc.width = (itemRel.name.length > 13 ? (itemRel.name.length * 8) : 100); //assuming 1 character = 8 pixel
+              //doc.width = 15 * 8; //characters * pixel
+              doc.xCoordinate = xCoord;
+              doc.yCoordinate = yCoord;
+              result.addLast(doc);
+        }
+
+        return result;
+      ]]></script>
+    </method>
+    <method name="createItemDocument" type="uimthd">
+      <parameterList>
+        <parameter name="item" type="rifp">
+          <type>doc_cwt_pc.cwt_itemNew</type>
+        </parameter>
+        <parameter name="yCoord" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="result" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var xCoord = 50;
+        var doc = new Document("cwt_pc:itemNodalChart");
+        doc.id = item.itemCode;
+        doc.label = item.name;
+        //doc.imageUrl = "/images/chart/product_green.png";
+        doc.imageUrl = cwt_pc.getItemTreeNodeIcon(item.itemType, 'L');
+        doc.height = 50;
+        //doc.width = (item.name.length > 13 ? (item.name.length * 8) : 100); //assuming 1 character = 8 pixel
+        //doc.width = 15 * 8; //characters * pixel
+        doc.xCoordinate = xCoord;
+        doc.yCoordinate = yCoord;
+        result.addLast(doc);
+
+        return result;
+      ]]></script>
+    </method>
+    <method name="rearrangeData" type="uimthd">
+      <parameterList>
+        <parameter name="relationsArr" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        //relationsArr is a 2x2 array. The last element in the second array is level.
+        var returnArr = new Array();
+        var oldLevel = -1;
+
+        for (var i=0; i<relationsArr.length; i++) {
+              var arr = relationsArr[i];
+              var level = arr[arr.length-1];
+              if (level > oldLevel) {
+                    var currentArr = new Array();
+                    currentArr = currentArr.concat(arr.slice(0, arr.length-1));
+
+                    for (var j=i+1; j<relationsArr.length; j++) {
+                          var arr2 = relationsArr[j];
+                          if (arr2[arr2.length-1] == level) {
+                                currentArr = currentArr.concat(arr2.slice(0, arr2.length-1));
+                          }
+                    }
+
+                    oldLevel = level;
+                    returnArr.push(currentArr);
+              }
+        }
+
+        return returnArr;
+
+        //slice(0, length-1)
+        //concat
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <overrides>findScript_cwa_epc.itemChartFinder/ui_UserInterface</overrides>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <label>cwt_itemNew</label>
+        <valueType>doc_cwt_pc.itemNodalChart</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cwt_pc.cwt_itemNodalChartSearch/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cwt_pc.itemNodalChart/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="itemChartFinderResultTable1" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="xCoordinate" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_com.conceptwave.system.NodalChartDocument/leaf_xCoordinate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="yCoordinate" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_com.conceptwave.system.NodalChartDocument/leaf_yCoordinate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="width" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_com.conceptwave.system.NodalChartDocument/leaf_width</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="height" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_com.conceptwave.system.NodalChartDocument/leaf_height</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="id" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_com.conceptwave.system.NodalChartDocument/leaf_id</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="label" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_com.conceptwave.system.NodalChartDocument/leaf_label</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="connectTo" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_com.conceptwave.system.NodalChartDocument/leaf_connectTo</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="connectorLabel" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_com.conceptwave.system.NodalChartDocument/leaf_connectorLabel</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="trendName" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_com.conceptwave.system.NodalChartDocument/leaf_trendName</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="imageUrl" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_com.conceptwave.system.NodalChartDocument/leaf_imageUrl</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="color" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_com.conceptwave.system.NodalChartDocument/leaf_color</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="shape" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_com.conceptwave.system.NodalChartDocument/leaf_shape</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Chart" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Chart</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Chart</extends>
+            <label>Chart</label>
+            <overrideList>
+              <override name="NodalChart" type="elndlchart">
+                <connectorColor type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uimthd_getConnectorColor</variablePath>
+                  </variablePathList>
+                </connectorColor>
+                <connectorThickness>0</connectorThickness>
+                <height>100%</height>
+                <labelAlign>bottom</labelAlign>
+                <showConnectArrowEnd>false</showConnectArrowEnd>
+                <showConnectArrowStart>false</showConnectArrowStart>
+                <showTrendLabel>false</showTrendLabel>
+                <showTrendLines>false</showTrendLines>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.itemChartFinder/ui_UserInterface/uivar_result</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>550px</width>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="getConnectorColor" type="uimthd">
+        <parameterList>
+          <parameter name="document" type="rifp">
+            <type>doc_cwt_pc.itemNodalChart</type>
+          </parameter>
+        </parameterList>
+        <valueType>dtype_com.conceptwave.system.String</valueType>
+        <script>return cwt_pc.getConnectorColor(document.trendName);</script>
+      </method>
+    </methodList>
+  </UserInterface>
+  <viewList>
+    <view name="itemChartFinderView" type="findVView">
+      <outputOverlay>findScript_cm_spoc.itemChartFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findScript>

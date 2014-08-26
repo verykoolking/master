@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TariffClassAppConditionForm">
+  <group>Common.ApplicabilityCondition</group>
+  <label>TariffClassAppConditionForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TariffClass</valueType>
+    </variable>
+    <variable name="PickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="SectionStack" type="elsectnstck">
+              <width>750px</width>
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="SectionHeader" type="elsecth">
+                      <label>Tariff Class</label>
+                    </element>
+                    <element name="Description" type="elfld">
+                      <cellAlignment>left,center</cellAlignment>
+                      <labeAlign>left</labeAlign>
+                      <labelOrientation>left</labelOrientation>
+                      <textAlign>left</textAlign>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.TariffClassAppConditionForm/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.TariffClass/dstruct_Description</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="LayoutSpacer" type="ellsp">
+                      <height>50px</height>
+                    </element>
+                    <element name="VerticalLayout" type="elvlt">
+                      <alignment>center,center</alignment>
+                      <elementList>
+                        <element name="FormFrame" type="elovf">
+                          <cellAlignment>center,center</cellAlignment>
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.TariffClassAppConditionForm/leaf_PickList</variablePath>
+                              <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <height>350px</height>
+                          <padding>0</padding>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.TariffClassAppConditionForm/leaf_PickList</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <width>750px</width>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.TariffClassAppConditionForm/leaf_model</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.TariffClassAppConditionForm/leaf_model</valueType>
+      <script><![CDATA[
+        var model = cm_spoc.initTariffClassAppCondition(this.model);
+        return model;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$PickList" type="laction">
+      <path>ui_cm_spoc.forms.TariffClassAppConditionForm/leaf_PickList</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TariffClass";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.TCACTariffClassArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setPickListModel;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="setPickListModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.TCACTariffClassArrDS.List = null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.TCACTariffClassArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+  </methodList>
+</userInterface>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cm_plm.changeRequest">
+  <dbSchema>ORDER</dbSchema>
+  <extends>doc_com.conceptwave.system.Document</extends>
+  <generatedKey>true</generatedKey>
+  <guid>{f911c440-b759-4b7b-9eed-3c6d0bf35de7}</guid>
+  <label>CM-PLM - Change Request</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="id" type="leaf">
+      <column>ID</column>
+      <key>1</key>
+      <label>System document ID</label>
+      <table>CWPL_CHANGEREQUEST</table>
+      <valueType>dtype_cwf.cwDocId</valueType>
+    </variable>
+    <variable name="projectCode" type="leaf">
+      <column>PROJECTCODE</column>
+      <label>Project</label>
+      <table>CWPL_CHANGEREQUEST</table>
+      <valueType>dtype_cwt_pcdd.catalogCode</valueType>
+    </variable>
+    <variable name="description" type="leaf">
+      <dontMap>true</dontMap>
+      <label>description</label>
+      <valueType>dtype_cwt_pclm.description</valueType>
+    </variable>
+    <variable name="errorList" type="leaf">
+      <column>ERRORLIST</column>
+      <label>description</label>
+      <table>CWPL_CHANGEREQUEST</table>
+      <valueType>dtype_cwt_pclm.description</valueType>
+    </variable>
+    <variable name="cwOrderId" type="leaf">
+      <column>CWORDERID</column>
+      <label>System order ID</label>
+      <table>CWPL_CHANGEREQUEST</table>
+      <valueType>dtype_cwf.cwOrderId</valueType>
+    </variable>
+    <variable name="cwParentId" type="leaf">
+      <column>CWPARENTID</column>
+      <label>System parent ID</label>
+      <table>CWPL_CHANGEREQUEST</table>
+      <valueType>dtype_cwf.cwParentId</valueType>
+    </variable>
+    <variable name="label" type="leaf">
+      <dontMap>true</dontMap>
+      <label>Label</label>
+      <valueType>dtype_cwt_pcdd.label</valueType>
+    </variable>
+    <variable name="orderStatus" type="leaf">
+      <column>STATUS</column>
+      <table>CWPL_CHANGEREQUEST</table>
+      <valueType>dtype_cm_plm.plmOrderStatusType</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="cwLeafInitAction$orderStatus" type="laction">
+      <path>doc_cm_plm.changeRequest/leaf_orderStatus</path>
+      <type>initializer</type>
+      <valueType>doc_cm_plm.changeRequest/leaf_orderStatus</valueType>
+      <script><![CDATA[return "NEW";]]></script>
+    </method>
+    <method name="viewPerm" type="permMethod">
+      <privilegesType>NEVER</privilegesType>
+    </method>
+    <method name="addPerm" type="permMethod">
+      <script>$psCondition</script>
+    </method>
+    <method name="deletePerm" type="permMethod">
+      <privilegesType>NEVER</privilegesType>
+    </method>
+    <method name="editablePerm" type="permMethod">
+      <script>true</script>
+    </method>
+    <method name="viewPicklist" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>marketManager</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+      <script>true</script>
+    </method>
+    <method name="cwOnDocVisualKey" type="action">
+      <system>true</system>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[return "Project Details";]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_com.conceptwave.system.Document/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cm_plm.changeRequest</valueType>
+      </variable>
+      <variable name="projectUI" type="leaf">
+        <valueType>doc_cwt_pc.cwt_project/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="DetailsGrid_vCentering" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="project" type="elovf">
+                    <formReference type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_plm.changeRequest/ui_UserInterface/leaf_projectUI</variablePath>
+                        <variablePath>doc_cwt_pc.cwt_project/ui_UserInterface/frmui_Forms</variablePath>
+                        <variablePath>doc_cwt_pc.cwt_project/ui_UserInterface/frmui_Forms/vform_workflowForm</variablePath>
+                      </variablePathList>
+                    </formReference>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_plm.changeRequest/ui_UserInterface/leaf_projectUI</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="LayoutSpacer" type="ellsp"/>
+                  <element name="otherFields" type="elovf">
+                    <formReference type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_plm.changeRequest/ui_UserInterface/frmui_Forms</variablePath>
+                        <variablePath>doc_cm_plm.changeRequest/ui_UserInterface/frmui_Forms/vform_orderFields</variablePath>
+                      </variablePathList>
+                    </formReference>
+                    <height>100%</height>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="orderFields" type="vform">
+            <label>orderFields</label>
+            <root name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="GridLayout" type="elgrd">
+                  <colWidths>150px,150px,150px,150px</colWidths>
+                  <labelOrientation>left</labelOrientation>
+                  <numOfCols>4</numOfCols>
+                  <elementList>
+                    <element name="orderStatus" type="elslct">
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <label>Order State</label>
+                      <labelOrientation>left</labelOrientation>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.DocumentUserInterface/usrActionMethod_runTrigger</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.changeRequest/ui_UserInterface/uivar_model</variablePath>
+                          <variablePath>doc_cm_plm.changeRequest/leaf_orderStatus</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>150px</width>
+                    </element>
+                    <element name="description" type="eltxtArea">
+                      <columnSpan>4</columnSpan>
+                      <label>Description</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.changeRequest/ui_UserInterface/uivar_model</variablePath>
+                          <variablePath>doc_cm_plm.changeRequest/leaf_description</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="Menu" type="exov">
+            <base>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms/exov_Menu</base>
+            <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms/exov_Menu</extends>
+            <label>Menu</label>
+            <overrideList>
+              <override name="cwfSave" type="eldel"/>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="isManager" type="permMethod">
+        <script><![CDATA[return UserProfile.hasPrivilege("initiateTask") || UserProfile.hasPrivilege("productManager");]]></script>
+      </method>
+      <method name="dummyTrigger" type="uimthd"/>
+      <method name="onInit" type="action">
+        <valueType>nmeta_com.conceptwave.system.Object</valueType>
+        <script><![CDATA[
+          var projectDoc = null;
+          if (this.model.projectCode)
+              projectDoc = epc.getProjectByCode(this.model.projectCode);
+          this.projectUI = new cwt_pc.cwt_project.UserInterface(projectDoc, this);
+        ]]></script>
+      </method>
+      <method name="onValidate" type="action">
+        <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+        <script><![CDATA[
+          this.cw$super_onValidate();
+          this.isValid = (this.projectUI.onValidate() && this.isValid);
+          return this.isValid;
+        ]]></script>
+      </method>
+    </methodList>
+  </UserInterface>
+</document>

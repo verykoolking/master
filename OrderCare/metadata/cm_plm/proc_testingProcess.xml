@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cm_plm.testingProcess">
+  <activity name="start" type="seqActivity">
+    <guid>{9ea07c7e-8b29-45d4-812d-4bcf2f9aebcc}</guid>
+    <label>Start</label>
+    <x>72.0</x>
+    <y>175.87646</y>
+    <childList>
+      <child name="TestingRequired" type="switchActivity">
+        <guid>{df3e569a-2dd4-464d-9030-e969bf897c8d}</guid>
+        <label>Testing Required?</label>
+        <x>163.0</x>
+        <y>166.1753</y>
+        <childList>
+          <child name="yes" type="caseActivity">
+            <guid>{aa6f5f6a-6dfe-42ef-9749-d3e2d0abf406}</guid>
+            <label>Yes</label>
+            <x>122.0</x>
+            <y>130.0</y>
+            <childList>
+              <child name="yes" type="seqActivity">
+                <guid>{0025f30e-8583-429d-a50a-fa9c181966f5}</guid>
+                <label>Yes</label>
+                <x>254.3711</x>
+                <y>170.70117</y>
+                <childList>
+                  <child name="CpErrorOnTesting" type="scriptActivity">
+                    <guid>{3d56a29d-3b87-46c3-8886-0d478dae3dfa}</guid>
+                    <label>CP</label>
+                    <x>346.3711</x>
+                    <y>170.70117</y>
+                    <childList>
+                      <child name="errorCP" type="compensateActivity">
+                        <compensatesList>
+                          <compensates>errorOnTestingCP</compensates>
+                        </compensatesList>
+                        <guid>{5b7b3845-c676-4be1-9015-d8b85c0084fe}</guid>
+                        <label>errorCP</label>
+                        <x>346.3711</x>
+                        <y>270.70117</y>
+                        <childList>
+                          <child name="cpScript" type="scriptActivity">
+                            <guid>{6dc4d62d-f8f0-4c22-ad47-d0736719fac8}</guid>
+                            <label>cpScript</label>
+                            <x>355.3711</x>
+                            <y>292.70117</y>
+                            <methodList>
+                              <method name="cwOnProcActBefore" type="action">
+                                <category>before</category>
+                                <system>true</system>
+                                <script>return;</script>
+                              </method>
+                            </methodList>
+                          </child>
+                        </childList>
+                      </child>
+                    </childList>
+                    <methodList>
+                      <method name="cwOnProcActBefore" type="action">
+                        <category>before</category>
+                        <system>true</system>
+                        <script><![CDATA[
+                          var pd = process.processDocument;
+                          pd.compPoint = 'errorOnTestingCP';
+                        ]]></script>
+                      </method>
+                    </methodList>
+                  </child>
+                  <child name="publishInAltamira" type="subflowActivity">
+                    <element>proc_cm_plm.publishInAltamira</element>
+                    <guid>{194a55c5-c973-494f-a649-35aedad53c13}</guid>
+                    <label>Publish in Altamira</label>
+                    <x>425.3711</x>
+                    <y>166.0</y>
+                    <methodList>
+                      <method name="cwOnProcActBefore" type="action">
+                        <category>before</category>
+                        <system>true</system>
+                        <script><![CDATA[
+                          process.processDocument.sendToAltamira = "TST";
+                          cm_plm.setProcessOrderState(process, 'DTS');
+                        ]]></script>
+                      </method>
+                    </methodList>
+                  </child>
+                  <child name="ConfigurationDeployAction" type="opActivity">
+                    <element>iface_cm_plm.confDeployInt/oper_deployConf</element>
+                    <guid>{440bca45-cc5a-4fdc-ac95-d790c2275242}</guid>
+                    <label>Configuration Deploy Action</label>
+                    <participant>part_cm_plm.confDeployPart</participant>
+                    <x>511.3711</x>
+                    <y>152.70117</y>
+                    <childList>
+                      <child name="evalDeployResultContinue" type="opActivity">
+                        <element>iface_cm_plm.confDeployInt/oper_Complete</element>
+                        <guid>{6530149d-5a59-483f-8843-91ca1440dfc3}</guid>
+                        <label>Continue</label>
+                        <participant>part_cm_plm.confDeployPart</participant>
+                        <x>648.3711</x>
+                        <y>170.70117</y>
+                      </child>
+                    </childList>
+                  </child>
+                  <child name="evalTestResult" type="opActivity">
+                    <element>iface_cm_plm.confTestingInt/oper_testingConf</element>
+                    <guid>{4b4fa703-775c-492a-97cf-9ba53d375d64}</guid>
+                    <label>Evaluate Testing Result</label>
+                    <participant>part_cm_plm.confTestingPart</participant>
+                    <x>764.3711</x>
+                    <y>152.42822</y>
+                    <methodList>
+                      <method name="cwOnProcActBefore" type="action">
+                        <category>before</category>
+                        <system>true</system>
+                        <script><![CDATA[cm_plm.setProcessOrderState(process, 'TST');]]></script>
+                      </method>
+                    </methodList>
+                  </child>
+                  <child name="evalTestResultAction" type="choiceActivity">
+                    <guid>{8754957f-0941-4846-8a5f-445a60ada795}</guid>
+                    <label>Configuration Reviewer Action</label>
+                    <x>751.05273</x>
+                    <y>276.8047</y>
+                    <childList>
+                      <child name="evalTestResultContinue" type="opActivity">
+                        <element>iface_cm_plm.confTestingInt/oper_Complete</element>
+                        <guid>{780da321-6488-475c-ad7b-42cd7b7c2849}</guid>
+                        <label>Continue</label>
+                        <participant>part_cm_plm.confTestingPart</participant>
+                        <x>732.4297</x>
+                        <y>474.40234</y>
+                        <methodList>
+                          <method name="cwOnProcActAfter" type="action">
+                            <category>script</category>
+                            <system>true</system>
+                            <script>process.processDocument.isAmendmentRequest = false;</script>
+                          </method>
+                        </methodList>
+                      </child>
+                      <child name="evalTestResultAmend" type="opActivity">
+                        <element>iface_cm_plm.confTestingInt/oper_Restart</element>
+                        <guid>{f7ba5f53-bbda-4edf-b717-d3a1613bcf83}</guid>
+                        <label>Amend Configuration</label>
+                        <participant>part_cm_plm.confTestingPart</participant>
+                        <x>605.75</x>
+                        <y>464.4541</y>
+                        <methodList>
+                          <method name="cwOnProcActAfter" type="action">
+                            <category>script</category>
+                            <system>true</system>
+                            <script>process.processDocument.isAmendmentRequest = true;</script>
+                          </method>
+                        </methodList>
+                      </child>
+                      <child name="evalTestResultReject" type="opActivity">
+                        <element>iface_cm_plm.confTestingInt/oper_Reject</element>
+                        <guid>{0ed568ec-62c8-4b0b-ae26-a8a9304fc0ed}</guid>
+                        <label>Reject</label>
+                        <participant>part_cm_plm.confTestingPart</participant>
+                        <x>832.05273</x>
+                        <y>480.8047</y>
+                        <childList>
+                          <child name="sendReject" type="exceptActivity">
+                            <element>excp_cm_plm.errorException</element>
+                            <guid>{53638a49-ae50-472a-9f6f-627edd3af376}</guid>
+                            <label>Rejected</label>
+                            <x>825.05273</x>
+                            <y>582.8047</y>
+                            <methodList>
+                              <method name="cwOnProcActBefore" type="action">
+                                <category>before</category>
+                                <system>true</system>
+                                <script><![CDATA[
+                                  var pDoc = process.processDocument;
+                                  pDoc.rejectToParent = true;
+                                ]]></script>
+                              </method>
+                            </methodList>
+                          </child>
+                        </childList>
+                        <methodList>
+                          <method name="cwOnProcActAfter" type="action">
+                            <category>script</category>
+                            <system>true</system>
+                            <script><![CDATA[cm_plm.setProcessOrderState(process, 'REJ');]]></script>
+                          </method>
+                        </methodList>
+                      </child>
+                    </childList>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnProcActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[
+                  var tst_req = Global.getConfigVariable("plmTestingRequired");
+                  return tst_req == "true";
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+          <child name="no" type="caseActivity">
+            <guid>{f707dc78-66af-477f-9eb3-a5a3ef5b31fc}</guid>
+            <label>No</label>
+            <x>175.3711</x>
+            <y>275.70117</y>
+          </child>
+        </childList>
+      </child>
+      <child name="end" type="completeActivity">
+        <guid>{5c665160-bc42-4ca8-aa54-d97c0fb3dae2}</guid>
+        <label>End</label>
+        <x>334.0</x>
+        <y>579.87646</y>
+      </child>
+      <child name="onReject" type="onExceptionActivity">
+        <element>excp_cwt_pclm.Rejected</element>
+        <guid>{705465c0-719a-4c94-9b48-26e0504bcf31}</guid>
+        <label>On Reject</label>
+        <x>25.496094</x>
+        <y>219.67938</y>
+        <childList>
+          <child name="sendRejectionToParent" type="subflowActivity">
+            <element>proc_cm_plm.sendRejectionToParentSubFlow</element>
+            <guid>{6fb6b752-e88a-4ac3-b556-473b9688f60c}</guid>
+            <label>Send Rejection To Parent</label>
+            <x>68.49609</x>
+            <y>306.67938</y>
+          </child>
+        </childList>
+      </child>
+      <child name="onError" type="onExceptionActivity">
+        <element>excp_cm_plm.errorException</element>
+        <guid>{3b54d726-1a96-4e3a-831f-f83d484edad1}</guid>
+        <label>On Error</label>
+        <x>29.0</x>
+        <y>-20.123535</y>
+        <childList>
+          <child name="handleError" type="subflowActivity">
+            <element>proc_cm_plm.handleErrorSubFlow</element>
+            <guid>{46179007-a2b7-4f51-b783-fbe28507707e}</guid>
+            <label>Handle Error</label>
+            <x>75.0</x>
+            <y>-2.1235352</y>
+          </child>
+        </childList>
+      </child>
+      <child name="confErrorPart" type="participantActivity">
+        <guid>{7049c593-ea3c-4acd-b586-3b06daa380df}</guid>
+        <label>CM-PLM Configuration Error Participant</label>
+        <participant>part_cm_plm.confErrorPart</participant>
+        <x>847.0</x>
+        <y>57.0</y>
+      </child>
+      <child name="confDeployPart" type="participantActivity">
+        <guid>{e12c97a8-1762-46e4-ba0b-ab145be64db7}</guid>
+        <label>CM-PLM Configuration Deploy Participant</label>
+        <participant>part_cm_plm.confDeployPart</participant>
+        <x>580.0</x>
+        <y>9.0</y>
+      </child>
+      <child name="confTestingPart" type="participantActivity">
+        <guid>{66afcf21-0e47-4f3a-83ef-2bdf754fabcf}</guid>
+        <label>CM-PLM Configuration Testing Participant</label>
+        <participant>part_cm_plm.confTestingPart</participant>
+        <x>937.0</x>
+        <y>24.0</y>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <document>doc_cm_plm.mainProcessDoc</document>
+  <guid>{b02933ec-0978-4cfe-9647-70d505a7a01f}</guid>
+  <label>CM-PLM Testing</label>
+  <metaVersion>4</metaVersion>
+  <parentProcessDoc>true</parentProcessDoc>
+  <priority>8</priority>
+  <type>User</type>
+</process>

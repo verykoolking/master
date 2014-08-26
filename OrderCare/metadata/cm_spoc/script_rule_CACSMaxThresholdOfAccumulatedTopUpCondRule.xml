@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_CACSMaxThresholdOfAccumulatedTopUpCondRule">
+  <group>rules_scripts.CyclicActions</group>
+  <label>rule_CACSMaxThresholdOfAccumulatedTopUpCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(data.MaxThresholdOfAccumulatedTopUp && data.CyclicActConditionedByPreviousTU!=true)
+        errList.addErrorMessage(data,["Maximum Threshold of Accumulated Top Ups only can save if The cyclic activation will be conditioned by previous top-ups is checked"],"NGAA_003","E");
+    return false;
+  ]]></script>
+</script>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="cm_plm.Nx24AppBoltonTypeList">
+  <container>true</container>
+  <extends>dstruct_cm_plm.baseObject</extends>
+  <group>applicabilityCondition.data</group>
+  <guid>{b26cf87a-4c78-4b01-b929-73578f6be61e}</guid>
+  <jsonMap type="jmap"/>
+  <label>Nx24AppBoltonTypeList</label>
+  <metaVersion>4</metaVersion>
+  <childList>
+    <child name="Nx24AppBoltonTypeListId" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_plm.Nx24AppBoltonTypeListIdType</element>
+      <guid>{0e7b3576-ba36-4aaa-8cd6-039f8b38e369}</guid>
+      <jsonMap type="jmap"/>
+      <label>Nx24AppBoltonTypeListId</label>
+      <mandatory>true</mandatory>
+      <xmlMap type="xmap">
+        <length>4</length>
+      </xmlMap>
+    </child>
+    <child name="Nx24AppBoltonTypeListDesc" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_plm.Nx24AppBoltonTypeListDescType</element>
+      <guid>{498ec1bc-48ae-45da-af06-6ab8ce449171}</guid>
+      <jsonMap type="jmap"/>
+      <label>Nx24AppBoltonTypeListDesc</label>
+      <xmlMap type="xmap">
+        <length>40</length>
+      </xmlMap>
+    </child>
+    <child name="Nx24AppBoltonTypeListModality" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.BoltOnTypeModalityEnum</element>
+      <guid>{55a7e851-41ef-4843-b3f0-4a3dff09edc3}</guid>
+      <jsonMap type="jmap"/>
+      <label>Nx24AppBoltonTypeListModality</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="Nx24AppBoltonTypeArr" type="dstruct">
+      <array>true</array>
+      <element>dstruct_cm_plm.Nx24AppBoltonType</element>
+      <guid>{1f6f5277-52d6-4b8e-acf2-32b9bbaf7d04}</guid>
+      <jsonMap type="jmap"/>
+      <label>Nx24AppBoltonTypeArr</label>
+      <mandatory>true</mandatory>
+      <maxInstance>-1</maxInstance>
+      <minInstance>1</minInstance>
+    </child>
+  </childList>
+  <methodList>
+    <method name="populateDefaultValues" type="action">
+      <parameterList>
+        <parameter name="conditions" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dstruct_cm_spoc.data.SimpleTemporalAppCondition</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var Nx24AppBoltonType;
+
+        for(var i=0; i<conditions.length; i++){
+           Nx24AppBoltonType = new cm_plm.Nx24AppBoltonType();
+           Nx24AppBoltonType.TypeOfDayID = conditions[i].TypeOfDay;
+           Nx24AppBoltonType.populateDefaultValues();
+           this.Nx24AppBoltonTypeArr[this.Nx24AppBoltonTypeArr.length] = Nx24AppBoltonType;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_cm_plm.Nx24AppBoltonTypeList</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_cm_plm.Nx24AppBoltonTypeList</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

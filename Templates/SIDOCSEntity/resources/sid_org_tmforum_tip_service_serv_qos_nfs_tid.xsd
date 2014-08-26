@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tid" xmlns:tc="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc" xmlns:ds="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/ds" xmlns:qos="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tid" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.service.serv.qos.nfs.tid
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 7
+ Association Classes: 1
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc" schemaLocation="sid_org_tmforum_tip_service_serv_qos_nfs_tc.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/ds" schemaLocation="sid_org_tmforum_tip_service_serv_qos_nfs_tc_ds.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos" schemaLocation="sid_org_tmforum_tip_service_serv_qos.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="classifierService" type="tns:ClassifierService"/>
+   <xsd:complexType name="ClassifierService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A Classifier is an internal component of the forwarding path. It is used to recognize and distinguish among different packet streams or flows. Without classification, all packets will be treated the same.
+
+The function of the ClassifierService is to model the identification of traffic accepted at the ingress interface of the device, and to separate traffic into different flows. This enables flows from different applications that can be treated the same way to be aggregated together, making the network design much more scalable.
+
+For almost all situations, the ClassifierService will be followed by a MarkerService (or one of its subclasses) so that separate traffic can be assigned a unique mark in the packet header. This will enable subsequent mechanisms to simply examine the mark in the header and perform operations based on that marking. This dependency is modeled using an instance of the NextForwardingService association.
+
+The definition of which flows can be separated into which aggregates is defined using the TrafficMatchCriteria class.
+
+The Classifier uses the PolicyStatement construct from the Policy Model. Operator is set to "match". PolicyVariable and PolicyValue can either be predefined in a TrafficMatchCriteria class, or defined dynamically using the four attributes defined in this class.
+
+In DEN-ng, this is modeled as a Service that can be invoked.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="dynamicClassVariableName" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute, whose value contains the name of a class to be used to form all or part of the traffic match criteria. For example, if it is desired to match on a dynamically negotiated port number, then the value of this attribute would be used to identify the appropriate class (e.g., PortVariable) that would be used.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="dynamicAttributeVariableName" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute, whose value contains the name of an attribute to be used to form all or part of the traffic match criteria. For example, if it is desired to match on a dynamically negotiated port number, then the value of this attribute would be used to identify the appropriate attribute (e.g., PortNumber ) in the appropriate class (e.g., PortVariable) that would be used.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="dynamicClassValueName" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute, whose value contains the name of a class to be used to supply the value to be matched against. For example, if it is desired to match on a dynamically negotiated port number, then the value of the dynamicClassVariableName attribute would be PortVariable. The value of this attribute could then be StringValue.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="dynamicAttributeValueName" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute, whose value contains the name of an attribute to be used to supply the value to be matched against.
+
+For example, if it is desired to match on a dynamically negotiated port number, then the value of the dynamicClassVariableName attribute would be PortVariable, and the attribute to match against in PortVariable might be PortNumber. The value of the dynamicClassValueName attribute to compare the SourcePort against could be StringValue</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="trafficMatchCriteria" type="tns:ArrayOfTrafficMatchCriteria" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association ClassifierUsesCriteria</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfClassifierService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ClassifierService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="markerPool" type="tns:MarkerPool"/>
+   <xsd:complexType name="MarkerPool">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A MarkerPool object represents a set of markings that can be used by one or more MarkerServices. For example, different MarkerPools could be defined for different Customers as well as for different technologies. Since MarkerPool objects can be designed independently of MarkerServices, the cardinality of the UsesMarkerPool association is 0..n on the MarkerService side. However, since a MarkerService must have at least one or more MarkerPool objects to function correctly, the cardinality of the UsesMarkerPool association is 1..n on the MarkerPool side.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="isExhausted" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, means that all values in this particular MarkerPool have been exhausted.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="valuesLeftInPool" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an integer that contains the current number of unique marker values that remain unused in this MarkerPool.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="typeOfMarkerPool" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the type of MarkerPool that this instance is. Values include:
+
+0: ToS
+1: DSCP
+2: 802-priority field
+3: 802-vlan id
+4: ISL class of service field (3 bits)
+5: Class of Service (other field)
+6: MPLS Label
+7: VC ID
+8: VC Bundle (set of VC IDs)</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="qoSService" type="qos:QoSService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association QoSTechnologyMarkedBy</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="markerService" type="tns:ArrayOfMarkerService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association UsesMarkerPool</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfMarkerPool">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:MarkerPool" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="markerService" type="tns:MarkerService"/>
+   <xsd:complexType name="MarkerService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The function of a MarkerService is to mark packets in a flow so that different devices in the network know how to treat the traffic that these packets belong to. This is done by "coloring" a packet so that it can be identified and distinguished among other packets that are receiving traffic conditioning. In effect, this partitions a network into multiple priority levels or classes. Marking packets is done using a technology-specific mechanism, such as the ToS byte, the DSCP, or other methods for other media.
+
+In DEN-ng, this function is modeled by the MarkerService. This service will mark a selected field in a network packet with a specified value. Packets are marked in order to indicate to downstream components what types of TrafficConditioningServices they will subsequently receive.
+
+The definition of how to mark a particular packet is defined using the MarkerPool class.
+
+Note that there is a fundamental difference between its two subclasses. StandardMarkerService enables different types of technology-specific marking, which directly affect subsequent operations, to be defined. Examples of this include the difference between DiffServ marking and IEEE 802 marking. The PreambleMarkingService is used to capture the result of traffic conditioning operations and store them in a preamble. The two types of marking can be combined in some implementations.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="rEDServiceElement" type="ds:REDServiceElement" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association MarkingUsedForDropping</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="dropProbabilityDetails" type="ds:ArrayOfDropProbabilityDetails" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association IdentifiesDroppingBehavior</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="markerPool" type="tns:ArrayOfMarkerPool" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association UsesMarkerPool</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfMarkerService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:MarkerService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="preambleMarkerService" type="tns:PreambleMarkerService"/>
+   <xsd:complexType name="PreambleMarkerService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This type of MarkerService is used to model the storing of traffic-conditioning results in a packet preamble. The results are stored as an array of , pairs.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="marking" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an array of strings of the form
+,
+
+Each string represents the result of a specific traffic conditioning action. This enables "memory" of the traffic conditioning process to be passed along from conditioning element to conditioning element.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="trafficConditioningService" type="tc:ArrayOfTrafficConditioningService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association PreambleMarkingDetails</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPreambleMarkerService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PreambleMarkerService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="standardMarkerService" type="tns:StandardMarkerService"/>
+   <xsd:complexType name="StandardMarkerService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This subclass defines the most common type of marker, which sets existing bits in specific fields of a packet or frame. The marking is done via the two attributes of this class. The first value is used to define the type of marker (e.g., ToS vs. DSCP), while the second attribute contains the actual value to be marked.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="valueOfMarker" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute that contains the value of the marker. This attribute is not used if a general preamble marking is desired.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="typeOfMarker" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the type of marker that this instance is. Values include:
+
+0: ToS
+1: DSCP
+2: 802-priority field
+3: 802-vlan id
+4: ISL class of service field (3 bits)
+5: Class of Service (other field)
+6: MPLS Label
+7: VC ID
+8: VC Bundle (set of VC IDs)</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfStandardMarkerService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:StandardMarkerService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="trafficIdentificationService" type="tns:TrafficIdentificationService"/>
+   <xsd:complexType name="TrafficIdentificationService" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A TrafficIdentificationService is a fundamental QoS building block.
+
+A TrafficIdentificationService is an abstract base class that is the parent for different types of traffic identification services defined in the DEN-ng Service model. TrafficIdentificationServices are one example of a ResourceFacingService, in that the Customer is not able to control them. In fact, the Customer doesn't even have to be aware that they exist! However, they must be implemented in order for different CoSs to be differentiated from each other, and hence for different Customers to receive different CoSs.
+
+TrafficIdentificationServices control how packets and flows are identified and distinguished from other packets and flows in the system. Without these services, traffic conditioning cannot work.
+
+Please see the DEN-ng Service model for more details.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="qoSService" type="qos:QoSService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association IdentifiesQoSService</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfTrafficIdentificationService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:TrafficIdentificationService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="trafficMatchCriteria" type="tns:TrafficMatchCriteria"/>
+   <xsd:complexType name="TrafficMatchCriteria">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The definition of which flows can be separated by the ClassifierService into which aggregates is defined using the TrafficMatchCriteria class. The purpose of this class is to formally define selection criteria for the ClassifierService to use so that the ClassifierService can separate ingress traffic into sets of flows. This class contains data, metadata, and links to PolicyRules to govern the selection criteria. This is described in the DEN-ng system view.
+
+The ClassifierUsesCriteria association binds a specific ClassifierService to one or more TrafficMatchCriteria classes.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="classifierService" type="tns:ArrayOfClassifierService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association ClassifierUsesCriteria</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfTrafficMatchCriteria">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:TrafficMatchCriteria" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* -->
+   <xsd:element name="preambleMarkingDetails" type="tns:PreambleMarkingDetails"/>
+   <xsd:complexType name="PreambleMarkingDetails">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class implements the semantics of the MarksPreambleWithConditioningResult association. The purpose of this class is to enable application- and vendor-specific implementations of preamble marking to be more easily modeled in DEN-ng.
+
+Further details of this class will be provided in the next release of DEN-ng.
+This association defines which type of TrafficConditioningServices are used to mark the preamble of a packet with. The semantics of this association are defined by the PreambleMarkingDetails association class.</p>
+            <p>This association class  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence/>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPreambleMarkingDetails">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PreambleMarkingDetails" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

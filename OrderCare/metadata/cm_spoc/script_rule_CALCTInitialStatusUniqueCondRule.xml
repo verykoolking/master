@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_CALCTInitialStatusUniqueCondRule">
+  <group>rules_scripts.CyclicActions</group>
+  <label>rule_CALCTInitialStatusUniqueCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var ds = data.CALifCycleTransitionArrDS.ListDS;
+    //var debt= data.DebtUseForAdjustmentCauses;
+    /*if( ds.length==0 && !(debt=="" || debt==null))
+    {
+     errList.addErrorMessage(data,["IVR Bolt On Language and Description mandatory if set IVR Bolt On Code "],"NGAA_003","E");
+    }*/
+
+    var error = false;
+    var numberInitialStatus = 0;
+    for (var i = 0; i < ds.length; i++)
+    {
+        var item = ds[i];
+        if(item.SourceStatusID == null || item.AfterNoOkStatusIsSet == null || item.AfterOkStatusIsSet==null){
+            error = true;
+        }
+        if( item.InitialStatus == true) {
+            numberInitialStatus = numberInitialStatus +1;
+
+        }
+    }
+    if(error){
+         errList.addErrorMessage(data,["CALifeCycleStatus, After OK and After NO OK are mandatory"],"NGAA_003","E");
+    }
+    if (numberInitialStatus>1)
+        errList.addErrorMessage(data,["There is only possible to define one value for InitialStatus: "],"NGAA_003","E");
+    if (numberInitialStatus<1)
+        errList.addErrorMessage(data,["It is mandatory to define InitialStatus at least once : "],"NGAA_003","E");
+
+    return false;
+  ]]></script>
+</script>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.cmInitModelEntity">
+  <group>utilities</group>
+  <label>cmInitModelEntity</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var mandatoryFields = cm_common.getMandatoryFields(model);
+
+    if(mandatoryFields == null)
+        return;
+
+    for(var i=0; i<mandatoryFields.length; i++) {
+
+        var f = mandatoryFields[i].split("/");
+        mandatoryFields[i] = f[f.length-1];
+
+        if(mandatoryFields[i].endsWith("DS") && !model.has(mandatoryFields[i])) {
+            var childDs = null;
+            if( model[mandatoryFields[i]].isCollection())
+            {
+                var auxMdTypeArr = model[mandatoryFields[i]][0].metadataType.split(':');
+                if(auxMdTypeArr.length>0)
+                {
+                    childDs = cm_spoc.initInnerDS("base_" + auxMdTypeArr[auxMdTypeArr.length-1]);
+                    model[mandatoryFields[i]][0] = childDs;
+                }
+                else
+                {
+                    childDs = cm_spoc.initInnerDS("base_" + mandatoryFields[i].substr(0,mandatoryFields[i].length-2));
+                    model[mandatoryFields[i]] = childDs;
+                }
+            }
+            else
+            {
+                childDs = cm_spoc.initInnerDS("base_" + mandatoryFields[i].substr(0,mandatoryFields[i].length-2));
+                model[mandatoryFields[i]] = childDs;
+            }
+
+
+            cm_common.cmInitModelEntity(childDs);
+
+        }
+        else if(mandatoryFields[i].endsWith("DS"))
+           cm_common.cmInitModelEntity(model[mandatoryFields[i]]);
+    }
+  ]]></script>
+</script>

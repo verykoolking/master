@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.RinCriterion">
+  <group>Promotion</group>
+  <label>RinCriterion</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="RinIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.PromotionalSegment</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <width>400px</width>
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <width>800px</width>
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <elementList>
+                        <element name="SectionHeader" type="elsecth">
+                          <label>RIN</label>
+                        </element>
+                        <element name="HorizontalLayout" type="elhlt">
+                          <elementList>
+                            <element name="add" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.RinCriterion/uimthd_addSubsRin</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/notebook_add.png</icon>
+                            </element>
+                            <element name="delete" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.RinCriterion/uimthd_deleteRinSubs</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/delete.png</icon>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="HeaderLayout" type="elgrd">
+                          <colWidths>50px</colWidths>
+                          <fixedColWidths>true</fixedColWidths>
+                          <numOfCols>6</numOfCols>
+                          <width>750px</width>
+                          <elementList>
+                            <element name="Select" type="ellab">
+                              <columnSpan>1</columnSpan>
+                              <width>30px</width>
+                            </element>
+                            <element name="ExpiryDateLabel" type="ellab">
+                              <columnSpan>2</columnSpan>
+                              <label>RIN Subscribers of the promotion</label>
+                              <width>200px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="IteratorLayout" type="elvlt">
+                          <height>200px</height>
+                          <width>750px</width>
+                          <elementList>
+                            <element name="Iterator" type="eliter">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.RinCriterion/leaf_RinIterator</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <elementList>
+                                <element name="HorizontalLayout1" type="elhlt">
+                                  <width>750px</width>
+                                  <elementList>
+                                    <element name="FormFrame" type="elovf">
+                                      <formReference type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.RinCriterion/leaf_RinIterator</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                        </variablePathList>
+                                      </formReference>
+                                      <width>750px</width>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="VerticalLayout1" type="elhlt">
+                          <alignment>right,center</alignment>
+                          <elementList>
+                            <element name="OK" type="elbtn">
+                              <cellAlignment>right,center</cellAlignment>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.RinCriterion/uimthd_onClickOk</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <label>Accept</label>
+                            </element>
+                            <element name="Cancel" type="elbtn">
+                              <canSort>false</canSort>
+                              <cellAlignment>center,center</cellAlignment>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.RinCriterion/uimthd_onClickCancel</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <label>Cancel</label>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.RinCriterion/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        //var m = cm_spoc.initSegmentablePromotion(this.model);
+        cm_spoc.initRinCriterionUi(this);
+        //return this.model;
+      ]]></script>
+    </method>
+    <method name="onClickCancel" type="uimthd">
+      <script>this.parent.cwDialogClose();</script>
+    </method>
+    <method name="onClickOk" type="uimthd">
+      <script><![CDATA[
+        this.parent.owner.model.SubscriberRINCriterionDS.SRINCriterionRinArrDS = this.model.SubscriberRINCriterionDS.SRINCriterionRinArrDS;
+        if(this.parent.owner.model.SubscriberRINCriterionDS.SRINCriterionRinArrDS.ListDS.length > 0 ){
+            if( this.parent.owner.ListSelected == null )
+                this.parent.owner.ListSelected = new DataObjectList();
+            //Check if the label was added
+            var exist = false;
+            for(var j=0; j< this.parent.owner.ListSelected.length; j++){
+                if( this.parent.owner.ListSelected[j].description == "Subscriber's RIN"){
+                     exist=true;
+                }
+            }
+            if(!exist){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Subscriber's RIN";
+                this.parent.owner.ListSelected.addLast(item);
+                this.parent.owner.ListSelected.updateList;
+            }
+        }else{
+            if( this.parent.owner.ListSelected == null )
+                this.parent.owner.ListSelected = new DataObjectList();
+            for(var k=0; k< this.parent.owner.ListSelected.length; k++){
+                if( this.parent.owner.ListSelected[k].description == "Subscriber's RIN")
+                     this.parent.owner.ListSelected.delete(k);
+            }
+            this.parent.owner.ListSelected.updateList;
+        }
+        this.parent.cwDialogClose();
+      ]]></script>
+    </method>
+    <method name="addSubsRin" type="uimthd">
+      <script><![CDATA[
+        if(this.parent.owner.model.SubscriberRINCriterionDS.SRINCriterionRinArrDS.ListDS.length>0)
+        {
+            var subsRinArr = cm_spoc.initInnerDS("base_SRINCriterionRinArr");
+            this.parent.owner.model.SubscriberRINCriterionDS.SRINCriterionRinArrDS = subsRinArr;
+        }
+
+        var subsRinValues = this.parent.owner.model.SubscriberRINCriterionDS.SRINCriterionRinArrDS.ListDS;
+        cm_spoc.addListElement(this, subsRinValues,"cm_spoc.forms.subscribersRinUI","base_Rin","RinIterator");
+      ]]></script>
+    </method>
+    <method name="deleteRinSubs" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.removeListElements(this ,this.parent.owner.model.SubscriberRINCriterionDS.SRINCriterionRinArrDS,"List", "RinIterator");
+        if(this.parent.owner.model.SubscriberRINCriterionDS.SRINCriterionRinArrDS.ListDS.length == 0)
+        {
+            this.parent.owner.model.SubscriberRINCriterionDS.SRINCriterionRinArrDS = null;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

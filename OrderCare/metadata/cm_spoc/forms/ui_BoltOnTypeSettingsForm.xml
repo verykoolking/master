@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.BoltOnTypeSettingsForm">
+  <group>Configuration.General</group>
+  <label>BoltOnTypeSettingsForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.BoltOnTypeSettings</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="General" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.BoltOnTypeSettingsForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.BoltOnTypeSettingsForm/frmui_Forms/vform_General</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General</label>
+                </element>
+                <element name="DynamicRating" type="eltab">
+                  <label>Dynamic Rating [CC]</label>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="General" type="vform">
+          <label>General</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>right,center</alignment>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>750px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <alignment>right,center</alignment>
+                        <elementList>
+                          <element name="TickSeconds" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <labeAlign>left</labeAlign>
+                            <label>Duration tick (seconds)</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnTypeSettingsForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOnTypeSettings/dstruct_TickSeconds</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="TicksPreviousNotification" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <labeAlign>left</labeAlign>
+                            <label>Number of ticks to execute the Bolt On expiration notification process</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnTypeSettingsForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOnTypeSettings/dstruct_TicksPreviousNotification</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="TicksPreviousNotificationEvent" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <labeAlign>right</labeAlign>
+                            <label>Number of ticks (before the expiration of the Bolt On Type) to generate&lt;br/&gt;the Bolt On expiration notification event</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnTypeSettingsForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOnTypeSettings/dstruct_TicksPreviousNotificationEvent</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="TicksPreviousExpiration" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <labeAlign>left</labeAlign>
+                            <label>Number of ticks to execute the Bolt On expiration process</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnTypeSettingsForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOnTypeSettings/dstruct_TicksPreviousExpiration</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="DynamicRating" type="vform">
+          <label>DynamicRating</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>750px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <alignment>right,center</alignment>
+                        <elementList>
+                          <element name="DynamicBoltonID" type="elslct">
+                            <label>Dynamic Bolt On Id.</label>
+                            <labelOrientation>left</labelOrientation>
+                            <multiselect>false</multiselect>
+                          </element>
+                          <element name="NotificationStart" type="elchk">
+                            <label>Notification at the Start of Call</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="NotificationEnd" type="elchk">
+                            <label>Notification at the End of Call</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="CombineBalance" type="elchk">
+                            <label>Combine with Balance Notification</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$cwShowHover" type="laction">
+      <path>ui_com.conceptwave.system.UserInterface/leaf_cwShowHover</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initBoltOnTypeSettings(this.model);
+        return m;
+      ]]></script>
+    </method>
+    <method name="ReadOnly" type="permMethod">
+      <script>return this.model.readonly;</script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+  </methodList>
+</userInterface>

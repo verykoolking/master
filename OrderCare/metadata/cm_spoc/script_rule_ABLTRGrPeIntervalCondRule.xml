@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_ABLTRGrPeIntervalCondRule">
+  <group>rules_scripts.Promotions</group>
+  <label>rule_ABLTRGrPeIntervalCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(data.AwardedByLastTimeReceivedDS.GrPeInterval && data.AwardedTopUpPromotionType!="LT" && data.AwardedTopUpPromotionType!="LO"){
+        errList.addErrorMessage(data,["Impossible to save GrPeInterval, AwardedTopUpPromotionType must be set to LT or LO."],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

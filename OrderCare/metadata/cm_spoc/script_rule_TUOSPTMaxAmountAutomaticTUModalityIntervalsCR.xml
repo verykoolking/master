@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_TUOSPTMaxAmountAutomaticTUModalityIntervalsCR">
+  <group>rules_scripts.TopUp</group>
+  <label>rule_TUOSPTMaxAmountAutomaticTUModalityIntervalsCR</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute value must be greater than the value of related attribute.
+    // Moreover, the related attribute should assume the value shown in the column H.
+    //      AutomaticTopUpMode
+    //MaxAmountAutomaticTUModality
+    //AutomaticTopUpMode
+    //MinAmountAutomaticTUModality
+    //NOT EMPTY
+
+    var entity=data.AutomaticTopUpMode;
+
+    if(entity.MaxAmountAutomaticTUModality < entity.MinAmountAutomaticTUModality)
+    {
+    errList.addErrorMessage(data,["MaxAmountAutomaticTUModality must be greater than MinAmountAutomaticTUModality"],"NGAA_003","E");
+    }
+
+    if(!entity.MinAmountAutomaticTUModality)
+    {
+    errList.addErrorMessage(data,["MinAmountAutomaticTUModality must be set"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

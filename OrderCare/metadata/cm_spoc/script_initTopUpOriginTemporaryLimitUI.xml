@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initTopUpOriginTemporaryLimitUI">
+  <group>ui_scripts.TopUp.init</group>
+  <label>initTopUpOriginTemporaryLimitUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="m" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.TopUpOriginTemporaryLimitIterator = new Array();
+    //var model = ui.model.TopUpOriginTempLimitArrDS.ListDS;
+    var model = m.TopUpOriginTempLimitArrDS.ListDS;
+    if(!ui.model.specificationCode){
+        ui.model.TopUpOriginGeneralParameterDS.TopUpOrType="N";
+       // cm_spoc.addListElement(ui, model,"cm_spoc.forms.TopUpOriginTemporaryLimitIteratorUI",
+       //                                                "base_TopUpOriginTemporaryLimit","TopUpOriginTemporaryLimitIterator");
+    }else{
+        ui.model.TopUpOriginGeneralParameterDS.TopUpOrTypeEnum=ui.model.TopUpOriginGeneralParameterDS.TopUpOrType;
+        cm_spoc.loadListElements(ui, model, "cm_spoc.forms.TopUpOriginTemporaryLimitIteratorUI", "TopUpOriginTemporaryLimitIterator");
+        for (var i=0; i<ui.TopUpOriginTemporaryLimitIterator.length; i++){
+            ui.TopUpOriginTemporaryLimitIterator[i].model.TariffPlanEnum=ui.TopUpOriginTemporaryLimitIterator[i].model.TariffPlan;
+        }
+    }
+  ]]></script>
+</script>

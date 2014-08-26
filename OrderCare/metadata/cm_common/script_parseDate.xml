@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.parseDate">
+  <group>utilities</group>
+  <label>parseDate</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dateString" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <valueType>dtype_com.conceptwave.system.DateTime</valueType>
+  <script><![CDATA[
+    if(dateString==null || dateString=='null')
+           return null;
+
+    var date  = new Date();
+    var patterns = new Array();
+
+    patterns[0] = ['\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}', 'yyyy-MM-dd HH:mm:ss'];
+    patterns[1] = ['\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2}', 'yyyy/MM/dd HH:mm:ss'];
+    patterns[2] = ['\\d{4}[.]\\d{2}[.]\\d{2} \\d{2}:\\d{2}:\\d{2}', 'yyyy.MM.dd HH:mm:ss'];
+
+    patterns[3] = ['\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}', "yyyy-MM-dd'T'HH:mm:ss"];
+    patterns[4] = ['\\d{4}/\\d{2}/\\d{2}T\\d{2}:\\d{2}:\\d{2}', "yyyy/MM/dd'T'HH:mm:ss"];
+
+    patterns[5] = ['\\d{4}/\\d{2}/\\d{2}', 'yyyy/MM/dd'];
+    patterns[6] = ['\\d{4}-\\d{2}-\\d{2}', 'yyyy-MM-dd'];
+    patterns[7] = ['\\d{4}[.]\\d{2}[.]\\d{2}', 'yyyy.MM.dd'];
+
+    patterns[8] = ['\\d{2}/\\d{2}/\\d{4}', 'dd/MM/yyyy'];
+    patterns[9] = ['\\d{2}-\\d{2}-\\d{4}', 'dd-MM-yyyy'];
+    patterns[10] = ['\\d{2}[.]\\d{2}[.]\\d{4}', 'dd.MM.yyyy'];
+
+    patterns[11] = ['\\d{4}-\\d{2}-\\d{2}[T]\\d{2}:\\d{2}:\\d{2}.\\d{3}[Z]', "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+    patterns[12] = ['\\d{4}-\\d{2}-\\d{2}[T]\\d{2}:\\d{2}:\\d{2}.\\d{3}[-]\\d{2}:\\d{2}', "yyyy-MM-dd'T'HH:mm:ss.SSS'-'hh"];
+    patterns[13] = ['\\d{4}-\\d{2}-\\d{2}[T]\\d{2}:\\d{2}:\\d{2}.\\d{3}[+]\\d{2}:\\d{2}', "yyyy-MM-dd'T'HH:mm:ss.SSS'+'hh"];
+    patterns[14] = ['\\d{4}[/]\\d{2}[/]\\d{2}[T]\\d{2}:\\d{2}:\\d{2}.\\d{3}[Z]', "yyyy/MM/dd'T'HH:mm:ss.SSS'Z'"];
+    patterns[15] = ['\\d{4}[/]\\d{2}[/]\\d{2}[T]\\d{2}:\\d{2}:\\d{2}.\\d{3}[-]\\d{2}:\\d{2}', "yyyy/MM/dd'T'HH:mm:ss.SSS'-'hh"];
+    patterns[16] = ['\\d{4}[/]\\d{2}[/]\\d{2}[T]\\d{2}:\\d{2}:\\d{2}.\\d{3}[+]\\d{2}:\\d{2}', "yyyy/MM/dd'T'HH:mm:ss.SSS'+'hh"];
+    patterns[17] = ['\\d{4}[/]\\d{2}[/]\\d{2}[T]\\d{2}:\\d{2}:\\d{2}.\\d{3}[-]\\d{2}:\\d{2}', "yyyy/MM/dd'T'HH:mm:ss'-'hh"];
+    patterns[18] = ['\\d{4}[/]\\d{2}[/]\\d{2}[T]\\d{2}:\\d{2}:\\d{2}.\\d{3}[+]\\d{2}:\\d{2}', "yyyy/MM/dd'T'HH:mm:ss'+'hh"];
+
+    patterns[19] = ['(Mon|Tue|Wed|Thu|Fri|Sat|Sun) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \\d{2} \\d{2}:\\d{2}:\\d{2} (BST|WEST|EAST) \\d{4}',"EEE MMM dd HH:mm:ss z yyyy"];
+
+
+
+    for(var i=0; i< patterns.length; i++){
+
+        var pat = patterns[i];
+        var patternStr = pat[0];
+        var patternBD  = pat[1];
+
+        var regexp = new RegExp();
+        regexp.compile(patternStr);
+
+        if(regexp.test(dateString)){
+
+            try{
+                var date = Calendar.parseDate(dateString, patternBD);
+                return date;
+            }catch(ex){
+                  throw ("Impossible to parse date: " + dateString);
+            }
+
+        }
+    }
+
+    try{
+
+        var date = new Date(dateString);
+        return date;
+
+    }catch(ex){
+         throw ("Impossible to parse date: " + dateString);
+    }
+
+
+    return null;
+  ]]></script>
+</script>

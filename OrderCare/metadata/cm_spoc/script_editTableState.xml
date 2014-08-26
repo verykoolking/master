@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.editTableState">
+  <group>ui_scripts.RatingTree.RTFinder</group>
+  <label>editTableState</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="finderUi" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var stateObj = finderUi.getTableState();
+    var colArray =  new Array("AT","CAT","COT","D","HZ","LC","LD","MLD","OO","OOS","ORZ","OZT","PTT","PT","QM","RP","RZ","S","SZ","TNS","TPC","TSD","TSV","FAB","UT","ECS","ECT",
+        "tariff","list","sp","ton","tribe","tribeCategory");
+
+    stateObj.setVisible("selectItem",true);
+    stateObj.setVisible("att",stateObj.isVisible("att"));
+
+    if (finderUi.RTDisplay.RTDisplayEnum == "id") {
+
+        for ( var i = 0; i < colArray.length; i++ ){
+            stateObj.setVisible(colArray[i]+"Code",stateObj.isVisible(colArray[i]+"Desc"));
+            stateObj.setVisible(colArray[i]+"Desc",false);
+        }
+
+    } else if (finderUi.RTDisplay.RTDisplayEnum  == "desc"){
+
+        for ( var i = 0; i < colArray.length; i++ ){
+            stateObj.setVisible(colArray[i]+"Desc",stateObj.isVisible(colArray[i]+"Code"));
+            stateObj.setVisible(colArray[i]+"Code",false);
+        }
+
+    }
+    finderUi.setTableState(stateObj.toString());
+  ]]></script>
+</script>

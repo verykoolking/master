@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cm_plm.handleErrorSubFlow">
+  <activity name="start" type="seqActivity">
+    <guid>{556d1eea-06b5-4737-adfb-1ef6526f96ff}</guid>
+    <label>Start</label>
+    <x>81.0</x>
+    <y>215.0</y>
+    <childList>
+      <child name="epcORspoc" type="switchActivity">
+        <guid>{131ced62-d2e3-4a03-8847-9892093f99af}</guid>
+        <label>EPC or SPOC?</label>
+        <x>186.3789</x>
+        <y>204.55371</y>
+        <childList>
+          <child name="epc" type="caseActivity">
+            <guid>{184d6c4e-b264-4476-afdc-6e483bfa09e4}</guid>
+            <label>EPC</label>
+            <x>438.06055</x>
+            <y>310.80078</y>
+            <childList>
+              <child name="EPC" type="seqActivity">
+                <guid>{e7fa32dd-8150-4c5b-afc8-3df4116e9f64}</guid>
+                <label>EPC</label>
+                <x>229.06055</x>
+                <y>64.80078</y>
+                <childList>
+                  <child name="alertModeler" type="alertActivity">
+                    <element>alert_cm_plm.modelerAlert</element>
+                    <guid>{dbc12b7a-ad44-4294-b8df-f6e8598cc0cf}</guid>
+                    <label>Alert Modeler</label>
+                    <x>441.03125</x>
+                    <y>57.0</y>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+          </child>
+          <child name="spoc" type="caseActivity">
+            <guid>{97aeaa20-4bcf-4656-91e3-51be509d2a58}</guid>
+            <label>SPOC</label>
+            <x>459.06055</x>
+            <y>323.9043</y>
+            <childList>
+              <child name="spoc" type="seqActivity">
+                <guid>{65b035dc-f732-4d62-bcc3-e3eacd0c9351}</guid>
+                <label>SPOC</label>
+                <x>233.06055</x>
+                <y>350.9043</y>
+                <childList>
+                  <child name="comercialAlert" type="alertActivity">
+                    <element>alert_cm_plm.comercialAlert</element>
+                    <guid>{25478e4d-0d90-4547-a537-5c8edab0f786}</guid>
+                    <label>Comercial Alert</label>
+                    <x>329.06055</x>
+                    <y>348.9043</y>
+                  </child>
+                  <child name="alertModeler" type="alertActivity">
+                    <element>alert_cm_plm.modelerAlert</element>
+                    <guid>{18d5054b-80e2-4235-ac35-b6a389f170b0}</guid>
+                    <label>Alert Modeler</label>
+                    <x>435.03125</x>
+                    <y>349.0</y>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnProcActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[return (process.processOrder.plmControl.caller=="GUI");]]></script>
+              </method>
+            </methodList>
+          </child>
+        </childList>
+      </child>
+      <child name="errorOrRejected" type="switchActivity">
+        <guid>{9f60d0a4-81ae-4c9b-a015-fe9a614e11d2}</guid>
+        <label>errorOrRejected</label>
+        <x>545.0</x>
+        <y>216.0</y>
+        <childList>
+          <child name="rejected" type="caseActivity">
+            <guid>{e176740d-71a9-4a79-a622-47dedb8b842e}</guid>
+            <label>rejected</label>
+            <x>550.0</x>
+            <y>351.0</y>
+            <childList>
+              <child name="seq" type="seqActivity">
+                <guid>{dc95d8a8-877c-4e4d-b2c3-5e5a036a5e52}</guid>
+                <label>seq</label>
+                <x>550.0</x>
+                <y>351.0</y>
+                <childList>
+                  <child name="sendReject" type="scriptActivity">
+                    <guid>{fc67823a-8671-4221-9df4-708f54061560}</guid>
+                    <label>sendReject</label>
+                    <x>542.0</x>
+                    <y>444.0</y>
+                    <methodList>
+                      <method name="cwOnProcActBefore" type="action">
+                        <category>before</category>
+                        <system>true</system>
+                        <script><![CDATA[
+                          var pDoc = process.processDocument;
+                          var projectDoc = epc.getProjectByCode(pDoc.projectCode);
+                          cwl_epc.changeProjectStatus(projectDoc, 'EVI');
+
+
+                          //pDoc.rejectToParent = true;
+                          //Process.sendExceptionToProcess(process.parent.id, "cm_plm.rejectedException");
+
+
+                          var errorOcurred = process.processDocument.caReturnType == 'ERROR';
+                          var message =  process.processDocument.caReturnMessage;
+                          if(process.processOrder.plmControl.caller == "EXTERNAL"){
+                              cm_pws.altamiraConfiguration.sendNotification("appId","reference","userCode",pDoc.projectCode,new Date(),errorOcurred,message,-1,pDoc.projectCode);
+                          }
+                        ]]></script>
+                      </method>
+                    </methodList>
+                  </child>
+                  <child name="end" type="completeActivity">
+                    <guid>{1f98e28f-0904-41f7-ac19-88ed88a3a24a}</guid>
+                    <label>end</label>
+                    <x>556.0</x>
+                    <y>540.0</y>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnProcActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[
+                  var pDoc = process.processDocument;
+                  return pDoc.rejectToParent == true;
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+          <child name="errorTM" type="caseActivity">
+            <guid>{22e30134-bf88-4176-a47a-cb2257522109}</guid>
+            <label>errorTM</label>
+            <x>472.0</x>
+            <y>303.0</y>
+            <childList>
+              <child name="errorTask" type="opActivity">
+                <element>iface_cm_plm.confErrorInt/oper_errorConf</element>
+                <guid>{742c87d3-7a8a-45df-9230-1a8f9b117122}</guid>
+                <label>errorTask</label>
+                <participant>part_cm_plm.confErrorPart</participant>
+                <x>688.0</x>
+                <y>353.0</y>
+                <childList>
+                  <child name="choisesForErrorTreatment" type="choiceActivity">
+                    <guid>{34e7a1e4-9c39-4d06-8624-dafa02d4446c}</guid>
+                    <label>Configuration IT Action</label>
+                    <x>678.0</x>
+                    <y>450.0</y>
+                    <childList>
+                      <child name="proceed" type="opActivity">
+                        <element>iface_cm_plm.confErrorInt/oper_Proceed</element>
+                        <guid>{5eb2582f-ac25-4d46-84ca-242f82fa4667}</guid>
+                        <label>Proceed</label>
+                        <participant>part_cm_plm.confErrorPart</participant>
+                        <x>768.0</x>
+                        <y>702.0</y>
+                        <childList>
+                          <child name="resume" type="resumeActivity">
+                            <guid>{ffd70a23-23b2-44b1-b883-ab6576b9f42a}</guid>
+                            <label>Resume</label>
+                            <x>758.0</x>
+                            <y>805.0</y>
+                          </child>
+                        </childList>
+                      </child>
+                      <child name="Restart" type="opActivity">
+                        <element>iface_cm_plm.confErrorInt/oper_Restart</element>
+                        <guid>{8a9a182f-236e-49b7-8f66-f3210201e299}</guid>
+                        <label>Restart</label>
+                        <participant>part_cm_plm.confErrorPart</participant>
+                        <x>719.0</x>
+                        <y>703.0</y>
+                        <childList>
+                          <child name="end" type="completeActivity">
+                            <guid>{051b37fb-704e-45a2-a0db-ea657c406186}</guid>
+                            <label>End</label>
+                            <x>712.0</x>
+                            <y>804.0</y>
+                            <methodList>
+                              <method name="cwOnProcActBefore" type="action">
+                                <category>before</category>
+                                <system>true</system>
+                                <script><![CDATA[
+                                  process.processDocument.isAmendmentRequest = true;
+                                  process.processDocument.caReturnMessage = null;
+                                ]]></script>
+                              </method>
+                            </methodList>
+                          </child>
+                        </childList>
+                      </child>
+                      <child name="Resubmit1" type="opActivity">
+                        <element>iface_cm_plm.confErrorInt/oper_Resubmit</element>
+                        <guid>{6b4737c4-179d-4449-b687-e73bfb8274f2}</guid>
+                        <label>Resubmit</label>
+                        <participant>part_cm_plm.confErrorPart</participant>
+                        <x>656.0</x>
+                        <y>705.0</y>
+                        <childList>
+                          <child name="seq" type="seqActivity">
+                            <guid>{f29e5879-77b3-49c6-b3ca-045988681d50}</guid>
+                            <label>seq</label>
+                            <x>656.0</x>
+                            <y>805.0</y>
+                            <childList>
+                              <child name="rollback" type="rollbackActivity">
+                                <guid>{719deef2-a9cf-4dc9-b322-5a25d6de1e21}</guid>
+                                <label>rollback</label>
+                                <x>655.0</x>
+                                <y>878.0</y>
+                                <methodList>
+                                  <method name="cwOnProcActBefore" type="action">
+                                    <category>before</category>
+                                    <system>true</system>
+                                    <script><![CDATA[
+                                      var pd = process.processDocument;
+                                      pd.caReturnMessage = null;
+                                      return [pd.compPoint];
+                                    ]]></script>
+                                  </method>
+                                </methodList>
+                              </child>
+                              <child name="resume" type="resumeActivity">
+                                <guid>{9a2bc6bd-6007-48ad-85cc-a8792fd2c221}</guid>
+                                <label>resume</label>
+                                <x>655.0</x>
+                                <y>952.0</y>
+                              </child>
+                            </childList>
+                          </child>
+                        </childList>
+                      </child>
+                      <child name="reject" type="opActivity">
+                        <element>iface_cm_plm.confErrorInt/oper_Reject</element>
+                        <guid>{86bfa98f-75d6-4ae6-b3d0-0e6885aded12}</guid>
+                        <label>Reject</label>
+                        <participant>part_cm_plm.confErrorPart</participant>
+                        <x>609.0</x>
+                        <y>706.0</y>
+                        <childList>
+                          <child name="sendReject" type="exceptActivity">
+                            <element>excp_cm_plm.errorException</element>
+                            <guid>{d445e1bf-bf9b-4433-8c91-507ce38737b4}</guid>
+                            <label>Rejected</label>
+                            <x>589.05273</x>
+                            <y>805.8047</y>
+                          </child>
+                        </childList>
+                      </child>
+                    </childList>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+      </child>
+      <child name="confErrorPart" type="participantActivity">
+        <guid>{483a7efd-2af9-4499-a622-490773d1b323}</guid>
+        <label>CM-PLM Configuration Error Participant</label>
+        <participant>part_cm_plm.confErrorPart</participant>
+        <x>862.0</x>
+        <y>75.0</y>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{af28e1fa-5626-4488-830b-869a7cddef50}</guid>
+  <label>CM-PLM Handle Error</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <type>Sub-flow</type>
+</process>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="cm_spoc.data.City">
+  <container>true</container>
+  <extends>dstruct_cm_spoc.data.OCSCustFacingServiceSpec</extends>
+  <group>Numbering</group>
+  <guid>{6c3a0be4-745d-4d97-8e4b-d8da2da3022f}</guid>
+  <jsonMap type="jmap"/>
+  <label>City</label>
+  <metaVersion>4</metaVersion>
+  <childList>
+    <child name="CityCode" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSNumber7Attribute</element>
+      <guid>{aa602cae-1d0f-4739-8d36-fa211f18fed3}</guid>
+      <jsonMap type="jmap"/>
+      <label>CityCode</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="Description" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSString80Attribute</element>
+      <guid>{7e636dad-aeb3-45db-a73b-be8455f8fff1}</guid>
+      <jsonMap type="jmap"/>
+      <label>Description</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="IncludeSubprefixInDestination" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSBooleanAttribute</element>
+      <guid>{670aceda-7841-4145-92d9-9146515cc917}</guid>
+      <jsonMap type="jmap"/>
+      <label>IncludeSubprefixInDestination</label>
+    </child>
+  </childList>
+  <methodList>
+    <method name="onInit" type="action">
+      <parameterList>
+        <parameter name="document" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <system>true</system>
+      <script><![CDATA[
+        this.cw$super_onInit(document);
+        this.IncludeSubprefixInDestination = false;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_cm_spoc.data.City</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_cm_spoc.data.City</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

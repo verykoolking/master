@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_TUOSPTSOSSourceRelativeTempCondRule">
+  <group>rules_scripts.TopUp</group>
+  <label>rule_TUOSPTSOSSourceRelativeTempCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute must be saved only if the related TopUpOriginSOSProperties attribute has the value shown in th e column H.
+    //TopUpOriginSOSProperties
+    //SOSSourceRelativeTemp
+    //TopUpOriginSOSProperties
+    //SOSSourceRelativePeriod
+    //FALSE
+
+    var entity=data.TopUpOriginSOSPropertiesDS;
+
+    if(entity.SOSSourceRelativeTemp && entity.SOSSourceRelativePeriod!="R")
+    {
+    errList.addErrorMessage(data,["SOSSourceRelativeTempe can be saved only if SOSSourceRelativePeriod is FALSE"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

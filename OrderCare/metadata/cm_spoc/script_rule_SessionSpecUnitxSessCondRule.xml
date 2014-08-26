@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_SessionSpecUnitxSessCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_SessionSpecUnitxSessCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+     * data = cm_spoc.data.BoltOnType
+     *
+     * The attribute data.SessionSpecificationDS.MaximumOfUnitsPerSession must NOT be saved if:
+     * - the BoltOnTypeModality assume one of the following values: [CR,PH]
+     *
+     */
+
+     var json =
+          {"data" :
+                [
+                      {
+                            "entityAttribute" : "MaximumOfUnitsPerSession" ,
+                            "notAdmissibleValues" : ["CR","PH"]
+                      }
+
+                ]
+          };
+
+    var ret = false; //Default return value is FALSE => No Error
+
+    for (var i=0;i<json.data.length;i++) {
+
+        var ent = json.data[i].entityAttribute;
+
+        if (data.SessionSpecificationDS[ent]) {
+            ret = false; // If the leaf exist and is set to true we need to check that the modality value is one fo the admissible ones that's why we set ret to TRUE
+            for (var k=0; k<json.data[i].notAdmissibleValues.length; k++) {
+
+                var val = json.data[i].notAdmissibleValues[k];
+
+                if(data.BoltOnTypeModality == val ) {
+
+                    ret = true; // The Modality value is NOT admissible for the leaf. the return value is set to TRUE : Error
+                }
+
+
+            }
+        }
+
+    }
+
+    if (ret==true) {
+     errList.addErrorMessage(data,["Session Specification","Value Not Allowed for this modality"],"NGAA_EPC_002","E");
+    };
+    return false;
+  ]]></script>
+</script>

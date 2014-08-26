@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.setCheckScript">
+  <group>ui_scripts.UsageControl.HappyPeriod</group>
+  <label>setCheckScript</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(ui.isChecked){
+        ui.style= null;
+        ui.isChecked=false;
+
+    }
+    else{
+        ui.style= "/cwt/images/24/check.png";
+        ui.isChecked=true;
+    }
+
+
+    //update model
+    if(ui.type==0)
+    ui.model.Months= cm_spoc.updateCode(ui.model.Months, ui.index);
+
+
+
+    if(ui.type==1)
+    ui.model.Days = cm_spoc.updateCode(ui.model.Days, ui.index);
+
+    if(ui.type==2)
+    ui.model.Hours= cm_spoc.updateCode(ui.model.Hours, ui.index);
+
+    if(ui.type==3)
+    ui.model.WeekDays= cm_spoc.updateCode(ui.model.WeekDays,ui.index);
+
+
+    if(ui.model.Months!="111111111111") ui.parent.monthsCtrlUI.allSelected=false; else ui.parent.monthsCtrlUI.allSelected=true;
+    if(ui.model.Days!="1111111111111111111111111111111") ui.parent.daysCtrlUI.allSelected=false; else ui.parent.daysCtrlUI.allSelected=true;
+    if(ui.model.Hours!="111111111111111111111111") ui.parent.hoursCtrlUI.allSelected=false; else  ui.parent.hoursCtrlUI.allSelected=true;
+    if(ui.model.WeekDays!="1111111") ui.parent.weekDaysCtrlUI.allSelected=false; else ui.parent.weekDaysCtrlUI.allSelected=false;
+
+    //update table
+    cm_spoc.updateTableUI(ui);
+  ]]></script>
+</script>

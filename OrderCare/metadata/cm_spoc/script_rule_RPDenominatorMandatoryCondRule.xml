@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_RPDenominatorMandatoryCondRule">
+  <group>rules_scripts.Rate</group>
+  <label>rule_RPDenominatorMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var currDS1= data.RateRateComponentArrDS.ListDS;
+
+    //Denominator mandatory
+        for(var k =0; k< currDS1.length;k++) {
+            var currDS2 = currDS1[k].RCRatePriceEventPhaseArrDS.ListDS;
+            for(var i =0; i< currDS2.length;i++) {
+
+                if (//(currDS2[i].StartUnit || currDS2[i].RatePriceDS.Price || currDS2[i].RatePriceDS.RatePriceDesc || currDS2[i].RatePriceDS.Q0 || currDS2[i].RatePriceDS.unitOfMeasure)
+                    //  &&
+                     currDS2[i].RatePriceDS.Denominator==null){
+                    errList.addErrorMessage(data,["No value in mandatory field 'Denominator' in Initial Cost/Pulse Train"],"NGAA_003","E");
+                    return false;
+                }
+            }
+        }
+    return false;
+  ]]></script>
+</script>

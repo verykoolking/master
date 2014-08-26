@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.BoltOnValueLabelVisRule">
+  <group>ui_scripts.utils</group>
+  <label>BoltOnValueLabelVisRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="modality" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <valueType>dtype_com.conceptwave.system.String</valueType>
+  <script><![CDATA[
+    var suff;
+    switch(modality){
+     case "BD":
+        suff=Global.translateText("CM_SPOC_MONEY");
+        break;
+     case "CR":
+         suff= "%o";
+         break;
+     case "XN":
+     case "PH":
+        suff=Global.translateText("CM_SPOC_UNITS");
+        break;
+      case "DT":
+      case "GB":
+       suff= "Bytes";
+       break;
+      case "ME":
+      case "MG":
+       suff= "SMS";
+       break;
+      case "MI":
+      case "MC":
+          suff=Global.translateText("CM_SPOC_SECONDS");
+       break;
+      default:
+      return "<nobr>"+Global.translateText("CM_SPOC_BOLTON_VALUE_UNITS_DEFAUL",null,null)+"</nobr>";
+
+    }
+    var string=Global.translateText("CM_SPOC_BOLTON_VALUE_UNITS",null,[suff]);
+
+
+    return "<nobr>"+string+"</nobr>";
+  ]]></script>
+</script>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_TPGeneralParametersModificationCondRule">
+  <group>rules_scripts.TariffPlan</group>
+  <label>rule_TPGeneralParametersModificationCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    // The listed attributes must be saved in the catalog only if it is a modification operation. In creation operation these fields must not be saved.
+    // TariffPlanGeneralParameterSpecification
+    // IVRCode
+
+    var TariffParam = data.TariffPlanGeneralParametersDS;
+    var existingItem = cm_spoc.getExistingItem(data.specificationCode);
+
+    if (TariffParam.IVRCode && !existingItem) {
+        errList.addErrorMessage(data,["IVR can be saved only in modification operation"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

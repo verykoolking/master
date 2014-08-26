@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cm_plm.mainProcess">
+  <activity name="start" type="seqActivity">
+    <guid>{bbe4d1f7-7337-4b30-929e-ecb0e4f7fd80}</guid>
+    <label>Start</label>
+    <x>115.49609</x>
+    <y>302.67938</y>
+    <childList>
+      <child name="configuration" type="spawnActivity">
+        <element>proc_cm_plm.configurationProcess</element>
+        <guid>{0aad6be8-44d5-4870-b615-576842e6ba9d}</guid>
+        <label>Configuration</label>
+        <syc>true</syc>
+        <x>204.4961</x>
+        <y>300.67938</y>
+      </child>
+      <child name="review" type="spawnActivity">
+        <element>proc_cm_plm.reviewProcess</element>
+        <guid>{b22005ab-843a-4788-ac42-8d711de2191d}</guid>
+        <label>Review</label>
+        <syc>true</syc>
+        <x>313.4961</x>
+        <y>300.67938</y>
+      </child>
+      <child name="amendmentRequired_review" type="switchActivity">
+        <guid>{692cee04-5445-4273-b050-04ce9ece1a08}</guid>
+        <label>Amendment Required after Review?</label>
+        <x>382.0</x>
+        <y>293.89178</y>
+        <childList>
+          <child name="yes" type="caseActivity">
+            <guid>{b0e80be1-b7b6-4edc-ac29-9afe51907a46}</guid>
+            <label>Yes</label>
+            <x>328.7246</x>
+            <y>130.0</y>
+            <childList>
+              <child name="amendment" type="repeatActivity">
+                <element>proc_cm_plm.mainProcess/seqActivity_start</element>
+                <guid>{dc1cc9da-44df-4fe1-b5d0-a50a6afb079f}</guid>
+                <label>Amendment</label>
+                <x>370.0664</x>
+                <y>192.95648</y>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnProcActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script>return process.processDocument.isAmendmentRequest;</script>
+              </method>
+            </methodList>
+          </child>
+          <child name="no" type="caseActivity">
+            <guid>{ff11bcc7-289c-49da-9d83-7fea1fae1ed0}</guid>
+            <label>No</label>
+            <x>504.71484</x>
+            <y>300.9047</y>
+            <childList>
+              <child name="no" type="seqActivity">
+                <guid>{78ce7833-f8a3-4826-a902-ad64d887617d}</guid>
+                <label>No</label>
+                <x>504.71484</x>
+                <y>300.9047</y>
+                <childList>
+                  <child name="testing" type="spawnActivity">
+                    <element>proc_cm_plm.testingProcess</element>
+                    <guid>{4025aaae-3e7e-4743-aaf9-5d34db7fd7be}</guid>
+                    <label>Testing</label>
+                    <syc>true</syc>
+                    <x>591.71484</x>
+                    <y>299.9047</y>
+                  </child>
+                  <child name="amendmentRequired_testing" type="switchActivity">
+                    <guid>{4ff10030-2768-4015-86ae-1bbcdc1e19aa}</guid>
+                    <label>Amendment Required after Testing?</label>
+                    <x>704.0664</x>
+                    <y>285.5541</y>
+                    <childList>
+                      <child name="yes" type="caseActivity">
+                        <guid>{b0e80be1-b7b6-4edc-ac29-9afe51907a46}</guid>
+                        <label>Yes</label>
+                        <x>328.7246</x>
+                        <y>130.0</y>
+                        <childList>
+                          <child name="amendment" type="repeatActivity">
+                            <element>proc_cm_plm.mainProcess/seqActivity_start</element>
+                            <guid>{dc1cc9da-44df-4fe1-b5d0-a50a6afb079f}</guid>
+                            <label>Amendment</label>
+                            <x>509.78125</x>
+                            <y>101.70117</y>
+                          </child>
+                        </childList>
+                        <methodList>
+                          <method name="cwOnProcActCond" type="action">
+                            <category>cond</category>
+                            <system>true</system>
+                            <script>return process.processDocument.isAmendmentRequest;</script>
+                          </method>
+                        </methodList>
+                      </child>
+                      <child name="no" type="caseActivity">
+                        <guid>{ff11bcc7-289c-49da-9d83-7fea1fae1ed0}</guid>
+                        <label>No</label>
+                        <x>792.1387</x>
+                        <y>297.0</y>
+                        <childList>
+                          <child name="no" type="seqActivity">
+                            <guid>{61f91338-d045-4569-9914-9fdc47083159}</guid>
+                            <label>No</label>
+                            <x>826.1387</x>
+                            <y>299.0</y>
+                            <childList>
+                              <child name="production" type="spawnActivity">
+                                <element>proc_cm_plm.productionProcess</element>
+                                <guid>{e7799c7c-afbb-40ce-a731-d21e03b15a26}</guid>
+                                <label>Production</label>
+                                <syc>true</syc>
+                                <x>927.1387</x>
+                                <y>298.0</y>
+                              </child>
+                              <child name="isRejectedInParent" type="switchActivity">
+                                <guid>{99770b75-7a4c-429f-936a-97f0d0789f30}</guid>
+                                <label>Is Rejected In Parent</label>
+                                <x>1026.1387</x>
+                                <y>292.0</y>
+                                <childList>
+                                  <child name="onRejected_4" type="caseActivity">
+                                    <guid>{cc8a3e17-2b6e-4df5-b65a-2177405328f3}</guid>
+                                    <label>On Rejected 4</label>
+                                    <x>704.0664</x>
+                                    <y>385.5541</y>
+                                    <childList>
+                                      <child name="sendRejectProd" type="exceptActivity">
+                                        <element>excp_cm_plm.rejectedException</element>
+                                        <guid>{7118f013-b2be-4562-8782-0affea5fd4f0}</guid>
+                                        <label>Send Reject</label>
+                                        <x>1039.0664</x>
+                                        <y>434.5541</y>
+                                      </child>
+                                    </childList>
+                                    <methodList>
+                                      <method name="cwOnProcActCond" type="action">
+                                        <category>cond</category>
+                                        <system>true</system>
+                                        <script><![CDATA[
+                                          var pDoc = process.processDocument;
+                                          //Process.sendExceptionToProcess(process.parent.id, "cm_plm.rejectedException");
+                                          return pDoc.rejectToParent;
+                                        ]]></script>
+                                      </method>
+                                    </methodList>
+                                  </child>
+                                </childList>
+                              </child>
+                              <child name="complete" type="spawnActivity">
+                                <element>proc_cm_plm.completeProcess</element>
+                                <guid>{95aa13d9-ecec-461c-9474-f6baec16fc47}</guid>
+                                <label>Complete</label>
+                                <syc>true</syc>
+                                <x>1122.1387</x>
+                                <y>297.0</y>
+                              </child>
+                              <child name="end" type="completeActivity">
+                                <guid>{13c5e227-c550-42d8-b44f-042656c8e3f1}</guid>
+                                <label>End</label>
+                                <x>1213.4961</x>
+                                <y>295.67938</y>
+                              </child>
+                            </childList>
+                          </child>
+                        </childList>
+                      </child>
+                      <child name="onRejected_3" type="caseActivity">
+                        <guid>{44863d4e-49af-4fb7-aeb4-886c659c64b4}</guid>
+                        <label>On Rejected 3</label>
+                        <x>704.0664</x>
+                        <y>385.5541</y>
+                        <childList>
+                          <child name="sendReject" type="exceptActivity">
+                            <element>excp_cm_plm.rejectedException</element>
+                            <guid>{7118f013-b2be-4562-8782-0affea5fd4f0}</guid>
+                            <label>Send Reject</label>
+                            <x>719.0664</x>
+                            <y>442.5541</y>
+                          </child>
+                        </childList>
+                        <methodList>
+                          <method name="cwOnProcActCond" type="action">
+                            <category>cond</category>
+                            <system>true</system>
+                            <script><![CDATA[
+                              var pDoc = process.processDocument;
+                              //Process.sendExceptionToProcess(process.parent.id, "cm_plm.rejectedException");
+                              return pDoc.rejectToParent;
+                            ]]></script>
+                          </method>
+                        </methodList>
+                      </child>
+                    </childList>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+      </child>
+      <child name="onReject" type="onExceptionActivity">
+        <element>excp_cm_plm.rejectedException</element>
+        <guid>{b3c13989-f42f-4b54-83c2-efa960e66b41}</guid>
+        <label>On Reject</label>
+        <x>110.49609</x>
+        <y>446.67938</y>
+      </child>
+    </childList>
+    <methodList>
+      <method name="cwOnProcActBefore" type="action">
+        <category>before</category>
+        <system>true</system>
+        <script>cm_plm.initializeMainProcess(process);</script>
+      </method>
+    </methodList>
+  </activity>
+  <curRevision>true</curRevision>
+  <document>doc_cm_plm.mainProcessDoc</document>
+  <guid>{e9756468-7018-44d0-93b9-c5c3de2529f7}</guid>
+  <label>CM-PLM Main Flow</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <revision>5</revision>
+  <type>User</type>
+</process>

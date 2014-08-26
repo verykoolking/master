@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.synchListElementsForUCS">
+  <group>ui_scripts.UsageControl</group>
+  <label>synchListElementsForUCS</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp"/>
+    <parameter name="path" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        if(cm_spoc.getExistingItem(model.specificationCode)){
+            var newModel;
+            var oldModel;
+            var s = new epc.data.Specification();
+            s.project =  cwa_epc.getDefaultProj();
+            s.specificationCode = model.specificationCode;
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                oldModel=r;
+                oldModel = cm_spoc.loadUCModel(oldModel);
+            }
+
+            if(oldModel){
+                newModel = eval("model."+path);
+                oldModel = eval("oldModel."+path);
+
+                var relsNew = newModel.List;
+                var relsOld = oldModel.List;
+
+                for(var i=0;i<relsOld.length;i++){
+                    for(var j=0;j<relsNew.length;j++){
+                        if(relsNew[j].CW_REFID==relsOld[i].CW_REFID) relsOld[i].CW_REFID=null;
+                    }
+                }
+
+                for(var k=0;k<relsOld.length;k++){
+
+
+                    if(relsOld[k].CW_REFID) cm_spoc.deleteRelatedItem(oldModel.id, relsOld[k].CW_REFID);
+                }
+            }
+        }
+    }
+    catch(e){
+        Global.logDebug("synchListElements:"+e.message);
+    }
+  ]]></script>
+</script>

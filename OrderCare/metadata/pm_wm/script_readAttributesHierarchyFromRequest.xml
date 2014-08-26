@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.readAttributesHierarchyFromRequest">
+  <highlight>64</highlight>
+  <label>readAttributesHierarchyFromRequest</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ca" type="rifp">
+      <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      complexAttribute structure&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+      <type>dtype_com.conceptwave.system.Void</type>
+    </parameter>
+  </parameterList>
+  <valueType>doc_pm_wm.hierarchicalAttribute</valueType>
+  <script><![CDATA[
+    /* readAttributesHierarchyFromRequest
+     * Reads/Fetchs the Product Attributes Hierarchy From The Request
+     *
+     * @author  Luis Amorim / Daniel Gomes
+     * @date    201405
+     *
+     * @param {Array}          Array of Complex Attributes
+     */
+
+    var ah    = new Array(); // attributesHierarchy
+    var vpath = "";          // path
+
+    if ( !(ca) || ( !(ca.has( "characteristic")) && !(ca.has( "complexCharacteristic")) && !(ca.has("choiceCharacteristic")) && !(ca.has("item"))) ) return ah;
+
+        //This function is for joining multiple "item" into one
+        function formatMSG(DS){
+
+            if(DS.has("item")){
+                var length = DS.item.length;
+
+                //Copy all elements to the first 'Item' and in the end remove all, except the first one.
+                for(var i = 1; i < length; i++){
+                    if(DS.item[i].has("characteristic")){
+                        for(var x = 0; x < DS.item[i].characteristic.length; x++){
+                            DS.item[0].characteristic[DS.item[0].characteristic.length] = DS.item[i].characteristic[x];
+                        }
+                    }if(DS.item[i].has("complexCharacteristic")){
+                        for(var x = 0; x < DS.item[i].complexCharacteristic.length; x++){
+                            DS.item[0].complexCharacteristic[DS.item[0].complexCharacteristic.length] = DS.item[i].complexCharacteristic[x];
+                        }
+                    }if(DS.item[i].has("choiceCharacteristic")){
+                        for(var x = 0; x < DS.item[i].choiceCharacteristic.length; x++){
+                            DS.item[0].choiceCharacteristic[DS.item[0].choiceCharacteristic.length] = DS.item[i].choiceCharacteristic[x];
+                        }
+                    }
+                }
+
+                //Remove the "item"s, except the first one.
+                for(var z = 1; z < (length); z++){
+                    DS.item[z] = null;
+                }
+
+                DS.item[0] = formatMSG( DS.item[0] );
+            }
+
+            //For 'Characteristic' do nothing { }
+
+            if(DS.has("complexCharacteristic")){
+                var complexCharacteristics = DS.complexCharacteristic;
+                for(var i = 0; i < complexCharacteristics.length; i++){
+                    complexCharacteristics[i] = formatMSG(complexCharacteristics[i]);
+                }
+            }
+
+            if(DS.has("choiceCharacteristic")){
+                var choiceCharacteristics = DS.choiceCharacteristic;
+                for(var i = 0; i < choiceCharacteristics.length; i++){
+                    choiceCharacteristics[i] = formatMSG(choiceCharacteristics[i]);
+                }
+            }
+
+            return DS;
+        }
+
+        function int_readAttributesHierarchyFromRequest( itemcode, path, ca, ah ) {
+            var k = ah.length;
+            if ( ca.has( "item") ) {
+                for (var x = 0; x < ca.item.length; x++) {
+                    if (( ca.item[x].has( "characteristic" )) ||
+                        ( ca.item[x].has( "complexCharacteristic")) ||
+                        ( ca.item[x].has( "choiceCharacteristic" )))
+                        int_readAttributesHierarchyFromRequest( itemcode, path, ca.item[x], ah );
+                }
+            }
+            if ( ca.has( "characteristic") ) {
+                var atts = ca.characteristic;
+                var counterI = null;
+                for (var ii = 0; ii < atts.length; ii++ ) {
+                    if (atts[ii].has("name")) {
+                        ah[k] = new Document( "pm_wm.hierarchicalAttribute");
+                        ah[k].itemattributecode = atts[ii].name;
+                        if ( (ii > 0) && (atts[ii].name == atts[ii-1].name)) {
+                            if (counterI) counterI++; else counterI=1;
+                            ah[k].attributepath     = ((path)? path + "." : "" ) + ah[k].itemattributecode + "[" + counterI + "]";
+                        }
+                        else {
+                            counterI = null;
+                            ah[k].attributepath     = ((path)? path + "." : "" ) + ah[k].itemattributecode + "[0]";
+                        }
+                        ah[k].defaultvalue      = atts[ii].value.string;
+                        if ( atts[ii].value.has("exponent") ) ah[k].exponent = atts[ii].value.exponent;
+                        k++;
+                    }
+                }
+            }
+            if ( (ca.has( "complexCharacteristic")) && ( ca.complexCharacteristic.length > 0) ) {
+                var attxs = ca.complexCharacteristic;
+                var counterI = null;
+                for (var ii = 0; ii < attxs.length; ii++ ) {
+                    //var vvpath = ((path)? path + "." : "" ) + attxs[ii].name;
+                    if ( (ii > 0) && (attxs[ii].name == attxs[ii-1].name)) {
+                        if (!(counterI)) counterI++; else counterI=1;
+                        var vvpath = ((path)? path + "." : "" ) + attxs[ii].name + "[" + counterI + "]";
+                    }
+                    else {
+                        counterI = null;
+                        var vvpath = ((path)? path + "." : "" ) + attxs[ii].name + "[0]";
+                    }
+                    if ( attxs[ii].has("item") ) int_readAttributesHierarchyFromRequest( attxs[ii].name, vvpath, attxs[ii], ah )
+                }
+            }
+            if ( (ca.has( "choiceCharacteristic")) && ( ca.choiceCharacteristic.length > 0) ) {
+                var attcs = ca.choiceCharacteristic;
+                for (var ii = 0; ii < attcs.length; ii++) {
+                    if (( ca.choiceCharacteristic[ii].has( "characteristic" )) ||
+                        ( ca.choiceCharacteristic[ii].has( "complexCharacteristic")))
+                        int_readAttributesHierarchyFromRequest( itemcode, path, attcs[ii], ah );
+                }
+            }
+
+        }
+
+    ca = formatMSG(ca);
+    int_readAttributesHierarchyFromRequest( "", vpath, ca, ah );
+
+    if ( (ah) && (ah.length > 0))
+        for (var kk=0; kk < ah.length; kk++) {
+            ah[kk].other3 = ah[kk].attributepath;
+            var e = RegExp("(\\x5B\[0-9]+\\x5D)");
+            ah[kk].attributepath = ah[kk].attributepath.replace( e, "");
+            for ( var i = (ah[kk].attributepath.split(".")).length; i > 0; i--)
+                ah[kk].attributepath = ah[kk].attributepath.replace( e, "");
+        }
+
+    return ah;
+  ]]></script>
+</script>

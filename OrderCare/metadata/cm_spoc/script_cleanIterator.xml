@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.cleanIterator">
+  <group>ui_scripts.Common.Price.Triggers</group>
+  <label>cleanIterator</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="iteratorName" type="rifp"/>
+    <parameter name="parentUI" type="rifp"/>
+    <parameter name="priceEvent" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    for (var  i=0; i<parentUI[iteratorName].length;i++ ) {
+
+           var price = parentUI[iteratorName][i].model.Price;
+           if (price) {
+                   var associationsFinder =  new cm_spoc.itemRelationFinder();
+                   associationsFinder.searchDocument.itemCode = price;
+                   var associations = associationsFinder.search();
+
+                   for (var l = 0; l < associations.length; l++ ) {
+                       if ( associations[l].itemCode != priceEvent) {
+                              parentUI[iteratorName].splice(i,1);
+                           i--;
+                       }
+                   }
+
+            }
+    }
+  ]]></script>
+</script>

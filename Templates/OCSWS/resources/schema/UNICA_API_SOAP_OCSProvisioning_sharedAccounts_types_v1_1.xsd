@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- PA1 -->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/sharedAccounts/v1/types"
+    xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+    xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+    targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/sharedAccounts/v1/types"
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xsd:import
+        namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+        schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_1.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+        schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd" />
+
+    <!-- ************************************* addAccountDependency ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="AddAccountDependencyType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:chargingModality"
+                minOccurs="0" />
+            <xsd:element ref="apt:dependentAccount" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="addAccountDependency" type="tns:AddAccountDependencyType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="AddAccountDependencyResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="addAccountDependencyResponse" type="tns:AddAccountDependencyResponseType" />
+
+    <!-- ************************************* changeAccountDependency ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeAccountDependencyType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:chargingModality"
+                minOccurs="0" />
+            <xsd:element ref="apt:dependentAccount" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeAccountDependency" type="tns:ChangeAccountDependencyType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeAccountDependencyResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeAccountDependencyResponse"
+        type="tns:ChangeAccountDependencyResponseType" />
+
+    <!-- ************************************* deleteAccountDependency ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="DeleteAccountDependencyType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:chargingModality"
+                minOccurs="0" />
+            <xsd:element ref="apt:childAccount" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deleteAccountDependency" type="tns:DeleteAccountDependencyType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="DeleteAccountDependencyResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deleteAccountDependencyResponse"
+        type="tns:DeleteAccountDependencyResponseType" />
+
+    <!-- ************************************* queryAccountDependencies ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryAccountDependenciesType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:subscriberRoleFlag" />
+            <xsd:element ref="apt:accountDependencyCodeFilter"
+                minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryAccountDependencies" type="tns:QueryAccountDependenciesType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryAccountDependenciesResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0" />
+            <xsd:element ref="apt:dependentAccountList"
+                minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryAccountDependenciesResponse"
+        type="tns:QueryAccountDependenciesResponseType" />
+
+</xsd:schema>

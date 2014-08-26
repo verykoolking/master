@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cm_spoc.UCSimpleAccumulationConditionsDoc">
+  <extends>doc_com.conceptwave.system.Document</extends>
+  <group>ui_scripts.UsageControl.AccumulationConditions</group>
+  <guid>{6b559a02-90f1-47db-96c7-d938beeb2521}</guid>
+  <label>UCSimpleAccumulationConditionsDoc</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="specificationCode" type="leaf">
+      <key>1</key>
+      <valueType>dtype_cwt_pcdd.catalogCode</valueType>
+    </variable>
+    <variable name="selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="ServiceTariffPlanGroup" type="leaf">
+      <valueType>dtype_cm_spoc.data.UCServiceTariffPlanGroupEnum</valueType>
+    </variable>
+    <variable name="ServiceTariffPlanGroupID" type="leaf">
+      <valueType>dtype_cm_spoc.data.OCSNumber4Attribute</valueType>
+    </variable>
+    <variable name="ServiceTariffPlanGroupDesc" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="ServiceTariffPlanGroupIdDesc" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="AccumulationConditionId" type="leaf">
+      <valueType>dtype_cm_spoc.data.OCSNumber4Attribute</valueType>
+    </variable>
+    <variable name="RelationshipWithUCSimpleAppCond" type="leaf">
+      <valueType>dtype_cm_spoc.data.OCSNumber4Attribute</valueType>
+    </variable>
+    <variable name="Ton" type="leaf">
+      <valueType>dtype_cm_spoc.data.UCTonEnum</valueType>
+    </variable>
+    <variable name="TonCode" type="leaf">
+      <valueType>dtype_cm_spoc.data.OCSNumber3From1Attribute</valueType>
+    </variable>
+    <variable name="TonDescription" type="leaf">
+      <valueType>dtype_cm_spoc.data.OCSString85Attribute</valueType>
+    </variable>
+    <variable name="TonCodeDesc" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="List" type="leaf">
+      <valueType>dtype_cm_spoc.data.UCListEnum</valueType>
+    </variable>
+    <variable name="ListCodeSDP" type="leaf">
+      <valueType>dtype_cm_spoc.data.OCSNumber4Attribute</valueType>
+    </variable>
+    <variable name="ListDescription" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="ListCodeSDPDesc" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="TariffClass" type="leaf">
+      <valueType>dtype_cm_spoc.data.UCTariffClassEnum</valueType>
+    </variable>
+    <variable name="TariffClassCode" type="leaf">
+      <valueType>dtype_cm_spoc.data.OCSNumber5Attribute</valueType>
+    </variable>
+    <variable name="TariffClassDesc" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="TariffClassCodeDesc" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="AccountType" type="leaf">
+      <valueType>dtype_cm_spoc.data.AccountTypeEnum</valueType>
+    </variable>
+    <variable name="ServiceProvider" type="leaf">
+      <valueType>dtype_cm_spoc.data.UCServiceProviderEnum</valueType>
+    </variable>
+    <variable name="ServiceProviderId" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="ServiceProviderDescription" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="ServiceProviderIdDesc" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="DestinationType" type="leaf">
+      <valueType>dtype_cwt_pcdd.catalogCode</valueType>
+    </variable>
+    <variable name="DestTypeId" type="leaf">
+      <valueType>dtype_cm_spoc.data.OCSNumber7FromM1Attribute</valueType>
+    </variable>
+    <variable name="DestTypeDesc" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="DestTypeIdDesc" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="UCSimpleAppConWalletArrDS" type="leaf">
+      <valueType>dtype_cwt_pcdd.catalogCode</valueType>
+    </variable>
+    <variable name="UCSApConTrafficTypeArrDS" type="leaf">
+      <valueType>dtype_cwt_pcdd.catalogCode</valueType>
+    </variable>
+    <variable name="UCSApConHappyPeriodArrDS" type="leaf">
+      <valueType>dtype_cwt_pcdd.catalogCode</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="cwLeafCalculateAction$TariffClassCodeDesc" type="laction">
+      <path>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_TariffClassCodeDesc</path>
+      <type>calculator</type>
+      <valueType>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_TariffClassCodeDesc</valueType>
+      <script><![CDATA[
+        if(this.TariffClassDesc == null && this.TariffClassCode== null ){
+            return " ";
+        }
+        else if(this.TariffClassDesc == null){
+        return this.TariffClassCode+" - "+"No Description";
+        }
+        else if(this.TariffClassCode == null){
+        return "No ID" +" - "+ this.TariffClassDesc;
+        }
+        else {return this.TariffClassCode+" - "+this.TariffClassDesc;}
+      ]]></script>
+    </method>
+    <method name="cwLeafCalculateAction$ServiceProviderIdDesc" type="laction">
+      <path>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ServiceProviderIdDesc</path>
+      <type>calculator</type>
+      <valueType>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ServiceProviderIdDesc</valueType>
+      <script><![CDATA[
+        if(this.ServiceProviderDescription == null && this.ServiceProviderId== null ){
+            return " ";
+        }
+        else if(this.ServiceProviderDescription == null){
+        return this.ServiceProviderId+" - "+"No Description";
+        }
+        else if(this.ServiceProviderId == null){
+        return "No ID" +" - "+ this.ServiceProviderDescription;
+        }
+        else {return this.ServiceProviderId+" - "+this.ServiceProviderDescription;}
+      ]]></script>
+    </method>
+    <method name="cwLeafCalculateAction$ServiceTariffPlanGroupIdDesc" type="laction">
+      <path>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ServiceTariffPlanGroupIdDesc</path>
+      <type>calculator</type>
+      <valueType>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ServiceTariffPlanGroupIdDesc</valueType>
+      <script><![CDATA[
+        if(this.ServiceTariffPlanGroupDesc == null && this.ServiceTariffPlanGroupID== null ){
+            return " ";
+        }
+        else if(this.ServiceTariffPlanGroupDesc == null){
+        return this.ServiceTariffPlanGroupID+" - "+"No Description";
+        }
+        else if(this.ServiceTariffPlanGroupID == null){
+        return "No ID" +" - "+ this.ServiceTariffPlanGroupDesc;
+        }
+        else {return this.ServiceTariffPlanGroupID+" - "+this.ServiceTariffPlanGroupDesc;}
+      ]]></script>
+    </method>
+    <method name="cwLeafCalculateAction$DestTypeIdDesc" type="laction">
+      <path>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_DestTypeIdDesc</path>
+      <type>calculator</type>
+      <script><![CDATA[
+        if(this.DestTypeDesc == null && this.DestTypeId== null ){
+            return " ";
+        }
+        else if(this.DestTypeDesc == null){
+        return this.DestTypeId+" - "+"No Description";
+        }
+        else if(this.DestTypeId == null){
+        return "No ID" +" - "+ this.DestTypeDesc;
+        }
+        else {return this.DestTypeId+" - "+this.DestTypeDesc;}
+      ]]></script>
+    </method>
+    <method name="cwLeafCalculateAction$ListCodeSDPDesc" type="laction">
+      <path>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ListCodeSDPDesc</path>
+      <type>calculator</type>
+      <script><![CDATA[
+        if(this.ListDescription == null && this.ListCodeSDP== null ){
+            return " ";
+        }
+        else if(this.ListDescription == null){
+        return this.ListCodeSDP+" - "+"No Description";
+        }
+        else if(this.ListCodeSDP == null){
+        return "No ID" +" - "+ this.ListDescription;
+        }
+        else {return this.ListCodeSDP+" - "+this.ListDescription;}
+      ]]></script>
+    </method>
+    <method name="cwLeafCalculateAction$TonCodeDesc" type="laction">
+      <path>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_TonCodeDesc</path>
+      <type>calculator</type>
+      <valueType>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_TonCodeDesc</valueType>
+      <script><![CDATA[
+        if(this.TonDescription == null && this.TonCode== null ){
+            return " ";
+        }
+        else if(this.TonDescription == null){
+        return this.TonCode+" - "+"No Description";
+        }
+        else if(this.TonCode == null){
+        return "No ID" +" - "+ this.TonDescription;
+        }
+        else {return this.TonCode+" - "+this.TonDescription;}
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_com.conceptwave.system.Document/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cm_spoc.UCSimpleAccumulationConditionsDoc</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</document>

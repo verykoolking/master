@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.getAddedArrayRelations">
+  <group>scripts</group>
+  <label>getAddedArrayRelations</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Retrieves all parent item that are related to specified item
+     *
+     * @author  Luis Barreira
+     * @date    29-05-2014
+     *
+     * @param {String} itemCode    The Catalog Item Code
+     * @param {String} projectCode    The Catalog Project Code
+     */
+
+    var arrRelFinder = new Finder("cm_common.itemArrayRelationsFinder");
+    arrRelFinder.searchDocument.itemCode = itemCode;
+    arrRelFinder.searchDocument.status = 'DEF';
+    arrRelFinder.searchDocument.projectCode = projectCode;
+    arrRelFinder.searchDocument.deleteMode = null;
+    var result = arrRelFinder.search();
+    return result;
+  ]]></script>
+</script>

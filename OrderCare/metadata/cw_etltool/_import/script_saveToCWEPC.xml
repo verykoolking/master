@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.saveToCWEPC">
+  <label>Save To CW EPC</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="process" type="rifp">
+      <mandatory>true</mandatory>
+      <type>doc_cwf_pm.CWPROCESS</type>
+    </parameter>
+    <parameter name="document" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$ Save To CW EPC Script Activity $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+
+    var  fileGroup, fileDoc, entityDoc, order, actionCommonInfo, oCSEntity, response, errorMsg, exception;
+    fileGroup, fileDoc = entityDoc = oCSEntity =  response = errorMsg = exception = actionCommonInfo = null;
+
+    try{
+        order = process.processOrder;
+        // ToDo : StartingDate
+        if( order.header.StartLoadingDate == null)
+            order.header.StartLoadingDate = new Date();
+
+
+        response = cw_etltool._import.endConfiguration(process,true);
+        if(api_common.isFault(response)){
+            process.processDocument.IsError = true;
+            exception = response.toXML();
+            setErrorEntity();
+            Global.rollbackTransaction("CATALOG");
+            Global.resetAutoTransaction("CATALOG");
+        }
+
+        while( process.processDocument.isThereFileToProcess() &&  !process.processDocument.IsError){
+
+            fileGroup = cw_etltool._import.getCurrentFile(process, document, process.processDocument.CurrentFileID);
+            fileDoc = fileGroup.fileDoc;
+
+            if(fileDoc.StartLoadingDate == null )
+                fileDoc.StartLoadingDate = new Date();
+
+            if(fileGroup.entities != null){
+                process.processDocument.setEntitiesCount(fileGroup.entities.length);
+                process.processDocument.resetProcessedEntitiesCount();
+            }
+
+            while( process.processDocument.isThereEntityToProcess() &&  !process.processDocument.IsError){
+
+
+                entityDoc = cw_etltool._import.getCurrentEntity(process, fileGroup, process.processDocument.CurrentEntityID);
+
+                if(entityDoc.EntityStatus != cw_etltool._import.$CONSTANT().entityStatus.DONE){
+
+                    if( entityDoc.StartLoadingDate == null)
+                        entityDoc.StartLoadingDate = new Date();
+
+                    if(! process.processDocument.IsError){
+                        entityDoc.EntityStatus   = cw_etltool._import.$CONSTANT().entityStatus.DONE;
+                        entityDoc.EndLoadingDate = new Date();
+                        process.processDocument.incrementProcessedEntitiesCount();
+                        process.processDocument.resetCurrentEntityID()
+                    }
+                }
+
+            }//End of Entities Loop
+
+            if( !process.processDocument.IsError){
+                fileDoc.FileStatus     = cw_etltool._import.$CONSTANT().fileStatus.DONE;
+                fileDoc.EndLoadingDate = new Date();
+                process.processDocument.incrementProcessedFilesCount();
+                process.processDocument.resetCurrentFileID()
+            }
+
+        }//End of Files Loop
+
+        if( !process.processDocument.IsError){
+            order.header.OrderStatus    = cw_etltool._import.$CONSTANT().orderStatus.DONE;
+            order.header.EndLoadingDate = new Date();
+        }else{
+            setOrderToError();
+        }
+
+    }catch(ex){
+
+        exception = ex.message;
+        setOrderToError();
+
+    }finally{
+        if(order != null){
+            order.save();
+        }
+    }
+
+    /*=================================================================================================*/
+
+    function setOrderToError(){
+
+        process.processDocument.IsError = true;
+        order.header.ErrorMessage = exception;
+        order.header.OrderStatus = cw_etltool._import.$CONSTANT().orderStatus.ERROR;
+
+        setFileToError();
+        setEntityToError();
+        generateErrorMsg();
+
+        order.header.ErrorMessage = errorMsg;
+    }
+
+    function setEntityToError(){
+
+        if( entityDoc != null){
+            entityDoc.ErrorCode = "ETL_IMPORT_ENTITY_SAVE_ERROR" ;
+            entityDoc.EntityStatus = cw_etltool._import.$CONSTANT().entityStatus.ERROR;
+        }
+    }
+
+    function setFileToError(){
+
+        if( fileDoc != null){
+            fileDoc.ErrorCode = "ETL_IMPORT_ENTITY_SAVE_ERROR" ;
+            fileDoc.FileStatus = cw_etltool._import.$CONSTANT().fileStatus.ERROR;
+        }
+    }
+
+
+    function generateErrorMsg(){
+
+        errorMsg = "Save To CW EPC Error :- ErrorCode : ETL_IMPORT_ENTITY_SAVE_ERROR ";
+        if(fileDoc != null)
+            errorMsg += " File Name : " + fileDoc.FileName;
+        if(entityDoc != null)
+            errorMsg += ", Entity Name : "+entityDoc.EntityName;
+
+        errorMsg += "\n" + exception;
+    }
+
+    function setErrorEntity(){
+        if(response.message[response.message.length - 1].code == "INPUT"){
+            var input = (Global.getItemsFromXML(response.message[response.message.length - 1].text, "OCSConfigurationOperation.v1.types.CreateEntity"))[0];
+            var entityDs = cm_pws.getInnerDataStructure(input.oCSEntity);
+            if(entityDs && entityDs.identifier.dn.scheme ){
+                var entity = cw_etltool._import.getOrderEntityByCode(order.id, entityDs.identifier.dn.scheme);
+                if(entity){
+                    fileDoc = order.files.findItemById(entity.FileID);
+                    entityDoc = order.files.findItemById(entity.EntityID);
+                    response.message.removeAt(response.message.length - 1);
+                    exception = response.toXML();
+                }
+
+            }
+        }
+    }
+  ]]></script>
+</script>

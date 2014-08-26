@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.cbe.policy.struct.action.PolicyActionComposite">
+  <container>true</container>
+  <description><![CDATA[
+    <p>The PolicyActionComposite class is the base class for serving as a generic container in which to place PolicyActionAtomic, PolicyActionVendor, or PolicyActionComposite classes. The first two provide actions that this container groups, while the latter establishes a hierarchy in which to order the execution of PolicyActions.    Both simple as well as complex PolicyActions can be placed in this container.    Each PolicyActionAtomic and PolicyActionVendor object is linked to this object using the containedPolicyActions association.</p>                <p>This entity  is  optional</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{317d1f46-2b2e-4b4d-bddc-5b82051128c2}</guid>
+  <label>PolicyActionComposite</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="actionSequence" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is an non-negative integer that defines the order in which the PolicyActions associated with this PolicyActionComposite object is to be executed.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{e6a213a9-b7c7-4ec4-bd5e-8d0a0ab6e2bf}</guid>
+      <label>actionSequence</label>
+    </child>
+    <child name="hasSubPolicyActions" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is a Boolean attribute that, if TRUE, signifies that this PolicyAction has one or more sub-actions. Sub-actions are used to enforce a hierarchical nesting of actions, so that parent actions may control the evaluation and other semantics of sub-actions that they contain.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{87986fc6-5d75-45ef-8e83-c38da931f745}</guid>
+      <label>hasSubPolicyActions</label>
+    </child>
+    <child name="actionsCNF" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{a674cd17-c9c9-4d7d-bec6-2fd7a6a2e42e}</guid>
+      <label>actionsCNF</label>
+    </child>
+    <child name="actionExecutionStrategy" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is an enumerated integer that defines the execution strategy to be used upon the sequenced actions aggregated by this PolicyActionComposite object. Defined execution strategies include:        0: Unknown        1: Do Until Success        2: Do All        3: Do Until Failure        4: Do All Without Failure or Do Nothing        "Do Until Success" means that actions should be executed according to their predefined order, until successful execution of a single action. At that point, the process should stop (even if there are additional actions that could be executed).        "Do All" means that all actions should be executed that are part of the set, according to their predefined order. This should continue, even if one or more of the actions fails.        "Do Until Failure" means that actions should be executed according to their predefined order until an action fails to execute. At that point, the entire sequence should be stopped.        Finally, "Do All Without Failure or Do Nothing" means that ALL actions specified should be performed. However, if a failure occurs, then NONE of the actions should be performed. This implies EITHER the ability to look-ahead and ensure that the actions will be able to be performed successfully, or the ability to perform a rollback of that action and all previous actions when an error is encountered.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{9a9eed7d-2943-466f-a38a-f07f85542bac}</guid>
+      <label>actionExecutionStrategy</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.cbe.policy.struct.action.PolicyActionComposite</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.cbe.policy.struct.action.PolicyActionComposite</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

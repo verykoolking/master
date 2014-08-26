@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_VAMNSliceCondRule">
+  <group>rules_scripts.Numbering</group>
+  <label>rule_VAMNSliceCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute (Slice) must be saved in the catalog only if the related attribute (AnalysisType) assumes one of the values shown in the column H (5, 7).
+
+    //var dt=data.VoiceAndMessageNumbering;
+    var dt=data;
+    if (dt.Slice!=0 && !(dt.AnalysisType == "B_MT" || dt.AnalysisType == "SMS" || dt.AnalysisType == "C" || dt.AnalysisType == "VC")){
+        errList.addErrorMessage(data,["Slice must be empty if Analysis Tpye is different to B_MT, SMS, CONTENT or VALUE CONTENT."],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.setSpec">
+  <group>scripts</group>
+  <label>setSpec</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemDS" type="rifp">
+      <type>dstruct_cwt_pcmaintapi.item</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var faultDS = new DataStructure("cwt_pcmaintapi:Fault");
+    var response = new DataStructure("cwt_pcmaintapi:response");
+    var endDate = new Date();
+    try {
+        var doc = Document.readDoc("cwt_pc:cwt_itemNew", itemDS.itemCode);
+        if (doc == null) {
+            faultDS.code = "DATA_NOT_FOUND";
+            faultDS.message = "Please check your request. \n ";
+            return faultDS;
+        }
+
+        //** process item
+        if (doc.status == "ACT" && itemDS.endDate==null) { //we need to update endDate for items even when they are in active status
+            response.message = "Item: " + itemDS.itemCode + " is in Active status, skipping.";
+        } else {
+            itemDS.mapStructureToDoc(doc, "cwt_pcmaintapi:itemDSToDoc");
+            doc.save();
+            response.message = "Item: " + itemDS.itemCode + " successfully updated";
+
+            cwt_pcmaintapi.projectAssignmentInternalUpdate(itemDS.projectCode, "cwt_pc:cwt_item", null, itemDS.itemCode);
+        }
+
+        //** get effectiveDate of the item
+        var effectiveFrom = cwl_epc.getVersionEffectiveDate(itemDS.projectCode, itemDS.itemCode);
+
+        //** process itemDescription
+        var finder = new Finder ("cwt_pc:cwt_itemDescriptionFinder");
+        finder.searchDocument.itemCode = itemDS.itemCode;
+        var tempDocArr = new Array();
+        cwt_pc.addToResult( finder, tempDocArr );
+
+        //find existing descriptions
+        var targetDoc = null;
+        var find=false;
+        for (var j=0; j<tempDocArr.length; j++) {
+            find=false;
+            targetDoc = tempDocArr[j];
+            if ( cwl_epc.validateProjectAssignment(targetDoc.startDate, effectiveFrom)) {
+                //if status!=ACT, object can be deleted
+                if (targetDoc.status != "ACT") {
+                    var itemDescriptionSearchDS = new DataStructure("cwt_pcmaintapi.itemDescriptionSearchDS");
+                    itemDescriptionSearchDS.itemCode = targetDoc.itemCode;
+                    itemDescriptionSearchDS.itemDescriptionCode = targetDoc.itemDescriptionCode;
+                    itemDescriptionSearchDS.startDate = targetDoc.startDate;
+                    var resp = cwt_pcmaintapi.itemDescriptionDelete( itemDescriptionSearchDS );
+                    if (resp.isBasedOn("cwt_pcmaintapi:Fault")) {
+                        return resp;
+                    }
+                }
+                //if status==ACT, find it in Specification
+                else{
+                    for (var i=0; i < itemDS.itemDescriptions.length; i++) {
+                        if(targetDoc.itemDescriptionCode==itemDS.itemDescriptions[i].itemDescriptionCode){
+                            //Description found
+                            find=true;
+                            break;
+                        }
+                    }
+                    //if not found, end date it
+                    if(!find){
+                        var resp=cm_common.endDateObject(targetDoc.itemCode,
+                                                         "cwt_pc:cwt_itemDescription",
+                                                         itemDS.projectCode,
+                                                         endDate,
+                                                         targetDoc.startDate,
+                                                         targetDoc.itemDescriptionCode,
+                                                         null,
+                                                         null,
+                                                         null,
+                                                         null,
+                                                         null);
+                    }
+                }
+            }
+        }
+
+        //create descriptions based on specification
+        for (var i=0; i < itemDS.itemDescriptions.length; i++) {
+            if(itemDS.itemDescriptions[i].projectCode==null)
+                itemDS.itemDescriptions[i].projectCode=itemDS.projectCode;
+            var ds = itemDS.itemDescriptions[i];
+            ds.startDate = endDate;
+            var resp = cwt_pcmaintapi.itemDescriptionCreate( ds );
+            if (resp.isBasedOn("cwt_pcmaintapi:Fault")) {
+                return resp;
+            }
+        }
+
+        //** process itemRelation
+        var finder = new Finder ("cwt_pc:cwt_itemRelationFinder");
+        finder.searchDocument.itemCode = itemDS.itemCode;
+        var tempDocArr = new Array();
+        cwt_pc.addToResult( finder, tempDocArr );
+
+        //find existing relations
+        var targetDoc = null;
+        for (var j=0; j<tempDocArr.length; j++) {
+            targetDoc = tempDocArr[j];
+            //if status!=ACT, object can be deleted
+            if (targetDoc.status != "ACT") {
+                if ( cwl_epc.validateProjectAssignment(targetDoc.startDate, effectiveFrom)) {
+                    var itemRelationSearchDS = new DataStructure("cwt_pcmaintapi.itemRelationSearchDS");
+                    itemRelationSearchDS.itemCode = targetDoc.itemCode;
+                    itemRelationSearchDS.itemRelationCode = targetDoc.itemRelationCode;
+                    itemRelationSearchDS.startDate = targetDoc.startDate;
+                    var resp = cwt_pcmaintapi.itemRelationDelete( itemRelationSearchDS );    //this also delete assocition attributes and charges, etc.
+                    if (resp.isBasedOn("cwt_pcmaintapi:Fault")) {
+                        return resp;
+                    }
+                }
+            }
+            //if status==ACT, find it in Specification
+            else{
+                for (var i=0; i < itemDS.itemRelations.length; i++) {
+                    if(targetDoc.itemRelationCode==itemDS.itemRelations[i].itemRelationCode){
+                        //Description found
+                        find=true;
+                        break;
+                    }
+                }
+                //if not found, end date it
+                if(!find){
+                    var resp=cm_common.endDateObject(targetDoc.itemCode,
+                                                     "cwt_pc:cwt_itemRelation",
+                                                     itemDS.projectCode,
+                                                     endDate,
+                                                     targetDoc.startDate,
+                                                     null,
+                                                     targetDoc.itemRelationCode,
+                                                     null,
+                                                     null,
+                                                     null,
+                                                     null);
+                }
+            }
+        }
+
+        //create releations based on specification
+        for (var i=0; i < itemDS.itemRelations.length; i++) {
+            if(itemDS.itemRelations[i].projectCode==null)
+                itemDS.itemRelations[i].projectCode=itemDS.projectCode;
+            var ds = itemDS.itemRelations[i];
+            ds.startDate = endDate;
+            var resp = cwt_pcmaintapi.itemRelationCreate( ds );
+            if (resp.isBasedOn("cwt_pcmaintapi:Fault")) {
+                return resp;
+            }
+        }
+
+
+        //** process itemAttribute
+        var finder = new Finder ("cwt_pc:cwt_itemAttributeFinder");
+        finder.searchDocument.itemCode = itemDS.itemCode;
+        var tempDocArr = new Array();
+        cwt_pc.addToResult( finder, tempDocArr );
+
+        //find existing attributes
+        var targetDoc = null;
+        for (var j=0; j<tempDocArr.length; j++) {
+            targetDoc = tempDocArr[j];
+            //if status!=ACT, object can be deleted
+            if (targetDoc.status != "ACT") {
+                if ( cwl_epc.validateProjectAssignment(targetDoc.startDate, effectiveFrom)) {
+                    var itemAttributeSearchDS = new DataStructure("cwt_pcmaintapi.itemAttributeSearchDS");
+                    itemAttributeSearchDS.itemCode = targetDoc.itemCode;
+                    itemAttributeSearchDS.itemRelationCode = targetDoc.itemRelationCode;
+                    itemAttributeSearchDS.catalogObjectType = targetDoc.catalogObjectType;
+                    itemAttributeSearchDS.itemAttributeCode = targetDoc.itemAttributeCode;
+                    itemAttributeSearchDS.startDate = targetDoc.startDate;
+                    var resp = cwt_pcmaintapi.itemAttributeDelete( itemAttributeSearchDS );
+                    if (resp.isBasedOn("cwt_pcmaintapi:Fault")) {
+                        return resp;
+                    }
+                }
+            }
+            //if status==ACT, find it in Specification
+            else{
+                for (var i=0; i < itemDS.itemAttributes.length; i++) {
+                    if(targetDoc.itemAttributeCode==itemDS.itemAttributes[i].itemAttributeCode){
+                        //Attribute found
+                        find=true;
+                        break;
+                    }
+                }
+                //if not found, end date it
+                if(!find){
+                    var resp=cm_common.endDateObject(targetDoc.itemCode,
+                                                     "cwt_pc:cwt_itemAttribute",
+                                                     itemDS.projectCode,
+                                                     endDate,
+                                                     targetDoc.startDate,
+                                                     null,
+                                                     null,
+                                                     targetDoc.itemAttributeCode,
+                                                     targetDoc.catalogObjectType,
+                                                     null,
+                                                     null);
+                }
+            }
+        }
+
+        //create item Attribute
+        for (var i=0; i < itemDS.itemAttributes.length; i++) {
+            if(itemDS.itemAttributes[i].projectCode==null)
+                itemDS.itemAttributes[i].projectCode=itemDS.projectCode;
+            var ds = itemDS.itemAttributes[i];
+            ds.startDate = endDate;
+            var resp = cwt_pcmaintapi.itemAttributeCreate( ds );
+            if (resp.isBasedOn("cwt_pcmaintapi:Fault")) {
+                return resp;
+            }
+        }
+
+
+
+        //** process itemChargeVersion
+        var finder = new Finder ("cwt_pc:cwt_itemChargeVersionFinder");
+        finder.searchDocument.itemCode = itemDS.itemCode;
+        var tempDocArr = new Array();
+        cwt_pc.addToResult( finder, tempDocArr );
+
+        //find existing itemChargeVersion
+        var targetDoc = null;
+        for (var j=0; j < tempDocArr.length; j++) {
+            targetDoc = tempDocArr[j];
+            //if status!=ACT, object can be deleted
+            if (targetDoc.status != "ACT") {
+                if ( cwl_epc.validateProjectAssignment(targetDoc.startDate, effectiveFrom) ) {
+                    var itemChargeVersionSearchDS = new DataStructure("cwt_pcmaintapi.itemChargeVersionSearchDS");
+                    itemChargeVersionSearchDS.itemCode = targetDoc.itemCode;
+                    itemChargeVersionSearchDS.itemRelationCode = targetDoc.itemRelationCode;
+                    itemChargeVersionSearchDS.catalogObjectType = targetDoc.catalogObjectType;
+                    itemChargeVersionSearchDS.itemChargeCode = targetDoc.itemChargeCode;
+                    itemChargeVersionSearchDS.startDate = targetDoc.startDate;
+                    var resp = cwt_pcmaintapi.itemChargeVersionDelete( itemChargeVersionSearchDS );
+                    if (resp.isBasedOn("cwt_pcmaintapi:Fault")) {
+                        return resp;
+                    }
+                }
+            }
+            //if status==ACT, find it in Specification
+            else{
+                for (var i=0; i < itemDS.itemChargeVersions.length; i++) {
+                    if(targetDoc.itemRelationCode==itemDS.itemChargeVersions[i].itemRelationCode){
+                        //ItemCharge found
+                        find=true;
+                        break;
+                    }
+                }
+                //if not found, end date it
+                if(!find){
+                    var resp=cm_common.endDateObject(targetDoc.itemCode,
+                                                     "cwt_pc:cwt_itemChargeVersion",
+                                                     itemDS.projectCode,
+                                                     endDate,
+                                                     targetDoc.startDate,
+                                                     null,
+                                                     null,
+                                                     null,
+                                                     null,
+                                                     targetDoc.itemChargeVersionCode,
+                                                     targetDoc.targetItemChargeCode);
+                }
+            }
+        }
+
+        //create itemChargeVersion
+        for (var i=0; i < itemDS.itemChargeVersions.length; i++) {
+            if(itemDS.itemChargeVersions[i].projectCode==null)
+                itemDS.itemChargeVersions[i].projectCode=itemDS.projectCode;
+            var ds = itemDS.itemChargeVersions[i];
+            ds.startDate = endDate;
+            var resp = cwt_pcmaintapi.itemChargeVersionCreate( ds );
+            if (resp.isBasedOn("cwt_pcmaintapi:Fault")) {
+                return resp;
+            }
+        }
+
+        return response;
+
+    } catch(e) {
+        faultDS.code ="INTERNAL_EXCEPTION";
+        faultDS.message = e.message;
+        return faultDS;
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.caGetAvaiableRatingEngines">
+  <highlight>32</highlight>
+  <label>CM-AACA Get Rating Engines Count</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="pDoc" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Retrieves the avaiable rating engines codes from cw config
+     *
+     * @author  Luis Barreira
+     * @date    27-02-2014
+     *
+     * @return {String}    The list of Rating Engines configured for this PE
+     */
+    var env = cm_aaca.caGetEnvironment(pDoc);
+    var reConf = Global.getConfigVariable("AACA_" + env + "_RES_ACTIVE");
+    Global.logDebug("cm_aaca.caGetAvaiableRatingEngines with variable AACA_" + env + "_RES_ACTIVE : " + reConf);
+    if (reConf)
+        reConf = reConf.split(";");
+    else
+        reConf = "";
+    return reConf;
+  ]]></script>
+</script>

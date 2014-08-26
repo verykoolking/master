@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.onChangeTariffClass">
+  <group>ui_scripts.RatingTree</group>
+  <label>onChangeTariffClass</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    // ui.model = Rating Tree
+
+    var code = ui.nodes.selected[0].code;
+    var tc = ui.nodes.selected[0].tariffClass;
+    var is = false;
+    for (var i = 0;i<ui.model.RTDefaultTCPerNodeArrDS.ListDS.length;i++) {
+
+        if (ui.model.RTDefaultTCPerNodeArrDS.ListDS[i].NodeName == code ) {
+            ui.model.RTDefaultTCPerNodeArrDS.ListDS[i].TariffClass = tc;
+            is = true;
+        }
+
+    }
+
+    if (!is) {
+
+        var dtcpn =  cm_spoc.initInnerDS("base_DefaultTariffClassPerNode");
+        dtcpn = cm_spoc.initModelForCreation(dtcpn);
+
+        dtcpn.NodeName = code;
+        dtcpn.TariffClass = tc;
+
+        ui.model.RTDefaultTCPerNodeArrDS.ListDS[ui.model.RTDefaultTCPerNodeArrDS.ListDS.length] = dtcpn;
+        ui.model.RTDefaultTCPerNodeArrDS.List[ui.model.RTDefaultTCPerNodeArrDS.List.length] = dtcpn.specificationCode;
+
+    }
+  ]]></script>
+</script>

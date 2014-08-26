@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.startPLM">
+  <highlight>32</highlight>
+  <label>Start PLM</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="caller" type="rifp">
+      <type>dtype_cm_plm.plmCallerType</type>
+    </parameter>
+    <parameter name="isTechnicalConfRequired" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="isComercialConfRequired" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="isReviewRequired" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="isTestingRequired" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="ord" type="rifp">
+      <type>order_com.conceptwave.system.Order</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var projectRef = epc.getProjectByCode(projectCode);
+
+    if(!ord) {
+        ord = cm_plm.getPLMOrderFromProjectCode(projectCode);
+
+        if(!ord) {
+            ord = new Order("cm_plm.plmOrder");
+            ord.change.projectCode = projectCode;
+            ord.plmControl.projectCode = projectCode;
+            ord.notes.projectCode = projectCode;
+        }
+
+        ord.plmControl.caller = caller ? caller : "GUI";
+
+        if(isComercialConfRequired)
+            ord.plmControl.isComercialConfRequired = true;
+        else
+            ord.plmControl.isComercialConfRequired = false;
+
+        if(isTechnicalConfRequired)
+            ord.plmControl.isTechnicalConfRequired = true;
+        else
+            ord.plmControl.isTechnicalConfRequired = false;
+
+        if(isReviewRequired)
+            ord.plmControl.isReviewRequired = true;
+        else
+            ord.plmControl.isReviewRequired = false;
+
+        if(isTestingRequired)
+            ord.plmControl.isTestingRequired = true;
+        else
+            ord.plmControl.isTestingRequired = false;
+
+        ord.save();
+    }
+
+    var p = Process.startProcess("cm_plm.mainProcess", ord.id);
+
+    cwl_epc.changeProjectStatus(projectRef, 'EVI');
+  ]]></script>
+</script>

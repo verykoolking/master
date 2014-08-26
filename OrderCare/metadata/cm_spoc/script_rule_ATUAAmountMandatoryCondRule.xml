@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_ATUAAmountMandatoryCondRule">
+  <group>rules_scripts.Promotions</group>
+  <label>rule_ATUAAmountMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute must be mandatory only if the related attribute assumes one of the the values shown in column H.
+    //AwardTopUpAssignation
+    //Amount
+    //PromotionAward
+    //AwardType
+    // TU
+
+    var DS = data.PromotionDueToExpenseDS.PDTEPromotionAwardArrDS.ListDS;
+
+    for(var k =0; k< DS.length;k++) {
+
+       if ((!DS[k].AwardTopUpAssignationDS.Amount) && (DS[k].AwardType == "TU"))
+         {
+          errList.addErrorMessage(data,["The attribute 'Amount' is mandatory if 'Award Type' is 'Top Up Assignation'."],"NGAA_003","E");
+          return false;
+         }
+    }
+    return false;
+  ]]></script>
+</script>

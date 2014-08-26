@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.FixedLimitsUI">
+  <group>TopUp</group>
+  <label>FixedLimitsUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="GridLayout" type="elgrd">
+              <colWidths>50px</colWidths>
+              <fixedColWidths>true</fixedColWidths>
+              <numOfCols>13</numOfCols>
+              <width>750px</width>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <columnSpan>1</columnSpan>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.FixedLimitsUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>30px</width>
+                </element>
+                <element name="TariffPlanEnum" type="elslct">
+                  <columnSpan>2</columnSpan>
+                  <multiselect>false</multiselect>
+                  <showLabel>false</showLabel>
+                  <width>100px</width>
+                </element>
+                <element name="BankEntityZoneEnum" type="elslct">
+                  <columnSpan>2</columnSpan>
+                  <multiselect>false</multiselect>
+                  <showLabel>false</showLabel>
+                  <width>100px</width>
+                </element>
+                <element name="BankEntitySubdistributorEnum" type="elslct">
+                  <columnSpan>2</columnSpan>
+                  <multiselect>false</multiselect>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showLabel>false</showLabel>
+                  <width>100px</width>
+                </element>
+                <element name="MinimumLimit" type="elfld">
+                  <columnSpan>2</columnSpan>
+                  <showLabel>false</showLabel>
+                  <width>100px</width>
+                </element>
+                <element name="MaximumLimit" type="elfld">
+                  <columnSpan>2</columnSpan>
+                  <showLabel>false</showLabel>
+                  <width>100px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="TariffPlanTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode = this.model.TariffPlanEnum;
+        this.model.TariffPlan = btCode;
+      ]]></script>
+    </method>
+    <method name="BankEntitySubdistributorTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode = this.model.BankEntitySubdistributorEnum;
+        this.model.BankEntitySubdistributor = btCode;
+      ]]></script>
+    </method>
+    <method name="BankEntityZoneTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode = this.model.BankEntityZoneEnum;
+        this.model.BankEntityZone = btCode;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

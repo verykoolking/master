@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findSql name="cm_common.itemPermissionsCUDFinder">
+  <dbSchema>CATALOG</dbSchema>
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <highlight>18</highlight>
+  <input>doc_cm_common.cwt_ngaaItemExtension</input>
+  <label>itemPermissionsCUDFinder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_cm_common.cwt_ngaaItemExtension</output>
+  <type>SQL</type>
+  <vDetailForm>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</vDetailForm>
+  <methodList>
+    <method name="cwOnFinderSQLSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        select n.id,n.itemCode,n.canCreate,n.canUpdate,n.canDelete from NGAAITEMEXTENSION n where 1=1
+        {[:itemCode] and n.ITEMCODE=?}
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cm_common.cwt_ngaaItemExtension</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cm_common.cwt_ngaaItemExtension/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cm_common.cwt_ngaaItemExtension/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="itemPermissionsCUDFinderResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_common.itemPermissionsCUDFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="id" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemPermissionsCUDFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_common.cwt_ngaaItemExtension/leaf_id</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="itemCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemPermissionsCUDFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_common.cwt_ngaaItemExtension/leaf_itemCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="canCreate" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemPermissionsCUDFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_common.cwt_ngaaItemExtension/leaf_canCreate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="canUpdate" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemPermissionsCUDFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_common.cwt_ngaaItemExtension/leaf_canUpdate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="canDelete" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemPermissionsCUDFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_common.cwt_ngaaItemExtension/leaf_canDelete</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwCreated" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemPermissionsCUDFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_common.cwt_ngaaItemExtension/leaf_cwCreated</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwCreatedBy" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemPermissionsCUDFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_common.cwt_ngaaItemExtension/leaf_cwCreatedBy</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="lastUpdatedDate" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemPermissionsCUDFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_common.cwt_ngaaItemExtension/leaf_lastUpdatedDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="updatedBy" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemPermissionsCUDFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_common.cwt_ngaaItemExtension/leaf_updatedBy</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_common.itemPermissionsCUDFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_common.itemPermissionsCUDFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="itemPermissionsCUDFinderView" type="findVView">
+      <outputOverlay>findSql_cm_common.itemPermissionsCUDFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findSql>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_LSDestGrAndNumSpecArrCondRule">
+  <group>rules_scripts.Lists</group>
+  <label>rule_LSDestGrAndNumSpecArrCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Conditional
+     * LSDestGrAndNumSpecArrCondRule
+     *
+     * It is not allowed to exist two rows in the array which three related attributes have the same value.
+     *
+     * LSDestGrAndNumSpecArr
+     * LSDestGrAndNumSpecArr
+     *
+     * DestGrAndNumSpec
+     * Numbering
+     *
+     * NOT EMPTY            17/7/2014
+     * Communities
+     *
+     * Added
+
+    */
+    var entity = data.LSDestGrAndNumSpecArrDS.ListDS;
+    var lg=entity.length;
+
+    //Rate fields duplicated
+         for (var i=0; i<lg; i++)
+        {
+            if (lg>1){
+                for (var j=0; j<lg; j++)
+                {
+                    if ((entity[i].Numbering==entity[j].Numbering && entity[i].MaxMembersListWithRestriction==entity[j].MaxMembersListWithRestriction && entity[i].DestinationTypeGroup==entity[j].DestinationTypeGroup) && i != j){
+                        errList.addErrorMessage(data,["Rate fields duplicated"],"NGAA_003","E");
+                        return;
+                    }
+                }
+            }
+         }
+    //}
+    //Rate fields empty
+     /*  for (var i=0; i<lg; i++)
+        {
+           if (entity[i].Numbering==null || entity[i].MaxMembersListWithRestriction==null || entity[i].DestinationTypeGroup==null)
+           {
+                        errList.addErrorMessage(data,["Rate fields empty"],"NGAA_003","E");
+                        return;
+            }
+         }
+    */
+
+    return false;
+  ]]></script>
+</script>

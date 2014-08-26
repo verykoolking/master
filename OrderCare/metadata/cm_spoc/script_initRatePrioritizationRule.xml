@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initRatePrioritizationRule">
+  <group>ui_scripts.Rate</group>
+  <label>initRatePrioritizationRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!model.specificationCode){
+        var prRateArr = cm_spoc.initInnerDS("base_RPRRateArr");
+        model.RPRRateArrDS = prRateArr;
+       // model = cm_spoc.initModelForCreation(model);
+    }else{
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+      s.specificationCode = model.RPRRateArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.RPRRateArrDS=r;
+       }
+
+     s.specificationCode = model.ApplicabilityCondition
+        model.ApplicabilityConditionEnum = s.specificationCode ;
+    /*   var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.ApplicabilityCondition=r;
+       }*/
+       var listRel = model.RPRRateArrDS.List;
+       var list  = model.RPRRateArrDS.ListDS;
+       for (var i=0;i<listRel.length;i++){
+           s.specificationCode = listRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r))
+              list[i]=r;
+       }
+    }
+    return model;
+  ]]></script>
+</script>

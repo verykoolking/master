@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.topUpOriginFinderDialog">
+  <group>ui_scripts.Promotion.triggers</group>
+  <label>topUpOriginFinderDialog</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+    itemFinder.searchDocument.baseItemCode = "base_Price";
+    var result = itemFinder.search(); */
+
+    var priceEvent = ui.parent.PriceEvent;
+    var priceFinder =  new cm_spoc.priceFinder();
+    priceFinder.searchDocument.baseItemCode = "base_Price";
+    priceFinder.searchDocument.project=cwt_pc.getDefaultProject().id;
+    var result = priceFinder.search();
+    cm_spoc.cleanResult(result, priceEvent);
+
+    var priceUI = new cm_spoc.forms.PriceContainerPriceUI(ui.model,ui);
+    //var priceUI = new cm_spoc.forms.PriceCIContainerUI(ui.model,ui);
+    priceUI.priceArray = new cm_spoc.data.PriceArr();
+    priceUI.priceEvent = priceEvent;
+
+    if(result.length == 0)
+    {
+        /*
+        var priceDs = new cm_spoc.data.Price();
+        priceDs = cm_spoc.initInnerDS("base_Price");
+
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+        s.specificationCode = priceEvent;
+        var t = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(t)){
+            priceDs.BoltOnPriceEventDS=t;
+        }
+        priceUI.priceArray.ListDS[0] = priceDs;
+        priceUI.priceArray.List[0] = priceDs.specificationCode;
+        */
+    }
+    else
+    {
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+        var j = 0;
+        for (var i = 0; i < result.length; i++) {
+
+            var priceDs = new cm_spoc.data.Price();
+            s.specificationCode = result[i].itemCode;
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                priceDs = r;
+
+
+                s.specificationCode = priceEvent;
+                var t = epc.getSpecificationByKey(s);
+                if(!api_common.isFault(t)){
+                    priceDs.PriceEventDS=t;
+                }
+
+                priceUI.priceArray.ListDS[j]=priceDs;
+                priceUI.priceArray.List[j] = result[i].itemCode;
+                j++;
+            }
+        }
+    }
+
+
+    priceUI.PriceIterator = new Array();
+    cm_spoc.loadListElements(priceUI, priceUI.priceArray.ListDS,"cm_spoc.forms.PriceEpcUI", "PriceIterator");
+
+    //issue 127520
+    /*
+     * Forcing the set of the parentUi in case it is not done when loading the iterator
+     */
+    for (var t=0;t<priceUI.PriceIterator.length;t++) {
+        priceUI.PriceIterator[t].parent=priceUI;
+    }
+
+    return priceUI;
+  ]]></script>
+</script>

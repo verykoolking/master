@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initEditNodePickList">
+  <group>ui_scripts.RatingTree.EditNodeDialogUI</group>
+  <label>initEditNodePickList</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var allItems=new DataObjectList();
+    //var selectedItems=new DataObjectList();
+    var selectedItems = [];
+    var itemCodeAttribute=null;
+    var itemDescriptionAttribute=null;
+
+
+
+    if(ui.nodeType == "ct" ) {
+
+        initVarsCT();
+        var pl = cm_spoc.initPickList(ui, allItems, selectedItems, itemCodeAttribute, itemDescriptionAttribute);
+        pl.modelCallback = ui.onChangeCTValues;
+        return pl;
+
+    } else if(ui.nodeType == "ntt" ) {
+        initVarsNTT();
+        var pl = cm_spoc.initPickList(ui, allItems, selectedItems, itemCodeAttribute, itemDescriptionAttribute);
+        pl.modelCallback = ui.onChangeNTTValues;
+        return pl;
+    }
+
+
+
+    //
+    function initVarsCT(){
+
+
+        //code
+        itemCodeAttribute="id";
+        //description
+        itemDescriptionAttribute="description";
+        //allItems
+        var arr = [];
+        if (!ui.nodeTypeValue) {
+            arr = [];
+        } else {
+            arr = Global.getCTCodesAndDescriptions(ui.nodeTypeValue);
+        }
+
+
+
+        for (var i=0;i<arr.length;i=i+2) {
+            var s = new cm_spoc.PickListDS();
+            s.id =  arr[i];
+            s.description = arr[i+1];
+
+
+            allItems.addLast(s);
+        }
+
+        var m = ui.model.RTNodeOutputArrDS.ListDS;
+
+        for (var i=0;i<m.length;i++) {
+            /* var s = new cm_spoc.PickListDS();
+            s.id =  m[i].NodeValue;
+            s.description = getDescription(m[i].NodeValue);*/
+
+            var tmp =  m[i].NodeValue;
+            selectedItems.push(tmp);
+
+        }
+
+
+        function getDescription(code) {
+
+            for (var i=0;i<arr.length;i++) {
+                if (arr[i]==code) return arr[i+1];
+
+            }
+
+            return "";
+        }
+
+    }
+
+    function initVarsNTT(){
+
+
+        //code
+        itemCodeAttribute="id";
+        //description
+        itemDescriptionAttribute="description";
+        //allItems
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_"+ui.nodeTypeValue;
+        var result = itemFinder.search();
+
+
+        for (var i=0;i<result.length;i=i+2) {
+            var s = new cm_spoc.PickListDS();
+            s.id =  result[i].itemCode;
+            s.description = result[i].itemCode;
+
+
+            allItems.addLast(s);
+        }
+
+        var type = ui.parent.nodeTypeValue;
+        if (type !="List" && type !="Tribe" && type !="TribeCategory" && type !="Ton" && type !="TariffPlan" && type !="ServiceProvider") return;
+
+
+        var arrayname = "RTNO"+type+"Arr";
+        var arraynameds = "RTNO"+type+"ArrDS";
+
+        var ar = ui.parent.model[arraynameds].List;
+
+        var m = ui.parent.model[arraynameds].ListDS;
+
+        for (var i=0;i<ar.length;i++) {
+            /* var s = new cm_spoc.PickListDS();
+            s.id =  ar[i];
+            s.description = ar[i];*/
+            var tmp = ar[i];
+            selectedItems.push(tmp);
+
+        }
+
+    }
+  ]]></script>
+</script>

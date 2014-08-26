@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.aaFormatDate">
+  <group>utilities</group>
+  <label>aaFormatDate</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="date" type="rifp"/>
+    <parameter name="dateSeparator" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="includeTime" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="dateTimeSeparator" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(date==null) return null;
+    var d = null;
+    if((typeof date) == 'string')
+        d = cm_common.parseDate(date);
+    else
+        d = date;
+
+    var day = '' + d.getDate();
+    if(day.length==1) day = '0'+day;
+
+    var month = '' + (d.getMonth()+1);
+    if(month.length==1) month = '0'+month;
+
+    var hours = '' + d.getHours();
+    if(hours.length==1) hours = '0'+hours;
+
+    var minutes = '' + d.getMinutes();
+    if(minutes.length==1) minutes = '0'+minutes;
+
+    var seconds = '' + d.getSeconds();
+    if(seconds.length==1) seconds = '0'+seconds;
+
+    if(dateSeparator == null)
+           dateSeparator = '';
+    if(dateTimeSeparator == null)
+           dateSeparator = '';
+
+    var ret = d.getUTCFullYear() + dateSeparator + month + dateSeparator + day;
+    if(includeTime)
+        ret = ret + dateTimeSeparator + hours + ":" + minutes + ":" + seconds;
+
+    return ret;
+  ]]></script>
+</script>

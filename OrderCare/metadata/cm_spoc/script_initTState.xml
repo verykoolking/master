@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initTState">
+  <group>ui_scripts.RatingTree.RTFinder</group>
+  <label>initTState</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp"/>
+    <parameter name="jsCol" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var model = ui.parent.model;
+    var rtrBranch = model.RTRatingTreeBranchArrDS.ListDS;
+    var colDisabled = new Array();
+    var jsCol = {"AT":false,"CAT":false,"COT":false,"D":false,"HZ":false,"LC":false,"LD":false,"MLD":false,"OO":false,"OOS":false,"ORZ":false,"OZT":false,
+        "PTT":false,"PT":false,"QM":false,"RP":false,"RZ":false,"S":false,"SZ":false,"TNS":false,"TPC":false,"TSD":false,"TSV":false,
+        "FAB":false,"UT":false,"ECS":false,"ECT":false,"tariff":false,"list":false,"sp":false,"ton":false,"tribe":false,"tribeCategory":false,"att":false};
+
+        for ( var i = 0; i < rtrBranch.length; i++ ){
+            var rtbNode = rtrBranch[i].RTBRTNodeOutputArrDS.ListDS;
+            for ( var j = 0; j < rtbNode.length; j++ ) {
+                if(rtbNode[j].RTNodeOutputArrDS.ListDS.length != 0 ){
+                    var nodeName = rtbNode[j].NodeName;
+                    var doc = Document.readDoc("cm_spoc.RatingTreeNodeTypes",nodeName);
+                    if (doc.nodeType == 'att'){
+                        jsCol.att = true;
+                    }
+                    if(doc.nodeType == 'ct'){
+                        jsCol[doc.code] = true;
+                    }
+                }
+                if(rtbNode[j].RTNOTariffPlanArrDS.ListDS.length != 0)
+                    jsCol.tariff = true;
+                if(rtbNode[j].RTNOListArrDS.List.length != 0)
+                    jsCol.list = true;
+                if(rtbNode[j].RTNOTonArrDS.List.length != 0)
+                    jsCol.ton = true;
+                if(rtbNode[j].RTNOServiceProviderArrDS.List.length != 0)
+                    jsCol.sp = true;
+                if(rtbNode[j].RTNOTribeArrDS.List.length != 0)
+                    jsCol.tribe = true;
+                if(rtbNode[j].RTNOTribeCategoryArrDS.List.length != 0)
+                    jsCol.tribeCategory = true;
+
+            }
+        }
+
+        var stateObj = new TableState();;
+        var colArray = new Array("AT","CAT","COT","D","HZ","LC","LD","MLD","OO","OOS","ORZ","OZT","PTT","PT","QM","RP","RZ","S","SZ","TNS","TPC","TSD","TSV","FAB","UT","ECS","ECT",
+        "tariff","list","sp","ton","tribe","tribeCategory");
+
+        stateObj.setVisible("selectItem",true);
+        stateObj.setVisible("att",jsCol.att);
+        if(ui.RTDisplay == null){
+            for ( var i = 0; i < colArray.length; i++ ){
+                stateObj.setVisible(colArray[i]+"Desc",false);
+                stateObj.setVisible(colArray[i]+"Code",jsCol[colArray[i]]);
+                // stateObj.setVisible("att",jsCol.att);
+            }
+            return stateObj.toString();
+        }
+        if(ui.RTDisplay.RTDisplayEnum == 'id' ){
+            for ( var i = 0; i < colArray.length; i++ ){
+                stateObj.setVisible(colArray[i]+"Desc",false);
+                stateObj.setVisible(colArray[i]+"Code",jsCol[colArray[i]]);
+                // stateObj.setVisible("att",jsCol.att);
+            }
+            return stateObj.toString();
+        }
+        if(ui.RTDisplay.RTDisplayEnum == 'desc'){
+            for ( var i = 0; i < colArray.length; i++ ){
+                stateObj.setVisible(colArray[i]+"Desc",jsCol[colArray[i]]);
+                stateObj.setVisible(colArray[i]+"Code",false);
+                // stateObj.setVisible("att",jsCol.att);
+            }
+            return stateObj.toString();
+        }
+  ]]></script>
+</script>

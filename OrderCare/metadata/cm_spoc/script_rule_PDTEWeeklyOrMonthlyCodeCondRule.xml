@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_PDTEWeeklyOrMonthlyCodeCondRule">
+  <group>rules_scripts.Promotions</group>
+  <label>rule_PDTEWeeklyOrMonthlyCodeCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute must be saved only if the related attribute is checked and has the value shown in the column H.
+    //PromotionDueToExpense
+    //WeeklyOrMonthly
+    //PromotionDueToExpense
+    //GeneralTimeOrDates
+    // G
+
+    var DS = data.PromotionDueToExpenseDS;
+
+    if ((DS.WeeklyOrMonthly) && (DS.GeneralTimeOrDates != "G"))
+    {
+        errList.addErrorMessage(data,["The attribute 'Weekly Or Monthly' can be saved only if 'General Time Period' is checked."],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

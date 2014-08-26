@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.DayDefinitionForm">
+  <group>Calendars</group>
+  <label>DayDefinitionForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="dayLabel" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.DayDefinition</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="GridLayout" type="elgrd">
+              <alignment>center,center</alignment>
+              <cellPadding>0</cellPadding>
+              <colWidths>320px</colWidths>
+              <fixedColWidths>true</fixedColWidths>
+              <numOfCols>2</numOfCols>
+              <elementList>
+                <element name="DayLabel" type="ellab">
+                  <cellAlignment>right,center</cellAlignment>
+                  <columnSpan>1</columnSpan>
+                  <dynStyle type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.DayDefinitionForm/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.DayDefinition/action_setLabelStyle</variablePath>
+                    </variablePathList>
+                  </dynStyle>
+                  <textAlign>left</textAlign>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.DayDefinitionForm/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.DayDefinition/dstruct_DayLabel</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>200px</width>
+                </element>
+                <element name="TypeOfDayEnum" type="elslct">
+                  <cellAlignment>left,center</cellAlignment>
+                  <columnSpan>1</columnSpan>
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.DayDefinitionForm/permMethod_readOnly</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.DayDefinitionForm/uimthd_setTypeOfDay</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.DayDefinitionForm/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.DayDefinition/dstruct_TypeOfDayEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>150px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+    <method name="setTypeOfDay" type="uimthd">
+      <script><![CDATA[
+        this.model.TypeOfDay = this.model.TypeOfDayEnum;
+        this.model.setLabelStyle();
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

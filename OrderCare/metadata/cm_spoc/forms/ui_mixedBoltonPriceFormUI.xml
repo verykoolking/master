@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.mixedBoltonPriceFormUI">
+  <extends>ui_cwa_epc.baseEpcItem</extends>
+  <group>MixedBolton</group>
+  <label>mixedBoltonPriceFormUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.MixedBoltOnPriceEvent</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_cwa_epc.baseEpcItem/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_cwa_epc.baseItem/frmui_Forms/exov_Default</base>
+          <extends>ui_cwa_epc.baseItem/frmui_Forms/exov_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="topStack" type="elvlt">
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <visibilityMode>multiple</visibilityMode>
+                  <width>350px</width>
+                  <elementList>
+                    <element name="sosTopUpInvitationSection" type="elsect">
+                      <elementList>
+                        <element name="sosTopUpInvitationSectionHeader" type="elsecth">
+                          <label>Creation of a new Price for mixed bolton</label>
+                        </element>
+                        <element name="GridLayout2" type="elgrd">
+                          <colWidths>70px</colWidths>
+                          <numOfCols>4</numOfCols>
+                          <width>350px</width>
+                          <elementList>
+                            <element name="RowSpacer" type="elrsp"/>
+                            <element name="PriceEventId" type="elfld">
+                              <label>Price Event Id</label>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.mixedBoltonPriceFormUI/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.PriceEvent/dstruct_PriceEventId</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>90px</width>
+                            </element>
+                            <element name="PriceEventType" type="elfld">
+                              <label>Price Event Type</label>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.mixedBoltonPriceFormUI/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.PriceEvent/dstruct_PriceEventType</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>90px</width>
+                            </element>
+                            <element name="Operation" type="elfld">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.mixedBoltonPriceFormUI/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.MixedBoltOnPriceEvent/dstruct_Operation</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>90px</width>
+                            </element>
+                            <element name="RowSpacer1" type="elrsp"/>
+                            <element name="okButton" type="elbtn">
+                              <cellAlignment>right,center</cellAlignment>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.mixedBoltonPriceFormUI/uimthd_onClickOk</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <columnSpan>2</columnSpan>
+                              <icon>/cwt/images/16/check.png</icon>
+                              <label>Ok</label>
+                            </element>
+                            <element name="cancelButton" type="elbtn">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.mixedBoltonPriceFormUI/uimthd_onClickCancel</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <columnSpan>2</columnSpan>
+                              <icon>/cwt/images/16/delete.png</icon>
+                              <label>Cancel</label>
+                            </element>
+                            <element name="RowSpacer2" type="elrsp"/>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="Menu" type="exov">
+          <base>ui_cwa_epc.baseItem/frmui_Forms/exov_Menu</base>
+          <extends>ui_cwa_epc.baseItem/frmui_Forms/exov_Menu</extends>
+          <label>Menu</label>
+          <overrideList>
+            <override name="menuHLayout" type="eldel"/>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="onClickCancel" type="uimthd">
+      <script>this.parent.cwDialogClose();</script>
+    </method>
+    <method name="onClickOk" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.saveMixedBoltonPrice(this);
+        this.parent.cwDialogClose();
+      ]]></script>
+    </method>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+  </methodList>
+</userInterface>

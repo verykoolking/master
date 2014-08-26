@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initBranchForm">
+  <group>ui_scripts.RatingTree</group>
+  <label>initBranchForm</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //ui.model : RatingTree
+
+    var rtb =  cm_spoc.initInnerDS("base_RatingTreeBranch");
+    rtb = cm_spoc.initModelForCreation(rtb);
+
+    var len = ui.model.RTRatingTreeBranchArrDS.List.length;
+    ui.model.RTRatingTreeBranchArrDS.ListDS[len] = rtb;
+    ui.model.RTRatingTreeBranchArrDS.List[len] = rtb.specificationCode;
+
+    var rtbui = new cm_spoc.forms.RatingTreeBranchForm(rtb,ui);
+
+    ui.branchForm = rtbui;
+  ]]></script>
+</script>

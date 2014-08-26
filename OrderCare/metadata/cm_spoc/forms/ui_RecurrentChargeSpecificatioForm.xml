@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.RecurrentChargeSpecificatioForm">
+  <group>CyclicActions</group>
+  <label>RecurrentChargeSpecificatioForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.RecurrentChargeSpecificatio</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>600px</width>
+              <elementList>
+                <element name="TabFrame" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RecurrentChargeSpecificatioForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.RecurrentChargeSpecificatioForm/frmui_Forms/vform_GeneralParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                </element>
+                <element name="TabFrame1" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RecurrentChargeSpecificatioForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.RecurrentChargeSpecificatioForm/frmui_Forms/vform_CycleChangeProperties</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Cycle Change Properties</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="CycleChangeProperties" type="vform">
+          <label>CycleChangeProperties</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="VerticalLayout1" type="elvlt">
+                <alignment>right,center</alignment>
+                <elementList>
+                  <element name="totalFlag" type="elchk">
+                    <label>Allow partial charge</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RecurrentChargeSpecificatioForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.RecurrentChargeSpecificatio/dstruct_CACHCycleChngeSpecificationDS</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.CACHCycleChngeSpecification/dstruct_totalFlag</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="calcChargingAmountCode" type="elchk">
+                    <label>It is a percentage of the amount of the recurrent charge</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RecurrentChargeSpecificatioForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.RecurrentChargeSpecificatio/dstruct_CACHCycleChngeSpecificationDS</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.CACHCycleChngeSpecification/dstruct_calcChargingAmountCode</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="GeneralParameters" type="vform">
+          <label>GeneralParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="CyclicActionSpecEnum" type="elslct">
+                <label>Cyclic Action Specificaton</label>
+                <labelOrientation>left</labelOrientation>
+                <multiselect>false</multiselect>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.RecurrentChargeSpecificatioForm/uimthd_cyclicActionSpecSelected</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.RecurrentChargeSpecificatioForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.RecurrentChargeSpecificatio/dstruct_CyclicActionSpecEnum</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.RecurrentChargeSpecificatioForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initRecurrentChargeSpecification(this.model);
+        if(m.CyclicActionSpecEnum == null){
+            m.CyclicActionSpecEnum = m.CyclicActionSpecification;
+        }
+        return m;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script>return true;</script>
+    </method>
+    <method name="cyclicActionSpecSelected" type="uimthd">
+      <script>this.model.CyclicActionSpecification = this.model.CyclicActionSpecEnum;</script>
+    </method>
+  </methodList>
+</userInterface>

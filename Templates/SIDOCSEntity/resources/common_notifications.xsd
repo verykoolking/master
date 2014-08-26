@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201206291233 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company/TIP_Soap_Generator(1.1) (1.1)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) 2010-2012 Members of the TIP Open Source Community
+
+Licensed to Members of the TIP Open Source Community under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+Members of the TIP Open Source Community licences this file to You under the Apache License,
+Version 2.0 (the 'License'); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an 'AS IS' BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/tip/common/notifications" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" xmlns:notifications="http://www.tmforum.org/xml/tip/internal/notifications" targetNamespace="http://www.tmforum.org/xml/tip/common/notifications" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.1">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: TIP_Common_Model
+                        at version: 1.1
+      for all artifacts in package: org.tmforum.tip.common.notifications
+      Model Description:
+      TIP Framework Common Model
+      Package Description:
+      
+      Package data summary information:
+            entities: 0
+ Association Classes: 0
+           datatypes: 0
+        enumerations: 0
+              events: 6
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/notifications" schemaLocation="internal_notifications.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** --><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** -->
+   <xsd:complexType name="AVCNotification">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>a generic Attribute Value Change event, ancestor of all specific Attribute Value Change events</p>
+            <p>This notification  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:CommonNotification">
+            <xsd:sequence>
+               <xsd:element name="extensionInfo" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:documentation>
+       a generic list of any type of elements. Used for vendor extensions or loose element encapsulation from other namespaces.
+      </xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="aliasNames" type="entity:CheckedCollection" minOccurs="0" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="aVCNotification" type="tns:AVCNotification"/>
+   <xsd:complexType name="CommonNotification">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is the root of the TIP Framework user modifiable Notification Heirarchy. All Notifications/Events defined by an interface designer using the TIP Framework should extend from CommonNotification</p>
+            <p>This notification  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="notifications:CommonNotificationBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="commonNotification" type="tns:CommonNotification"/>
+   <xsd:complexType name="HeartbeatNotification">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This Notification is used to indicate the state of the notification delivery mechanism between the sending and receiving systems. The sending system shall send out heartbeat notifications to the receiving system on a regular basis so that the receiving system can conclude that it is out of sync (regarding events) if it doesn't receive any heartbeat notifications for some time.</p>
+            <p>This notification  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="notifications:NotificationBase">
+            <xsd:sequence>
+               <xsd:element name="heartbeatPeriod" type="xsd:int" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>Defines the heartbeat period in seconds.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  mandatory</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="heartbeatNotification" type="tns:HeartbeatNotification"/>
+   <xsd:complexType name="OCNotification">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>a generic Object Creation event, ancestor of all specific Object Creation events</p>
+            <p>This notification  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:CommonNotification">
+            <xsd:sequence>
+               <xsd:element name="extensionInfo" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:documentation>
+       a generic list of any type of elements. Used for vendor extensions or loose element encapsulation from other namespaces.
+      </xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="aliasNames" type="entity:CheckedCollection" minOccurs="0" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="oCNotification" type="tns:OCNotification"/>
+   <xsd:complexType name="ODelNotification">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>When an instance of an entity type has been removed, an event of the type will be sent out. in TIP, this is the only common Object Deletion event.</p>
+            <p>This notification  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:CommonNotification">
+            <xsd:sequence>
+               <xsd:element name="extensionInfo" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:documentation>
+       a generic list of any type of elements. Used for vendor extensions or loose element encapsulation from other namespaces.
+      </xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="oDelNotification" type="tns:ODelNotification"/>
+   <xsd:complexType name="ODisNotification">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>a generic Object Discovery event, ancestor of all specific Object Discovery events</p>
+            <p>This notification  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:CommonNotification">
+            <xsd:sequence>
+               <xsd:element name="extensionInfo" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:documentation>
+       a generic list of any type of elements. Used for vendor extensions or loose element encapsulation from other namespaces.
+      </xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="aliasNames" type="entity:CheckedCollection" minOccurs="0" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="oDisNotification" type="tns:ODisNotification"/><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

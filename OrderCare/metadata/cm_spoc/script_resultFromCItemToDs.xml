@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.resultFromCItemToDs">
+  <group>ui_scripts.Calendars.Helpers</group>
+  <label>resultFromCItemToDs</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="result" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * This script gets the item code from the result set of an item finder a instantiate corrisponding DS.
+     * The DS is then substituted in the same set
+     */
+
+
+
+    for (var i = 0; i<result.length;i++) {
+
+        var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+       s.specificationCode = result[i].itemCode;
+
+
+       var r = epc.getSpecificationByKey( s );
+       if(!api_common.isFault(r)){
+
+           result[i]=r;
+
+
+            //Service Provider
+           s.specificationCode =  result[i].SpDayServiceProviderArr;
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+                 result[i].SpDayServiceProviderArrDS=r;
+           }
+
+           //Tariff PLan
+           s.specificationCode =  result[i].SpDayTariffPlanArr;
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+                 result[i].SpDayTariffPlanArrDS=r;
+           }
+         }
+    }
+  ]]></script>
+</script>

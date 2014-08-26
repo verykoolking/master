@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.filterMessageByTypology">
+  <group>ui_scripts.LifeCycles</group>
+  <label>filterMessageByTypology</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="result" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="MessageTypology" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var attributeFinder = new Finder("cwt_pc:cwt_itemAttributeFinder");
+    var attributeResult;
+    var currentResult = new DataObjectList();
+    var flag=false;
+
+    var filteredRes = new DataObjectList();
+
+    for ( var i = 0; i < result.length; i++){
+        attributeFinder.searchDocument.itemCode = result[i].itemCode;
+        attributeResult = attributeFinder.search();
+        for ( var j = 0; j < attributeResult.length; j++ ) {
+            if(attributeResult[j].name=="MessageTypology" && attributeResult[j].defaultValue== MessageTypology){
+                filteredRes.addLast(result[i]);
+                break;
+            }
+        }
+    }
+
+    return filteredRes;
+  ]]></script>
+</script>

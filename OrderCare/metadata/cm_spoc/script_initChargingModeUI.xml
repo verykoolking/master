@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initChargingModeUI">
+  <group>ui_scripts.Common.ChargingMode.init</group>
+  <label>initChargingModeUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <mandatory>true</mandatory>
+      <type>ui_cm_spoc.forms.ChargingModeForm</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var CMTariffPlanGroupUI = new cm_spoc.forms.CMTariffPlanGroupUI(ui.model,ui);
+    CMTariffPlanGroupUI.CMTariffPlanGroupIterator = new Array();
+    ui.CMTariffPlanGroupUI = CMTariffPlanGroupUI;
+
+    var CMWalletApplicationUI = new cm_spoc.forms.CMWalletApplicationUI(ui.model,ui);
+    CMWalletApplicationUI.CMWalletApplicationIterator = new Array();
+    ui.CMWalletApplicationUI = CMWalletApplicationUI;
+
+    if(ui.model.specificationCode){
+
+        if(ui.model.CMCMByPlanGroupArrDS.ListDS.length>0){
+            cm_spoc.loadListElements(ui.CMTariffPlanGroupUI, ui.model.CMCMByPlanGroupArrDS.ListDS, "cm_spoc.forms.CMTariffPlanGroupRuleUI", "CMTariffPlanGroupIterator");
+            cm_spoc.loadListElements(ui.CMWalletApplicationUI, ui.model.CMCMByPlanGroupArrDS.ListDS[0].CMBPGWalletApplicationArrDS.ListDS, "cm_spoc.forms.CMWalletApplicationRuleUI", "CMWalletApplicationIterator");
+
+            ui.CMTariffPlanGroupUI.CMTariffPlanGroupIterator[0].Selected = true;
+
+            var iterator = ui.CMWalletApplicationUI.CMWalletApplicationIterator;
+            for(var i=0;i<iterator.length;i++){
+                if(iterator[i].model.WalletUsageRule){
+                   iterator[i].model.WalletUsageRuleEnum = iterator[i].model.WalletUsageRule;
+                }
+            }
+       }
+    }
+
+    return ui.model;
+  ]]></script>
+</script>

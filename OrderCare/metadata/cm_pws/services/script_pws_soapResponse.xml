@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.pws_soapResponse">
+  <highlight>64</highlight>
+  <label>pws_soapResponse</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="object" type="rifp">
+      <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      Data Structure&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="isServerException" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <valueType>nmeta_com.conceptwave.system.Object</valueType>
+  <script><![CDATA[
+    if(api_common.isFault(object)) {
+        //In case of any issues, everything must be rolled back including changes to the Catalog
+        Global.rollbackTransaction("CBIO");
+        Global.rollbackTransaction("CATALOG");
+
+       object = cm_pws.services.mapToServer_ClientException(object, isServerException);
+        Global.throwSoapFaultException(object);
+    } else {
+        return object;
+    }
+
+
+
+    ///(object instanceof common.v2.serverException || object instanceof common.v2.clientException)
+  ]]></script>
+</script>

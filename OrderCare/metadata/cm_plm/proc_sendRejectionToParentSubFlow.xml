@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cm_plm.sendRejectionToParentSubFlow">
+  <activity name="start" type="seqActivity">
+    <guid>{843d21e1-5ee1-4bbe-ae30-e5476a9215de}</guid>
+    <label>Start</label>
+    <x>101.0</x>
+    <y>118.0</y>
+    <childList>
+      <child name="sendRejection" type="scriptActivity">
+        <guid>{b2202e1b-325d-41de-86fa-828cba61d723}</guid>
+        <label>Send Rejection</label>
+        <x>197.0</x>
+        <y>112.0</y>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[Process.sendExceptionToProcess(process.parent.id, "cm_plm.rejectedException");]]></script>
+          </method>
+        </methodList>
+      </child>
+      <child name="end" type="completeActivity">
+        <guid>{47456536-2a66-4004-a951-f8cfe1a9c5fa}</guid>
+        <label>End</label>
+        <x>327.0</x>
+        <y>117.0</y>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{d3d05678-bed7-41a1-96f9-470742ab25b5}</guid>
+  <label>Send Rejection To Parent</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <type>Sub-flow</type>
+</process>

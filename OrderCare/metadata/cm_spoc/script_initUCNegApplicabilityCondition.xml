@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initUCNegApplicabilityCondition">
+  <group>ui_scripts.UsageControl</group>
+  <label>initUCNegApplicabilityCondition</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!model.specificationCode){
+       // model = cm_spoc.initModelForCreation(model);
+    }
+    else
+    {
+
+
+
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+
+       s.specificationCode = model.UCNegativeConUCACArr;
+
+
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.UCNegativeConUCACArrDS=r;
+       }
+
+
+       var UCNegList =  model.UCNegativeConUCACArrDS.List;
+       var UCNegListDS= model.UCNegativeConUCACArrDS.ListDS;
+
+       for(var i=0;i< UCNegList.length;i++){
+
+           if(UCNegList[i] instanceof DataStructure && "CW_REFID" in UCNegList[i]) s.specificationCode = UCNegList[i].CW_REFID;
+           else s.specificationCode = UCNegList[i];
+
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+                UCNegListDS[i]=r;
+
+
+
+               s.specificationCode =UCNegListDS[i].TariffClass;
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    UCNegListDS[i].TariffClassRef.TariffClassCode=r.TariffClassCode;
+                     UCNegListDS[i].TariffClassRef.Description=r.Description;
+
+               }
+
+                   s.specificationCode =UCNegListDS[i].Ton;
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    UCNegListDS[i].TonRef.TonCode=r.TonCode;
+                    UCNegListDS[i].TonRef.TonDescription=r.TonDescription;
+
+               }
+
+               s.specificationCode =UCNegListDS[i].List;
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    UCNegListDS[i].ListRef.ListCodeSDP=r.ListCodeSDP;
+                    UCNegListDS[i].ListRef.ListDescription=r.ListDescription;
+
+               }
+                   s.specificationCode =UCNegListDS[i].DestinationType;
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    UCNegListDS[i].DestinationTypeRef.DestTypeId=r.DestTypeId;
+                    UCNegListDS[i].DestinationTypeRef.DestTypeDesc=r.DestTypeDesc;
+
+               }
+
+                   s.specificationCode =UCNegListDS[i].ServiceProvider;
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    UCNegListDS[i].ServiceProviderRef.ServiceProviderId=r.ServiceProviderId;
+                    UCNegListDS[i].ServiceProviderRef.ServiceProviderDescription=r.ServiceProviderDescription;
+
+               }
+
+              s.specificationCode =UCNegListDS[i].ServiceTariffPlanGroup;
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    UCNegListDS[i].ServiceTariffPlanGroupRef.ServiceTariffPlanGroupID=r.ServiceTariffPlanGroupID;
+
+                    UCNegListDS[i].ServiceTariffPlanGroupRef.Description=r.Description;
+
+               }
+
+
+                s.specificationCode =UCNegListDS[i].UCSApConHappyPeriodArr;
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    UCNegListDS[i].UCSApConHappyPeriodArrDS=r;
+
+               }
+
+                for(var j=0 ;j<UCNegListDS[i].UCSApConHappyPeriodArrDS.List.length ;j++){
+              s.specificationCode =UCNegListDS[i].UCSApConHappyPeriodArrDS.List[j];
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    UCNegListDS[i].UCSApConHappyPeriodArrDS.ListDS[j]=r;
+
+               }
+               }
+
+                  s.specificationCode =UCNegListDS[i].UCSimpleAppConWalletArr;
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    UCNegListDS[i].UCSimpleAppConWalletArrDS=r;
+
+               }
+
+                for(var j=0 ;j<UCNegListDS[i].UCSimpleAppConWalletArrDS.List.length ;j++){
+               s.specificationCode =UCNegListDS[i].UCSimpleAppConWalletArrDS.List[j];
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    UCNegListDS[i].UCSimpleAppConWalletArrDS.ListRef[j]=r;
+
+               }
+               }
+
+                     s.specificationCode =UCNegListDS[i].UCSApConTrafficTypeArr;
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    UCNegListDS[i].UCSApConTrafficTypeArrDS=r;
+
+               }
+         for(var j=0 ;j<UCNegListDS[i].UCSApConTrafficTypeArrDS.List.length ;j++){
+               s.specificationCode =UCNegListDS[i].UCSApConTrafficTypeArrDS.List[j];
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    UCNegListDS[i].UCSApConTrafficTypeArrDS.ListRef[j]=r;
+
+               }
+             }
+
+
+
+           }
+       }
+    }
+
+
+
+    return model;
+  ]]></script>
+</script>

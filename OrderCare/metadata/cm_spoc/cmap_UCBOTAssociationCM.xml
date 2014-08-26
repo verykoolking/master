@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<conversionMap name="cm_spoc.UCBOTAssociationCM">
+  <group>ui_scripts.UsageControl.UCBoltOnTypeAssociation</group>
+  <itemMapList>
+    <itemMap name="0" type="mapItem">
+      <sourcePath name="source" type="mapPath">
+        <pathList>
+          <path>dstruct_cm_spoc.data.UCBoltOnTypeAssociation</path>
+          <path>dstruct_epc.data.Specification/dstruct_specificationCode</path>
+        </pathList>
+      </sourcePath>
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.UCBOTAssociationDoc</path>
+          <path>doc_cwt_pc.cwt_item/leaf_itemCode</path>
+        </pathList>
+      </targetPath>
+    </itemMap>
+    <itemMap name="2" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.UCBOTAssociationDoc</path>
+          <path>doc_cm_spoc.UCBOTAssociationDoc/leaf_secondMsgToDisp</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script>return this.Threshold;</script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="3" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.UCBOTAssociationDoc</path>
+          <path>doc_cm_spoc.UCBOTAssociationDoc/leaf_msgToDisp</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var s = new epc.data.Specification();
+            s.project =  cwa_epc.getDefaultProj();
+            s.specificationCode = this.BoltOnType;
+
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                 return "[" + r.BoltOnTypeID + "](" + r.BoltOnTypeModality + ") " +r.BoltOnTypeDescription;
+            }
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+  </itemMapList>
+  <label>UCBOTAssociationCM</label>
+  <metaVersion>4</metaVersion>
+  <source>dstruct_cm_spoc.data.UCBoltOnTypeAssociation</source>
+  <target>doc_cm_spoc.UCBOTAssociationDoc</target>
+</conversionMap>

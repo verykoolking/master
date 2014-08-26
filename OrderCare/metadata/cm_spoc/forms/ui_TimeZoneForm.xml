@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TimeZoneForm">
+  <group>Numbering</group>
+  <label>TimeZoneForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TimeZone</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>400px</width>
+              <elementList>
+                <element name="TabFrame" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TimeZoneForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.TimeZoneForm/frmui_Forms/vform_general</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                  <width>100px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="general" type="vform">
+          <label>general</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>right,center</alignment>
+            <elementList>
+              <element name="TimeZoneAreaCode" type="elfld">
+                <editable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_setIsPrimaryKey</variablePath>
+                  </variablePathList>
+                </editable>
+                <label>Time Zone Area Code</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_TimeZoneAreaCode</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="Description" type="elfld">
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_Description</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="GMTHourOffset" type="elfld">
+                <label>GMT Hour Offset</label>
+                <labelOrientation>left</labelOrientation>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/uimthd_SecondHourTrigger</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_GMTHourOffset</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="GMTMinuteOffset" type="elfld">
+                <label>GMT Minute Offset</label>
+                <labelOrientation>left</labelOrientation>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/uimthd_SecondMinuteTrigger</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_GMTMinuteOffset</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="AppliesDaylightSavingTime" type="elchk">
+                <label>Applies Daylight Saving Time</label>
+                <labelOrientation>left</labelOrientation>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/uimthd_RunAppliesDaylightSavingTime</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_AppliesDaylightSavingTime</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="AppliesOffset" type="elchk">
+                <label>Applies Offset</label>
+                <labelOrientation>left</labelOrientation>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/uimthd_RunAppliesOffSet</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_AppliesOffset</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_TZAppliesOffsetVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="SecondGMTHourOffset" type="elfld">
+                <editable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_TZSecondGMTHourOffsetReadOCondRule</variablePath>
+                  </variablePathList>
+                </editable>
+                <label>Second GMT Hour Offset</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_SecondGMTHourOffset</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_TZSecondGMTHourOffsetVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="SecondGMTMinuteOffset" type="elfld">
+                <editable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_TZSecondGMTMinuteOffsetReadOCondRule</variablePath>
+                  </variablePathList>
+                </editable>
+                <label>Second GMT Minute Offset</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_SecondGMTMinuteOffset</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_TZSecondGMTMinuteOffsetVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="StartingDaylightMonth" type="elslct">
+                <label>Starting Daylight Month</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_StartingDaylightMonth</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_TZStartingDaylightMonthVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="StartingDaylightWeek" type="elslct">
+                <label>Starting Daylight Week</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_StartingDaylightWeek</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_TZStartingDaylightWeekVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="StartingDaylightWeekDay" type="elslct">
+                <label>Starting Daylight Week Day</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_StartingDaylightWeekDay</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_TZStartingDaylightWeekDayVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="EndingDaylightMonth" type="elslct">
+                <label>Ending Daylight Month</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_EndingDaylightMonth</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_TZEndingDaylightMonthVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="EndingDaylightWeek" type="elslct">
+                <label>Ending Daylight Week</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_EndingDaylightWeek</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_TZEndingDaylightWeekVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="EndingDaylightWeekDay" type="elslct">
+                <label>Ending Daylight Week Day</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_EndingDaylightWeekDay</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_TZEndingDaylightWeekDayVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="LayoutSpacer" type="ellsp">
+                <height>10px</height>
+              </element>
+              <element name="HorizontalLayout3" type="elhlt">
+                <alignment>right,center</alignment>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_TZStartingDaylightTimeVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+                <elementList>
+                  <element name="Label11" type="ellab">
+                    <groupBy>true</groupBy>
+                    <label>Start Daylight Time (HH:MM:SS)</label>
+                    <labelOrientation>left</labelOrientation>
+                    <padding>10</padding>
+                    <textAlign>left</textAlign>
+                    <width>170px</width>
+                  </element>
+                  <element name="StartingDaylightHour1" type="elfld">
+                    <removeLabelLine>true</removeLabelLine>
+                    <showLabel>false</showLabel>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_StartingDaylightHour</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>30px</width>
+                  </element>
+                  <element name="Label4" type="ellab">
+                    <fontProperties type="pfnt">
+                      <bold>true</bold>
+                      <size>14</size>
+                    </fontProperties>
+                    <label>:</label>
+                    <labelOrientation>right</labelOrientation>
+                    <padding>3</padding>
+                    <textAlign>center</textAlign>
+                    <width>10px</width>
+                  </element>
+                  <element name="StartingDaylightMin1" type="elfld">
+                    <removeLabelLine>true</removeLabelLine>
+                    <showLabel>false</showLabel>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_StartingDaylightMin</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>30px</width>
+                  </element>
+                  <element name="Label22" type="ellab">
+                    <fontProperties type="pfnt">
+                      <bold>true</bold>
+                      <size>14</size>
+                    </fontProperties>
+                    <label>:</label>
+                    <labelOrientation>right</labelOrientation>
+                    <padding>3</padding>
+                    <textAlign>center</textAlign>
+                    <width>10px</width>
+                  </element>
+                  <element name="StartingDaylightSec" type="elfld">
+                    <removeLabelLine>true</removeLabelLine>
+                    <showLabel>false</showLabel>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_StartingDaylightSec</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>30px</width>
+                  </element>
+                </elementList>
+              </element>
+              <element name="HorizontalLayout" type="elhlt">
+                <alignment>right,center</alignment>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.TimeZoneForm/permMethod_TZEndingDaylightTimeVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+                <elementList>
+                  <element name="Label1" type="ellab">
+                    <groupBy>true</groupBy>
+                    <label>End Daylight Time (HH:MM:SS)</label>
+                    <labelOrientation>left</labelOrientation>
+                    <padding>10</padding>
+                    <textAlign>left</textAlign>
+                    <width>170px</width>
+                  </element>
+                  <element name="EndingDaylightHour" type="elfld">
+                    <removeLabelLine>true</removeLabelLine>
+                    <showLabel>false</showLabel>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_EndingDaylightHour</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>30px</width>
+                  </element>
+                  <element name="Label" type="ellab">
+                    <fontProperties type="pfnt">
+                      <bold>true</bold>
+                      <size>14</size>
+                    </fontProperties>
+                    <label>:</label>
+                    <labelOrientation>right</labelOrientation>
+                    <padding>3</padding>
+                    <textAlign>center</textAlign>
+                    <width>10px</width>
+                  </element>
+                  <element name="EndingDaylightMin" type="elfld">
+                    <removeLabelLine>true</removeLabelLine>
+                    <showLabel>false</showLabel>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_EndingDaylightMin</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>30px</width>
+                  </element>
+                  <element name="Label2" type="ellab">
+                    <fontProperties type="pfnt">
+                      <bold>true</bold>
+                      <size>14</size>
+                    </fontProperties>
+                    <label>:</label>
+                    <labelOrientation>right</labelOrientation>
+                    <padding>3</padding>
+                    <textAlign>center</textAlign>
+                    <width>10px</width>
+                  </element>
+                  <element name="EndingDaylightSeg" type="elfld">
+                    <removeLabelLine>true</removeLabelLine>
+                    <showLabel>false</showLabel>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TimeZoneForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_EndingDaylightSec</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>30px</width>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="setReadOnly" type="uimthd">
+      <script>return true;</script>
+    </method>
+    <method name="TZAppliesOffsetVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZSecondGMTHourOffsetVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZSecondGMTMinuteOffsetVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZStartingDaylightMonthVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZStartingDaylightWeekVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZStartingDaylightWeekDayVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZStartingDaylightTimeVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZEndingDaylightMonthVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZEndingDaylightWeekVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZEndingDaylightWeekDayVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZEndingDaylightTimeVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZSecondGMTHourOffsetReadOCondRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesOffset;
+        var hour=this.model.GMTHourOffset;
+        if( this.model.readonly || value==false ) return false;
+        else return true;
+      ]]></script>
+    </method>
+    <method name="TZSecondGMTMinuteOffsetReadOCondRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesOffset;
+        if( value==false || this.model.readonly) return false;
+        else return true;
+      ]]></script>
+    </method>
+    <method name="selectTrigger" type="uimthd">
+      <script>return;</script>
+    </method>
+    <method name="RunAppliesDaylightSavingTime" type="uimthd">
+      <script><![CDATA[
+        this.model.AppliesOffset=false;
+        this.model.SecondGMTHourOffset="";
+        this.model.SecondGMTMinuteOffset="";
+        this.model.StartingDaylightMonth="March";
+        this.model.StartingDaylightWeek="Last Week";
+        this.model.StartingDaylightWeekDay="";
+        this.model.EndingDaylightMonth="";
+        this.model.EndingDaylightWeek="";
+        this.model.EndingDaylightWeekDay="";
+        this.model.StartingDaylightHour="";
+        this.model.StartingDaylightMin="";
+        this.model.StartingDaylightSec="";
+        this.model.EndingDaylightHour="";
+        this.model.EndingDaylightMin="";
+        this.model.EndingDaylightSec="";
+
+        if (this.model.AppliesDaylightSavingTime==true && this.model.AppliesOffset==false && this.model.GMTHourOffset!=null){
+            this.model.SecondGMTHourOffset=this.model.GMTHourOffset+1;
+            this.model.SecondGMTMinuteOffset=this.model.GMTMinuteOffset;
+            if (this.model.GMTHourOffset=12){
+                this.model.SecondGMTHourOffset==-11;
+            }
+        }
+        else{
+        this.model.SecondGMTHourOffset="";
+        this.model.SecondGMTMinuteOffset="";
+        }
+        if (this.model.AppliesDaylightSavingTime==false){
+            this.model.StartingDaylightMonth="";
+            this.model.StartingDaylightWeek="";
+        }
+        return;
+      ]]></script>
+    </method>
+    <method name="SecondHourTrigger" type="uimthd">
+      <script><![CDATA[
+        var value=this.model.AppliesOffset;
+        var GTMHour=this.model.GMTHourOffset;
+
+        if(this.model.AppliesDaylightSavingTime==true &&  value==false && GTMHour!=null){
+            this.model.SecondGMTHourOffset=GTMHour + 1;
+            if (this.model.GMTHourOffset==12){
+                this.model.SecondGMTHourOffset=-11;
+            }
+        }
+        else
+            this.model.SecondGMTHourOffset="";
+        return;
+      ]]></script>
+    </method>
+    <method name="RunAppliesOffSet" type="uimthd">
+      <script><![CDATA[
+        var value=this.model.AppliesOffset;
+        var GTMHour=this.model.GMTHourOffset;
+
+        if(value==false && GTMHour!=null)
+            this.model.SecondGMTHourOffset=GTMHour + 1;
+        else{
+            this.model.SecondGMTHourOffset="";
+            this.model.SecondGMTMinuteOffset="";
+        }
+        if (this.model.AppliesDaylightSavingTime==true && this.model.AppliesOffset==false && this.model.GMTHourOffset!=null){
+            this.model.SecondGMTHourOffset=this.model.GMTHourOffset+1;
+            this.model.SecondGMTMinuteOffset=this.model.GMTMinuteOffset;
+            if (this.model.GMTHourOffset==12){
+                this.model.SecondGMTHourOffset=-11;
+            }
+        }
+        else{
+        this.model.SecondGMTHourOffset="";
+        this.model.SecondGMTMinuteOffset="";
+        }
+        return;
+      ]]></script>
+    </method>
+    <method name="TZStartingDaylightHourVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZStartingDaylightMinVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZStartingDaylightSecVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZEndingDaylightHourVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZEndingDaylightMinVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TZEndingDaylightSecVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AppliesDaylightSavingTime;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="SecondMinuteTrigger" type="uimthd">
+      <script><![CDATA[
+        if (this.model.AppliesDaylightSavingTime==true && this.model.AppliesOffset==false && this.model.GMTMinuteOffset!=null){
+            this.model.SecondGMTMinuteOffset=this.model.GMTMinuteOffset;
+        }
+        else{
+            this.model.SecondGMTMinuteOffset="";}
+        return;
+      ]]></script>
+    </method>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+  </methodList>
+</userInterface>

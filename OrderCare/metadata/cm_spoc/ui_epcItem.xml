@@ -1,0 +1,1411 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.epcItem">
+  <extends>ui_cwa_epc.baseEpcItem</extends>
+  <group>overridden.UI</group>
+  <label>epcItem</label>
+  <metaVersion>4</metaVersion>
+  <overrides>ui_cwa_epc.epcItem</overrides>
+  <variableList>
+    <variable name="specificationCodeLabel" type="leaf">
+      <valueType>dtype_cwt_pcdd.string128</valueType>
+    </variable>
+    <variable name="commercialEndDate" type="leaf">
+      <valueType>dtype_com.conceptwave.system.DateTime</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_epc.data.Specification</valueType>
+    </variable>
+    <variable name="itemRrelation" type="leaf">
+      <valueType>dstruct_cwt_pc.item_relationType</valueType>
+    </variable>
+    <variable name="isRecurringPeriodSelected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_cwa_epc.baseEpcItem/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="generalItemForm" type="exov">
+          <base>ui_cwa_epc.baseEpcItem/frmui_Forms/exov_generalItemForm</base>
+          <extends>ui_cwa_epc.baseEpcItem/frmui_Forms/exov_generalItemForm</extends>
+          <label>generalItemForm</label>
+          <overrideList>
+            <override name="formVLayout" type="elvlt">
+              <elementList>
+                <element name="baseItemGrid" type="elgrd">
+                  <cellPadding>5</cellPadding>
+                  <colWidths>164px</colWidths>
+                  <fixedColWidths>true</fixedColWidths>
+                  <labeAlign>left</labeAlign>
+                  <labelOrientation>left</labelOrientation>
+                  <numOfCols>4</numOfCols>
+                  <style>cwFormDetailGrid</style>
+                  <wrapLabel>true</wrapLabel>
+                  <elementList>
+                    <element name="baseSpecificationCode" type="elfld">
+                      <columnSpan>1</columnSpan>
+                      <dynStyle type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/action_style$EPCbaseSpecificationCode</variablePath>
+                        </variablePathList>
+                      </dynStyle>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/permMethod_editablePerm$EPCbaseSpecificationCode</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <labelOrientation>left</labelOrientation>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/leaf_model</variablePath>
+                          <variablePath>dstruct_epc.data.Specification/dstruct_baseSpecificationCode</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/permMethod_visiblePerm$EPCbaseSpecificationCode</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="specificationCode" type="elfld">
+                      <columnSpan>1</columnSpan>
+                      <dynLabel type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/leaf_specificationCodeLabel</variablePath>
+                        </variablePathList>
+                      </dynLabel>
+                      <dynStyle type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/action_style$EPCspecificationCode</variablePath>
+                        </variablePathList>
+                      </dynStyle>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/permMethod_editablePerm$EPCspecificationCode</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <labelOrientation>left</labelOrientation>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/uimthd_setCodes</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/leaf_model</variablePath>
+                          <variablePath>dstruct_epc.data.Specification/dstruct_specificationCode</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/permMethod_visiblePerm$EPCspecificationCode</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="label" type="elfld">
+                      <columnSpan>1</columnSpan>
+                      <dynStyle type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/action_style$EPClabel</variablePath>
+                        </variablePathList>
+                      </dynStyle>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/permMethod_editablePerm$EPClabel</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <label>Name</label>
+                      <labelOrientation>left</labelOrientation>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/leaf_model</variablePath>
+                          <variablePath>dstruct_epc.data.Specification/dstruct_label</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/permMethod_visiblePerm$EPClabel</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="effectiveDate" type="eldatetime">
+                      <columnSpan>1</columnSpan>
+                      <dynStyle type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/action_style$EPCeffectiveDate</variablePath>
+                        </variablePathList>
+                      </dynStyle>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/permMethod_editablePerm$EPCeffectiveDate</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/usrActionMethod_setStartDate</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <startRow>true</startRow>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/leaf_model</variablePath>
+                          <variablePath>dstruct_epc.data.Specification/dstruct_effectiveDate</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/permMethod_visiblePerm$EPCeffectiveDate</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="startDate" type="eldatetime">
+                      <columnSpan>1</columnSpan>
+                      <dynStyle type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/action_style$EPCstartDate</variablePath>
+                        </variablePathList>
+                      </dynStyle>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <labelOrientation>left</labelOrientation>
+                      <startRow>true</startRow>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/leaf_model</variablePath>
+                          <variablePath>dstruct_epc.data.Specification/dstruct_startDate</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/permMethod_visiblePerm$EPCstartDate</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="endDate" type="eldatetime">
+                      <columnSpan>1</columnSpan>
+                      <dynStyle type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/action_style$EPCendDate</variablePath>
+                        </variablePathList>
+                      </dynStyle>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/permMethod_editablePerm$EPCendDate</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <labelOrientation>left</labelOrientation>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/leaf_model</variablePath>
+                          <variablePath>dstruct_epc.data.Specification/dstruct_endDate</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/permMethod_visiblePerm$EPCendDate</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="state" type="elslct">
+                      <columnSpan>1</columnSpan>
+                      <dynStyle type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/action_style$EPCstate</variablePath>
+                        </variablePathList>
+                      </dynStyle>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/leaf_model</variablePath>
+                          <variablePath>dstruct_epc.data.Specification/dstruct_state</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="commercialEndDate" type="eldatetime">
+                      <label>Commercial End Date</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/leaf_commercialEndDate</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="description" type="eltxtArea">
+                      <cellAlignment></cellAlignment>
+                      <columnSpan>3</columnSpan>
+                      <dynStyle type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/action_style$EPCdescription</variablePath>
+                        </variablePathList>
+                      </dynStyle>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/permMethod_editablePerm$EPCdescription</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <label>Description (depends on product)</label>
+                      <startRow>true</startRow>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/leaf_model</variablePath>
+                          <variablePath>dstruct_epc.data.Specification/dstruct_description</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/permMethod_visiblePerm$EPCdescription</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="Menu" type="exov">
+          <base>ui_cwa_epc.baseItem/frmui_Forms/exov_Menu</base>
+          <extends>ui_cwa_epc.baseItem/frmui_Forms/exov_Menu</extends>
+          <label>Menu</label>
+          <overrideList>
+            <override name="menuHLayout" type="elhlt">
+              <style>cwMenusLayout</style>
+              <elementList>
+                <element name="LayoutSpacer" type="ellsp">
+                  <width>10px</width>
+                </element>
+                <element name="actionButtons" type="elgrd">
+                  <colWidths>35px</colWidths>
+                  <fillSpace>false</fillSpace>
+                  <height>28px</height>
+                  <numOfCols>5</numOfCols>
+                  <style>cwActionButtons</style>
+                  <elementList>
+                    <element name="editMenu" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseEpcItem/usrActionMethod_editModelAction</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <enable type="varPath">
+                        <independant>true</independant>
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/permMethod_editMenuEnabled</variablePath>
+                        </variablePathList>
+                      </enable>
+                      <height>22px</height>
+                      <icon>/images/ericsson/edit.png</icon>
+                      <removeLabelLine>true</removeLabelLine>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/permMethod_editMenuVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="saveMenu" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/usrActionMethod_saveModelAction</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <enable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/permMethod_saveMenuEnabled</variablePath>
+                        </variablePathList>
+                      </enable>
+                      <height>22px</height>
+                      <icon>/images/ericsson/save.png</icon>
+                      <removeLabelLine>true</removeLabelLine>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/permMethod_saveMenuVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="newMenu" type="elmnu">
+                      <height>22px</height>
+                      <icon>/images/ericsson/new.png</icon>
+                      <removeLabelLine>true</removeLabelLine>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/permMethod_newMenuVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="Button" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/usrActionMethod_cancelAction</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <height>22px</height>
+                      <icon>/images/ericsson/arrow_left_active.png</icon>
+                      <iconHeight>0</iconHeight>
+                      <iconWidth>0</iconWidth>
+                      <removeLabelLine>true</removeLabelLine>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>35px</width>
+                    </element>
+                    <element name="deleteMenu" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/usrActionMethod_deleteElement</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <enable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/permMethod_editMenuEnabled</variablePath>
+                        </variablePathList>
+                      </enable>
+                      <icon>/images/ericsson/delete.png</icon>
+                      <removeLabelLine>true</removeLabelLine>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/permMethod_deleteMenuVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="cancelMenu" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/usrActionMethod_cancelAction</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <enable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                        </variablePathList>
+                      </enable>
+                      <height>22px</height>
+                      <icon>/images/ericsson/arrow_left_active.png</icon>
+                      <removeLabelLine>true</removeLabelLine>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/permMethod_customCancelMenuVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="ngaaActions" type="elgrd">
+                  <colWidths>35px</colWidths>
+                  <fillSpace>false</fillSpace>
+                  <height>28px</height>
+                  <elementList>
+                    <element name="genXMLMenu" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/usrActionMethod_genXMLAction</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <enable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/permMethod_genXMLEnable</variablePath>
+                        </variablePathList>
+                      </enable>
+                      <height>22px</height>
+                      <icon>/images/ericsson/file-xml.png</icon>
+                      <removeLabelLine>true</removeLabelLine>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.epcItem/permMethod_genXMLVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="menuActionButtons" type="elgrd">
+                  <colWidths>75px</colWidths>
+                  <fillSpace>false</fillSpace>
+                  <height>28px</height>
+                  <numOfCols>4</numOfCols>
+                  <style>cwActionButtons</style>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwa_epc.baseItem/permMethod_menuActionButtonsVisible</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <elementList>
+                    <element name="copyMenu" type="elmnu">
+                      <height>22px</height>
+                      <label>Copy</label>
+                      <removeLabelLine>true</removeLabelLine>
+                      <style>cwCopyMenu</style>
+                    </element>
+                    <element name="extendMenu" type="elmnu">
+                      <height>22px</height>
+                      <label>Extend</label>
+                      <removeLabelLine>true</removeLabelLine>
+                      <style>cwCopyMenu</style>
+                    </element>
+                    <element name="changeHistoryMenu" type="elmnu">
+                      <height>22px</height>
+                      <label>Change History</label>
+                      <removeLabelLine>true</removeLabelLine>
+                      <style>cwCopyMenu</style>
+                      <width>105px</width>
+                    </element>
+                    <element name="showUsageMenu" type="elmnu">
+                      <height>22px</height>
+                      <label>Show Usage</label>
+                      <removeLabelLine>true</removeLabelLine>
+                      <style>cwCopyMenu</style>
+                      <width>105px</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="Default" type="exov">
+          <base>ui_cwa_epc.baseItem/frmui_Forms/exov_Default</base>
+          <extends>ui_cwa_epc.baseItem/frmui_Forms/exov_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="topStack" type="elvlt">
+              <dynStyle type="varPath">
+                <variablePathList>
+                  <variablePath>ui_cwa_epc.baseItem/uimthd_returnComponentStyle</variablePath>
+                </variablePathList>
+              </dynStyle>
+              <fillSpace>false</fillSpace>
+              <width>100%</width>
+              <elementList>
+                <element name="baseItemLayout" type="elvlt">
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwa_epc.baseItem/permMethod_baseItemLayoutVisible</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="labelStatusLayout" type="elhlt">
+                      <width>100%</width>
+                      <elementList>
+                        <element name="header" type="ellab">
+                          <cellAlignment>left,center</cellAlignment>
+                          <label>Form Label</label>
+                          <removeLabelLine>true</removeLabelLine>
+                          <style>cwDetailFormHeader</style>
+                          <textAlign>left</textAlign>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/leaf_header</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/permMethod_formLabelVisible</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <wrap>false</wrap>
+                        </element>
+                        <element name="menuFrame" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/frmui_Forms</variablePath>
+                              <variablePath>ui_cwa_epc.baseItem/frmui_Forms/exov_Menu</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/permMethod_menuFrameVisible</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="labelSpacer" type="ellsp">
+                          <style>cwLabelSpacer</style>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/permMethod_cancelMenuVisible</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <width>70%</width>
+                        </element>
+                        <element name="cancelButton" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/usrActionMethod_cancelAction</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <enable type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                            </variablePathList>
+                          </enable>
+                          <icon>/images/ericsson/arrow_left_active.png</icon>
+                          <label>Back</label>
+                          <style>cwCancelBackMenu</style>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/permMethod_cancelMenuVisible</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="reservedLayout" type="elvlt">
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <elementList>
+                        <element name="baseItemGrid" type="elgrd">
+                          <cellPadding>5</cellPadding>
+                          <colWidths>164px,164px,164px,164px,164px,164px</colWidths>
+                          <fixedColWidths>true</fixedColWidths>
+                          <numOfCols>6</numOfCols>
+                          <style>cwFormDetailGrid</style>
+                          <wrapLabel>true</wrapLabel>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="baseItemFormLayout" type="elvlt">
+                      <elementList>
+                        <element name="generalItemForm" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/frmui_Forms</variablePath>
+                              <variablePath>ui_cwa_epc.baseItem/frmui_Forms/vform_generalItemForm</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <style>cwFormDetailFrame</style>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/permMethod_showBaseItemForm</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="showMoreVLayout" type="elvlt">
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/permMethod_showMoreButtonVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <elementList>
+                        <element name="showMoreButton" type="elbtn">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/usrActionMethod_onShowMoreMenuClick</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <disabled type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </disabled>
+                          <dynLabel type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/uimthd_returnShowMoreMenuLabel</variablePath>
+                            </variablePathList>
+                          </dynLabel>
+                          <style>cwShowMoreMenu</style>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="epcItemVLayout" type="elvlt">
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/permMethod_epcFormVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <elementList>
+                        <element name="epcItemForm" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/leaf_detailForm</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <style>cwFormDetailFrame</style>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/leaf_epcItemFormUI</variablePath>
+                            </variablePathList>
+                          </variable>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpacer" type="ellsp">
+                  <height>15px</height>
+                  <style>cwBaseItemMarginSpacer</style>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwa_epc.baseItem/permMethod_baseItemLayoutVisible</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="tabLayout" type="elvlt">
+                  <dynStyle type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwa_epc.baseItem/uimthd_returnTabLayoutStyle</variablePath>
+                    </variablePathList>
+                  </dynStyle>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwa_epc.baseItem/permMethod_tabLayoutVisible</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="HLayout" type="elhlt">
+                      <width>100%</width>
+                      <elementList>
+                        <element name="topTabButtonLayout" type="elhlt">
+                          <alignment>right,center</alignment>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/permMethod_tabMenuVisible</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <elementList>
+                            <element name="catalogTabMenuLayout1" type="elhlt">
+                              <alignment>left,center</alignment>
+                              <fillSpace>false</fillSpace>
+                              <membersMargin>2</membersMargin>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cwa_epc.baseItem/permMethod_catalogTabMenuVisible</variablePath>
+                                </variablePathList>
+                              </visible>
+                              <elementList>
+                                <element name="Iterator1" type="eliter">
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwa_epc.baseItem/leaf_tabElement</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <elementList>
+                                    <element name="tabMenu1" type="elbtn">
+                                      <autofit>true</autofit>
+                                      <clickMethod type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cwa_epc.baseItem/leaf_tabElement</variablePath>
+                                          <variablePath>ui_cwa_epc.tabElement/usrActionMethod_onTabClick</variablePath>
+                                        </variablePathList>
+                                      </clickMethod>
+                                      <columnSpan>1</columnSpan>
+                                      <disabled type="varPath">
+                                        <variablePathList>
+                                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                        </variablePathList>
+                                      </disabled>
+                                      <dynImage type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cwa_epc.tabElement/uimthd_returnTabButtonImage</variablePath>
+                                        </variablePathList>
+                                      </dynImage>
+                                      <dynLabel type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cwa_epc.tabElement/leaf_label</variablePath>
+                                        </variablePathList>
+                                      </dynLabel>
+                                      <dynStyle type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cwa_epc.tabElement/uimthd_returnTabButtonStyle</variablePath>
+                                        </variablePathList>
+                                      </dynStyle>
+                                      <imageSideSize>6</imageSideSize>
+                                      <imgButton>true</imgButton>
+                                      <staticImage>/cwt/images/tab/tab.png</staticImage>
+                                      <visible type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cwa_epc.tabElement/permMethod_tabVisible</variablePath>
+                                        </variablePathList>
+                                      </visible>
+                                      <width>80px</width>
+                                    </element>
+                                  </elementList>
+                                </element>
+                                <element name="moreTabMenu1" type="elmnu">
+                                  <enable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                                    </variablePathList>
+                                  </enable>
+                                  <height>20px</height>
+                                  <iconSpacing>0</iconSpacing>
+                                  <style>cwTabMenuMore</style>
+                                  <width>23px</width>
+                                  <elementList>
+                                    <element name="moreTabIterator1" type="eliter">
+                                      <variable type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cwa_epc.baseItem/leaf_tabMenuElement</variablePath>
+                                        </variablePathList>
+                                      </variable>
+                                      <elementList>
+                                        <element name="MenuItem1" type="elmnu">
+                                          <clickMethod type="varPath">
+                                            <variablePathList>
+                                              <variablePath>ui_cwa_epc.baseItem/leaf_tabMenuElement</variablePath>
+                                              <variablePath>ui_cwa_epc.tabElement/usrActionMethod_onTabClick</variablePath>
+                                            </variablePathList>
+                                          </clickMethod>
+                                          <dynStyle type="varPath">
+                                            <independant>true</independant>
+                                            <variablePathList>
+                                              <variablePath>ui_cwa_epc.tabElement/uimthd_returnTabButtonStyle</variablePath>
+                                            </variablePathList>
+                                          </dynStyle>
+                                          <iconHeight>0px</iconHeight>
+                                          <iconSpacing>0</iconSpacing>
+                                          <iconWidth>0px</iconWidth>
+                                          <style>cwTabMenu</style>
+                                          <variable type="varPath">
+                                            <variablePathList>
+                                              <variablePath>ui_cwa_epc.tabElement/leaf_label</variablePath>
+                                            </variablePathList>
+                                          </variable>
+                                          <visible type="varPath">
+                                            <variablePathList>
+                                              <variablePath>ui_cwa_epc.tabElement/permMethod_tabInMenuVisible</variablePath>
+                                            </variablePathList>
+                                          </visible>
+                                        </element>
+                                      </elementList>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="specificItemForm" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/leaf_tabForm</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/leaf_tabFrame</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100%</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="menusLayout" type="elhlt">
+                  <style>cwMenusLayout</style>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwa_epc.baseItem/permMethod_menusLayoutVisible</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="customMenu" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/frmui_Forms</variablePath>
+                          <variablePath>ui_cwa_epc.baseItem/frmui_Forms/vform_customMenu</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/permMethod_customMenuVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>100%</width>
+                    </element>
+                    <element name="actionButtons" type="elgrd">
+                      <colWidths>70px</colWidths>
+                      <fillSpace>false</fillSpace>
+                      <height>28px</height>
+                      <numOfCols>4</numOfCols>
+                      <style>cwActionButtons</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/permMethod_actionButtonsVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <elementList>
+                        <element name="editMenu" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/usrActionMethod_editModelAction</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <enable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/permMethod_editMenuEnabled</variablePath>
+                            </variablePathList>
+                          </enable>
+                          <height>22px</height>
+                          <label>Edit</label>
+                          <removeLabelLine>true</removeLabelLine>
+                          <style>cwSaveMenu</style>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/permMethod_editMenuVisible</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="saveMenu" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/usrActionMethod_saveModelAction</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <enable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/permMethod_saveMenuEnabled</variablePath>
+                            </variablePathList>
+                          </enable>
+                          <height>22px</height>
+                          <label>Save</label>
+                          <removeLabelLine>true</removeLabelLine>
+                          <style>cwSaveMenu</style>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/permMethod_saveMenuVisible</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="newMenu" type="elmnu">
+                          <height>22px</height>
+                          <label>New</label>
+                          <removeLabelLine>true</removeLabelLine>
+                          <style>cwNewMenu</style>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/permMethod_newMenuVisible</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="Button" type="elbtn">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/usrActionMethod_cancelAction</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <dynLabel type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwa_epc.baseItem/uimthd_returnCloseMenuLabel</variablePath>
+                            </variablePathList>
+                          </dynLabel>
+                          <height>22px</height>
+                          <iconHeight>0</iconHeight>
+                          <iconWidth>0</iconWidth>
+                          <removeLabelLine>true</removeLabelLine>
+                          <style>cwNewMenu</style>
+                          <width>75px</width>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="menuSpacer" type="ellsp">
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwa_epc.baseItem/permMethod_actionButtonsSpacerVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>80%</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="treeDetailFrame" type="elovf">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwa_epc.baseItem/leaf_treeDetailUI</variablePath>
+                      <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                      <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwa_epc.baseItem/leaf_treeDetailUI</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwa_epc.baseItem/permMethod_treeDetailUIVisible</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$isRecurringPeriodSelected" type="laction">
+      <path>ui_cm_spoc.epcItem/leaf_isRecurringPeriodSelected</path>
+      <type>initializer</type>
+      <script>return false;</script>
+    </method>
+    <method name="onInit" type="action">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+      <script><![CDATA[
+        this.cw$super_onInit();
+        this.isCancelMenuVisible = false;
+        this.isDeleteMenuVisible = true;
+        this.itemCode = this.model.specificationCode;
+
+
+        this.commercialEndDate = this.model.commercialEndDate;
+        if(this.parent.parent.specificationTypeDoc.code=="ProductOffering")
+            this.specificationCodeLabel="Id";
+        if(this.parent.parent.specificationTypeDoc.code=="ProductSpecification")
+            this.specificationCodeLabel="Product Number";
+
+        this.showMoreMenuClicked = true;
+
+        if(!(this.model instanceof epc.data.Service_BSCS))
+            this.initFrames(this.itemCode);
+
+        if(this.model instanceof epc.data.ScheduleType && this.model.IsRecurringPeriod){
+            this.isTabLayoutVisible = false;
+            this.isRecurringPeriodSelected = true;
+        }
+      ]]></script>
+    </method>
+    <method name="customSaveMenuVisible" type="permMethod">
+      <script><![CDATA[return this.isCustomSaveMenuVisible && this.model.state == "DEF";]]></script>
+    </method>
+    <method name="customDeleteMenuVisible" type="permMethod">
+      <script><![CDATA[return this.isCustomDeleteMenuVisible && this.model.state == "DEF";]]></script>
+    </method>
+    <method name="cancelAction" type="usrActionMethod">
+      <script><![CDATA[
+        if(this.isCancelMenuIcon){
+            if(Global.isMethodDefined(this.parent,"hideDetailAction"))
+                this.parent.hideDetailAction();
+            else if(Global.isMethodDefined(this.parent.parent,"hideDetailAction"))
+                this.parent.parent.hideDetailAction();
+        }
+      ]]></script>
+    </method>
+    <method name="onSaveModelPre" type="uimthd">
+      <script><![CDATA[
+        if (this.model instanceof epc.data.ServiceCharacteristics) {
+            var res = this.epcItemFormUI.validateServiceChar();
+            if(res){
+                var CSVStr  = cwa_epc.getChargableQuantityCSV(this.epcItemFormUI.chargeUI.getResult());
+                this.model.BsServiceChargeableQuantityArray =  CSVStr;
+
+                var CSVStr1  = cwa_epc.getUsageIndicatorCSV(this.epcItemFormUI.usageUI.getResult());
+                this.model.BsServiceUsageTypeArray =  CSVStr1;
+            }
+            return res;
+        }
+        else if(this.model instanceof epc.data.ScheduleType && this.isRecurringPeriodSelected){
+            var periodType = this.epcItemFormUI.setRecurringPeriod(this.model);
+            if(api_common.isFault(periodType)){
+                this.setModelStatus(periodType,"CWA_EPC_SAVE_001",false, this.model.metadataTypeLabel);
+                return periodType;
+            }
+            if(this.model.Periods[0] == null)
+                this.model.Periods[this.model.Periods.length] = periodType.specificationCode;
+        }
+        else if(this.model instanceof epc.data.Service_BSCS){
+            this.model.BsSvlCode = this.getSVLCode();
+        }
+      ]]></script>
+    </method>
+    <method name="getSVLCode" type="uimthd">
+      <script><![CDATA[
+        var  marketCode = getMarketCode(this.model.BsScCode);
+        var keySrv =  this.model.BsS1Code;
+        // teleBasicService
+
+        var srvCodeTele = null;
+        var bcDoc = getBasicServiceDoc(keySrv);
+        if(bcDoc != null){
+
+            srvCodeTele = bcDoc.SRVCODE;
+        }
+        // BearerBasicService
+        var keyBearer =  this.model.BsS2Code;
+        var srvCodeBearer = null;
+        var bcDoc = getBasicServiceDoc(keyBearer);
+        if(bcDoc != null){
+            srvCodeBearer = bcDoc.SRVCODE;
+        }
+        // SuplementBasicService
+        var keySuplement = this.model.BsSsCode;
+        var suplementSrvCode = null;
+        var bcDoc = getBasicServiceDoc(keySuplement);
+        if(bcDoc != null){
+            suplementSrvCode = bcDoc.SRVCODE;
+        }
+        var svlCode =  BSCS.generateSvlCodeForService(srvCodeTele, srvCodeBearer, suplementSrvCode, marketCode);
+
+        return svlCode;
+
+        function getBasicServiceDoc(key){
+            var bcDoc = new Document("BSCS.data.basicService",key);
+            if(bcDoc != null && bcDoc.dirty != true){
+                return bcDoc;
+            }
+            return null;
+        }
+
+        function  getMarketCode(mCode){
+            var mDoc = new Document("BSCS.data.marketDoc",mCode);
+            if(mDoc != null && mDoc.dirty != true){
+                return mDoc.SCSLPREFIX;
+            }
+            return null;
+        }
+      ]]></script>
+    </method>
+    <method name="postSaveFault" type="uimthd">
+      <parameterList>
+        <parameter name="fault" type="rifp">
+          <type>dstruct_epc.data.fault</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(this.model instanceof epc.data.Service_BSCS){
+            if (fault.message.length > 0) {
+                for(var i=0; i<fault.message.length; i++){
+                    if(fault.message[i].code == "BSCS_ERR_0009"){
+                        fault.message[i].text = getServCodeErrorMessage(this.model);
+                    }
+                }
+            }
+        }
+
+        function getServCodeErrorMessage(model)
+        {
+            var servCode = null;
+            var finder = new Finder("cwl_epc.attributeFinder");
+            finder.searchDocument.itemAttributeCode = "BsSvlCode";
+            finder.searchDocument.defaultValue = model.BsSvlCode;
+            var result = finder.search();
+            if(result.length > 0){
+                if(result[0].itemCode == model.specificationCode){
+                    return;
+                }else{
+                    servCode = result[0].itemCode;
+                }
+            }else{
+                var finderBSCS = new Finder("BSCS.bscsSVLCodeFinder");
+                finderBSCS.searchDocument.SVLCODE = model.BsSvlCode;
+                var resultBSCS = finderBSCS.search();
+                if (resultBSCS.length > 0){
+                    var code = resultBSCS[0].SNCODE;
+                    var sql = "SELECT SHDES FROM CBIO_BSCS_MPUSNTAB where SNCODE="+code+"";
+                    var res = Global.runSQLQuery("ORDER", "BSCS.data.service", 1, null, sql);
+                    if(res.length > 0)
+                        servCode = res[0].id;
+
+                }else
+                    return;
+            }
+            return Global.translateText("CWA_EPC_UNIQ_SVLCODE",null,servCode);
+        }
+      ]]></script>
+    </method>
+    <method name="onSaveModelRec" type="uimthd">
+      <parameterList>
+        <parameter name="model" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script>return cm_spoc.epcOnSaveModelRec(model, this);</script>
+    </method>
+    <method name="saveModelAction" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        this.model.commercialEndDate=this.commercialEndDate;
+        //var label = this.model!=null ? this.getModel().metadataTypeLabel : this.header;
+        /*if(!this.isValid){
+            this.setModelStatus(null,"CWA_EPC_SAVE_001",false);
+            return;
+        }*/
+
+        try{
+            var res = this.onSaveModelPre();
+            if(res != false && !api_common.isFault(res)){
+                if(this.parent != null && Global.isMethodDefined(this.parent,"onUpdate")){
+                    var res = this.parent.onUpdate(this.model);
+                    if(res == null){
+                        this.onSaveModelRec(this.model);
+                    }
+                }else{
+                    this.onSaveModelRec(this.model);
+                }
+                this.onSaveModelPost();
+            }
+        }catch(ex){
+            var fault = api_common.createException(ex, "COM_ERR_0001");
+            this.setModelStatus(fault);
+        }
+        //if(this.model!=null)
+        //    this.model.dirty = false;
+      ]]></script>
+    </method>
+    <method name="initFrames" type="uimthd">
+      <parameterList>
+        <parameter name="inputId" type="rifp">
+          <type>dtype_cwt_pcdd.catalogCode</type>
+        </parameter>
+      </parameterList>
+      <script>//this.cw$super_initFrames(inputId);</script>
+    </method>
+    <method name="setCodes" type="uimthd">
+      <script><![CDATA[
+        /*if ("BoltOnCode" in this.model){
+            this.model.BoltOnCode = this.model.specificationCode;
+        }
+        if ("BoltOnTypeCode" in this.model) this.model.BoltOnTypeCode = this.model.specificationCode;
+
+        if ("MixedBoltOnCode" in this.model)
+            this.model.MixedBoltOnCode = this.model.specificationCode;*/
+      ]]></script>
+    </method>
+    <method name="onSaveModelRecCopia" type="uimthd">
+      <parameterList>
+        <parameter name="model" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var fault = api_common.createFault();
+        var project = cwa_epc.getDefaultProj();
+
+        /* Cardinality rules*/
+        var eList = cm_common.validateDs(model);
+        for (var i = 0; eList != null && i < eList.length; i+=2) {
+              //fault.addFault(eList[i], eList[i+1], null, 'E');
+              fault.addErrorMessage(model,[ eList[i+1],null],eList[i],"E");
+        }/*
+        var res =  null;
+        if (!eList || eList.length==0) {
+            res= cm_spoc.saveModelRec(model,project); //recursively Saves or Modify the catalog entities
+        }
+        */
+        var createMainItem= !(this.parentFinderUI && this.parentFinderUI.isStored);
+        if(!fault || fault.message.length==0) {
+            var res= cm_spoc.saveModelRec(model,project,createMainItem); //recursively Saves or Modify the catalog entities
+        }
+
+        if(res!=null && !api_common.isFault(res) ){
+            this.itemCode = model.specificationCode;
+
+           // var count = ruleSet.validate(model, fault, null, true);
+            if (fault.message.length == 0)
+                fault = null;
+
+            if(!fault)
+                this.setModelStatus(null,"CWA_EPC_SAVE_002",true, model.metadataTypeLabel);
+            else //saved with warning messages
+                this.setModelStatus(fault,"CWA_EPC_SAVE_004",true, model.metadataTypeLabel);
+
+            //attach the model to the UI;
+            //model = res; - sets it to a response
+
+            if (this.parentFinderUI && !this.parentFinderUI.isStored) {
+                this.parentFinderUI.isStored = true;
+                this.refreshFrames();
+                this.setFormLabel();
+            }
+            if(this.parentFinderUI)
+                this.parentFinderUI.isNew = false;
+
+            if(this.parent instanceof cwa_epc.treeDetailTabComponent || this.parent instanceof cwa_epc.consumptionDetailTabComponent){
+                this.parent.leftTreeUI.refreshNode(true, true);
+                this.updateRootNode();
+
+            }
+            this.setFormLabel();
+            this.isSaveClicked = true;
+            return true;
+        }else if (res!=null && api_common.isFault(res) ){
+
+            this.postSaveFault(res);
+            this.setModelStatus(res,"CWA_EPC_SAVE_001",false, model.metadataTypeLabel);
+           return false;
+        } else {
+             fault=cwl_epc.getErrorFault(fault);
+             this.postSaveFault(fault);
+            this.setModelStatus(fault,"CWA_EPC_SAVE_001",false, model.metadataTypeLabel);
+             return false;
+        }
+      ]]></script>
+    </method>
+    <method name="deleteModelAction" type="usrActionMethod">
+      <script><![CDATA[
+        try{
+                var project = cwa_epc.getDefaultProj();
+                var response=cm_common.plmRemoveItem(this.model,project);
+                if(response instanceof api_common.data.fault)
+                     this.setModelStatus(response);
+                else{
+                    this.cancelAction();
+                    if( (this.parent.parent.model.metadataType ==  'cm_spoc:epcItemFinder') || (this.parent.parent.model.isChild('searchDocument')) )
+                        this.parent.parent.model.searchDocument.specification.specificationCode=null;
+
+                    this.setModelStatus(null,"CWA_EPC_REMOVE_002",true, this.model.metadataTypeLabel);
+
+                    if( (this.parent.parent.model.metadataType ==  'cm_spoc:epcItemFinder'))
+                        this.parent.parent.resultUI.result=this.parent.parent.model.search();
+                }
+
+        }catch(ex){
+            var fault = api_common.createException(ex, "COM_ERR_0001");
+            this.setModelStatus(fault);
+        }
+      ]]></script>
+    </method>
+    <method name="editMenuVisible" type="permMethod">
+      <script><![CDATA[
+        var valueProfile;
+        var itemType = cm_spoc.getSpecificationType(this.model);
+        if(itemType == "ProductSpecification")
+            valueProfile=UserProfile.hasPrivilege('marketingPriv');
+        else if(itemType == "ProductOffering")
+            valueProfile=UserProfile.hasPrivilege('marketingPriv');
+        else if(itemType == "ServiceSpecification")
+            valueProfile=UserProfile.hasPrivilege('technicalPriv');
+        else{
+            valueProfile=false;
+        }
+        var permission = cm_common.getItemPermissionCUD(this.model.baseSpecificationCode);
+        //this.cw$super_editMenuVisible($psCondition);
+        if(!this.editablePerm() && this.isEditMenuVisible && (permission.length == 0 || permission[0].canUpdate)){
+            if(this.model.state == "DEF")
+                return valueProfile;
+            if(this.model.state == "ACT"){
+                var proj = cwt_pc.getDefaultProject();
+                if(proj != null && proj.status != "ACT"){
+                    return valueProfile;
+                    //var versionable = publishEvent("CWA_EPC_VERSIONABLE_MODEL",FIRST_ONE,null,this.model);
+                    //return versionable;
+                }else{
+                    return false;
+                }
+
+            }
+        }else
+            return false;
+      ]]></script>
+    </method>
+    <method name="deleteElement" type="usrActionMethod">
+      <form>ui_cm_spoc.deleteConfirmation/frmui_Forms/exov_Default</form>
+      <showInPopup>true</showInPopup>
+      <userInterface>ui_cm_spoc.deleteConfirmation</userInterface>
+      <valueType>ui_cm_spoc.deleteConfirmation</valueType>
+    </method>
+    <method name="getBaseSpecificationCode" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        if(this.model.baseSpecificationCode!=null)
+            return this.model.baseSpecificationCode;
+        else
+            return cm_spoc.getBaseSpecificationCode(this.model);
+      ]]></script>
+    </method>
+    <method name="genXMLVisible" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CWAdminApp</privilege>
+        </privileges>
+      </privilegesList>
+      <script><![CDATA[return (!this.editablePerm() && this.isEditMenuVisible);]]></script>
+    </method>
+    <method name="genXMLAction" type="usrActionMethod">
+      <script><![CDATA[
+        var itemCode = this.model.specificationCode;
+        var projectCode = cm_common.getProjectsForItems([itemCode]).projects[0].projectCode;
+
+        var node = null;
+        var projTopItens = cm_plm.getProjectTopItems(projectCode);
+        var xmlData = cm_aaca.caAACatalogItemData(projectCode, itemCode, projTopItens, node, false);
+
+        var data = null;
+        if(xmlData) {
+
+            var data = xmlData.aaItem.toXML();
+            var data = '<AAConfigurableItem xsi:noNamespaceSchemaLocation="AAConfiguration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+                         data.substr(19);
+        }
+        else {
+            data = '<NGAA>No data to sent to Altamira</NGAA>';
+        }
+
+         if (data) {
+            if(data.substring(0, 1)=="<")
+                Global.showModelessDialog(data,500,400,'text/xml');
+            else
+                Global.showModelessDialog(data,500,400); //not xml, could be json or plain text.
+        }
+      ]]></script>
+    </method>
+    <method name="genXMLEnable" type="permMethod">
+      <script><![CDATA[
+        var itemCode = this.model.specificationCode;
+        var project = cm_common.getProjectsForItems([itemCode]).projects[0];
+        return project.status != "ACT";
+      ]]></script>
+    </method>
+    <method name="deleteMenuVisible" type="permMethod">
+      <script><![CDATA[
+        var valueProfile;
+        var itemType = cm_spoc.getSpecificationType(this.model);
+        if(itemType == "ProductSpecification")
+            valueProfile=UserProfile.hasPrivilege('marketingPriv');
+        else if(itemType == "ProductOffering")
+            valueProfile=UserProfile.hasPrivilege('marketingPriv');
+        else if(itemType == "ServiceSpecification")
+            valueProfile=UserProfile.hasPrivilege('technicalPriv');
+        else{
+            valueProfile=false;
+        }
+        var permission = cm_common.getItemPermissionCUD(this.model.baseSpecificationCode);
+        //this.cw$super_editMenuVisible($psCondition);
+        if(!this.editablePerm() && this.isEditMenuVisible && (permission.length == 0 || permission[0].canDelete)){
+            if(this.model.state == "DEF")
+                return valueProfile;
+            if(this.model.state == "ACT"){
+                var proj = cwt_pc.getDefaultProject();
+                if(proj != null && proj.status != "ACT"){
+                    return valueProfile;
+                    //var versionable = publishEvent("CWA_EPC_VERSIONABLE_MODEL",FIRST_ONE,null,this.model);
+                    //return versionable;
+                }else{
+                    return false;
+                }
+
+            }
+        }else
+            return false;
+      ]]></script>
+    </method>
+    <method name="setStartDate" type="usrActionMethod">
+      <script>this.model.startDate=this.model.effectiveDate</script>
+    </method>
+  </methodList>
+</userInterface>

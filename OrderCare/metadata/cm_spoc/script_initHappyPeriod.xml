@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initHappyPeriod">
+  <group>ui_scripts.UsageControl.HappyPeriod</group>
+  <label>initHappyPeriod</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+    <parameter name="happyPeriod" type="rifp">
+      <type>dstruct_cm_spoc.data.UCSApConHappyPeriod</type>
+    </parameter>
+    <parameter name="onEditFlag" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var hp;
+    var loadFlag= false;
+    if(happyPeriod == null){
+        hp= cm_spoc.createNewHappyPeriod(ui);
+    }else{
+    hp=happyPeriod;
+    loadFlag= true;
+    }
+
+    if(onEditFlag){
+    var uis = new Array();
+
+    for (var i = 0; i <= 11; i++) {
+      uis[i] = new cm_spoc.forms.HappyPeriodPopUpButton(hp,ui);
+      uis[i].Form = "Default";
+      uis[i].label= cm_spoc.getMonthName(i);
+      uis[i].index= i;
+      uis[i].type = 0;
+
+
+    }
+    ui.monthIterator=uis;
+
+
+    var uis = new Array();
+
+    for (var  i= 0; i <= 11; i++) {
+      uis[i] = new cm_spoc.forms.HappyPeriodPopUpButton(hp,ui);
+      uis[i].Form = "Default";
+      uis[i].label= (1+i)+"";
+      uis[i].index= i;
+      uis[i].type = 1;
+
+
+    }
+    ui.dayRow1Iterator= uis;
+
+
+    var uis = new Array();
+
+    for (var i = 0; i <= 11; i++) {
+      uis[i] = new cm_spoc.forms.HappyPeriodPopUpButton(hp,ui);
+      uis[i].Form = "Default";
+      uis[i].label= (13+i)+"";
+      uis[i].index= 12+i;
+      uis[i].type = 1;
+
+
+    }
+    ui.dayRow2Iterator=uis;
+
+    var uis = new Array();
+
+    for (var i = 0; i <= 6; i++) {
+      uis[i] = new cm_spoc.forms.HappyPeriodPopUpButton(hp,ui);
+      uis[i].Form = "Default";
+      uis[i].label= (25+i)+"";
+      uis[i].index= 24+i;
+      uis[i].type = 1;
+
+
+    }
+    ui.dayRow3Iterator= uis;
+
+    var uis = new Array();
+
+    for (var i = 0; i <= 11; i++) {
+      uis[i] = new cm_spoc.forms.HappyPeriodPopUpButton(hp,ui);
+      uis[i].Form = "Default";
+      uis[i].label= ""+i+":00";
+      uis[i].index= i;
+      uis[i].type = 2;
+
+
+
+    }
+    ui.hourRow1Iterator=uis;
+
+
+    var uis = new Array();
+
+    for (var i = 0; i <= 11; i++) {
+      uis[i] = new cm_spoc.forms.HappyPeriodPopUpButton(hp,ui);
+      uis[i].Form = "Default";
+      uis[i].label= 12+i+":00";
+      uis[i].index= 12+i;
+      uis[i].type = 2;
+
+
+    }
+    ui.hourRow2Iterator= uis;
+
+
+    var uis = new Array();
+
+    for (var i = 0; i <= 6; i++) {
+      uis[i] = new cm_spoc.forms.HappyPeriodPopUpButton(hp,ui);
+      uis[i].Form = "Default";
+      uis[i].label= cm_spoc.getWeekDayName(i);
+      uis[i].index= i;
+      uis[i].type = 3;
+
+
+    }
+    ui.weekDayIterator= uis;
+
+     var monthsCtrl = new cm_spoc.forms.HappyPeriodPopUpCtrlButton(hp,ui);
+     monthsCtrl.Form = "Default";
+     monthsCtrl.label= "Months";
+     monthsCtrl.index= 0;
+     monthsCtrl.type = 0;
+      ui.monthsCtrlUI = monthsCtrl;
+
+       var daysCtrl = new cm_spoc.forms.HappyPeriodPopUpCtrlButton(hp,ui);
+    daysCtrl.Form = "Default";
+    daysCtrl.label= "Days";
+    daysCtrl.index= 0;
+    daysCtrl.type = 1;
+     ui.daysCtrlUI = daysCtrl;
+
+      var hoursCtrl = new cm_spoc.forms.HappyPeriodPopUpCtrlButton(hp,ui);
+    hoursCtrl.Form = "Default";
+    hoursCtrl.label= "Hours";
+    hoursCtrl.index= 0;
+    hoursCtrl.type = 2;
+    ui.hoursCtrlUI = hoursCtrl;
+
+      var weekDaysCtrl = new cm_spoc.forms.HappyPeriodPopUpCtrlButton(hp,ui);
+    weekDaysCtrl.Form = "Default";
+    weekDaysCtrl.label= "Week Day";
+    weekDaysCtrl.index= 0;
+    weekDaysCtrl.type = 3;
+    ui.weekDaysCtrlUI =weekDaysCtrl;
+
+
+     var yearSel = new cm_spoc.forms.HappyPeriodPopUpYearSelectionButton(hp,ui);
+
+      ui.yearsUI = yearSel;
+
+
+    cm_spoc.loadDetail(ui,hp);
+    }
+  ]]></script>
+</script>

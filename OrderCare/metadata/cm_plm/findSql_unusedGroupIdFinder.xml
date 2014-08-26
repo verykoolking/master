@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findSql name="cm_plm.unusedGroupIdFinder">
+  <dbSchema>CATALOG</dbSchema>
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <group>applicabilityCondition.finders.sql</group>
+  <input>doc_cm_plm.AppBoltonTypeGroupListDoc</input>
+  <label>unusedGroupIdFinder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_cm_plm.AppBoltonTypeGroupListDoc</output>
+  <type>SQL</type>
+  <methodList>
+    <method name="cwOnFinderSQLSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        select distinct g.appboltontypegroupid from ngaa_appboltontypegrouplist g, ngaa_nx24appboltontype a
+        where g.appboltontypegroupid <> 0
+        and g.endDate is null
+        and a.h0<>g.appboltontypegroupid
+        and a.h0<>g.appboltontypegroupid
+        and a.h1<>g.appboltontypegroupid
+        and a.h2<>g.appboltontypegroupid
+        and a.h3<>g.appboltontypegroupid
+        and a.h4<>g.appboltontypegroupid
+        and a.h5<>g.appboltontypegroupid
+        and a.h6<>g.appboltontypegroupid
+        and a.h7<>g.appboltontypegroupid
+        and a.h8<>g.appboltontypegroupid
+        and a.h9<>g.appboltontypegroupid
+        and a.h10<>g.appboltontypegroupid
+        and a.h11<>g.appboltontypegroupid
+        and a.h12<>g.appboltontypegroupid
+        and a.h13<>g.appboltontypegroupid
+        and a.h14<>g.appboltontypegroupid
+        and a.h15<>g.appboltontypegroupid
+        and a.h16<>g.appboltontypegroupid
+        and a.h17<>g.appboltontypegroupid
+        and a.h18<>g.appboltontypegroupid
+        and a.h19<>g.appboltontypegroupid
+        and a.h20<>g.appboltontypegroupid
+        and a.h21<>g.appboltontypegroupid
+        and a.h22<>g.appboltontypegroupid
+        and a.h23<>g.appboltontypegroupid
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cm_plm.AppBoltonTypeGroupListDoc</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cm_plm.AppBoltonTypeGroupListDoc/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cm_plm.AppBoltonTypeGroupListDoc/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="unusedGroupIdFinderResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_plm.unusedGroupIdFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="AppBoltonTypeGroupId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.unusedGroupIdFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.AppBoltonTypeGroupListDoc/leaf_AppBoltonTypeGroupId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="AppBoltonTypeGroupDescription" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.unusedGroupIdFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.AppBoltonTypeGroupListDoc/leaf_AppBoltonTypeGroupDescription</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="AppBoltonTypeGroupModality" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.unusedGroupIdFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.AppBoltonTypeGroupListDoc/leaf_AppBoltonTypeGroupModality</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="BoltonTypeArr" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.unusedGroupIdFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.AppBoltonTypeGroupListDoc/leaf_BoltonTypeArr</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="projectCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.unusedGroupIdFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.AppBoltonTypeGroupListDoc/leaf_projectCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwCreated" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.unusedGroupIdFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.AppBoltonTypeGroupListDoc/leaf_cwCreated</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwCreatedBy" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.unusedGroupIdFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.AppBoltonTypeGroupListDoc/leaf_cwCreatedBy</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwDocStamp" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.unusedGroupIdFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.AppBoltonTypeGroupListDoc/leaf_cwDocStamp</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="lastUpdatedDate" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.unusedGroupIdFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.AppBoltonTypeGroupListDoc/leaf_lastUpdatedDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_plm.unusedGroupIdFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_plm.unusedGroupIdFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="inProgressProjectsFinderView" type="findVView">
+      <outputOverlay>findSql_cm_plm.unusedGroupIdFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findSql>

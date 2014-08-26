@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.registerItemInOrder">
+  <label>registerItemInOrder</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="registerStatus" type="rifp">
+      <type>dtype_cm_plm.itemPLMStatus</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Resgister an item with a PLM Order
+     *
+     * @author  Luis Barreira
+     * @date    26-06-2014
+     *
+     * @param {String} itemCode    The itemCode
+     * @param {String} projectCode The projectCode
+     * @param {String} registerStatus The item status to be register
+     */
+
+     var ord = cm_plm.getPLMOrderFromProjectCode(projectCode);
+     if(ord!=null) {
+
+        //register Item
+        ord.createUpdateCatItem(itemCode, registerStatus);
+
+        //Register parent Scope Itens
+        var parentItens = cm_common.getAlIRelatedToTopItems(itemCode, 'scope');
+        for(var i=0; i<parentItens.length; i++)
+            ord.createUpdateCatItem(parentItens[i].itemCode, "CHANGE");
+
+        ord.save();
+     }
+  ]]></script>
+</script>

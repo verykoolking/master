@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getFilteredDataObject">
+  <description><![CDATA[
+    <p style="margin-top: 0">
+      <font face="Courier New">return a filtered DataObjectList puts in input
+      by attribute and filter value.
+    </font>    </p>
+        <p style="margin-top: 0">
+          <font face="Courier New">
+    </font>    </p>
+        <p style="margin-top: 0">
+          <b><font face="Courier New">Input</font></b><font face="Courier New">
+    </font>    </p>
+        <p style="margin-top: 0">
+          <font face="Courier New">DOLSource: the DataObjectList wants filter
+          (Object)
+    </font>    </p>
+        <p style="margin-top: 0">
+          <font face="Courier New">Attrib: the DataObjectList attribute on which
+          apply the filter (String)
+    </font>    </p>
+        <p style="margin-top: 0">
+          <font face="Courier New">Filter: filter string ('%' wildcard is allowed)
+          (String)</font>
+        </p>
+  ]]></description>
+  <label>getFilteredDataObject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="DBLSource" type="rifp">
+      <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+    &#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      DataObjectList input&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="Attrib" type="rifp">
+      <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+    &#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      DataObjectList&apos;s Attribute on which applies filter&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="Filter" type="rifp">
+      <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+    &#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      &lt;font face=&quot;Courier New&quot;&gt;filter string (&apos;%&apos; wildcard is allowed)&lt;/font&gt;&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var tmpFilter='';
+    var pattern=null;
+    var currentAttribValue='';
+    var DOLFiltered = new DataObjectList();
+
+    if(Filter==null || Filter=='') {
+        Filter = '%';
+    }
+
+    for(var i=0;i<Filter.length;i++){
+        if(Filter[i]=='%'){
+            tmpFilter=tmpFilter+'.*'; //the % is used like * by the user
+        }else {
+            tmpFilter=tmpFilter + Filter[i]; //escaping char for each char of the search string
+        }
+    }
+
+    pattern= new RegExp('^'+ tmpFilter +'$','i'); //casi insensitive match
+    for(var i=0;i<DBLSource.length;i++){
+        currentAttribValue = DBLSource[i][Attrib];
+        if(currentAttribValue.match(pattern)!=null) {
+           DOLFiltered.addLast(DBLSource[i]);
+        }
+    }
+    DOLFiltered.updateList;
+    return DOLFiltered;
+  ]]></script>
+</script>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initModelForCreation">
+  <group>ui_scripts.utils</group>
+  <label>initModelForCreation</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var nodeNames=model.getNodeNames();
+    var ci,dsSubs;
+    for(var i=0;i<nodeNames.length;i++){
+        dsSubs=cm_spoc.getDsName(nodeNames[i]);
+        if(dsSubs && nodeNames[i]!="ListDS"){
+            model[nodeNames[i]]=cm_spoc.initInnerDS("base_"+dsSubs);
+            initModelForCreation(model[nodeNames[i]]);
+        }
+    }
+
+    return model;
+  ]]></script>
+</script>

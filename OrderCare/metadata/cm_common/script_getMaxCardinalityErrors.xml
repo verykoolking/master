@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.getMaxCardinalityErrors">
+  <group>utilities</group>
+  <label>getMaxCardinalityErrors</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dataStructure" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var err = dataStructure.validate(100, true, true);
+    var ret = [];
+    if (err) {
+
+        var fem = cm_common.filterErrorMessages(err, 'DE0038', '/([^"]*)"');
+
+        for (var i=0; i<fem.length; i++) {
+            ret.push("EPC_ERR_0006");
+             ret.push(fem[i]);
+
+        }
+
+        return ret;
+    }
+    else {
+        return ret;
+    }
+  ]]></script>
+</script>

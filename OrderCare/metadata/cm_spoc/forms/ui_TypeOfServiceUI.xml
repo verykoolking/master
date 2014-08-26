@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TypeOfServiceUI">
+  <group>TariffPlan</group>
+  <label>TypeOfServiceUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TypeOfService</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="GridLayout" type="elgrd">
+              <colWidths>50px</colWidths>
+              <numOfCols>11</numOfCols>
+              <width>550px</width>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <columnSpan>1</columnSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TypeOfServiceUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="ServiceID" type="elslct">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>3</columnSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TypeOfServiceUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.TypeOfService/dstruct_ServiceID</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="DefaultServiceTariffPlan" type="elchk">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>3</columnSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TypeOfServiceUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.TypeOfService/dstruct_DefaultServiceTariffPlan</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="ServiceTariffPlanEnum" type="elslct">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>4</columnSpan>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TypeOfServiceUI/uimthd_setServiceTariffPlanAllowedPer</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TypeOfServiceUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.TypeOfService/dstruct_ServiceTariffPlanEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>150px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+    <method name="setServiceTariffPlanAllowedPer" type="uimthd">
+      <script>this.model.ServiceTariffPlanAllowedPer = this.model.ServiceTariffPlanEnum;</script>
+    </method>
+  </methodList>
+</userInterface>

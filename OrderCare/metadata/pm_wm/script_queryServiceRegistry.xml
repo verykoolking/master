@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.queryServiceRegistry">
+  <label>queryServiceRegistry</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <type>dtype_com.conceptwave.system.Void</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var subscriberId        = null;
+    var offerType           = null;
+    var productSerialNumber = null;
+    var productOfferingId   = null;
+    var productNumber       = null;
+    var productIdAA         = new Array();  // not needed, stays null
+    var specialCase         = false;
+
+    if(dtree.operation == "subscribeProductOffering" && !(dtree.pmOperation[0].inactiveServiceRegistry && dtree.pmOperation[0].updateServiceRegistry)) return true;
+
+    try {
+        var subscriberId        = dtree.request.subscriberId;
+    }
+    catch (err) {
+        dtree.errorcode.push("ER_WF_200");
+        dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_200"));
+        return false;
+    }
+
+    var offerType = dtree.offerType;
+
+    try {
+        var productSerialNumber = dtree.catalogData.oCSProductInstanceProductSerialNumber;
+    }
+    catch (err) {}
+
+    try {
+        var productOfferingId = dtree.catalogData.oCSProductOfferingItemcode;
+    }
+    catch (err) {}
+
+    try {
+        var productNumber = dtree.catalogData.oCSProductSpecificationItemcode;
+    }
+    catch (err) {}
+
+    try {
+        var startDate = null;
+        var endDate   = null;
+        if(dtree.operation == "queryProductSubscription"){
+            //Mapping the date from ES message
+            var fromDS  = dtree.request.filterCharacteristics.oCSProductSpecCharacteristic;
+            var path    = 'timeIntervalFilter.startTime.date';
+            startDate   = findValue(fromDS, path, 0);
+            path        = 'timeIntervalFilter.endTime.date';
+            endDate     = findValue(fromDS, path, 0);
+        } else if(dtree.operation == "subscribeProductOffering"){
+            productOfferingId = null;
+            var paths         = dtree.pmOperation[0].querySRProdIdAAPathRQ ? dtree.pmOperation[0].querySRProdIdAAPathRQ.split(',') : null;
+            var reqAtt        = dtree.requestAttributesHierarchy;
+            for(var x = 0; paths && x < paths.length; x++){
+                if(paths[x] == '') continue;
+                for(var y = 0; y < reqAtt.length; y++){
+                    if(paths[x] == reqAtt[y].attributepath){
+                        productIdAA[x] = reqAtt[y].defaultvalue;
+                    }
+                }
+            }
+        }
+
+
+        var productSerialNumberQuery = productSerialNumber != '0' ? productSerialNumber : null;
+        if(dtree.pmOperation[0].globalSelectionLastActiveId && eval("dtree.request." + dtree.pmOperation[0].fieldForGlobalSelection) != null){
+            productSerialNumberQuery = null;
+            specialCase = true;
+        }
+
+        dtree.entitiesSR = pm_sr.getEntities( subscriberId, offerType, productSerialNumberQuery, productOfferingId, productNumber, productIdAA, startDate, endDate);
+    }
+    catch (err) {
+        dtree.errorcode.push("ER_WF_299");
+        dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_299", [err]));
+        return false;
+    }
+
+    if (dtree.entitiesSR == null || dtree.entitiesSR.length == 0) {
+        // if it's not query , it's an action - if it has not products error
+        if (dtree.isQueryRequest == false){ //If it's unsubscribeProduct or updateProduct, must proceed. Also, queryRequests don't enter here. So, it's better to take this out, just LOG it.
+            if(productSerialNumber == null && specialCase == false){
+                Global.logInfo('No information in SR: subscriberId = ' + subscriberId + ' | offerType = ' + offerType + ' | productSerialNumber = ' + productSerialNumber + ' | productOfferingId = ' + productOfferingId + ' | productNumber = ' + productNumber + ' | productIdAA = ' + productIdAA + ' | startDate = ' + startDate + ' | endDate = ' + endDate);
+            }else{
+                dtree.errorcode.push("ER_WF_201");
+                dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_201"));
+                return false;
+            }
+        }
+    }
+
+    return true;
+
+    //Auxiliar Function
+
+    function findValue(fromDS, path, idx){
+        var nodes = path.split('.');
+        for(var cc = 0; cc < fromDS.complexCharacteristic.length; cc++){
+            if(fromDS.complexCharacteristic[cc].name == nodes[idx]){
+                return findValue(fromDS.complexCharacteristic[cc].item[0], path, (idx + 1))
+            }
+        }
+        for(var sc = 0; sc < fromDS.characteristic.length; sc++){
+            if(fromDS.characteristic[sc].name == nodes[idx]){
+                return fromDS.characteristic[sc].value.string;
+            }
+        }
+        return null;
+
+    }
+  ]]></script>
+</script>

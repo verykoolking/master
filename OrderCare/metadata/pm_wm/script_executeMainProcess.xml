@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.executeMainProcess">
+  <label>executeMainProcess</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="operation" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="request" type="rifp">
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var dtree = new DecisionTree( "pm_wm.mainProcess");
+
+    dtree.operation = operation;
+    dtree.request = request;
+
+    dtree.soapHeaderRequest = UserProfile.getSoapRequestHeader("pm_wm.MessageID");
+
+    dtree.run();
+
+    return dtree.response;
+  ]]></script>
+</script>

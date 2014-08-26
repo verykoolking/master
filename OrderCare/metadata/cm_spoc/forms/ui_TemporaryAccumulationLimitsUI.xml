@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TemporaryAccumulationLimitsUI">
+  <group>TopUp</group>
+  <label>TemporaryAccumulationLimitsUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="HorizontalLayout" type="elgrd">
+              <numOfCols>6</numOfCols>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TemporaryAccumulationLimitsUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="TariffPlanEnum" type="elslct">
+                  <multiselect>false</multiselect>
+                  <showLabel>false</showLabel>
+                </element>
+                <element name="BankEntityZoneEnum" type="elslct">
+                  <multiselect>false</multiselect>
+                  <showLabel>false</showLabel>
+                </element>
+                <element name="DailyLimit" type="elfld">
+                  <autoFocusNextField>false</autoFocusNextField>
+                  <showLabel>false</showLabel>
+                </element>
+                <element name="MonthlyLimit" type="elfld">
+                  <autoFocusNextField>false</autoFocusNextField>
+                  <showLabel>false</showLabel>
+                </element>
+                <element name="ResetDay" type="elfld">
+                  <autoFocusNextField>false</autoFocusNextField>
+                  <showLabel>false</showLabel>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="BankEntityZoneTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode = this.model.BankEntityZoneEnum;
+        this.model.BankEntityZone = btCode;
+      ]]></script>
+    </method>
+    <method name="TariffPlanTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode = this.model.TariffPlanEnum;
+        this.model.TariffPlan = btCode;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

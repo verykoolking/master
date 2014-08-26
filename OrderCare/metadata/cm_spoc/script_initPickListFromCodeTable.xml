@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initPickListFromCodeTable">
+  <group>ui_scripts.utils</group>
+  <label>initPickListFromCodeTable</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+    <parameter name="codeTableName" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="selectedItems" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var ct = Global.getCTCodesAndDescriptions(codeTableName);
+    var result = [];
+    var count = 0;
+    for(var i=0;i<ct.length;i++){
+        var item = new cm_spoc.PickListDS();
+        item.id = ct[i];
+        i++;
+        item.description = ct[i];
+        result[count] = item;
+        count++;
+    }
+
+    return cm_spoc.initPickList(ui, result, selectedItems, "id", "description");
+  ]]></script>
+</script>

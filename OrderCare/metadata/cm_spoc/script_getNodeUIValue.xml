@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getNodeUIValue">
+  <group>ui_scripts.RatingTree</group>
+  <label>getNodeUIValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+    <parameter name="code" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.model; // RatingTreeBranch
+    var model = ui.model.RTBRTNodeOutputArrDS.ListDS; // array of RatingTreeNodeOutput
+    var node = Document.readDoc("cm_spoc.RatingTreeNodeTypes",code);
+
+    for (var i = 0;i<model.length;i++) {
+
+        if(model[i].NodeName == code ) return getValue(model[i],node);
+
+    }
+
+    function getValue(model,node) {
+
+        if (node.nodeType == "ct" || node.nodeType == "att"){
+
+            var ret = "";
+
+            for (var k=0;k<model.RTNodeOutputArrDS.ListDS.length;k++) {
+
+                ret = ret ? ret+", "+model.RTNodeOutputArrDS.ListDS[k].NodeValue+", " : model.RTNodeOutputArrDS.ListDS[k].NodeValue;
+
+            }
+
+            return ret;
+
+        } /*else if ( node.nodeType == "att") {
+
+           return model.RTNodeOutputArrDS.ListDS[0].NodeValue;
+
+        } */ else {
+
+            var type = node.nodeTypeValue;
+            if (type !="List" && type !="Tribe" && type !="TribeCategory" && type !="Ton" && type !="TariffPlan" && type !="ServiceProvider") return "";
+
+            var arrayname = "RTNO"+type+"Arr";
+            var arraynameds = "RTNO"+type+"ArrDS";
+
+
+
+            var ret="";
+            for (var i = 0;i<model[arraynameds].List.length;i++) {
+
+                ret = ret ? ret+", "+model[arraynameds].List[i] : model[arraynameds].List[i];
+            }
+
+            return ret;
+
+
+        }
+
+    }
+  ]]></script>
+</script>

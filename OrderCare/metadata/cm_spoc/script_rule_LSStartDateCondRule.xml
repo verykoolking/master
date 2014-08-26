@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_LSStartDateCondRule">
+  <group>rules_scripts.Lists</group>
+  <label>rule_LSStartDateCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**Conditional
+
+    LSStartDateCondRule
+
+    The attribute must be saved in the catalog only if the related attribute assumes the value shown in the column H.
+
+    ListSpecification
+    StartDate
+
+    ListSpecification
+    InfiniteDate
+
+    FALSE
+    */
+    var entity = data;
+
+    if(entity.StartDate && entity.InfiniteDate)
+    {
+         errList.addErrorMessage(data,["Start Date can be saved only if Infinite Date is set"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

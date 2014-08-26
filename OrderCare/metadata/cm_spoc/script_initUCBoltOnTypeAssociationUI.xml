@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initUCBoltOnTypeAssociationUI">
+  <group>ui_scripts.UsageControl.UCBoltOnTypeAssociation.init</group>
+  <label>initUCBoltOnTypeAssociationUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="action" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(action=="addNew" && ui.BoltOnTypeModalityFinder !=null ){
+        var ucBoltOnTypeAssociation = new cm_spoc.data.UCBoltOnTypeAssociation();
+        ucBoltOnTypeAssociation = cm_spoc.initInnerDS("base_UCBoltOnTypeAssociation");
+        var model = ucBoltOnTypeAssociation;
+       // model.Enabled = "D";
+       // model.Customize = false;
+       // model.BoltOnTypeEnd = false;
+
+        var UCBoltOnTypeAssociationUI =  new cm_spoc.forms.UCBoltOnTypeAssociationForm(model,ui);
+        ui.UCBoltOnTypeAssociationUI = UCBoltOnTypeAssociationUI;
+
+    } else {
+        var arrDS = ui.parent.model.UCBOASUCBoltOnTypeAssArrDS.ListDS;
+        var selected = ui.result.selected[0].id;
+        var len = arrDS.length;
+        var model = null;
+        for ( var i = 0; i < len; i++ ) {
+            if ( arrDS[i].id == selected )
+                model = arrDS[i];
+        }
+        var UCBoltOnTypeAssociationUI =  new cm_spoc.forms.UCBoltOnTypeAssociationForm(model,ui.parent);
+        ui.parent.UCBoltOnTypeAssociationUI = UCBoltOnTypeAssociationUI;
+    }
+
+
+    return model;
+  ]]></script>
+</script>

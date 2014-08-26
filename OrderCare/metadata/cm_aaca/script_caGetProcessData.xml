@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.caGetProcessData">
+  <highlight>66</highlight>
+  <label>CM-ACAA - Fill Process Data</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="pDoc" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var projectCode = pDoc.projectCode;
+    var pData = new cm_aaca.aacaProcessData();
+    var projectTopItems = cm_plm.getProjectTopItems(projectCode);
+
+    Global.logInfo("AACA: Start of processing Altamira Data");
+
+
+    //Fill RE nodes
+    var reNodes = cm_aaca.caGetAvaiableRatingEngines(pDoc);
+    for(var i=0; i<reNodes.length; i++) {
+        pData.reData.nodes[i].name = reNodes[i];
+    }
+
+    var reItemsData = new Array();
+    var msItemsData = new Array();
+
+    //For each Top Item
+    for(var i=0; i<projectTopItems.length; i++) {
+
+        var reItemData = cm_aaca.caAACatalogItemData(projectCode, projectTopItems[i].itemCode, projectTopItems, 'RE', false);
+        if(reItemData != null)
+            reItemsData[reItemsData.length] = reItemData;
+
+        var msItemData = cm_aaca.caAACatalogItemData(projectCode, projectTopItems[i].itemCode, projectTopItems, 'MS', false);
+        if(msItemData != null)
+            msItemsData[msItemsData.length] = msItemData;
+
+    }
+
+    //Sort items depending on dependents
+    reItemsData = sortConfiguration(reItemsData);
+    msItemsData = sortConfiguration(msItemsData);
+
+    //Create RE Data
+    pData.reData.configurationRequired = (reItemsData.length>0);
+    for(var i=0; i<reItemsData.length; i++)
+        pData.reData.aaData[i] = reItemsData[i];
+
+    //Create MS Data
+    pData.msData.configurationRequired = (msItemsData.length>0);
+    for(var i=0; i<msItemsData.length; i++)
+        pData.msData.aaData[i] = msItemsData[i];
+
+
+    Global.logInfo("AACA: End of processing Altamira Data");
+
+    return pData;
+
+
+    function sortConfiguration(aaArrayData) {
+
+        //Clear references not in project
+        for(var i=0; i<aaArrayData.length; i++)
+            clearDependentItemsCode(aaArrayData[i].dependsItems, null, aaArrayData);
+
+        var dependentList = 'Full Itens->Dependency List:';
+        for(var i=0; i<aaArrayData.length; i++)
+            if(aaArrayData[i] != null) {
+               dependentList += '\n' + aaArrayData[i].aaItem.cwCode + ' -> ';
+               if(countArrayData(aaArrayData[i].dependsItems) > 0) {
+                    for(var j=0; j<aaArrayData[i].dependsItems.length; j++)
+                        if(aaArrayData[i].dependsItems[j]!=null)
+                            dependentList += aaArrayData[i].dependsItems[j] + ' ; ';
+               }
+                else
+                    dependentList += 'NONE';
+            }
+
+
+        var sortedArrayData = new Array();
+
+        var hasChanges = true;
+        while(hasChanges) {
+            hasChanges = false;
+
+            for(var i=0; i<aaArrayData.length; i++) {
+                if(aaArrayData[i] != null) {
+
+                    //item doesnt have dependences
+                    if(countArrayData(aaArrayData[i].dependsItems) == 0) {
+
+                        //push it to sorted array
+                        sortedArrayData[sortedArrayData.length] = aaArrayData[i];
+                        aaArrayData[i] = null;
+
+                        //clear this item from all other items depedencies
+                        for(var j=0; j<aaArrayData.length; j++)
+                            if(aaArrayData[j] != null)
+                                clearDependentItemsCode(aaArrayData[j].dependsItems, sortedArrayData[sortedArrayData.length-1].aaItem.cwCode, null);
+
+                        hasChanges = true;
+                    }
+                }
+            }
+        }
+
+        //Big problem there are loop references
+        if(countArrayData(aaArrayData)) {
+            throw ("Impossible to generate Altamira XML for project: " + projectCode + " circular references exists or a configuration is missing.\n" + dependentList);
+        }
+
+        return sortedArrayData;
+    }
+
+    function countArrayData(aaArrayData) {
+        var ret = 0;
+        for(var i=0; i<aaArrayData.length; i++)
+            if(aaArrayData[i] != null)
+                ret++;
+        return ret;
+    }
+
+    function clearDependentItemsCode(dependsItemCodes, codeToRemove, aaArrayData) {
+        for(var i=0; i<dependsItemCodes.length; i++) {
+            if(codeToRemove && dependsItemCodes[i] == codeToRemove)
+                dependsItemCodes[i] = null;
+            else if(codeToRemove==null && !isCodeInArrayData(aaArrayData, dependsItemCodes[i]))
+                dependsItemCodes[i] = null;
+        }
+    }
+
+    function isCodeInProject(itemCode) {
+        for(var i=0; i<projectTopItems.length; i++)
+            if(projectTopItems[i].itemCode == itemCode)
+                return true;
+        return false;
+    }
+
+    function isCodeInArrayData(aaArrayData, itemCode) {
+        for(var i=0; i<aaArrayData.length; i++)
+            if(aaArrayData[i] != null)
+               if(aaArrayData[i].aaItem.cwCode == itemCode)
+                    return true;
+        return false;
+    }
+  ]]></script>
+</script>

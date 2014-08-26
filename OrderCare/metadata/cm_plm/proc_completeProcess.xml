@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cm_plm.completeProcess">
+  <activity name="start" type="seqActivity">
+    <guid>{2855150c-6a1d-4048-abd4-8a9ca7086167}</guid>
+    <label>Start</label>
+    <x>82.0</x>
+    <y>92.0</y>
+    <childList>
+      <child name="end" type="completeActivity">
+        <guid>{33c2a1c9-5eb1-4c2e-81f2-e8d092ace122}</guid>
+        <label>End</label>
+        <x>186.0</x>
+        <y>89.0</y>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              var pDoc = process.processDocument;
+              var projectDoc = epc.getProjectByCode(pDoc.projectCode);
+
+              if(process.processDocument.caReturnType!='ERROR') {
+                  cwl_epc.changeProjectStatus(projectDoc, 'ACT');
+                  cm_plm.setProcessOrderState(process, 'END');
+                  //
+                   var ord = cm_plm.getPLMOrderFromProjectCode(pDoc.projectCode);
+                   if(ord!=null) {
+                       ord.onSuccessUpdateOrderStatus();
+                   }
+              }
+
+              var errorOcurred = process.processDocument.caReturnType == 'ERROR';
+              var message =  process.processDocument.caReturnMessage;
+              if(process.processOrder.plmControl.caller == "EXTERNAL"){
+                  cm_pws.altamiraConfiguration.sendNotification("appId","reference","userCode",pDoc.projectCode,new Date(),errorOcurred,message,0,pDoc.projectCode);
+              }
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <document>doc_cm_plm.mainProcessDoc</document>
+  <guid>{23308220-f9d5-4eda-84aa-7c6c566ca2ef}</guid>
+  <label>CM-PLM Complete</label>
+  <metaVersion>4</metaVersion>
+  <parentProcessDoc>true</parentProcessDoc>
+  <priority>8</priority>
+  <type>User</type>
+</process>

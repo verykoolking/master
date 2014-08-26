@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.getObjectDoc">
+  <group>applicabilityCondition.scripts</group>
+  <label>getObjectDoc</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="object" type="rifp">
+      <type>dstruct_cm_plm.baseObject</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        var result, objectDocType;
+        objectDocType = cm_plm.getObjectDocType(object);
+        var doc = Document.readDoc(objectDocType, object.id);
+        if(!doc)
+            return api_common.createFault("ERR", "The object was not found: " + objectDocType + ":"+ object.id);
+
+        return doc;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

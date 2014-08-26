@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.CALifeCycleTransitionUI">
+  <group>CyclicActions</group>
+  <label>CALifeCycleTransitionUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="inactivityChecked" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.CALifeCycleTransition</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="GridLayout" type="elgrd">
+              <cellPadding>3</cellPadding>
+              <colWidths>120px,150px,100px,100px,190px,100px,200px,100px,300px,100px,300px</colWidths>
+              <numOfCols>20</numOfCols>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleTransitionUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="SourceStatusID" type="elfld">
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <label>CALifeCycleStatus</label>
+                  <labelOrientation>top</labelOrientation>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleTransitionUI/uimthd_resettrigger</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleTransitionUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.CALifeCycleTransition/dstruct_SourceStatusID</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>150px</width>
+                </element>
+                <element name="Button" type="elbtn">
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleTransitionUI/usrActionMethod_FinderCALifeCycleStatusSelectReferenceDialog</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <icon>/cwf/finder.gif</icon>
+                  <width>25px</width>
+                </element>
+                <element name="CellSpacer" type="elcsp">
+                  <width>20px</width>
+                </element>
+                <element name="InitialStatus" type="elchk">
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleTransitionUI/permMethod_CALCTInitialStatusVisRule</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <labelOrientation>top</labelOrientation>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleTransitionUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.CALifeCycleTransition/dstruct_InitialStatus</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>50px</width>
+                </element>
+                <element name="AfterOkStatusIsSet" type="elfld">
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <label>After OK, this status is set:</label>
+                  <labelOrientation>top</labelOrientation>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleTransitionUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.CALifeCycleTransition/dstruct_AfterOkStatusIsSet</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>150px</width>
+                </element>
+                <element name="Button1" type="elbtn">
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleTransitionUI/usrActionMethod_FinderAfterOKSelectReferenceDialog</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <icon>/cwf/finder.gif</icon>
+                  <width>25px</width>
+                </element>
+                <element name="CellSpacer2" type="elcsp">
+                  <width>30px</width>
+                </element>
+                <element name="AfterNoOkStatusIsSet" type="elfld">
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <label>After NO OK, this status is set:</label>
+                  <labelOrientation>top</labelOrientation>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleTransitionUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.CALifeCycleTransition/dstruct_AfterNoOkStatusIsSet</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>150px</width>
+                </element>
+                <element name="Button2" type="elbtn">
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleTransitionUI/usrActionMethod_FinderAfterNoOkSelectReferenceDialog</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <icon>/cwf/finder.gif</icon>
+                  <width>25px</width>
+                </element>
+                <element name="CellSpacer3" type="elcsp">
+                  <width>60px</width>
+                </element>
+                <element name="NokTransitionDependErrorCode" type="elchk">
+                  <label>The status transition will just be &lt;br&gt; made for some error codes</label>
+                  <labelOrientation>top</labelOrientation>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleTransitionUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.CALifeCycleTransition/dstruct_NokTransitionDependErrorCode</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="inactivityChecked" type="elfld">
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleTransitionUI/leaf_inactivityChecked</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="FinderCALifeCycleStatusSelectReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        //this.model.SourceStatusID = " ";
+        var newDetail = new cm_spoc.FinderSourceStatusIDReference(null, this);
+        newDetail.setBaseItemCode("base_CALifeCycleStatus");
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="referenceSourceStatusCallback" type="uimthd">
+      <parameterList>
+        <parameter name="itemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="inactivityStatus" type="rifp">
+          <type>dtype_com.conceptwave.system.Integer</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        //switch(baseItemCode){
+        //    case "base_CALifeCycleStatus":
+                this.model.SourceStatusID = itemCode;
+                this.inactivityChecked = inactivityStatus;
+                if( this.inactivityChecked == "Inactive")
+                    this.model.InitialStatus = false;
+        //        break;
+        //}
+      ]]></script>
+    </method>
+    <method name="SourceStatusIDTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode=this.model.SourceStatusIDEnum;
+        this.model.SourceStatusID = btCode;
+      ]]></script>
+    </method>
+    <method name="AfterOkStatusIsSetTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode=this.model.AfterOkStatusIsSetEnum;
+        this.model.AfterOkStatusIsSet = btCode;
+      ]]></script>
+    </method>
+    <method name="AfterNoOkStatusIsSetTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode=this.model.AfterNoOkStatusIsSetEnum;
+        this.model.AfterNoOkStatusIsSet = btCode;
+      ]]></script>
+    </method>
+    <method name="FinderAfterOKSelectReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        //this.model.AfterOkStatusIsSet = " ";
+        var newDetail = new cm_spoc.FinderSelectAfterOKReference(this);
+        newDetail.setBaseItemCode("base_CALifeCycleStatus");
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="FinderAfterNoOkSelectReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        //this.model.AfterNoOkStatusIsSet = " ";
+        var newDetail = new cm_spoc.FinderSelectAfterNoOKReference(this);
+        newDetail.setBaseItemCode("base_CALifeCycleStatus");
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="referenceAfterOKCallback" type="uimthd">
+      <parameterList>
+        <parameter name="itemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        //switch(baseItemCode){
+        //    case "base_CALifeCycleStatus":
+                this.model.AfterOkStatusIsSet = itemCode;
+        //        break;
+        //}
+      ]]></script>
+    </method>
+    <method name="referenceAfterNoOKCallback" type="uimthd">
+      <parameterList>
+        <parameter name="itemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        //switch(baseItemCode){
+        //    case "base_CALifeCycleStatus":
+                this.model.AfterNoOkStatusIsSet = itemCode;
+        //        break;
+        //}
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="CALCTInitialStatusVisRule" type="permMethod">
+      <script><![CDATA[
+        if(this.inactivityChecked == "Active" ) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="resettrigger" type="uimthd">
+      <script><![CDATA[
+        if(this.inactivityChecked == "Inactive")
+        {
+            this.model.InitialStatus = null;
+        }
+        return;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

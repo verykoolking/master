@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/trouble/asap" xmlns:notifications="http://www.tmforum.org/xml/tip/common/notifications" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/trouble/asap" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.resource.trouble.asap
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 1
+ Association Classes: 0
+           datatypes: 1
+        enumerations: 1
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/common/notifications" schemaLocation="common_notifications.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* -->
+   <xsd:simpleType name="AssignedSeverity">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The assigned severity is allocated to a probable cause using the alarm severity assignment profile. The identified probable cause should be raised with the assigned severity. The assignment of severities is extended beyond PerceivedSeverity to cover the case where:
+- no alarm should be raised: "NOT_ALARMED"
+- the target OS/NE is free to make a choice based upon its local criteria: "FREE_CHOICE".</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="CRITICAL">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "CRITICAL"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="FREE_CHOICE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "FREE_CHOICE"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="INDETERMINATE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "INDETERMINATE"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="MAJOR">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "MAJOR"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="MINOR">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "MINOR"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="WARNING">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "WARNING"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="NOT_ALARMED">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "NOT_ALARMED"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfAssignedSeverity">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:AssignedSeverity" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** -->
+   <xsd:element name="alarmSeverityAssignment" type="tns:AlarmSeverityAssignment"/>
+   <xsd:complexType name="AlarmSeverityAssignment">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This data type provides three values for severity to cover the three cases of service affecting conditions, non- service affecting conditions and conditions where the service impact is unknown. The structure identifies the specific case of alarm that it applies to using three probable cause identifiers in combination.
+
+See also attached supporting document for further details on the values of the strings probableCause, probableCauseQualifier and nativeProbableCause.</p>
+            <p>This datatype  is  not extendable</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="specificProblem" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies a qualifier of the probable cause that is used to achieve uniqueness in some cases where the probable cause is not sufficient.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="nativeProbableCause" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies the probable cause used on the NE/target OS. This may also be used to qualify the probable cause to achieve uniqueness in some cases where the probable cause is not sufficient.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="serviceAffectingSeverity" type="tns:AssignedSeverity" minOccurs="0" maxOccurs="1" default="FREE_CHOICE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies the severity assigned to the probable cause when service affecting.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="nonServiceAffectingSeverity" type="tns:AssignedSeverity" minOccurs="0" maxOccurs="1" default="FREE_CHOICE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies the severity assigned to the probable cause when not service affecting.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="serviceIndependentSeverity" type="tns:AssignedSeverity" minOccurs="0" maxOccurs="1" default="FREE_CHOICE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies the severity assigned to the probable cause when the reportable alarm is service independent or the service impact is not known.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="probableCause" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies the probable cause of the alarm to which the severities should be applied to.
+See attached supporting document SD1-33_ProbableCauses.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfAlarmSeverityAssignment">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:AlarmSeverityAssignment" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="alarmSeverityAssignmentProfile" type="tns:AlarmSeverityAssignmentProfile"/>
+   <xsd:complexType name="AlarmSeverityAssignmentProfile">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This object class models the (flexible) severity assignment to specified probable causes. So the ASAP object includes a table, with each row specifying the probable cause (plus optionally the probableCauseQualifier and / or the nativeProbableCause) and the assigned severity for "service affecting", "non service affecting" and "service independent or unknown" alarms.
+Probable cause, probableCauseQualifier and nativeProbableCause are the coordinates of the ASAP entries, so there must not be two ASAP entries with the same coordinates. It is the responsibility of the EMS to enforce this.
+Alarms against entities that are not modeled by the interface are reported using the "AID" objectType. For these "AID" alarms the ASAP mechanism is not applicable.
+Typically the ASAP function is implemented in the OS or NE where the alarm is originated. I. e. the severity will usually be assigned directly by the NE, so it is up to the EMS to download the defined ASAP to the NE. Other alarms, e.g. on arcs like SNCs, may be generated by the target OS.
+An alarm becomes reportable by NE/target OS:
+- when for PTP, CTP, FTP: AlarmReporting changes from "off" to "on"
+- when for SNC, TopologicalLink, Equipment, EquipmentHolder, GTP: alarmReportingIndicator changes from false to true.
+Alarms are always reportable for all other objects as they do not have any alarm reporting attribute.
+When an alarm becomes reportable the ASAPs are applied (accessed via the asapPointer). The severity of the alarm is adopted from the ASAP entry that matches for all of the following:
+- same probableCause
+- same probableCauseQualifier (an empty string is a match)
+- same nativeProbableCause (an empty string is a match).
+For example, if the reportable alarm has LOS probableCause and an ASAP entry is found with LOS probableCause and both probableCauseQualifier and nativeProbableCause are empty strings, then the search is successful.
+If there is a matching ASAP, then the severities are adopted on the following basis:
+- the alarm is service affecting: the severity specified in the serviceAffecting field is assigned
+- the alarm is service non affecting: the severity specified in the serviceNonAffecting field is assigned
+- the alarm is service independent or NE/target OS is not equipped to determine if the alarm affects service or not:
+the severity specified in the serviceIndependentOrUnknown field is assigned.
+If the assigned severity specified in the ASAP is:
+- "FREE_CHOICE" then the NE/target OS are free to determine the severity. If there is no local mechanism on
+the ME/EMS to determine severity then the severity "INDETERMINATE" should be assigned.
+- "NOTALARMED" then the EMS should not emit an alarm over the EML-NML interface.
+If there is no ASAP that matches, then the NE/target OS is free to determine the severity. If there is no local mechanism on the NE/target OS to determine severity then the severity "INDETERMINATE" should be assigned.
+Once a severity has been assigned, the alarm notification is emitted (other than for "NOTALARMED").
+Note: Any operation of alarm retrieval will not include "NOTALARMED" alarms.</p>
+            <p>This entity  is  optional</p>
+            <p>This entity  is  extendable</p>
+            <p>This entity   generates Object Creation notifications</p>
+            <p>This entity   generates Object Deletion notifications</p>
+            <p>This entity   generates Object Discovery notifications</p>
+            <p>This entity generates Attribute Value Change notifications.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="alarmSeverityAssignmentList" type="tns:AlarmSeverityAssignment" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute identifies a list of Alarm Severity Assignments (ASA). Each record of this sequence specifies the probable cause (plus optionally the probableCauseQualifier and / or the nativeProbableCause) and the severities to be assigned.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isFixed" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute defines if the Alarm Severity Assignment Profile (ASAP) is fixed or not.
+If true, then this ASAP instance is fixed, i.e. is an ASAP which is defined at NE or target OS level and can be neither modified nor deleted through the interface, but only assigned/de-assigned. If false, otherwise.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC disabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfAlarmSeverityAssignmentProfile">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:AlarmSeverityAssignmentProfile" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="AlarmSeverityAssignmentProfileAVCN">
+      <xsd:complexContent>
+         <xsd:extension base="notifications:AVCNotification">
+            <xsd:sequence>
+               <xsd:element name="alarmSeverityAssignmentList" type="tns:AlarmSeverityAssignment" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute identifies a list of Alarm Severity Assignments (ASA). Each record of this sequence specifies the probable cause (plus optionally the probableCauseQualifier and / or the nativeProbableCause) and the severities to be assigned.</p>
+                        <p>This attribute  has  multiplicity 0..1</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="alarmSeverityAssignmentProfileAVCN" type="tns:AlarmSeverityAssignmentProfileAVCN">
+      <xsd:annotation>
+         <xsd:documentation>
+			   AlarmSeverityAssignmentProfile Attribute Value Change Event. Event that is sent when the attribute values of a(an) AlarmSeverityAssignmentProfile have changed. 
+            </xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:complexType name="AlarmSeverityAssignmentProfileOCN">
+      <xsd:complexContent>
+         <xsd:extension base="notifications:OCNotification">
+            <xsd:sequence>
+               <xsd:element name="object" type="tns:AlarmSeverityAssignmentProfile" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="alarmSeverityAssignmentProfileOCN" type="tns:AlarmSeverityAssignmentProfileOCN">
+      <xsd:annotation>
+         <xsd:documentation>Event that is sent if a(an) AlarmSeverityAssignmentProfile instance has been created.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:complexType name="AlarmSeverityAssignmentProfileODelN">
+      <xsd:complexContent>
+         <xsd:extension base="notifications:ODelNotification">
+            <xsd:sequence>
+               <xsd:element name="object" type="tns:AlarmSeverityAssignmentProfile" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="alarmSeverityAssignmentProfileODelN" type="tns:AlarmSeverityAssignmentProfileODelN">
+      <xsd:annotation>
+         <xsd:documentation>Event that is sent if a(an) AlarmSeverityAssignmentProfile instance has been deleted.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:complexType name="AlarmSeverityAssignmentProfileODisN">
+      <xsd:complexContent>
+         <xsd:extension base="notifications:ODisNotification">
+            <xsd:sequence>
+               <xsd:element name="object" type="tns:AlarmSeverityAssignmentProfile" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="alarmSeverityAssignmentProfileODisN" type="tns:AlarmSeverityAssignmentProfileODisN">
+      <xsd:annotation>
+         <xsd:documentation>Event that is sent if a(an) AlarmSeverityAssignmentProfile has been discovered.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

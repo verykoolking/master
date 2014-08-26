@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.startConfiguration">
+  <label>Start Configuration</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="process" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="actionCommonInfo" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="sessionId" type="rifp">
+      <type>dtype_cwf.guid</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var  order, response, startConfiguration, actionCommonInfo, importCommonInfo, errorMsg, exception;
+    order = response = startConfiguration = actionCommonInfo = importCommonInfo = errorMsg = exception = null;
+    order =  process.processOrder;
+
+    try{
+        actionCommonInfo = process.processDocument.getActionCommonInfo();
+        actionCommonInfo.sessionId = "";
+        startConfiguration = new DataStructure("OCSConfigurationOperation.v1.types.StartConfiguration");
+        actionCommonInfo.mapTo(startConfiguration);
+
+        importCommonInfo = new DataStructure("cw_etltool._import.impCommonInfo");
+        importCommonInfo.projectDS.description = order.header.ProjectName;
+        importCommonInfo.isNeedUpdateAA = order.header.IsNeedUpdateAA;
+        process.processDocument.setImportCommonInfo(importCommonInfo);
+
+        if(process.processDocument.isSessionIdExist()){
+            actionCommonInfo.sessionId = process.processDocument.getSessionId();
+        }else{
+
+            response =  cw_etltool._import.inOut_startConfiguration(startConfiguration,importCommonInfo);
+            if(api_common.isFault(response)){
+                exception = response.toXML();
+                setOrderToError();
+            }else{
+                actionCommonInfo.sessionId = response.sessionCommonInfoResult.sessionId;
+                process.processDocument.setSessionId(actionCommonInfo.sessionId);
+            }
+        }
+
+        process.processDocument.setActionCommonInfo(actionCommonInfo);
+
+
+
+    }catch(ex){
+        setOrderToError();
+    }finally{
+        if(order != null)
+            order.save();
+    }
+
+    //==========================================================================================
+    function setOrderToError(){
+
+        process.processDocument.IsError = true;
+        order.header.ErrorMessage = exception;
+        order.header.OrderStatus = cw_etltool._import.$CONSTANT().orderStatus.ERROR;
+        generateErrorMsg();
+        order.header.ErrorMessage = errorMsg;
+    }
+
+    function generateErrorMsg(){
+
+        errorMsg = "Start Configuration Error :";
+        errorMsg += "\n" + exception;
+    }
+  ]]></script>
+</script>

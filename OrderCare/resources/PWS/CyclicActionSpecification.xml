@@ -1,0 +1,195 @@
+<OCSEntityType>
+		<oCSProductSpecification>
+			<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+			<!-- Attributes inherited from SID EntityBase: identifier -->
+			<!-- Attributes inherited from SID ProductSpecification: name; description; productNumber; validFor; lifeCycleStatus -->
+			<!-- Compulsory SID attributes -->
+			<identifier>
+				<context>
+					<valuePairs/>
+					<scheme>Testing</scheme>
+				</context>
+				<dn>
+					<valuePairs/>
+					<scheme>CyclicActionSpecification_T</scheme>
+				</dn>
+				<entityType>CyclicActionSpecification</entityType>
+			</identifier>
+			<!-- NGAA attributes -->
+			<type>CyclicActionSpecification</type>
+			<oCSProductSpecCharacteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+				<characteristic  type="xsd:string" maxLength="4">
+					<name>Code</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+				<characteristic  type="xsd:any">
+					<name>CyclicActionRelationship</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>Description</annotation> -->
+				<characteristic  type="xsd:string" maxLength="240">
+					<name>Description</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>Number of Executions</annotation> -->
+				<characteristic  type="xsd:long" minValue="0" maxValue="99999">
+					<name>NumberOfExecutions</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>Priority Rate</annotation> -->
+				<characteristic  type="xsd:long" minValue="0" maxValue="99999" defaultValue="1">
+					<name>PriorityRate</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>Execution Interval</annotation> -->
+				<characteristic  type="xsd:string" enumValues="SUBS;CYCLE;DAY;LASTDAY">
+					<name>ExecutionIntervalType</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>It will be executed once per  (1)       (2)     </annotation> -->
+				<characteristic  type="xsd:long" minValue="1" maxValue="999">
+					<name>NumberOfPeriods</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+				<characteristic  type="xsd:string" enumValues="D;W;M;Y">
+					<name>PeriodCode</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>    the day    x    of the month</annotation> -->
+				<characteristic  type="xsd:long" minValue="1" maxValue="30">
+					<name>RenewalDay</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>It shall notify through ASN1 the date change of recurrence or the recurent status</annotation> -->
+				<characteristic  type="xsd:boolean">
+					<name>NotifRecurDateChangeOrRecurStat</name>
+				</characteristic>
+				<complexCharacteristic minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+					<name>CAGenericSpecification</name>
+					<item>
+						<!-- <xsd:annotation> <xsd:documentation><p>Recovery order</annotation> -->
+						<characteristic  type="xsd:long" minValue="1" maxValue="999">
+							<name>RecoveryOrder</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Maximum number of subscriptors  / It will be awarded a maximum of   (1)   subscriptions each   </annotation> -->
+						<characteristic  type="xsd:long" minValue="1" maxValue="999">
+							<name>MaximumNumberOfSubscriptors</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>(2)</annotation> -->
+						<characteristic  type="xsd:long" minValue="1" maxValue="999">
+							<name>NumberOfPeriods</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>(3)</annotation> -->
+						<characteristic  type="xsd:string" enumValues="D;M" defaultValue="NULL">
+							<name>DMPeriod</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>(4)</annotation> -->
+						<characteristic  type="xsd:string" enumValues="N;R">
+							<name>Nature</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+						<characteristic  type="xsd:any">
+							<name>CAGenericSpecification</name>
+						</characteristic>
+
+					</item>
+				</complexCharacteristic>
+				<complexCharacteristic minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+					<name>CACycleChangeSpecification</name>
+					<item>
+						<!-- <xsd:annotation> <xsd:documentation><p>Prorating is applied during a cycle change</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>ProratingAppliedCycleChange</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Another attempt is made in case of failure</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>AnotherAttemptIsMadeInFailure</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Recurrent attempts are made in case of failure</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>RecurrentAttemptsMadeInFailure</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>      Time interval between attempts</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="9999">
+							<name>TimeIntervalBetweenAttempts</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+						<characteristic  type="xsd:any">
+							<name>CACycleChangeSpecification </name>
+						</characteristic>
+
+					</item>
+				</complexCharacteristic>
+				<complexCharacteristic minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+					<name>CAConditionedSpecification</name>
+					<item>
+						<!-- <xsd:annotation> <xsd:documentation><p>Prorating to the first execution for the recurrent activation</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>ProratingFirstExeRecurrentActiva</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>The cyclic activation will be conditioned by previous topups</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>CyclicActConditionedByPreviousTU</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>        Minimum Threshold of Accumulated Top Up</annotation> -->
+						<characteristic  type="xsd:long" minValue="0">
+							<name>MinThresholdOfAccumulatedTopUp</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>        Maximum Threshold of Accumulated Top Up</annotation> -->
+						<characteristic  type="xsd:long" minValue="0">
+							<name>MaxThresholdOfAccumulatedTopUp</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>        Top Up to do in a deadline inferior to _____ ______                       before of the Cyclic Action</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="999">
+							<name>TopUpToDoInADeadlineInferior</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+						<characteristic  type="xsd:string" enumValues="D;W;M;Y">
+							<name>DWMYPeriod</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>        Top Up will be conducted from the day _____ of the month preceding the same day of the current month</annotation> -->
+						<characteristic  type="xsd:long" minValue="1" maxValue="31">
+							<name>TopUpWillBeConductedFromDay</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>            In the ______ first cyclic actions will not take place the checking of the top up amount</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="99999" defaultValue="0">
+							<name>NumberOfExecWithoutCondition</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>        If the subscriber does not meet the condition of prior refills will be discharged this timing</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>TimingWillBeDischarged</name>
+						</characteristic>
+
+					</item>
+				</complexCharacteristic>
+			</oCSProductSpecCharacteristic>
+			<relations>
+				<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+				<relation name="CyclicActionLifeCycle" oCSTargetEntityType="CyclicActionLifeCycle" minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+					<item>
+						<target>
+							<context>
+								<valuePairs/>
+								<scheme>String</scheme>
+							</context>
+							<dn>
+								<valuePairs/>
+								<scheme>CyclicActionLifeCycle</scheme>
+							</dn>
+							<entityType>CyclicActionLifeCycle</entityType>
+						</target>
+					</item>
+				</relation>
+				<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+				<relation name="Message" oCSTargetEntityType="Message" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+					<item>
+						<target>
+							<context>
+								<valuePairs/>
+								<scheme>String</scheme>
+							</context>
+							<dn>
+								<valuePairs/>
+								<scheme>Message</scheme>
+							</dn>
+							<entityType>Message</entityType>
+						</target>
+					</item>
+				</relation>
+			</relations>
+		</oCSProductSpecification>
+</OCSEntityType>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.call_invokeTuxedo">
+  <group>opgeRereading.scripts</group>
+  <label>Output - Invoke ReReading</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="sessionId" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="tuxedoToBeInvoked" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="host" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="port" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="user" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="role" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="user_pass" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="app_pass" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="timeout" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="locale" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="testMode" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cm_aaca.opgeRereadingResult</valueType>
+  <script><![CDATA[
+    Global.logInfo("Start of invokeTuxedo method");
+
+    // Compose de object param to invoke the operation:
+    var doc = new cm_aaca.in_invokeTuxedo();
+    doc.sessionId = sessionId;
+    doc.tuxedoToBeInvoked = tuxedoToBeInvoked;
+    doc.host = host;
+    doc.port = port;
+    doc.user = user;
+    doc.role = role;
+    doc.user_pass = user_pass;
+    doc.app_pass = app_pass;
+    doc.timeout = timeout;
+    doc.locale = locale;
+    doc.testMode = testMode;
+
+    // Invoke the method of the interface:
+    var ret = Global.invokeInterface("cm_aaca.opgeRereadingInt", "invokeTuxedo", doc);
+
+    // Initialize the returned object:
+    var resp = new cm_aaca.opgeRereadingResult();
+
+    // Check received response and set the returning values:
+    if(ret[0] != null && ret[0].returnedMessage != null) {
+        var tokens = ret[0].returnedMessage.split(",");
+        var isSuccess = tokens[0];
+        var msg = tokens[1];
+
+        if(isSuccess == "OK") {
+            resp.success = true;
+            resp.message = msg;
+        }
+        else {
+            resp.success = false;
+            resp.message = msg;
+
+            Global.logError(resp.message);
+        }
+    }
+    else {
+        resp.success = false;
+        resp.message = "Error: unable to parse the result of the operation";
+
+        Global.logError("Error: unable to parse the result of the operation");
+    }
+
+    Global.logInfo("End of invokeTuxedo method with result: " + resp.success + " - " + resp.message);
+
+    return resp;
+  ]]></script>
+</script>

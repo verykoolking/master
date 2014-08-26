@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.keepSync">
+  <group>ui_scripts.UsageControl.AccumulationConditions</group>
+  <label>keepSync</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var result = ui.result;
+    var parentModel = "UCPositiveConditions";
+    var nameArrayDS = "UCPositiveConUCACArrDS";
+
+    if (ui.negative) {
+        parentModel = "UCNegativeConditions"
+        nameArrayDS = "UCNegativeConUCACArrDS";
+
+    }
+    var ListDS =ui.parent.model[nameArrayDS].ListDS;
+    var List =ui.parent.model[nameArrayDS].List;
+    var xLen = ListDS.length;
+    var yLen = result.length;
+
+
+
+
+
+    //First Step: Keep consistent Arrays and Result Set
+    if (xLen>yLen) {
+        var x;
+        var y;
+
+
+    var tempListDSArr= new Array();
+
+
+        for (x=xLen-1;x>=0;x--) {
+
+
+            for (y=0;y<yLen;y++) {
+
+
+                if (ListDS[x]["specificationCode"]==result[y]["specificationCode"]){
+
+                        tempListDSArr.push(ListDS[x]["specificationCode"]);
+                        break;
+                }
+
+
+            }
+
+           // ListDS=ListDS.splice(x,1);
+
+        }
+        ListDS=tempListDSArr;
+
+
+
+    var tempListArr= new Array();
+
+        for (x=xLen-1;x>=0;x--) {
+            for (y=0;y<yLen;y++) {
+
+
+                if (List[x]==result[y]["specificationCode"]){
+                    tempListArr.push(List[x]["specificationCode"]);
+                    break;}
+            }
+
+           // List=List.splice(x,1);
+
+        }
+        List=tempListArr;
+    }
+
+
+
+
+    //Second Step: Align Values
+    for (var i = 0;i<result.length;i++) {
+
+        var id = result[i].specificationCode;
+
+        for (var k=0;k<ListDS.length;k++) {
+
+            if ( ListDS[k].specificationCode == id ) {
+
+                alignDsToDoc(ListDS[k],result[i]);
+
+            }
+
+        }
+
+    }
+
+
+
+    function alignDsToDoc(ds,doc){
+
+        var nodes = ds.getNodeNames();
+        var leafs = doc.getLeafNames();
+
+        for(var n = 0; n<nodes.length;n++){
+
+            for (var l=0;l<leafs.length;l++) {
+
+                if (nodes[n]==leafs[l]) {
+                    ds[nodes[n]]=doc[leafs[l]];
+                }
+
+            }
+        }
+
+    }
+  ]]></script>
+</script>

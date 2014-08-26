@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.getAttributeName">
+  <label>Get Attribute Name</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="attributeName" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="language" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+     * Returns the converted name of the attribute
+     *
+     * @author  Daniel Gomes
+     * @date    2014/07
+     *
+     * @param {string}      attributeName
+     * @param {string}      language of the description
+     *
+     * @return {string}     new attribute name
+     */
+     var attributeNameSub = attributeName.substr(0,32);
+     var description = pm_wm.getValueFromCT('pmNameConversionCT', attributeNameSub, true);
+     return description ? description : attributeName;
+  ]]></script>
+</script>

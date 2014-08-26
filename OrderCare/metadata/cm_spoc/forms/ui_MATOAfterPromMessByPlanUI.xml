@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.MATOAfterPromMessByPlanUI">
+  <group>Messages</group>
+  <label>MATOAfterPromMessByPlanUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.AfterPromotionMessageByPlan</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Headers" type="elgrd">
+              <colWidths>50px</colWidths>
+              <fixedColWidths>true</fixedColWidths>
+              <numOfCols>11</numOfCols>
+              <width>750px</width>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <columnSpan>1</columnSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MATOAfterPromMessByPlanUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>30px</width>
+                </element>
+                <element name="MessageEnum" type="elslct">
+                  <canSort>false</canSort>
+                  <columnSpan>1</columnSpan>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MATOAfterPromMessByPlanUI/uimthd_MessageSelected</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MATOAfterPromMessByPlanUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.AfterPromotionMessageByPlan/dstruct_MessageEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100px</width>
+                </element>
+                <element name="TariffPlanEnum" type="elslct">
+                  <canSort>false</canSort>
+                  <columnSpan>1</columnSpan>
+                  <label>Price</label>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MATOAfterPromMessByPlanUI/uimthd_TariffPlanSelected</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MATOAfterPromMessByPlanUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.AfterPromotionMessageByPlan/dstruct_TariffPlanEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="MessageSelected" type="uimthd">
+      <script><![CDATA[
+        this.model.Message = this.model.MessageEnum;
+        return true;
+      ]]></script>
+    </method>
+    <method name="TariffPlanSelected" type="uimthd">
+      <script><![CDATA[
+        this.model.TariffPlan = this.model.TariffPlanEnum;
+        return true;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

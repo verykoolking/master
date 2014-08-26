@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.MessageSubscriptionUI">
+  <group>Messages</group>
+  <label>MessageSubscriptionUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.MessageSubscriptionPriceGui</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="SimpleDestinationHeaders" type="elgrd">
+              <colWidths>50px</colWidths>
+              <fixedColWidths>true</fixedColWidths>
+              <numOfCols>11</numOfCols>
+              <width>1000px</width>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <columnSpan>1</columnSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MessageSubscriptionUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>30px</width>
+                </element>
+                <element name="TechnologyModalityCode" type="elslct">
+                  <canSort>false</canSort>
+                  <columnSpan>1</columnSpan>
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MessageSubscriptionUI/permMethod_readOnly</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <label>TechnologyCode</label>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MessageSubscriptionUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.MessageSubscriptionPriceGui/dstruct_TechnologyModalityCode</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100px</width>
+                </element>
+                <element name="PriceEnum" type="elslct">
+                  <canSort>false</canSort>
+                  <columnSpan>1</columnSpan>
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MessageSubscriptionUI/permMethod_readOnly</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <label>Price</label>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MessageSubscriptionUI/usrActionMethod_updatePrice</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <onEnter type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MessageSubscriptionUI/usrActionMethod_updatePrice</variablePath>
+                    </variablePathList>
+                  </onEnter>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MessageSubscriptionUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.MessageSubscriptionPriceGui/dstruct_PriceEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="updatePrice" type="usrActionMethod">
+      <script>this.model.Price = this.model.PriceEnum;</script>
+    </method>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+  </methodList>
+</userInterface>

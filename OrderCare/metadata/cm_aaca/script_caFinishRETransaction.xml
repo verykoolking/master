@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.caFinishRETransaction">
+  <highlight>32</highlight>
+  <label>CM-AACA Finish RE Transaction</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="pDoc" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var resNumber = cm_aaca.caGetAvaiableRatingEngines(pDoc);
+    var env = cm_aaca.caGetEnvironment(pDoc);
+    var reCode = "AACA_" + env + "_RE" + resNumber[pDoc.currentREIndex];
+    var addInfo = env + ' - ' + reCode;
+    var phId = cm_plm.startPlmControlPhase(pDoc.projectCode, 'REFN', addInfo);
+
+    try {
+        Global.commitTransaction(reCode);
+    }
+    catch(exp) {
+       pDoc.errorOccurred = true;
+       pDoc.errorCode = '99';
+       pDoc.errorDescription = exp.toString();
+       Global.logError(exp);
+    }
+
+    cm_plm.endPlmControlPhase(phId);
+  ]]></script>
+</script>

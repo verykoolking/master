@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.BoltOnInPhasesIteratorUI">
+  <group>CyclicActions</group>
+  <label>BoltOnInPhasesIteratorUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="isLoading" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.RecurrentBoltOnRenewalPhase</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <width>1000px</width>
+              <elementList>
+                <element name="BoltOnInPhasesHeaders" type="elgrd">
+                  <cellPadding>0</cellPadding>
+                  <numOfCols>17</numOfCols>
+                  <width>1000px</width>
+                  <elementList>
+                    <element name="Selected" type="elchk">
+                      <columnSpan>1</columnSpan>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BoltOnInPhasesIteratorUI/leaf_Selected</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>30px</width>
+                    </element>
+                    <element name="CellSpacer" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="PhaseNumber" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <canSort>false</canSort>
+                      <columnSpan>1</columnSpan>
+                      <label>Phase Number</label>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BoltOnInPhasesIteratorUI/usrActionMethod_checkPhaseNumber</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BoltOnInPhasesIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.RecurrentBoltOnRenewalPhase/dstruct_PhaseNumber</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>60px</width>
+                    </element>
+                    <element name="CellSpacer1" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="Price" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <canSort>false</canSort>
+                      <columnSpan>1</columnSpan>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <label>Awarded Amount</label>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BoltOnInPhasesIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.RecurrentBoltOnRenewalPhase/dstruct_Price</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>60px</width>
+                    </element>
+                    <element name="PriceButton" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BoltOnInPhasesIteratorUI/usrActionMethod_FinderPriceReferenceDialog</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <icon>/cwf/finder.gif</icon>
+                      <width>22px</width>
+                    </element>
+                    <element name="CellSpacer2" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="boltonAmount" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <label>Subsized Amount</label>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BoltOnInPhasesIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.RecurrentBoltOnRenewalPhase/dstruct_CyclicBoltOnAwardingDS</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.CyclicBoltOnAwarding/dstruct_boltonAmount</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>60px</width>
+                    </element>
+                    <element name="CellSpacer3" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="boltonLD" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BoltOnInPhasesIteratorUI/permMethod_CBOAboltonLDEdiRule</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <label>% reduction in long distance</label>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BoltOnInPhasesIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.RecurrentBoltOnRenewalPhase/dstruct_CyclicBoltOnAwardingDS</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.CyclicBoltOnAwarding/dstruct_boltonLD</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>60px</width>
+                    </element>
+                    <element name="CellSpacer4" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="boltonMaxNumberOfSessions" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <iconHeight>16</iconHeight>
+                      <iconWidth>16</iconWidth>
+                      <label>Number of sessions</label>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BoltOnInPhasesIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.RecurrentBoltOnRenewalPhase/dstruct_CyclicBoltOnAwardingDS</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.CyclicBoltOnAwarding/dstruct_boltonMaxNumberOfSessions</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>60px</width>
+                    </element>
+                    <element name="CellSpacer5" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="maxUnitsPerSession" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <iconHeight>16</iconHeight>
+                      <iconWidth>16</iconWidth>
+                      <label>Maximum units per session:</label>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BoltOnInPhasesIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.RecurrentBoltOnRenewalPhase/dstruct_CyclicBoltOnAwardingDS</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.CyclicBoltOnAwarding/dstruct_maxUnitsPerSession</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>60px</width>
+                    </element>
+                    <element name="CellSpacer6" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="ChargingMode" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <canSort>false</canSort>
+                      <columnSpan>1</columnSpan>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <label>Charging Mode</label>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BoltOnInPhasesIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.RecurrentBoltOnRenewalPhase/dstruct_ChargingMode</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>60px</width>
+                    </element>
+                    <element name="ChargingModeButton" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BoltOnInPhasesIteratorUI/usrActionMethod_FinderChargingModeReferenceDialog</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <icon>/cwf/finder.gif</icon>
+                      <width>22px</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="readOnly" type="permMethod">
+      <script><![CDATA[
+        return false;
+        //!this.model.readonly;
+      ]]></script>
+    </method>
+    <method name="FinderPriceReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderRecPhasePriceSelectReference(null,this);
+        newDetail.setBaseItemCode("RecurrentPhase");
+        newDetail.parentUI = this;
+        newDetail.modelCallback = this.setPrice;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="FinderChargingModeReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_ChargingMode");
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="referenceCallback" type="uimthd">
+      <parameterList>
+        <parameter name="itemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        switch(baseItemCode){
+            case "base_ChargingMode":
+                this.model.ChargingMode = itemCode;
+                break;
+        }
+      ]]></script>
+    </method>
+    <method name="CBOAboltonLDEdiRule" type="permMethod">
+      <script><![CDATA[
+        var BoltOn = this.parent.model.BoltOn;
+        var MixedBoltOn = this.parent.model.MixedBoltOn;
+        if(BoltOn && this.isLoading == false)
+        {
+            var s = new epc.data.Specification();
+            s.project =  cwa_epc.getDefaultProj();
+
+            s.specificationCode = BoltOn;
+            var b = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(b)){
+                s.specificationCode = b.BoltOnType;
+                var a = epc.getSpecificationByKey(s);
+                if(!api_common.isFault(a)){
+                    if(a.BoltOnTypeModality == "CR")
+                        return true;
+                    else this.model.CyclicBoltOnAwardingDS.boltonLD = null;
+                }
+            }
+        }
+        if(MixedBoltOn && this.isLoading == false)
+        {
+            return true;
+        }
+        this.isLoading = false;
+        return false;
+      ]]></script>
+    </method>
+    <method name="setPrice" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script>this.parentUI.model.Price = selected.itemCode;</script>
+    </method>
+    <method name="checkPhaseNumber" type="usrActionMethod">
+      <script><![CDATA[
+        if(this.model.PhaseNumber < 0 || this.model.PhaseNumber == null){
+            this.model.PhaseNumber = null;
+            Global.showUserMessage("Phase Number inserted is invalid");
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

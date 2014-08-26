@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.UCSimAppConSingleAssignmentPopUp">
+  <group>UsageControl</group>
+  <label>UCSimAppConSingleAssignmentPopUp</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="baseItemCode" type="leaf">
+      <valueType>dtype_cwt_pcdd.catalogCode</valueType>
+    </variable>
+    <variable name="SACAttributeDetailFinder" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.UCSimpleApplicabilityCondit</valueType>
+    </variable>
+    <variable name="modelBackup" type="leaf">
+      <valueType>dstruct_cm_spoc.data.UCSimpleApplicabilityCondit</valueType>
+    </variable>
+    <variable name="List" type="leaf">
+      <valueType>dstruct_cm_spoc.data.List</valueType>
+    </variable>
+    <variable name="UCSimpleAccumulationConditionsDoc" type="leaf">
+      <valueType>doc_cm_spoc.UCSimpleAccumulationConditionsDoc</valueType>
+    </variable>
+    <variable name="PickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="parentIndex" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <width>600px</width>
+              <elementList>
+                <element name="UCSimAppConditStaticRelEnum" type="elslct">
+                  <labeAlign>left</labeAlign>
+                  <label>Edit : </label>
+                  <labelOrientation>left</labelOrientation>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/uimthd_onSelectField</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.UCSimpleApplicabilityCondit/dstruct_UCSimAppConditStaticRelEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="Separator" type="elsep"/>
+                <element name="VerticalLayout1" type="elvlt">
+                  <width>600px</width>
+                  <elementList>
+                    <element name="AccumulationConditionId" type="elfld">
+                      <dataLength>4</dataLength>
+                      <label>Accumulation Condition ID</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.UCSimpleApplicabilityCondit/dstruct_AccumulationConditionId</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/permMethod_AccumulationConditionIdVisRul</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="RelationshipWithUCSimpleAppCond" type="elfld">
+                      <dataLength>4</dataLength>
+                      <label>Relation</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.UCSimpleApplicabilityCondit/dstruct_RelationshipWithUCSimpleAppCond</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/permMethod_RelationVisRul</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="AccountType" type="elslct">
+                      <label>Account Type</label>
+                      <multiselect>false</multiselect>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.UCSimpleApplicabilityCondit/dstruct_AccountType</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/permMethod_AccountTypeVisRul</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>150px</width>
+                    </element>
+                    <element name="FormFrame" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/leaf_PickList</variablePath>
+                          <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                          <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <height>325px</height>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/leaf_PickList</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>600px</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="HorizontalLayout" type="elhlt">
+                  <elementList>
+                    <element name="Button" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/uimthd_editComplete</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Edit Complete</label>
+                    </element>
+                    <element name="ButtonCancel" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/uimthd_cancelEdit</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Cancel</label>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/leaf_model</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/leaf_model</valueType>
+      <script>return cm_spoc.initEditPopUp(this);</script>
+    </method>
+    <method name="cwLeafInitAction$modelBackup" type="laction">
+      <path>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/leaf_modelBackup</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.UCSimAppConSingleAssignmentPopUp/leaf_modelBackup</valueType>
+      <script><![CDATA[
+        this.modelBackup= this.model.copy();
+        var currentState = this.modelBackup;
+        return currentState;
+      ]]></script>
+    </method>
+    <method name="onSelectField" type="uimthd">
+      <script><![CDATA[
+        /*this.SACAttributeDetailFinder = cm_spoc.initSACAttributeDetailFinder(this,this.model.UCSimAppConditStaticRelEnum);*/
+        var base, callback, result,arr;
+
+
+        /*
+        var listDS= this.parent.owner.parent.model.UCPositiveConUCACArrDS.ListDS;
+        var sel = this.parent.owner.result.selected[0].id;
+
+        for( var i=0;i<listDS.length;i++){
+              if(listDS[i].id == sel){
+                    this.model = listDS[i];
+               this.parentIndex = i;
+                    break;
+              }
+        }
+        */
+
+
+
+        initVars(this,this.model.UCSimAppConditStaticRelEnum,callback,result);
+
+
+
+        function initVars (ui,base,callback,result) {
+
+            var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+            itemFinder.searchDocument.baseItemCode = base;
+            result = itemFinder.search();
+            switch (base) {
+                case "base_TariffClass":
+                callback = ui.setPickListTariffClass;
+                arr = [];
+                if (ui.model.TariffClass){
+                    arr[0] = ui.model.TariffClass;
+                }else
+            {arr[0]="";
+            }
+            var pl = cm_spoc.initPickListSingleSel(ui,result,arr,"itemCode","itemCode");
+            pl.modelCallback =callback;
+            ui.PickList = pl;
+            break;
+
+            case "base_Ton":
+            callback = ui.setPickListTon;
+            arr = [];
+            if (ui.model.Ton){
+                arr[0] = ui.model.Ton;
+            }else{arr[0]="";}
+            var pl = cm_spoc.initPickListSingleSel(ui,result,arr,"itemCode","itemCode");
+            pl.modelCallback =callback;
+            ui.PickList = pl;
+            break;
+
+            case "base_ServiceProvider":
+            callback = ui.setPickListServiceProvider;
+            arr = [];
+            if (ui.model.ServiceProvider){
+                arr[0] = ui.model.ServiceProvider;
+            }else{
+                arr[0]="";
+
+            }
+            var pl = cm_spoc.initPickListSingleSel(ui,result,arr,"itemCode","itemCode");
+            pl.modelCallback =callback;
+            ui.PickList = pl;
+            break;
+
+            case "base_List":
+            callback = ui.setPickListList;
+            arr = [];
+            if (ui.model.List){
+                arr[0] = ui.model.List;
+            }else{
+                arr[0]="";
+            }
+
+            var pl = cm_spoc.initPickListSingleSel(ui,result,arr,"itemCode","itemCode");
+            pl.modelCallback =callback;
+            ui.PickList = pl;
+            break;
+
+
+            case "base_ServiceTariffPlanGroup":
+            callback = this.setPickListServiceTariffPlanGroup;
+            arr = [];
+            if (ui.model.ServiceTariffPlanGroup){
+                arr[0] = ui.model.ServiceTariffPlanGroup;
+            }else{
+                arr[0]="";
+            }
+
+            var pl = cm_spoc.initPickListSingleSel(ui,result,arr,"itemCode","itemCode");
+            pl.modelCallback =callback;
+            ui.PickList = pl;
+            break;
+
+            case "base_DestinationType":
+            callback = ui.setPickListDestinationType;
+            arr = [];
+            if (ui.model.DestinationType){
+                arr[0] = ui.model.DestinationType;
+            }else{
+                arr[0]="";
+            }
+
+            var pl = cm_spoc.initPickListSingleSel(ui,result,arr,"itemCode","itemCode");
+            pl.modelCallback =callback;
+            ui.PickList = pl;
+            break;
+
+
+
+
+
+
+
+            case "base_Wallet":
+
+            callback = ui.setPickListUCSimpleAppConWalletArr;
+            arr = [];
+            if (ui.model.UCSimpleAppConWalletArrDS.List.length>0){
+                arr = ui.model.UCSimpleAppConWalletArrDS.List;
+            }else{arr[0]="";}
+            var pl = cm_spoc.initPickList(ui,result,arr,"itemCode","itemCode");
+            pl.modelCallback =callback;
+            ui.PickList = pl;
+            break;
+
+
+
+            case "base_TrafficType":
+
+
+
+             callback = ui.setUCSApConTrafficTypeArr;
+            arr = [];
+            if (ui.model.UCSApConTrafficTypeArrDS.List.length>0){
+                arr = ui.model.UCSApConTrafficTypeArrDS.List;
+            }else{arr[0]="";}
+            var pl = cm_spoc.initPickList(ui,result,arr,"itemCode","itemCode");
+            pl.modelCallback =callback;
+            ui.PickList = pl;
+            break;
+
+
+
+           case "base_HappyPeriod":
+           ui.PickList=null;
+           ui.openDialogHappyPeriod();
+            break;
+
+            case "AccountType":
+             ui.PickList=null;
+
+            break;
+
+            case "AccumulationConditionId":
+             ui.PickList=null;
+
+
+            break;
+
+            case "Relation":
+             ui.PickList=null;
+
+            break;
+
+
+
+
+            default:
+
+            }
+
+
+
+
+        }
+      ]]></script>
+    </method>
+    <method name="setPickList" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.SpDayServiceProviderArrDS.List =null;
+        this.parent.model.SpDayServiceProviderArrDS.ListDS =null;
+
+        for(var i=0;i<selectedItems.length;i++){
+        this.parent.model.SpDayServiceProviderArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setPickListTariffClass" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItem" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(selectedItem != null){
+            this.parent.model.TariffClass = selectedItem.id;
+
+
+           var s = new epc.data.Specification();
+           s.project =  cwa_epc.getDefaultProj();
+
+
+           s.specificationCode = this.parent.model.TariffClass;
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               this.parent.model.TariffClassRef.TariffClassCode=r.TariffClassCode;
+
+               this.parent.model.TariffClassRef.Description=r.Description;
+
+           }
+
+            //this.parent.model.TariffClassRef = null;
+
+        }else{
+             this.parent.model.TariffClass = null;
+              this.parent.model.TariffRef = null;
+        }
+      ]]></script>
+    </method>
+    <method name="setPickListTon" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItem" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(selectedItem != null){
+            this.parent.model.Ton = selectedItem.id;
+
+
+           var s = new epc.data.Specification();
+           s.project =  cwa_epc.getDefaultProj();
+
+
+           s.specificationCode = this.parent.model.Ton;
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               this.parent.model.TonRef.TonCode=r.TonCode;
+               this.parent.model.TonRef.TonDescription=r.TonDescription;
+
+           }
+
+        }else{
+             this.parent.model.Ton= null;
+             this.parent.model.TonRef= null;
+        }
+      ]]></script>
+    </method>
+    <method name="setPickListDestinationType" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItem" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(selectedItem != null){
+            this.parent.model.DestinationType = selectedItem.id;
+
+
+           var s = new epc.data.Specification();
+           s.project =  cwa_epc.getDefaultProj();
+
+
+           s.specificationCode = this.parent.model.DestinationType;
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               this.parent.model.DestinationTypeRef.DestTypeId=r.DestTypeId;
+               this.parent.model.DestinationTypeRef.DestTypeDesc=r.DestTypeDesc;
+
+           }
+
+        }else{
+             this.parent.model.DestinationType= null;
+             this.parent.model.DestinationTypeRef= null;
+        }
+      ]]></script>
+    </method>
+    <method name="setPickListList" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItem" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(selectedItem != null){
+            this.parent.model.List = selectedItem.id;
+
+
+           var s = new epc.data.Specification();
+           s.project =  cwa_epc.getDefaultProj();
+
+
+           s.specificationCode = this.parent.model.List;
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               this.parent.model.ListRef.ListCodeSDP=r.ListCodeSDP;
+               this.parent.model.ListRef.ListDescription=r.ListDescription;
+
+           }
+
+        }else{
+             this.parent.model.List= null;
+              this.parent.model.ListRef= null;
+        }
+      ]]></script>
+    </method>
+    <method name="setPickListServiceProvider" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItem" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(selectedItem != null){
+            this.parent.model.ServiceProvider = selectedItem.id;
+
+
+           var s = new epc.data.Specification();
+           s.project =  cwa_epc.getDefaultProj();
+
+
+           s.specificationCode = this.parent.model.ServiceProvider;
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               this.parent.model.ServiceProviderRef.ServiceProviderId=r.ServiceProviderId;
+                this.parent.model.ServiceProviderRef.ServiceProviderDescription=r.ServiceProviderDescription;
+
+           }
+
+        }else{
+             this.parent.model.ServiceProvider= null;
+             this.parent.model.ServiceProviderRef= null;
+        }
+      ]]></script>
+    </method>
+    <method name="setPickListServiceTariffPlanGroup" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItem" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(selectedItem != null){
+            this.parent.model.ServiceTariffPlanGroup = selectedItem.id;
+
+
+           var s = new epc.data.Specification();
+           s.project =  cwa_epc.getDefaultProj();
+
+
+           s.specificationCode = this.parent.model.ServiceTariffPlanGroup;
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               this.parent.model.cm_spoc.data.UCSimpleApplicabilityCondit.ServiceTariffPlanGroupRef.ServiceTariffPlanGroupID=r.ServiceTariffPlanGroupID;
+               this.parent.model.ServiceTariffPlanGroupRef.Description=r.Description;
+
+           }
+
+        }else{
+             this.parent.model.ServiceTariffPlanGroup= null;
+             this.parent.model.ServiceTariffPlanGroupRef= null;
+        }
+      ]]></script>
+    </method>
+    <method name="editComplete" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.editCompleteScript(this);
+        return this.parent.cwDialogClose();
+      ]]></script>
+    </method>
+    <method name="cancelEdit" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.restoreEditPopUp(this);
+        return this.parent.cwDialogClose();
+      ]]></script>
+    </method>
+    <method name="setPickListUCSimpleAppConWalletArr" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(selectedItems != null){
+
+            for(var i=0;i<selectedItems.length;i++){
+                this.parent.model.UCSimpleAppConWalletArrDS.List[i] = selectedItems[i].id;
+                /*
+                var s = new epc.data.Specification();
+                s.project =  cwa_epc.getDefaultProj();
+                s.specificationCode = this.parent.model.UCSimpleAppConWalletArrDS.List[i];
+                var r = epc.getSpecificationByKey(s);
+
+                if(!api_common.isFault(r)){
+                    this.parent.model.UCSimpleAppConWalletArrDS.ListDS[i]=r;
+                }*/
+           }
+        }else{
+            this.parent.model.UCSimpleAppConWalletArrDS.List = null;
+            this.parent.model.UCSimpleAppConWalletArrDS.ListRef= null;
+        }
+      ]]></script>
+    </method>
+    <method name="setUCSApConTrafficTypeArr" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(selectedItems != null){
+
+            for(var i=0;i<selectedItems.length;i++){
+                this.parent.model.UCSApConTrafficTypeArrDS.List[i] = selectedItems[i].id;
+           }
+        }else{
+            this.parent.model.UCSimpleAppConWalletArrDS.List = null;
+            this.parent.model.UCSimpleAppConWalletArrDS.ListRef = null;
+        }
+      ]]></script>
+    </method>
+    <method name="openDialogHappyPeriod" type="usrActionMethod">
+      <dialogHeight>10000</dialogHeight>
+      <dialogWidth>10000</dialogWidth>
+      <showInPopup>true</showInPopup>
+      <script>return new cm_spoc.forms.HappyPeriodPopUp(this.model,this);</script>
+    </method>
+    <method name="AccountTypeVisRul" type="permMethod">
+      <script><![CDATA[
+        if(this.model.UCSimAppConditStaticRelEnum == "AccountType") return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="AccumulationConditionIdVisRul" type="permMethod">
+      <script><![CDATA[
+        if(this.model.UCSimAppConditStaticRelEnum == "AccumulationConditionId") return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="RelationVisRul" type="permMethod">
+      <script><![CDATA[
+        if(this.model.UCSimAppConditStaticRelEnum == "Relation") return true;
+        else return false;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

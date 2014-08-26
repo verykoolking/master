@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.moveNode">
+  <group>ui_scripts.RatingTree.NodesUI</group>
+  <label>moveNode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+    <parameter name="up" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var code = ui.code;
+    var node = ui.parent.selectedNodes.findById(code);
+
+    var newPos = up ? node.position - 1 : node.position +1;
+
+    //update selected items
+
+    node.position=newPos;
+
+    ui.parent.selectedNodes.remove(node);
+    ui.parent.selectedNodes.add(node.position,node),
+    ui.parent.selectedNodes.setSelected(node);
+    ui.parent.selectedNodes.updateList;
+
+    //update iterator
+
+    for (var i = 0;i<ui.parent.nodesIterator.length;i++ ){
+
+        if(ui.parent.nodesIterator[i].code == code) {
+
+            if (!up && i<ui.parent.nodesIterator.length || up && i>0 ) {
+
+              ui.parent.nodesIterator = up ?  swap(ui.parent.nodesIterator,i,i-1) : swap(ui.parent.nodesIterator,i,i+1);
+              break;
+            }
+
+
+        }
+    }
+
+
+
+    function swap(array,pos1,pos2) {
+
+        var nArr = [];
+
+        for (var i = 0;i<array.length;i++) {
+
+
+            if(pos1!=i && pos2!=i) {
+                nArr[i] = array[i]
+            }
+            else if (pos1==i) {
+                nArr[i]=array[pos2]
+            }
+            else if (pos2==i) {
+                nArr[i]=array[pos1]
+            }
+
+        }
+
+        return nArr;
+
+    }
+    //update model, ui vars, and selected (according to the iterator)
+
+    for (var i = 0 ; i<ui.parent.nodesIterator.length;i++) {
+
+        var sc = ui.parent.nodesIterator[i].model.specificationCode;
+        ui.parent.nodesIterator[i].position = i;
+
+        ui.parent.selectedNodes.findById( ui.parent.nodesIterator[i].code).position = i;
+
+        for (var k = 0;k<ui.parent.model.RTBRTNodeOutputArrDS.List.length;k++){
+
+            if(ui.parent.model.RTBRTNodeOutputArrDS.List[k].CW_REFID == sc ) ui.parent.model.RTBRTNodeOutputArrDS.List[k].position = i;
+
+        }
+
+    }
+  ]]></script>
+</script>

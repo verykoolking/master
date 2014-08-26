@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/cbe/policy/struct/evt" xmlns:fmk="http://www.tmforum.org/xml/sid/org/tmforum/tip/cbe/policy/fmk" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/cbe/policy/struct/evt" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.cbe.policy.struct.evt
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 2
+ Association Classes: 1
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/cbe/policy/fmk" schemaLocation="sid_org_tmforum_tip_cbe_policy_fmk.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="eventEmitDetails" type="tns:EventEmitDetails"/>
+   <xsd:complexType name="EventEmitDetails">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class contains the OCL expression that will be used by the emits association to determine what, if any, constraints are to be applied to this PolicyEventSet. It also contains some additional semantics to help identify the type of this event.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="emitConstraint" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is a string that contains the specific OCL expression to constrain how a particular Event is emitted by a particular Resource. Defining this as an attribute enables external applications to populate this constraint.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isPhysicalEvent" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, identifies this event as being emitted from a PhysicalResource. If it is FALSE, then this event has been emitted from a LogicalResource.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfEventEmitDetails">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:EventEmitDetails" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="policyEventBase" type="tns:PolicyEventBase"/>
+   <xsd:complexType name="PolicyEventBase" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents an aggregation of PolicyEvents, constrained according to the eventConstraint attribute of the EventDetails aggregation class. This set of PolicyEvents is then presented to one or more PolicyRules to trigger the evaluation of their condition clauses. This enables an external application, such as a Policy Server, to dynamically adjust the set of events that are being used to trigger the evaluation of a PolicyRule</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="hasEventEvaluated" type="xsd:int" minOccurs="0" maxOccurs="1" default="0">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that is set by a policy application to define the state of evaluation of this event. Values include:
+
+0: not yet evaluated
+1: evaluated as TRUE
+2: evaluated as FALSE</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="policyGroup" type="fmk:ArrayOfPolicyGroup" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association PolicyGroupExecutionDetails</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="policyEventBase" type="tns:ArrayOfPolicyEventBase" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association ContainsEventSets</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="policyEventBase1" type="tns:PolicyEventBase" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association ContainsEventSets</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="policyRuleBase" type="fmk:ArrayOfPolicyRuleBase" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association EventTriggerDetails</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPolicyEventBase">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PolicyEventBase" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* -->
+   <xsd:element name="eventTriggerDetails" type="tns:EventTriggerDetails"/>
+   <xsd:complexType name="EventTriggerDetails">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is a class that implements the semantics needed for the IsTriggeredBy aggregation. This aggregation defines the set of Events that can be used to trigger the evaluation of this PolicyRule.</p>
+            <p>This association class  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="retryNumber" type="xsd:int" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This specifies the number of times that this PolicyEvent should be resent to the specified PolicyRule. If the triggerEndTime elapses, then this PolicyEvent will not be resent anymore, even if the retryNumber indicates that additional retries should be attempted. Instead, the hasEventEvaluated attribute of this PolicyEvent must be set to 2 (failed to be evaluated).</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="triggerStartTime" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute specifies the start of the time period in which this PolicyEvent can be sent to the associated PolicyRule.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="triggerConstraints" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute is a string that contains the specific OCL expression to constrain how a given set of PolicyEvents are used to trigger the evaluation of the condition clause of a particular PolicyRule. Defining this as an attribute enables external applications to populate the constraint that will be applied to this PolicyRule.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="triggerEndTime" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute specifies the end of the time period in which this PolicyEvent can be sent to the associated PolicyRule.
+
+If the Trigger was not successfully sent (including retries) by this time, then the hasEventEvaluated attribute of each PolicyEvent in this EventSet must be set to 2 (failed to be evaluated).</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="retryPolicy" type="xsd:int" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This is an enumerated integer that defines the policy for retrying triggers. An enumeration enables the policy application to choose among a set of pre-defined policies for determining how many times to retry sending this PolicyEvent to its associated PolicyRule. Values include:
+
+0 - do NOT retry
+1 - always retry (until successful acknowledgment)
+2 - retry the number of times specified in the retryNumber attribute</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfEventTriggerDetails">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:EventTriggerDetails" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

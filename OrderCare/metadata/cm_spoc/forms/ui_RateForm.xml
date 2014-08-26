@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.RateForm">
+  <group>Rate</group>
+  <label>RateForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="inputCostEstimation" type="leaf">
+      <valueType>dtype_cm_spoc.data.OCSNumber22Attribute</valueType>
+    </variable>
+    <variable name="radioButtonEnum" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TimeVolumeEnumeration</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.Rate</valueType>
+    </variable>
+    <variable name="componentIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_cm_spoc.forms.ComponentUI</valueType>
+    </variable>
+    <variable name="resultCostEstimation" type="leaf">
+      <valueType>dtype_cm_spoc.data.OCSNumber22Attribute</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="generalParameters" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RateForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.RateForm/frmui_Forms/vform_generalParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                </element>
+                <element name="costEstimation" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RateForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.RateForm/frmui_Forms/vform_costEstimation</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Cost Estimation</label>
+                </element>
+                <element name="applicabilityConditions" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RateForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.RateForm/frmui_Forms/vform_applicabilityCondition</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Applicability Conditions</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="applicabilityCondition" type="vform">
+          <label>applicabilityCondition</label>
+          <root name="applicabitility" type="elhlt">
+            <alignment>center,center</alignment>
+            <width>550px</width>
+            <elementList>
+              <element name="Label" type="ellab">
+                <cellAlignment>left,center</cellAlignment>
+                <label>Applicability Condition:</label>
+                <labelOrientation>left</labelOrientation>
+                <showLabel>false</showLabel>
+                <textAlign>left</textAlign>
+                <wrap>false</wrap>
+              </element>
+              <element name="VerticalLayout" type="elhlt">
+                <alignment>center,top</alignment>
+                <elementList>
+                  <element name="ApplicabilityCondition" type="elfld">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <cellAlignment>center,center</cellAlignment>
+                    <columnSpan>3</columnSpan>
+                    <disablePaste>true</disablePaste>
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <labeAlign>left</labeAlign>
+                    <labelOrientation>left</labelOrientation>
+                    <showHint>false</showHint>
+                    <showLabel>false</showLabel>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RateForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Rate/dstruct_ApplicabilityCondition</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>200px</width>
+                  </element>
+                  <element name="Button1" type="elbtn">
+                    <cellAlignment>center,center</cellAlignment>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RateForm/usrActionMethod_FinderSelectReferenceDialog</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/finder.gif</icon>
+                    <width>22px</width>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="generalParameters" type="vform">
+          <label>generalParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="layout" type="elvlt">
+                <alignment>right,center</alignment>
+                <elementList>
+                  <element name="RateId" type="elfld">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <label>Rate Id</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RateForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Rate/dstruct_RateId</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="Description" type="elfld">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <label>Rate Description</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RateForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Rate/dstruct_Description</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="Service" type="elslct">
+                    <labeAlign>left</labeAlign>
+                    <label>Rate Service</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RateForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Rate/dstruct_Service</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="Model" type="elslct">
+                    <label>Rate Model</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RateForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Rate/dstruct_Model</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="CurrencyEnum" type="elslct">
+                    <labeAlign>left</labeAlign>
+                    <label>Rate Currency</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RateForm/uimthd_CurrencyTrigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RateForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Rate/dstruct_CurrencyEnum</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="Separator" type="elsep"/>
+                </elementList>
+              </element>
+              <element name="Tabset" type="eltset">
+                <width>750px</width>
+                <elementList>
+                  <element name="Iterator" type="eliter">
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.RateForm/leaf_componentIterator</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="Component" type="eltab">
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.RateForm/leaf_componentIterator</variablePath>
+                            <variablePath>ui_cm_spoc.forms.ComponentUI/frmui_Forms</variablePath>
+                            <variablePath>ui_cm_spoc.forms.ComponentUI/frmui_Forms/exov_Default</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <labelPath type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.ComponentUI/leaf_model</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.RateComponent/dstruct_ComponentLabel</variablePath>
+                          </variablePathList>
+                        </labelPath>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="costEstimation" type="vform">
+          <label>costEstimation</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="VerticalLayout1" type="elvlt">
+                <alignment>left,center</alignment>
+                <elementList>
+                  <element name="HorizontalLayout" type="elhlt">
+                    <alignment>center,center</alignment>
+                    <elementList>
+                      <element name="TimeVolumeEnum" type="elrgrp">
+                        <label>Duration Call/Session</label>
+                        <labelOrientation>left</labelOrientation>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.RateForm/leaf_radioButtonEnum</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.TimeVolumeEnumeration/dstruct_TimeVolumeEnum</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="inputCostEstimation" type="elfld">
+                        <label>Duration Call/Session</label>
+                        <labelOrientation>left</labelOrientation>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.RateForm/leaf_inputCostEstimation</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>100px</width>
+                      </element>
+                      <element name="SecBytes" type="ellab">
+                        <cellAlignment>center,center</cellAlignment>
+                        <label>sec</label>
+                        <labelOrientation>left</labelOrientation>
+                        <wrap>false</wrap>
+                      </element>
+                      <element name="Button" type="elbtn">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.RateForm/uimthd_estimateCost</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <label>Calculate</label>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="HorizontalLayout1" type="elhlt">
+                    <alignment>center,center</alignment>
+                    <elementList>
+                      <element name="resultCostEstimation" type="elfld">
+                        <label>Estimated Cost</label>
+                        <labelOrientation>left</labelOrientation>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.RateForm/leaf_resultCostEstimation</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>100px</width>
+                      </element>
+                      <element name="Label" type="ellab">
+                        <cellAlignment>center,center</cellAlignment>
+                        <label>cents</label>
+                        <labelOrientation>left</labelOrientation>
+                        <wrap>false</wrap>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.RateForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initRate(this.model);
+        cm_spoc.initPulseTrainUI(this,m);
+
+        return m;
+      ]]></script>
+    </method>
+    <method name="FinderSelectReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_ApplicabilityCondition");
+        newDetail.showButton=true;
+        newDetail.parentUI = this;
+        //newDetail.modelCallback=this.referenceCallback;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="CurrencyTrigger" type="uimthd">
+      <script>this.model.Currency  = this.model.CurrencyEnum;</script>
+    </method>
+    <method name="referenceCallback" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <type>dstruct_cm_spoc.FinderSelectReferenceDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(selected != null){
+            this.model.ApplicabilityCondition = selected;
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script>return;</script>
+    </method>
+    <method name="estimateCost" type="uimthd">
+      <script>this.resultCostEstimation = cm_spoc.costEstimation(this);</script>
+    </method>
+  </methodList>
+</userInterface>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.loadSubOperations">
+  <group>ui_scripts.Operation</group>
+  <label>loadSubOperations</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="modelUI" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    if(model.Operation!=null)
+        {
+            var s = new epc.data.Specification();
+            s.project =  cwa_epc.getDefaultProj();
+
+            s.specificationCode = model.Operation;
+            var operation = epc.getSpecificationByKey(s);
+            if(operation)
+            {
+                var subOperationByOperationFinder = new Finder("cm_spoc.SubOperationsByOperationScriptFinder");
+                subOperationByOperationFinder.searchDocument.Operation = operation.OperationId;
+                var result = subOperationByOperationFinder.search();
+
+                if(result.length>0)
+                {
+                    if(result[0].Entity == true){
+                        modelUI.subOpEntityLabel = result[0].Label;
+                        modelUI.SubOpType = result[0].SubOperation;
+                        modelUI.subOpCodeTable = false;
+                        modelUI.subOpComplex = false;
+
+                        var subOperationDS = modelUI.model.SubOperationDS;
+                        var subOperation = subOperationDS.getValueByName(result[0].SubOperation);
+                        modelUI.subOperation = subOperation
+                    }
+                    else{
+                        if(result[0].Entity == false){
+                            if(result[0].Complex == null){
+                                modelUI.subOpEntityLabel = result[0].Label;
+                                modelUI.SubOpType = result[0].SubOperation;
+                                modelUI.SubOperationCode = result[0].SubOperationCode;
+                                modelUI.subOpComplex = false;
+                                modelUI.subOpEntity = false;
+
+                                var subOperationDS =modelUI.model.SubOperationDS;
+                                cm_spoc.initSubOpFromCT(subOperationDS,result[0].SubOperation);
+                                var subOpCTDS =modelUI.model.SubOperationDS.getValueByName(modelUI.SubOpType+"DS");
+                                var subOpCT = subOpCTDS.getValueByName(modelUI.SubOperationCode);
+                                modelUI.subOperation = subOpCT;
+                            }
+                            else{
+                                switch(result[0].Complex){
+                                case 1:
+                                    modelUI.subOpEntityLabel = result[0].Label;
+                                    modelUI.subOpCodeTableLabel = result[0].Label;
+                                    modelUI.SubOpType = result[0].SubOperation;
+                                    modelUI.SubOperationCode = result[0].SubOperationCode;
+                                    modelUI.subOpEntity = false;
+                                    modelUI.subOpCPtype = result[0].Complex;
+                                    modelUI.subOpRelations = result[0].Relations;
+                                    modelUI.subOpComplexLabel = result[0].SubOperationCode;
+                                    var entity = result[0].Relations.split(":");
+
+                                    var subOperationDS =modelUI.model.SubOperationDS;
+                                    cm_spoc.initSubOpFromCT(subOperationDS,result[0].SubOperation);
+                                    var subOpInDS =modelUI.model.SubOperationDS.getValueByName(modelUI.SubOpType+"DS");
+
+                                    var subOpInCode = subOpInDS.getValueByName(modelUI.SubOperationCode);
+                                    modelUI.subOperation = subOpInDS.getValueByName(entity[0]);
+                                    modelUI.SubOperationCodeValue = subOpInCode;
+                                    break;
+                                case 2:
+                                    modelUI.subOpEntityLabel = result[0].Label;
+                                    modelUI.subOpCodeTableLabel = result[0].Label;
+                                    modelUI.SubOpType = result[0].SubOperation;
+                                    modelUI.SubOperationCode = result[0].SubOperationCode;
+                                    modelUI.subOpEntity = false;
+                                    modelUI.subOpCPtype = result[0].Complex;
+                                    modelUI.subOpRelations = result[0].Relations;
+                                    var subAtt = result[0].SubOperationCode.split(":");
+                                    var entity = result[0].Relations.split(":");
+
+                                    var subOperationDS = modelUI.model.SubOperationDS;
+                                    cm_spoc.initSubOpFromCT(subOperationDS,result[0].SubOperation);
+                                    var subOpInDS = modelUI.model.SubOperationDS.getValueByName(modelUI.SubOpType+"DS");
+
+                                    modelUI.subOperation = subOpInDS.getValueByName(subAtt[0]);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+  ]]></script>
+</script>

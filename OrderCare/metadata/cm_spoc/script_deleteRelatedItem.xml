@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.deleteRelatedItem">
+  <group>ui_scripts.utils</group>
+  <label>deleteRelatedItem</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="source" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="target" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="itemCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var itemRelFinder = new Finder("cwt_pc.cwt_itemRelationFinder");
+    itemRelFinder.searchDocument.itemCode = source;
+    itemRelFinder.searchDocument.itemRelationCode=target;
+    var result = itemRelFinder.search();
+    if(result.length>0) result[0].deleteFromDB();
+
+    var is = new DataStructure("cwt_pcmaintapi.itemSearchDS");
+
+    if(itemCode) is.itemCode = itemCode;
+    else is.itemCode = target;
+
+    var res = cwt_pcmaintapi.itemDelete(is);
+
+    if (res.metadata == "cwt_pcmaintapi.Fault")  {
+        var m = [];
+        var t = {};
+        t.text=res.message;
+        m[0] =t;
+
+        var r = {};
+        r.message = m;
+       cm_spoc.faultHandling(r);
+       return res;
+    } else {
+        return res;
+    }
+  ]]></script>
+</script>

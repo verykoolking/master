@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="urn:webservices.com.tid" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:impl="urn:webservices.com.tid" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:intf="urn:webservices.com.tid">
+  <types>
+    <schema targetNamespace="urn:webservices.com.tid" xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+      <element name="table_service_object" nillable="true" type="impl:table_service_object_type"/>
+      <complexType name="table_service_object_type">
+        <sequence>
+          <element name="tableName" type="xsd:string"/>
+        </sequence>
+      </complexType>
+      <element name="ArrayOf_table_service_object" nillable="true" type="impl:ArrayOf_table_service_object_type"/>
+      <complexType name="ArrayOf_table_service_object_type">
+        <complexContent>
+          <restriction base="soapenc:Array">
+            <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:table_service_object[]" xmlns:wsdl1="http://schemas.xmlsoap.org/wsdl/"/>
+          </restriction>
+        </complexContent>
+      </complexType>
+      <element name="deferred_rereading_object" nillable="true" type="impl:deferred_rereading_object_type"/>
+      <complexType name="deferred_rereading_object_type">
+        <sequence>
+          <element name="id" type="xsd:string"/>
+          <element name="groupsOfTables" type="xsd:string"/>
+          <element name="date" type="xsd:string"/>
+        </sequence>
+      </complexType>
+      <element name="ArrayOf_deferred_rereading_object" nillable="true" type="impl:ArrayOf_deferred_rereading_object_type"/>
+      <complexType name="ArrayOf_deferred_rereading_object_type">
+        <complexContent>
+          <restriction base="soapenc:Array">
+            <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:deferred_rereading_object[]" xmlns:wsdl1="http://schemas.xmlsoap.org/wsdl/"/>
+          </restriction>
+        </complexContent>
+      </complexType>
+      <element name="query_rereading_object" nillable="true" type="impl:query_rereading_object_type"/>
+      <complexType name="query_rereading_object_type">
+        <sequence>
+          <element name="state" type="xsd:string"/>
+          <element name="command" type="xsd:string"/>
+          <element name="host" type="xsd:string"/>
+          <element name="process" type="xsd:string"/>
+          <element name="cell" type="xsd:string"/>
+          <element name="instance" type="xsd:string"/>
+          <element name="detail" type="xsd:string"/>
+        </sequence>
+      </complexType>
+      <element name="ArrayOf_query_rereading_object" nillable="true" type="impl:ArrayOf_query_rereading_object_type"/>
+      <complexType name="ArrayOf_query_rereading_object_type">
+        <complexContent>
+          <restriction base="soapenc:Array">
+            <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:query_rereading_object[]" xmlns:wsdl1="http://schemas.xmlsoap.org/wsdl/"/>
+          </restriction>
+        </complexContent>
+      </complexType>
+    </schema>
+  </types>
+  <message name="queryDeferredRereadingsResponse">
+    <part name="listOfDeferredRereadings" type="impl:ArrayOf_deferred_rereading_object">
+    </part>
+    <part name="resultCode" type="xsd:string">
+    </part>
+    <part name="resultDescription" type="xsd:string">
+    </part>
+  </message>
+  <message name="voidDeferredRereadingResponse">
+    <part name="resultCode" type="xsd:string">
+    </part>
+    <part name="resultDescription" type="xsd:string">
+    </part>
+  </message>
+  <message name="voidDeferredRereadingRequest">
+    <part name="id" type="xsd:string">
+    </part>
+  </message>
+  <message name="queryCommandRequest">
+    <part name="commandId" type="xsd:string">
+    </part>
+  </message>
+  <message name="rereadingRequest">
+    <part name="command" type="xsd:string">
+    </part>
+    <part name="sdp" type="xsd:string">
+    </part>
+    <part name="serviceId" type="xsd:string">
+    </part>
+    <part name="diferDate" type="xsd:string">
+    </part>
+    <part name="listOfTables" type="impl:ArrayOf_table_service_object">
+    </part>
+  </message>
+  <message name="queryCommandResponse">
+    <part name="resultCode" type="xsd:string">
+    </part>
+    <part name="resultDescription" type="impl:ArrayOf_query_rereading_object">
+    </part>
+  </message>
+  <message name="rereadingResponse">
+    <part name="resultCode" type="xsd:string">
+    </part>
+    <part name="resultDescription" type="xsd:string">
+    </part>
+  </message>
+  <message name="rereadingTariffTreeRequestU">
+    <part name="sdp" type="xsd:string">
+    </part>
+    <part name="serviceId" type="xsd:string">
+    </part>
+    <part name="diferDate" type="xsd:string">
+    </part>
+    <part name="treeType" type="xsd:string">
+    </part>
+    <part name="externalUser" type="xsd:string">
+    </part>
+  </message>
+  <message name="rereadingTariffTreeRequest">
+    <part name="sdp" type="xsd:string">
+    </part>
+    <part name="serviceId" type="xsd:string">
+    </part>
+    <part name="diferDate" type="xsd:string">
+    </part>
+    <part name="treeType" type="xsd:string">
+    </part>
+  </message>
+  <message name="rereadingRequestU">
+    <part name="command" type="xsd:string">
+    </part>
+    <part name="sdp" type="xsd:string">
+    </part>
+    <part name="serviceId" type="xsd:string">
+    </part>
+    <part name="diferDate" type="xsd:string">
+    </part>
+    <part name="listOfTables" type="impl:ArrayOf_table_service_object">
+    </part>
+    <part name="externalUser" type="xsd:string">
+    </part>
+  </message>
+  <message name="voidDeferredRereadingRequestU">
+    <part name="id" type="xsd:string">
+    </part>
+    <part name="externalUser" type="xsd:string">
+    </part>
+  </message>
+  <message name="queryDeferredRereadingsRequest">
+  </message>
+  <portType name="RereadingInterface">
+    <operation name="executeCommand">
+      <input name="rereadingRequest" message="impl:rereadingRequest">
+    </input>
+      <output name="rereadingResponse" message="impl:rereadingResponse">
+    </output>
+    </operation>
+    <operation name="executeCommandU">
+      <input name="rereadingRequestU" message="impl:rereadingRequestU">
+    </input>
+      <output name="rereadingResponseU" message="impl:rereadingResponse">
+    </output>
+    </operation>
+    <operation name="executeCommandTariffTreeRereading">
+      <input name="rereadingTariffTreeRequest" message="impl:rereadingTariffTreeRequest">
+    </input>
+      <output name="rereadingTariffTreeResponse" message="impl:rereadingResponse">
+    </output>
+    </operation>
+    <operation name="executeCommandTariffTreeRereadingU">
+      <input name="rereadingTariffTreeRequestU" message="impl:rereadingTariffTreeRequestU">
+    </input>
+      <output name="rereadingTariffTreeResponseU" message="impl:rereadingResponse">
+    </output>
+    </operation>
+    <operation name="queryCommand">
+      <input name="queryCommandRequest" message="impl:queryCommandRequest">
+    </input>
+      <output name="queryCommandResponse" message="impl:queryCommandResponse">
+    </output>
+    </operation>
+    <operation name="queryDeferredRereadings">
+      <input name="queryDeferredRereadingsRequest" message="impl:queryDeferredRereadingsRequest">
+    </input>
+      <output name="queryDeferredRereadingsResponse" message="impl:queryDeferredRereadingsResponse">
+    </output>
+    </operation>
+    <operation name="voidDeferredRereading">
+      <input name="voidDeferredRereadingRequest" message="impl:voidDeferredRereadingRequest">
+    </input>
+      <output name="voidDeferredRereadingResponse" message="impl:voidDeferredRereadingResponse">
+    </output>
+    </operation>
+    <operation name="voidDeferredRereadingU">
+      <input name="voidDeferredRereadingRequestU" message="impl:voidDeferredRereadingRequestU">
+    </input>
+      <output name="voidDeferredRereadingResponseU" message="impl:voidDeferredRereadingResponse">
+    </output>
+    </operation>
+  </portType>
+  <binding name="RereadingBinding" type="impl:RereadingInterface">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="executeCommand">
+      <wsdlsoap:operation soapAction=""/>
+      <input name="rereadingRequest">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </input>
+      <output name="rereadingResponse">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </output>
+    </operation>
+    <operation name="executeCommandU">
+      <wsdlsoap:operation soapAction=""/>
+      <input name="rereadingRequestU">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </input>
+      <output name="rereadingResponseU">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </output>
+    </operation>
+    <operation name="executeCommandTariffTreeRereading">
+      <wsdlsoap:operation soapAction=""/>
+      <input name="rereadingTariffTreeRequest">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </input>
+      <output name="rereadingTariffTreeResponse">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </output>
+    </operation>
+    <operation name="executeCommandTariffTreeRereadingU">
+      <wsdlsoap:operation soapAction=""/>
+      <input name="rereadingTariffTreeRequestU">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </input>
+      <output name="rereadingTariffTreeResponseU">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </output>
+    </operation>
+    <operation name="queryCommand">
+      <wsdlsoap:operation soapAction=""/>
+      <input name="queryCommandRequest">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </input>
+      <output name="queryCommandResponse">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </output>
+    </operation>
+    <operation name="queryDeferredRereadings">
+      <wsdlsoap:operation soapAction=""/>
+      <input name="queryDeferredRereadingsRequest">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </input>
+      <output name="queryDeferredRereadingsResponse">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </output>
+    </operation>
+    <operation name="voidDeferredRereading">
+      <wsdlsoap:operation soapAction=""/>
+      <input name="voidDeferredRereadingRequest">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </input>
+      <output name="voidDeferredRereadingResponse">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </output>
+    </operation>
+    <operation name="voidDeferredRereadingU">
+      <wsdlsoap:operation soapAction=""/>
+      <input name="voidDeferredRereadingRequestU">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </input>
+      <output name="voidDeferredRereadingResponseU">
+        <wsdlsoap:body use="literal" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="RereadingInterfaceService">
+    <port name="RereadingV1" binding="impl:RereadingBinding">
+      <wsdlsoap:address location="http://TP0033W7010:9090/mockRereadingBinding"/>
+    </port>
+  </service>
+</definitions>

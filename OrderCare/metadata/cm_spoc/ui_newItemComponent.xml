@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.newItemComponent">
+  <extends>ui_cwa_epc.baseComponent</extends>
+  <group>overridden.UI</group>
+  <label>newItemComponent</label>
+  <metaVersion>4</metaVersion>
+  <overrides>ui_cwa_epc.newItemComponent</overrides>
+  <variableList>
+    <variable name="itemSubTypeSearchDoc" type="leaf">
+      <initialize>true</initialize>
+      <valueType>doc_cwa_epc.itemSubTypeSearchDoc/ui_UserInterface</valueType>
+    </variable>
+    <variable name="isItemSubtypeVisible" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_epc.data.Specification</valueType>
+    </variable>
+    <variable name="specificationTypeDoc" type="leaf">
+      <valueType>doc_cwa_epc.specificationTypeDoc</valueType>
+    </variable>
+    <variable name="serviceTypeDoc" type="leaf">
+      <initialize>true</initialize>
+      <valueType>doc_cwa_epc.serviceTypeDoc/ui_UserInterface</valueType>
+    </variable>
+    <variable name="isServiceTypeVisible" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="groupTypeSearchDoc" type="leaf">
+      <valueType>doc_cm_spoc.groupTypeSearchDoc</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_cwa_epc.baseComponent/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="detailFormVL" type="exov">
+          <base>ui_cwa_epc.baseComponent/frmui_Forms/vform_detailFormVL</base>
+          <extends>ui_cwa_epc.baseComponent/frmui_Forms/vform_detailFormVL</extends>
+          <label>detailFormVL</label>
+          <overrideList>
+            <override name="formVLLayout" type="elext">
+              <elementList>
+                <element name="lifeCycleGrid" type="elgrd">
+                  <alignment>left,center</alignment>
+                  <cellPadding>5</cellPadding>
+                  <colWidths>164px,164px,155px</colWidths>
+                  <fillSpace>false</fillSpace>
+                  <fixedColWidths>true</fixedColWidths>
+                  <labeAlign>left</labeAlign>
+                  <labelOrientation>left</labelOrientation>
+                  <numOfCols>3</numOfCols>
+                  <style>cwformVLGridLayoutNarrow</style>
+                  <width>483px</width>
+                  <wrapLabel>true</wrapLabel>
+                  <elementList>
+                    <element name="code" type="elslct">
+                      <columnSpan>1</columnSpan>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.newItemComponent/uimthd_itemTypeTrigger</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <startRow>true</startRow>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.newItemComponent/leaf_specificationTypeDoc</variablePath>
+                          <variablePath>doc_cwa_epc.specificationTypeDoc/leaf_code</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="groupDescription" type="elslct">
+                      <label>Group</label>
+                      <multiselect>false</multiselect>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.newItemComponent/uimthd_itemTypeTrigger</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.newItemComponent/leaf_groupTypeSearchDoc</variablePath>
+                          <variablePath>doc_cm_spoc.groupTypeSearchDoc/leaf_groupDescription</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="itemSubType" type="elslct">
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.newItemComponent/uimthd_itemSubtypeTrigger</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <startRow>true</startRow>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.newItemComponent/leaf_itemSubTypeSearchDoc</variablePath>
+                          <variablePath>doc_cwa_epc.itemSubTypeSearchDoc/ui_UserInterface/uivar_model</variablePath>
+                          <variablePath>doc_cwa_epc.itemSubTypeSearchDoc/leaf_itemSubType</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.newItemComponent/permMethod_itemSubtypeVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="serviceType" type="elslct">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.newItemComponent/leaf_serviceTypeDoc</variablePath>
+                          <variablePath>doc_cwa_epc.serviceTypeDoc/ui_UserInterface/uivar_model</variablePath>
+                          <variablePath>doc_cwa_epc.serviceTypeDoc/leaf_code</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.newItemComponent/permMethod_serivceTypeVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpacer1" type="ellsp">
+                  <height>5px</height>
+                </element>
+                <element name="HorizontalLayout" type="elhlt">
+                  <elementList>
+                    <element name="LayoutSpacer" type="ellsp">
+                      <width>180px</width>
+                    </element>
+                    <element name="ok" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.newItemComponent/usrActionMethod_onOK</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>OK</label>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$groupTypeSearchDoc" type="laction">
+      <path>ui_cm_spoc.newItemComponent/leaf_groupTypeSearchDoc</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        this.groupTypeSearchDoc=new cm_spoc.groupTypeSearchDoc();
+        this.groupTypeSearchDoc.codeTable="GroupType";
+        return this.groupTypeSearchDoc;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$specificationTypeDoc" type="laction">
+      <path>ui_cm_spoc.newItemComponent/leaf_specificationTypeDoc</path>
+      <type>initializer</type>
+      <valueType>findScript_cwa_epc.epcItemFinder/ui_UserInterface/leaf_specificationTypeDoc</valueType>
+      <script>return new cwa_epc.specificationTypeDoc;</script>
+    </method>
+    <method name="cwLeafInitAction$isServiceTypeVisible" type="laction">
+      <path>ui_cm_spoc.newItemComponent/leaf_isServiceTypeVisible</path>
+      <type>initializer</type>
+      <script>return false;</script>
+    </method>
+    <method name="cwLeafInitAction$isItemSubtypeVisible" type="laction">
+      <path>ui_cm_spoc.newItemComponent/leaf_isItemSubtypeVisible</path>
+      <type>initializer</type>
+      <script>return false;</script>
+    </method>
+    <method name="cwLeafInitAction$detailForm" type="laction">
+      <path>ui_cwa_epc.baseComponent/leaf_detailForm</path>
+      <type>initializer</type>
+      <valueType>ui_cwa_epc.baseComponent/leaf_detailForm</valueType>
+      <script><![CDATA[return "detailFormVL";]]></script>
+    </method>
+    <method name="itemSubtypeVisible" type="permMethod">
+      <script>return this.isItemSubtypeVisible;</script>
+    </method>
+    <method name="itemTypeTrigger" type="uimthd">
+      <script><![CDATA[
+        var itemType = this.specificationTypeDoc.code;
+        var groupType = this.groupTypeSearchDoc.groupDescription;
+
+        this.isServiceTypeVisible = false;
+        if(itemType != null || groupType!=null){
+            this.isItemSubtypeVisible = true;
+            this.itemSubTypeSearchDoc.model.itemSubType = null;
+        }
+        else
+            this.isItemSubtypeVisible = false;
+
+        if(!this.itemSubTypeSearchDoc)
+            this.itemSubTypeSearchDoc = new cwa_epc.itemSubTypeSearchDoc.UserInterface();
+
+        this.itemSubTypeSearchDoc.model.itemType = this.specificationTypeDoc.code;
+        /*if(itemType == "BalanceSpecification")
+            this.itemSubTypeSearchDoc.model.codeTable = "BalanceSpecificationType";
+        else if(itemType == "ResourceSpecification")
+            this.itemSubTypeSearchDoc.model.codeTable = "ResourceSpecificationType";
+        else if(itemType == "ProductSpecification")
+            this.itemSubTypeSearchDoc.model.codeTable = "ProductSpecificationType";
+        else if(itemType == "ConsumptionSpecification")
+            this.itemSubTypeSearchDoc.model.codeTable = "ConsumptionSpecificationType";
+        else if(itemType == "PricePlan")
+            this.itemSubTypeSearchDoc.model.codeTable = "PricePlanType";
+        else if(itemType == "ProductOffering")
+            this.itemSubTypeSearchDoc.model.codeTable = "ProductOfferingType";
+        else if(itemType == "ServiceSpecification")
+            this.itemSubTypeSearchDoc.model.codeTable = "ServiceSpecificationType";
+        else
+            this.isItemSubtypeVisible = false;*/
+            cm_spoc.setCodeTableName(this.itemSubTypeSearchDoc.model, this.itemSubTypeSearchDoc.model.itemType, this.groupTypeSearchDoc.groupDescription);
+      ]]></script>
+    </method>
+    <method name="onOK" type="usrActionMethod">
+      <script><![CDATA[
+        var message = null;
+        if (this.itemSubTypeSearchDoc.model.itemType == null) {
+            message = "CWA_EPC_SPEC_TYPE_MANDATORY";
+        } else if (this.itemSubTypeSearchDoc.model.itemSubType == null) {
+            message = "CWA_EPC_SPEC_SUBTYPE_MANDATORY";
+        }else if(this.isServiceTypeVisible == true && this.serviceTypeDoc.model.code == null){
+             message = "CWA_EPC_SERVICE_SUBTYPE_MANDATORY";
+        }
+
+        if(this.itemSubTypeSearchDoc.model.itemSubType != null){
+             var permission = cm_common.getItemPermissionCUD(this.itemSubTypeSearchDoc.model.itemSubType);
+             if(permission.length > 0 && !permission[0].canCreate)
+                 message = "SERVICE SUBTYPE CREATION DENIED";
+        }
+
+        if (message != null) {
+            cwa_epc.setStatusMessage(this.parent, null, message);
+            return;
+        }
+
+        var parent = this.parent.owner;
+        parent.isStored = false;
+        parent.isNew = true;
+        var detailModel = this.getNewDetailModel();
+        if (detailModel instanceof epc.data.Service_BSCS)
+            this.serviceTypeTrigger(detailModel);
+        var detailForm = parent.getDetailForm(detailModel);
+        var newDetail = null;
+
+        if (detailForm !=null) {
+            newDetail = parent.getDetail(detailForm, detailModel);
+        }
+
+        if(newDetail!=null){
+            newDetail.parent = parent;
+            newDetail.parentFinderUI = parent;
+            if(!(detailModel.isBasedOn("epc.data.selectionTreeRoot"))){
+                newDetail.isEditMenuVisible = false;
+            }
+            newDetail.isCancelMenuVisible = true;
+            parent.detail = newDetail;
+            newDetail.isActionButtonsVisible = false;
+            newDetail.isComponentVisible = true;
+            //newDetail.isMenuActionButtonsVisible = false;
+            //newDetail.isCustomDeleteMenuVisible = false;
+            newDetail.tabFrame.isEditMenuVisible = false;
+            newDetail.parent.leftFormContentUI = newDetail;
+            newDetail.parent.detailLeftForm = "leftForm";
+            var tabElement, tabMenuElement;
+            newDetail instanceof cwa_epc.treeDetailTabComponent ? tabElement = newDetail.tabFrame.tabElement : tabElement = newDetail.tabElement;
+            newDetail instanceof cwa_epc.treeDetailTabComponent ? tabMenuElement = newDetail.tabFrame.tabMenuElement : tabMenuElement = newDetail.tabMenuElement;
+            for(var j = 0;tabElement != null && j < tabElement.length; j++){
+                tabElement[j].setReadOnly(false);
+            }
+            for(var j = 0;tabMenuElement != null && j < tabMenuElement.length - 1; j++){
+                tabMenuElement[j].setReadOnly(false);
+            }
+            newDetail.model.state = "DEF";
+
+        }
+        this.parent.cwDialogClose();
+      ]]></script>
+    </method>
+    <method name="getNewDetailModel" type="uimthd">
+      <description><![CDATA[
+        <p style="margin-top: 0">
+          To implement for retrieving a new detail model used for new action
+        </p>
+      ]]></description>
+      <valueType>mdl_com.conceptwave.system.Model</valueType>
+      <script><![CDATA[
+        var model = cwa_epc.getSpecificationModel(this.itemSubTypeSearchDoc.model.itemSubType.key);
+        //if(model)
+        //    model.baseSpecificationCode = this.specificationCodeDoc.code;
+        //else
+        //    model = new epc.data.specification;
+
+        return model;
+      ]]></script>
+    </method>
+    <method name="cancelAction" type="usrActionMethod">
+      <script><![CDATA[
+        this.cw$super_cancelAction();
+        //this.parent.isNew = false;
+      ]]></script>
+    </method>
+    <method name="onInit" type="action">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+      <script>return this.cw$super_onInit();</script>
+    </method>
+    <method name="serivceTypeVisible" type="permMethod">
+      <script>return this.isServiceTypeVisible;</script>
+    </method>
+    <method name="itemSubtypeTrigger" type="uimthd">
+      <script><![CDATA[
+        var itemSubtype = this.itemSubTypeSearchDoc.model.itemSubType;
+        this.isServiceTypeVisible = false;
+        if(itemSubtype == "Service")
+            this.isServiceTypeVisible = true;
+      ]]></script>
+    </method>
+    <method name="serviceTypeTrigger" type="uimthd">
+      <parameterList>
+        <parameter name="model" type="rifp">
+          <type>dstruct_epc.data.Specification</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        model.BsSnType = this.serviceTypeDoc.model.code;
+        if (model.BsSnType == 'U') {
+            model.BsSnMml = true;
+            model.BsRatingInd = true;
+            model.BsPrepaidSupported = true;
+            model.BsProvisioningIntFlag = false;
+            model.BsSsCode = "1";
+        }else if(model.BsSnType == "E"){
+            model.BsS2Code = "1";
+        }else if(model.BsSnType == "V"){
+            model.BsS1Code = "1";
+            model.BsS2Code = "1";
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_SpecialDayExclusionaryCondRule">
+  <group>rules_scripts.Calendars.SpecialDay</group>
+  <label>rule_SpecialDayExclusionaryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var selDate = data.Date;
+    var selSP = data.SpDayServiceProviderArrDS.List;
+    var arrSelSPId = new Array();
+    var attributeSelSPFinder = new Finder("cwt_pc:cwt_itemAttributeFinder");
+    var attributeSelSPResult;
+
+    var count=0;
+    for(var k=0; k<selSP.length; k++)
+    {
+        attributeSelSPFinder.searchDocument.itemCode = selSP[k];
+        attributeSelSPResult = attributeSelSPFinder.search();
+
+        for (var u=0; u<attributeSelSPResult.length; u++)
+        {
+            if(attributeSelSPResult[u].name == "ServiceProviderId")
+            {
+                arrSelSPId[count] = attributeSelSPResult[u].defaultValue;
+                count++;
+            }
+        }
+    }
+
+    var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+    itemFinder.searchDocument.baseItemCode = "base_SpecialDay";
+    var allSpDay = itemFinder.search();
+
+    var attributeAllSpDayFinder = new Finder("cwt_pc:cwt_itemAttributeFinder");
+    var attributeAllSpDayResult;
+
+    var spDayRelationFinder = new Finder("cwt_pc.cwt_itemRelationFinder");
+    var spDaySPArrRelation = "SpDayServiceProviderArr";
+    var spDayRelationResult;
+
+    var spDaySPArrRelationFinder = new Finder("cwt_pc.cwt_itemRelationFinder");
+    var spDaySPArrRelationResult;
+
+    var spDaySPRelationFinder = new Finder("cwt_pc.cwt_itemRelationFinder");
+    var spDaySPRelationResult;
+
+    var attributeSpDaySPFinder = new Finder("cwt_pc:cwt_itemAttributeFinder");
+    var attributeSpDaySPResult;
+
+    var attributeSPFinder = new Finder("cwt_pc:cwt_itemAttributeFinder");
+    var attributeSPResult;
+
+    var arrSpDay = new Array();
+    var currSPArrRelationCode = "";
+
+    var c=0;
+    if(allSpDay)
+    {
+        for (var i=0; i<allSpDay.length; i++)
+        {
+            attributeAllSpDayFinder.searchDocument.itemCode = allSpDay[i].itemCode;
+            attributeAllSpDayResult = attributeAllSpDayFinder.search();
+
+            for (var j=0; j<attributeAllSpDayResult.length; j++)
+            {
+                if( (allSpDay[i].itemCode != data.id) && (attributeAllSpDayResult[j].name == "Date") && (selDate) && (attributeAllSpDayResult[j].dateDefaultValue.getTime() == selDate.getTime()) )
+                {
+                    arrSpDay[c] = allSpDay[i];
+                    c++;
+                }
+            }
+        }
+    }
+    var len = arrSpDay.length;
+
+    if(len>0)
+    {
+        for(var l=0; l<len; l++)
+        {
+            spDayRelationFinder.searchDocument.itemCode = arrSpDay[l].itemCode;
+            spDayRelationResult = spDayRelationFinder.search();
+
+            for (var n=0; n<spDayRelationResult.length; n++)
+            {
+                if (spDayRelationResult[n].itemRelationCode == spDaySPArrRelation)
+                {
+                    currSPArrRelationCode = spDayRelationResult[n].itemRelationTarget;
+                    spDaySPArrRelationFinder.searchDocument.itemCode = currSPArrRelationCode;
+                    spDaySPArrRelationResult = spDaySPArrRelationFinder.search();
+
+                    for ( var w=0; w<spDaySPArrRelationResult.length; w++)
+                    {
+                        attributeSPFinder.searchDocument.itemCode = spDaySPArrRelationResult[w].itemRelationCode;
+                        attributeSPResult = attributeSPFinder.search();
+
+                        for (var b=0; b<arrSelSPId.length; b++)
+                        {
+                            for (var t=0; t<attributeSPResult.length; t++)
+                            {
+                                if(attributeSPResult[t].name == "ServiceProviderId" && attributeSPResult[t].defaultValue == arrSelSPId[b])
+                                {
+                                    errList.addErrorMessage(data,["For the selected date a Special Day with the same Service Provider already exists."],"NGAA_003","E");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return false;
+  ]]></script>
+</script>

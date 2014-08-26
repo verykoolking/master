@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_NotificationsNotOpRuleArrMandatoryCondRule">
+  <group>rules_scripts.Operation</group>
+  <label>rule_NotificationsNotOpRuleArrMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var entityArray = data.ListDS;
+
+    for(var i=0;i<entityArray.length;i++){
+        for(var j=i+1;j<entityArray.length;j++){
+            if(entityArray[i].Operation == entityArray[j].Operation
+            && entityArray[i].TariffPlan == entityArray[j].TariffPlan
+            && entityArray[i].LifeCycleSubStatus == entityArray[j].LifeCycleSubStatus
+            && entityArray[i].ServiceProvider == entityArray[j].ServiceProvider
+            && entityArray[i].NotifErrorListHandling == entityArray[j].NotifErrorListHandling
+            && entityArray[i].ErrorCode == entityArray[j].ErrorCode
+            && entityArray[i].OperationMode == entityArray[j].OperationMode
+            && entityArray[i].DeliveryRescheduling == entityArray[j].DeliveryRescheduling
+            && entityArray[i].RequiresSubscription == entityArray[j].RequiresSubscription
+            && entityArray[i].ActiveRule == entityArray[j].ActiveRule
+            && cm_spoc.SubOperationAttributesCompare(data,errList,entityArray[i].SubOperationDS,entityArray[j].SubOperationDS) == true
+            && cm_spoc.ExternalNotifNodeSelectedCompare(data,errList,entityArray[i].ExternalNotifNodeArrDS.List,entityArray[j].ExternalNotifNodeArrDS.List) == true
+            ){
+                var first = i+1;
+                var second = j+1;
+                errList.addErrorMessage(data,["In the tab Notifiable Operations the row "+first+" is equal to the row "+second],"NGAA_003","E");
+            }
+        }
+    }
+
+    return false;
+  ]]></script>
+</script>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getAvailableNodes">
+  <group>ui_scripts.RatingTree.BranchUI</group>
+  <label>getAvailableNodes</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var nodes = ui.nodes;
+    var selectedNodes = ui.selectedNodes;
+    var availableNodes = new DataObjectList();
+
+    for (var i=0;i<nodes.length;i++) {
+        var isIn = false;
+        for (var k=0;k<selectedNodes.length;k++){
+            if(selectedNodes[k].code==nodes[i].code) isIn = true;
+        }
+        if (!isIn) availableNodes.addLast(nodes[i]);
+    }
+
+    return availableNodes;
+  ]]></script>
+</script>

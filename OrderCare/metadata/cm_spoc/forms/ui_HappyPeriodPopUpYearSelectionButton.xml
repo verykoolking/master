@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.HappyPeriodPopUpYearSelectionButton">
+  <group>UsageControl</group>
+  <label>HappyPeriodPopUpYearSelectionButton</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.UCSApConHappyPeriod</valueType>
+    </variable>
+    <variable name="allSelected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="HorizontalLayout" type="elvlt">
+              <elementList>
+                <element name="PeriodDescription" type="elfld">
+                  <dataLength>4</dataLength>
+                  <label>Description</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpYearSelectionButton/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.UCSApConHappyPeriod/dstruct_PeriodDescription</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="HorizontalLayout1" type="elhlt">
+                  <elementList>
+                    <element name="Year" type="elspnr">
+                      <label>Year: </label>
+                      <max>2100</max>
+                      <min>2014</min>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpYearSelectionButton/uimthd_onChangeYearSelection</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpYearSelectionButton/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.UCSApConHappyPeriod/dstruct_Year</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="allSelected" type="elchk">
+                      <label>All Years</label>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpYearSelectionButton/uimthd_checkAllYears</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpYearSelectionButton/leaf_allSelected</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$allSelected" type="laction">
+      <path>ui_cm_spoc.forms.HappyPeriodPopUpYearSelectionButton/leaf_allSelected</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.HappyPeriodPopUpYearSelectionButton/leaf_allSelected</valueType>
+      <script>return false;</script>
+    </method>
+    <method name="onChangeYearSelection" type="uimthd">
+      <script>cm_spoc.onChangeYearSelectionScript(this);</script>
+    </method>
+    <method name="checkAllYears" type="uimthd">
+      <script>cm_spoc.selectAllYearsScript(this);</script>
+    </method>
+  </methodList>
+</userInterface>

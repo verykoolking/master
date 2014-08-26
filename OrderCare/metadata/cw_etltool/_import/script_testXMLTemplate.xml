@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.testXMLTemplate">
+  <label>Test XML Template</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="fileName" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    fileName = "E:\\EPC\\boltonTypes.xml";
+    var f = new FileReader(fileName);
+    var ds = new DataStructure("OCSEntity.v1.types.oCSEntityList");
+    ds = f.getItemsFromXML("OCSEntity.v1.types.oCSEntityList");
+
+    var xml = "";
+
+    while(!f.isEOF()){
+
+        if(xml==null || xml == "")
+            xml=f.readLine();
+        else
+        xml=xml+f.readLine();
+    }
+    var result = Global.validateXML(xml,"/OCS_Entity_v1.xsd");
+    var a;
+    a=0;
+    /*
+    var sc = new DataStructure("OCSConfigurationOperation.v1.types.StartConfiguration");
+    sc.appId = Global.getAppName();//getAppTitle();
+    sc.reference = "";
+    sc.userCode = UserProfile.userProfile.userName;
+
+
+    */
+  ]]></script>
+</script>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.isAAVersionValid">
+  <group>scripts</group>
+  <label>isAAVersionValid</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="aaVersion" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(aaVersion == null) return false;
+    if(aaVersion == 'All') return true;
+
+    var SERVER_VERSION = Global.getConfigVariable('SERVER_VERSION');
+    if(SERVER_VERSION==null || SERVER_VERSION=='')
+        SERVER_VERSION = 'All';
+
+    if(SERVER_VERSION == 'All') return true;
+
+    var serverVersion = -1;
+    var toTestVersion = -1;
+    var versions = Global.getAllCodes('cm_plm.aaReleaseType');
+
+    for(var i=0; i<versions.length; i++) {
+        if(versions[i]==SERVER_VERSION) serverVersion = i;
+        if(versions[i]==aaVersion) toTestVersion = i;
+    }
+
+    return (serverVersion<=toTestVersion);
+  ]]></script>
+</script>

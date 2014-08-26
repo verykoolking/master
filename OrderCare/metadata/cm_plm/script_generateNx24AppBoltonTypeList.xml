@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.generateNx24AppBoltonTypeList">
+  <group>applicabilityCondition.scripts</group>
+  <label>generateNx24AppBoltonTypeList</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="boltonType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_spoc.data.BoltOnType</type>
+    </parameter>
+    <parameter name="TCDT" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.DestTypeAssoTariffClassList</type>
+    </parameter>
+    <parameter name="conditions" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_spoc.data.SimpleTemporalAppCondition</type>
+    </parameter>
+    <parameter name="reusableNx24Ids" type="rifp">
+      <array>true</array>
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+    <parameter name="reusableGroupIds" type="rifp">
+      <array>true</array>
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cm_plm.Nx24AppBoltonTypeList</valueType>
+  <script><![CDATA[
+    var list;
+    var Nx24 = new cm_plm.Nx24AppBoltonTypeList();
+
+    Nx24.Nx24AppBoltonTypeListModality = TCDT.AppBoltonTypeModality;
+
+    if(TCDT.Nx24AppBoltonTypeListId){
+        Nx24.Nx24AppBoltonTypeListId = TCDT.Nx24AppBoltonTypeListId;
+        Nx24 = cm_plm.queryNx24AppBoltonTypeList(Nx24)
+        if(api_common.isFault(Nx24))
+            return Nx24;
+        if(Nx24.length != 1)
+            return new api_common.createFault("ERR", "More than one template was found!");
+        Nx24 = Nx24[0];
+
+        //check if this is is used elsewhere also
+        var tmpTCDT = new cm_plm.DestTypeAssoTariffClassList();
+        tmpTCDT.Nx24AppBoltonTypeListId = TCDT.Nx24AppBoltonTypeListId;
+        list = cm_plm.queryDestTypeAssoTariffClassList(tmpTCDT);
+        if(list.length > 1)    //meaning it is used by others, so we cant update this and need to create a new one
+            Nx24.Nx24AppBoltonTypeListId = null;
+
+        Nx24 = mergeLists(Nx24, conditions);
+    }else{
+        Nx24.populateDefaultValues(conditions);
+    }
+
+    if(!Nx24.Nx24AppBoltonTypeListId && reusableNx24Ids.length >0)
+        Nx24.Nx24AppBoltonTypeListId = reusableNx24Ids.pop();
+
+    Nx24 = cm_plm.applyBoltonTypePriorities(boltonType, TCDT, conditions, reusableGroupIds, Nx24, projectCode);
+
+    return Nx24;
+
+    /*******************************************************************
+    * FUNCTIONS
+    ******************************************************************/
+
+
+    function mergeLists(current, conditions){
+        var Nx24template = new cm_plm.Nx24AppBoltonTypeList();
+        Nx24template.populateDefaultValues(conditions);
+
+        var result = new cm_plm.Nx24AppBoltonTypeList();
+        current.mapTo(result);
+        result.Nx24AppBoltonTypeArr.clear();
+
+        var index;
+        for(var i =0; i<current.Nx24AppBoltonTypeArr.length; i++){
+            index = cm_plm.indexOf(Nx24template.Nx24AppBoltonTypeArr, current.Nx24AppBoltonTypeArr[i].TypeOfDayID, "TypeOfDayID");
+            if(index >=0 ){
+                result.Nx24AppBoltonTypeArr[result.Nx24AppBoltonTypeArr.length] = current.Nx24AppBoltonTypeArr[i];
+                Nx24template.Nx24AppBoltonTypeArr.removeAt(index);
+            }
+        }
+
+        for(var i=0; i<Nx24template.Nx24AppBoltonTypeArr.length; i++)
+            result.Nx24AppBoltonTypeArr[result.Nx24AppBoltonTypeArr.length] = Nx24template.Nx24AppBoltonTypeArr[i];
+
+        return result;
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.queryAppBoltonTypeGroupList">
+  <group>applicabilityCondition.api</group>
+  <label>queryAppBoltonTypeGroupList</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="AppBoltonTypeGroupList" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.AppBoltonTypeGroupList</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        var finder = new cm_plm.AppBoltonTypeGroupListFinder();
+        AppBoltonTypeGroupList.mapTo(finder.searchDocument);
+        var result = finder.search();
+        var list = new DataObjectList();
+        var now = new Date();
+        for(var i=0; i<result.length; i++){
+            if((!result[i].endDate || result[i].endDate >= now) || (result[i].endDate <= AppBoltonTypeGroupList.endDate))
+                if((!result[i].startDate || result[i].startDate <= now) || (result[i].startDate >= AppBoltonTypeGroupList.startDate))
+                if(cm_plm.isObjectDateValid(result[i], AppBoltonTypeGroupList.endDate)){
+                    var ds = new cm_plm.AppBoltonTypeGroupList();
+                    result[i].mapTo(ds);
+                    list[list.length] = ds;
+                }
+        }
+
+        return list;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

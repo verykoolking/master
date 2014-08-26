@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initRTFinder">
+  <group>ui_scripts.RatingTree.RTFinder</group>
+  <label>initRTFinder</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var finderUi =  new cm_spoc.RTFinder.UserInterface(null,ui);
+
+    if ( !ui.model.specificationCode ) {
+
+        var emptyRes = new DataObjectList();
+        finderUi.model.setList(emptyRes);
+
+    } else {
+        var parentModel = "RatingTree";
+        var nameArrayDS = "RTRatingTreeBranchArrDS";
+        var nameArray = "RTRatingTreeBranchArr";
+
+        var code = ui.model[nameArray];
+
+        var result= cm_spoc.fromArrayToDOL(ui.model[nameArrayDS].ListDS);
+
+        mapToOutputDoc(result);
+        finderUi.model.updateUI();
+
+        finderUi.model.setList(result);
+    }
+
+
+    return finderUi;
+
+
+
+    function mapToOutputDoc(result) {
+
+        for (var t=0;t<result.length;t++ ) {
+            var doc = new cm_spoc.RatingTreeDoc();
+            var s = new epc.data.Specification();
+            s.project =  cwa_epc.getDefaultProj();
+            s.specificationCode = result[t].specificationCode;
+
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                 result[t]=result[t].mapTo(doc,"cm_spoc.RatingTreeCM")[0];
+            }
+
+
+        }
+    }
+  ]]></script>
+</script>

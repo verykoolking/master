@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initCntTypeCode">
+  <group>ui_scripts.Numbering</group>
+  <label>initCntTypeCode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+        var CntTypeCodeArr = cm_spoc.initInnerDS("base_CntTypeCodeArr");
+        model.CntTypeCodeArrDS = CntTypeCodeArr;
+
+        return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        s.specificationCode = model.CntTypeCodeArr;
+        var r = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(r)){
+           model.CntTypeCodeArrDS=r;
+        }
+
+        var CntTypeCodeRel =  model.CntTypeCodeArrDS.List;
+        var CntTypeCodeDS =  model.CntTypeCodeArrDS.ListDS;
+        for(var i=0;i<CntTypeCodeRel.length;i++){
+            s.specificationCode = CntTypeCodeRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                CntTypeCodeDS[i]=r;
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

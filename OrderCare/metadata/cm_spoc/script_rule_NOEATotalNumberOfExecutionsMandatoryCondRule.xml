@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_NOEATotalNumberOfExecutionsMandatoryCondRule">
+  <group>rules_scripts.Promotions</group>
+  <label>rule_NOEATotalNumberOfExecutionsMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    // The attribute will be mandatory when the related attribute assumes the value shown in the column H.
+    // NumberOfExecutionApplicability
+    // TotalNumberOfExecutions
+    // NumberOfExecutionApplicability
+    // TotalExecutionsApplicability
+    // TRUE
+
+
+    if (data.TotalNumberOfExecutions==null && data.TotalExecutionsApplicability) {
+        errList.addErrorMessage(data,["Total Number of Execution is mandatory only if Total Excution Applicability is TRUE"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.removeProjectAssignmentByKey">
+  <group>applicabilityCondition.api</group>
+  <label>removeProjectAssignmentByKey</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectAssignment" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.projectAssignment</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+
+        var doc = Document.readDoc("cm_plm:projectAssignmentDoc", projectAssignment.projectAssignmentId);
+        if(!doc)
+            return api_common.createFault("ERR", "The projectAssignmentId was not found: " + projectAssignment.projectAssignmentId);
+
+        doc.deleteFromDB();
+
+        return projectAssignment;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

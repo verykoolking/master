@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.isFileAlreadyImported">
+  <label>Is File Already Imported</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="fileDoc" type="rifp">
+      <mandatory>true</mandatory>
+      <type>doc_cw_etltool._import.fileDoc</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var result = null;
+    var fdf = new Finder("cw_etltool._import.fileDocFinder");
+    //fdf.searchDocument.cwOrderId  = orderId;
+    fdf.searchDocument.FileName   = fileDoc.FileName.toUpperCase();
+    fdf.searchDocument.PathFileName   = fileDoc.PathFileName.toUpperCase();
+
+    var list = fdf.search();
+    if(list && list.length > 1){
+        for (var i=0; i < list.length ; i++){
+            var doc = list[i];
+            if(doc.cwOrderId != fileDoc.cwOrderId && doc.FileStatus != cw_etltool._import.$CONSTANT().fileStatus.ABORT){
+                result = "File already exists. OrderId = " +doc.cwOrderId + ", FileID : "+doc.FileID + ", File Status : " + doc.FileStatus;
+                break;
+            }
+        }
+    }
+    return result;
+  ]]></script>
+</script>

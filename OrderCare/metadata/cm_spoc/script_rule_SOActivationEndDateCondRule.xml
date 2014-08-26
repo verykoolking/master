@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_SOActivationEndDateCondRule">
+  <group>rules_scripts.BoltOn</group>
+  <label>rule_SOActivationEndDateCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+     *
+     * Conditional
+     *
+     * SOActivationEndDateCondRule
+     *
+     * The attribute must be saved only if the related attribute assumes the value shown in column H.
+     *
+     * SubscriptionOffering
+     * ActivationEndDate
+     *
+     * SubscriptionOffering
+     * TemporalSubscriberActCond
+     *
+     * TRUE
+
+    */
+    var varSO = data.SubscriptionOffering;
+
+    if(varSO.ActivationEndDate && !varSO.TemporalSubscriberActCond      )
+    {
+         errList.addErrorMessage(data,["ActivationEndDate       can be saved only if  TemporalSubscriberActCond       is set"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

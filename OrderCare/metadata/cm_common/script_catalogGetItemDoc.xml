@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.catalogGetItemDoc">
+  <group>api</group>
+  <label>Get Item Document From Catalog</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="readDefinitions" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(readDefinitions)
+        theCatalog.catalogTestModeOnOff(true);
+
+    var itemCat = theCatalog.getItem(itemCode);
+
+    if(itemCat==null)
+        throw ("No Catalog Item found with code " + itemCode);
+
+    var itemDoc = new Document('cm_plm.cwt_item', itemCode);
+    itemDoc.endDate = itemCat.getItemEndDate();
+
+    if(readDefinitions)
+        theCatalog.catalogTestModeOnOff(false);
+
+    return itemDoc;
+  ]]></script>
+</script>

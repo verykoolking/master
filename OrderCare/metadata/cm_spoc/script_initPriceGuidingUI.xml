@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initPriceGuidingUI">
+  <group>ui_scripts.Common.Price.Init</group>
+  <label>initPriceGuidingUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+    <parameter name="nameArrayDS" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.PriceGuidingContainerUI.PriceGuidingUI.PriceGuidingIterator = new Array();
+    var PriceGuidingDs= ui.model[nameArrayDS].ListDS;
+
+    //Controlling if the Price Event is set. If not assigning it to the first result of the finder
+    if (!ui.PriceGuidingContainerUI.PriceEvent || ui.PriceGuidingContainerUI.PriceEvent == "" )
+        {
+            ui.PriceGuidingContainerUI.PriceEvent = setDefaultPriceEvent();
+            ui.model[nameArrayDS].PriceEventEnum= ui.PriceGuidingContainerUI.PriceEvent;
+        }
+
+
+    //Loading the Price Guiding interator
+
+    if(!ui.model.specificationCode){
+        cm_spoc.addListElement(ui.PriceGuidingContainerUI.PriceGuidingUI,PriceGuidingDs,"cm_spoc.forms.PriceGuidingRuleUI","base_PriceGuiding","PriceGuidingIterator");
+    }
+    else{
+
+        cm_spoc.loadListElements(ui.PriceGuidingContainerUI.PriceGuidingUI, PriceGuidingDs,"cm_spoc.forms.PriceGuidingRuleUI", "PriceGuidingIterator");
+
+        for( var i=0;i<PriceGuidingDs.length;i++){
+            PriceGuidingDs[i].OperationEnum = PriceGuidingDs[i].Operation;
+            PriceGuidingDs[i].TariffPlanEnum = PriceGuidingDs[i].TariffPlan;
+            PriceGuidingDs[i].ProvinceEnum = PriceGuidingDs[i].Province;
+        }
+        //The iterator loads with all the priceguidings, we remove the uneccessary one from the iterator filterring by PriceEvent
+        cm_spoc.cleanIterator("PriceGuidingIterator",ui.PriceGuidingContainerUI.PriceGuidingUI,ui.PriceGuidingContainerUI.PriceEvent );
+    }
+
+    //In order to have the procefinders aware of the event we are browsing, we need to assing the current event value to every PriceGuiding mdel.
+    cm_spoc.addEventToTheModel(PriceGuidingDs,ui.PriceGuidingContainerUI.PriceEvent);
+    cm_spoc.addOperationToTheModel(PriceGuidingDs,ui.PriceGuidingContainerUI.PriceEvent);
+
+    function setDefaultPriceEvent () {
+
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode =  ui.PriceGuidingContainerUI.BaseEvent;
+        var result = itemFinder.search();
+        if ( result.length != 0 && result[0].itemCode ) {
+
+            if (!PriceGuidingDs || PriceGuidingDs.length==0 ) return result[0].itemCode;
+
+            for (var  i=0; i<PriceGuidingDs.length;i++ ) {
+
+                var price = PriceGuidingDs[i].Price;
+                if (price) {
+                    var associationsFinder =  new cm_spoc.itemRelationFinder();
+                    associationsFinder.searchDocument.itemCode = price;
+                    var associations = associationsFinder.search();
+
+                    for (var l = 0; l < associations.length; l++ ) {
+                        if ( associations[l].itemCode ) {
+                            return associations[l].itemCode;
+                        }
+                    }
+
+                }
+            }
+
+            return result[0].itemCode;
+
+        }
+    }
+  ]]></script>
+</script>

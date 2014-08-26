@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.onChangeNTTValues">
+  <group>ui_scripts.RatingTree.EditNodeDialogUI</group>
+  <label>onChangeNTTValues</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+    <parameter name="selectedItems" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var type = ui.parent.nodeTypeValue;
+    if (type !="List" && type !="Tribe" && type !="TribeCategory" && type !="Ton" && type !="TariffPlan" && type !="ServiceProvider") return;
+
+    var arrayname = "RTNO"+type+"Arr";
+    var arraynameds = "RTNO"+type+"ArrDS";
+
+    ui.parent.model[arraynameds].List=null;
+
+    ui.parent.model[arraynameds].ListDS=null;
+
+    var values="";
+    for (var i = 0;i<selectedItems.length;i++) {
+       ui.parent.model[arraynameds].List[i]=selectedItems[i].id;
+
+        values = values ? values+", "+selectedItems[i].id : selectedItems[i].id;
+    }
+
+    ui.parent.parent.owner.values = values;
+  ]]></script>
+</script>

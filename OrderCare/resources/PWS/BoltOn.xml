@@ -1,0 +1,414 @@
+<OCSEntityType>
+		<oCSProductOffering>
+			<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+			<!-- Attributes inherited from SID EntityBase: identifier -->
+			<!-- Attributes inherited from SID ProductOffering: id; name; description; validFor; status -->
+			<!-- Compulsory SID attributes -->
+			<identifier>
+				<context>
+					<valuePairs/>
+					<scheme>Testing</scheme>
+				</context>
+				<dn>
+					<valuePairs/>
+					<scheme>BoltOn_TC</scheme>
+				</dn>
+				<entityType>BoltOn</entityType>
+			</identifier>
+			<!-- NGAA attributes -->
+			<type>BoltOn</type>
+			<oCSProductSpecCharValueUse>
+				<!-- <xsd:annotation> <xsd:documentation><p>Bolt On Code</annotation> -->
+				<characteristic  type="xsd:string" maxLength="9">
+					<name>BoltOnCode</name>
+					<value>BC</value>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>Large Code of Bolt On</annotation> -->
+				<characteristic  type="xsd:string" maxLength="16">
+					<name>LargeCodeOfBoltOn</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>Bolt On Description</annotation> -->
+				<characteristic  type="xsd:string" maxLength="240">
+					<name>BoltOnDescription</name>
+					<value>Description</value>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>Accumulative Bolt On</annotation> -->
+				<characteristic  type="xsd:boolean" defaultValue="0">
+					<name>AccumulativeBoltOn</name>
+				</characteristic>
+				<complexCharacteristic minOccurs="1" maxOccurs="unbounded" individualItemUpdate="true">
+					<name>PriceGuiding</name>
+					<item operation="A">
+						<!-- <xsd:annotation> <xsd:documentation><p>Mode</annotation> -->
+						<characteristic  type="xsd:string" enumValues="E;C">
+							<name>Mode</name>
+							<value>E</value>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>User Profile</annotation> -->
+						<characteristic  type="xsd:string" enumValues="*;PROM ;SIM ;boweb;sips;web">
+							<name>CustomerProfile</name>
+							<value>PROM</value>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Tax applies</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>TaxApplies</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Promotions applied on the cost</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="1">
+							<name>PromotionsAppliedOnThePrice</name>
+						</characteristic>
+
+						<relations>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="Price" oCSTargetEntityType="Price_TC" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>Price_TC</scheme>
+										</dn>
+										<entityType>Price</entityType>
+									</target>
+								</item>
+							</relation>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<!--<relation name="Province" oCSTargetEntityType="Province_TC" minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>Province_TC</scheme>
+										</dn>
+										<entityType>Province</entityType>
+									</target>
+								</item>
+							</relation>-->
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<!--<relation name="Operation" oCSTargetEntityType="Operation_TC" minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>Operation_TC</scheme>
+										</dn>
+										<entityType>Operation</entityType>
+									</target>
+								</item>
+							</relation>-->
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<!--<relation name="ServiceProvider" oCSTargetEntityType="ServiceProvider_TC" minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>ServiceProvider_TC</scheme>
+										</dn>
+										<entityType>ServiceProvider</entityType>
+									</target>
+								</item>
+							</relation>-->
+						</relations>
+					</item>
+				</complexCharacteristic>
+				<complexCharacteristic minOccurs="0" individualItemUpdate="true">
+					<name>ChargingModeGuiding</name>
+					<item operation="A">
+						<!-- <xsd:annotation> <xsd:documentation><p>Mode</annotation> -->
+						<characteristic  type="xsd:string" enumValues="E;C">
+							<name>Mode</name>
+							<value>E</value>
+						</characteristic>
+
+						<relations>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="ChargingMode" oCSTargetEntityType="ChargingMode_TC" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>ChargingMode_TC</scheme>
+										</dn>
+										<entityType>ChargingMode</entityType>
+									</target>
+								</item>
+							</relation>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="Operation" oCSTargetEntityType="Operation_TC" minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>Operation_TC</scheme>
+										</dn>
+										<entityType>Operation</entityType>
+									</target>
+								</item>
+							</relation>
+						</relations>
+					</item>
+				</complexCharacteristic>
+				<complexCharacteristic minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+					<name>BoltOnValueOffering</name>
+					<item>
+						<!-- <xsd:annotation> <xsd:documentation><p>Bolton Value (units)</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="9223372036854769664" isOverride="true">
+							<name>BoltOnAmount</name>
+							<value>123</value>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Apply % reduction in long distance</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>ApplyReductionInLongDistance</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>% Reduction in long distance</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="9223372036854769664" isOverride="true">
+							<name>BoltOnLD</name>
+						</characteristic>
+
+					</item>
+				</complexCharacteristic>
+				<complexCharacteristic minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+					<name>BoltOnValidityOffering</name>
+					<item>
+						<!-- <xsd:annotation> <xsd:documentation><p>Infinite Validity </annotation> -->
+						<characteristic  type="xsd:string" enumValues="V_BILLING_CYCLE;V_TIME;V_DATES;V_CALENDAR;V_INFINITE">
+							<name>BoltOnValidityModality</name>
+							<value>MI</value>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Valid for Calendar date </annotation> -->
+						<characteristic  type="xsd:string" enumValues="V_DAY;V_WEEK;V_MONTH;V_YEAR">
+							<name>CalendarDate</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Number of days  (*only for modality  V_TIME:)</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="2400" defaultValue="0">
+							<name>Days</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Number of hours (*only for modality  V_TIME)</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="23" defaultValue="0">
+							<name>Hours</name>
+							<value>0</value>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Number of minutes (*only for modality  V_TIME)</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="59" defaultValue="0">
+							<name>Minutes</name>
+							<value>0</value>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Start date (*only for modality V_DATES)</annotation> -->
+						<characteristic  type="xsd:dateTime" isOverride="true">
+							<name>StartTime</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>End date (*only for modality V_DATES)</annotation> -->
+						<characteristic  type="xsd:dateTime" isOverride="true">
+							<name>EndTime</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Bolt On Validity will be conditional</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>BoltOnValidityConditional</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Bolt On Validity will affect subscriber's life cycle</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>BoltOnValidityAffectLifecycle</name>
+						</characteristic>
+
+					</item>
+				</complexCharacteristic>
+				<complexCharacteristic minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+					<name>SessionOffering</name>
+					<item>
+						<!-- <xsd:annotation> <xsd:documentation><p>Number of sessions</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="99999" isOverride="true">
+							<name>BoltOnMaxNumberOfSessions</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Accumulative Number of sessions</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>AccumulativeBoltOnApplication</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Configure maximum units per session</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>ConfigureMaxUnitsPerSession</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Maximum units per session</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="999999999999999" isOverride="true">
+							<name>MaxUnitsPerSession</name>
+						</characteristic>
+
+					</item>
+				</complexCharacteristic>
+				<complexCharacteristic minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+					<name>SubscriptionOffering</name>
+					<item>
+						<!-- <xsd:annotation> <xsd:documentation><p>Activation Start Date</annotation> -->
+						<characteristic  type="xsd:dateTime">
+							<name>ActivationStartDate</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Activation End Date</annotation> -->
+						<characteristic  type="xsd:dateTime">
+							<name>ActivationEndDate</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>The bolton can only be awarded to subscribers activated between the dates</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>TemporalSubscriberActCond</name>
+						</characteristic>
+						<complexCharacteristic minOccurs="0" individualItemUpdate="true">
+							<name>SubscriptionLimit</name>
+							<item operation="A">
+								<!-- <xsd:annotation> <xsd:documentation><p>The bolt on will be awarded a maximum of (Times)</annotation> -->
+								<characteristic  type="xsd:long" minValue="0" maxValue="999">
+									<name>MaxSubscriptions</name>
+									<value>1</value>
+								</characteristic>
+								<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+								<characteristic  type="xsd:long" minValue="0" maxValue="999">
+									<name>SubscriptionEach</name>
+									<value>1</value>
+								</characteristic>
+								<!-- <xsd:annotation> <xsd:documentation><p>Subscriptions each (Unity)</annotation> -->
+								<characteristic  type="xsd:string" enumValues="D;M">
+									<name>Period</name>
+									<value>D</value>
+								</characteristic>
+								<!-- <xsd:annotation> <xsd:documentation><p>(Nature/Relative)</annotation> -->
+								<characteristic  type="xsd:boolean" defaultValue="0">
+									<name>NaturalPeriod</name>
+									<value>false</value>
+								</characteristic>
+								<!-- <xsd:annotation> <xsd:documentation><p>(Activity flag)</annotation> -->
+								<characteristic  type="xsd:boolean" defaultValue="0">
+									<name>CountingOnlyActives</name>
+									<value>false</value>
+								</characteristic>
+								<!-- <xsd:annotation> <xsd:documentation><p>Operational Profile</annotation> -->
+								<characteristic  type="xsd:string" enumValues="*;PROM ;SIM ;boweb;sips;web">
+									<name>CustomerProfile</name>
+									<value>PROM</value>
+								</characteristic>
+
+							</item>
+						</complexCharacteristic>
+
+						<relations>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="ActivationMessage" oCSTargetEntityType="Message_TC" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>Message_TC</scheme>
+										</dn>
+										<entityType>ActivationMessage</entityType>
+									</target>
+								</item>
+							</relation>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="NextToLastMessage" oCSTargetEntityType="Message_TC" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>Message_TC</scheme>
+										</dn>
+										<entityType>NextToLastMessage</entityType>
+									</target>
+								</item>
+							</relation>
+						</relations>
+					</item>
+				</complexCharacteristic>
+				<complexCharacteristic minOccurs="0" individualItemUpdate="true">
+					<name>BoltOnSubscription</name>
+					<item operation="A">
+						<!-- <xsd:annotation> <xsd:documentation><p>Profiles</annotation> -->
+						<characteristic  type="xsd:string" enumValues="*;PROM ;SIM ;boweb;sips;web">
+							<name>CustomerProfile</name>
+							<value>PROM</value>
+						</characteristic>
+
+						<relations>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="SubscriptionIncompatibleWith" oCSTargetEntityType="base_BoltOn" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>base_BoltOn</scheme>
+										</dn>
+										<entityType>SubscriptionIncompatibleWith</entityType>
+									</target>
+								</item>
+							</relation>
+						</relations>
+					</item>
+				</complexCharacteristic>
+			</oCSProductSpecCharValueUse>
+			<relations>
+				<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+				<relation name="BoltOnType" oCSTargetEntityType="BoltOnType_TC" oCSAssociationEntityType="" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+					<item>
+						<target>
+							<context>
+								<valuePairs/>
+								<scheme>String</scheme>
+							</context>
+							<dn>
+								<valuePairs/>
+								<scheme>BoltOnType_TC</scheme>
+							</dn>
+							<entityType>BoltOnType</entityType>
+						</target>
+					</item>
+				</relation>
+				<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+				<relation name="TariffPlanAllowedPer" oCSTargetEntityType="TariffPlan_TC" minOccurs="0" individualItemUpdate="true">
+					<item operation="A">
+						<target>
+							<context>
+								<valuePairs/>
+								<scheme>String</scheme>
+							</context>
+							<dn>
+								<valuePairs/>
+								<scheme>TariffPlan_TC</scheme>
+							</dn>
+							<entityType>TariffPlanAllowedPer</entityType>
+						</target>
+					</item>
+				</relation>
+			</relations>
+		</oCSProductOffering>
+</OCSEntityType>

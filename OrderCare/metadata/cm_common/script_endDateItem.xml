@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.endDateItem">
+  <group>scripts</group>
+  <label>endDateItem</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="item" type="rifp">
+      <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      Could be any other catalog item too.&#xd;
+    &lt;/p&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      Such as ItemRule, ItemDescription ....&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+      <mandatory>true</mandatory>
+      <type>dstruct_cwt_pcmaintapi.item</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="endDate" type="rifp">
+      <type>dtype_com.conceptwave.system.DateTime</type>
+    </parameter>
+    <parameter name="endDateTargetItems" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="relationType" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        var response;
+        var items = new cwt_pcmaintapi.itemList();
+        if(endDateTargetItems)
+        {
+            response = cm_common.getRelatedItems(item, relationType);
+            if(api_common.isFault(response)){
+                return response;
+            }
+        }
+        response.items[response.items.length] = item;
+        items = response.items;
+
+        //now end date all the items
+        for(var i=0; i<items.length;i++)
+        {
+
+            response = cm_common.endDateObject(items[i].itemCode, cm_common.getItemCatalogType(items[i].metadataType), projectCode, endDate);
+            if(cwt_pcmaintapi.isFault(response))
+                return response;
+        }
+        return response;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

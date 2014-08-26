@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cm_spoc.SubOpCodeTableFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <input>doc_cm_spoc.SubOperationsByOperation</input>
+  <label>SubOpCodeTableFinder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_cm_spoc.SubOperationsByOperation</output>
+  <type>script</type>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        var item;
+        var res = new DataObjectList;
+        var ctCodes = null;
+        var codeTable="SubOperationTypeCodeTable";
+                ctCodes = Global.getCTCodesAndDescriptions(codeTable);
+                for(var i=0; i<ctCodes.length; i=i+2){
+                    item = new cm_spoc.SubOperationsByOperation;
+                    item.code = ctCodes[i];
+                    item.description = ctCodes[i+1];
+                            res.addLast(item);
+                }
+                return res;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cm_spoc.SubOperationsByOperation</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cm_spoc.SubOperationsByOperation/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cm_spoc.SubOperationsByOperation/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="SubOpCodeTableFinderResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.SubOpCodeTableFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="cwDocId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.SubOpCodeTableFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_spoc.SubOperationsByOperation/leaf_cwDocId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Operation" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.SubOpCodeTableFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_spoc.SubOperationsByOperation/leaf_Operation</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Label" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.SubOpCodeTableFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_spoc.SubOperationsByOperation/leaf_Label</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Entity" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.SubOpCodeTableFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_spoc.SubOperationsByOperation/leaf_Entity</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="SubOperation" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.SubOpCodeTableFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_spoc.SubOperationsByOperation/leaf_SubOperation</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="SubOperationCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.SubOpCodeTableFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_spoc.SubOperationsByOperation/leaf_SubOperationCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Relations" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.SubOpCodeTableFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_spoc.SubOperationsByOperation/leaf_Relations</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Complex" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.SubOpCodeTableFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_spoc.SubOperationsByOperation/leaf_Complex</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.SubOpCodeTableFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.SubOpCodeTableFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="LifeCycleInternalSubstatusStatusFinderView" type="findVView">
+      <outputOverlay>findScript_cm_spoc.SubOpCodeTableFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findScript>

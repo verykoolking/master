@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cw_etltool._import.entityManagement">
+  <activity name="start" type="seqActivity">
+    <guid>{4b94d0b5-870d-4564-943f-12a781a5fd4c}</guid>
+    <label>start</label>
+    <x>167.0</x>
+    <y>34.0</y>
+    <childList>
+      <child name="startConfiguration" type="subflowActivity">
+        <element>proc_cw_etltool._import.start_Configuration</element>
+        <guid>{29bce890-d8f6-4deb-acaa-d29917679cfb}</guid>
+        <label>Start Configuration</label>
+        <x>154.0</x>
+        <y>130.0</y>
+      </child>
+      <child name="loadEntities" type="subflowActivity">
+        <element>proc_cw_etltool._import.loadEntityToStageArea</element>
+        <guid>{5592345b-9375-43d6-95f0-e39e4715a5f7}</guid>
+        <label>Load Entities</label>
+        <x>170.0</x>
+        <y>235.0</y>
+      </child>
+    </childList>
+    <methodList>
+      <method name="cwOnProcActBefore" type="action">
+        <category>before</category>
+        <system>true</system>
+        <script><![CDATA[
+          this.process.processDocument.resetProcessedEntitiesCount();
+          var fileGroup = cw_etltool._import.getCurrentFile(process,document,process.processDocument.CurrentFileID);
+          fileGroup.fileDoc.FileStatus = cw_etltool._import.$CONSTANT().fileStatus.PROCESSING;
+          if(fileGroup.fileDoc.StartProcessDate == null )
+              fileGroup.fileDoc.StartProcessDate = new Date();
+          fileGroup.fileDoc.save();
+        ]]></script>
+      </method>
+    </methodList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{5763f28d-fb48-4bdc-9fd4-d1b6f45942c4}</guid>
+  <label>Entities Management</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <revision>2</revision>
+  <type>Sub-flow</type>
+</process>

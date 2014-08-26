@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/capacity" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/capacity" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.resource.res.phy.capacity
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 3
+ Association Classes: 0
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="physicalCapacity" type="tns:PhysicalCapacity"/>
+   <xsd:complexType name="PhysicalCapacity" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract class that represents the minimum and maximum requirements, limits, or other variable features of a ManagedDevice or ManagedHardware object.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="physicalCapacityStatus" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer whose value indicates the current status of this category of capacity object. The category is the name of the subclass. For example, the PhysicalMemoryCapacity subclass inherits the Status attribute, so the status applies to this instance of PhysicalMemory. The following values are defined:
+
+0: Unknown
+1: OK
+2: Initializing
+3: Starting
+4: Paused
+5: Stopping
+6: Stopped
+7: Degraded
+8: Stressed
+9: Critical
+10: Predicted Failure
+11: Error - General
+12: Error - Non Recoverable
+13: Not Installed or Not Present
+14: In Maintenance
+15: Unable To Contact
+16: Lost Communications
+
+Stopped indicates that the object is known still exist, but it is no longer operational. However, it has not failed. Stressed indicates that the object is functioning, but needs attention (e.g., it may be overheating, or overloaded in some way). Predicted Failure indicates that this object is functioning properly but predicting a failure in the near future.
+
+In Maintenance describes an object that is being configured, maintained, or otherwise administered and is NOT available for service. Unable To Contact indicates that the monitoring system has knowledge of this object but has never been able to establish communications with it. Lost Commmunications indicates that the object has been contacted successfully in the past and is known to still exist; however, it is currently unreachable.
+
+This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPhysicalCapacity">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PhysicalCapacity" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="physicalMemoryCapacity" type="tns:PhysicalMemoryCapacity"/>
+   <xsd:complexType name="PhysicalMemoryCapacity">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is a concrete class that defines the type of Memory that can be installed on a ManagedHardware instance, along with its minimum and maximum limits.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="maximum" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This defines the maximum amount of memory, in Kbytes, that can be supported by this ManagedHardware instance. This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="minimum" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This defines the minimum amount of memory, in Kbytes, that can be supported by this ManagedHardware instance. This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="memoryType" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer, and defines the type of memory that this ManagedHardware object instance can have. Values include:
+
+O: Unknown
+1: DRAM
+2: Synchronous DRAM
+3: Cache DRAM
+4: RAM
+5: SRAM
+6: VRAM
+7: EDRAM
+8: EDO
+9: ROM
+10: PROM
+11: EPROM
+12: EEPROM
+13: FEPROM
+14: CDRAM
+15: 3DRAM
+16: SDRAM
+17: SGRAM
+18: RDRAM
+19: Flash
+20: DDR
+
+This is a REQUIRED attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPhysicalMemoryCapacity">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PhysicalMemoryCapacity" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="powerCapacity" type="tns:PowerCapacity"/>
+   <xsd:complexType name="PowerCapacity">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is a concrete class that defines the type of power that a ManagedHardware instance can use, along with its minimum and maximum limits.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="maxPowerSupplies" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an integer that defines the maximum number of power supplies that can be installed in the Equipment. This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="requirements" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a free-form string that defines the recommend power supply configuration required as a function of how populated the Equipment is. Often in networking devices, higher-capacity power supplies must be used in place of lower-capacity ones when the type and/or number of installed Cards exceeds a certain number. In addition, in order to have fully-redundant power, higher-capacity power supplies must sometimes be used, again depending on the type and number of Cards installed. This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="typeOfPower" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer, and defines the type of power that this ManagedHardware unit can accept. Values are:
+
+0: Unknown
+1: AC-input
+2: DC-input
+3: Both AC- and DC-input
+
+Note that a value of 3 means that the Equipment can mix AC- and DC-input power supplies. This is a REQUIRED attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPowerCapacity">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PowerCapacity" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

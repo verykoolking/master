@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.removeNx24AppBoltonTypeByKey">
+  <group>applicabilityCondition.api</group>
+  <label>removeNx24AppBoltonTypeByKey</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="Nx24AppBoltonType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.Nx24AppBoltonType</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+
+        if(cm_plm.isProjectActive(Nx24AppBoltonType.projectCode))
+            return api_common.createFault("ERR", "Item cannot be created for projects in ACT status.");
+
+        if(cm_plm.isObjectActive(Nx24AppBoltonType)){
+            Nx24AppBoltonType.endDate = new Date();
+            return cm_plm.endDateObject(Nx24AppBoltonType);
+        }else{
+            return cm_plm.deleteObject(Nx24AppBoltonType, "cm_plm.Nx24AppBoltonTypeDoc");
+        }
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

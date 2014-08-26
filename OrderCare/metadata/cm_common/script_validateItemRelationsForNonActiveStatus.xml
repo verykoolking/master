@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.validateItemRelationsForNonActiveStatus">
+  <group>scripts</group>
+  <label>validateItemRelationsForNonActiveStatus</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="entityData" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        var response;
+
+        var allItemCodes = new Array();
+        getAllItemCodes(entityData);
+
+        //we get all the project which have relations with each item
+        var projectList = cm_common.getProjectsForItems(allItemCodes);
+
+        var status, code;
+        for(var i=0; i<projectList.projects.length; i++){
+            status = projectList.projects[i].status;
+            code = projectList.projects[i].projectCode;
+             if( status != "ACT") {
+                if (code != projectCode) {
+                    var fault = api_common.createFault("E301", "The item has relations that are not active and are being maintained in a different project.");
+                    return fault;
+                }
+            }
+        }
+        return true;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+
+
+    function getAllItemCodes(model) {
+
+        if(model.specificationCode && model.specificationCode!="")
+            allItemCodes[allItemCodes.length] = model.specificationCode;
+
+        var modelType = getModelCWType(model);
+        if(modelType==null)
+            return;
+        var typeItem = theCatalog.getItem(modelType);
+        if(typeItem==null)
+            return;
+        var associations = typeItem.getAssociations();
+
+        for(var i=0; i<associations.length; i++) {
+
+            var assoCode = associations[i].code;
+            var assoCodeEnum = associations[i].code + 'Enum';
+            var assoCodeDS = associations[i].code + 'DS';
+
+
+            if(model.has(assoCode))
+                addNewReferenceCode(model[assoCode]);
+
+            if(model.has(assoCodeEnum))
+                addNewReferenceCode(model[assoCodeEnum]);
+
+            if(model.has(assoCodeDS)) {
+                var referenceNode = model[assoCodeDS];
+                if(referenceNode != null) {
+                    if(referenceNode.isCollection()) {
+                        for(var j=0; j<referenceNode.length; j++)
+                            getAllItemCodes(referenceNode[j]);
+                    }
+                    else
+                        getAllItemCodes(referenceNode);
+                }
+            }
+
+        }
+    }
+
+    function addNewReferenceCode(referenceValue) {
+
+        if((typeof referenceValue)=='object' && referenceValue.isCollection()) {
+            for(var j=0; j<referenceValue.length; j++)
+                allItemCodes[allItemCodes.length] = referenceValue[j];
+        }
+        else if(referenceValue!=null){
+            if(allItemCodes[allItemCodes.length-1] != referenceValue)
+                allItemCodes[allItemCodes.length] = referenceValue;
+        }
+    }
+
+    function getModelCWType(model) {
+        for(var i=0; i<model.attributes.length; i++)
+            if(model.attributes[i].name == 'CW_SPECTYPE')
+                return model.attributes[i].value;
+        if(model.baseSpecificationCode != null)
+            return ('type_' + model.baseSpecificationCode.substr(5));
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_HBOPHappyBoltOnPeriodsCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_HBOPHappyBoltOnPeriodsCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute must be saved only if the related HappyBoltOnSpecification attribute assumes one of the values shown in column H.
+
+    //SPOC Entity       -- HappyBoltOnPeriods
+    //SPOC Entity attribute       --             HappyBoltOnPeriods
+    //Related SPOC Entity -- HappyBoltOnSpecification
+    //Related SPOC Entity attribute --       GeneralPeriod
+    //COLUMN H -- FALSE
+
+    var entity = data.HappyBoltOnSpecificationDS.HappyBoltOnPeriodArrDS.ListDS;
+    var hbos = data.HappyBoltOnSpecificationDS;
+
+    //if (entity.length > 0 && hbos.GeneralPeriod) { GeneralPeriod will be boolean --- now is string!!!!!!!!!!!!
+    if (entity.length > 0 && hbos.GeneralPeriod=="true") {
+
+        errList.addErrorMessage(data,["Happy BoltOn Periods can be saved only if 'General Period' selected"],"NGAA_003","E");
+
+    }
+        return false;
+  ]]></script>
+</script>

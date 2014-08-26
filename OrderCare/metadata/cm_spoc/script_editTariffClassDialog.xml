@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.editTariffClassDialog">
+  <group>ui_scripts.RatingTree.BranchUI</group>
+  <label>editTariffClassDialog</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+    itemFinder.searchDocument.baseItemCode = "base_TariffClass";
+    var result = itemFinder.search();
+    var arr = [];
+    if (ui.model.TariffClass){
+        arr[0] = ui.model.TariffClass;
+    }else
+    {arr[0]="";
+    }
+    var pl = cm_spoc.initPickListSingleSel(ui,result,arr,"itemCode","itemCode");
+    pl.modelCallback =ui.setPickListTariffClass;
+    return pl;//ui.PickList = pl;
+  ]]></script>
+</script>

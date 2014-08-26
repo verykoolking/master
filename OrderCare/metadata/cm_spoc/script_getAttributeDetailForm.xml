@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getAttributeDetailForm">
+  <group>overridden.scripts</group>
+  <label>getAttributeDetailForm</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="specification" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //NGAA attributeExists baseSpecificationCode
+    /*var ci;
+    if(specification.has("catalogEntity")) ci = specification.catalogEntity;
+    if(ci){
+     var it=theCatalog.getItem(ci);
+     if(it.attributeExists("CW_UITYPE")){
+         var att = it.CW_UITYPE;
+         return att.getDefaultValue();
+     }
+    }*/
+    var specMDType = specification.metadataTypeName;
+    var specInd = specMDType.indexOf("data.")+"data.".length;
+    var specSubs = specMDType.substring(specInd);
+    var ci = "base_"+specSubs;
+    var it=theCatalog.getItem(ci);
+    if(it && it.attributeExists("CW_UITYPE")){
+         var att = it.CW_UITYPE;
+         var attDefValue = att.getDefaultValue();
+         if(attDefValue) return attDefValue;
+    }
+
+
+    //NGAA
+    switch(specification.metadataTypeName){
+    /* epc.data.ResourceSpecification */
+           //NGAA
+           /*case "cm_spoc.data.BoltOnType":
+           return "cm_spoc.forms.BoltOnTypeForm";
+           case "cm_spoc.data.BoltOn":
+           return "cm_spoc.forms.BoltOnForm";*/
+           //NGAA
+            case "epc.data.PAM":
+            return "cwa_epc.pamForm";
+            case "epc.data.ScheduleType":
+            return "cwa_epc.scheduleTypeForm";
+            case "epc.data.PeriodicAdjustment":
+            return "cwa_epc.periodicAdjustmentForm";
+            case "epc.data.NumberList":
+            return "cwa_epc.numberListForm";
+            case "epc.data.AnnouncementFlat":
+            return "cwa_epc.announcementFlatForm";
+            case "epc.data.ServiceCharacteristics":
+            return "cwa_epc.serviceCharacteristicsForm";
+            //case "epc.data.PeriodType":
+            //return "cwa_epc.scheduleTypeForm";
+    /* epc.data.ProductSpecification */
+            case "epc.data.ServicePackage":
+            return "cwa_epc.servicePackageForm";
+            case "epc.data.RatePlanCharacteristics":
+            return "cwa_epc.ratePlanCharacteristicsForm";
+            case "epc.data.Service_BSCS":
+            return "cwa_epc.serviceBSCSForm";
+    /* epc.data.ServiceSpecification */
+    /* epc.data.ProductOffering */
+            case "epc.data.OfferDefinition":
+            case "epc.data.OfferAddOn":
+            return "cwa_epc.offerAddOnForm";
+            case "epc.data.RatePlan":
+            return "cwa_epc.ratePlanForm";
+    /* service */
+            case "epc.data.BasicService":
+            return "cwa_epc.basicServiceForm";
+    /* balance */
+            case "epc.data.DedicatedAccount":
+            return "cwa_epc.dedicatedAccountForm";
+            case "epc.data.MainAccountBalance":
+            return "cwa_epc.mainAccountForm";
+            case "epc.data.UsageCounter":
+            return "cwa_epc.usageCounterForm";
+            case "epc.data.UsageAccumulator":
+            return "cwa_epc.usageAccumulatorForm";
+            case "epc.data.UsageThreshold":
+            return "cwa_epc.usageThresholdForm";
+
+            /* consumption */
+            case "epc.data.ZonePackage":
+            return "cwa_epc.zonePackageForm";
+            case "epc.data.TariffZone":
+            return "cwa_epc.tariffZoneForm";
+            case "epc.data.ZoneDestination":
+            return "cwa_epc.zoneDestinationForm";
+            case "epc.data.ZoneOrigin":
+            return "cwa_epc.zoneOriginForm";
+        }
+
+    return null;
+  ]]></script>
+</script>

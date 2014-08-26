@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.subscribersDiallUI">
+  <group>Promotion</group>
+  <label>subscribersDiallUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="parentUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.SubscriberDialling</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.SDCodeCriterion</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="HorizontalLayout2" type="elhlt">
+              <width>700px</width>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <columnSpan>1</columnSpan>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.subscribersDiallUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>20px</width>
+                </element>
+                <element name="HorizontalLayout" type="elhlt">
+                  <alignment>center,center</alignment>
+                  <width>340px</width>
+                  <elementList>
+                    <element name="DiallingCode" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <columnSpan>2</columnSpan>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <removeLabelLine>true</removeLabelLine>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.subscribersDiallUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.SDCodeCriterion/dstruct_DiallingCode</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>280px</width>
+                    </element>
+                    <element name="DiallingButton" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.subscribersDiallUI/usrActionMethod_FinderSDCodeReferenceDialog</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <icon>/cwf/finder.gif</icon>
+                      <width>22px</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="BoltOnPickListDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.forms.PickListBoltOn(null,this);
+        newDetail.pickList.setParentUI(this);
+        newDetail.model=this.model;
+
+        var currentUsedBoltOns = new Array();
+
+        var list = this.parentUI.model.BoltOnSubscriptionArrDS.ListDS;
+        for(var i=0;i<list.length;i++){
+            var code = list[i].SubscriptionIncompatibleWith;
+
+            for(var j=0;j<newDetail.pickList.availableItems.length;j++){
+                if(newDetail.pickList.availableItems[j].id.equals(code)){
+                    newDetail.pickList.availableItems.remove(newDetail.pickList.availableItems[j]);
+                    break;
+                }
+            }
+        }
+        newDetail.pickList.selectedItems = new DataObjectList();
+
+        if(this.model.SubscriptionIncompatibleWith!=null){
+            var item = new cm_spoc.PickListDS();
+            item.id = this.model.SubscriptionIncompatibleWith;
+            item.description = this.model.SubscriptionIncompatibleWith;
+            newDetail.pickList.selectedItems.addLast(item);
+        }
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="RinPickListDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        // This method open a popup where user can choose between severals profiles
+        var newDetail = new cm_spoc.forms.PickListSubscriptionProvince(null,this);
+        newDetail.pickList.model=this.model;
+
+        newDetail.pickList.selectedItems = new DataObjectList();
+
+        // Populate selectedItems from CustomerProfile value stored in DS
+        if(this.model.RinCode != null){
+            var selectedProfile = this.model.RinCode.split(",");
+            if(selectedProfile!=null){
+                for(var i=0;i<selectedProfile.length;i++){
+                    var item = new cm_spoc.PickListDS();
+                    item.id = selectedProfile[i];
+                    item.description = selectedProfile[i];
+                    newDetail.pickList.selectedItems.addLast(item);
+
+                    // Remove from availableItems the ones that are selected
+                    for(var j=0;j<newDetail.pickList.availableItems.length;j++){
+                        if(newDetail.pickList.availableItems[j].id.equals(item.id)){
+                            item.description = newDetail.pickList.availableItems[j].description;
+                            newDetail.pickList.availableItems.remove(newDetail.pickList.availableItems[j]);
+                        }
+                    }
+                }
+            }
+        }
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="setParentUI" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <mandatory>true</mandatory>
+          <type>ui_com.conceptwave.system.UserInterface</type>
+        </parameter>
+      </parameterList>
+      <script>this.parentUI = ui;</script>
+    </method>
+    <method name="getParentUI" type="uimthd">
+      <valueType>ui_cm_spoc.forms.BoltOnForm</valueType>
+      <script>return this.parentUI;</script>
+    </method>
+    <method name="getBoltOnLabel" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        if(this.model.TariffPlanIdentifier!=null){
+            return this.model.TariffPlanIdentifier;
+        }
+
+        return "";
+      ]]></script>
+    </method>
+    <method name="getCustomerProfile" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        if(this.model.RinCode!=null){
+            return this.model.RinCode;
+        }
+
+        return "";
+      ]]></script>
+    </method>
+    <method name="FinderSDCodeReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null, this);
+        newDetail.setBaseItemCode("base_SDCodeCriterion");
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="referenceCallback" type="uimthd">
+      <parameterList>
+        <parameter name="itemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        switch(baseItemCode){
+               case "base_SDCodeCriterion":
+                    this.model.DiallingCode = itemCode;
+                    break;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

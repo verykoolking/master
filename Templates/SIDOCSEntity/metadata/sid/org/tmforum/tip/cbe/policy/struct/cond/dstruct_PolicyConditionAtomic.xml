@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.cbe.policy.struct.cond.PolicyConditionAtomic">
+  <container>true</container>
+  <description><![CDATA[
+    <p>This is the base class for all simple policy conditions. A simple policy condition consists of a single Boolean clause, which is used to test a single condition. This consists of a single occurrence of a PolicyStatement, which is of the form:    {variable, operator, value}    This design relies on the PolicyStatement to supply the actual terms to make up the condition clause. Thus, since everything is normalized to a condition clause, no subclasses of PolicyConditionAtomic are needed. Instead, subclasses of the appropriate PolicyStatement classes are provided.    A compound PolicyCondition consists of one or more PolicyConditions contained inside a higher-level PolicyCondition. These can optionally be grouped by a PolicyConditionComposite object if desired.</p>                <p>This entity  is  optional</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{97286b89-dcde-463e-935e-8c380391db97}</guid>
+  <label>PolicyConditionAtomic</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="hasSubConditions" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is a Boolean attribute that, if TRUE, signifies that this PolicyCondition has one or more sub-conditions. Sub-conditions are used to enforce a hierarchical nesting of conditions, so that parent conditions may control the evaluation and other semantics of the sub-conditions that they contain.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{0dc15802-98bf-4368-9f9a-b4b3d80e62d5}</guid>
+      <label>hasSubConditions</label>
+    </child>
+    <child name="hasEvaluated" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is an enumerated integer that is set by a policy application to define the state of evaluation of this PolicyCondition. Values include:        0: not yet evaluated        1: evaluated as TRUE        2: evaluated as FALSE</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{e7590508-e22b-41fe-8f59-f69106378a51}</guid>
+      <label>hasEvaluated</label>
+    </child>
+    <child name="conditionSequenceNumber" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute is a non-negative integer and represents the particular sequence in which this element is parsed as part of the overall policy structure.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{059dcafc-696f-491e-b2d6-2a06221a5195}</guid>
+      <label>conditionSequenceNumber</label>
+    </child>
+    <child name="policyStatement" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..1</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association PolicyStatementInPolicyCondition</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.cbe.policy.struct.stat.PolicyStatement</element>
+      <guid>{f778a97d-5667-420f-b910-0dd9b722c617}</guid>
+      <label>policyStatement</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.cbe.policy.struct.cond.PolicyConditionAtomic</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.cbe.policy.struct.cond.PolicyConditionAtomic</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

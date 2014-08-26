@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BOMBOBoltOnOrMixedBoltOnExcCondRule">
+  <group>rules_scripts.CyclicActions</group>
+  <label>rule_BOMBOBoltOnOrMixedBoltOnExcCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(data.BoltOnOrMixedBoltOnEnum == "MixedBoltOn" && data.BoltOnEnum ){
+        errList.addErrorMessage(data,["Provided Bolt On must be empty."],"NGAA_003","E");
+    }
+    if(data.BoltOnOrMixedBoltOnEnum == "BoltOn" && data.MixedBoltOnEnum){
+        errList.addErrorMessage(data,["Provided Mixed Bolt On must be empty."],"NGAA_003","E");
+    }
+
+    return;
+  ]]></script>
+</script>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="cm_spoc.data.BoltOnValidityOffering">
+  <container>true</container>
+  <extends>dstruct_cm_spoc.data.OCSInternalProdOffering</extends>
+  <group>BoltOn</group>
+  <guid>{664d5105-911e-4e3d-990e-3d1a7ac425f3}</guid>
+  <jsonMap type="jmap"/>
+  <label>BoltOnValidityOffering</label>
+  <metaVersion>4</metaVersion>
+  <childList>
+    <child name="BoltOnValidityModality" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.BoltOnValidityModalityEnum</element>
+      <guid>{948e175e-2e72-4f69-9ec0-5708ebbc70c2}</guid>
+      <jsonMap type="jmap"/>
+      <label>BoltOnValidityModality</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="BoltOnValidityConditional" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSBooleanAttribute</element>
+      <guid>{7a1790c0-2838-440c-99c5-9b4ea3f44432}</guid>
+      <jsonMap type="jmap"/>
+      <label>BoltOnValidityConditional</label>
+    </child>
+    <child name="BoltOnValidityAffectLifecycle" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSBooleanAttribute</element>
+      <guid>{93964abe-bb81-4302-8632-8979dda17d66}</guid>
+      <jsonMap type="jmap"/>
+      <label>BoltOnValidityAffectLifecycle</label>
+    </child>
+    <child name="CalendarDate" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.CalendarDateEnum</element>
+      <guid>{b21170c6-c2b6-4b00-8a89-0f794eb8c9d7}</guid>
+      <jsonMap type="jmap"/>
+      <label>CalendarDate</label>
+    </child>
+    <child name="StartTime" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSDateAttribute</element>
+      <guid>{4a778910-29b0-40cd-8fe9-e3e4a64a9d1b}</guid>
+      <jsonMap type="jmap"/>
+      <label>StartTime</label>
+    </child>
+    <child name="EndTime" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSDateAttribute</element>
+      <guid>{03cb07e4-bb73-413f-b261-086c32ba7e66}</guid>
+      <jsonMap type="jmap"/>
+      <label>EndTime</label>
+    </child>
+    <child name="Days" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSDayAttribute</element>
+      <guid>{6b4bdf70-99f4-4970-bfee-9f5b721f8a5c}</guid>
+      <jsonMap type="jmap"/>
+      <label>Days</label>
+    </child>
+    <child name="Hours" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSHourAttribute</element>
+      <guid>{fed78eda-e414-4ad6-b7f1-29c5b4aa1e2e}</guid>
+      <jsonMap type="jmap"/>
+      <label>Hours</label>
+    </child>
+    <child name="Minutes" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSMinuteAttribute</element>
+      <guid>{fd33b3ff-716d-4302-aab4-04b2c7430e38}</guid>
+      <jsonMap type="jmap"/>
+      <label>Minutes</label>
+    </child>
+  </childList>
+  <methodList>
+    <method name="onInit" type="action">
+      <parameterList>
+        <parameter name="document" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <system>true</system>
+      <script><![CDATA[
+        this.cw$super_onInit(document);
+        this.BoltOnValidityConditional = false;
+        this.BoltOnValidityAffectLifecycle = false;
+        this.Days=0;
+        this.Hours=0;
+        this.Minutes=0;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_cm_spoc.data.BoltOnValidityOffering</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_cm_spoc.data.BoltOnValidityOffering</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

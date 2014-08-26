@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.cbe.policy.struct._var.PolicyConditionTimePeriod">
+  <container>true</container>
+  <description><![CDATA[
+    <p>This is a concrete class that provides the capability of enabling or disabling a PolicyCondition according to a pre-determined time schedule. This enables this class to effectively enable or disable evaluation of the entire condition clause. The simplest way to do this is to specify a value for the TimePeriod class attribute; this may of course be modified by other class attributes as necessary.</p>                <p>This entity  is  optional</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{d2fe9263-34d1-4003-be7b-c9c7272b4047}</guid>
+  <label>PolicyConditionTimePeriod</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="timeOfDayMask" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is a string attribute that refines the definition of the valid time period that is defined by the timePeriod attribute. This is done by explicitly specifying a range of times in a day the PolicyRule is valid for. These attributes work together, with the timePeriod attribute used to specify the overall time period that the PolicyRule is valid for, and the timeOfDayMask attribute used to pick out which range of time periods in a given day of that time period the PolicyRule is valid for.        This attribute is formatted in the style of RFC 2445: a time string beginning with the character 'T', followed by the solidus character ('/'), followed by a second time string. The first time indicates the beginning of the range, while the second time indicates the end. Times are expressed as substrings of the form "Thhmmss".        The second substring always identifies a later time than the first substring. To allow for ranges that span midnight, however, the value of the second string may be smaller than the value of the first substring. Thus, "T080000/T210000" identifies the range from 0800 until 2100, while "T210000/T080000" identifies the range from 2100 until 0800 of the following day.        When a range spans midnight, it by definition includes parts of two        successive days. When one of these days is also selected by either the monthOfYearMask, dayOfMonthMask, and/or dayOfWeekMask, but the other day is not, then the policy is active only during the portion of the range that falls on the selected day. For example, if the range extends from 2100 until 0800, and the day of week mask selects Monday and Tuesday, then the policy is active during the following three intervals:        From midnight Sunday until 0800 Monday;        From 2100 Monday until 0800 Tuesday;        From 2100 Tuesday until 23:59:59 Tuesday.        If this attribute is not specified, then the PolicyRule is treated as valid for the entire day, for all days specified by the timePeriod attribute.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{07a01d86-b8f3-4c33-a3e9-f7d6ef1b2588}</guid>
+      <label>timeOfDayMask</label>
+    </child>
+    <child name="monthOfYearMask" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>The monthOfYearMask attribute is a string that refines the definition of the valid time period that is defined by the timePeriod attribute. This is done by explicitly specifying the months when the policy is valid. Thus, the timePeriod attribute is used to specify the overall time period during which the policy might be valid, and the monthOfYearMask attribute is used to pick out the specific months within that time period when the PolicyRule is valid. This attribute consists of a fixed string of 16 bits. The first 12 bits correspond to the 12 months of the year, beginning with January and ending with December. The last 4 bits are always set to "0". For each month, the value "1" indicates that the policy is valid for that month, and the value "0" indicates that it is not valid.        If this attribute is not specified, then the PolicyRule is treated as valid for all twelve months.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{c30d8149-9a65-4a10-87b2-41a1712cdc6a}</guid>
+      <label>monthOfYearMask</label>
+    </child>
+    <child name="timePeriod" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is a string attribute that defines an overall range of calendar dates and times over which a PolicyRule is valid. As such, this is the most basic way to use date and/or time to enable or disable a given PolicyRule.        This attribute is based on time as defined in RFC 2445. This calls for a string to represent a starting date and time, in which the character 'T' indicates the beginning of the time portion, followed by the solidus character ('/'), followed by a similar string representing an end date and time. The first date indicates the beginning of the range, while the second date indicates the end. The second date and time must be later than the first.        Date/times are expressed as substrings of the form:        "yyyymmddThhmmss".        For example:        20000101T080000/20000131T120000        is interpreted as:        January 1, 2000, 0800 through January 31, 2000, noon        There are also two special cases in which one of the date/time strings is replaced with a special string defined in RFC 2445.        - If the first date/time is replaced with the string "THISANDPRIOR", then the property indicates that a policy rule is valid, from now until the date/time that appears after the '/'.        - If the second date/time is replaced with the string "THISANDFUTURE", then the property indicates that a policy rule becomes valid on the date/time that appears before the '/', and remains valid from that point on.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{ce0ca38e-7172-4578-992e-732e2d684908}</guid>
+      <label>timePeriod</label>
+    </child>
+    <child name="dayOfMonthMask" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is a string attribute that refines the definition of the valid time period that is defined by the timePeriod attribute. This is done by explicitly specifying the days of the month when the policy is valid.        These attributes work together, with the timePeriod attribute used to specify the overall time period during which the PolicyRule might be valid, and the dayOfMonthMask attribute used to pick out the specific days of the month within that time period when the PolicyRule is valid.        This property is formatted as a fixed string of 64 bits. The first 31 bits correspond to the days of the month counting from the beginning, followed by 31 more bits identifying the days of the month counting from the end, followed by 2 bits that are always set to '0'.        For each day, the value '1' indicates that the policy is valid for that day, and the value '0' indicates that it is not valid. The value X'80 00 00 01 00 00 00 00', for example, indicates that a PolicyRule is valid on the first and last days of the month.        For months with fewer than 31 days, the digits corresponding to days that the months do not have (counting in both directions) are ignored.        The encoding of the 62 significant bits in the octet string matches that used for the schedDay object in the DISMAN-SCHEDULE-MIB.        If this attribute is not specified, then the PolicyRule is treated as valid for all days in the months specified by the timePeriod attribute.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{9045a2e8-a2cf-4108-8989-c36ba6c121ea}</guid>
+      <label>dayOfMonthMask</label>
+    </child>
+    <child name="dayOfWeekMask" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is a string attribute that refines the definition of the valid time period that is defined by the timePeriod attribute. This is done by explicitly specifying the days of the week when the PolicyRule is valid. These attributes work together, with the timePeriod attribute used to specify the overall time period when the policy might be valid, and the DayOfWeekMask used to pick out the specific days of the week in that time period when the PolicyRule is valid.        This property is formatted as a fixed length string of 8 bits. The first 7 bits identify the 7 days of the week, beginning with Sunday and ending with Saturday, followed by 1 bit that is always set to '0'. For each day of the week, the value '1' indicates that the PolicyRule is valid for that day, and the value '0' indicates that it is not valid.        If this attribute is not specified, then the PolicyRule is treated as valid for all 7 days in the weeks specified by the timePeriod attribute.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{979050a6-5b91-489b-91b4-4a6382f08a7b}</guid>
+      <label>dayOfWeekMask</label>
+    </child>
+    <child name="isLocalTime" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is a Boolean attribute that, if TRUE, signifies that the times represented in the timePeriod attribute and in the various Mask attributes represent local times. If the value of this attribute is FALSE, then this means that the times represented in the timePeriod attribute and in the various Mask attributes represent UTC times.        There is no provision for mixing of local times and UTC times: the value of this attribute applies to all of the other time-related attributes.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{cb96eaeb-66a2-4a57-9a43-fc4215e1a547}</guid>
+      <label>isLocalTime</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.cbe.policy.struct._var.PolicyConditionTimePeriod</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.cbe.policy.struct._var.PolicyConditionTimePeriod</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

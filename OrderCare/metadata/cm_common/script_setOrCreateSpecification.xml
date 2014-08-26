@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.setOrCreateSpecification">
+  <group>scripts</group>
+  <label>setOrCreateSpecification</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="specification" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="operation" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.string10</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try
+    {
+        specification.project=projectCode;
+        cwa_epc.setSpecificationLeafs(specification);
+        specification.baseSpecificationCode = cwa_epc.getBaseSpecificationCode(specification);
+        specification.specificationType = cwa_epc.getSpecificationType(specification);
+        specification.specificationSubType = cwa_epc.getSpecificationSubType(specification);
+        var res = null;
+
+        //TODO: verify if is needed to control the existence of any child item in case of creation
+        var existingItem = cm_common.getItemByCode(specification.specificationCode);
+        if(existingItem && operation.equals("C")) {
+            var fault = api_common.createFault("E105", "The item already exists.");
+            return fault;
+        }
+        if(existingItem && operation.equals("S")) {
+            specification.catalogEntity=existingItem.baseItemCode;
+        }
+
+        if(!specification.baseSpecificationCode) specification.baseSpecificationCode=specification.catalogEntity;
+
+        var nodeNames = specification.getNodeNames();
+        var node, refNode, association;
+
+        var baseCatalogItem = theCatalog.getItem(specification.baseSpecificationCode);
+        var typeCatalogItemStr = baseCatalogItem.CW_SPECTYPE.getDefaultValue();
+        var typeCatalogItem =  theCatalog.getItem(typeCatalogItemStr);
+
+        var associations = typeCatalogItem.getAssociations();
+
+        for(var i=0;i<associations.length;i++){
+            for(var j=0;j<nodeNames.length;j++){
+                if(associations[i].code == nodeNames[j]){
+                    node=specification[nodeNames[j]];
+                    refNode = null;
+                    association =null;
+                    if(specification.has(nodeNames[j]+"DS")) refNode=specification[nodeNames[j]+"DS"];
+                    if(refNode!=null){
+                        if(refNode.isCollection() && refNode.length>0){
+                            for(var k=0;k<refNode.length;k++){
+                                if(refNode[k].specificationCode && refNode[k].specificationCode!=""){
+                                    res = cm_common.setOrCreateSpecification(refNode[k],projectCode,operation);
+                                    if(api_common.isFault(res))
+                                        return res;
+                                    if(specification[nodeNames[j]][k] && specification[nodeNames[j]][k] instanceof DataStructure && "CW_REFID" in specification[nodeNames[j]][k]){
+                                        specification[nodeNames[j]][k].CW_REFID = refNode[k].specificationCode;
+                                    }
+                                    else specification[nodeNames[j]][k]=refNode[k].specificationCode;
+                                }
+                            }
+                        }
+                        else if(!refNode.isCollection() && refNode.specificationCode && refNode.specificationCode!=""){
+                            res = cm_common.setOrCreateSpecification(refNode,projectCode,operation);
+                            if(api_common.isFault(res))
+                                return res;
+                            specification[nodeNames[j]]=refNode.specificationCode;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(specification.has("ItemCharges")) specification.ItemCharges=null;
+
+        if(operation.equals("C") || (operation.equals("S") && !existingItem))
+            res = epc.createSpecificationByValue(specification);
+        else{
+            //operation.equals("S") && existingItem
+            res = cm_common.doCheckForSet(specification,projectCode);
+        }
+
+
+        return res;
+
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

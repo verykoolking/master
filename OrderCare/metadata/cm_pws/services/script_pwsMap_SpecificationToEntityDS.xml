@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.pwsMap_SpecificationToEntityDS">
+  <label>pwsMap_SpecificationToEntityDS</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="fromDS" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="toDS" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try {
+        var specDS           = null;
+        var characteristicDS = null;
+
+        var cw_mdtype = getSpecificationType(fromDS);
+        var auxEntity = new DataStructure(cw_mdtype);
+
+        if(auxEntity instanceof cm_spoc.data.OCSPriceEvent) {
+            specDS = toDS.oCSPriceEventType;
+            characteristicDS = toDS.oCSPriceEventType.oCSPriceEventCharacteristic;
+        }
+        /*else if(auxEntity instanceof cm_spoc.data.OCSComponentProdPrice) {
+            specDS = toDS.oCSComponentProdOfferPrice;
+            characteristicDS = toDS.oCSComponentProdOfferPrice.oCSProdOfferPriceCharacteristic;
+        }*/
+        else if(auxEntity instanceof cm_spoc.data.OCSProductOffering) {
+            specDS = toDS.oCSProductOffering;
+            characteristicDS = toDS.oCSProductOffering.oCSProductSpecCharValueUse;
+        }
+        /*else if(auxEntity instanceof cm_spoc.data.OCSBundledProductOffering) {
+            specDS = toDS.oCSBundledProductOffering;
+            characteristicDS = toDS.oCSBundledProductOffering.oCSProductSpecCharValueUse;
+        }*/
+        else if(auxEntity instanceof cm_spoc.data.OCSProductSpecification) {
+            specDS = toDS.oCSProductSpecification;
+            characteristicDS = toDS.oCSProductSpecification.oCSProductSpecCharacteristic;
+        }
+        else if(auxEntity instanceof cm_spoc.data.OCSCustFacingServiceSpec) {
+            specDS = toDS.oCSCustomerFacingServiceSpec;
+            characteristicDS = toDS.oCSCustomerFacingServiceSpec.oCSServiceSpecCharacteristic;
+        }
+        /*else if(auxEntity instanceof cm_spoc.data.OCSProduct) {
+            specDS = toDS.oCSProduct;
+            characteristicDS = toDS.oCSProduct.oCSProductCharacteristicValue;
+        }
+        else if(auxEntity instanceof "ComponentProdPrice") {
+            specDS = toDS.oCSComponentProdPrice;
+            characteristicDS = toDS.oCSComponentProdPrice.oCSProdPriceCharacteristic;
+        }
+        else if(auxEntity instanceof "CustomerFacingService") {
+            specDS = toDS.oCSCustomerFacingService;
+            characteristicDS = toDS.oCSCustomerFacingService.oCSServiceCharacteristicValue;
+        }*/
+        else {
+            var fault = api_common.createFault("E111", "Incorrect Entity Specification structure.");
+            return fault;
+        }
+
+        // SpecificationType:
+    /*    if(fromDS.specificationType == "PriceEvent") {
+            specDS = toDS.oCSPriceEventType;
+            characteristicDS = toDS.oCSPriceEventType.oCSPriceEventCharacteristic;
+        }
+        else if(fromDS.specificationType == "ComponentProdPrice") {
+            specDS = toDS.oCSComponentProdOfferPrice;
+            characteristicDS = toDS.oCSComponentProdOfferPrice.oCSProdOfferPriceCharacteristic;
+        }
+        else if(fromDS.specificationType == "ProductOffering") {
+            specDS = toDS.oCSProductOffering;
+            characteristicDS = toDS.oCSProductOffering.oCSProductSpecCharValueUse;
+        }
+        else if(fromDS.specificationType == "BundledProductOffering") {
+            specDS = toDS.oCSBundledProductOffering;
+            characteristicDS = toDS.oCSBundledProductOffering.oCSProductSpecCharValueUse;
+        }
+        else if(fromDS.specificationType == "ProductSpecification") {
+            specDS = toDS.oCSProductSpecification;
+            characteristicDS = toDS.oCSProductSpecification.oCSProductSpecCharacteristic;
+        }
+        else if(fromDS.specificationType == "CustomerFacingServiceSpec") {
+            specDS = toDS.oCSCustomerFacingServiceSpec;
+            characteristicDS = toDS.oCSCustomerFacingServiceSpec.oCSServiceSpecCharacteristic;
+        }
+        else if(fromDS.specificationType == "Product") {
+            specDS = toDS.oCSProduct;
+            characteristicDS = toDS.oCSProduct.oCSProductCharacteristicValue;
+        }
+        else if(fromDS.specificationType == "ComponentProdPrice") {
+            specDS = toDS.oCSComponentProdPrice;
+            characteristicDS = toDS.oCSComponentProdPrice.oCSProdPriceCharacteristic;
+        }
+        else if(fromDS.specificationType == "CustomerFacingService") {
+            specDS = toDS.oCSCustomerFacingService;
+            characteristicDS = toDS.oCSCustomerFacingService.oCSServiceCharacteristicValue;
+        }
+        else {
+            toDS = api_common.createFault("E111", "Incorrect Entity Specification structure.");
+            return;
+        }
+    */
+
+        // Identifier:
+        specDS.identifier.entityType = fromDS.specificationSubType;
+        specDS.identifier.dn = new tip.internal.entity.DistinguishedName();
+        specDS.identifier.dn.scheme = fromDS.specificationCode;
+
+        // Type:
+        specDS.type = fromDS.specificationSubType;
+
+
+
+
+        // Map of Characteristics, ComplexCharacteristics and Relations:
+        cm_pws.services.pwsMap_SpecToDS(fromDS, characteristicDS);
+
+
+
+
+
+
+
+    /*
+        // Attributes:
+        var specificationSubType = cm_spoc.getSpecificationSubType(fromDS);
+        var cont = 0;
+
+        var dsNodes = fromDS.getNodeNames();
+        var baseSpec = "base_" + specificationSubType;
+        var dsChars = cm_common.catalogGetItemAttributesDoc(baseSpec, null, false);
+        for(var i=0; i<dsChars.length; i++) {
+            var name = dsChars[i].name;
+            //converting external to internal
+            name = cm_pws.services.getInternalName(name);
+            if((dsNodes.indexOf(name) > -1) && !(dsChars[i].isProperty) && (dsChars[i].itemCode == baseSpec)) {
+                var value = fromDS[name];
+                var characteristic = new OCSEntity.v1.types.CharacteristicValueType();
+                characteristic.name = cm_pws.services.getExternalName(name, fromDS.metadataType);
+                characteristic.value = value;
+                characteristicDS.characteristic[cont] = characteristic;
+                cont++;
+            }
+        }
+
+        // ComplexAttributes:
+        var dsComplexAttr = cm_common.catalogGetItemItemAttributesDoc(fromDS.specificationCode, false);
+        for(var i=0; i<dsComplexAttr.length; i++) {
+            var name = dsComplexAttr[i].code;
+            name = cm_pws.services.getInternalName(name);
+            //TODO
+        }
+
+        // Relations:
+        var dsRelations = cm_common.catalogGetItemRelationsDoc(fromDS.specificationCode, null, null, null);
+        for(var i=0; i<dsRelations.length; i++) {
+            var rel = dsRelations[i];
+            var relation = new OCSEntity.v1.types.RelationType();
+            relation.name = rel.itemRelationCode;
+            relation.oCSTargetEntityType = rel.itemRelationTarget;
+            relation.oCSAssociationEntityType = rel.type;
+            relation.minOccurs = rel.minQuantity;
+            relation.maxOccurs = rel.maxQuantity;
+            //var relatedItem = new OCSEntity.v1.types.OCSEntityType();
+            //relatedItem.oCSProductSpecification.identifier.dn.scheme =  rel.itemCode;
+            //relation.item[0] = relatedItem;
+            //rel.label;
+
+            specDS.relations.relation[i] = relation;
+        }
+    */
+        /*var item = new cwt_pcmaintapi.item();
+        item.itemCode =  fromDS.specificationCode;
+        var dsRelations = cm_common.getRelatedItems(item, null);
+        if(api_common.isFault(dsRelations)){
+            return dsRelations;
+        }
+        for(var i=0; i<dsRelations.items.length; i++) {
+            var rel = dsRelations[i];
+            toDS.relations[i] = rel;
+        }*/
+
+    }catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+
+    function getSpecificationType(fromDS) {
+        for(var i=0; i<fromDS.attributes.length; i++) {
+            if(fromDS.attributes[i].name == "CW_MDTYPE") {
+                return fromDS.attributes[i].value;
+            }
+        }
+        return null;
+    }
+  ]]></script>
+</script>

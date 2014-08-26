@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="cm_spoc.data.TypeOfService">
+  <container>true</container>
+  <extends>dstruct_cm_spoc.data.OCSInternalProdOffering</extends>
+  <group>TariffPlan</group>
+  <guid>{a6cb8442-a225-448b-98c5-9d61b401b03b}</guid>
+  <jsonMap type="jmap"/>
+  <label>TypeOfService</label>
+  <metaVersion>4</metaVersion>
+  <childList>
+    <child name="ServiceID" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.ServiceIDEnum</element>
+      <guid>{f39c414b-cc16-4abd-95d4-796cf03f226f}</guid>
+      <jsonMap type="jmap"/>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="DefaultServiceTariffPlan" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSBooleanAttribute</element>
+      <guid>{dc9dbf49-7844-4f2c-98cb-274946c7153d}</guid>
+      <jsonMap type="jmap"/>
+      <label>DefaultServiceTariffPlan</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="ServiceTariffPlanAllowedPer" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{97b3961d-2fdd-4aca-be99-d5457e54fbbd}</guid>
+      <jsonMap type="jmap"/>
+      <label>ServiceTariffPlanAllowedPer</label>
+    </child>
+    <child name="ServiceTariffPlanEnum" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.ServiceTariffPlanEnum</element>
+      <guid>{d6699ac4-f299-4b4c-9494-0e7acbd0c5e9}</guid>
+      <jsonMap type="jmap"/>
+    </child>
+  </childList>
+  <methodList>
+    <method name="onInit" type="action">
+      <parameterList>
+        <parameter name="document" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <system>true</system>
+      <script><![CDATA[
+        this.cw$super_onInit(document);
+
+        this.DefaultServiceTariffPlan = false;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_cm_spoc.data.TypeOfService</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_cm_spoc.data.TypeOfService</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

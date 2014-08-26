@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.resource.res.log.tip.nrf.TopologicalLink">
+  <container>true</container>
+  <description><![CDATA[
+    <p>This object class represents a physical link between two or more (usual case two; more than two e.g., for representing RPR transport connectivity) PTPs or a trail between two TPs.    A Topological Link (TL) may traverse through DWDM equipment and optical transport networks managed by another target OS. The TL reported by the first target OS in that case could correspond to a (regenerator) section under its management domain. It is up to the requesting OS user to put together the exact topology of the network in such cases, based on the reported Managed Elements and TLs.    For unidirectional TLs the aEndTP marks the traffic source whereas the zEndTP marks the traffic sink.    See R_TMF518_NRF_I_0019 and R_TMF518_NRF_I_0020.</p>                <p>This entity  is  optional</p>                <p>This entity  is  extendable</p>                <p>This entity   generates Object Creation notifications</p>                <p>This entity   generates Object Deletion notifications</p>                <p>This entity   generates Object Discovery notifications</p>                <p>This entity generates Attribute Value Change notifications.</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{c28bd7fe-6e77-44b5-b545-b209db813930}</guid>
+  <label>TopologicalLink</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="direction" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute identifies the direction of the Topological Link.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  invariant</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC disabled</p>
+      ]]></description>
+      <element>dtype_sid.org.tmforum.tip.resource.res.log.tip.nrf.ConnectionDirection</element>
+      <guid>{c6a5d951-9f99-4dd8-bcbe-2e8a600e2351}</guid>
+      <label>direction</label>
+    </child>
+    <child name="ituArcStateAndStatusList" type="dstruct">
+      <description><![CDATA[
+        <p>See R_TMF518_NRB_I_0001 and R_TMF518_NRB_I_0004.        See supporting document SD1-8_encodingX731M3100</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.tip.nra.ItuArcStateAndStatusList</element>
+      <guid>{8471a2e5-97a4-430b-a61c-9554ba586321}</guid>
+      <label>ituArcStateAndStatusList</label>
+    </child>
+    <child name="isReportingAlarms" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute provides an indication of whether alarm reporting for this Topological Link is administratively activated or de-activated.        True = alarm reporting is activated; False = alarm reporting is de-activated.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{43a3e8d6-a4c5-4baf-a2bf-1b67abdd28ed}</guid>
+      <label>isReportingAlarms</label>
+    </child>
+    <child name="layerRate" type="dstruct">
+      <description><![CDATA[
+        <p>This attribute identifies the layer and bandwidth (rate) of the Topological Link (TL).        The Layer Rate of a TL is determined by the lowest common Layer Rate of the end point TPs, about which the target OS has knowledge (with the physical layer being the very lowest).</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  invariant</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC disabled</p>
+      ]]></description>
+      <element>dstruct_tip.resource.res.nrb.LayerRate</element>
+      <guid>{e4af1859-02ce-49ec-9715-d1173c6c418d}</guid>
+      <label>layerRate</label>
+    </child>
+    <child name="aEndTpRefList" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association TlIsTerminatedByAEndTps</p>                                <p>This association end  is  passed by id</p>                                <p>This association end  is  optional</p>                                <p>This association end  is  AVC disabled</p>
+      ]]></description>
+      <element>dstruct_tip.internal.entity.ArrayOfEntityIdentifier</element>
+      <guid>{3cf9be25-ccd9-46ff-858b-0f9ba7c53cfe}</guid>
+      <label>aEndTpRefList</label>
+    </child>
+    <child name="zEndTpRefList" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association TlIsTerminatedByZEndTps</p>                                <p>This association end  is  passed by id</p>                                <p>This association end  is  optional</p>                                <p>This association end  is  AVC disabled</p>
+      ]]></description>
+      <element>dstruct_tip.internal.entity.ArrayOfEntityIdentifier</element>
+      <guid>{cac86ed0-6fa5-4845-a66e-fe02588cc620}</guid>
+      <label>zEndTpRefList</label>
+    </child>
+    <child name="asapRef" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..1</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association TopologicalLinkHas</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.trouble.asap.AlarmSeverityAssignmentProfile</element>
+      <guid>{d232bbf4-066b-4caa-ae08-cf2ac9cc122d}</guid>
+      <label>asapRef</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.resource.res.log.tip.nrf.TopologicalLink</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.resource.res.log.tip.nrf.TopologicalLink</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

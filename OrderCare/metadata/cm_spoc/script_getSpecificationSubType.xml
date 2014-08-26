@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getSpecificationSubType">
+  <group>overridden.scripts</group>
+  <label>getSpecificationSubType</label>
+  <metaVersion>4</metaVersion>
+  <overrides>script_cwa_epc.getSpecificationSubType</overrides>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    switch (model.metadataTypeName){
+    //Resource Specification
+        case "epc.data.PAM":
+            return "PamClass";
+        case "epc.data.NumberList":
+            return "NumberList";
+        case "epc.data.ScheduleType":
+            return "PamSchedule";
+        case "epc.data.PeriodicAdjustment":
+            return "PeriodicAdjustment";
+        case "epc.data.AnnouncementFlat":
+            return "Announcement";
+        case "epc.data.ServiceCharacteristics":
+            return "ServiceCharacteristics";
+    //Product Specification
+        case "epc.data.RatePlanCharacteristics":
+            return "RatePlanCharacteristics";
+        case "epc.data.Service_BSCS":
+            return "Service";
+    //    case "epc.data.ServiceClass":
+        case "epc.data.ServicePackage":
+            return "ServicePackage";
+    //Service Specification
+        case "epc.data.BasicService":
+            return "BasicService";
+    //Product Offering
+        case "epc.data.OfferDefinition":
+        case "epc.data.OfferAddOn":
+            return "Offer";
+    //NGAA
+        case "cm_spoc.data.BoltOn":
+            return "BoltOn";
+        case "cm_spoc.data.BoltOnType":
+            return "BoltOnType";
+    //NGAA
+        case "epc.data.RatePlan":
+            return "RatePlan"
+    //Balance Specification
+        case "epc.data.DedicatedAccount":
+            return "DedicatedAccount";
+        case "epc.data.MainAccountBalance":
+            return "MainAccount";
+        case "epc.data.UsageCounter":
+            return "UsageCounter";
+        case "epc.data.UsageAccumulator":
+            return "UsageAccumulator";
+        case "epc.data.UsageThreshold":
+            return "UsageThreshold";
+    //Consumption Specification
+        //case "epc.data.Holiday":
+        // case "epc.data.TimeInterval":
+        // case "epc.data.TimePackage":
+        case "epc.data.ZoneOrigin":
+            return "ZoneOrigin";
+        case "epc.data.ZoneDestination":
+            return "ZoneDestination";
+        case "epc.data.ZonePackage":
+            return "ZonePackage";
+        case "epc.data.ZoneModelElements":
+            return "ZoneModelElements";
+    //PricePlan: chargeType
+        case "epc.data.ChargeTypeEpc":
+            return model.specificationSubType;
+    //Price:
+        case "cm_spoc.data.Price":
+            return "Price";
+        //BALINQ; BONUS; COMMUNITY; FAF; FLEXSVCFEE; INITRECURFEE; ONETIMEFEE; PERIODICADJ; RATING; RECURFEE; SVCCLSCHG; USAGEFEE
+        case "cm_spoc.data.UsageControlThreshold":
+            return "UsageControlThreshold";
+        case "cm_spoc.data.UCThSetSpecifArr":
+            return "UCThSetSpecifArr";
+        case "cm_spoc.data.UsageControlThresholdSetSpe":
+            return  "UsageControlThresholdSetSpe";
+        case "cm_spoc.data.RecoveryConditionArr":
+            return "RecoveryConditionArr";
+        case "cm_spoc.data.LifeCycleGracePeriodRule":
+            return "LifeCycleGracePeriodRule";
+        case "cm_spoc.data.TemporalAppCondition":
+            return "TemporalAppCondition";
+        case "cm_spoc.data.UsageControlApplicabilityCo":
+            return "UsageControlApplicabilityCo";
+        default:
+            return cm_spoc.getValue(model,"specificationSubType");
+    }
+  ]]></script>
+</script>

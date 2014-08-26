@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.EditNodeDialog">
+  <group>RatingTree.EditDialogUI</group>
+  <label>EditNodeDialog</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.RatingTreeNodeOutput</valueType>
+    </variable>
+    <variable name="code" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="nodeType" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="description" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="nodeTypeValue" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="pickList" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <fillSpace>false</fillSpace>
+              <height>400px</height>
+              <width>600px</width>
+              <elementList>
+                <element name="FormFrame" type="elovf">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.EditNodeDialog/leaf_pickList</variablePath>
+                      <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                      <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <height>400px</height>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.EditNodeDialog/leaf_pickList</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>600px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$pickList" type="laction">
+      <path>ui_cm_spoc.forms.EditNodeDialog/leaf_pickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.EditNodeDialog/leaf_pickList</valueType>
+      <script>return cm_spoc.initEditNodePickList(this);</script>
+    </method>
+    <method name="cwLeafInitAction$code" type="laction">
+      <path>ui_cm_spoc.forms.EditNodeDialog/leaf_code</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.EditNodeDialog/leaf_code</valueType>
+      <script>return this.parent.code;</script>
+    </method>
+    <method name="cwLeafInitAction$nodeTypeValue" type="laction">
+      <path>ui_cm_spoc.forms.EditNodeDialog/leaf_nodeTypeValue</path>
+      <type>initializer</type>
+      <script>return this.parent.nodeTypeValue;</script>
+    </method>
+    <method name="cwLeafInitAction$description" type="laction">
+      <path>ui_cm_spoc.forms.EditNodeDialog/leaf_description</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.EditNodeDialog/leaf_description</valueType>
+      <script>return this.parent.description;</script>
+    </method>
+    <method name="cwLeafInitAction$nodeType" type="laction">
+      <path>ui_cm_spoc.forms.EditNodeDialog/leaf_nodeType</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.EditNodeDialog/leaf_nodeType</valueType>
+      <script>return this.parent.nodeType;</script>
+    </method>
+    <method name="onChangeCTValues" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script>cm_spoc.onChangeCTValues(this,selectedItems);</script>
+    </method>
+    <method name="onChangeNTTValues" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script>cm_spoc.onChangeNTTValues(this,selectedItems);</script>
+    </method>
+  </methodList>
+</userInterface>

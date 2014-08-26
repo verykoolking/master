@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initPickListSingleSel">
+  <group>ui_scripts.utils</group>
+  <label>initPickListSingleSel</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+    <parameter name="availableItems" type="rifp">
+      <array>true</array>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="selectedItem" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="itemCodeAttribute" type="rifp"/>
+    <parameter name="itemDescriptionAttribute" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var pl = new cm_spoc.PickListSingleSelection(null,ui);
+    pl.availableItems = new DataObjectList();
+
+    var Sel=selectedItem;
+
+    for(var i=0;i<availableItems.length;i++){
+
+        var item = new cm_spoc.PickListDS();
+        item.id = availableItems[i][itemCodeAttribute];
+        item.description = availableItems[i][itemDescriptionAttribute];
+
+        if(Sel ==null)
+        {
+            pl.availableItems.addLast(item);
+        }
+        else
+    {
+
+        var found = false;
+
+            if(Sel[0].equals(availableItems[i][itemCodeAttribute]))
+        {
+            found = true;
+        }
+
+        if(found){
+            pl.selectedItem=item;
+
+        }else{
+
+            pl.availableItems.addLast(item);
+        }
+
+    }
+
+
+    }
+
+    return pl;
+  ]]></script>
+</script>

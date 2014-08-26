@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cm_plm.productionProcess">
+  <activity name="start" type="seqActivity">
+    <guid>{3f98a979-ff9f-4c18-aff8-72d0e954353f}</guid>
+    <label>Start</label>
+    <x>30.0</x>
+    <y>88.876465</y>
+    <childList>
+      <child name="waitForEffectiveDate" type="switchActivity">
+        <guid>{7373fe31-a810-4ced-bdf1-e97237f87487}</guid>
+        <label>Wait For Effective Date ?</label>
+        <x>142.0</x>
+        <y>67.876465</y>
+        <childList>
+          <child name="yes" type="caseActivity">
+            <guid>{618892a1-5f49-4ec5-83b9-97b06f25b6cb}</guid>
+            <label>YES</label>
+            <x>144.0</x>
+            <y>168.87646</y>
+            <childList>
+              <child name="yesSeq" type="seqActivity">
+                <guid>{99c371ca-6f68-4ab0-a621-5b4f005f09a8}</guid>
+                <label>Yes Sequence</label>
+                <x>257.0</x>
+                <y>192.87646</y>
+                <childList>
+                  <child name="choice" type="choiceActivity">
+                    <guid>{f6b1b963-0182-4e21-bd0a-954a0c8314ee}</guid>
+                    <label>WAIT</label>
+                    <x>379.0</x>
+                    <y>191.87646</y>
+                    <childList>
+                      <child name="bypassWaitForEffectiveDate" type="opActivity">
+                        <element>iface_cm_plm.confProductionInt/oper_bypassWaitForEffectiveDate</element>
+                        <guid>{a22ef919-0468-48f2-9101-9cf4ab07384a}</guid>
+                        <invokeDirectly>true</invokeDirectly>
+                        <label>Bypass Wait For Effective Date</label>
+                        <participant>part_cm_plm.confProductionAutoPart</participant>
+                        <x>546.0</x>
+                        <y>274.87646</y>
+                      </child>
+                      <child name="effectiveDateReached" type="timeoutActivity">
+                        <guid>{678555a3-f629-4b48-897f-8d59658b7973}</guid>
+                        <label>Effective Date Reached</label>
+                        <schedule type="sched">
+                          <duration type="dur">
+                            <methodList>
+                              <method name="cwOnDuration" type="action">
+                                <system>true</system>
+                                <script>return cm_plm.calculateDateProjectEffectiveDate(this);</script>
+                              </method>
+                            </methodList>
+                          </duration>
+                        </schedule>
+                        <x>534.0</x>
+                        <y>10.876465</y>
+                      </child>
+                    </childList>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnProcActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[
+                  var waitEffcDate =  Global.getConfigVariable('waitForEffectiveDate','true');
+                  return (waitEffcDate && waitEffcDate.toLowerCase() == 'true');
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+          <child name="no" type="caseActivity">
+            <guid>{8f5e9b70-579c-4fc2-9473-be01237099d5}</guid>
+            <label>NO</label>
+            <x>406.0</x>
+            <y>-167.12354</y>
+          </child>
+        </childList>
+      </child>
+      <child name="CpErrorOnProduction" type="scriptActivity">
+        <guid>{b7da43ba-cae9-4816-86ee-84491f7051c0}</guid>
+        <label>CP</label>
+        <x>758.3711</x>
+        <y>158.70117</y>
+        <childList>
+          <child name="errorCP" type="compensateActivity">
+            <compensatesList>
+              <compensates>errorOnProductionCP</compensates>
+            </compensatesList>
+            <guid>{5b7b3845-c676-4be1-9015-d8b85c0084fe}</guid>
+            <label>errorCP</label>
+            <x>346.3711</x>
+            <y>270.70117</y>
+            <childList>
+              <child name="cpScript" type="scriptActivity">
+                <guid>{6dc4d62d-f8f0-4c22-ad47-d0736719fac8}</guid>
+                <label>cpScript</label>
+                <x>786.3711</x>
+                <y>300.70117</y>
+                <methodList>
+                  <method name="cwOnProcActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script>return;</script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              var pd = process.processDocument;
+              pd.compPoint = 'errorOnProductionCP';
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+      <child name="publishInAltamira" type="subflowActivity">
+        <element>proc_cm_plm.publishInAltamira</element>
+        <guid>{22d2fad3-104e-4bc7-b8b9-46d8085c98d8}</guid>
+        <label>Publish In Altamira</label>
+        <x>853.3711</x>
+        <y>153.0</y>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              process.processDocument.sendToAltamira = "PRD";
+              cm_plm.setProcessOrderState(process, 'DPR');
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+      <child name="end" type="completeActivity">
+        <guid>{980045c5-f59a-4f87-949c-c57e3bf807bd}</guid>
+        <label>End</label>
+        <x>978.0</x>
+        <y>161.87646</y>
+      </child>
+      <child name="onError" type="onExceptionActivity">
+        <element>excp_cm_plm.errorException</element>
+        <guid>{ab754a19-64c6-4926-9a54-fb85c898de3f}</guid>
+        <label>On Error</label>
+        <x>29.0</x>
+        <y>-20.123535</y>
+        <childList>
+          <child name="handleError" type="subflowActivity">
+            <element>proc_cm_plm.handleErrorSubFlow</element>
+            <guid>{46179007-a2b7-4f51-b783-fbe28507707e}</guid>
+            <label>Handle Error</label>
+            <x>33.0</x>
+            <y>-20.123535</y>
+          </child>
+        </childList>
+      </child>
+      <child name="confProductionAutoPart" type="participantActivity">
+        <guid>{326e2232-7515-4e72-bd97-f3c2af5ffc96}</guid>
+        <label>CM-PLM Configuration Production Automated Participant</label>
+        <participant>part_cm_plm.confProductionAutoPart</participant>
+        <x>338.0</x>
+        <y>301.0</y>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <document>doc_cm_plm.mainProcessDoc</document>
+  <guid>{54771090-7f19-4883-98f7-5cbeae558a95}</guid>
+  <label>CM-PLM Production</label>
+  <metaVersion>4</metaVersion>
+  <parentProcessDoc>true</parentProcessDoc>
+  <priority>8</priority>
+  <type>User</type>
+</process>

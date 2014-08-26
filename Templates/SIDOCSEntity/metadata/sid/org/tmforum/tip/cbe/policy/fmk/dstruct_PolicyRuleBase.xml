@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.cbe.policy.fmk.PolicyRuleBase">
+  <abstract>true</abstract>
+  <container>true</container>
+  <description><![CDATA[
+    <p>This is a concrete base class for realizing the "event-condition-passaction-failaction" semantics that form a DEN-ng policy rule. The semantics of this rule are that the rule is evaluated when an event occurs. If the condition clause is satisfied, then the pass-action clause will be executed (otherwise, the fail-action clause will be executed).    PolicyRules may be nested within PolicyRules. This is often needed in networking (e.g., bandwidth allocation).</p>                <p>This entity  is  abstract</p>                <p>This entity  is  optional</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{ad8ee176-ff93-4992-ae4c-f621f0c80eb6}</guid>
+  <label>PolicyRuleBase</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="hasSubRules" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is a Boolean attribute that, if TRUE, signifies that this PolicyRule has one or more sub-rules. Sub-rules are used to enforce a hierarchical nesting of rules, so that parent rules may control the execution and other semantics of sub-rules that they contain.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{458e5f52-2b65-4dd7-ae8c-b170a7b1bd55}</guid>
+      <label>hasSubRules</label>
+    </child>
+    <child name="isCNF" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is a Boolean attribute that, if TRUE, defines the condition clause of this rule to be represented in Conjunctive Normal Form (e.g., an AND of ORs). If the value of this attribute is FALSE, then the condition clause will be represented in Disjunctive Normal Form (e.g., an OR of ANDs).        This attribute controls the setting of how multiple condition clauses (as represented by multiple PolicyConditionComposite objects) are treated in the PolicyRule. As such, it is different from the attribute PolicyConditionComposite.IsCNF, which controls how multiple PolicyConditionAtomic objects are treated in a (single) PolicyConditionComposite object.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{c38cd984-c99d-4a5a-8c8f-1bf8f71329db}</guid>
+      <label>isCNF</label>
+    </child>
+    <child name="policyAction" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..*</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association PolicyActionRuleDetails</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.cbe.policy.struct.action.ArrayOfPolicyAction</element>
+      <guid>{1efca159-b175-4bd4-8717-a71becddb0d7}</guid>
+      <label>policyAction</label>
+    </child>
+    <child name="policyCondition" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..*</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association PolicyConditionRuleDetails</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.cbe.policy.struct.cond.ArrayOfPolicyCondition</element>
+      <guid>{209ed3d6-20d5-48ae-85f9-7350568c2de1}</guid>
+      <label>policyCondition</label>
+    </child>
+    <child name="policyEventBase" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..*</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association EventTriggerDetails</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.cbe.policy.struct.evt.ArrayOfPolicyEventBase</element>
+      <guid>{d129b29f-2d5e-4c71-a847-408a9c9441f8}</guid>
+      <label>policyEventBase</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.cbe.policy.fmk.PolicyRuleBase</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.cbe.policy.fmk.PolicyRuleBase</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

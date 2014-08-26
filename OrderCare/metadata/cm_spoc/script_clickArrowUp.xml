@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.clickArrowUp">
+  <group>ui_scripts.UsageControl.AccumulationConditions.FinderHelpers</group>
+  <label>clickArrowUp</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="finderUi" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var pos = finderUi.getSingleSelectedIndex(); // Index of the selected item
+
+    if(pos>0){
+        finderUi.changeItemPos(finderUi.result[pos], pos-1);
+    }
+
+
+    var UCArr;
+
+    if(finderUi.parent.positive){
+
+        UCArr= finderUi.parent.model.UCPositiveConUCACArrDS;
+    }else{
+        UCArr= finderUi.parent.model.UCNegativeConUCACArrDS;
+    }
+
+
+    cm_spoc.posSwitchUp(pos,UCArr);
+    cm_spoc.positionUpdate(UCArr);
+  ]]></script>
+</script>

@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/network" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" xmlns:hw="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/hw" xmlns:compound="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/compound" xmlns:trans="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/trans" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/network" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.resource.res.log.network
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      The Resource ABE contains entities that are used to represent the various aspects of a Resource. These can be divided into four basic types of entities.
+
+The first two, PhysicalResource and LogicalResource, are sets of entities that represent the physical and logical aspects of a Resource, respectively. This is important to enable the SID to build a set of reusable managed entities that can be used to model the physical and logical aspects of different types of Resources.
+
+The third type of entity, CompoundResource, is a set of entities that shows how to aggregate PhysicalResources and LogicalResources into aggregate entities that has physical and logical characteristics and behavior. This enables designers to represent Resources that have physical and logical characteristics and behavior as a single entity.
+
+The fourth type of entity, Network, is a set of entities that shows how to represent networks, sub-networks, network components, and other related aspects of a network. This type of entity builds on the notion of a CompoundResource by aggregating CompoundResources into a functional whole.
+      Package data summary information:
+            entities: 10
+ Association Classes: 0
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/hw" schemaLocation="sid_org_tmforum_tip_resource_res_phy_hw.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/compound" schemaLocation="sid_org_tmforum_tip_resource_res_compound.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/trans" schemaLocation="sid_org_tmforum_tip_resource_res_log_trans.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="autonomousSystem" type="tns:AutonomousSystem"/>
+   <xsd:complexType name="AutonomousSystem">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>An Autonomous System (AS) provides a structured view of routing by segregating the system that is using routing (e.g., the Internet, a corporate intranet, or a company extranet) into a set of separately administered domains that each has their own independent routing policies.
+
+The classic definition of an AS, from RFC1771, is '...a set of routers under a single technical administration, using an interior gateway protocol and common metrics to route packets within the AS, and using an exterior gateway protocol to route packets to other ASs. Since this classic definition was developed, it has become common for a single AS to use several interior gateway protocols and sometimes several sets of metrics within an AS. The use of the term Autonomous System here stresses the fact that, even when multiple IGPs and metrics are used, the administration of an AS appears to other ASs to have a single coherent interior routing plan and presents a consistent picture of what destinations are reachable through it.'</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="asNumber" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an integer between 1 and 65535, with the range 64512 through 65535 reserved for private use. Every AS has a unique AS number, which is assigned to it by an Internet Registry or a provider. IANA assigns and administers AS numbers.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isSingleHomed" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a boolean that, when its value is TRUE, indicates that this AS reaches networks outside of its domain through a single exit point. Whether a given AS is single-homed or not has important ramifications for BGP configuration.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isTransitRouter" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a boolean that, when its value is TRUE, indicates that this AS will advertise routes that it learns from other ASs. A non-transit AS will only advertise its own routes.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="requiresIGPSync" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a boolean that, when its value is TRUE, indicates that this AS must obey the following BGP rule: a BGP router should not advertise destinations learned from internal BGP neighbors to external BGP destinations unless those destinations are also known via some internal gateway protocol. Otherwise, a BGP router may receive traffic that cannot yet be routed. However, since this is a costly choice, it is common practice to allow this rule to be broken under certain carefully controlled circumstances.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="routeAggregationMethod" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This refers to summarizing ranges of routes into one or more aggregate routes. This is done to minimize the number of routes in the global routing table. A potential drawback is that specific path information (e.g., AS_Path attribute value) is lost, which may lead to potential routing loops. There are a variety of ways to ensure that this does not happen. Note, however, that BGP4 is required to do this.
+
+There are many ways to form aggregate routes. The following are the most popular: 'Aggregate only', where only the aggregate is advertised, and all of its more specific routes are suppressed; 'Aggregate and Include Specific Routes', where both the aggregate as well as its more specific routes are advertised (e.g., send the aggregate to the NAP, but send the more specific routes to providers); 'Aggregate Based on a Subset of Specific Routes', where the aggregate route is formed by looking at certain more specific routes and forming an aggregate on them, suppressing all others. Values include:
+
+0: Unknown
+1: None
+2: Aggregate Only
+3: Aggregate and Include Specific Routes
+4: Aggregate Based on Subset of Specific Routes</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="routingUpdateMethod" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This defines how routing information is to be injected. Statically injected routes are maintained by the routing table and are independent of the status of the networks that they refer to. This is done by defining static routes in the routing table. Dynamically injected routes are of two types. Dynamic routes refer to distributing all of the IGP routes into the AS. Semi-dynamic routes define a set of specific IGP routes that will be injected into the AS. Values include:
+
+0: Unknown
+1: Static
+2: Dynamic
+3: Semi-Dynamic</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfAutonomousSystem">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:AutonomousSystem" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="excludedPortsDetail" type="tns:ExcludedPortsDetail"/>
+   <xsd:complexType name="ExcludedPortsDetail">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The attribute exclusionFunction is designed to be populated from an external management system, and represents the criteria for excluding one or more ResourcePorts. Note that a predefined exclusion function is to limit the role that a ResourcePort plays to an edge role. However, this class enables additional functions to be used to exclude ResourcePorts.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="excludedRoleList" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is a Collection of ResourceRole names. Any ResourceRole name that appears in this Collection MUST be excluded from being part of the Link identified in the resourcePortsInLink aggregation that the instance of this class pertains to.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfExcludedPortsDetail">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ExcludedPortsDetail" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="iPSubnet" type="tns:IPSubnet"/>
+   <xsd:complexType name="IPSubnet">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A portion of a network that shares a common address component. On TCP/IP networks, subnets are defined as all devices whose IP addresses have the same prefix. For example, all devices with IP addresses that start with 100.100.100 would be part of the same subnet.
+
+In DEN-ng, a Subnet represents a group of related logical endpoints, each of which is uniquely identified by a logical address, that can communicate with each other directly using a particular type of IP protocol.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="addressRange" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string format that contains the range of IP Addresses of this IPSubnet. The format is determined by the AddressType attribute, and is either CIDR or dotted decimal.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="addressVersion" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that describes the format of the address of this IPSubnet. Values include:
+
+0: Unknown
+1: IPv4
+2: IPv6</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="addressType" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the format of the IPAddress. Values include:
+
+0: Unknown
+1: Dotted Decimal (i.e., Address and Mask)
+2: CIDR</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfIPSubnet">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:IPSubnet" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="lAN" type="tns:LAN"/>
+   <xsd:complexType name="LAN">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A Local Area Network is a computer network covering a specific local area, like a home, office or small group of buildings. It provides communication between computers and devices.
+
+The topology of a network dictates its physical structure. In DEN-ng, this is represented as a collection of endpoints of a common type that are all able to intercommunicate directly with each other, without the assistance of bridging or routing services.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="lanID" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a label or identifier for the LAN.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="canAutoSense" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean that, if TRUE, means that every ManagedElement in the LAN can sense what speed the LAN is running at and adjust accordingly. FALSE means that this capability is NOT shared by every element, and so a speed must be chosen at startup time.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="lanType" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer, and is an indication of the kind of technology used on the LAN. Values include:
+
+0: Unknown
+1: Ethernet
+2: FastEthernet
+3: GigabitEthernet
+4: 10 GigabitEthernet
+5: TokenRing
+6: FDDI
+
+Note that FastEthernet is also able to run at Ethernet speeds if CanAutoSense is TRUE.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfLAN">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:LAN" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="layerNetwork" type="tns:LayerNetwork"/>
+   <xsd:complexType name="LayerNetwork">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The LayerNetwork class is derived from G.805; DEN-ng has enhanced this definition by providing additional semantics that enable objects defined in the ITU to interact with objects defined in the IETF. (These semantics are present in the DEN-ng system view, not in the business view).
+
+A LayerNetwork is defined by the complete set of AccessGroups of the same type that may be associated for the purpose of transferring information. The information transferred is characteristic of the layer network and is termed characteristic information. The associations of the trail terminations (that form a trail) in a layer network may be made and broken by a layer network management process thus changing its connectivity. A separate, logically distinct layer network exists for each trail termination type. The topology of a layer network is described by access groups, subnetworks and the links between them.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="subNetwork" type="tns:ArrayOfSubNetwork" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association SubNetworksInLayeredNetwork</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfLayerNetwork">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:LayerNetwork" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="network" type="tns:Network"/>
+   <xsd:complexType name="Network">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The Network class is derived from M.3100; DEN-ng has enhanced this definition by providing additional semantics that enable objects defined in the ITU to interact with objects defined in the IETF and the TMF.
+
+A Network is a managed object that represents an aggregation of interconnected telecommunications and management objects capable of exchanging information. The reason that a Network is subclassed from ResourceCollection is that it is important that a Network be able to represent physical as well as logical characteristics and behavior of this collection of telecommunications and management objects.
+
+A Network has the additional semantics of having one or more common characteristics and/or behavior. For example, a network may be owned by a single customer or provider, or be associated with the delivery of a specific set of services. A network may be nested within another (larger) network, thereby forming a containment relationship. An example of a network that is contained in another network is a transmission sub-network. It is owned by a single Administration and can only perform transmission functions.
+
+The m.3100 SystemTitle attribute is NOT implemented in this class, we're using UserLabel instead.
+
+Note that the LocationName attribute of m.3100 and MTNM is NOT implemented in this class, but rather is defined through an association to the Location object class in order to represent more generic types of associations.
+
+The MTNM managedElementName, nativeEMSName, communucationState, and emsInSyncState attributes are NOT implemented in this class, as all SHOULD be derived from the ManagedDevices association. Note that there can be multiple EMSes that manage any given ManagedElement.
+
+The MTNM owner attribute is NOT implemented in this class, as it is derived from the MEOwner association. Note that there can be multiple owners for any given ManagedElement.
+
+The MTNM connectionRate attribute is NOT implemented in this class, as not all ManagedElements have the ability to communicate.
+
+The MTNM softwareVersion attribute is NOT implemented in this class, as not all ManagedElements have software associated with them.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="isNetworkOperational" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is used to define the operational status of the Network, and is implemented as a Boolean: TRUE means that the Network is currently operational, and FALSE means that the Network is not currently operational.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="layerRates" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a comma-separated Sequence of string attributes. Each string identifies a communication rate that is supported by this Network.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="networkAlarmStatus" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that indicates the occurrence of an abnormal condition relating to one or more managed objects that are contained in this Network. This attribute may also function as a summary indicator of alarm conditions associated with a specific resource. It is used to indicate the existence of an alarm condition, a pending alarm condition such as threshold situations, or (when used as a summary indicator) the highest severity of active alarm conditions. Values include:
+
+0: unknown error
+1: active - Critical
+2: active - Major
+3: active - Minor
+4: active - Indeterminate
+5: active - Warning
+6: active - PendingDecision
+7: active - UnderRepair
+8: active - BeingReplaced
+9: cleared</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="networkAdministrativeState" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is an enumerated integer that defines the administrative state of the Network. Values include:
+
+0: Unknown
+1: Unlocked
+2: Locked
+3: Shutting Down
+4: Starting Up
+5: Testing
+6: Maintenance</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="networkComposite" type="tns:NetworkComposite" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association HasNetworks</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="physicalPort" type="hw:ArrayOfPhysicalPort" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association PortsInNetwork</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfNetwork">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:Network" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="networkAtomic" type="tns:NetworkAtomic"/>
+   <xsd:complexType name="NetworkAtomic">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents a stand-alone Network. NetworkAtomics may be combined into larger Networks by aggregating them into an appropriate NetworkComposite object.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfNetworkAtomic">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:NetworkAtomic" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="networkComposite" type="tns:NetworkComposite"/>
+   <xsd:complexType name="NetworkComposite">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents an aggregation of NetworkAtomic and possibly NetworkComposite objects. Each NetworkAtomic object represents a stand-alone Network; these can be combined to build larger Networks by choosing the appropriate type of NetworkComposite object to aggregate NetworkAtomic objects. Note that a NetworkComposite object can also aggregate NetworkComposite objects.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="network" type="tns:ArrayOfNetwork" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association HasNetworks</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfNetworkComposite">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:NetworkComposite" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="networkDomain" type="tns:NetworkDomain"/>
+   <xsd:complexType name="NetworkDomain">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A NetworkDomain represents a set of ManagedPhysicalEntities that share a common set of administrative and operational characteristics. Primary among these is the use of a common naming methodology. A NetworkDomain is used to partition ManagedEntity instances into logical groupings (e.g., operational and/or administrative groups) that are controlled by one or more common managers. NetworkDomains provide one way to administer and control the operational characteristics of a set of ManagedEntities.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="compoundResource" type="compound:ArrayOfCompoundResource" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association ScopesCompoundResource</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfNetworkDomain">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:NetworkDomain" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="subNetwork" type="tns:SubNetwork"/>
+   <xsd:complexType name="SubNetwork">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The SubNetwork class is derived from MTNM; please note that this definition is subtlely different than that of G.805. DEN-ng has mapped this definition into a form that can be represented using the SID and DEN-ng modeling philosophy. By including this mapping in the Network fragment and adding some additional semantics, objects defined in the TMF and ITU are able to interact with objects defined in the IETF.
+
+MTNM defines a subnetwork as an abstraction provided by the EMS to the NMS that describes the potential for subnetwork connections. (An MTNM SubNetworkConnection relates end-point TerminationPoints. It provides a transparent end-to-end connection or a trail (closed or half-open) through a Subnetwork according to the roles associated to its end points.)
+
+DEN-ng uses the above MTNM definition and expands on it. It defines a SubNetwork as existing within a single layer network. It is defined by the set of ResourcePorts that are available for the purpose of transferring characteristic information. The associations between the ResourcePorts at the edge of a SubNetwork may be made and broken by a LayerNetwork management process, thus changing its connectivity. When a SubNetwork connection is established, the reference points are also created by binding the ports to input and output of the SubNetwork connection. In general, SubNetworks may be partitioned into smaller SubNetworks interconnected by links.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="subNetworkType" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the specific type of SubNetwork that this instance is.
+
+The following values are defined by TMF608:
+
+0: Singleton
+1: CHAIN
+2: PSR
+3: SPRING
+4: OPEN_PSR
+5: OPEN_SPRING
+6: MESH</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="connectionRates" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a comma-separated Sequence of string attributes. Each string identifies a connection rate that is supported by this Network. Connection rates can operate at a speed that is different from the overall rate of the network that contains this SubNetwork.
+
+Values are defined by the LayerRates supporting document in the MTNM specification.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="subNetwork" type="tns:ArrayOfSubNetwork" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association HasSubNetworks</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="subNetwork1" type="tns:SubNetwork" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association HasSubNetworks</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="pipe" type="trans:ArrayOfPipe" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association PipesInSubNetwork</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="layerNetwork" type="tns:LayerNetwork" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association SubNetworksInLayeredNetwork</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfSubNetwork">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:SubNetwork" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

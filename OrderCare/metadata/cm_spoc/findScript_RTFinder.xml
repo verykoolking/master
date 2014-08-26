@@ -1,0 +1,1222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cm_spoc.RTFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <group>ui_scripts.RatingTree.RTFinder</group>
+  <input>doc_cwa_epc.itemSearch</input>
+  <label>RTFinder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_cm_spoc.RatingTreeDoc</output>
+  <type>script</type>
+  <volatility>0</volatility>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script>return;</script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="RTDisplay" type="leaf">
+        <valueType>dstruct_cm_spoc.data.RTEnumContainer</valueType>
+      </variable>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cm_spoc.RatingTreeDoc</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cwa_epc.itemSearch/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cm_spoc.RatingTreeDoc/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="VerticalLayout" type="elvlt">
+                    <height>100%</height>
+                    <width>100%</width>
+                    <elementList>
+                      <element name="HorizontalLayout" type="elhlt">
+                        <alignment>center,center</alignment>
+                        <elementList>
+                          <element name="GridLayout" type="elgrd">
+                            <colWidths>100px</colWidths>
+                            <elementList>
+                              <element name="RTDisplayEnum" type="elslct">
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uimthd_editTableState</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <showLabel>false</showLabel>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/leaf_RTDisplay</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.RTEnumContainer/dstruct_RTDisplayEnum</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="HorizontalLayout1" type="elhlt">
+                        <height>90%</height>
+                        <width>100%</width>
+                        <elementList>
+                          <element name="RTFinderResultTable" type="eltabl">
+                            <doubleClickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uimthd_editBranch</variablePath>
+                              </variablePathList>
+                            </doubleClickMethod>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/permMethod_readOnly</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <height>200px</height>
+                            <onSelectChange type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                              </variablePathList>
+                            </onSelectChange>
+                            <showDetailColumn>false</showDetailColumn>
+                            <showFilter>true</showFilter>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>750px</width>
+                            <elementList>
+                              <element name="selectItem" type="elchk">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <showLabel>false</showLabel>
+                                <toggleEdit>true</toggleEdit>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_selectItem</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>30px</width>
+                              </element>
+                              <element name="ATCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>AT Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_ATCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ATDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>AT Desc</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_ATDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="listCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>List Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_listCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="listDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>List Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_listDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="tonCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Ton Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_tonCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="tonDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Ton Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_tonDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="spCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Service Provider Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_spCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="spDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Service Provider Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_spDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="tariffCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Tariff Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_tariffCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="tariffDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Tariff Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_tariffDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="tribeCategoryCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Tribe Category Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_tribeCategoryCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="tribeCategoryDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Tribe Category Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_tribeCategoryDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="tribeCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Tribe Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_tribeCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="tribeDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Tribe Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_tribeDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="att" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Attribute</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_att</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="CATCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>CAT Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_CATCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="CATDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>CAT Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_CATDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="COTCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>COT Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_COTCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="COTDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>COT Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_COTDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="DCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>D Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_DCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="DDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>D Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_DDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="HZCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>HZ Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_HZCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="HZDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>HZ Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_HZDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="LCCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>LC Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_LCCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="LCDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>LC Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_LCDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="LDDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>LD Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_LDDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="LDCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>LD Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_LDCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="MLDCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>MLD Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_MLDCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="MLDDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>MLD Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_MLDDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="OOCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>OO Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_OOCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="OODesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>OO Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_OODesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="OOSCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>OOS Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_OOSCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="OOSDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>OOS Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_OOSDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ORZCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>ORZ Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_ORZCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ORZDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>ORZ Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_ORZDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="OZTCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>OZT Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_OZTCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="OZTDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>OZT Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_OZTDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="PTTCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>PTT Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_PTTCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="PTTDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>PTT Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_PTTDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="PTCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>PT Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_PTCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="PTDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>PT Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_PTDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="QMCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>QM Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_QMCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="QMDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>QM Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_QMDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="RPCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>RP Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_RPCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="RPDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>RP Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_RPDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="RZCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>RZ Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_RZCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="RZDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>RZ Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_RZDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="SCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>S Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_SCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="SDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>S Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_SDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="SZCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>SZ Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_SZCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="SZDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>SZ Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_SZDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TNSCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>TNS Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_TNSCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TNSDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>TNS Desc</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_TNSDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TPCCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>TPC Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_TPCCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TPCDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>TPC Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_TPCDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TSDCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>TSD Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_TSDCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TSDDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>TSD Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_TSDDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TSVCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>TSV Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_TSVCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TSVDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>TSV Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_TSVDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="FABCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>FAB Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_FABCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="FABDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>FAB Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_FABDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="UTCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>UT Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_UTCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="UTDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>UT Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_UTDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ECSCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>ECS Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_ECSCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ECSDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>ECS Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_ECSDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ECTCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>ECT Code</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_ECTCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ECTDesc" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>ECT Description</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.RatingTreeDoc/leaf_ECTDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.RTFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="cwLeafInitAction$tableState" type="laction">
+        <path>ui_com.conceptwave.system.BaseFinderUserInterface/leaf_tableState</path>
+        <type>initializer</type>
+        <script>return cm_spoc.initTState(this);</script>
+      </method>
+      <method name="cwLeafInitAction$RTDisplay" type="laction">
+        <path>findScript_cm_spoc.RTFinder/ui_UserInterface/leaf_RTDisplay</path>
+        <type>initializer</type>
+        <script><![CDATA[
+          var ds= new DataStructure("cm_spoc.data.RTEnumContainer");
+          ds.RTDisplayEnum = "id";
+          return ds;
+        ]]></script>
+      </method>
+      <method name="readOnly" type="permMethod">
+        <script>return !this.parent.model.readonly;</script>
+      </method>
+      <method name="editBranch" type="uimthd">
+        <script>cm_spoc.editBranch(this);</script>
+      </method>
+      <method name="editTableState" type="uimthd">
+        <script><![CDATA[
+          if(!this.parent.model.readonly){
+              cm_spoc.editTableState(this);
+          }
+          else{
+          }
+        ]]></script>
+      </method>
+      <method name="OnSelChanged" type="action">
+        <script>this.cw$super_OnSelChanged();</script>
+      </method>
+      <method name="selectAll" type="uimthd"/>
+    </methodList>
+  </UserInterface>
+  <viewList>
+    <view name="RTFinderView" type="findVView">
+      <outputOverlay>findScript_cm_spoc.RTFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findScript>

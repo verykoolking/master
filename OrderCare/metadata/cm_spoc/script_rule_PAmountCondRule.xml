@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_PAmountCondRule">
+  <group>rules_scripts.Common.PriceGuidings</group>
+  <label>rule_PAmountCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+    *
+
+
+    var nameArray = cm_spoc.getBasePriceGuidingArrayName(data.base_SpecificationCode);
+    var nameArrayDS = nameArray+"DS";
+
+    if ( data[nameArrayDS].ListDS && data[nameArrayDS].ListDS.length>0 ) {
+
+        for (var i=0;i< data[nameArrayDS].ListDS.length;i++) {
+
+            if ( !data[nameArrayDS].ListDS[i].Price)  errList.addErrorMessage(data,[data[nameArrayDS].ListDS[i].specificationCode,"Price Cannot be null"],"NGAA_EPC_002","E");
+        }
+
+    }
+
+    return false;
+
+    */
+
+    if ( !data.Price)  errList.addErrorMessage(data,[data.specificationCode,"Price Cannot be null"],"NGAA_EPC_002","E");
+    return false;
+  ]]></script>
+</script>

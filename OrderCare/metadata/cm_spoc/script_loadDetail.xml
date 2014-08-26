@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.loadDetail">
+  <group>ui_scripts.UsageControl.HappyPeriod</group>
+  <label>loadDetail</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+    <parameter name="model" type="rifp">
+      <type>dstruct_cm_spoc.data.UCSApConHappyPeriod</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(model.Months=="111111111111") ui.monthsCtrlUI.allSelected=true;
+    if(model.Days=="1111111111111111111111111111111") ui.daysCtrlUI.allSelected=true;
+    if(model.Hours=="111111111111111111111111") ui.hoursCtrlUI.allSelected=true;
+    if(model.WeekDays=="1111111") ui.weekDaysCtrlUI.allSelected=true;
+
+    for(var i=0; i< model.Months.length; i++){
+
+
+
+    if(model.Months[i]=="0"){
+
+    ui.monthIterator[i].isChecked==false;
+    ui.monthIterator[i].style= null;
+
+    }else{
+    ui.monthIterator[i].isChecked =  true;
+    ui.monthIterator[i].style= "/cwt/images/24/check.png";
+    }
+
+
+    }
+
+    for(var i=0; i< model.Days.length; i++){
+
+
+
+        if(i<=11){
+            if(model.Days[i]=="0"){
+
+                ui.dayRow1Iterator[i].isChecked=false;
+                ui.dayRow1Iterator[i].style= null;
+
+            }else{
+                ui.dayRow1Iterator[i].isChecked =  true;
+                ui.dayRow1Iterator[i].style= "/cwt/images/24/check.png";
+            }
+
+        }
+
+        if(i >= 12 && i <= 23){
+            if(model.Days[i]=="0"){
+
+                ui.dayRow2Iterator[i-12].isChecked=false;
+                ui.dayRow2Iterator[i-12].style= null;
+
+            }else{
+                ui.dayRow2Iterator[i-12].isChecked =  true;
+                ui.dayRow2Iterator[i-12].style= "/cwt/images/24/check.png";
+            }
+
+        }
+
+        if(i >= 24 &&i<= 31){
+            if(model.Days[i]=="0"){
+
+                ui.dayRow3Iterator[i-24].isChecked=false;
+                ui.dayRow3Iterator[i-24].style= null;
+
+            }else{
+                ui.dayRow3Iterator[i-24].isChecked =  true;
+                ui.dayRow3Iterator[i-24].style= "/cwt/images/24/check.png";
+            }
+
+        }
+
+
+    }
+
+    for(var i=0; i< model.Hours.length; i++){
+
+
+        if(i<=11){
+            if(model.Hours[i]=="0"){
+
+                ui.hourRow1Iterator[i].isChecked=false;
+                ui.hourRow1Iterator[i].style= null;
+
+            }else{
+                ui.hourRow1Iterator[i].isChecked =  true;
+                ui.hourRow1Iterator[i].style= "/cwt/images/24/check.png";
+            }
+
+        }
+
+        if(i >= 12 && i <= 23){
+            if(model.Hours[i]=="0"){
+
+                ui.hourRow2Iterator[i-12].isChecked=false;
+                ui.hourRow2Iterator[i-12].style= null;
+
+            }else{
+                ui.hourRow2Iterator[i-12].isChecked =  true;
+                ui.hourRow2Iterator[i-12].style= "/cwt/images/24/check.png";
+            }
+
+        }
+
+
+
+
+    }
+
+    for(var i=0; i< model.WeekDays.length; i++){
+
+    if(model.WeekDays[i]=="0"){
+
+    ui.weekDayIterator[i].isChecked==false;
+    ui.weekDayIterator[i].style= null;
+
+    }else{
+    ui.weekDayIterator[i].isChecked =  true;
+    ui.weekDayIterator[i].style= "/cwt/images/24/check.png";
+    }
+
+
+
+
+
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.getValueFromCT">
+  <label>Get Value From CT</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="CT" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="value" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="isName" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+     * Returns the description or name from a codeTable
+     *
+     * @author  Daniel Gomes
+     * @date    2014/07
+     *
+     * @param {string}      CT        (codeTable name)
+     * @param {string}      value     (string to search in codeTable)
+     * @param {string}      isName    (indicates if "value" is the name, or description)
+     *
+     * @return {string}     description/name, from CT
+     */
+
+    var codeTable = Global.getCTCodesAndDescriptions(CT);
+    for(var i = 0; i < codeTable.length; i++)
+    {
+        if(isName){
+            if(codeTable[i] == value)
+                return codeTable[i+1];
+        }else{
+            if(codeTable[i+1] == value)
+                return codeTable[i];
+        }
+    }
+    return null;
+  ]]></script>
+</script>

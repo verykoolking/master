@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TopUpOriginDestinationIteratorUI">
+  <group>Promotion</group>
+  <label>TopUpOriginDestinationIteratorUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TopUpOriginDestinationPair</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="TopUpOriginDestinationIteratorUIVL" type="elvlt">
+              <alignment>center,center</alignment>
+              <width>500px</width>
+              <elementList>
+                <element name="TopUpOriginDestinationIteratorUIGridLayout" type="elgrd">
+                  <alignment>center,center</alignment>
+                  <colWidths>50px</colWidths>
+                  <fixedColWidths>true</fixedColWidths>
+                  <numOfCols>3</numOfCols>
+                  <width>500px</width>
+                  <elementList>
+                    <element name="CellSpacer" type="elcsp">
+                      <width>80px</width>
+                    </element>
+                    <element name="TopUpOriginEnum" type="elslct">
+                      <label>Top Up Origin</label>
+                      <multiselect>false</multiselect>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.TopUpOriginDestinationIteratorUI/uimthd_setTopUpOriginTrigger</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <removeLabelLine>true</removeLabelLine>
+                      <showLabel>false</showLabel>
+                      <tooltipWidth>10</tooltipWidth>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.TopUpOriginDestinationIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.TopUpOriginDestinationPair/dstruct_TopUpOriginEnum</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100px</width>
+                    </element>
+                    <element name="TopUpDestinationEnum" type="elslct">
+                      <columnSpan>0</columnSpan>
+                      <label>Top Up Destination</label>
+                      <multiselect>false</multiselect>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.TopUpOriginDestinationIteratorUI/uimthd_setTopUpDestinationTrigger</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <removeLabelLine>true</removeLabelLine>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.TopUpOriginDestinationIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.TopUpOriginDestinationPair/dstruct_TopUpDestinationEnum</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100px</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="setTopUpOriginTrigger" type="uimthd">
+      <script>this.model.TopUpOrigin = this.model.TopUpOriginEnum;</script>
+    </method>
+    <method name="setTopUpDestinationTrigger" type="uimthd">
+      <script>this.model.TopUpDestination = this.model.TopUpDestinationEnum;</script>
+    </method>
+  </methodList>
+</userInterface>

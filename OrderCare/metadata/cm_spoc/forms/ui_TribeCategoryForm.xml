@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TribeCategoryForm">
+  <group>Tribes</group>
+  <label>TribeCategoryForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TribeCategory</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <visibilityMode>multiple</visibilityMode>
+                  <width>750px</width>
+                  <elementList>
+                    <element name="SectionCharacteristics" type="elsect">
+                      <removeLabelLine>true</removeLabelLine>
+                      <elementList>
+                        <element name="TribeCategory" type="elsecth">
+                          <label>TribeCategory</label>
+                        </element>
+                        <element name="layoutCharacteristics" type="elvlt">
+                          <alignment>right,center</alignment>
+                          <elementList>
+                            <element name="CategoryId" type="elfld">
+                              <cellAlignment>left,center</cellAlignment>
+                              <displayFormat>[0-9]{5}</displayFormat>
+                              <editable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TribeCategoryForm/permMethod_isPrimaryKey</variablePath>
+                                </variablePathList>
+                              </editable>
+                              <labeAlign>left</labeAlign>
+                              <label>Category ID</label>
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TribeCategoryForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.TribeCategory/dstruct_CategoryId</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="LayoutSpacer" type="ellsp">
+                              <height>5px</height>
+                            </element>
+                            <element name="CategoryDescription" type="elfld">
+                              <labeAlign>left</labeAlign>
+                              <label>Category Description</label>
+                              <labelOrientation>left</labelOrientation>
+                              <textAlign>left</textAlign>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TribeCategoryForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.TribeCategory/dstruct_CategoryDescription</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="LayoutSpacer2" type="ellsp">
+                              <height>5px</height>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$cwShowHover" type="laction">
+      <path>ui_com.conceptwave.system.UserInterface/leaf_cwShowHover</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        //var m = cm_spoc.initTribeCategory(this.model);
+        //return m;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="isPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+  </methodList>
+</userInterface>

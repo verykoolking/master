@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.caAACatalogItemData">
+  <highlight>66</highlight>
+  <label>CM-ACAA - Fill Process Data</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="itemCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="projectTopItens" type="rifp">
+      <array>true</array>
+      <type>doc_cm_plm.cwt_item</type>
+    </parameter>
+    <parameter name="mode" type="rifp">
+      <type>dtype_cm_aaca.nodesToBeConfiguredType</type>
+    </parameter>
+    <parameter name="strictMode" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cm_aaca.aacaGenData</valueType>
+  <script><![CDATA[
+    var RELATION_CONFIGURATION_TYPE = "NGAAConfigurationSpecification";
+    var RELATION_CONFIGURATION_ADAPTER_TYPE = "OCSAdapterConfigurationSpec";
+    var RELATION_CONFIGURATION_PARAMETER_TYPE = "OCSAdapterConfigParameter";
+    var AACA_APPLICATION = "AACA";
+    var AACA_USER = "acaa";
+    var SERVER_VERSION = Global.getConfigVariable("SERVER_VERSION");
+    if(SERVER_VERSION==null || SERVER_VERSION=='')
+        SERVER_VERSION = "All";
+    var AACA_VERSION = "1.0";
+    var ARRAY_TYPE = "#ARRAY#";
+    var ARRAY_ORDERED = "#ARRAY_ORD#";
+    var ARRAY_OPERATION = "#ARRAY_OPE#";
+
+    //Return Data
+    var retData = new cm_aaca.aacaGenData();
+
+    //Top Item Document
+    var itemDoc = new Document('cm_plm.cwt_item', itemCode);
+    var topItemCode = itemCode;
+    //Get Procedures to Invoke ands Configuration Mode
+    var operation = cm_aaca.caGetOperationFromItem(itemCode, projectCode);
+    var nodeType = (mode=='RE'?'R':'M');
+    var confResult = getItemConfiguration(itemCode, operation, nodeType);
+    //this item for this operation and this mode does not be to be configured in Altamira
+    if(confResult.length == 0 && mode==null) {
+        nodeType = 'R';
+        confResult = getItemConfiguration(itemCode, operation, nodeType);
+    }
+    if(confResult.length == 0)
+        return null;
+    //Procedures names
+    for(var i=0; i<confResult.length; i++)
+        retData.procedureName[retData.procedureName.length] = confResult[i].ProcedureName;
+    //Configuration Mode
+    var configurationMode = confResult[0].ConfigurationMode!=null?confResult[0].ConfigurationMode:'STANDALONE';
+
+
+    //Top Item Altamira PL Format
+    var topItem = new cm_aaca.AAConfigurableItem();
+    retData.aaItem = topItem;
+    topItem.cwCode = itemCode;
+    topItem.AAProjectID = projectCode;
+    topItem.AAApplication = AACA_APPLICATION;
+    topItem.AAProcedureVersion = AACA_VERSION;
+    topItem.AAUser = AACA_USER;
+    //Set top Item Name
+    var itemDocAttributes = cm_common.catalogGetNGAAItemAttributesDoc(itemCode, null, true, itemCode, topItemCode);
+    topItem.name = getSpecType(itemDocAttributes, itemDoc);
+    var onlyKeys = (operation == 'D');//IF IS DELETE ONLY SEND PRIMARY KEYS
+    //Fill Top Item
+    var attsAdded = fillItemAttributes(topItem.AAAttributeList, itemDocAttributes, itemDoc, onlyKeys, null);
+
+    if(attsAdded)
+        return retData;
+    else
+        return null;
+
+
+    //AUXILIAR FUNCTIONS
+
+    function fillItemAttributes(attListDS, itemDocAttributes, itemDocToProcess, onlyKeys, parentRelationType) {
+
+          var arrayType = cm_common.getArrayType(itemDocToProcess.itemCode);
+          var isArray = arrayType!=null;
+          var attsAdded = false;
+
+          //Mapp attributes only if entity not array
+          if(!isArray) {
+              for (var i = 0; i < itemDocAttributes.length; i++) {
+                    var attributeDoc = itemDocAttributes[i];
+                    //attributeDoc.loadNGAAAttributes();
+                    //0nly include attribute if: they if property sent to altamira and we are on correct version, and if onlyKey==true then only attributes who are primaryKey
+                    if (isToIncludeAttribute(attributeDoc, onlyKeys)) {
+                          var newAtt = null;
+                          if (attributeDoc.attributeType == 6) { // 6-Date attribute
+                                newAtt = new cm_aaca.AAAttributeDateTimeType();
+                                newAtt.dateTime = cm_common.aaFormatDate(attributeDoc.defaultValue, '-', true, 'T');
+                                attListDS.AAAttributeDateTime[attListDS.AAAttributeDateTime.length] = newAtt;
+                          } else if (attributeDoc.attributeType == 4) { // 4-Boolean attribute
+                                newAtt = new cm_aaca.AAAttributeBooleanType();
+                                newAtt.boolean = attributeDoc.defaultValue;
+                                attListDS.AAAttributeBoolean[attListDS.AAAttributeBoolean.length] = newAtt;
+                          } else {  // 0-String or 3-Number or 7-CodeTable attribute
+                                newAtt = new cm_aaca.AAAttributeGenericType();
+                                newAtt.string = attributeDoc.defaultValue;
+                                attListDS.AAAttributeGeneric[attListDS.AAAttributeGeneric.length] = newAtt;
+                          }
+                          newAtt.name = attributeDoc.name;
+                          attsAdded = true;
+                    }
+              }
+          }
+
+
+          //in case of an array where order matter, we get relations ordered
+          var itemDocRelations = cm_common.catalogGetItemRelationsDoc(itemDocToProcess.itemCode, null, true, isArray);
+
+          for (var i = 0; i < itemDocRelations.length; i++) {
+
+                var relationItemDoc = cm_common.catalogGetItemDoc(itemDocRelations[i].itemRelationTarget, true);
+                var relationType = itemDocRelations[i].type;
+
+                //scope relations we need to process primary keys also
+                if(relationType=='scope') {
+
+                    var childItemDocAttributes = cm_common.catalogGetNGAAItemAttributesDoc(relationItemDoc.itemCode, null, true, itemDocToProcess.itemCode, topItemCode);
+                    var specType = getSpecType(childItemDocAttributes, relationItemDoc);
+                    var previousOperation = operation;
+                    var previousOnlyKeys = onlyKeys;
+
+                    if(relationItemDoc.status=='DEF' && operation!='D') {
+                        operation = 'C';
+                        onlyKeys = false;
+                    }
+
+                    var ChildItem = new cm_aaca.AAItemType();
+                    ChildItem.name = specType;
+
+                    if(fillItemAttributes(ChildItem, childItemDocAttributes, relationItemDoc, onlyKeys, null)) {
+                        attListDS.AAItem[attListDS.AAItem.length] = ChildItem;
+                        attsAdded = true;
+                    }
+
+                    if(relationItemDoc.status=='DEF' && operation!='D') {
+                        operation = previousOperation;
+                        onlyKeys = previousOnlyKeys;
+                    }
+
+                }
+                else if(!onlyKeys) {
+
+                    var childItemDocAttributes = cm_common.catalogGetNGAAItemAttributesDoc(relationItemDoc.itemCode, null, true, itemDocToProcess.itemCode, topItemCode);
+
+                    var specType = getSpecType(childItemDocAttributes, relationItemDoc);
+                    var relationToArrayType = cm_common.getArrayType(relationItemDoc.itemCode);
+                    var isRelationToArray = relationToArrayType!=null;
+
+                    //if this relation leads to an array then we must include, no matter what type of relation
+                    if(isRelationToArray) {
+
+                        var ChildItem = new cm_aaca.AAItemType();
+                        ChildItem.name = specType;
+
+                        var ArrayItem = null;
+                        //is relation to operation array
+                        if(relationToArrayType == ARRAY_OPERATION) {
+                            ArrayItem = new cm_aaca.AAArrayOpeType();
+                            ChildItem.AAArrayOpe[attListDS.AAArrayOpe.length] = ArrayItem;
+                        }
+                        //is relation to ordered array
+                        else if(relationToArrayType == ARRAY_ORDERED) {
+                            ArrayItem = new cm_aaca.AAArrayOrdType();
+                            ChildItem.AAArrayOrd[attListDS.AAArrayOrd.length] = ArrayItem;
+                        }
+                        else {
+                            ArrayItem = new cm_aaca.AAArrayType();
+                            ChildItem.AAArray[attListDS.AAArray.length] = ArrayItem;
+                        }
+                        ArrayItem.name = specType;
+
+                        if(fillItemAttributes(ArrayItem, null, relationItemDoc, false, relationType)) {
+                            attListDS.AAItem[attListDS.AAItem.length] = ChildItem;
+                            attsAdded = true;
+                        }
+                    }
+                    else {
+                        var ChildItem = new cm_aaca.AAItemType();
+                        ChildItem.name = specType;
+                        var ArrayChild = null;
+                        var childOnlyKeys = onlyKeys;
+
+                        //if its an array we need to map itds childs relation, but not its child attributes
+                        if(isArray) {
+                            //is operation array
+                            if(arrayType == ARRAY_OPERATION) {
+                                ArrayChild = new cm_aaca.AAArrayOpeRowType();
+
+                                var addedRelations = cm_common.getAddedArrayRelations(itemDocToProcess.itemCode, projectCode);
+                                var deletedRelations = cm_common.getDeletedArrayRelations(itemDocToProcess.itemCode, projectCode);
+
+                                var reOp = '';
+                                if(isDocInArray(relationItemDoc.itemCode, addedRelations))
+                                    reOp = 'A';
+                                else if(isDocInArray(relationItemDoc.itemCode, deletedRelations))
+                                    reOp = 'D';
+                                ArrayChild.ArrayOperation = reOp;
+                            }
+                            else {
+                                ArrayChild = new cm_aaca.AAArrayRowType();
+                            }
+                            //ordering all arrays even if it's not needed because it was defined like that, and what's defined can not change.
+                            ArrayChild.pos = (i+1);
+
+                            childOnlyKeys = (parentRelationType != 'contains');
+                            ArrayChild.AAItem[0] = ChildItem;
+                        }
+                        else {
+                            childOnlyKeys = (relationType != 'contains');
+                        }
+
+                        //if only keys then we cant read DEF attributes form child item, unless it belongs to the same project
+                        if(childOnlyKeys && !isItemInSameProject(relationItemDoc.itemCode))
+                            childItemDocAttributes = cm_common.catalogGetNGAAItemAttributesDoc(relationItemDoc.itemCode, null, false, itemDocToProcess.itemCode, topItemCode);
+
+                        if(fillItemAttributes(ChildItem, childItemDocAttributes, relationItemDoc, childOnlyKeys, null)) {
+                            if(isArray)
+                                attListDS.AAArrayRow[attListDS.AAArrayRow.length] = ArrayChild;
+                            else
+                                attListDS.AAItem[attListDS.AAItem.length] = ChildItem;
+                            attsAdded = true;
+
+                            //If child has dependent configuration then the child item is already dependent on this item, otherwise this one is dependent on the child
+                            if(childOnlyKeys && isItemInSameProject(relationItemDoc.itemCode)) {
+                                var relItemOperation = cm_aaca.caGetOperationFromItem(relationItemDoc.itemCode);
+                                var confResult = getItemConfiguration(relationItemDoc.itemCode, relItemOperation, nodeType);
+                                var relItemConfigurationMode = (confResult.length>0 && confResult[0].ConfigurationMode!=null)?confResult[0].ConfigurationMode:'STANDALONE';
+                                if(relItemConfigurationMode=='STANDALONE')
+                                    addToArray(relationItemDoc.itemCode, retData.dependsItems);
+                            }
+                        }
+                    }
+                }
+            }
+
+          //process dependent mode for main item
+          if(!onlyKeys && itemDocToProcess.itemCode == topItemCode && configurationMode == 'DEPENDENT') {
+
+              //we can only get parents that are in same project
+              var parentItens = cm_common.getAlIRelatedToTopItems(itemDocToProcess.itemCode, 'dependent');
+              for (var i = 0; i < parentItens.length; i++) {
+
+                    //we can only read DEF attributes if object is in same project
+                    var childItemDocAttributes = cm_common.catalogGetNGAAItemAttributesDoc(relationItemDoc.itemCode, null, isItemInSameProject(relationItemDoc.itemCode), itemDocToProcess.itemCode, topItemCode);
+
+                    var ChildItem = new cm_aaca.AAItemType();
+                    ChildItem.name = getSpecType(childItemDocAttributes, relationItemDoc);
+
+                    if(fillItemAttributes(ChildItem, childItemDocAttributes, relationItemDoc, true, null)) {
+                        attListDS.AAItem[attListDS.AAItem.length] = ChildItem;
+                        attsAdded = true;
+                        addToArray(parentItens[i].itemCode, retData.dependsItems);
+                    }
+              }
+          }
+          return attsAdded;
+    }
+
+    function getItemConfiguration(itemCode, operation, nodeType) {
+        var confFinder = new cm_aaca.caConfigurationFinder();
+        confFinder.searchDocument.itemCode = itemCode;
+        confFinder.searchDocument.operation = operation;
+        confFinder.searchDocument.nodeType = nodeType;
+        var confResult = confFinder.search();
+        return confResult;
+    }
+
+
+    function getSpecType(attributeList, itemDoc) {
+        for (var j = 0; j < attributeList.length; j++)
+            if(attributeList[j].itemAttributeCode=='specificationSubType' && attributeList[j].defaultValue!=null)
+                return attributeList[j].defaultValue;
+        return itemDoc.baseItemCode.itemCode.substring(5);
+    }
+
+
+    function isToIncludeAttribute(attDoc, onlyKeys) {
+
+        //not to be sent to AA
+        if(!attDoc.isSent2Altamira) return false;
+        //if(onlyKeys && !attDoc.isPrimaryKey) return false; //this validation is probably not needed anymore since now the rules onsider the parent
+        if(operation == 'D' && onlyKeys && !attDoc.isPrimaryKey) return false;
+        if(operation == 'C' && (attDoc.defaultValue==null || attDoc.defaultValue=='')) return false;
+        if(operation == 'U' && !attDoc.isPrimaryKey && attDoc.status=='ACT') return false;
+
+        var versions = Global.getAllCodes('cm_plm.aaReleaseType');
+        var serverVersion = -1;
+        var attREVersion = -1;
+        var attMSVersion = -1;
+        for(var i=0; i<versions.length; i++) {
+            if(versions[i]==SERVER_VERSION) serverVersion = i;
+            if(versions[i]==attDoc.RE_Release) attREVersion = i;
+            if(versions[i]==attDoc.MS_Release) attMSVersion = i;
+        }
+
+        if(strictMode && mode=='RE' && attREVersion==-1) return false;
+        if(strictMode && mode=='MS' && attMSVersion==-1) return false;
+
+        if(mode=='RE' && attREVersion>=0 && SERVER_VERSION=='All') return true;
+        if(mode=='MS' && attMSVersion>=0 && SERVER_VERSION=='All') return true;
+
+        if(mode=='RE' && attDoc.RE_Release=='All') return true;
+        if(mode=='MS' && attDoc.MS_Release=='All') return true;
+
+        if(strictMode && mode=='RE' && serverVersion>attREVersion) return false;
+        if(strictMode && mode=='MS' && serverVersion>attMSVersion) return false;
+
+        if(!strictMode && attREVersion==-1 && attMSVersion==-1) return false;
+        if(!strictMode && (attREVersion>=0 || attREVersion>=0) && SERVER_VERSION=='All') return true;
+        if(!strictMode && (attDoc.RE_Release=='All' || attDoc.MS_Release=='All')) return true;
+
+
+        return true;
+    }
+
+    function addToArray(value, array) {
+        var found = false;
+        for(var i=0; i<array.length; i++) {
+            if(array[i] == value) {
+                found = true;
+                break;
+            }
+        }
+        if(!found)
+            array[array.length] = value;
+    }
+
+    function isItemInSameProject(itemCode) {
+        for(var i=0; i<projectTopItens.length; i++) {
+            if(projectTopItens[i].itemCode == itemCode)
+                return true;
+        }
+        return false;
+    }
+
+    function isDocInArray(itemCode, itemRelArray) {
+        for(var i=0; i<itemRelArray.length; i++) {
+            if(itemRelArray[i].itemRelationTarget == itemCode)
+                return true;
+        }
+        return false;
+    }
+  ]]></script>
+</script>

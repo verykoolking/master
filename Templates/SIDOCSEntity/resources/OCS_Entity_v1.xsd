@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:tns="http://www.telefonica.com/schemas/SOAP/OCSEntity/v1/types"
+xmlns:po="http://www.tmforum.org/xml/sid/org/tmforum/tip/product/offer"
+xmlns:pop="http://www.tmforum.org/xml/sid/org/tmforum/tip/product/offer/price"
+xmlns:ps="http://www.tmforum.org/xml/sid/org/tmforum/tip/product/spec"
+xmlns:cfs="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/spec/cfs"
+xmlns:pr="http://www.tmforum.org/xml/sid/org/tmforum/tip/product/prod"
+xmlns:pp="http://www.tmforum.org/xml/sid/org/tmforum/tip/product/prod/price"
+xmlns:ser="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/cfs"
+xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity"
+targetNamespace="http://www.telefonica.com/schemas/SOAP/OCSEntity/v1/types" elementFormDefault="qualified">
+
+
+	<!-- <xsd:annotation><xsd:documentation><p>
+
+	XSD FOR OCS ENTITY CONFIGURATION
+	=========================================================================
+	
+	Last changes (2014-07-16):
+	- Included ConfigurationStatusType
+	- Added attribute "orderId" to ArrayOfCharacteristicValueType
+	- Added attribute "orderId" to ArrayOfRelationItemType
+	- Telefonica namespaces URI corrected
+	- xsd:element name="item" minOcurrs=0 in RelationType, to allow deleting the whole relation or complexCharacteristic with changeEntity.
+	- xsd:element name="item" minOcurrs=0 in ArrayOfComplexCharacteristicValueType, to allow deleting the whole complexCharacteristic with changeEntity. 
+	- Added isUpdatable, CharacteristicValueType
+	- "orderId" changes to "position"
+
+	Previous changes (2014-06-12)
+	- Included 'isOrdered' attribute for 'complexCharacteristic' element (ArrayOfComplexCharacteristicValueType).
+	- Included 'individualItemUpdate' attribute for 'complexCharacteristic' and 'relation' elements. It is optional, and defaults false.
+	- Included 'operation' attribute for the 'item' element inside 'complexCharacteristic' and 'relation', in order to define whether the operation is Add ('A') or Delete ('D') when included the individualItemUpdate attribute with value 'true'.
+
+	</p></xsd:documentation></xsd:annotation> -->
+
+
+
+ 	<!-- SID imports -->
+    <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/product/offer"  schemaLocation="sid_org_tmforum_tip_product_offer.xsd" />
+    <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/product/offer/price" schemaLocation="sid_org_tmforum_tip_product_offer_price.xsd" />
+    <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/product/spec"      schemaLocation="sid_org_tmforum_tip_product_spec.xsd" />
+    <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/spec/cfs"  schemaLocation="sid_org_tmforum_tip_service_spec_cfs.xsd" />
+    <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/product/prod"      schemaLocation="sid_org_tmforum_tip_product_prod.xsd" />
+    <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/product/prod/price" schemaLocation="sid_org_tmforum_tip_product_prod_price.xsd" />
+    <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/cfs" schemaLocation="sid_org_tmforum_tip_service_serv_cfs.xsd" />
+    <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd" />
+    <!--
+	<xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/>
+	-->
+	<!-- Element root that should be removed here, just for examples -->
+	<xsd:element name="oCSEntityList" type="tns:ArrayOfOCSEntityType"/>
+	<!-- Complex type definitions -->
+	<xsd:complexType name="ArrayOfOCSProductOfferingType">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:OCSProductOfferingType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OCSProductOfferingType">
+		<xsd:complexContent>
+			<xsd:extension base="po:ProductOffering">
+				<xsd:sequence>
+					<!-- identifiers inherited from EntityBase
+          <xsd:element name="identifier" type="EntityIdentifier" minOccurs="1" maxOccurs="1"/>
+          -->
+					<!-- identifiers inherited from ProductOffering
+          <xsd:element name="id" type="xsd:string" minOccurs="0" maxOccurs="1">
+          <xsd:element name="name" type="xsd:string" minOccurs="0" maxOccurs="1">
+          <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1">
+          <xsd:element name="validFor" type="base:TimePeriod" minOccurs="0" maxOccurs="1">
+          <xsd:element name="status" type="xsd:string" minOccurs="0" maxOccurs="1">
+          -->
+					<xsd:element name="type" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="oCSProductSpecCharValueUse" type="tns:ArrayOfCharacteristicValueType" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="relations" type="tns:ArrayOfRelationType" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfOCSBundledProductOfferingType">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:OCSBundledProductOfferingType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OCSBundledProductOfferingType">
+		<xsd:complexContent>
+			<xsd:extension base="po:BundledProductOffering">
+				<xsd:sequence>
+					<!-- identifiers inherited from EntityBase
+          <xsd:element name="identifier" type="EntityIdentifier" minOccurs="1" maxOccurs="1"/>
+          -->
+					<!-- identifiers inherited from ProductOffering
+          <xsd:element name="id" type="xsd:string" minOccurs="0" maxOccurs="1">
+          <xsd:element name="name" type="xsd:string" minOccurs="0" maxOccurs="1">
+          <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1">
+          <xsd:element name="validFor" type="base:TimePeriod" minOccurs="0" maxOccurs="1">
+          <xsd:element name="status" type="xsd:string" minOccurs="0" maxOccurs="1">
+          -->
+					<xsd:element name="type" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="oCSProductSpecCharValueUse" type="tns:ArrayOfCharacteristicValueType" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="relations" type="tns:ArrayOfRelationType" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="oCSProductOffering" type="tns:ArrayOfOCSProductOfferingType" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfOCSProductSpecificationType">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:OCSProductSpecificationType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OCSProductSpecificationType">
+		<xsd:complexContent>
+			<xsd:extension base="ps:ProductSpecification">
+				<xsd:sequence>
+					<!-- identifiers inherited from EntityBase
+          <xsd:element name="identifier" type="EntityIdentifier" minOccurs="1" maxOccurs="1"/>
+          -->
+					<!-- identifiers inherited from ProductSpecification
+          <xsd:element name="name" type="xsd:string" minOccurs="0" maxOccurs="1">
+          <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1">
+          <xsd:element name="productNumber" type="xsd:string" minOccurs="0" maxOccurs="1">
+          <xsd:element name="brand" type="xsd:string" minOccurs="0" maxOccurs="1">
+          <xsd:element name="validFor" type="base:TimePeriod" minOccurs="0" maxOccurs="1">
+          <xsd:element name="lifecycleStatus" type="xsd:string" minOccurs="0" maxOccurs="1">
+          -->
+					<xsd:element name="type" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="oCSProductSpecCharacteristic" type="tns:ArrayOfCharacteristicValueType" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="relations" type="tns:ArrayOfRelationType" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfOCSPriceEventType">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:OCSPriceEventType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OCSPriceEventType">
+		<xsd:complexContent>
+			<xsd:extension base="pop:PriceEvent">
+				<xsd:sequence>
+					<!-- identifiers inherited from EntityBase
+          <xsd:element name="identifier" type="EntityIdentifier" minOccurs="1" maxOccurs="1"/>
+          -->
+					<!-- identifiers inherited from PriceEvent
+          -->
+					<xsd:element name="type" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="oCSPriceEventCharacteristic" type="tns:ArrayOfCharacteristicValueType" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="relations" type="tns:ArrayOfRelationType" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfOCSComponentProdOfferPriceType">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:OCSComponentProdOfferPriceType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OCSComponentProdOfferPriceType">
+		<xsd:complexContent>
+			<xsd:extension base="pop:ComponentProdOfferPrice">
+				<xsd:sequence>
+					<!-- identifiers inherited from EntityBase
+          <xsd:element name="identifier" type="EntityIdentifier" minOccurs="1" maxOccurs="1"/>
+          -->
+					<!-- identifiers inherited from ProductOfferingPrice
+          <xsd:element name="name" type="xsd:string" minOccurs="0" maxOccurs="1">
+          <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1">
+          <xsd:element name="validFor" type="base:TimePeriod" minOccurs="0" maxOccurs="1">
+          -->
+					<!-- identifiers inherited from ComponentProdOfferPrice
+          <xsd:element name="unitOfMeasure" type="base:Quantity" minOccurs="0" maxOccurs="1">
+          <xsd:element name="price" type="base:Money" minOccurs="0" maxOccurs="1">
+          -->
+					<xsd:element name="oCSPrice" type="tns:MonetaryType" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="type" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="oCSProdOfferPriceCharacteristic" type="tns:ArrayOfCharacteristicValueType" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="relations" type="tns:ArrayOfRelationType" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfOCSCustomerFacingServiceSpecType">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:OCSCustomerFacingServiceSpecType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OCSCustomerFacingServiceSpecType">
+		<xsd:complexContent>
+			<xsd:extension base="cfs:CustomerFacingServiceSpec">
+				<xsd:sequence>
+					<!-- identifiers inherited from EntityBase
+          <xsd:element name="identifier" type="EntityIdentifier" minOccurs="1" maxOccurs="1"/>
+          -->
+					<!-- identifiers inherited from ServiceSpecification
+          -->
+					<!-- identifiers inherited from CustomerFacingServiceSpec
+          -->
+					<xsd:element name="type" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="name" type="xsd:string" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								<p>A word, term, or phrase by which the CustomerFacingServiceSpec is known and distinguished from other CustomerFacingServiceSpec</p>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								<p>A narrative that explains what the customer facing service specification is</p>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="oCSServiceSpecCharacteristic" type="tns:ArrayOfCharacteristicValueType" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="relations" type="tns:ArrayOfRelationType" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfOCSProductType">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:OCSProductType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OCSProductType">
+		<xsd:complexContent>
+			<xsd:extension base="pr:Product">
+				<xsd:sequence>
+					<!-- identifiers inherited from EntityBase
+          <xsd:element name="identifier" type="EntityIdentifier" minOccurs="1" maxOccurs="1"/>
+          -->
+					<!-- identifiers inherited from Product
+          <xsd:element name="name" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="productStatus" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="productSerialNumber" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="validFor" type="base:TimePeriod" minOccurs="0" maxOccurs="1"/>
+          -->
+					<xsd:element name="type" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="oCSProductCharacteristicValue" type="tns:ArrayOfCharacteristicValueType" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="relations" type="tns:ArrayOfRelationType" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfOCSComponentProdPriceType">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:OCSComponentProdPriceType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OCSComponentProdPriceType">
+		<xsd:complexContent>
+			<xsd:extension base="pp:ComponentProdPrice">
+				<xsd:sequence>
+					<!-- identifiers inherited from EntityBase
+          <xsd:element name="identifier" type="EntityIdentifier" minOccurs="1" maxOccurs="1"/>
+          -->
+					<!-- attributes inherited from ProductPrice
+          <xsd:element name="name" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="validFor" type="base:TimePeriod" minOccurs="0" maxOccurs="1"/>
+          -->
+					<!-- identifiers inherited from ComponentProdPrice
+          <xsd:element name="unitOfMeasure" type="base:Quantity" minOccurs="0" maxOccurs="1">
+          <xsd:element name="price" type="base:Money" minOccurs="0" maxOccurs="1">
+          -->
+					<xsd:element name="oCSPrice" type="tns:MonetaryType" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="type" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="oCSProdPriceCharacteristic" type="tns:ArrayOfCharacteristicValueType" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="relations" type="tns:ArrayOfRelationType" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfOCSCustomerFacingServiceType">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:OCSCustomerFacingServiceType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OCSCustomerFacingServiceType">
+		<xsd:complexContent>
+			<xsd:extension base="ser:CustomerFacingService">
+				<xsd:sequence>
+					<!-- identifiers inherited from EntityBase
+          <xsd:element name="identifier" type="EntityIdentifier" minOccurs="1" maxOccurs="1"/>
+          -->
+					<!-- identifiers inherited from ServiceSpecification
+          -->
+					<!-- identifiers inherited from CustomerFacingServiceSpec
+          -->
+					<xsd:element name="type" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="oCSServiceCharacteristicValue" type="tns:ArrayOfCharacteristicValueType" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="relations" type="tns:ArrayOfRelationType" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<!-- characteristic type definitions -->
+	<xsd:complexType name="ArrayOfCharacteristicValueType" mixed="true">
+		<xsd:sequence>
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>List of complex and simple attributes</p>
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:element name="characteristic" type="tns:CharacteristicValueType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="complexCharacteristic" type="tns:ArrayOfComplexCharacteristicValueType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="relations" type="tns:ArrayOfRelationType" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="position" type="xsd:string" use="optional" default="0">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Attribute indicating the position of the item in the ordered complex characteristic list (when isOrdered=true for the item in ArrayOfComplexCharacteristicValueType).</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="operation" type="tns:ItemOperationType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Attribute indicating if the operation for the 'item' elements is Add ('A') or Delete ('D').</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfComplexCharacteristicValueType" mixed="true">
+		<xsd:sequence>
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>List of items and relations of the same complex attribute (allows recursion for including complex or simple attributes)</p>
+				</xsd:documentation>
+			</xsd:annotation>
+            <xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="item" type="tns:ArrayOfCharacteristicValueType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="minOccurs" type="xsd:string" use="optional" default="0">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Minimum number of occurrences of this attribute</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="maxOccurs" type="xsd:string" use="optional" default="unbounded">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Maximum number of occurrences of this attribute</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="isOrdered" type="xsd:boolean" use="optional" default="false">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>If true, it indicates that the items of the complexCharacteristic are ordered and therefore the order is relevant.</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="individualItemUpdate" type="xsd:boolean" use="optional" default="false">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>If true, it indicates that the items inside are the only one affected by a change operation (Add of Delete), and not all of them in the entity.
+						If true, besides, an attribute 'operation' must be included in the 'item' element with two possible values: 'A' (Add) or 'D' (Delete).</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="CharacteristicValueType" mixed="true">
+		<xsd:annotation>
+			<xsd:documentation>
+				<p>Simple attribute definition</p>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+            <xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Type of the attribute</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="isOverride" type="xsd:boolean" use="optional" default="false">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Flag indicating that the attribute can be overwritten during provisioning</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="defaultValue" type="xsd:string" use="optional" default="">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Default value of the attribute</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="isUpdatable" type="xsd:boolean" use="optional" default="true">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>If true it indicates if the characteristic can be modified </p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="maxLength" type="xsd:long" use="optional" default="10">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Maximum length for string attributes</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="totalDigits" type="xsd:long" use="optional" default="10">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Total number of digits for number attributes</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="fractionDigits" type="xsd:long" use="optional" default="0">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Number of fractional digits for number attributes</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="minValue" type="xsd:long" use="optional" default="0">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Minimum value for number attributes</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="maxValue" type="xsd:long" use="optional" default="2147483647">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Maximum value for number attributes</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="minOccurs" type="xsd:string" use="optional" default="0">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Minimum number of occurrences of this attribute</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="maxOccurs" type="xsd:string" use="optional" default="unbounded">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Maximum number of occurrences of this attribute</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="enumValues" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>List of valid values for enumerations separated by semicolon (e.g. "1;3;5")</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!-- relation type definitions -->
+	<xsd:complexType name="ArrayOfRelationType">
+		<xsd:sequence>
+			<xsd:element name="relation" type="tns:RelationType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfRelationItemType" mixed="true">
+		<xsd:sequence>
+			<xsd:element name="target" type="entity:EntityIdentifier" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>
+						<p>Identifier of the target entity</p>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="associationEntity" type="tns:OCSEntityType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>
+						<p>Association entity</p>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="position" type="xsd:string" use="optional" default="0">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Attribute indicating the position of the item in the ordered relation list (when isOrdered=true for the item in RelationType).</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="operation" type="tns:ItemOperationType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Attribute indicating if the operation for the 'item' elements is Add ('A') or Delete ('D').</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:simpleType name="ItemOperationType">
+		<xsd:restriction base="xsd:string">
+            <xsd:enumeration value="A"/>
+            <xsd:enumeration value="D"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="RelationType" mixed="true">
+		<xsd:sequence>
+			<xsd:element name="item" type="tns:ArrayOfRelationItemType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>
+						<p>Relation item</p>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Name of the relation</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="oCSTargetEntityType" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>The target OCS entity type</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="oCSAssociationEntityType" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>The OCS association entity type (optional)</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="minOccurs" type="xsd:string" use="optional" default="0">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Minimum cardinality of the relationship</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="maxOccurs" type="xsd:string" use="optional" default="unbounded">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Maximum cardinality of the relationship</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="isOrdered" type="xsd:boolean" use="optional" default="false">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>If true, it indicates that the items of the relation are ordered and therefore the order is relevant.</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="individualItemUpdate" type="xsd:boolean" use="optional" default="false">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>If true, it indicates that the items inside are the only one affected by a change operation (Add of Delete), and not all of them in the entity.
+						If true, besides, an attribute 'operation' must be included in the 'item' element with two possible values: 'A' (Add) or 'D' (Delete).</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<!-- Monetary type definition -->
+    <xsd:complexType name="MonetaryType">
+        <xsd:simpleContent>
+            <xsd:extension base="tns:UnitValueType">
+				<!-- Future compatibility -->
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="UnitValueType">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:long">
+                <xsd:attribute name="exponent" type="xsd:int"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+	<!-- general entity type definition -->
+	<xsd:complexType name="OCSEntityType">
+		<xsd:choice>
+			<xsd:element name="oCSPriceEvent" type="tns:OCSPriceEventType"/>
+			<xsd:element name="oCSComponentProdOfferPrice" type="tns:OCSComponentProdOfferPriceType"/>
+			<xsd:element name="oCSProductOffering" type="tns:OCSProductOfferingType"/>
+			<xsd:element name="oCSBundledProductOffering" type="tns:OCSBundledProductOfferingType"/>
+			<xsd:element name="oCSProductSpecification" type="tns:OCSProductSpecificationType"/>
+			<xsd:element name="oCSCustomerFacingServiceSpec" type="tns:OCSCustomerFacingServiceSpecType"/>
+			<xsd:element name="oCSProduct" type="tns:OCSProductType"/>
+			<xsd:element name="oCSComponentProdPrice" type="tns:OCSComponentProdPriceType"/>
+			<xsd:element name="oCSCustomerFacingService" type="tns:OCSCustomerFacingServiceType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfOCSEntityType">
+		<xsd:sequence>
+			<xsd:element name="oCSEntity" type="tns:OCSEntityType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OCSEntityStatusType">
+		<xsd:choice>
+			<xsd:element name="oCSEntity" type="tns:OCSEntityType"/>
+			<xsd:element name="entityStatus" type="xsd:string"/>
+			<xsd:element name="lastStateChangeDate" type="xsd:dateTime"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayOfOCSEntityStatusType">
+		<xsd:sequence>
+			<xsd:element name="oCSEntityStatus" type="tns:OCSEntityStatusType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+		<xsd:complexType name="ConfigurationStatusType">
+		<xsd:sequence>
+			<xsd:element name="sessionId" type="xsd:string"/>
+			<xsd:element name="lifecycleStatus" type="xsd:string"/>
+			<xsd:element name="lastStateChangeDate" type="xsd:dateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

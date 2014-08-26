@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BoltOnValidityOfferCondRule">
+  <group>rules_scripts.BoltOn</group>
+  <label>rule_BoltOnValidityOfferCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>dstruct_cm_spoc.data.BoltOn</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+     * data=cm_spoc.data.BoltOn
+    */
+     var bovods = data;
+
+     if ( ( bovods.StartTime || bovods.EndTime ) && !(bovods.BoltOnValidityModality == "V_DATES") ) {
+
+        //return true;
+         errList.addErrorMessage(data,["Start date, End Date", "Validity Modality is not date range"],"NGAA_EPC_002","E");
+
+     } else if ( ( bovods.Days || bovods.Hours || bovods.Minutes ) && !(bovods.BoltOnValidityModality == "V_TIME") ) {
+
+        // return true;
+         errList.addErrorMessage(data,["Days, Hours, Minutes", "Validity Modality is not time period"],"NGAA_EPC_002","E");
+
+     }  else if ( ( bovods.CalendarDate ) && !(bovods.BoltOnValidityModality == "V_CALENDAR") ) {
+
+        // return true;
+        errList.addErrorMessage(data,["Calendar", "Validity Modality is not calendar date"],"NGAA_EPC_002","E");
+
+
+     } else {
+
+         return false;
+
+     }
+  ]]></script>
+</script>

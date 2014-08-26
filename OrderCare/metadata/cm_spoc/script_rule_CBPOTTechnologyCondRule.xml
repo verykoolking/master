@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_CBPOTTechnologyCondRule">
+  <group>rules_scripts.Operation</group>
+  <label>rule_CBPOTTechnologyCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var lg=data.ListDS.length;
+    var entity=data.ListDS;//.ConstraintByPlanOrTechnolog;
+    var ContOP=0;
+    var ContSer=0;
+
+    if (lg > 0){
+        for (var i=0; i<lg; i++)
+        {
+            if (entity[i].Technology!=null && entity[i].BanningByTechnologyOrByTP!="T"){
+                ContOP++;
+            }
+         }
+
+        if (ContOP>0){
+        errList.addErrorMessage(data,["Technology must be empty when Banning isn't T."],"NGAA_003","E");
+        }
+    }
+    return;
+  ]]></script>
+</script>

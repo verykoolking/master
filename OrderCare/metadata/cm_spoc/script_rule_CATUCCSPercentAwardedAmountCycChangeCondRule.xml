@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_CATUCCSPercentAwardedAmountCycChangeCondRule">
+  <group>rules_scripts.CyclicActions</group>
+  <label>rule_CATUCCSPercentAwardedAmountCycChangeCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(data.PercentAwardedAmountCycleChange && data.TopUpAmount == null){
+        errList.addErrorMessage(data,["Percentage of the awarded amount can't be save if Top Up Amount is empty."],"NGAA_003","E");
+    }
+    return;
+  ]]></script>
+</script>

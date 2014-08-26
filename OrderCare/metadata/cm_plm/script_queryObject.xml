@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.queryObject">
+  <group>applicabilityCondition.api</group>
+  <label>queryObject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="object" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.baseObject</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        if(object instanceof cm_plm.AppBoltonTypeGroupLIst)
+            return cm_plm.queryAppBoltonTypeGroupList(object);
+        else if(object instanceof cm_plm.DestTypeAssoTariffClassList)
+            return cm_plm.queryDestTypeAssoTariffClassList(object);
+        else if(object instanceof cm_plm.Nx24AppBoltonType)
+            return cm_plm.queryNx24AppBoltonType(object)
+        else if(object instanceof cm_plm.Nx24AppBoltonTypeList)
+            return cm_plm.queryNx24AppBoltonTypeList(object);
+        else
+            return api_common.createFault("ERR", "The object type is not supported!");
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

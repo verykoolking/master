@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initUsageControlBoltOnAssociatiForm">
+  <group>ui_scripts.UsageControl.UCBoltOnTypeAssociation.init</group>
+  <label>initUsageControlBoltOnAssociatiForm</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!model.specificationCode){
+        model = cm_spoc.initModelForCreation(model);
+    }else{
+        model = cm_spoc.initModelForModification(model);
+
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        s.specificationCode = model.UCBOASUCBoltOnTypeAssArr;
+        var r = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(r)){
+            model.UCBOASUCBoltOnTypeAssArrDS=r;
+        }
+
+
+        var ucbota =  model.UCBOASUCBoltOnTypeAssArrDS.List;
+        var ucbotaDS= model.UCBOASUCBoltOnTypeAssArrDS.ListDS;
+        for(var i=0;i<ucbota.length;i++){
+            s.specificationCode = ucbota[i];
+
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                ucbotaDS[i]=r;
+                ucbotaDS[i].BoltOnTypeModEnum = ucbotaDS[i].BoltOnType;
+                ucbotaDS[i].ThresholdEnum = ucbotaDS[i].Threshold;
+            }
+        }
+
+    }
+    return model;
+  ]]></script>
+</script>

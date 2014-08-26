@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.discardACProject">
+  <group>applicabilityCondition.scripts</group>
+  <label>discardACProject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        if(cm_plm.isProjectActive(projectCode)){
+            Global.runDBUpdate("CATALOG", "delete from NGAA_PROJECTASSIGNMENT where projectCode = '" + projectCode + "'" );
+            Global.runDBUpdate("CATALOG", "delete from NGAA_APPBOLTONTYPEGROUP where projectCode = '" + projectCode + "'" );
+            Global.runDBUpdate("CATALOG", "delete from NGAA_DESTTYPEASSOTARIFFCLASS where projectCode = '" + projectCode + "'" );
+            Global.runDBUpdate("CATALOG", "delete from NGAA_NX24APPBOLTONTYPE where projectCode = '" + projectCode + "'" );
+            Global.runDBUpdate("CATALOG", "delete from NGAA_NX24APPBOLTONTYPELIST where projectCode = '" + projectCode + "'" );
+        }else
+            return api_common.createFault("ERR", "Projects in ACT state cannot be deleted!");
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

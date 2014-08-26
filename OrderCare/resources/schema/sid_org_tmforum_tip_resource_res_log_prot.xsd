@@ -1,0 +1,1026 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/prot" xmlns:asap="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/trouble/asap" xmlns:nrb="http://www.tmforum.org/xml/tip/resource/res/nrb" xmlns:notifications="http://www.tmforum.org/xml/tip/common/notifications" xmlns:nra="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/tip/nra" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" xmlns:base="http://www.tmforum.org/xml/tip/cbe/base" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/prot" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.resource.res.log.prot
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 2
+ Association Classes: 0
+           datatypes: 2
+        enumerations: 8
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/trouble/asap" schemaLocation="sid_org_tmforum_tip_resource_trouble_asap.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/resource/res/nrb" schemaLocation="common_resource_res_nrb.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/common/notifications" schemaLocation="common_notifications.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/tip/nra" schemaLocation="sid_org_tmforum_tip_resource_res_tip_nra.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/cbe/base" schemaLocation="common_cbe_base.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* -->
+   <xsd:simpleType name="EquipmentProtectionType">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This enumeration attribute identifies the type of equipment protection.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>"M_FOR_N", means that M pieces of equipment protect N pieces of equipment.</p>
+                  <p>This literal  has  value 1</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfEquipmentProtectionType">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:EquipmentProtectionType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="EquipmentSwitchReason">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This enumeration reflects the reason why a switch occurred.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="NOT_APPLICABLE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>NOT_APPLICABLE is used, if a more precise value is not available.</p>
+                  <p>This literal  has  value "NOT_APPLICABLE"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="MANUAL">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>MANUAL indicates a switch that was requested by the operator and includes forced switches.</p>
+                  <p>This literal  has  value "MANUAL"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="EQUIPMENT_FAILURE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>EQUIPMENT_FAILURE is used when an instance of equipment has failed.</p>
+                  <p>This literal  has  value "EQUIPMENT_FAILURE"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfEquipmentSwitchReason">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:EquipmentSwitchReason" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="ProtectionCommand">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This data type identifies the protection switch commands. See ITU-T Recommendation G.841 for definitions.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="CLEAR">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "CLEAR"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="EXERCISER">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "EXERCISER"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="FORCED_SWITCH">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "FORCED_SWITCH"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="LOCKOUT">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "LOCKOUT"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="MANUAL_SWITCH">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "MANUAL_SWITCH"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfProtectionCommand">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ProtectionCommand" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="ProtectionGroupType">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>Note: The values "MSP_1_PLUS_1" and "MSP_1_FOR_N" are also used for trail protection.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="TWO_FIBER_BLSR">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "TWO_FIBER_BLSR"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="FOUR_FIBER_BLSR">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "FOUR_FIBER_BLSR"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="MSP_1_FOR_N">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "MSP_1_FOR_N"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="MSP_1_PLUS_1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "MSP_1_PLUS_1"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfProtectionGroupType">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ProtectionGroupType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="ProtectionSchemeState">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p/>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="AUTOMATIC">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "AUTOMATIC"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="FORCED_OR_LOCKED_OUT">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "FORCED_OR_LOCKED_OUT"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="UNKNOWN">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "UNKNOWN"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfProtectionSchemeState">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ProtectionSchemeState" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="ProtectionType">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>Note: The value "MSP_APS" is also used for general trail protection.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="MSP_APS">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "MSP_APS"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="SNCP">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "SNCP"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfProtectionType">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ProtectionType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="ReversionMode">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p/>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="NON_REVERTIVE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "NON_REVERTIVE"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="REVERTIVE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "REVERTIVE"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="UNKNOWN">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "UNKNOWN"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfReversionMode">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ReversionMode" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="SwitchReason">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p/>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="SIGNAL_DEGRADE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "SIGNAL_DEGRADE"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="SIGNAL_FAIL">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p/>
+                  <p>This literal  has  value "SIGNAL_FAIL"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="RESTORED">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>RESTORED is used for revertive groups to indicate a return to the normal state.</p>
+                  <p>This literal  has  value "RESTORED"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="NOT_APPLICABLE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>NOT_APPLICABLE is used upon retrieval of switch data for non-revertive groups, if a more precise value is not available.</p>
+                  <p>This literal  has  value "NOT_APPLICABLE"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="MANUAL">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>MANUAL switch indicates that a manual operation caused this switch, including MANUAL, FORCED and LOCKOUT switches.</p>
+                  <p>This literal  has  value "MANUAL"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="AUTOMATIC_SWITCH">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>AUTOMATIC_SWITCH is used when the switch reason for the automatic switch is not known.</p>
+                  <p>This literal  has  value "AUTOMATIC_SWITCH"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="SIGNAL_MISMATCH">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>SIGNAL_MISMATCH is used in the case the signal is ok, but is identified as coming from an incorrect source: TRAIL_TRACE_IDENTIFIER_MISMATCH, Signal Label Mismatch, etc..</p>
+                  <p>This literal  has  value "SIGNAL_MISMATCH"</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ArrayOfSwitchReason">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:SwitchReason" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** -->
+   <xsd:element name="equipmentSwitchData" type="tns:EquipmentSwitchData"/>
+   <xsd:complexType name="EquipmentSwitchData">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This data type identifies the current protection switch status of an Equipment Protection Group.</p>
+            <p>This datatype  is  extendable</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="equipmentSwitchReason" type="tns:EquipmentSwitchReason" minOccurs="0" maxOccurs="1" default="NOT_APPLICABLE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute contains the reason of the last switch.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="epgRef" type="entity:EntityIdentifier" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies the Equipment Protection Group for which the protection switch status is being reported.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="switchToEquipmentRef" type="entity:EntityIdentifier" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies the Equipment object that is working after the switch, or currently working if no protection switch is currently active.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="equipmentProtectionType" type="tns:EquipmentProtectionType" minOccurs="0" maxOccurs="1" default="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies the type of equipment protection for which the switch has occurred.
+The attribute can take on the following value:
+- "M_FOR_N", means that M pieces of equipment protect N pieces of equipment.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="protectedEquipmentRef" type="entity:EntityIdentifier" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies the name of the protected equipment.
+In case of an M:N equipment protection type, protectedEquipmentRef always identifies a worker Equipment object.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="extensionInfo" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>
+       a generic list of any type of elements. Used for vendor extensions or loose element encapsulation from other namespaces.
+      </xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfEquipmentSwitchData">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:EquipmentSwitchData" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="switchData" type="tns:SwitchData"/>
+   <xsd:complexType name="SwitchData">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This data type identifies the current protection switch status of a Protection Group or an SNCP reliable CTP. See supporting document SD1-34_protectionSwitch.</p>
+            <p>This datatype  is  extendable</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="protectionType" type="tns:ProtectionType" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies the type of the protection for which the switch has occurred.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="switchReason" type="tns:SwitchReason" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute contains the reason of the last switch. During a switch notification the switch reason is known. If it is not cached in the target OS for later retrieval, then a NOT_APPLICABLE value is assigned.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="pgRef" type="entity:EntityIdentifier" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies the Protection Group in case of a trail protection switch. This is empty, if the protection type is SNCP.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="layerRate" type="nrb:LayerRate" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies the layer at which the switch has occurred. The Layer Rate can be used to filter the switch notification.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="protectedTpRef" type="entity:EntityIdentifier" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute contains the name of the TP that is protected. The protected (worker) and protecting TPs are fixed in a revertive Protection Group, the worker can be active or not at any point in time. In a non-revertive Protection Group, there is no fixed worker / protecting distinction. The worker TP is indeed always the active TP; after a switch, the worker and protecting TPs exchange their roles.
+- For an SNCP, this is always the reliable TP.
+- For a retrieval of a 2F BLSR, each TP is protected, and two SwitchData instances are returned.
+- For a retrieval of a 4FMSSPR, each worker TP is protected, and two SwitchData instances are returned.
+- For a retrieval of a 1:N trail protection (e.g. MSP), each worker TP is protected, and N SwitchData instances are returned.
+- For a retrieval of a revertive 1+1 trail protection (e.g. MSP), this is always the worker TP.
+- For a retrieval of a non-revertive 1+1 trail protection (e.g. MSP) switch, this is the active TP.
+- This TP is a CTP for SNCP and a PTP for trail protection schemes.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="switchToTpRef" type="entity:EntityIdentifier" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute identifies the TP which is being switched to and is the active source after the switch.
+This TP is a CTP for SNCP and a PTP for trail protection schemes.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  invariant</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="extensionInfo" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>
+       a generic list of any type of elements. Used for vendor extensions or loose element encapsulation from other namespaces.
+      </xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfSwitchData">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:SwitchData" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="equipmentProtectionGroup" type="tns:EquipmentProtectionGroup"/>
+   <xsd:complexType name="EquipmentProtectionGroup">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This object class represents the information about an equipment protection in a Managed Element.</p>
+            <p>This entity  is  optional</p>
+            <p>This entity  is  extendable</p>
+            <p>This entity   generates Object Creation notifications</p>
+            <p>This entity   generates Object Deletion notifications</p>
+            <p>This entity   generates Object Discovery notifications</p>
+            <p>This entity generates Attribute Value Change notifications.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="protectionSchemeState" type="tns:ProtectionSchemeState" minOccurs="0" maxOccurs="1" default="AUTOMATIC">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute indicates whether the protection scheme is active or frozen locked out because of a forced switch command. This is an indicator whether the protection scheme is free to switch or is in a state where it cannot switch freely, without an explicit clear command applied to the protection scheme. FORCED_OR_LOCKED_OUT indicates that the entire group is locked; partial locking is indicated by AUTOMATIC (partial locking could be done via operation PerformProtectionCommand in CTP).</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="reversionMode" type="tns:ReversionMode" minOccurs="0" maxOccurs="1" default="UNKNOWN">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute defines whether the protection scheme is revertive or not.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ituArcStateAndStatusList" type="nra:ItuArcStateAndStatusList" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>See supporting document SD1-8_encodingX731M3100.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="parameterList" type="base:ArrayOfAttributeValuePair" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute contains a name value list of the associated parameters for the equipment protection group.
+No equipment Protection Group parameters have been identified.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC disabled (NA)</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="type" type="tns:EquipmentProtectionType" minOccurs="0" maxOccurs="1" default="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute defines the type of scheme this group represents (so far, only M:N equipment protection has been identified).</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC disabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="asapRef" type="entity:EntityIdentifier" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute indicates the assignment of an Alarm Severity Assignement Profile (ASAP) to the Equipment Protection Group.</p>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  unique</p>
+                        <p>This association end  is  an end of association EPGHasASAP</p>
+                        <p>This association end  is  passed by id</p>
+                        <p>This association end  is  optional</p>
+                        <p>This association end  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="protectedEquipments" type="entity:ArrayOfEntityIdentifier" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This object class represents the information about an equipment protection in a Managed Element.</p>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  unique</p>
+                        <p>This association end  is  an end of association EPGHasProtectedEquipments</p>
+                        <p>This association end  is  invariant</p>
+                        <p>This association end  is  passed by id</p>
+                        <p>This association end  is  optional</p>
+                        <p>This association end  is  AVC disabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="protectingEquipments" type="entity:ArrayOfEntityIdentifier" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  unique</p>
+                        <p>This association end  is  an end of association EPGHasProtectingEquipments</p>
+                        <p>This association end  is  invariant</p>
+                        <p>This association end  is  passed by id</p>
+                        <p>This association end  is  optional</p>
+                        <p>This association end  is  AVC disabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfEquipmentProtectionGroup">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:EquipmentProtectionGroup" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="EquipmentProtectionGroupAVCN">
+      <xsd:complexContent>
+         <xsd:extension base="notifications:AVCNotification">
+            <xsd:sequence>
+               <xsd:element name="protectionSchemeState" type="tns:ProtectionSchemeState" minOccurs="0" maxOccurs="1" default="AUTOMATIC">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute indicates whether the protection scheme is active or frozen locked out because of a forced switch command. This is an indicator whether the protection scheme is free to switch or is in a state where it cannot switch freely, without an explicit clear command applied to the protection scheme. FORCED_OR_LOCKED_OUT indicates that the entire group is locked; partial locking is indicated by AUTOMATIC (partial locking could be done via operation PerformProtectionCommand in CTP).</p>
+                        <p>This attribute  has  multiplicity 0..1</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="reversionMode" type="tns:ReversionMode" minOccurs="0" maxOccurs="1" default="UNKNOWN">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute defines whether the protection scheme is revertive or not.</p>
+                        <p>This attribute  has  multiplicity 0..1</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ituArcStateAndStatusList" type="nra:ItuArcStateAndStatusList" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>See supporting document SD1-8_encodingX731M3100.</p>
+                        <p>This attribute  has  multiplicity 0..1</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="asapRef" type="entity:EntityIdentifier" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute indicates the assignment of an Alarm Severity Assignement Profile (ASAP) to the Equipment Protection Group.</p>
+                        <p>This attribute  has  multiplicity 0..1</p>
+                        <p>This attribute  is  passed by id</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="equipmentProtectionGroupAVCN" type="tns:EquipmentProtectionGroupAVCN">
+      <xsd:annotation>
+         <xsd:documentation>
+			   EquipmentProtectionGroup Attribute Value Change Event. Event that is sent when the attribute values of a(an) EquipmentProtectionGroup have changed. 
+            </xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:complexType name="EquipmentProtectionGroupOCN">
+      <xsd:complexContent>
+         <xsd:extension base="notifications:OCNotification">
+            <xsd:sequence>
+               <xsd:element name="object" type="tns:EquipmentProtectionGroup" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="equipmentProtectionGroupOCN" type="tns:EquipmentProtectionGroupOCN">
+      <xsd:annotation>
+         <xsd:documentation>Event that is sent if a(an) EquipmentProtectionGroup instance has been created.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:complexType name="EquipmentProtectionGroupODelN">
+      <xsd:complexContent>
+         <xsd:extension base="notifications:ODelNotification">
+            <xsd:sequence>
+               <xsd:element name="object" type="tns:EquipmentProtectionGroup" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="equipmentProtectionGroupODelN" type="tns:EquipmentProtectionGroupODelN">
+      <xsd:annotation>
+         <xsd:documentation>Event that is sent if a(an) EquipmentProtectionGroup instance has been deleted.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:complexType name="EquipmentProtectionGroupODisN">
+      <xsd:complexContent>
+         <xsd:extension base="notifications:ODisNotification">
+            <xsd:sequence>
+               <xsd:element name="object" type="tns:EquipmentProtectionGroup" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="equipmentProtectionGroupODisN" type="tns:EquipmentProtectionGroupODisN">
+      <xsd:annotation>
+         <xsd:documentation>Event that is sent if a(an) EquipmentProtectionGroup has been discovered.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="protectionGroup" type="tns:ProtectionGroup"/>
+   <xsd:complexType name="ProtectionGroup">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This object class represents the information about a trail protection in a Managed Element.</p>
+            <p>This entity  is  optional</p>
+            <p>This entity  is  extendable</p>
+            <p>This entity   generates Object Creation notifications</p>
+            <p>This entity   generates Object Deletion notifications</p>
+            <p>This entity   generates Object Discovery notifications</p>
+            <p>This entity generates Attribute Value Change notifications.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="type" type="tns:ProtectionGroupType" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute identifies the type of the Protection Group.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC disabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ituArcStateAndStatusList" type="nra:ItuArcStateAndStatusList" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>See supporting document SD1-8_encodingX731M3100.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="layerRate" type="nrb:LayerRate" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute identifies the line rate of the TPs of the Protection Group.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC disabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="parameterList" type="base:ArrayOfAttributeValuePair" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute identifies any protection group specific parameters. Non-applicable parameters and parameters for which the value is unknown to the target OS may be left out.
+See attached SD1-29_PGPParameters supporting document for values and descriptions.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC disabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="apsProtocolType" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute defines the APS protocol on which the switching function is based on.
+
+Possible values:
+- "G.783" in case of K1/K2 based APS
+- "Legacy" in case of proprietary APS protocol, as for radio equipment.
+
+No default value</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  invariant</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC disabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="reversionMode" type="tns:ReversionMode" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute identifies whether the switch is revertive or not.
+The default value depends on the protection group implementation</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="protectionSchemeState" type="tns:ProtectionSchemeState" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute identifies the state in which the protection scheme is in. FORCED_OR_LOCKED_OUT indicates that the entire group is locked; partial locking is indicated by AUTOMATIC.
+Individual locks can be reported through transmission parameters on the appropriate TPs.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                        <p>This attribute  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="asapRef" type="asap:AlarmSeverityAssignmentProfile" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute indicates the assignment of an Alarm Severity Assignement Profile (ASAP) to the Protection Group.</p>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  unique</p>
+                        <p>This association end  is  an end of association PGHasASAP</p>
+                        <p>This association end  is  passed by value</p>
+                        <p>This association end  is  optional</p>
+                        <p>This association end  is  AVC enabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="protectionRelatedTps" type="entity:ArrayOfEntityIdentifier" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute contains the list of PTPs that belong in the Protection Group. The list of PTPs is partially ordered. The protecting PTP always trails its worker PTPs. The East PTPs are always contiguous in the list, as well as West PTPs.
+
+At least 2 values.</p>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  unique</p>
+                        <p>This association end  is  an end of association PGHasRelatedTP</p>
+                        <p>This association end  is  invariant</p>
+                        <p>This association end  is  passed by id</p>
+                        <p>This association end  is  optional</p>
+                        <p>This association end  is  AVC disabled</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfProtectionGroup">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ProtectionGroup" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ProtectionGroupAVCN">
+      <xsd:complexContent>
+         <xsd:extension base="notifications:AVCNotification">
+            <xsd:sequence>
+               <xsd:element name="ituArcStateAndStatusList" type="nra:ItuArcStateAndStatusList" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>See supporting document SD1-8_encodingX731M3100.</p>
+                        <p>This attribute  has  multiplicity 0..1</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="reversionMode" type="tns:ReversionMode" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute identifies whether the switch is revertive or not.
+The default value depends on the protection group implementation</p>
+                        <p>This attribute  has  multiplicity 0..1</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="protectionSchemeState" type="tns:ProtectionSchemeState" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute identifies the state in which the protection scheme is in. FORCED_OR_LOCKED_OUT indicates that the entire group is locked; partial locking is indicated by AUTOMATIC.
+Individual locks can be reported through transmission parameters on the appropriate TPs.</p>
+                        <p>This attribute  has  multiplicity 0..1</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="asapRef" type="asap:AlarmSeverityAssignmentProfile" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute indicates the assignment of an Alarm Severity Assignement Profile (ASAP) to the Protection Group.</p>
+                        <p>This attribute  has  multiplicity 0..1</p>
+                        <p>This attribute  is  passed by value</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="protectionGroupAVCN" type="tns:ProtectionGroupAVCN">
+      <xsd:annotation>
+         <xsd:documentation>
+			   ProtectionGroup Attribute Value Change Event. Event that is sent when the attribute values of a(an) ProtectionGroup have changed. 
+            </xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:complexType name="ProtectionGroupOCN">
+      <xsd:complexContent>
+         <xsd:extension base="notifications:OCNotification">
+            <xsd:sequence>
+               <xsd:element name="object" type="tns:ProtectionGroup" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="protectionGroupOCN" type="tns:ProtectionGroupOCN">
+      <xsd:annotation>
+         <xsd:documentation>Event that is sent if a(an) ProtectionGroup instance has been created.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:complexType name="ProtectionGroupODelN">
+      <xsd:complexContent>
+         <xsd:extension base="notifications:ODelNotification">
+            <xsd:sequence>
+               <xsd:element name="object" type="tns:ProtectionGroup" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="protectionGroupODelN" type="tns:ProtectionGroupODelN">
+      <xsd:annotation>
+         <xsd:documentation>Event that is sent if a(an) ProtectionGroup instance has been deleted.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:complexType name="ProtectionGroupODisN">
+      <xsd:complexContent>
+         <xsd:extension base="notifications:ODisNotification">
+            <xsd:sequence>
+               <xsd:element name="object" type="tns:ProtectionGroup" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="protectionGroupODisN" type="tns:ProtectionGroupODisN">
+      <xsd:annotation>
+         <xsd:documentation>Event that is sent if a(an) ProtectionGroup has been discovered.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

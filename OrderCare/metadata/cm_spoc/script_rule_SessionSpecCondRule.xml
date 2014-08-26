@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_SessionSpecCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_SessionSpecCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+     *  if the BoltOnDuration is set the BoltOnTypeModality must be have one of the following values  ["MC","CR","PH","GB","XN","MI","DT","BD"] and the attribute MaximumOfUnitsPerSession must be set
+     *
+     * data=BoltOnType*/
+     /*
+    var json =
+          {"data" :
+                [
+                      {
+                            "entityAttribute" : "BoltOnDuration" ,
+                            "admissibleValues" : ["MC","CR","PH","GB","XN","MI","DT","BD"]
+                      }
+                ]
+          };
+
+    var ret = false; //Default return value is TRUE => No Error
+
+    for (var i=0;i<json.data.length;i++) {
+
+        var ent = json.data[i].entityAttribute;
+
+        if (data.SessionSpecificationDS[ent]) {
+
+            /**BoltOnDuration is set if the MaximumOfUnitsPerSession is NOT set we can return true:Error**/
+            /**
+            if (data.SessionSpecificationDS.MaximumOfUnitsPerSession==null &&  !cm_spoc.checkInclusion(data.BoltOnTypeModality,[ "ME", "MG", "XN", "PH", "CR" ])) {
+
+                 errList.addErrorMessage(data,["Bolt On Duration","Maximum Units Per Sessions is not set"],"NGAA_EPC_002","E");
+
+                 return false;
+                 break;
+             }
+
+            ret = true; // If the leaf exist and is set to true we need to check that the modality value is one fo the admissible ones that's why we set ret to TRUE
+            for (var k=0; k<json.data[i].admissibleValues.length; k++) {
+
+                var val = json.data[i].admissibleValues[k];
+
+                if(data.BoltOnTypeModality == val ) {
+
+                    return false; // The Modality value is admissible for the leaf. the return value is set to false : No Error
+                }
+
+
+            }
+            errList.addErrorMessage(data,["Bolt On Duration","Value not admissible for this modality"],"NGAA_EPC_002","E");
+        }
+
+    }
+
+    */
+    return false;
+  ]]></script>
+</script>

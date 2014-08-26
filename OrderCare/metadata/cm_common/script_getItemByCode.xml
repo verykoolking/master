@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.getItemByCode">
+  <group>scripts</group>
+  <label>getItemByCode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var itemSearchDS = new cwt_pcmaintapi.itemSearchDS();
+    itemSearchDS.itemCode = itemCode;
+    var item = cwt_pcmaintapi.itemRead(itemSearchDS);
+    if(cwt_pcmaintapi.isFault(item) &&  item.code == "DATA_NOT_FOUND")
+    {
+        return null;
+
+    }
+    return item;
+  ]]></script>
+</script>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.createAppBoltonTypeGroupListByValue">
+  <group>applicabilityCondition.api</group>
+  <label>createAppBoltonTypeGroupListByValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="AppBoltonTypeGroupList" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.AppBoltonTypeGroupList</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        if(!cm_plm.isModificationAllowed(AppBoltonTypeGroupList))
+            return api_common.createFault("ERR", "This modality is being maintained in another project.");
+
+        if(cm_plm.isProjectActive(AppBoltonTypeGroupList.projectCode))
+            return api_common.createFault("ERR", "Item cannot be created for projects in ACT status.");
+
+        AppBoltonTypeGroupList.startDate = AppBoltonTypeGroupList.startDate ? AppBoltonTypeGroupList.startDate : new Date();
+        var doc = new cm_plm.AppBoltonTypeGroupListDoc();
+        AppBoltonTypeGroupList.mapTo(doc);
+        doc.save();
+        doc.mapTo(AppBoltonTypeGroupList);
+
+        var result = cm_plm.createProjectAssignmentForObject(AppBoltonTypeGroupList);
+        if(api_common.isFault(result))
+            return result;
+
+        return AppBoltonTypeGroupList;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

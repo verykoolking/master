@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.MessageWarningExpirationCAForm">
+  <group>Messages</group>
+  <label>MessageWarningExpirationCAForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.MessageWarningExpirationCA</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <width>750px</width>
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <elementList>
+                        <element name="SectionHeader" type="elsecth">
+                          <label>Warning Prior to last Recurrent  BoltOn Expiration</label>
+                        </element>
+                        <element name="GridLayout" type="elgrd">
+                          <labeAlign>left</labeAlign>
+                          <elementList>
+                            <element name="RowSpacer" type="elrsp">
+                              <height>10px</height>
+                              <rowSpan>10px</rowSpan>
+                            </element>
+                            <element name="CyclicActionSpecEnum" type="elslct">
+                              <label>For The Cyclic Action</label>
+                              <labelOrientation>left</labelOrientation>
+                              <multiselect>false</multiselect>
+                              <onChangeMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageWarningExpirationCAForm/uimthd_CyclicActionSpecificationTrigger</variablePath>
+                                </variablePathList>
+                              </onChangeMethod>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageWarningExpirationCAForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.MessageWarningExpirationCA/dstruct_CyclicActionSpecEnum</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>300px</width>
+                            </element>
+                            <element name="MessageEnum" type="elslct">
+                              <label>It Will Send The Message</label>
+                              <labelOrientation>left</labelOrientation>
+                              <multiselect>false</multiselect>
+                              <onChangeMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageWarningExpirationCAForm/uimthd_MessageTrigger</variablePath>
+                                </variablePathList>
+                              </onChangeMethod>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageWarningExpirationCAForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.MessageWarningExpirationCA/dstruct_MessageEnum</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>300px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="VerticalLayout2" type="elvlt">
+                          <elementList>
+                            <element name="HorizontalLayout" type="elhlt">
+                              <elementList>
+                                <element name="LayoutSpacer" type="ellsp">
+                                  <height>10px</height>
+                                </element>
+                                <element name="WEIntTemp1" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <labeAlign>left</labeAlign>
+                                  <labelOrientation>left</labelOrientation>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageWarningExpirationCAForm/usrActionMethod_checkWEIntTemp</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageWarningExpirationCAForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.MessageWarningExpirationCA/dstruct_WEIntTemp</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>80px</width>
+                                </element>
+                                <element name="WECodTemp" type="elslct">
+                                  <label>Before Expiry Date Of Last Cyclic Bolt-on</label>
+                                  <labelOrientation>right</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageWarningExpirationCAForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.MessageWarningExpirationCA/dstruct_WECodTemp</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>286px</width>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.MessageWarningExpirationCAForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initMessageWarningExpirationCA(this.model);
+        return m;
+      ]]></script>
+    </method>
+    <method name="MessageTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode = this.model.MessageEnum;
+        this.model.Message = btCode;
+      ]]></script>
+    </method>
+    <method name="CyclicActionSpecificationTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode = this.model.CyclicActionSpecEnum;
+        this.model.CyclicActionSpecification = btCode;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script>//return true;</script>
+    </method>
+    <method name="checkWEIntTemp" type="usrActionMethod">
+      <script><![CDATA[
+        if(this.model.WEIntTemp < 0 || this.model.WEIntTemp == null)
+            this.model.WEIntTemp = 0;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

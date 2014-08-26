@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TopUpOriginDestinationPairForm">
+  <group>Promotion</group>
+  <label>TopUpOriginDestinationPairForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="selectedOrigin" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TopUpOriginDestinationPair</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <width>750px</width>
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <elementList>
+                        <element name="SectionHeader" type="elsecth">
+                          <label>TopUp Origin Destination Pair</label>
+                        </element>
+                        <element name="GridLayout" type="elgrd">
+                          <labelOrientation>left</labelOrientation>
+                          <numOfCols>4</numOfCols>
+                          <width>50%</width>
+                          <elementList>
+                            <element name="TopUpOrigin1" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <editable type="varPath">
+                                <variablePathList>
+                                  <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                </variablePathList>
+                              </editable>
+                              <labeAlign>left</labeAlign>
+                              <label>TopUp Origin</label>
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TopUpOriginDestinationPairForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.TopUpOriginDestinationPair/dstruct_TopUpOrigin</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>150px</width>
+                            </element>
+                            <element name="Button3" type="elbtn">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TopUpOriginDestinationPairForm/usrActionMethod_FinderTopUpOriginPairReferenceDialog</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwf/finder.gif</icon>
+                              <showLabel>false</showLabel>
+                              <width>25px</width>
+                            </element>
+                            <element name="TopUpDestination" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <editable type="varPath">
+                                <variablePathList>
+                                  <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                </variablePathList>
+                              </editable>
+                              <labeAlign>left</labeAlign>
+                              <label>TopUp Destination</label>
+                              <labelOrientation>left</labelOrientation>
+                              <startRow>true</startRow>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TopUpOriginDestinationPairForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.TopUpOriginDestinationPair/dstruct_TopUpDestination</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>150px</width>
+                            </element>
+                            <element name="Button4" type="elbtn">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TopUpOriginDestinationPairForm/usrActionMethod_FinderTopUpDestinationPairReferenceDialog</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwf/finder.gif</icon>
+                              <width>25px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="setReadOnly" type="uimthd">
+      <script>//return true;</script>
+    </method>
+    <method name="FinderTopUpOriginPairReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        this.selectedOrigin=1;
+        var newDetail = new cm_spoc.FinderSelectReference(null, this);
+        newDetail.setBaseItemCode("base_TopUpOrigin");
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="referenceCallback" type="uimthd">
+      <parameterList>
+        <parameter name="itemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        switch(baseItemCode){
+            case "base_TopUpOrigin":
+               // this.model.AwPrSegmentCode = itemCode;
+               if(this.selectedOrigin==1)
+               this.model.TopUpOrigin = itemCode;
+               if(this.selectedOrigin==2)
+               this.model.TopUpDestination = itemCode;
+                break;
+
+
+        }
+      ]]></script>
+    </method>
+    <method name="FinderTopUpDestinationPairReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        this.selectedOrigin=2;
+        var newDetail = new cm_spoc.FinderSelectReference(null, this);
+        newDetail.setBaseItemCode("base_TopUpOrigin");
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

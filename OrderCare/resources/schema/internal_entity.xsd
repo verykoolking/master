@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201206291233 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company/TIP_Soap_Generator(1.1) (1.1)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) 2010 Members of the TIP Open Source Community
+
+Licensed to Members of the TIP Open Source Community under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+Members of the TIP Open Source Community licences this file to You under the Apache License,
+Version 2.0 (the 'License'); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an 'AS IS' BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/tip/internal/entity" xmlns:extensibility="http://www.tmforum.org/xml/tip/internal/extensibility" targetNamespace="http://www.tmforum.org/xml/tip/internal/entity" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.1">
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/extensibility" schemaLocation="internal_extensibility.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** -->
+   <xsd:element name="checkedCollection" type="tns:CheckedCollection"/>
+   <xsd:complexType name="CheckedCollection">
+      <xsd:sequence>
+         <xsd:element name="valuePairs" type="tns:NameValuePairCollection" minOccurs="1" maxOccurs="1">
+         </xsd:element>
+         <xsd:element name="scheme" type="xsd:string" minOccurs="1" maxOccurs="1">
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfCheckedCollection">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:CheckedCollection" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="context" type="tns:Context"/>
+   <xsd:complexType name="Context">
+      <xsd:complexContent>
+         <xsd:extension base="tns:CheckedCollection">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfContext">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:Context" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="distinguishedName" type="tns:DistinguishedName"/>
+   <xsd:complexType name="DistinguishedName">
+      <xsd:complexContent>
+         <xsd:extension base="tns:CheckedCollection">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfDistinguishedName">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:DistinguishedName" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="eid" type="tns:EntityIdentifier"/>
+   <xsd:complexType name="EntityIdentifier">
+      <xsd:sequence>
+         <xsd:element name="context" type="tns:Context" minOccurs="1" maxOccurs="1">
+         </xsd:element>
+         <xsd:element name="dn" type="tns:DistinguishedName" minOccurs="1" maxOccurs="1">
+         </xsd:element>
+         <xsd:element name="entityType" type="xsd:string" minOccurs="1" maxOccurs="1">
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfEntityIdentifier">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:EntityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="nameValuePair" type="tns:NameValuePair"/>
+   <xsd:complexType name="NameValuePair">
+      <xsd:sequence>
+         <xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1">
+         </xsd:element>
+         <xsd:element name="value" type="xsd:string" minOccurs="1" maxOccurs="1">
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfNameValuePair">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:NameValuePair" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="nameValuePairCollection" type="tns:NameValuePairCollection"/>
+   <xsd:complexType name="NameValuePairCollection">
+      <xsd:sequence>
+         <xsd:element name="nameValuePairs" type="tns:ArrayOfNameValuePair" minOccurs="0" maxOccurs="1">
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfNameValuePairCollection">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:NameValuePairCollection" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="entityBase" type="tns:EntityBase"/>
+   <xsd:complexType name="EntityBase" abstract="true">
+      <xsd:sequence>
+         <xsd:element name="identifier" type="tns:EntityIdentifier" minOccurs="1" maxOccurs="1">
+         </xsd:element>
+         <xsd:element name="aliasNames" type="tns:CheckedCollection" minOccurs="0" maxOccurs="1">
+         </xsd:element>
+         <xsd:element name="extensionInfo" type="extensibility:Any" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfEntityBase">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:EntityBase" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

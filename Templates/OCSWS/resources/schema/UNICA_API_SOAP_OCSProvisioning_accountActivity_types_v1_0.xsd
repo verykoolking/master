@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/accountActivity/v1/types" 
+            xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"             
+            xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+            targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/accountActivity/v1/types" 
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" 
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_0.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" 
+    			schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+
+	<!-- ************************************* queryOperationsDetails ************************************* -->
+
+	<!-- Request -->
+
+	<xsd:complexType name="QueryOperationDetails">
+		<xsd:sequence>
+			<xsd:element ref="apt:queryCommonInfo" />
+			<xsd:element ref="apt:subscriberId" />
+			<xsd:element ref="apt:opCode" minOccurs="0" />
+			<xsd:element ref="apt:timeIntervalFilter" minOccurs="0" />
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="queryOperationDetails" type="tns:QueryOperationDetails" />
+
+	<!-- Response -->
+
+	<xsd:complexType name="QueryOperationDetailsResponse">
+		<xsd:sequence>
+			<xsd:element ref="apt:operationInfoList" minOccurs="0"/>
+			<xsd:element ref="apt:token" minOccurs="0"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="queryOperationDetailsResponse" type="tns:QueryOperationDetailsResponse" />
+
+	<!-- ************************************* queryVoiceTraffic ************************************* -->
+
+	<!-- Request -->
+
+	<xsd:complexType name="QueryVoiceTraffic">
+		<xsd:sequence>
+			<xsd:element ref="apt:queryCommonInfo" />
+			<xsd:element ref="apt:subscriberId" />
+			<xsd:element ref="apt:timeInterval" />
+			<xsd:element ref="apt:destinationPrefixMaskFilter" minOccurs="0" />
+			<xsd:element ref="apt:minAmountFilter" minOccurs="0" />
+			<xsd:element name="category" type="apt:CallCategoryType" minOccurs="0" />
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="queryVoiceTraffic" type="tns:QueryVoiceTraffic" />
+
+	<!-- Response -->
+
+	<xsd:complexType name="QueryVoiceTrafficResponse">
+		<xsd:sequence>
+			<xsd:element ref="apt:token" minOccurs="0"/>
+			<xsd:element ref="apt:callInfoList" minOccurs="0"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="queryVoiceTrafficResponse" type="tns:QueryVoiceTrafficResponse" />
+
+	<!-- ************************************* queryDataTraffic ************************************* -->
+
+	<!-- Request -->
+
+	<xsd:complexType name="QueryDataTraffic">
+		<xsd:sequence>
+			<xsd:element ref="apt:queryCommonInfo" />
+			<xsd:element ref="apt:subscriberId" />
+			<xsd:element ref="apt:timeInterval" />
+			<xsd:element ref="apt:destinationPrefixMaskFilter" minOccurs="0" />
+			<xsd:element ref="apt:minAmountFilter" minOccurs="0" />
+			<xsd:element name="category" type="apt:DataSessionCategoryType" minOccurs="0" />
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="queryDataTraffic" type="tns:QueryDataTraffic" />
+
+	<!-- Response -->
+
+	<xsd:complexType name="QueryDataTrafficResponse">
+		<xsd:sequence>
+			<xsd:element ref="apt:token" minOccurs="0"/>
+			<xsd:element ref="apt:dataTrafficInfoList" minOccurs="0"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="queryDataTrafficResponse" type="tns:QueryDataTrafficResponse" />
+
+	<!-- ************************************* queryMessageTraffic ************************************* -->
+
+	<!-- Request -->
+
+	<xsd:complexType name="QueryMessageTraffic">
+		<xsd:sequence>
+			<xsd:element ref="apt:queryCommonInfo" />
+			<xsd:element ref="apt:subscriberId" />
+			<xsd:element ref="apt:timeInterval" />
+			<xsd:element ref="apt:destinationPrefixMaskFilter" minOccurs="0" />
+			<xsd:element ref="apt:minAmountFilter" minOccurs="0" />
+			<xsd:element name="category" type="apt:MessageCategoryType" minOccurs="0" />
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="queryMessageTraffic" type="tns:QueryMessageTraffic" />
+
+	<!-- Response -->
+
+	<xsd:complexType name="QueryMessageTrafficResponse">
+		<xsd:sequence>
+			<xsd:element ref="apt:token" minOccurs="0"/>
+			<xsd:element ref="apt:messageInfoList" minOccurs="0"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="queryMessageTrafficResponse" type="tns:QueryMessageTrafficResponse" />
+
+	<!-- ************************************* queryContentTraffic ************************************* -->
+
+	<!-- Request -->
+
+	<xsd:complexType name="QueryContentTraffic">
+		<xsd:sequence>
+			<xsd:element ref="apt:queryCommonInfo" />
+			<xsd:element ref="apt:subscriberId" />
+			<xsd:element ref="apt:timeInterval" />
+			<xsd:element ref="apt:destinationPrefixMaskFilter" minOccurs="0" />
+			<xsd:element ref="apt:minAmountFilter" minOccurs="0" />
+			<xsd:element name="category" type="apt:ContentCategoryType" minOccurs="0" />
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="queryContentTraffic" type="tns:QueryContentTraffic" />
+
+	<!-- Response -->
+
+	<xsd:complexType name="QueryContentTrafficResponse">
+		<xsd:sequence>
+			<xsd:element ref="apt:token" minOccurs="0"/>
+			<xsd:element ref="apt:contentTrafficInfoList" minOccurs="0"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="queryContentTrafficResponse" type="tns:QueryContentTrafficResponse" />
+
+</xsd:schema>

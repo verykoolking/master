@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.generateNx24AppBoltonTypeListForAA">
+  <group>ApplicabilityCondition</group>
+  <label>generateNx24AppBoltonTypeListForAA</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="Nx24AppBoltonTypeList" type="rifp">
+      <array>true</array>
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.Nx24AppBoltonTypeList</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cm_aaca.AAItemType</valueType>
+  <script><![CDATA[
+    try{
+        var item = new cm_aaca.AAItemType();
+        item.name = "Nx24AppBoltonTypeArr";
+        item.AAArrayOpe[0] = cm_aaca.createArrayOpe(item.name);
+        var rowNum = 0;
+
+        for(var i=0; i<Nx24AppBoltonTypeList.length; i++)
+        {
+            if(!(Nx24AppBoltonTypeList[i] instanceof cm_plm.Nx24AppBoltonTypeList))
+                continue;
+
+            var row = cm_aaca.createRow(rowNum+1, Nx24AppBoltonTypeList[i].ArrayOperation);
+
+            var rowItem = cm_aaca.addItem(row, "Nx24ApplicabilityBoltonType");
+            cm_aaca.addGenericAtt(rowItem, "Nx24AppBoltonTypeListId", Nx24AppBoltonTypeList[i].Nx24AppBoltonTypeListId);
+            cm_aaca.addGenericAtt(rowItem, "Nx24AppBoltonTypeListDesc", Nx24AppBoltonTypeList[i].Nx24AppBoltonTypeListDesc);
+            cm_aaca.addGenericAtt(rowItem, "Nx24AppBoltonTypeListModality", Nx24AppBoltonTypeList[i].Nx24AppBoltonTypeListModality);
+
+            var TODItem = cm_aaca.addItem(rowItem, "TypeOfDayHoursArr");;
+            TODItem.AAArrayOpe[0] = cm_aaca.createArrayOpe(TODItem.name);
+            for(var j=0; j<Nx24AppBoltonTypeList[i].Nx24AppBoltonTypeArr.length; j++){
+                var TODRow = cm_aaca.createRow(j+1, Nx24AppBoltonTypeList[i].Nx24AppBoltonTypeArr[j].ArrayOperation);
+                cm_aaca.addGenericAtt(cm_aaca.addItem(TODRow, "TypeOfDay"), "TypeOfDayID", Nx24AppBoltonTypeList[i].Nx24AppBoltonTypeArr[j].TypeOfDayID);
+                var HAItem = cm_aaca.addItem(TODRow, "HoursArr");
+                HAItem.AAArray[0] = cm_aaca.createArray(HAItem.name);
+                for(var k=0; k< Nx24AppBoltonTypeList[i].Nx24AppBoltonTypeArr[j].HoursArr.length; k++){
+                    var HoursRow = cm_aaca.createRow(k+1);;
+                    cm_aaca.addGenericAtt(HoursRow, "Hour", Nx24AppBoltonTypeList[i].Nx24AppBoltonTypeArr[j].HoursArr[k].Hour);
+                    cm_aaca.addGenericAtt(cm_aaca.addItem(HoursRow, "AppBoltonTypeGroup"), "AppBoltonTypeGroupId", Nx24AppBoltonTypeList[i].Nx24AppBoltonTypeArr[j].HoursArr[k].AppBoltonTypeGroupId);
+                    HAItem.AAArray[0].AAArrayRow[k] = HoursRow;
+                }
+                TODItem.AAArrayOpe[0].AAArrayRow[j] = TODRow;
+            }
+            item.AAArrayOpe[0].AAArrayRow[rowNum] = row;
+            rowNum++;
+        }
+
+        //constructing the response
+        var configItem = cm_aaca.createConfigurableItem("Nx24AppBoltonTypeList", projectCode);
+        configItem.AAAttributeList.AAItem[0] = item;
+        return configItem;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

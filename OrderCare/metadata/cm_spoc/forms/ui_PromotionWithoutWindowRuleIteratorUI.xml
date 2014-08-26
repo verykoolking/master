@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.PromotionWithoutWindowRuleIteratorUI">
+  <group>Promotion</group>
+  <label>PromotionWithoutWindowRuleIteratorUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.PromotionWithoutWindowRule</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="GridLayout" type="elgrd">
+              <alignment>center,center</alignment>
+              <colWidths>50px</colWidths>
+              <fixedColWidths>true</fixedColWidths>
+              <numOfCols>21</numOfCols>
+              <width>1050px</width>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <cellAlignment>left,center</cellAlignment>
+                  <columnSpan>1</columnSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PromotionWithoutWindowRuleIteratorUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>30px</width>
+                </element>
+                <element name="MaximumTopUpThreshold" type="elfld">
+                  <autoFocusNextField>false</autoFocusNextField>
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>4</columnSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PromotionWithoutWindowRuleIteratorUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.PromotionWithoutWindowRule/dstruct_MaximumTopUpThreshold</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>150px</width>
+                </element>
+                <element name="MinimumTopUpThreshold" type="elfld">
+                  <autoFocusNextField>false</autoFocusNextField>
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>4</columnSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PromotionWithoutWindowRuleIteratorUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.PromotionWithoutWindowRule/dstruct_MinimumTopUpThreshold</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>150px</width>
+                </element>
+                <element name="AmountAwardedByThePromotion" type="elfld">
+                  <autoFocusNextField>false</autoFocusNextField>
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>3</columnSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PromotionWithoutWindowRuleIteratorUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.PromotionWithoutWindowRule/dstruct_AmountAwardedByThePromotion</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100px</width>
+                </element>
+                <element name="Percentage" type="elchk">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>2</columnSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PromotionWithoutWindowRuleIteratorUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.PromotionWithoutWindowRule/dstruct_Percentage</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="BoltOnEnum" type="elslct">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>3</columnSpan>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PromotionWithoutWindowRuleIteratorUI/uimthd_setBoltOn</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PromotionWithoutWindowRuleIteratorUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.PromotionWithoutWindowRule/dstruct_BoltOnEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>150px</width>
+                </element>
+                <element name="Button" type="elbtn">
+                  <cellAlignment>center,center</cellAlignment>
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PromotionWithoutWindowRuleIteratorUI/usrActionMethod_TopUpOriginDestinationDialog</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <columnSpan>4</columnSpan>
+                  <label>Top Up Origin-Destination</label>
+                  <width>150px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="setBoltOn" type="uimthd">
+      <script>this.model.BoltOn = this.model.BoltOnEnum;</script>
+    </method>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+    <method name="TopUpOriginDestinationDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <parameterList>
+        <parameter name="dialog" type="rifp">
+          <type>ui_com.conceptwave.system.Dialog</type>
+        </parameter>
+      </parameterList>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var topUpDestinationPopUp = new cm_spoc.forms.TopUpOriginDestinationPairUI(this.model.PWWRuleTUODestPairArrDS,this);
+        topUpDestinationPopUp.TopUpOriginDestinationPairIterator = new Array();
+        var model = topUpDestinationPopUp.model.ListDS;
+
+        if(topUpDestinationPopUp.model.specificationCode){
+           cm_spoc.loadListElements(topUpDestinationPopUp, model, "cm_spoc.forms.TopUpOriginDestinationPairIteratorUI", "TopUpOriginDestinationPairIterator");
+        }
+        return topUpDestinationPopUp;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

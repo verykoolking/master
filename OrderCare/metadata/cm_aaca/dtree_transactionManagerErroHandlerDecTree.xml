@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<decisionTree name="cm_aaca.transactionManagerErroHandlerDecTree">
+  <activity name="start" type="dtSeqActivity">
+    <guid>{6f02c230-9d97-4b60-b110-07734cda8d55}</guid>
+    <label>Start</label>
+    <x>30.0</x>
+    <y>155.10352</y>
+    <childList>
+      <child name="seqApplyConfRE" type="dtSeqActivity">
+        <guid>{62983258-7e9c-4074-9f2c-b21a42609e65}</guid>
+        <label>Seq Apply Configuration on RE&apos;s</label>
+        <x>138.0</x>
+        <y>148.10352</y>
+        <childList>
+          <child name="forEachRE" type="dtWhileActivity">
+            <guid>{ab426183-69e2-48ad-be24-ea86d66f370d}</guid>
+            <label>For Each RE</label>
+            <x>243.41602</x>
+            <y>143.35059</y>
+            <childList>
+              <child name="rollbackRETransaction" type="dtScriptActivity">
+                <guid>{e77ac8cc-9fd9-4822-8713-46a5d1e8ec52}</guid>
+                <label>Rollback RE Transaction</label>
+                <x>348.10156</x>
+                <y>135.0</y>
+                <methodList>
+                  <method name="cwOnDTActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      this.processDocument.currentEntityIndex = -1;
+                      cm_aaca.caRollbackRETransactions(this.processDocument);
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+              <child name="forEachService" type="dtWhileActivity">
+                <guid>{dae7ef2b-762c-432a-9f8f-2a3a5fa92166}</guid>
+                <label>For Each Service</label>
+                <x>451.79688</x>
+                <y>145.35059</y>
+                <childList>
+                  <child name="caRollbackRE" type="dtScriptActivity">
+                    <guid>{7f0592f9-d276-468a-9f1d-49680514b187}</guid>
+                    <label>Rollback RE</label>
+                    <x>558.4824</x>
+                    <y>145.35059</y>
+                    <methodList>
+                      <method name="cwOnDTActBefore" type="action">
+                        <category>before</category>
+                        <system>true</system>
+                        <script>cm_aaca.caRollbackAndCheckRE(this.processDocument, this.processData);</script>
+                      </method>
+                    </methodList>
+                  </child>
+                </childList>
+                <methodList>
+                  <method name="cwOnDTActCond" type="action">
+                    <category>cond</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      this.processDocument.currentEntityIndex++;
+                      return (this.processDocument.errorPhase == 'REVERT' && cm_aaca.caGetCurrentService(this.processDocument, this.processData) != null);
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnDTActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[
+                  var pDoc = this.processDocument;
+                  pDoc.currentREIndex++;
+                  var res = cm_aaca.caGetAvaiableRatingEngines(pDoc);
+                  return (res.length>pDoc.currentREIndex);
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnDTActCond" type="action">
+            <category>cond</category>
+            <system>true</system>
+            <script><![CDATA[return (this.processDocument.errorPhase != 'ERROR_MS' && this.processData.reData.configurationRequired);]]></script>
+          </method>
+          <method name="cwOnDTActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script>this.processDocument.currentREIndex = -1;</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="seqApplyConfMS" type="dtSeqActivity">
+        <guid>{6956dcf4-e1be-4a39-8fca-94bbaf50449e}</guid>
+        <label>Seq Apply Configuration on MS</label>
+        <x>673.0</x>
+        <y>150.10352</y>
+        <childList>
+          <child name="rollbackMSTransaction" type="dtScriptActivity">
+            <guid>{54a394cc-0b28-43ee-99f3-80151eabd726}</guid>
+            <label>Rollback MS Transaction</label>
+            <x>777.8965</x>
+            <y>135.0</y>
+            <methodList>
+              <method name="cwOnDTActBefore" type="action">
+                <category>before</category>
+                <system>true</system>
+                <script>cm_aaca.caRollbackMSTransactions(this.processDocument);</script>
+              </method>
+            </methodList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnDTActCond" type="action">
+            <category>cond</category>
+            <system>true</system>
+            <script><![CDATA[return (this.processDocument.errorPhase != 'ERROR_MS' && this.processData.msData.configurationRequired);]]></script>
+          </method>
+        </methodList>
+      </child>
+    </childList>
+  </activity>
+  <highlight>34</highlight>
+  <label>Transaction Manager Error Handler Decision tree</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="processData" type="dtparameter">
+      <parameterElementType>dstruct_cm_aaca.aacaProcessData</parameterElementType>
+    </parameter>
+    <parameter name="processDocument" type="dtparameter">
+      <parameterElementType>doc_cm_aaca.globalPublishProcessDoc</parameterElementType>
+    </parameter>
+  </parameterList>
+</decisionTree>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initRecurrentCharge">
+  <group>ui_scripts.CyclicActions</group>
+  <label>initRecurrentCharge</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+        var RecurrentChargePhaseArr = cm_spoc.initInnerDS("base_RecurrentChargePhaseArr");
+        model.RecurrentChargePhaseArrDS = RecurrentChargePhaseArr;
+
+        return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        var RecurrentChargePhaseRel = model.RecurrentChargePhaseArr;
+        s.specificationCode = RecurrentChargePhaseRel;
+        var a = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(a)){
+            model.RecurrentChargePhaseArrDS = a;
+            RecurrentChargePhaseRel = a.List;
+        }
+        var RecurrentChargePhaseDS = model.RecurrentChargePhaseArrDS.ListDS;
+        for(var i=0;i<RecurrentChargePhaseRel.length;i++){
+            s.specificationCode = RecurrentChargePhaseRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                RecurrentChargePhaseDS[i]=r;
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

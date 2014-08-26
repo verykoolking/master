@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initListSettings">
+  <group>ui_scripts.Lists</group>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+        /*var listsettings = cm_spoc.initInnerDS("base_ListSettings");
+        model= listsettings;
+        */
+        var listallowedstatearr = cm_spoc.initInnerDS("base_ListAllowedStateArr");
+        model.ListAllowedStateArrDS = listallowedstatearr;
+
+
+        return model;
+    }
+    else{
+
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+
+       /*s.specificationCode = model.ListAllowedStateArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+           model.ListAllowedStateArrDS=r;
+       }
+
+
+       var listAllowedStateRel = model.ListAllowedStateArrDS.List;
+       var listAllowedStateDS=model.ListAllowedStateArrDS.ListDS;
+       for(var i=0;i<listAllowedStateRel.length;i++){
+           s.specificationCode = listAllowedStateRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+              listAllowedStateDS[i]=r;
+           }
+       }
+       */
+
+
+        var listAllowedStateRel = model.ListAllowedStateArr;
+        s.specificationCode = listAllowedStateRel;
+        var a = epc.getSpecificationByKey(s);
+        listAllowedStateRel = a.List;
+        var  listAllowedStateDS = model.ListAllowedStateArrDS.ListDS;
+        for(var i=0;i<listAllowedStateRel.length;i++){
+            s.specificationCode = listAllowedStateRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                listAllowedStateDS[i]=r;
+            }
+        }
+
+       return model;
+    }
+  ]]></script>
+</script>

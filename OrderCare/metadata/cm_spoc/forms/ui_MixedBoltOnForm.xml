@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.MixedBoltOnForm">
+  <group>MixedBolton</group>
+  <label>MixedBoltOnForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.MixedBoltOn</valueType>
+    </variable>
+    <variable name="showLanguageAddButton" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="languageIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="pickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="MixedBoltOn" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/frmui_Forms/vform_mixedBolton</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Mixed Bolt On</label>
+                </element>
+                <element name="IVR" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/frmui_Forms/vform_IVR</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>IVR Bolt On</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="mixedBolton" type="vform">
+          <label>mixedBolton</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>left,center</alignment>
+            <elementList>
+              <element name="VerticalLayout2" type="elvlt">
+                <alignment>right,center</alignment>
+                <elementList>
+                  <element name="MixedBoltOnCode" type="elfld">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/permMethod_setIsPrimaryKey</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <labeAlign>left</labeAlign>
+                    <label>Mixed Bolt On Code</label>
+                    <labelOrientation>left</labelOrientation>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/uimthd_selectTrigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.MixedBoltOn/dstruct_MixedBoltOnCode</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="MixedBoltOnDescription" type="elfld">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <labeAlign>left</labeAlign>
+                    <label>Mixed Bolt On Description</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.MixedBoltOn/dstruct_MixedBoltOnDescription</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="MessageEnum" type="elslct">
+                    <labeAlign>left</labeAlign>
+                    <label>Associated message to the &lt;br&gt;Mixed Bolt On Activation&lt;/br&gt;</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/uimthd_MessageTrigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <optional type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </optional>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.MixedBoltOn/dstruct_MessageEnum</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </element>
+              <element name="SectionStack" type="elsectnstck">
+                <width>600px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <cellAlignment>center,center</cellAlignment>
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Bolt Ons Composing the Mixed Bolt On</label>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <elementList>
+                          <element name="FormFrame" type="elovf">
+                            <fillSpace>false</fillSpace>
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/leaf_pickList</variablePath>
+                                <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                                <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                              </variablePathList>
+                            </formReference>
+                            <height>300px</height>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/leaf_pickList</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>600px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="Section3" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader1" type="elsecth">
+                        <label>Price</label>
+                        <elementList>
+                          <element name="ToolBarHorizontalLayout" type="elhlt">
+                            <alignment>left,center</alignment>
+                            <edgeSize>1</edgeSize>
+                            <width>100%</width>
+                            <elementList>
+                              <element name="TimerImg" type="elimg">
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/usrActionMethod_addNewPrice</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <imageType>normal</imageType>
+                                <imageUrl>/cwt/images/16/money2_add.png</imageUrl>
+                                <labelOrientation>right</labelOrientation>
+                                <padding>5</padding>
+                                <showLabel>false</showLabel>
+                              </element>
+                              <element name="TimerLabel" type="ellab">
+                                <label> Price</label>
+                                <width>120px</width>
+                              </element>
+                              <element name="LayoutSpacer" type="ellsp">
+                                <width>30px</width>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="Header" type="elvlt">
+                        <alignment>left,center</alignment>
+                        <elementList>
+                          <element name="GridLayout" type="elgrd">
+                            <labelOrientation>left</labelOrientation>
+                            <width>400px</width>
+                          </element>
+                          <element name="GridLayout3" type="elhlt">
+                            <alignment>right,center</alignment>
+                            <elementList>
+                              <element name="Price" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Price</label>
+                                <labelOrientation>left</labelOrientation>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.MixedBoltOn/dstruct_Price</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="Button" type="elbtn">
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/usrActionMethod_selectExistingPrice</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <icon>/cwf/finder.gif</icon>
+                                <width>22px</width>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="IVR" type="vform">
+          <label>IVR</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>left,center</alignment>
+            <elementList>
+              <element name="IVRBoltOnCode" type="elfld">
+                <autoFocusNextField>false</autoFocusNextField>
+                <labeAlign>left</labeAlign>
+                <label>IVR Bolt On Code</label>
+                <labelOrientation>left</labelOrientation>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/uimthd_selectTrigger</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.MixedBoltOn/dstruct_IVRBoltOnCode</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="LayoutSpacer" type="ellsp">
+                <height>10px</height>
+              </element>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/permMethod_IVRBODIVRBoltOnDescriptionsVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+                <width>750px</width>
+                <elementList>
+                  <element name="languagueSection" type="elsect">
+                    <removeLabelLine>true</removeLabelLine>
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth"/>
+                      <element name="buttonsLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <menuAccel type="mAccelP"/>
+                            <canFocus>false</canFocus>
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/uimthd_addLenguage</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/permMethod_maxLanguage</variablePath>
+                              </variablePathList>
+                            </visible>
+                            <width>40px</width>
+                          </element>
+                          <element name="deleteButton" type="elmnu">
+                            <menuAccel type="mAccelP"/>
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/uimthd_deleteLanguage</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                            <width>40px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="HorizontalLayout" type="elhlt">
+                        <width>700px</width>
+                        <elementList>
+                          <element name="Select2" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <width>20px</width>
+                          </element>
+                          <element name="language" type="ellab">
+                            <canSort>false</canSort>
+                            <columnSpan>4</columnSpan>
+                            <label>Language</label>
+                            <textAlign>center</textAlign>
+                            <width>340px</width>
+                          </element>
+                          <element name="description" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Description</label>
+                            <textAlign>center</textAlign>
+                            <width>340px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="LanguageVL" type="elvlt">
+                        <height>200px</height>
+                        <overflow>auto</overflow>
+                        <width>750px</width>
+                        <elementList>
+                          <element name="LanguageIterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/leaf_languageIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="languageHL" type="elhlt">
+                                <width>750px</width>
+                                <elementList>
+                                  <element name="languageFormFrame" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.MixedBoltOnForm/leaf_languageIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_com.conceptwave.system.UserInterface/uivar_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var model = cm_spoc.initMixedBolton(this.model);
+        cm_spoc.initMixedBoltonUI(this);
+        return model;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$pickList" type="laction">
+      <path>ui_cm_spoc.forms.MixedBoltOnForm/leaf_pickList</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_BoltOn";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.MixOrderedBoltOnArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setModel;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="IVRBODIVRBoltOnDescriptionsVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.IVRBoltOnCode;
+        if (value==null || value=="") return false;
+        else return true;
+      ]]></script>
+    </method>
+    <method name="selectTrigger" type="uimthd">
+      <script><![CDATA[
+        /*this.model.IVRBoltOnDescriptionArrDS.ListDS.clear();
+        this.languageIterator=new Array();*/
+
+        return;
+      ]]></script>
+    </method>
+    <method name="setModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.MixOrderedBoltOnArrDS.List=null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.MixOrderedBoltOnArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="deleteLanguage" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.removeListElements(this, this.model.IVRBoltOnDescriptionArrDS, "List", "languageIterator");
+        this.showLanguageAddButton=true;
+      ]]></script>
+    </method>
+    <method name="setParentUI" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <mandatory>true</mandatory>
+          <type>ui_com.conceptwave.system.UserInterface</type>
+        </parameter>
+      </parameterList>
+      <script>this.parentUI = ui;</script>
+    </method>
+    <method name="getParentUI" type="uimthd">
+      <valueType>ui_cm_spoc.forms.BoltOnForm</valueType>
+      <script>return this.parentUI;</script>
+    </method>
+    <method name="addLenguage" type="uimthd">
+      <script><![CDATA[
+        var listDS = this.model.IVRBoltOnDescriptionArrDS.ListDS;
+        cm_spoc.addListElement(this, listDS,"cm_spoc.forms.LanguageUI","base_IVRBoltOnDescription","languageIterator");
+      ]]></script>
+    </method>
+    <method name="MessageTrigger" type="uimthd">
+      <script><![CDATA[
+        this.model.Message=this.model.MessageEnum;
+        return;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="NotReadOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+    <method name="maxLanguage" type="permMethod">
+      <script><![CDATA[
+        if(this.model.IVRBoltOnDescriptionArrDS.ListDS.length>2)return false;
+        return true;
+      ]]></script>
+    </method>
+    <method name="addNewPrice" type="usrActionMethod">
+      <parameterList>
+        <parameter name="dialog" type="rifp">
+          <type>ui_com.conceptwave.system.Dialog</type>
+        </parameter>
+      </parameterList>
+      <showInPopup>true</showInPopup>
+      <script>return cm_spoc.mixedBoltonPriceDialog(this);</script>
+    </method>
+    <method name="selectExistingPrice" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_MixedBoltOnPriceEvent");
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="referenceCallback" type="uimthd">
+      <parameterList>
+        <parameter name="itemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script>this.model.Price = itemCode;</script>
+    </method>
+  </methodList>
+</userInterface>

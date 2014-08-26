@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.loadConstraintByStatus">
+  <group>ui_scripts.Operation</group>
+  <label>loadConstraintByStatus</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="array" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="iterator" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    for(var i=0;i<array.length;i++)
+    {
+        cm_spoc.loadSubOperations(array[i], iterator[i]);
+
+        if(array[i].LifeCycleSubStatus!=null)
+        {
+            var s = new epc.data.Specification();
+            s.project =  cwa_epc.getDefaultProj();
+
+            s.specificationCode = array[i].LifeCycleSubStatus;
+            var lifeCycleSubStatus = epc.getSpecificationByKey(s);
+            if(lifeCycleSubStatus)
+            {
+                iterator[i].Status = lifeCycleSubStatus.Status;
+                iterator[i].Substatus = lifeCycleSubStatus.Status;
+                iterator[i].SubstatusDescription = lifeCycleSubStatus.DescriptionOfSubstatus;
+            }
+        }
+    }
+  ]]></script>
+</script>

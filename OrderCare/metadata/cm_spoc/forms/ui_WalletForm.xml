@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.WalletForm">
+  <group>Wallets</group>
+  <label>WalletForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="WalletIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.Wallet</valueType>
+    </variable>
+    <variable name="BalanceThresholdIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="DateThresholdIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="TariffPlanPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="Characteristics" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.WalletForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.WalletForm/frmui_Forms/vform_Characteristics</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Characteristics</label>
+                </element>
+                <element name="NotAllowedTariffPlans" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.WalletForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.WalletForm/frmui_Forms/vform_NotAllowedTariffPlans</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Not Allowed Tariff Plans</label>
+                </element>
+                <element name="ValuesTariffPlan" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.WalletForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.WalletForm/frmui_Forms/vform_ValuesTariffPlan</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Values by Tariff Plans</label>
+                </element>
+                <element name="ExpiryDate" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.WalletForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.WalletForm/frmui_Forms/vform_ExpiryDateWarningThreshold</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Expiry Date Warning Threshold</label>
+                </element>
+                <element name="BalanceWarning" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.WalletForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.WalletForm/frmui_Forms/vform_BalanceWarningThreshold</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Balance Warning Threshold</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="Characteristics" type="vform">
+          <label>Characteristics</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>100%</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>850px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="GridLayout2" type="elgrd">
+                        <edgeShowCenter>true</edgeShowCenter>
+                        <edgeSize>2</edgeSize>
+                        <labeAlign>left</labeAlign>
+                        <labelOrientation>left</labelOrientation>
+                        <width>300px</width>
+                        <elementList>
+                          <element name="WalletIdentifier" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/permMethod_setIsPrimaryKey</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <labeAlign>left</labeAlign>
+                            <label>Wallet ID</label>
+                            <labelOrientation>left</labelOrientation>
+                            <optional type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                              </variablePathList>
+                            </optional>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.Wallet/dstruct_WalletIdentifier</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="WalletDescription" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Description</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.Wallet/dstruct_WalletDescription</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="NetBalance" type="elchk">
+                            <label>Net Balance Expressed</label>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.Wallet/dstruct_WalletGeneralSpecificationDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.WalletGeneralSpecification/dstruct_NetBalance</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="Validity" type="elslct">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Validity Type</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.Wallet/dstruct_WalletGeneralSpecificationDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.WalletGeneralSpecification/dstruct_Validity</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>100px</width>
+                          </element>
+                          <element name="GeneralMaximumBalance" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>General Maximun Balance</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.Wallet/dstruct_WalletGeneralSpecificationDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.WalletGeneralSpecification/dstruct_GeneralMaximumBalance</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="GridLayout3" type="elgrd">
+                        <edgeShowCenter>true</edgeShowCenter>
+                        <edgeSize>2</edgeSize>
+                        <labeAlign>left</labeAlign>
+                        <labelOrientation>left</labelOrientation>
+                        <elementList>
+                          <element name="WalletValSyncWithGreatestVal1" type="elchk">
+                            <label>The Wallet validity is synchronized with the greatest validity among the subscriber&apos;s Wallets </label>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.Wallet/dstruct_WalletGeneralSpecificationDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.WalletGeneralSpecification/dstruct_WalletValSyncWithGreatestVal</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="SendFirstUseEvent1" type="elchk">
+                            <label>Send first use event</label>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.Wallet/dstruct_WalletGeneralSpecificationDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.WalletGeneralSpecification/dstruct_SendFirstUseEvent</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="ShareWithAuthorizedSubscribers1" type="elchk">
+                            <label>Share with authorized subscribers</label>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.Wallet/dstruct_WalletGeneralSpecificationDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.WalletGeneralSpecification/dstruct_ShareWithAuthorizedSubscribers</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="ExpiryDateWarningThreshold" type="vform">
+          <label>ExpiryDateWarningThreshold</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>850px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Expiry Date Warning Threshold</label>
+                      </element>
+                      <element name="HorizontalLayout" type="elhlt">
+                        <elementList>
+                          <element name="add" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/uimthd_addExpiryDate</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                          </element>
+                          <element name="delete" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/uimthd_deleteExpDate</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="HeaderLayout" type="elgrd">
+                        <colWidths>50px</colWidths>
+                        <fixedColWidths>true</fixedColWidths>
+                        <numOfCols>6</numOfCols>
+                        <width>750px</width>
+                        <elementList>
+                          <element name="Select" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <width>30px</width>
+                          </element>
+                          <element name="ExpiryDateLabel" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Expiry date warning thresholds (days)</label>
+                            <width>200px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="IteratorLayout" type="elvlt">
+                        <height>200px</height>
+                        <elementList>
+                          <element name="Iterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/leaf_DateThresholdIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="HorizontalLayout1" type="elhlt">
+                                <elementList>
+                                  <element name="FormFrame" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.WalletForm/leaf_DateThresholdIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="BalanceWarningThreshold" type="vform">
+          <label>BalanceWarningThreshold</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>800px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Balance warning threshold</label>
+                      </element>
+                      <element name="HorizontalLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/uimthd_addBalanceThres</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                          </element>
+                          <element name="deleteButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/uimthd_deleteBalanceThres</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="HeaderLayout" type="elgrd">
+                        <colWidths>50px</colWidths>
+                        <fixedColWidths>true</fixedColWidths>
+                        <numOfCols>6</numOfCols>
+                        <width>750px</width>
+                        <elementList>
+                          <element name="Select" type="ellab">
+                            <width>30px</width>
+                          </element>
+                          <element name="BalanceWarning" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Balance warning threshold</label>
+                            <width>150px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="IteratorLayout" type="elvlt">
+                        <height>200px</height>
+                        <elementList>
+                          <element name="Iterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/leaf_BalanceThresholdIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="HorizontalLayout1" type="elhlt">
+                                <elementList>
+                                  <element name="FormFrame" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.WalletForm/leaf_BalanceThresholdIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="NotAllowedTariffPlans" type="vform">
+          <label>NotAllowedTariffPlans</label>
+          <root name="HL" type="elvlt">
+            <width>600px</width>
+            <elementList>
+              <element name="FormFrame" type="elovf">
+                <fillSpace>false</fillSpace>
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.WalletForm/leaf_TariffPlanPickList</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>300px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.WalletForm/leaf_TariffPlanPickList</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>600px</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="ValuesByTariffPlans" type="vform">
+          <label>ValuesByTariffPlans</label>
+          <root name="SectionStack" type="elsectnstck">
+            <visibilityMode>multiple</visibilityMode>
+            <width>1500px</width>
+            <elementList>
+              <element name="Section" type="elsect">
+                <elementList>
+                  <element name="GridLayout" type="elgrd">
+                    <numOfCols>2</numOfCols>
+                    <width>200px</width>
+                    <elementList>
+                      <element name="MaximumBalanceFromEachPlan" type="elfld">
+                        <labeAlign>left</labeAlign>
+                        <label>Maximum balance</label>
+                        <labelOrientation>left</labelOrientation>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.WalletForm/leaf_model</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.Wallet/dstruct_WWalletValuesPerPlanArrDS</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.WWalletValuesPerPlanArr/dstruct_ListDS</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.WalletValuesPerPlan/dstruct_MaximumBalanceFromEachPlan</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>150px</width>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+              <element name="ValuesTariffPlanSection" type="elsect">
+                <removeLabelLine>true</removeLabelLine>
+                <elementList>
+                  <element name="SectionHeader1" type="elsecth">
+                    <label>Characteristics</label>
+                  </element>
+                  <element name="ValueLayout" type="elhlt">
+                    <elementList>
+                      <element name="addButton" type="elmnu">
+                        <menuAccel type="mAccelP"/>
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.WalletForm/uimthd_addWalletValues</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <icon>/cwt/images/16/notebook_add.png</icon>
+                        <width>40px</width>
+                      </element>
+                      <element name="deleteButton" type="elmnu">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.WalletForm/uimthd_deleteWalletValues</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <icon>/cwt/images/16/delete.png</icon>
+                        <width>40px</width>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="CALifeCycleValueHeaders" type="elgrd">
+                    <colWidths>50px</colWidths>
+                    <fixedColWidths>true</fixedColWidths>
+                    <numOfCols>13</numOfCols>
+                    <width>900px</width>
+                    <elementList>
+                      <element name="Select" type="ellab">
+                        <width>120px</width>
+                      </element>
+                      <element name="TariffPlanID" type="ellab">
+                        <columnSpan>1</columnSpan>
+                        <label>Tariff Plan ID</label>
+                        <width>125px</width>
+                      </element>
+                      <element name="RealTime" type="ellab">
+                        <label>Real time expiration checking</label>
+                        <width>150px</width>
+                      </element>
+                      <element name="ExhaustedBalanceEventEnabled" type="ellab">
+                        <columnSpan>2</columnSpan>
+                        <label>Exhausted Balance Event enabled</label>
+                        <width>190px</width>
+                      </element>
+                      <element name="ExpirationEventEnabled" type="ellab">
+                        <columnSpan>2</columnSpan>
+                        <label>Expiration Event enabled</label>
+                        <width>200px</width>
+                      </element>
+                      <element name="BalanceInformationOnBalanceQuery" type="ellab">
+                        <label>Balance information on Balance Query</label>
+                        <width>300px</width>
+                      </element>
+                      <element name="ExpirationInformationOnBalanceQuery" type="ellab">
+                        <label>Expiration information on Balance Query</label>
+                        <width>200px</width>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="WalletVL" type="elvlt">
+                    <width>750px</width>
+                    <elementList>
+                      <element name="WalletIterator" type="eliter">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.WalletForm/leaf_WalletIterator</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <elementList>
+                          <element name="WalletHL" type="elhlt">
+                            <width>750px</width>
+                            <elementList>
+                              <element name="WalletFormFrame" type="elovf">
+                                <formReference type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.WalletForm/leaf_WalletIterator</variablePath>
+                                    <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                    <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                  </variablePathList>
+                                </formReference>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="ValuesTariffPlan" type="vform">
+          <label>ValuesTariffPlan</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>1300px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Values by Tariff Plan</label>
+                      </element>
+                      <element name="HorizontalLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/uimthd_addWalletValues2</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                          </element>
+                          <element name="deleteButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/uimthd_deleteWalletValues</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="HeaderLayout" type="elgrd">
+                        <colWidths>50px</colWidths>
+                        <fixedColWidths>true</fixedColWidths>
+                        <numOfCols>9</numOfCols>
+                        <width>1100px</width>
+                        <elementList>
+                          <element name="Select" type="ellab">
+                            <width>30px</width>
+                          </element>
+                          <element name="TariffPlanID" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <label>Tariff Plan ID</label>
+                            <width>150px</width>
+                          </element>
+                          <element name="Label" type="ellab">
+                            <label>Real time expiration checking</label>
+                            <width>150px</width>
+                          </element>
+                          <element name="Label1" type="ellab">
+                            <label>Exhausted Balance Event enabled</label>
+                            <width>180px</width>
+                          </element>
+                          <element name="Label2" type="ellab">
+                            <label>Expiration Event enabled</label>
+                            <width>125px</width>
+                          </element>
+                          <element name="Label5" type="ellab">
+                            <label>Balance information on Balance Query</label>
+                            <width>190px</width>
+                          </element>
+                          <element name="Label6" type="ellab">
+                            <label>Expiration information on Balance Query</label>
+                            <width>200px</width>
+                          </element>
+                          <element name="Label3" type="ellab">
+                            <label>Maximum balance</label>
+                            <width>150px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="IteratorLayout" type="elvlt">
+                        <height>200px</height>
+                        <elementList>
+                          <element name="Iterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.WalletForm/leaf_WalletIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="HorizontalLayout1" type="elhlt">
+                                <elementList>
+                                  <element name="FormFrame" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.WalletForm/leaf_WalletIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.WalletForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initWallet(this.model);
+        cm_spoc.initWalletUi(this);
+
+        return m;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$TariffPlanPickList" type="laction">
+      <path>ui_cm_spoc.forms.WalletForm/leaf_TariffPlanPickList</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TariffPlan";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.TariffPlanNotAllowedPerArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setModel;
+
+        return pl;
+      ]]></script>
+    </method>
+    <method name="addExpiryDate" type="uimthd">
+      <script><![CDATA[
+        if(this.model.WWExpiryDateWarningThresArrDS.ListDS.length==0)
+        {
+            var thresholdSpecificationArr = cm_spoc.initInnerDS("base_WWExpiryDateWarningThresArr");
+            this.model.WWExpiryDateWarningThresArrDS = thresholdSpecificationArr
+        }
+
+        var expDays = this.model.WWExpiryDateWarningThresArrDS.ListDS;
+        cm_spoc.addListElement(this, expDays,"cm_spoc.forms.ExpiryDateWarningThresholdUI","base_WalletExpiryDateWarningThre","DateThresholdIterator");
+      ]]></script>
+    </method>
+    <method name="deleteExpDate" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.removeListElements(this,this.model.WWExpiryDateWarningThresArrDS,"List", "DateThresholdIterator");
+        if(this.model.WWExpiryDateWarningThresArrDS.ListDS.length==0)
+        {
+            this.model.WWExpiryDateWarningThresArrDS=null;
+        }
+      ]]></script>
+    </method>
+    <method name="addBalanceThres" type="uimthd">
+      <script><![CDATA[
+        if(this.model.WWBalanceWarningThresArrDS.ListDS.length==0){
+            var thresholdSpecificationArr = cm_spoc.initInnerDS("base_WWBalanceWarningThresArr");
+            this.model.WWBalanceWarningThresArrDS = thresholdSpecificationArr
+        }
+        var balance = this.model.WWBalanceWarningThresArrDS.ListDS;
+        cm_spoc.addListElement(this, balance,"cm_spoc.forms.BalanceWarningThresholdUI","base_WalletBalanceWarningThresho","BalanceThresholdIterator");
+      ]]></script>
+    </method>
+    <method name="deleteBalanceThres" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.removeListElements(this,this.model.WWBalanceWarningThresArrDS,"List", "BalanceThresholdIterator");
+        if(this.model.WWBalanceWarningThresArrDS.ListDS.length==0)
+        {
+            this.model.WWBalanceWarningThresArrDS=null;
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="addWalletValues" type="uimthd">
+      <script><![CDATA[
+        if(this.model.WWalletValuesPerPlanArrDS.ListDS.length==0)
+        {
+            var wwValuesArr = cm_spoc.initInnerDS("base_WWalletValuesPerPlanArr");
+            this.model.WWalletValuesPerPlanArrDS = wwValuesArr;
+        }
+
+        var wwValues = this.model.WWalletValuesPerPlanArrDS.ListDS;
+        cm_spoc.addListElement(this, wwValues,"cm_spoc.forms.WalletValuesUI","base_WalletValuesPerPlan","WalletIterator");
+      ]]></script>
+    </method>
+    <method name="deleteWalletValues" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.removeListElements(this,this.model.WWalletValuesPerPlanArrDS,"List", "WalletIterator");
+        if(this.model.WWalletValuesPerPlanArrDS.ListDS.length==0)
+        {
+            this.model.WWalletValuesPerPlanArrDS=null;
+        }
+      ]]></script>
+    </method>
+    <method name="setModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.TariffPlanNotAllowedPerArrDS.List.clear();
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.TariffPlanNotAllowedPerArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="addWalletValues2" type="uimthd">
+      <script><![CDATA[
+        if(this.model.WWalletValuesPerPlanArrDS.ListDS.length==0)
+        {
+            var wwValuesArr = cm_spoc.initInnerDS("base_WWalletValuesPerPlanArr");
+            this.model.WWalletValuesPerPlanArrDS = wwValuesArr;
+        }
+
+        var wwValues = this.model.WWalletValuesPerPlanArrDS.ListDS;
+        cm_spoc.addListElement(this, wwValues,"cm_spoc.forms.ValuesTariffPlanUI","base_WalletValuesPerPlan","WalletIterator");
+      ]]></script>
+    </method>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+  </methodList>
+</userInterface>

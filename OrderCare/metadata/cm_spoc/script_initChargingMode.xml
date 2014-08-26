@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initChargingMode">
+  <group>ui_scripts.Common.ChargingMode.init</group>
+  <label>initChargingMode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_spoc.data.ChargingMode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+        var CMCMByPlanGroupArr = cm_spoc.initInnerDS("base_CMCMByPlanGroupArr");
+        model.CMCMByPlanGroupArrDS = CMCMByPlanGroupArr;
+    }else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        s.specificationCode = model.CMCMByPlanGroupArr;
+        var r = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(r)){
+            model.CMCMByPlanGroupArrDS=r;
+        }
+
+        var CMCMByPlanGroupArrDSRel=model.CMCMByPlanGroupArrDS.List;
+        var CMCMByPlanGroupArrDSRelDS=model.CMCMByPlanGroupArrDS.ListDS;
+
+        for(var i=0;i<CMCMByPlanGroupArrDSRel.length;i++){
+           s.specificationCode = CMCMByPlanGroupArrDSRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               CMCMByPlanGroupArrDSRelDS[i]=r;
+
+                s.specificationCode = CMCMByPlanGroupArrDSRelDS[i].CMBPGWalletApplicationArr;
+                var r = epc.getSpecificationByKey(s);
+                if(!api_common.isFault(r)){
+                    CMCMByPlanGroupArrDSRelDS[i].CMBPGWalletApplicationArrDS=r;
+                }
+
+                var arrayRel=CMCMByPlanGroupArrDSRelDS[i].CMBPGWalletApplicationArrDS.List;
+                var arrayDS=CMCMByPlanGroupArrDSRelDS[i].CMBPGWalletApplicationArrDS.ListDS;
+                for(var j=0;j<arrayRel.length;j++){
+                   s.specificationCode = arrayRel[j];
+                   var r = epc.getSpecificationByKey(s);
+                   if(!api_common.isFault(r)){
+                       arrayDS[j]=r;
+                   }
+
+                }
+           }
+        }
+
+    }
+
+    return model;
+  ]]></script>
+</script>

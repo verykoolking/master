@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ContentsAndDataGenericUI">
+  <group>Numbering</group>
+  <label>Contents And Data Generic UI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="id" type="leaf">
+      <valueType>dtype_cm_spoc.data.OCSNumber10Attribute</valueType>
+    </variable>
+    <variable name="description" type="leaf">
+      <valueType>dtype_cm_spoc.data.OCSString80Attribute</valueType>
+    </variable>
+    <variable name="ContentId" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ContentId</valueType>
+    </variable>
+    <variable name="ContentServiceProvider" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ContentServiceProvider</valueType>
+    </variable>
+    <variable name="ContentType" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ContentType</valueType>
+    </variable>
+    <variable name="TimeZone" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TimeZone</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <alignment>right,center</alignment>
+              <elementList>
+                <element name="contentId" type="elfld">
+                  <labeAlign>left</labeAlign>
+                  <label>ID</label>
+                  <labelOrientation>left</labelOrientation>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentsAndDataGenericUI/usrActionMethod_updateId</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <onEnter type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentsAndDataGenericUI/usrActionMethod_updateId</variablePath>
+                    </variablePathList>
+                  </onEnter>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentsAndDataGenericUI/leaf_id</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="contentDescription" type="elfld">
+                  <labeAlign>left</labeAlign>
+                  <label>Description</label>
+                  <labelOrientation>left</labelOrientation>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentsAndDataGenericUI/usrActionMethod_updateDescription</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentsAndDataGenericUI/leaf_description</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="CntXnt" type="elslct">
+                  <labeAlign>left</labeAlign>
+                  <label>XNT</label>
+                  <labelOrientation>left</labelOrientation>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentsAndDataGenericUI/leaf_ContentId</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.ContentId/dstruct_CntXnt</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentsAndDataGenericUI/permMethod_isVisibleCntXnt</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="CntSrvProvXnt" type="elslct">
+                  <labeAlign>left</labeAlign>
+                  <label>XNT</label>
+                  <labelOrientation>left</labelOrientation>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentsAndDataGenericUI/leaf_ContentServiceProvider</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.ContentServiceProvider/dstruct_CntSrvProvXnt</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentsAndDataGenericUI/permMethod_isVisibleCntSrvProvXnt</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="CntTypeXnt" type="elslct">
+                  <labeAlign>left</labeAlign>
+                  <label>XNT</label>
+                  <labelOrientation>left</labelOrientation>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentsAndDataGenericUI/leaf_ContentType</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.ContentType/dstruct_CntTypeXnt</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentsAndDataGenericUI/permMethod_isVisibleCntTypeXnt</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="EndingDaylightMonth" type="elslct">
+                  <labeAlign>left</labeAlign>
+                  <labelOrientation>left</labelOrientation>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentsAndDataGenericUI/leaf_TimeZone</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.TimeZone/dstruct_EndingDaylightMonth</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$description" type="laction">
+      <path>ui_cm_spoc.forms.ContentsAndDataGenericUI/leaf_description</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.ContentsAndDataGenericUI/leaf_description</valueType>
+      <script><![CDATA[
+        var contentDescription = '';
+        if(this.parent.model.isChild("CntDescription") && this.parent.model.CntDescription != null)
+            contentDescription = this.parent.model.CntDescription;
+        else if(this.parent.model.isChild("CntSrvProvDesc") && this.parent.model.CntSrvProvDesc != null)
+            contentDescription = this.parent.model.CntSrvProvDesc;
+        else if(this.parent.model.isChild("CntTypeDesc") && this.parent.model.CntTypeDesc != null)
+            contentDescription = this.parent.model.CntTypeDesc;
+
+        else if(this.parent.model.isChild("Description") && this.parent.model.Description != null)
+            contentDescription = this.parent.model.Description;
+        else if(this.parent.model.isChild("RGDescription") && this.parent.model.RGDescription != null)
+            contentDescription = this.parent.model.RGDescription;
+        else if(this.parent.model.isChild("SrvDescription") && this.parent.model.SrvDescription != null)
+            contentDescription = this.parent.model.SrvDescription;
+
+        return contentDescription;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$id" type="laction">
+      <path>ui_cm_spoc.forms.ContentsAndDataGenericUI/leaf_id</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var contentId = '';
+        if(this.parent.model.isChild("CntContent") && this.parent.model.CntContent != null)
+            contentId = this.parent.model.CntContent;
+        else if(this.parent.model.isChild("CntSrvProv") && this.parent.model.CntSrvProv != null)
+            contentId = this.parent.model.CntSrvProv;
+        else if(this.parent.model.isChild("CntTypeCntType") && this.parent.model.CntTypeCntType != null)
+            contentId = this.parent.model.CntTypeCntType;
+
+        else if(this.parent.model.isChild("APNId") && this.parent.model.APNId != null)
+            contentId = this.parent.model.APNId;
+        else if(this.parent.model.isChild("RatingGroupId") && this.parent.model.RatingGroupId != null)
+            contentId = this.parent.model.RatingGroupId;
+        else if(this.parent.model.isChild("ServiceID") && this.parent.model.ServiceID != null)
+            contentId = this.parent.model.ServiceID;
+
+        return contentId;
+      ]]></script>
+    </method>
+    <method name="updateId" type="usrActionMethod">
+      <script><![CDATA[
+        //var elementName = Global.getCurrentElementActionCulprit();
+        //var modelName = this.parent.model;
+
+        if(this.parent.model.isChild("CntContent"))
+            this.parent.model.CntContent = this.contentId;
+        else if(this.parent.model.isChild("CntSrvProv"))
+            this.parent.model.CntSrvProv = this.contentId;
+        else if(this.parent.model.isChild("CntTypeCntType"))
+            this.parent.model.CntTypeCntType = this.contentId;
+
+        else if(this.parent.model.isChild("APNId"))
+            this.parent.model.APNId = this.contentId;
+        else if(this.parent.model.isChild("RatingGroupId"))
+            this.parent.model.RatingGroupId = this.contentId;
+        else if(this.parent.model.isChild("ServiceID"))
+            this.parent.model.ServiceID = this.contentId;
+      ]]></script>
+    </method>
+    <method name="updateXnt" type="usrActionMethod">
+      <script><![CDATA[
+        //var elementName = Global.getCurrentElementActionCulprit();
+        //var modelName = this.parent.model;
+
+        if(this.parent.model.isChild("CntXnt"))
+            this.parent.model.CntXnt = this.contentXnt;
+        else if(this.parent.model.isChild("CntSrvProvXnt"))
+            this.parent.model.CntSrvProvXnt = this.contentXnt;
+        else if(this.parent.model.isChild("CntTypeXnt"))
+            this.parent.model.CntTypeXnt = this.contentXnt;
+      ]]></script>
+    </method>
+    <method name="updateDescription" type="usrActionMethod">
+      <script><![CDATA[
+        //var elementName = Global.getCurrentElementActionCulprit();
+        //var modelName = this.parent.model;
+
+        if(this.parent.model.isChild("CntDescription"))
+            this.parent.model.CntDescription = this.contentDescription;
+        else if(this.parent.model.isChild("CntSrvProvDesc"))
+            this.parent.model.CntSrvProvDesc = this.contentDescription;
+        else if(this.parent.model.isChild("CntTypeDesc"))
+            this.parent.model.CntTypeDesc = this.contentDescription;
+        else if(this.parent.model.isChild("Description"))
+            this.parent.model.Description = this.contentDescription;
+        else if(this.parent.model.isChild("RGDescription"))
+            this.parent.model.RGDescription = this.contentDescription;
+        else if(this.parent.model.isChild("SrvDescription"))
+            this.parent.model.SrvDescription = this.contentDescription;
+      ]]></script>
+    </method>
+    <method name="isVisibleCntXnt" type="permMethod">
+      <script><![CDATA[
+        var visible = false;
+
+        if(this.parent.model.isChild("CntXnt")){
+            visible = true;
+        }
+
+        return visible;
+      ]]></script>
+    </method>
+    <method name="isVisibleCntTypeXnt" type="permMethod">
+      <script><![CDATA[
+        var visible = false;
+
+        if(this.parent.model.isChild("CntTypeXnt")){
+            visible = true;
+        }
+
+        return visible;
+      ]]></script>
+    </method>
+    <method name="isVisibleCntSrvProvXnt" type="permMethod">
+      <script><![CDATA[
+        var visible = false;
+
+        if(this.parent.model.isChild("CntSrvProvXnt")){
+            visible = true;
+        }
+
+        return visible;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

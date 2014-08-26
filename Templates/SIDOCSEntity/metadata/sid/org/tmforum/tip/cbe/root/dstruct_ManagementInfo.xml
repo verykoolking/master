@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.cbe.root.ManagementInfo">
+  <abstract>true</abstract>
+  <container>true</container>
+  <description><![CDATA[
+    <p>This is an abstract base class that is used to represent entities that represent management information obtained in a managed environment . Specifically, in the process of managing an entity, information of various forms are created. This class is the base class for defining different types of management information.    The design of how management information is obtained uses this class to gather specific type of information, and the ManagementMethodEntity class to obtain the desired data using an appropriate method. This combination of class hierarchies enables different management methods (e.g., CLI vs. SNMP) to be used to gather different types of management data, and is unique to the DEN-ng information model.</p>                <p>This entity  is  abstract</p>                <p>This entity  is  optional</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{74f1431f-a507-498b-9943-4788bed85e02}</guid>
+  <label>ManagementInfo</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="mgmtInfoValidFor" type="dstruct">
+      <description><![CDATA[
+        <p>This attribute defines the time period that this management information is valid for. A TimePeriod is a complex datatype, that has a starting time and an ending time.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dstruct_tip.cbe.base.TimePeriod</element>
+      <guid>{c5ab77a6-9537-46d8-b859-1d1a5dd45fcb}</guid>
+      <label>mgmtInfoValidFor</label>
+    </child>
+    <child name="retrievalMethodsSupported" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is an array of integers that define the different means of retrieving management methods that are supported by this object. Values include:        0: Unknown        1: None        2: CLI        3: SNMP        4: TL1        5: CMIP        6: RMON        7: Proprietary        None could mean that this ManagedEntity performs a set function and is not configurable, as well as mean that this ManagedEntity is not configurable except by the factory.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{86009fd6-dd4e-4a97-942f-73c7d72b9af9}</guid>
+      <label>retrievalMethodsSupported</label>
+    </child>
+    <child name="retrievalMethodCurrent" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is an enumerated integer that defines the particular type of method that is currently being used to retrieve the management information. Values include:        0: Unknown        1: None        2: CLI        3: SNMP        4: TL1        5: CMIP        6: RMON        7: Proprietary        None could mean that this ManagedEntity performs a set function and is not configurable, as well as mean that this ManagedEntity is not configurable except by the factory.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{80d6a9f9-b263-47d9-9b83-29937d08d1c5}</guid>
+      <label>retrievalMethodCurrent</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.cbe.root.ManagementInfo</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.cbe.root.ManagementInfo</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

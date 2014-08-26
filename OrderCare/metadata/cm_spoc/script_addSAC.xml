@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.addSAC">
+  <group>ui_scripts.UsageControl.AccumulationConditions</group>
+  <label>addSAC</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var ds =  cm_spoc.initInnerDS("base_UCSimpleApplicabilityCondit");
+    ds = cm_spoc.initModelForCreation(ds);
+
+    var doc = new cm_spoc.UCSimpleAccumulationConditionsDoc();
+
+    doc = ds.mapTo(doc,"cm_spoc.SimpleApplicabilityConditionsCM")[0];
+
+    ui.result[ui.result.length] = doc;
+
+
+    if(ui.parent.positive) {
+
+
+
+    var ass = new cm_spoc.IndexedAssociation();
+
+    var len = ui.parent.model.UCPositiveConUCACArrDS.List.length;
+    ass.CW_REFID = ds.specificationCode;
+    ass.position = len;
+
+
+        ui.parent.model.UCPositiveConUCACArrDS.List[ui.parent.model.UCPositiveConUCACArrDS.List.length]=ass;
+       // ui.parent.model.UCPositiveConUCACArrDS.List[ui.parent.model.UCPositiveConUCACArrDS.List.length]=ds.specificationCode;
+        ui.parent.model.UCPositiveConUCACArrDS.ListDS[ui.parent.model.UCPositiveConUCACArrDS.ListDS.length]=ds;
+
+
+    }
+    else if (ui.parent.negative){
+
+
+    var ass = new cm_spoc.IndexedAssociation();
+
+    var len = ui.parent.model.UCNegativeConUCACArrDS.List.length;
+    ass.CW_REFID = ds.specificationCode;
+    ass.position = len;
+
+     ui.parent.model.UCNegativeConUCACArrDS.List[ui.parent.model.UCNegativeConUCACArrDS.List.length]=ass;
+     ui.parent.model.UCNegativeConUCACArrDS.ListDS[ui.parent.model.UCNegativeConUCACArrDS.ListDS.length]=ds;
+
+
+    }
+
+    ui.model.updateUI();
+  ]]></script>
+</script>

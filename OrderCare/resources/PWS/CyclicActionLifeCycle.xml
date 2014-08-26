@@ -1,0 +1,137 @@
+<OCSEntityType>
+		<oCSProductSpecification>
+			<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+			<!-- Attributes inherited from SID EntityBase: identifier -->
+			<!-- Attributes inherited from SID ProductSpecification: name; description; productNumber; validFor; lifeCycleStatus -->
+			<!-- Compulsory SID attributes -->
+			<identifier>
+				<context>
+					<valuePairs/>
+					<scheme>Testing</scheme>
+				</context>
+				<dn>
+					<valuePairs/>
+					<scheme>CyclicActionLifeCycle_T</scheme>
+				</dn>
+				<entityType>CyclicActionLifeCycle</entityType>
+			</identifier>
+			<!-- NGAA attributes -->
+			<type>CyclicActionLifeCycle</type>
+			<oCSProductSpecCharacteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>Cyclic action life cycle</annotation> -->
+				<characteristic  type="xsd:long" minValue="0" maxValue="99999">
+					<name>CyclicActionsLifeCycleId</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>Description</annotation> -->
+				<characteristic  type="xsd:string" maxLength="80">
+					<name>Description</name>
+				</characteristic>
+				<complexCharacteristic minOccurs="1" maxOccurs="unbounded" individualItemUpdate="false">
+					<name>CALifeCycleStatus</name>
+					<item>
+						<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="99999">
+							<name>StatusId</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Status Description</annotation> -->
+						<characteristic  type="xsd:string" maxLength="240">
+							<name>StatusDescription</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Inactivity status</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>InactivityStatus</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Time of permanence in the status (hours):</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="99999">
+							<name>TimeOfPermanenceInTheStatus</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>The activation is retried periodically, for a maximum period of time</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>PeriodicRetries</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Number of hours between attempts</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="99999">
+							<name>NumberOfHoursBetweenAttempts</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>The reactivation date is modified after a successful attempt</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>ModifyRenewalDateAfterRetryOK</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Number of recurrent activation phases during which it is retried</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="99999">
+							<name>NumOfRecurrentActivationPhases</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>When this status is set, it will be notified via ASN1</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>ChangeOfStatusNotifiedViaASN1</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>When a change of reactivation date takes place, it will be notified via ASN1</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>ChangeOfReactDateNotifiedViaASN1</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>The recurrent activation is retried after a Charges Manager operation</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>AfterOperationRetries</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Outstanding executions are recovered and they will be charged when subscriber has balance again</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>OutstandingExecutionsAreRecovere</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Maximum number of delays</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="999">
+							<name>MaximumNumberOfDelays</name>
+						</characteristic>
+
+					</item>
+				</complexCharacteristic>
+				<complexCharacteristic minOccurs="1" maxOccurs="unbounded" individualItemUpdate="true">
+					<name>CALifeCycleTransition</name>
+					<item operation="A">
+						<!-- <xsd:annotation> <xsd:documentation><p>Initial status</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>InitialStatus</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>The status transition will just be made for some error codes</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>NokTransitionDependErrorCode</name>
+						</characteristic>
+
+						<relations>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="AfterNoOKStatusIsSet" oCSTargetEntityType="CALifeCycleStatus" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>CALifeCycleStatus</scheme>
+										</dn>
+										<entityType>AfterNoOKStatusIsSet</entityType>
+									</target>
+								</item>
+							</relation>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="AfterOKStatusIsSet" oCSTargetEntityType="CALifeCycleStatus" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>CALifeCycleStatus</scheme>
+										</dn>
+										<entityType>AfterOKStatusIsSet</entityType>
+									</target>
+								</item>
+							</relation>
+						</relations>
+					</item>
+				</complexCharacteristic>
+			</oCSProductSpecCharacteristic>
+		</oCSProductSpecification>
+</OCSEntityType>

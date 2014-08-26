@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.inOut_queryConfigurationStatus">
+  <highlight>32</highlight>
+  <label>inOut_queryConfigurationStatus</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="input" type="rifp">
+      <type>dstruct_OCSConfigurationOperation.v1.types.QueryEntity</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_OCSConfigurationOperation.v1.types.QueryEntityResponse</valueType>
+  <script><![CDATA[
+    try {
+        var OP_REFERENCE = 'QUERY_CONFIGURATION_STATUS';
+
+        var sessionId = input.sessionId;
+        var queryCommonInfo = input.queryCommonInfo;
+
+        //validate the session
+        var project = epc.getProjectByCode(sessionId);
+        if(!project)
+        {
+            var fault = api_common.createFault("E101", "Invalid SessionId.");    //TODO: correct code
+            return fault;
+        }
+
+        // Create the method response:
+        var output = new OCSConfigurationOperation.v1.types.QueryConfigurationStatusResponse();
+        output.queryCommonInfoResult = new OCSConfigurationOperation.v1.types.QueryEntity();
+
+        output.configurationStatus.sessionId = project.projectCode;
+        output.configurationStatus.lastStateChangeDate = project.lastUpdatedDate;
+        output.configurationStatus.lifeCycleStatus = project.getStatus();
+
+
+        return output;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

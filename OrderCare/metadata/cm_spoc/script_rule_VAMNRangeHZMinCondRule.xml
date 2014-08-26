@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_VAMNRangeHZMinCondRule">
+  <group>rules_scripts.Numbering</group>
+  <label>rule_VAMNRangeHZMinCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute (MinLNhZ) must be saved in the catalog only if the related attribute (AnalysisType) assumes one of the values shown in the column H (3).
+
+    var dt=data;
+    if (dt.MinLNhZ && !(dt.AnalysisType == "ANT" || dt.AnalysisType == "C" || dt.AnalysisType == "VC")) {
+        errList.addErrorMessage(data,["MinLNhZ must be empty if Analysis Tpye is different to ANT, CONTENT or VALUE CONTENT."],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

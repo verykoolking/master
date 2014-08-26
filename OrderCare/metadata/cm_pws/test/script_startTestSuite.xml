@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.startTestSuite">
+  <group>scripts</group>
+  <label>startTestSuite</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="name" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="owner" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="isNested" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var log = cm_pws.test.clsLog();
+    name = owner.visualKey;
+    var testCaseInfo =  "Test suite '" + name + "' - STARTED";
+    try{
+        log.newLine();
+        log.writeLn(testCaseInfo);
+
+        if(isNested){
+            //setting the level
+            var testOwner = Global.getSessionParameter("TEST_OWNER");
+            if(!testOwner){
+                Global.setSessionParameter("TEST_OWNER", owner.metadata);
+                cm_pws.test.testImportCatalog();
+            }
+            ///
+        }
+
+    }catch(exp){
+        log.writeLn(exp);
+        Global.throwException("EXP", exp);
+
+    }
+  ]]></script>
+</script>

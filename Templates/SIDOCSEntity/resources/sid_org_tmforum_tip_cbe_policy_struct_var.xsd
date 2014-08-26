@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/cbe/policy/struct/var" xmlns:val="http://www.tmforum.org/xml/sid/org/tmforum/tip/cbe/policy/struct/val" xmlns:stat="http://www.tmforum.org/xml/sid/org/tmforum/tip/cbe/policy/struct/stat" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/cbe/policy/struct/var" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.cbe.policy.struct.var
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 20
+ Association Classes: 0
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/cbe/policy/struct/val" schemaLocation="sid_org_tmforum_tip_cbe_policy_struct_val.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/cbe/policy/struct/stat" schemaLocation="sid_org_tmforum_tip_cbe_policy_struct_stat.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="bitStringVariable" type="tns:BitStringVariable"/>
+   <xsd:complexType name="BitStringVariable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class is used to represent a single or set of bit string variable. Thus, only BitStringValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="variableBitStringList" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is an unordered list of strings, each representing
+a single bit string or a set of bit strings. The number of bits
+specified SHOULD equal the number of bits of the expected variable. For example, for an 8-bit byte variable, 8 bits should be specified. If the variable does not have a fixed length, the most significant bits should be used. The formal definition of a bit string is:
+
+binary-digit = "0" / "1"
+bitstring = 1*binary-digit
+maskedBitString = bitstring","bitstring
+
+Each string entry is either:
+
+1. A single bit string. Example: 00111010
+2. A range of bit strings specifies using a bit string and a bit
+mask. The bit string and mask properties have the same
+number of bits specified. The mask bit string specifies the
+significant bits in the bit string value. For example, 110110,
+100110 and 110111 would match the maskedBitString
+100110,101110 but 100100 would not.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfBitStringVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:BitStringVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="dNVariable" type="tns:DNVariable"/>
+   <xsd:complexType name="DNVariable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class is used to represent a single or set of Distinguished
+Name variable, which may include wildcards. This variable type is specifically defined for retrieving LDAP-based data. Thus, only DNValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="variableDNList" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute provides an unordered list of strings, each representing a Distinguished Name (DN) with wildcards. The asterisk character ("*") is used as wildcard for either a single attribute value or a wildcard for an RDN.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfDNVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:DNVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="dSCPVariable" type="tns:DSCPVariable"/>
+   <xsd:complexType name="DSCPVariable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents using the value of the DSCP byte as part of a condition expression. Thus, only BitStringValue and IntegerValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfDSCPVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:DSCPVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="etherTypeVariable" type="tns:EtherTypeVariable"/>
+   <xsd:complexType name="EtherTypeVariable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents using the value of the Ethertype protocol number of Ethernet frames as part of a condition expression. Thus, only BitStringValue and IntegerValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfEtherTypeVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:EtherTypeVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="iPProtocolVariable" type="tns:IPProtocolVariable"/>
+   <xsd:complexType name="IPProtocolVariable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents using the value of the IP protocol number as part of a condition expression. Thus, only BitStringValue and IntegerValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfIPProtocolVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:IPProtocolVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="iPToSVariable" type="tns:IPToSVariable"/>
+   <xsd:complexType name="IPToSVariable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents using the value of the IP ToS byte as part of a condition expression. Thus, only BitStringValue and IntegerValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfIPToSVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:IPToSVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="iPVersionVariable" type="tns:IPVersionVariable"/>
+   <xsd:complexType name="IPVersionVariable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents filtering on a particular version of the IP protocol as part of a condition expression. Thus, only BitStringValue and IntegerValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfIPVersionVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:IPVersionVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="iPv4Variable" type="tns:IPv4Variable"/>
+   <xsd:complexType name="IPv4Variable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents using the value of IPv4 source and/or destination addresses as part of a condition expression. Thus, only IPv4AddressValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="v4Direction" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines if this variable is used to represent source addresses, destination addresses, or both. Values are:
+
+0: source addresses
+1: destination addresses
+2: both</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="v4HeaderNumber" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is an enumerated integer that defines the particular packet header that contains the IPv4 address information. Specifying the packet header is necessary in case the address is tunneled. In this case, it is mandatory that the correct address be chosen for comparison. Values are:
+
+0: outermost header
+1: next innermost header
+2: second innermost header
+
+etc.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="v4AddressList" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is an unordered list of strings, each specifying a
+single IPv4 address, a hostname, or a range of IPv4 addresses, according to the ABNF definition of an IPv4 address as specified below:
+
+IPv4address = 1*3DIGIT "." 1*3DIGIT "." 1*3DIGIT "." 1*3DIGIT
+IPv4prefix = IPv4address "/" 1*2DIGIT
+IPv4range = IPv4address"-"IPv4address
+IPv4maskedaddress = IPv4address","IPv4address
+
+Hostnames are defined in RFC1035.
+
+In the above definition, each string entry is either:
+
+1. A single Ipv4address in dot notation as defined above.
+Example: 121.1.1.2
+
+2. A single Hostname. Hostname format follows the guidelines
+and restrictions specified in RFC1035.
+Example: www.bigcompany.com
+
+3. An IPv4range address range defined above, specified by a
+start address in dot notation and an end address in dot
+notation, separated by "-". The range includes all addresses
+between the range's start and end addresses, including the
+start and end addresses.
+Example: 1.1.22.1-1.1.22.5
+
+4. An IPv4maskedaddress address range defined above,
+specified by an address and mask. The address and mask
+are represented in dot notation separated by a comma ",".
+Example: 2.3.128.0,255.255.248.0.
+
+5. An IPv4prefix address range defined above specified by an
+address and a prefix length separated by "/".
+Example: 2.3.128.0/15</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfIPv4Variable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:IPv4Variable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="iPv6FlowIDVariable" type="tns:IPv6FlowIDVariable"/>
+   <xsd:complexType name="IPv6FlowIDVariable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents using the value of the flow ID in the specified packet header as part of a condition expression. The specific packet header to use is specified in the flowHeaderNumber attribute of this class. Thus, only IntegerValue and BitStringValue classes can be used in the value portion of the condition expression with this Variable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="v6HeaderNumber" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is an enumerated integer that defines the particular packet header that contains the IPv6 address information. Specifying the packet header is necessary in case the address is tunneled. In this case, it is mandatory that the correct address be chosen for comparison. Values are:
+
+0: outermost header
+1: next innermost header
+2: second innermost header
+
+etc.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="flowIDHeaderNumber" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is an enumerated integer that defines the particular packet header that contains the IPv6 flow ID information. Specifying the packet header is necessary in case the address is tunneled. In this case, it is mandatory that the correct address be chosen for comparison. Values are:
+
+0: outermost header
+1: next innermost header
+2: second innermost header
+
+etc.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfIPv6FlowIDVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:IPv6FlowIDVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="iPv6Variable" type="tns:IPv6Variable"/>
+   <xsd:complexType name="IPv6Variable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents using the value of IPv6 source and/or destination addresses as part of a condition expression. Thus, only IPv6AddressValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="v6Direction" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines if this variable is used to represent source addresses, destination addresses, or both.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="v6HeaderNumber" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is an enumerated integer that defines the particular packet header that contains the IPv6 address information. Specifying the packet header is necessary in case the address is tunneled. In this case, it is mandatory that the correct address be chosen for comparison. Values are:
+
+0: outermost header
+1: next innermost header
+2: second innermost header
+
+etc.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="v6AddressList" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is an unordered list of strings, each specifying a
+single IPv6 address, a hostname, or a range of IPv6 addresses, according to the ABNF definition of an IPv6 address as specified below:
+
+IPv6address = hexpart [ ":" IPv4address ]
+IPv4address = 1*3DIGIT "." 1*3DIGIT "." 1*3DIGIT "." 1*3DIGIT
+IPv6prefix = hexpart "/" 1*2DIGIT
+hexpart = hexseq | hexseq "::" [ hexseq ] | "::" [ hexseq ]
+hexseq = hex4 *( ":" hex4)
+hex4 = 1*4HEXDIG
+IPv6range = IPv6address"-"IPv6address
+IPv6maskedaddress = IPv6address","IPv6address
+
+Hostnames are defined in RFC1035.
+
+In the above definition, each string entry is either:
+
+1. A single IPv6address in dot notation as defined above.
+
+2. A single Hostname. Hostname format follows the guidelines
+and restrictions specified in RFC1035.
+
+3. An IPv6range address range defined above, specified by a
+start address in dot notation and an end address in dot
+notation, separated by "-". The range includes all addresses
+between the range's start and end addresses, including the
+start and end addresses.
+
+4. An IPv6maskedaddress address range defined above,
+specified by an address and mask. The address and mask
+are represented in dot notation separated by a comma ",".
+
+5. An IPv6prefix address range defined above specified by an
+address and a prefix length separated by "/".</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfIPv6Variable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:IPv6Variable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="mACVariable" type="tns:MACVariable"/>
+   <xsd:complexType name="MACVariable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents using the source MAC address value as part of a condition expression. Thus, only BitStringValue and IntegerValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="macDirection" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines if this variable is used to represent source addresses, destination addresses, or both.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="macAddressList" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is an unordered list of strings, each specifying a
+MAC address or a range of MAC addresses. The 802 MAC address canonical format is used:
+
+MACaddress = 1*4HEXDIG ":" 1*4HEXDIG ":" 1*4HEXDIG
+MACmaskedaddress = MACaddress","MACaddress
+
+Each string entry is either:
+
+1. A single MAC address. Example: 0000:00A5:0000
+2. A MACmaskedaddress address range defined specified by
+an address and mask. The mask specifies the relevant bits in
+the address. Example: 0000:00A5:0000, FFFF:FFFF:0000
+defines a range of MAC addresses in which the first 4 8-bit
+bytes are equal to 0000:00A5</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfMACVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:MACVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="policyConditionTimePeriod" type="tns:PolicyConditionTimePeriod"/>
+   <xsd:complexType name="PolicyConditionTimePeriod">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is a concrete class that provides the capability of enabling or disabling a PolicyCondition according to a pre-determined time schedule. This enables this class to effectively enable or disable evaluation of the entire condition clause. The simplest way to do this is to specify a value for the TimePeriod class attribute; this may of course be modified by other class attributes as necessary.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="timeOfDayMask" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute that refines the definition of the valid time period that is defined by the timePeriod attribute. This is done by explicitly specifying a range of times in a day the PolicyRule is valid for. These attributes work together, with the timePeriod attribute used to specify the overall time period that the PolicyRule is valid for, and the timeOfDayMask attribute used to pick out which range of time periods in a given day of that time period the PolicyRule is valid for.
+
+This attribute is formatted in the style of RFC 2445: a time string beginning with the character 'T', followed by the solidus character ('/'), followed by a second time string. The first time indicates the beginning of the range, while the second time indicates the end. Times are expressed as substrings of the form "Thhmmss".
+
+The second substring always identifies a later time than the first substring. To allow for ranges that span midnight, however, the value of the second string may be smaller than the value of the first substring. Thus, "T080000/T210000" identifies the range from 0800 until 2100, while "T210000/T080000" identifies the range from 2100 until 0800 of the following day.
+
+When a range spans midnight, it by definition includes parts of two
+successive days. When one of these days is also selected by either the monthOfYearMask, dayOfMonthMask, and/or dayOfWeekMask, but the other day is not, then the policy is active only during the portion of the range that falls on the selected day. For example, if the range extends from 2100 until 0800, and the day of week mask selects Monday and Tuesday, then the policy is active during the following three intervals:
+
+From midnight Sunday until 0800 Monday;
+From 2100 Monday until 0800 Tuesday;
+From 2100 Tuesday until 23:59:59 Tuesday.
+
+If this attribute is not specified, then the PolicyRule is treated as valid for the entire day, for all days specified by the timePeriod attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="monthOfYearMask" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>The monthOfYearMask attribute is a string that refines the definition of the valid time period that is defined by the timePeriod attribute. This is done by explicitly specifying the months when the policy is valid. Thus, the timePeriod attribute is used to specify the overall time period during which the policy might be valid, and the monthOfYearMask attribute is used to pick out the specific months within that time period when the PolicyRule is valid. This attribute consists of a fixed string of 16 bits. The first 12 bits correspond to the 12 months of the year, beginning with January and ending with December. The last 4 bits are always set to "0". For each month, the value "1" indicates that the policy is valid for that month, and the value "0" indicates that it is not valid.
+
+If this attribute is not specified, then the PolicyRule is treated as valid for all twelve months.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="timePeriod" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute that defines an overall range of calendar dates and times over which a PolicyRule is valid. As such, this is the most basic way to use date and/or time to enable or disable a given PolicyRule.
+
+This attribute is based on time as defined in RFC 2445. This calls for a string to represent a starting date and time, in which the character 'T' indicates the beginning of the time portion, followed by the solidus character ('/'), followed by a similar string representing an end date and time. The first date indicates the beginning of the range, while the second date indicates the end. The second date and time must be later than the first.
+
+Date/times are expressed as substrings of the form:
+"yyyymmddThhmmss".
+
+For example:
+
+20000101T080000/20000131T120000
+
+is interpreted as:
+January 1, 2000, 0800 through January 31, 2000, noon
+
+There are also two special cases in which one of the date/time strings is replaced with a special string defined in RFC 2445.
+
+- If the first date/time is replaced with the string "THISANDPRIOR", then the property indicates that a policy rule is valid, from now until the date/time that appears after the '/'.
+
+- If the second date/time is replaced with the string "THISANDFUTURE", then the property indicates that a policy rule becomes valid on the date/time that appears before the '/', and remains valid from that point on.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="dayOfMonthMask" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute that refines the definition of the valid time period that is defined by the timePeriod attribute. This is done by explicitly specifying the days of the month when the policy is valid.
+
+These attributes work together, with the timePeriod attribute used to specify the overall time period during which the PolicyRule might be valid, and the dayOfMonthMask attribute used to pick out the specific days of the month within that time period when the PolicyRule is valid.
+
+This property is formatted as a fixed string of 64 bits. The first 31 bits correspond to the days of the month counting from the beginning, followed by 31 more bits identifying the days of the month counting from the end, followed by 2 bits that are always set to '0'.
+
+For each day, the value '1' indicates that the policy is valid for that day, and the value '0' indicates that it is not valid. The value X'80 00 00 01 00 00 00 00', for example, indicates that a PolicyRule is valid on the first and last days of the month.
+
+For months with fewer than 31 days, the digits corresponding to days that the months do not have (counting in both directions) are ignored.
+
+The encoding of the 62 significant bits in the octet string matches that used for the schedDay object in the DISMAN-SCHEDULE-MIB.
+
+If this attribute is not specified, then the PolicyRule is treated as valid for all days in the months specified by the timePeriod attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="dayOfWeekMask" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute that refines the definition of the valid time period that is defined by the timePeriod attribute. This is done by explicitly specifying the days of the week when the PolicyRule is valid. These attributes work together, with the timePeriod attribute used to specify the overall time period when the policy might be valid, and the DayOfWeekMask used to pick out the specific days of the week in that time period when the PolicyRule is valid.
+
+This property is formatted as a fixed length string of 8 bits. The first 7 bits identify the 7 days of the week, beginning with Sunday and ending with Saturday, followed by 1 bit that is always set to '0'. For each day of the week, the value '1' indicates that the PolicyRule is valid for that day, and the value '0' indicates that it is not valid.
+
+If this attribute is not specified, then the PolicyRule is treated as valid for all 7 days in the weeks specified by the timePeriod attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isLocalTime" type="xsd:boolean" minOccurs="0" maxOccurs="1" default="true">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, signifies that the times represented in the timePeriod attribute and in the various Mask attributes represent local times. If the value of this attribute is FALSE, then this means that the times represented in the timePeriod attribute and in the various Mask attributes represent UTC times.
+
+There is no provision for mixing of local times and UTC times: the value of this attribute applies to all of the other time-related attributes.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPolicyConditionTimePeriod">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PolicyConditionTimePeriod" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="policyConditionVendor" type="tns:PolicyConditionVendor"/>
+   <xsd:complexType name="PolicyConditionVendor">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is a concrete base class that provides a general extension mechanism for representing PolicyConditions that have not been modeled with the attributes specified in this model. This class uses two of its properties (constraintData and constraintEncoding) for defining the content and format of a vendor-specific condition. Its other two attributes are used to describe the type of condition that this represents, and to provide a standard definition of a TRUE or FALSE response. This latter enables this object to interoperate with other PolicyVariableStandard objects as part of a PolicyConditon clause.
+
+Standardized extensions are not expected to use this class.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="constraintEncoding" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>The constraintEncoding attribute is a string that is used to represent an OID that in turn identifies the encoding and semantics of the constraintData attribute in this instance.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="conditionType" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a free-form string that can be used to define the type of condition that this instance is checking.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="conditionResponse" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that is used to allow a 'standard' definition of a TRUE/FALSE response to be made by an external system attached to the model at this point. This will allow integration with a generalized policy processing engine.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="constraintData" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>The constraintData attribute is a string that provides a general extension mechanism for representing PolicyConditions that have not been modeled with specific attributes (as specified in this model). The format of this attribute is determined by the OID value stored in the constraintEncoding attribute of this class. The constraintEncoding attribute provides a convenient and simple mechanism by which a Policy Server can determine whether it supports the values stored in an instance of constraintData. If it doesn't recognize any of the OID values in the constraintEncoding attribute, then it will not know how to interpret the data in the corresponding constraintData attributes. The action for the policy decision point to take in case it does not recognize the format of this data could itself be modeled as a PolicyRule, governing the behavior of the Policy Server.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPolicyConditionVendor">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PolicyConditionVendor" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="policyVariable" type="tns:PolicyVariable"/>
+   <xsd:complexType name="PolicyVariable" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract class for modeling different types of variables that can be used to form a PolicyStatement. The variable specifies an attribute or concept that should either be matched or in some way compared to a value when the condition is evaluated.
+
+There are three important factors that must be taken into account in the design of variables. The first is that not every combination of a variable and a value creates a meaningful condition. For example, port numbers cannot be negative. Rather, the type of variable in the condition defines the set of matchable value types.
+
+Second, just because a value has the correct datatype does not mean that it can be meaningfully compared to a variable. To continue the above example, a port of 1,000,000 is meaningless. This is handled in this model by specifying constraints (using OCL) that apply to a particular variable that must be obeyed by any value that it is being compared to. The ExpectedPolicyValuesForVariable association binds a PolicyVariable to a PolicyValue; any constraints that are required in this binding are added to an instance of this association using OCL.
+
+Third, while the DEN-ng model defines a set of useful PolicyVariables, there is a high likelihood that specific applications will need extensions to these variables. This is accommodated through the notion of implicit and explicit PolicyVariable classes.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="policyOperator" type="stat:ArrayOfPolicyOperator" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association OperatorConstraintDetails</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="policyValue" type="val:ArrayOfPolicyValue" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association ValueConstraintDetails</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPolicyVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PolicyVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="portVariable" type="tns:PortVariable"/>
+   <xsd:complexType name="PortVariable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents using the value of port source and/or destination fields as part of a condition expression. Thus, only BitStringValue and IntegerValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="portDirection" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines if this variable is used to represent source addresses, destination addresses, or both.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPortVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PortVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="stringVariable" type="tns:StringVariable"/>
+   <xsd:complexType name="StringVariable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class is used to represent a single or set of string variable. Each can have wildcards. Thus, only StringValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="variableStringList" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is an unordered list of strings, each representing
+a single string with wildcards. The asterisk character "*" is used as a wildcard, and represents an arbitrary sub-string replacement. For example, the value "abc*def" match "abcxyzdef", and the value "abc*def*" match "abcxxxdefyyyzzz".</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfStringVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:StringVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="vLANVariable" type="tns:VLANVariable"/>
+   <xsd:complexType name="VLANVariable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents using the IEEE 802.1q VLAN ID value (which is 12 bits) as part of a condition expression. Thus, only BitStringValue and IntegerValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfVLANVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:VLANVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="variableCustom" type="tns:VariableCustom"/>
+   <xsd:complexType name="VariableCustom" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>There are two subclasses of PolicyVariable, called VariableCustom and VariableStandard. The VariableCustom class defines a set of standardized policy variables for use in an application-specific manner. The term "custom" means that such variables are explicitly designed to work with attributes that are not in any of the DEN-ng VariableStandard subclasses. This means that the particular semantics (including any applicable constraints) are not known to DEN-ng.
+
+This is an abstract base class that provides two basic attributes to define custom variables that can be used in an application-specific fashion.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="variableModelAttribute" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute that defines the name of the attribute within the class specified in the variableModelClass attribute that is to be evaluated or set as a PolicyVariable. This enables the VariableCustom class to point to other attributes of other classes that can be defined as extensions of the standard DEN-ng model.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="variableModelClass" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute that defines the class name whose attribute is to be evaluated or set as a PolicyVariable. This enables the VariableCustom class to point to other attributes of other classes that can be defined as extensions of the standard DEN-ng model.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfVariableCustom">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:VariableCustom" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="variableStandard" type="tns:VariableStandard"/>
+   <xsd:complexType name="VariableStandard" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract base class for defining a standard set of PolicyVariable objects that are common to most PBNM applications. This is the superclass for a standard set of PolicyVariable subclasses that are part of the DEN-ng model.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="allowedValueTypes" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an array of string attributes that define the set of class names (which correspond to a set of datatypes) that are allowed to be used in conjunction with this PolicyVariable. Each string provides a class name, which corresponds to a particular subclass of PolicyValue. Each allowed subclass defines an object with a compatible datatype and semantics.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfVariableStandard">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:VariableStandard" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="_1qCoSVariable" type="tns:_1qCoSVariable"/>
+   <xsd:complexType name="_1qCoSVariable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents using the IEEE 802.1q Class of Service value (which is three bits) as part of a condition expression. Thus, only BitStringValue and IntegerValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOf_1qCoSVariable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:_1qCoSVariable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

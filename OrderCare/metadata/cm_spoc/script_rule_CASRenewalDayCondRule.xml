@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_CASRenewalDayCondRule">
+  <group>rules_scripts.CyclicActions</group>
+  <label>rule_CASRenewalDayCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(data.PeriodCode!="M" && data.ExecutionIntervalType!="DAY" && data.RenewalDay)
+        errList.addErrorMessage(data,["Day must be empty."],"NGAA_003","E");
+    return false;
+  ]]></script>
+</script>

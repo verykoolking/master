@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.calculateDesc">
+  <group>ui_scripts.RatingTree.RTFinder</group>
+  <label>calculateDesc</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="rtbrtArr" type="rifp"/>
+    <parameter name="ct" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var str = "";
+
+    for ( var i = 0; i < rtbrtArr.length; i++ ){
+        var nodeName = rtbrtArr[i].NodeName;
+        var doc = Document.readDoc("cm_spoc.RatingTreeNodeTypes",nodeName);
+        var codeTable = null;
+        if (doc.nodeType == 'ct'){
+            codeTable = doc.nodeTypeValue;
+            var arr = Global.getCTCodesAndDescriptions(""+codeTable);
+            if(codeTable == ct  && arr && arr.length > 0){
+                var listDS = rtbrtArr[i].RTNodeOutputArrDS.ListDS;
+                var lengthDS = listDS.length;
+                for ( var j = 0; j < lengthDS; j++){
+                    if ( j > 0 )
+                        str = str + ";";
+                    for ( var k = 0 ; k < arr.length; k +=2 ){
+                        if ( listDS[j].NodeValue == arr[k] ) {
+                            str = str + arr[k+1];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return str;
+  ]]></script>
+</script>

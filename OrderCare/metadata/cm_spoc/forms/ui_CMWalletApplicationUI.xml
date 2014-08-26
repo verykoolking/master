@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.CMWalletApplicationUI">
+  <group>Common.ChargingMode</group>
+  <label>CMWalletApplicationUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ChargingMode</valueType>
+    </variable>
+    <variable name="CMWalletApplicationIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_cm_spoc.forms.CMWalletApplicationRuleUI</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <width>100%</width>
+              <elementList>
+                <element name="LayoutSpacer" type="ellsp">
+                  <height>20px</height>
+                </element>
+                <element name="WalletApplicationVL" type="elvlt">
+                  <edgeOffset>2</edgeOffset>
+                  <edgeSize>1</edgeSize>
+                  <showEdge>true</showEdge>
+                  <style>cwDetailFormHeader</style>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="HorizontalLayout" type="elhlt">
+                      <alignment>center,center</alignment>
+                      <height>26px</height>
+                      <style>cwExpressionGradientLayout</style>
+                      <width>450px</width>
+                      <elementList>
+                        <element name="Select" type="ellsp">
+                          <width>31px</width>
+                        </element>
+                        <element name="Wallet1" type="ellab">
+                          <cellAlignment></cellAlignment>
+                          <columnSpan>0</columnSpan>
+                          <label>Wallet</label>
+                          <labelOrientation>left</labelOrientation>
+                          <showLabel>false</showLabel>
+                          <textAlign>center</textAlign>
+                          <width>100px</width>
+                        </element>
+                        <element name="WalletUsageRuleEnum" type="ellab">
+                          <columnSpan>0</columnSpan>
+                          <label>Usage Rule</label>
+                          <labelOrientation>left</labelOrientation>
+                          <showLabel>false</showLabel>
+                          <textAlign>center</textAlign>
+                          <width>185px</width>
+                        </element>
+                        <element name="getRuleType" type="ellab">
+                          <cellAlignment></cellAlignment>
+                          <columnSpan>0</columnSpan>
+                          <editable type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </editable>
+                          <label>Rule Type</label>
+                          <labelOrientation>left</labelOrientation>
+                          <showLabel>false</showLabel>
+                          <textAlign>center</textAlign>
+                          <width>100px</width>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="WalletApplicationIterator" type="eliter">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.CMWalletApplicationUI/leaf_CMWalletApplicationIterator</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <elementList>
+                        <element name="WalletApplicationHL" type="elhlt">
+                          <width>100%</width>
+                          <elementList>
+                            <element name="FormFrame" type="elovf">
+                              <formReference type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.CMWalletApplicationUI/leaf_CMWalletApplicationIterator</variablePath>
+                                  <variablePath>ui_cm_spoc.forms.CMTariffPlanGroupRuleUI/frmui_Forms</variablePath>
+                                  <variablePath>ui_cm_spoc.forms.CMTariffPlanGroupRuleUI/frmui_Forms/exov_Default</variablePath>
+                                </variablePathList>
+                              </formReference>
+                              <width>100%</width>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="addWalletApplication" type="uimthd">
+      <script><![CDATA[
+        var currentIndex = this.parent.selectedTariffPlanGroup;
+        var listDs= this.model.CMCMByPlanGroupArrDS.ListDS[currentIndex].CMBPGWalletApplicationArrDS.ListDS;
+        cm_spoc.addListElement(this,listDs,"cm_spoc.forms.CMWalletApplicationRuleUI","base_WalletApplication","CMWalletApplicationIterator");
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.RatingTreeBranchForm">
+  <group>RatingTree</group>
+  <label>RatingTreeBranchForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.RatingTreeBranch</valueType>
+    </variable>
+    <variable name="nodes" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>doc_cm_spoc.RatingTreeNodeTypes</valueType>
+    </variable>
+    <variable name="selectedNodes" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>doc_cm_spoc.RatingTreeNodeTypes</valueType>
+    </variable>
+    <variable name="availableNodes" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>doc_cm_spoc.RatingTreeNodeTypes</valueType>
+    </variable>
+    <variable name="nodesIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elhlt">
+              <width>750px</width>
+              <elementList>
+                <element name="AvailableNodesTable" type="eltabl">
+                  <autoFit>Vertical</autoFit>
+                  <cellWidth>230</cellWidth>
+                  <doubleClickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RatingTreeBranchForm/uimthd_addNode</variablePath>
+                    </variablePathList>
+                  </doubleClickMethod>
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <height>600px</height>
+                  <showDetailColumn>false</showDetailColumn>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RatingTreeBranchForm/leaf_availableNodes</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>230px</width>
+                  <elementList>
+                    <element name="description" type="elfld">
+                      <label>Available nodes</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.RatingTreeBranchForm/leaf_availableNodes</variablePath>
+                          <variablePath>doc_cm_spoc.RatingTreeNodeTypes/leaf_description</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpacer" type="ellsp">
+                  <width>40px</width>
+                </element>
+                <element name="HorizontalLayout" type="elvlt">
+                  <alignment>right,center</alignment>
+                  <width>400px</width>
+                  <elementList>
+                    <element name="VerticalLayout2" type="elhlt">
+                      <alignment>right,center</alignment>
+                      <elementList>
+                        <element name="TariffClass" type="elfld">
+                          <editable type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </editable>
+                          <labeAlign>left</labeAlign>
+                          <label>Tariff Class</label>
+                          <labelOrientation>left</labelOrientation>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.RatingTreeBranchForm/leaf_model</variablePath>
+                              <variablePath>dstruct_cm_spoc.data.RatingTreeBranch/dstruct_TariffClass</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <width>200px</width>
+                        </element>
+                        <element name="LayoutSpacer3" type="ellsp">
+                          <width>20px</width>
+                        </element>
+                        <element name="edit" type="elimg">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.RatingTreeBranchForm/usrActionMethod_openTariffClassDialog</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <imageUrl>/cwf/MenuIconEdit.gif</imageUrl>
+                          <tooltip>Edit Node</tooltip>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="Separator" type="elsep"/>
+                    <element name="Iterator" type="eliter">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.RatingTreeBranchForm/leaf_nodesIterator</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <elementList>
+                        <element name="VerticalLayout1" type="elvlt">
+                          <alignment>right,center</alignment>
+                          <elementList>
+                            <element name="FormFrame" type="elovf">
+                              <cellAlignment>right,center</cellAlignment>
+                              <formReference type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.RatingTreeBranchForm/leaf_nodesIterator</variablePath>
+                                  <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                  <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                </variablePathList>
+                              </formReference>
+                              <width>500px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$nodes" type="laction">
+      <path>ui_cm_spoc.forms.RatingTreeBranchForm/leaf_nodes</path>
+      <type>initializer</type>
+      <script>return cm_spoc.getAllNodesTypes();</script>
+    </method>
+    <method name="cwLeafInitAction$nodesIterator" type="laction">
+      <path>ui_cm_spoc.forms.RatingTreeBranchForm/leaf_nodesIterator</path>
+      <type>initializer</type>
+      <script>return cm_spoc.initNodesUIIterator(this);</script>
+    </method>
+    <method name="cwLeafInitAction$availableNodes" type="laction">
+      <path>ui_cm_spoc.forms.RatingTreeBranchForm/leaf_availableNodes</path>
+      <type>initializer</type>
+      <script>return cm_spoc.getAvailableNodes(this);</script>
+    </method>
+    <method name="cwLeafInitAction$selectedNodes" type="laction">
+      <path>ui_cm_spoc.forms.RatingTreeBranchForm/leaf_selectedNodes</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.RatingTreeBranchForm/leaf_selectedNodes</valueType>
+      <script>return cm_spoc.getSelectedNodes(this);</script>
+    </method>
+    <method name="addNode" type="uimthd">
+      <script>cm_spoc.addNode(this);</script>
+    </method>
+    <method name="openTariffClassDialog" type="usrActionMethod">
+      <dialogHeight>400</dialogHeight>
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <dialogWidth>600</dialogWidth>
+      <showInPopup>true</showInPopup>
+      <script>return cm_spoc.editTariffClassDialog(this);</script>
+    </method>
+    <method name="setPickListTariffClass" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItem" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script>cm_spoc.setTariffClass(this, selectedItem);</script>
+    </method>
+  </methodList>
+</userInterface>

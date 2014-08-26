@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_MultipleInstancesVisRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_MultipleInstancesVisRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+     * data = cm_spoc.data.BoltOnGenericSpecification
+     *
+     * The attribute data.MultipleInstances must NOT be saved if:
+     * - the BoltOnTypeModality assume one of the following values: [BD,MC,MG,GB]
+     * OR
+     * - the SessionSpecification.MaximumNumberOfSession OR the SessionSpecification.MaximumOfunitsPerSession are set
+     *
+     * BD;Free money
+    CR;Reduction coefficient
+    XN;X/N
+    DT;Bytes bonus
+    ME;SMS bonus
+    MI;Time bonus
+    PH;Happy period
+    MC;Free minutes
+    MG;Free SMS
+    GB;Free bytes
+    This flag will be hidden (and false) for boltons types with the following characteristics:
+    • BoltOns with bolton type different from free minutes (0), free sms(2), free bytes(6) or free money(8)
+    • Self- renewable boltons by sub-period
+    • BoltOns with sessions limit
+    • BoltOns with units per session limit
+    • Shared boltons
+    • General boltons
+    • Self-provisionable boltonss
+    comment for GUI/OC. It should not be enabled for updates.
+
+    If the modality assumes one of the values listed the multipleinstances can be either true or false. For other modalities multiple instances must be false
+     *
+     */
+    var json =
+          {"data" :
+                [
+                      {
+                            "entityAttribute" : "MultipleInstances" ,
+                            "admissibleValues" : ["BD","MC","MG","GB"]
+                      }
+
+                ]
+          };
+
+    var ret = false; //Default return value is True => Error
+
+    for (var i=0;i<json.data.length;i++) {
+
+        var ent = json.data[i].entityAttribute;
+
+        if (data.BoltOnGenericSpecificationDS[ent]) {
+            ret = true; // If the leaf exist and is set to true we need to check that the modality value is one fo the admissible ones that's why we set ret to TRUE
+            for (var k=0; k<json.data[i].admissibleValues.length; k++) {
+
+                var val = json.data[i].admissibleValues[k];
+
+                if(data.BoltOnTypeModality == val ) {
+
+                    ret = false; // The Modality value is admissible for the leaf. the return value is set to TRUE : Error
+
+
+                }
+
+
+            }
+        }
+
+    }
+
+
+    if (ret)  errList.addErrorMessage(data,["Multiple Instances","Value Not Allowed for this modality"],"NGAA_EPC_002","E");
+
+    /**
+     * The Modality Value is Admissible so we check the SessionSpecification
+     */
+
+
+    if (data.BoltOnGenericSpecificationDS.MultipleInstances && ( data.SessionSpecificationDS.MaximumNumberOfSessions || data.SessionSpecificationDS.MaximumOfUnitsPerSession ) ) {
+        errList.addErrorMessage(data,["Multiple Instances","Value not allowed for multiple sessions"],"NGAA_EPC_002","E");
+        //ret=true;
+    }
+    return false;
+  ]]></script>
+</script>

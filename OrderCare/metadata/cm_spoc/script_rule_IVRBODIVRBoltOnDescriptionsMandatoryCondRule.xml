@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_IVRBODIVRBoltOnDescriptionsMandatoryCondRule">
+  <group>rules_scripts.MixedBoltOn</group>
+  <label>rule_IVRBODIVRBoltOnDescriptionsMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var ds = data.IVRBoltOnDescriptionArrDS.ListDS;
+    var ivrCode= data.IVRBoltOnCode;
+    if( ds.length==0 && !(ivrCode=="" || ivrCode==null))
+    {
+     errList.addErrorMessage(data,["IVR Bolt On Language and Description mandatory if set IVR Bolt On Code "],"NGAA_003","E");
+    }
+
+    for (var i = 0; i < ds.length; i++)
+    {
+        var item = ds[i];
+        var error = false;
+        if( !item.IVRBoltOnDescription ){
+            errList.addErrorMessage(data,["Description mandatory if set IVR Bolt On Code"],"NGAA_003","E");
+            error = true;
+        }
+
+        if( !item.Language ){
+            errList.addErrorMessage(data,["Language mandatory if set IVR Bolt On Code"],"NGAA_003","E");
+            error = true;
+        }
+
+        if(!error){
+            for(var j=i;j<ds.length;j++){
+                if( (j!=i) && (ds[j].Language==item.Language) ){
+                        errList.addErrorMessage(data,["Duplicated language: " + ds[j].Language],"NGAA_003","E");
+                }
+            }
+        }
+    }
+
+
+    return false;
+  ]]></script>
+</script>

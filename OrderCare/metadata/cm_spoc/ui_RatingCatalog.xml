@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.RatingCatalog">
+  <blockUIOnAction>true</blockUIOnAction>
+  <extends>ui_com.conceptwave.system.Application</extends>
+  <group>overridden.UI.RatingCatalogApp</group>
+  <label>Rating Catalog</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="projectImage" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="loginUserImage" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="loginUser" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="modelStatusType" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="statusWidth" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="isModelStatusMenuVisible" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="modelStatusTrim" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="modelStatus" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="showStatus" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="helpURL" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="isMenuVisible" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="isWorklistParticipant" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="defaultProject" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.Application/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Page" type="expg">
+          <base>ui_com.conceptwave.system.Application/frmui_Forms/pg_Page</base>
+          <extends>ui_com.conceptwave.system.Application/frmui_Forms/pg_Page</extends>
+          <label>Page</label>
+          <overrideList>
+            <override name="vLayout" type="elvlt">
+              <alignment>center,center</alignment>
+              <height>100%</height>
+              <style>cwPageBackground</style>
+              <width>100%</width>
+              <elementList>
+                <element name="middelvLayout" type="elvlt">
+                  <edgeShowCenter>true</edgeShowCenter>
+                  <height>100%</height>
+                  <style>cwPageContentBackground</style>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="dialog" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Window/uivar_dialog</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Dialog/frmui_Forms</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Dialog/frmui_Forms/exov_Default</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <height>100%</height>
+                      <unmanaged>true</unmanaged>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Window/uivar_dialog</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="bannerLayout" type="elhlt">
+                      <style>CwBanner</style>
+                      <width>100%</width>
+                      <elementList>
+                        <element name="banner" type="elimg"/>
+                      </elementList>
+                    </element>
+                    <element name="mLayout" type="elhlt">
+                      <style>menuBar</style>
+                      <width>100%</width>
+                      <elementList>
+                        <element name="menu" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.RatingCatalog/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.RatingCatalog/frmui_Forms/exov_Menu</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <width>100%</width>
+                        </element>
+                        <element name="HelpImage" type="elimg">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_com.conceptwave.system.Application/usrActionMethod_generateHelp</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <imageUrl>/cwf/help.gif</imageUrl>
+                          <tooltip>Show Help</tooltip>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_com.conceptwave.system.Application/leaf_HelpVariable</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_com.conceptwave.system.Application/permMethod_showHelp</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="context" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Window/leaf_contextForm</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <overflow>visible</overflow>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Window/leaf_context</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="status" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.RatingCatalog/frmui_Forms</variablePath>
+                          <variablePath>ui_cm_spoc.RatingCatalog/frmui_Forms/vform_status</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <height>27px</height>
+                      <style>cwStatusFrame</style>
+                      <width>100%</width>
+                    </element>
+                    <element name="content" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Window/uivar_contentForm</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <height>100%</height>
+                      <overflow>auto</overflow>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Window/uivar_content</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100%</width>
+                    </element>
+                    <element name="contentMenu" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Window/uivar_content</variablePath>
+                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Menu</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <style>menuBar</style>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Window/uivar_content</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100%</width>
+                    </element>
+                    <element name="statusMessage" type="ellab">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_statusMessage</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/permMethod_statusMessagePerm</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <wrap>false</wrap>
+                    </element>
+                    <element name="download" type="eldload">
+                      <fileName type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Download/leaf_fileName</variablePath>
+                        </variablePathList>
+                      </fileName>
+                      <heightVar type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Download/leaf_height</variablePath>
+                        </variablePathList>
+                      </heightVar>
+                      <isSimpleText type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Download/leaf_isSimpleText</variablePath>
+                        </variablePathList>
+                      </isSimpleText>
+                      <mimeType type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Download/leaf_mimeType</variablePath>
+                        </variablePathList>
+                      </mimeType>
+                      <simpleContent type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Download/leaf_simpleText</variablePath>
+                        </variablePathList>
+                      </simpleContent>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <widthVar type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Download/leaf_width</variablePath>
+                        </variablePathList>
+                      </widthVar>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+          <skin>Enterprise</skin>
+          <stylesheet>/cbio.css</stylesheet>
+          <title>Rating Catalog</title>
+          <visible type="varPath">
+            <variablePathList>
+              <variablePath>ui_cm_spoc.RatingCatalog/permMethod_menuVisible</variablePath>
+            </variablePathList>
+          </visible>
+        </overlay>
+        <overlay name="Menu" type="exov">
+          <base>ui_com.conceptwave.system.Application/frmui_Forms/exov_Menu</base>
+          <extends>ui_com.conceptwave.system.Application/frmui_Forms/exov_Menu</extends>
+          <label>Menu</label>
+          <overrideList>
+            <override name="HorizontalLayout" type="elhlt">
+              <style>cwAppGradientHeader</style>
+              <width>100%</width>
+              <elementList>
+                <element name="appHeaderLayout" type="elhlt">
+                  <alignment>left,center</alignment>
+                  <height>36px</height>
+                  <membersMargin>6</membersMargin>
+                  <style>cwAppHeader</style>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="returnAppMenuLabel" type="ellab">
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <style>cwAppLabel</style>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.RatingCatalog/uimthd_returnAppMenuLabel</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <wrap>false</wrap>
+                    </element>
+                    <element name="LayoutSpacer2" type="ellsp">
+                      <style>cwHeaderSpacer</style>
+                      <width>5%</width>
+                    </element>
+                    <element name="HorizontalLayout1" type="elhlt">
+                      <alignment>left,center</alignment>
+                      <height>100%</height>
+                      <width>100%</width>
+                      <elementList>
+                        <element name="HorizontalLayoutForMenuItems" type="elhlt">
+                          <alignment>left,center</alignment>
+                          <width>100%</width>
+                          <elementList>
+                            <element name="homeIcon" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.RatingCatalog/usrActionMethod_goToHomePage</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <iconSpacing>0</iconSpacing>
+                              <label>Home</label>
+                              <showRollOver>true</showRollOver>
+                              <style>cwAppSpecificMenu</style>
+                              <tooltip>Home</tooltip>
+                            </element>
+                            <element name="LayoutSpacer" type="ellsp">
+                              <width>15px</width>
+                            </element>
+                            <element name="Tools" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <label>Tools</label>
+                              <showMenuDropDown>true</showMenuDropDown>
+                              <style>cwAppSpecificMenu</style>
+                              <tooltip>Tools</tooltip>
+                              <elementList>
+                                <element name="SelectApplication" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.RatingCatalog/usrActionMethod_exitApp</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwf/choice.gif</icon>
+                                  <label>Select Application</label>
+                                  <style>cwAppSpecificSubMenu</style>
+                                </element>
+                                <element name="Logout" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.RatingCatalog/usrActionMethod_Logout</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwf/MenuIconLogout.gif</icon>
+                                  <label>Logout</label>
+                                  <style>cwAppSpecificSubMenu</style>
+                                </element>
+                                <element name="ChangePassword" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <icon>/cwf/key.gif</icon>
+                                  <label>Change Password</label>
+                                  <style>cwAppSpecificSubMenu</style>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="HorizontalLayoutForUserWorklist" type="elhlt">
+                          <alignment>right,center</alignment>
+                          <style>cwAppHeaderMenu</style>
+                          <elementList>
+                            <element name="loginUser" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <iconHeight>18px</iconHeight>
+                              <iconWidth>18px</iconWidth>
+                              <showRollOver>true</showRollOver>
+                              <tooltip>Login User</tooltip>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                </variablePathList>
+                              </visible>
+                            </element>
+                            <element name="Separator8" type="elsep">
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                </variablePathList>
+                              </visible>
+                              <width>10px</width>
+                            </element>
+                            <element name="defaultProject" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <iconHeight>18px</iconHeight>
+                              <iconWidth>18px</iconWidth>
+                              <showRollOver>true</showRollOver>
+                              <style>cwAppHeaderMenu</style>
+                              <tooltip>Projects</tooltip>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.RatingCatalog/leaf_defaultProject</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="Separator3" type="elsep">
+                              <width>10px</width>
+                            </element>
+                            <element name="helpURL" type="htmlElement">
+                              <style>CgMEIDef</style>
+                              <tooltip>Help</tooltip>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.RatingCatalog/leaf_helpURL</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.RatingCatalog/permMethod_menuVisible</variablePath>
+                                </variablePathList>
+                              </visible>
+                            </element>
+                            <element name="Separator2" type="elsep">
+                              <width>10px</width>
+                            </element>
+                            <element name="dummywrklist" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <icon>/cwf/MenuIconTask.gif</icon>
+                              <iconHeight>18px</iconHeight>
+                              <iconWidth>18px</iconWidth>
+                              <imageOnRight>true</imageOnRight>
+                              <showRollOver>true</showRollOver>
+                              <style>cwAppHeaderMenu</style>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.RatingCatalog/permMethod_isWorklistParticipantPerm</variablePath>
+                                </variablePathList>
+                              </visible>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="LayoutSpacer1" type="ellsp">
+                          <width>30px</width>
+                        </element>
+                        <element name="Logo" type="elimg">
+                          <imageUrl>/cwf/css/logo.jpg</imageUrl>
+                          <padding>0</padding>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="noWrapLayout" type="elgrd">
+                      <alignment>right,center</alignment>
+                      <cellPadding>0</cellPadding>
+                      <fillSpace>false</fillSpace>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>150px</width>
+                      <elementList>
+                        <element name="topSpacer" type="elrsp">
+                          <height>1px</height>
+                          <rowSpan>1px</rowSpan>
+                          <style>cwHeaderTopSpacer</style>
+                        </element>
+                        <element name="returnUserId" type="ellab">
+                          <canSort>false</canSort>
+                          <editable type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </editable>
+                          <icon>/images/user_loggedin.png</icon>
+                          <removeLabelLine>true</removeLabelLine>
+                          <showLabel>false</showLabel>
+                          <style>cwUserId</style>
+                          <textAlign>right</textAlign>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <width>150px</width>
+                          <wrap>false</wrap>
+                        </element>
+                        <element name="bottomSpacer" type="elrsp">
+                          <height>1px</height>
+                          <rowSpan>1px</rowSpan>
+                          <style>cwHeaderTopSpacer</style>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="userIdMenu" type="elmnu">
+                      <canFocus>false</canFocus>
+                      <icon>/images/user_loggedin.png</icon>
+                      <iconHeight>20px</iconHeight>
+                      <iconSpacing>12</iconSpacing>
+                      <iconWidth>14px</iconWidth>
+                      <label>test</label>
+                      <removeLabelLine>true</removeLabelLine>
+                      <style>cwUserId</style>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.RatingCatalog/uimthd_returnUserId</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="logoutMenu" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.RatingCatalog/usrActionMethod_Logout</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>| Logout </label>
+                      <style>cwAppHeaderMenu</style>
+                    </element>
+                    <element name="exitAppMenu" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.RatingCatalog/usrActionMethod_exitApp</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>| Exit Application</label>
+                      <style>cwAppHeaderMenu</style>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="status" type="vform">
+          <label>status</label>
+          <root name="statusLayout" type="elvlt">
+            <alignment>center,center</alignment>
+            <height>100%</height>
+            <style>cwStatusLayout</style>
+            <width>100%</width>
+            <elementList>
+              <element name="statusBoxLayout" type="elhlt">
+                <alignment>center,center</alignment>
+                <dynStyle type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.RatingCatalog/uimthd_returnModelStatusStyle</variablePath>
+                  </variablePathList>
+                </dynStyle>
+                <fillSpace>false</fillSpace>
+                <height>100%</height>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.RatingCatalog/permMethod_statusVisible</variablePath>
+                  </variablePathList>
+                </visible>
+                <width>100%</width>
+                <elementList>
+                  <element name="LayoutSpacer" type="ellsp"/>
+                  <element name="modelStatusTrim" type="ellab">
+                    <columnSpan>2</columnSpan>
+                    <dynStyle type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.RatingCatalog/uimthd_returnModelStatusLabelStyle</variablePath>
+                      </variablePathList>
+                    </dynStyle>
+                    <label>Model Status</label>
+                    <padding>0</padding>
+                    <removeLabelLine>true</removeLabelLine>
+                    <showLabel>false</showLabel>
+                    <textAlign>center</textAlign>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.RatingCatalog/leaf_modelStatusTrim</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <wrap>false</wrap>
+                  </element>
+                  <element name="modelStatusMenu" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.RatingCatalog/usrActionMethod_modelStatusAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <height>15px</height>
+                    <label>more</label>
+                    <style>cwModelStatusMenu</style>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.RatingCatalog/permMethod_modelStatusMenuVisible</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="LayoutSpacer2" type="ellsp"/>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$isModelStatusMenuVisible" type="laction">
+      <path>ui_cm_spoc.RatingCatalog/leaf_isModelStatusMenuVisible</path>
+      <type>initializer</type>
+      <script>return true;</script>
+    </method>
+    <method name="cwLeafInitAction$showStatus" type="laction">
+      <path>ui_cm_spoc.RatingCatalog/leaf_showStatus</path>
+      <type>initializer</type>
+      <script>return false;</script>
+    </method>
+    <method name="cwLeafInitAction$statusWidth" type="laction">
+      <path>ui_cm_spoc.RatingCatalog/leaf_statusWidth</path>
+      <type>initializer</type>
+      <script>return 120;</script>
+    </method>
+    <method name="onInit" type="action">
+      <description><![CDATA[
+        <p style="margin-top: 0">
+          This notification method is called by the framework when this application is initialized
+        </p>
+      ]]></description>
+      <script><![CDATA[
+        this.cw$super_onInit();
+
+        var curUser = Global.getUserId();
+        var isAvail = UserProfile.isAvailable(curUser);
+
+        if(isAvail){
+              this.worklistImage = "/cwf/MenuIconTaskAvail.gif";
+        }else{
+              this.worklistImage = "/cwf/MenuIconTaskUnavail.gif";
+        }
+        //Global.startTimer(this);
+
+        this.projectImage = "/cwt/images/24/folder.png";
+        var proj = cwt_pc.getDefaultProject();
+        if (proj)
+              this.defaultProject = "Project : " + proj.name;
+        else
+              this.defaultProject = "Project : NONE";
+
+        this.loginUserImage = "/cwt/images/24/user3.png"
+        var curUserProfile = UserProfile.getUserProfile(curUser);
+        if (curUserProfile) {
+              this.loginUser = "Login User: " +curUserProfile.userName;
+        } else {
+              this.loginUser = "User Unknown";
+        }
+
+        var docUrl = "/cwf/r/help/index.html";
+        var imgUrl = "/cwf/r/images/16/help.png";
+        this.helpURL = "<html><body><a href=\"" + docUrl + "\" target=\"_blank\"><img src=\"" + imgUrl + "\" border=\"0\" width=\"18\" height=\"18\" /></a></body> </html>";
+
+        var allow = UserProfile.getUserParticipants(UserProfile.userId());
+        if (!allow || allow.length == 0)
+              this.isWorklistParticipant = false;
+        else
+              this.isWorklistParticipant = true;
+
+        return new cm_spoc.RatingHomePage(null, this);
+      ]]></script>
+    </method>
+    <method name="exitApp" type="usrActionMethod">
+      <script>UserProfile.selectApp();</script>
+    </method>
+    <method name="logout" type="usrActionMethod">
+      <script>UserProfile.logout();</script>
+    </method>
+    <method name="returnUserId" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[return Global.translateText("CWA_EPC_LOGIN",null,Global.getUserId());]]></script>
+    </method>
+    <method name="returnAppMenuLabel" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script>return Global.getAppTitle();</script>
+    </method>
+    <method name="menuVisible" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>RatingCatalogApp</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="isWorklistParticipantPerm" type="permMethod">
+      <script><![CDATA[return this.isWorklistParticipant && this.isMenuVisible;]]></script>
+    </method>
+    <method name="Logout" type="usrActionMethod">
+      <allowInvalidObject>true</allowInvalidObject>
+      <form>doc_cwf_oe.login/ui_UserInterface/frmui_Forms/vform_LoggedOut</form>
+      <userInterface>doc_cwf_oe.login</userInterface>
+      <validate>true</validate>
+      <valueType>doc_cwf_oe.login</valueType>
+      <script>UserProfile.logout();</script>
+    </method>
+    <method name="goToHomePage" type="usrActionMethod">
+      <script>return new cm_spoc.RatingHomePage(null, this);</script>
+    </method>
+    <method name="statusVisible" type="permMethod">
+      <script>return this.showStatus;</script>
+    </method>
+    <method name="modelStatusAction" type="usrActionMethod">
+      <dialogObject>ui_cwa_epc.dialogExtend</dialogObject>
+      <parameterList>
+        <parameter name="dialog" type="rifp">
+          <type>ui_cwa_epc.dialogExtend</type>
+        </parameter>
+      </parameterList>
+      <showInPopup>true</showInPopup>
+      <script>return cwa_epc.getStatusMessageDialog(dialog,this);</script>
+    </method>
+    <method name="modelStatusMenuVisible" type="permMethod">
+      <script><![CDATA[return this.showStatus && this.modelStatus!=this.modelStatusTrim && this.isModelStatusMenuVisible;]]></script>
+    </method>
+    <method name="setStatus" type="uimthd">
+      <parameterList>
+        <parameter name="msg" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="doStyle" type="rifp">
+          <type>dtype_com.conceptwave.system.Boolean</type>
+        </parameter>
+        <parameter name="stringParam" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script>cwa_epc.setStatusMessage(this,null,msg,doStyle,null,stringParam);</script>
+    </method>
+    <method name="resetModelStatus" type="uimthd">
+      <script>cwa_epc.resetStatusMessage(this);</script>
+    </method>
+    <method name="returnModelStatusLabelStyle" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script>return cwa_epc.returnModelStatusLabelStyle(this);</script>
+    </method>
+    <method name="returnModelStatusStyle" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script>return cwa_epc.returnModelStatusStyle(this);</script>
+    </method>
+  </methodList>
+</userInterface>

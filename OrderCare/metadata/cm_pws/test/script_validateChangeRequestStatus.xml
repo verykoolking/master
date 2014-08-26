@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.validateChangeRequestStatus">
+  <group>scripts</group>
+  <label>validateChangeRequestStatus</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try
+    {
+        //Global.commitTransaction("ORDER");
+        var order = cm_plm.getPLMOrderFromProjectCode(projectCode);
+        if(!order)
+            return api_common.createFault("ERR", "Order for the projectCode '" + projectCode + "' not found.");
+
+        var changeDoc = order.change;
+        var success = "TST";var error = "ERR";
+        var delayTime = 5;var maxDelay = 45; //seconds
+
+        var totalDelay = 0;
+        while (changeDoc.orderStatus != success && changeDoc.orderStatus != error){
+
+            if(totalDelay > maxDelay)
+               return api_common.createFault("ERR", "PLM Status didnt complete in " + maxDelay + " seconds. Either increase the time or find out what the issue is!");
+
+            //delay for 5 seconds
+            delay(delayTime);
+            totalDelay += delayTime;
+            if(!changeDoc.read())
+                return api_common.createFault("ERR", "Change request document for the order '" + order.id + "' not found.");
+        }
+
+        if (changeDoc.orderStatus != success)
+            return api_common.createFault("ERR", "PLM did not finish successfully. PLM status: '" + changeDoc.orderStatus);
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+
+
+    function delay(seconds)
+    {
+        seconds = seconds * 1000; //milisecond
+        var start = new Date().getTime();
+        var diff = (new Date().getTime() - start) - seconds;
+        while (diff < 0)
+        {
+           // I know it is a very bad delay method but take it or leave it!
+           diff = (new Date().getTime() - start) - seconds;
+        }
+    }
+  ]]></script>
+</script>

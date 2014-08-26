@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.getErrorDescription">
+  <label>Get Error Description</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="errorCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="parameters" type="rifp">
+      <array>true</array>
+      <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      Array of parameters&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+     * Returns the description of an Error Code
+     *
+     * @author  Daniel Gomes
+     * @date    2014/05
+     *
+     * @param {string}      errorCode
+     * @param {string}[]    list of parameters to improve error msg
+     * @param {string}      language of the description
+     *
+     * @return {string} description
+     */
+     var error = pm_wm.getValueFromCT('pmErrorCodesCT', errorCode, true);
+     if(!error) return errorCode;
+
+     for(var i=0;parameters && i<parameters.length;i++)
+         error = error.replace("@VALUE",parameters[i]);
+
+    return error;
+  ]]></script>
+</script>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.resource.res.phy.equip.Equipment">
+  <abstract>true</abstract>
+  <container>true</container>
+  <description><![CDATA[
+    <p>This class is based on the m.3100 specification, and is described as follows:    The Equipment object class is a class of managed objects that represents physical components of a managed device, including replaceable components. An instance of this object class must be present in only a single geographic location. An Equipment object may be nested within another Equipment object, thereby creating a containment relationship. The Equipment type shall be identified by sub-classing this object class. Either the name of the sub-class or an attribute may be used for identifying the equipment type.    Changed name of m.3100 attribute AlarmReportingIndicator to AlarmStatus, and enhanced semantics.    The m.3100 SystemTitle attribute is NOT implemented in this class, we're using CommonName instead.    We don't support the m.3100 supportedByObjectList attribute. This attribute is intended to list a set of physical and logical objects that directly affect this object. We think that the model should show this via associations, not via an embedded attribute.</p>                <p>This entity  is  abstract</p>                <p>This entity  is  optional</p>                <p>This entity  is  extendable</p>                <p>This entity   generates Object Creation notifications</p>                <p>This entity   generates Object Deletion notifications</p>                <p>This entity   generates Object Discovery notifications</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{d2eb5b89-c86f-4dbd-bf29-729be9538ae6}</guid>
+  <label>Equipment</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="protectionSchemeState" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute identifies the individual lock of this equipment. In case the equipment is not protected, the value "UNKNOWN" shall also be used.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_sid.org.tmforum.tip.resource.res.log.prot.ProtectionSchemeState</element>
+      <guid>{2066576b-7ceb-4edc-b7d7-acde114cc701}</guid>
+      <label>protectionSchemeState</label>
+    </child>
+    <child name="protectionRole" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute defines the protection role that this equipment plays. In case the equipment is not protected, the value "NOT_APPLICABLE" shall be used.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_sid.org.tmforum.tip.resource.res.log.tip.nrf.ProtectionRole</element>
+      <guid>{1da55b67-f79c-404a-9d5a-41018d8501e1}</guid>
+      <label>protectionRole</label>
+    </child>
+    <child name="manufacturer" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute identifies the equipment manufacturer name. It is defined as a non-empty free format string with no semantics.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  invariant</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC disabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{263f9b75-9027-48a2-92a0-75bd59e6c111}</guid>
+      <label>manufacturer</label>
+    </child>
+    <child name="isReportingAlarms" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute provides an indication of whether alarm reporting for this Equipment is enabled (true) or disabled (false).</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{625593fb-c817-4792-9076-a50fd975fcf1}</guid>
+      <label>isReportingAlarms</label>
+    </child>
+    <child name="installedVersion" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute identifies the vendor's resource version of the installed equipment.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{35062ee5-bb97-493c-b57e-3d63f9ec39f2}</guid>
+      <label>installedVersion</label>
+    </child>
+    <child name="installedSerialNumber" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute contains the vendor's serial number of the installed equipment. Unique, if no default is provided. At least one serial number has to be provided.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  invariant</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC disabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{574b0016-179f-4331-a4f2-aed7bff93da2}</guid>
+      <label>installedSerialNumber</label>
+    </child>
+    <child name="installedPartNumber" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute identifies the vendor's resource Part Number (PN) of the installed equipment. If PN is not available empty string shall be used. If the part and serial number are both non-null then the part+serial number together shall be unique.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  invariant</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC disabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{dd56891b-7822-49af-89eb-c92176df9161}</guid>
+      <label>installedPartNumber</label>
+    </child>
+    <child name="installedEquipmentObjectType" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute identifies the type of the installed resource. For example, "Fan" or "STM16" for the Equipment class and "Line Shelf" for the Equipment Holder class.) The installed equipment type is invariant for the lifetime of the hardware. This is an empty string if there is no expected equipment.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{6c6dc058-e4cc-472a-bd4f-f5f2f332139a}</guid>
+      <label>installedEquipmentObjectType</label>
+    </child>
+    <child name="expectedEquipmentObjectType" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute identifies the type of the expected resource. For example, "Fan" or "STM16" for the Equipment class and "Line Shelf" for the Equipment Holder class.) This is an empty string if there is no expected equipment.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{d1a5810d-3b2b-4c4c-afcf-4b728c1c303f}</guid>
+      <label>expectedEquipmentObjectType</label>
+    </child>
+    <child name="asapRef" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dstruct_tip.internal.entity.EntityIdentifier</element>
+      <guid>{ab47df48-4c17-4bf0-ad67-84b7c78d6ffa}</guid>
+      <label>asapRef</label>
+    </child>
+    <child name="resourceFulfillmentState" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute supports basic administration of plug-ins.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_tip.resource.res.nrb.ResourceFulfillmentState</element>
+      <guid>{90966c54-da26-4d65-9c2b-ca12f6c2bb60}</guid>
+      <label>resourceFulfillmentState</label>
+    </child>
+    <child name="ituArcStateAndStatusList" type="dstruct">
+      <description><![CDATA[
+        <p>See R_TMF518_NRB_I_0001 and R_TMF518_NRB_I_0004.        See supporting document SD1-8_encodingX731M3100.pdf</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.tip.nra.ItuArcStateAndStatusList</element>
+      <guid>{1a3c8d2d-90d7-46e6-bdbd-76a6315b186a}</guid>
+      <label>ituArcStateAndStatusList</label>
+    </child>
+    <child name="supportingEquipment" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association EquipmentSupportedBy</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.phy.equip.ArrayOfEquipment</element>
+      <guid>{829436b7-a0e8-4ac6-b42f-6cf244b1723f}</guid>
+      <label>supportingEquipment</label>
+    </child>
+    <child name="supportedEquipment" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association EquipmentSupports</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.phy.equip.ArrayOfEquipment</element>
+      <guid>{5456ef23-23fa-47cc-9a7e-c219ec16648c}</guid>
+      <label>supportedEquipment</label>
+    </child>
+    <child name="physicalTerminationPoint" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association supported_supporting</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.log.tip.nrf.ArrayOfPhysicalTerminationPoint</element>
+      <guid>{c0bbc9f4-35ad-459e-b34e-713f4a846222}</guid>
+      <label>physicalTerminationPoint</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.resource.res.phy.equip.Equipment</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.resource.res.phy.equip.Equipment</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

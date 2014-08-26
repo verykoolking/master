@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- May 7, 2013 -->
+
+<wsdl:definitions 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/productConfigurationManagement/v1/services"
+    xmlns:pcns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productConfigurationManagement/v1/types"
+    xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+    xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/04/secext"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    targetNamespace="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/productConfigurationManagement/v1/services">
+    
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+            <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productConfigurationManagement/v1/types"
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_productConfigurationManagement_types_v1_0.xsd"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                schemaLocation="addressing" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2002/04/secext"
+                schemaLocation="secext.xsd" />
+	        <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+  			    schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>	
+        </xsd:schema>
+    </wsdl:types>
+    
+    <!--
+        Header
+    -->
+    <wsdl:message name="OCSHeaderInfo">
+        <wsdl:part name="messageID" element="wsa:MessageID" />
+        <wsdl:part name="replyTo" element="wsa:ReplyTo" />
+        <wsdl:part name="security" element="wsse:Security" />
+    </wsdl:message>
+  
+	<!--
+	    Messages
+	-->
+	
+    <wsdl:message name="QueryCodesRequest">
+        <wsdl:part name="parameters" element="pcns:queryCodes" />
+    </wsdl:message>
+    <wsdl:message name="QueryCodesResponse">
+        <wsdl:part name="parameters" element="pcns:queryCodesResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryCurrencyCatalogRequest">
+        <wsdl:part name="parameters" element="pcns:queryCurrencyCatalog" />
+    </wsdl:message>
+    <wsdl:message name="QueryCurrencyCatalogResponse">
+        <wsdl:part name="parameters" element="pcns:queryCurrencyCatalogResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryCodeDescriptionRequest">
+        <wsdl:part name="parameters" element="pcns:queryCodeDescription" />
+    </wsdl:message>
+    <wsdl:message name="QueryCodeDescriptionResponse">
+        <wsdl:part name="parameters" element="pcns:queryCodeDescriptionResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryActionCostRequest">
+        <wsdl:part name="parameters" element="pcns:queryActionCost" />
+    </wsdl:message>
+    <wsdl:message name="QueryActionCostResponse">
+        <wsdl:part name="parameters" element="pcns:queryActionCostResponse" />
+    </wsdl:message>
+
+    <wsdl:message name="ServerException">
+      <wsdl:part name="ServerException" element="uct:serverException"/>
+    </wsdl:message>
+    <wsdl:message name="ClientException">
+      <wsdl:part name="ClientException" element="uct:clientException"/>
+    </wsdl:message>
+	
+	<!--
+	    Port
+	-->
+	
+	<wsdl:portType name="ProductConfigurationManagementPort_v1_0">
+        <wsdl:operation name="queryCodes">
+            <wsdl:input message="tns:QueryCodesRequest" />
+            <wsdl:output message="tns:QueryCodesResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryCurrencyCatalog">
+            <wsdl:input message="tns:QueryCurrencyCatalogRequest" />
+            <wsdl:output message="tns:QueryCurrencyCatalogResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryCodeDescription">
+            <wsdl:input message="tns:QueryCodeDescriptionRequest" />
+            <wsdl:output message="tns:QueryCodeDescriptionResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryActionCost">
+            <wsdl:input message="tns:QueryActionCostRequest" />
+            <wsdl:output message="tns:QueryActionCostResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+	</wsdl:portType>
+	
+	<!-- Binding -->
+	
+	<wsdl:binding name="ProductConfigurationManagementServiceSOAPBinding_v1_0" type="tns:ProductConfigurationManagementPort_v1_0">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+	
+        <wsdl:operation name="queryCodes">
+            <soap:operation soapAction="queryCodes" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryCurrencyCatalog">
+            <soap:operation soapAction="queryCurrencyCatalog" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryCodeDescription">
+            <soap:operation soapAction="queryCodeDescription" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryActionCost">
+            <soap:operation soapAction="queryActionCost" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+	
+	</wsdl:binding>
+	
+	<!--
+	    Service
+	-->
+	
+	<wsdl:service name="ProductConfigurationManagementService_v1">
+		<wsdl:port name="ProductConfigurationManagement_v1_0" binding="tns:ProductConfigurationManagementServiceSOAPBinding_v1_0">
+			<soap:address location="http://localhost/UNICA/OCSProvisioning/ProductConfigurationManagement_v1"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>
+	

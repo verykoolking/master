@@ -1,0 +1,916 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ExternalNotificationNodePickList">
+  <group>Operation</group>
+  <label>ExternalNotificationNodePickList</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="showsButtonListSearch" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="TextFilterAvailable" type="leaf">
+      <propertyElement type="elfld"/>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="TextFilterSelected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="labelDescription" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="parentUI" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="modelCallback" type="leaf">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+    </variable>
+    <variable name="availableItems" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dstruct_cm_spoc.PickListDS</valueType>
+    </variable>
+    <variable name="selectedItems" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dstruct_cm_spoc.PickListDS</valueType>
+    </variable>
+    <variable name="selectedItemsNoFilter" type="leaf">
+      <valueType>dstruct_cm_spoc.PickListDS</valueType>
+    </variable>
+    <variable name="availableItemsNoFilter" type="leaf">
+      <valueType>dstruct_cm_spoc.PickListDS</valueType>
+    </variable>
+    <variable name="priorityButtonsEnabled" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="showAvailableTable" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="showsSearchBars" type="leaf">
+      <description><![CDATA[
+        <p style="margin-top: 0">
+          Used to show or hide the search text top bar on the lists
+        </p>
+      ]]></description>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="inputIndex" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <alignment>center,center</alignment>
+              <height>100%</height>
+              <width>100%</width>
+              <elementList>
+                <element name="VerticalLayout4" type="elvlt">
+                  <elementList>
+                    <element name="Label" type="ellab">
+                      <cellAlignment>center,center</cellAlignment>
+                      <fontProperties type="pfnt">
+                        <bold>true</bold>
+                        <color>#003366</color>
+                      </fontProperties>
+                      <label>External Notification Nodes*</label>
+                      <width>200px</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpace2" type="ellsp">
+                  <height>20px</height>
+                </element>
+                <element name="HorizontalLayout" type="elhlt">
+                  <alignment>center,center</alignment>
+                  <edgeOffset>5</edgeOffset>
+                  <edgeSize>2</edgeSize>
+                  <height>90%</height>
+                  <membersMargin>2</membersMargin>
+                  <showEdge>true</showEdge>
+                  <width>90%</width>
+                  <elementList>
+                    <element name="VerticalLayout1" type="elvlt">
+                      <height>100%</height>
+                      <width>45%</width>
+                      <elementList>
+                        <element name="HorizontalLayout2" type="elhlt">
+                          <alignment>center,center</alignment>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/permMethod_permission_ShowsSearchBars</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <width>100%</width>
+                          <elementList>
+                            <element name="TextFilterAvailable" type="elfld">
+                              <cellAlignment>center,center</cellAlignment>
+                              <onEnter type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_filter_applyOnAvailable</variablePath>
+                                </variablePathList>
+                              </onEnter>
+                              <removeLabelLine>true</removeLabelLine>
+                              <showLabel>false</showLabel>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_TextFilterAvailable</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>100%</width>
+                            </element>
+                            <element name="ApplyFilterAva" type="elbtn">
+                              <cellAlignment>center,center</cellAlignment>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_filter_applyOnAvailable</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <height>20px</height>
+                              <icon>/cwt/images/16/funnel_new.png</icon>
+                              <iconHeight>0</iconHeight>
+                              <showLabel>false</showLabel>
+                              <width>20px</width>
+                            </element>
+                            <element name="ClearFilterAva" type="elbtn">
+                              <cellAlignment>center,center</cellAlignment>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_filter_clearOnAvailable</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <height>20px</height>
+                              <icon>/cwt/images/16/funnel_delete.png</icon>
+                              <iconHeight>0</iconHeight>
+                              <showLabel>false</showLabel>
+                              <width>20px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="AvailableItems" type="eltabl">
+                          <filterFullData>true</filterFullData>
+                          <height>100%</height>
+                          <noItemsMessage>No items to select</noItemsMessage>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_availableItems</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/permMethod_ShowAvailableTable</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <width>100%</width>
+                          <elementList>
+                            <element name="description1" type="elfld">
+                              <height>100%</height>
+                              <label>Available</label>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_availableItems</variablePath>
+                                  <variablePath>dstruct_cm_spoc.PickListDS/dstruct_description</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>100%</width>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="VerticalLayout3" type="elvlt">
+                      <elementList>
+                        <element name="ButtonListSearch" type="elbtn">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_Click_ButtonListSearch</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <height>22px</height>
+                          <icon>/cwt/images/16/find.png</icon>
+                          <iconHeight>20</iconHeight>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/permMethod_permission_ShowsButtonListSearch</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <width>22px</width>
+                        </element>
+                        <element name="ButtonsVL" type="elvlt">
+                          <alignment>center,center</alignment>
+                          <edgeOffset>5</edgeOffset>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/permMethod_ShowAvailableTable</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <elementList>
+                            <element name="ButtonRight" type="elbtn">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_addToSelected</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/navigate_right.png</icon>
+                              <width>22px</width>
+                            </element>
+                            <element name="ButtonDoubleRight" type="elbtn">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_addAllToSelected</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/navigate_right2.png</icon>
+                              <width>22px</width>
+                            </element>
+                            <element name="ButtonDoubleLeft" type="elbtn">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_removeAllFromSelected</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/navigate_left2.png</icon>
+                              <width>22px</width>
+                            </element>
+                            <element name="ButtonLeft" type="elbtn">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_removeFromSelected</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/navigate_left.png</icon>
+                              <width>22px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="VerticalLayout2" type="elvlt">
+                      <height>100%</height>
+                      <width>45%</width>
+                      <elementList>
+                        <element name="HorizontalLayout3" type="elhlt">
+                          <alignment>center,center</alignment>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/permMethod_permission_ShowsSearchBars</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <width>100%</width>
+                          <elementList>
+                            <element name="TextFilterSelected" type="elfld">
+                              <cellAlignment>center,center</cellAlignment>
+                              <onEnter type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_filter_applyOnSelected</variablePath>
+                                </variablePathList>
+                              </onEnter>
+                              <removeLabelLine>true</removeLabelLine>
+                              <showLabel>false</showLabel>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_TextFilterSelected</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>100%</width>
+                            </element>
+                            <element name="ApplyFilterSel" type="elbtn">
+                              <cellAlignment>center,center</cellAlignment>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_filter_applyOnSelected</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <height>20px</height>
+                              <icon>/cwt/images/16/funnel_new.png</icon>
+                              <iconHeight>0</iconHeight>
+                              <width>20px</width>
+                            </element>
+                            <element name="ClearFilterSel" type="elbtn">
+                              <cellAlignment>center,center</cellAlignment>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_filter_clearOnSelected</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <height>20px</height>
+                              <icon>/cwt/images/16/funnel_delete.png</icon>
+                              <iconHeight>0</iconHeight>
+                              <width>20px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="SelectedItems" type="eltabl">
+                          <height>100%</height>
+                          <noItemsMessage>No selected items</noItemsMessage>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_selectedItems</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <width>100%</width>
+                          <elementList>
+                            <element name="description" type="elfld">
+                              <dynLabel type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_DynamicLabelDescription</variablePath>
+                                </variablePathList>
+                              </dynLabel>
+                              <height>100%</height>
+                              <label>Selected</label>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_selectedItems</variablePath>
+                                  <variablePath>dstruct_cm_spoc.PickListDS/dstruct_description</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>100%</width>
+                            </element>
+                            <element name="priority" type="elfld">
+                              <canFilter>false</canFilter>
+                              <label>Priority</label>
+                              <textAlign>center</textAlign>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_selectedItems</variablePath>
+                                  <variablePath>dstruct_cm_spoc.PickListDS/dstruct_priority</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/permMethod_PriorityButtonsVisible</variablePath>
+                                </variablePathList>
+                              </visible>
+                              <width>25%</width>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="PriorityButtonsVL" type="elvlt">
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/permMethod_PriorityButtonsVisible</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <elementList>
+                        <element name="ButtonUpDouble" type="elbtn">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_clickArrowUpTop</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwt/images/16/navigate_up2.png</icon>
+                          <width>22px</width>
+                        </element>
+                        <element name="ButtonUp" type="elbtn">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_clickArrowUp</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwt/images/16/navigate_up.png</icon>
+                          <width>22px</width>
+                        </element>
+                        <element name="HorizontalLayout1" type="elhlt">
+                          <elementList>
+                            <element name="ButtonRefresh" type="elbtn">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_newIndexValue</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/refresh.png</icon>
+                              <showLabel>false</showLabel>
+                              <width>22px</width>
+                            </element>
+                            <element name="inputIndex" type="elfld">
+                              <cellAlignment>center,center</cellAlignment>
+                              <labelOrientation>right</labelOrientation>
+                              <showLabel>false</showLabel>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_inputIndex</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>40px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="ButtonDown" type="elbtn">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_clickArrowDown</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwt/images/16/navigate_down.png</icon>
+                          <width>22px</width>
+                        </element>
+                        <element name="ButtonDownDouble" type="elbtn">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_clickArrowDownBottom</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwt/images/16/navigate_down2.png</icon>
+                          <width>22px</width>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpace3" type="ellsp">
+                  <height>20px</height>
+                </element>
+                <element name="ButtonsHL" type="elhlt">
+                  <alignment>center,center</alignment>
+                  <fillSpace>false</fillSpace>
+                  <snapOnMouseOver>false</snapOnMouseOver>
+                  <elementList>
+                    <element name="OK" type="elbtn">
+                      <cellAlignment></cellAlignment>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.ExternalNotificationNodePickList/uimthd_onClickOK</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>OK</label>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$selectedItems" type="laction">
+      <path>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_selectedItems</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_selectedItems</valueType>
+      <script>return new DataObjectList();</script>
+    </method>
+    <method name="cwLeafInitAction$selectedItemsNoFilter" type="laction">
+      <path>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_selectedItemsNoFilter</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_selectedItemsNoFilter</valueType>
+      <script>return new DataObjectList();</script>
+    </method>
+    <method name="cwLeafInitAction$availableItemsNoFilter" type="laction">
+      <path>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_availableItemsNoFilter</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_availableItemsNoFilter</valueType>
+      <script>return new DataObjectList();</script>
+    </method>
+    <method name="cwLeafInitAction$labelDescription" type="laction">
+      <path>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_labelDescription</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        // Init default value
+        return "Description";
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$availableItems" type="laction">
+      <path>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_availableItems</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.ExternalNotificationNodePickList/leaf_availableItems</valueType>
+      <script>return new DataObjectList();</script>
+    </method>
+    <method name="addToSelected" type="uimthd">
+      <script><![CDATA[
+        var selected = this.availableItems.selected;
+        var priority = this.selectedItems.length;
+        if(selected != null){
+            for(var i=0;i<selected.length;i++){
+                selected[i].priority=this.selectedItems.length+1;
+                this.selectedItems.addLast(selected[i]);
+                this.selectedItemsNoFilter.addLast(selected[i]);
+                this.availableItems.remove(selected[i]);
+                this.availableItemsNoFilter.remove(selected[i]);
+            }
+            this.selectedItems.updateList;
+        }
+        this.availableItems.updateList;
+
+        if(this.modelCallback) this.modelCallback(this.selectedItems);
+      ]]></script>
+    </method>
+    <method name="removeFromSelected" type="uimthd">
+      <script><![CDATA[
+        var selected = this.selectedItems.selected;
+        if(selected != null){
+            for(var i=0;i<selected.length;i++){
+                this.availableItems.addLast(selected[i]);
+                this.availableItemsNoFilter.addLast(selected[i]);
+                this.selectedItems.remove(selected[i]);
+                this.selectedItemsNoFilter.remove(selected[i]);
+            }
+
+            this.availableItems.updateList;
+            this.selectedItems.updateList;
+        }
+        this.refreshPriorityValues();
+        if(this.modelCallback) this.modelCallback(this.selectedItems);
+      ]]></script>
+    </method>
+    <method name="addAllToSelected" type="uimthd">
+      <script><![CDATA[
+        this.availableItems.selectAllRecords();
+        this.addToSelected();
+        this.refreshPriorityValues();
+      ]]></script>
+    </method>
+    <method name="removeAllFromSelected" type="uimthd">
+      <script><![CDATA[
+        this.selectedItems.selectAllRecords();
+        this.removeFromSelected();
+      ]]></script>
+    </method>
+    <method name="PriorityButtonsVisible" type="permMethod">
+      <script><![CDATA[
+        if(this.priorityButtonsEnabled==true){
+            return true;
+        }
+        // false - if it is null or false
+        return false;
+      ]]></script>
+    </method>
+    <method name="clickArrowUp" type="uimthd">
+      <script><![CDATA[
+        var pos = this.getSingleSelectedIndex(); // Index of the selected item
+
+        if(pos>0){
+            this.changeItemPos(this.selectedItems[pos], pos-1);
+            this.changeItemPosNoFilter(this.selectedItemsNoFilter[pos], pos-1);
+        }
+      ]]></script>
+    </method>
+    <method name="clickArrowUpTop" type="uimthd">
+      <script><![CDATA[
+        var pos = this.getSingleSelectedIndex(); // Index of the selected item
+
+        if(pos>0){
+            this.changeItemPos(this.selectedItems[pos], 0);
+            this.changeItemPosNoFilter(this.selectedItemsNoFilter[pos], 0);
+        }
+      ]]></script>
+    </method>
+    <method name="clickArrowDownBottom" type="uimthd">
+      <script><![CDATA[
+        var pos = this.getSingleSelectedIndex(); // Index of the selected item
+
+        if(pos>=0 && pos<this.selectedItems.length-1){
+            this.changeItemPos(this.selectedItems[pos], this.selectedItems.length-1);
+            this.changeItemPosNoFilter(this.selectedItemsNoFilter[pos], this.selectedItemsNoFilter.length-1);
+        }
+      ]]></script>
+    </method>
+    <method name="clickArrowDown" type="uimthd">
+      <script><![CDATA[
+        var pos = this.getSingleSelectedIndex(); // Index of the selected item
+
+        if(pos>=0 && pos<this.selectedItems.length-1){
+            this.changeItemPos(this.selectedItems[pos], pos+1);
+            this.changeItemPosNoFilter(this.selectedItemsNoFilter[pos], pos+1);
+        }
+      ]]></script>
+    </method>
+    <method name="PriorityButtonsDisable" type="permMethod">
+      <script><![CDATA[
+        // Priority buttons must be enable only if one row is selected.
+        return this.selectedItems.selected==null || this.selectedItems.selected.length!=1;
+      ]]></script>
+    </method>
+    <method name="getSingleSelectedIndex" type="uimthd">
+      <script><![CDATA[
+        var selected = this.selectedItems.selected;
+
+        if(selected!=null && selected.length==1){
+            for(var i=0; i<this.selectedItems.length;i++){
+                if(selected[0] == this.selectedItems[i]){
+                    return i;
+                }
+            }
+        }
+
+        return -1;
+      ]]></script>
+    </method>
+    <method name="changeItemPos" type="uimthd">
+      <parameterList>
+        <parameter name="item" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+        <parameter name="newPos" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.Integer</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(newPos>this.selectedItems.length-1){
+            newPos=this.selectedItems.length-1;
+        }else if(newPos<0){
+            newPos = 0;
+        }
+
+        this.inputIndex=newPos;
+        this.selectedItems.remove(item);
+        this.selectedItems.add(newPos,item);
+        this.selectedItems.setSelected(item);
+        this.selectedItems.updateList;
+        this.refreshPriorityValues();
+        if(this.modelCallback) this.modelCallback(this.selectedItems);
+      ]]></script>
+    </method>
+    <method name="newIndexValue" type="uimthd">
+      <script><![CDATA[
+        // this method move the selected item to the position entried in the text field
+
+        var pos = this.getSingleSelectedIndex(); // Index of the current selected item
+
+        if(pos>=0){
+            this.changeItemPos(this.selectedItems[pos], this.inputIndex);
+        }
+      ]]></script>
+    </method>
+    <method name="getParentUI" type="uimthd">
+      <script>return this.parentUI;</script>
+    </method>
+    <method name="setParentUI" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <mandatory>true</mandatory>
+          <type>ui_com.conceptwave.system.UserInterface</type>
+        </parameter>
+      </parameterList>
+      <script>this.parentUI = ui;</script>
+    </method>
+    <method name="refreshPriorityValues" type="uimthd">
+      <script><![CDATA[
+        if(this.priorityButtonsEnabled){
+            for(var i=0;i<this.selectedItems.length;i++){
+                this.selectedItems[i].priority = i;
+            }
+
+            this.selectedItems.updateList;
+        }
+      ]]></script>
+    </method>
+    <method name="ShowAvailableTable" type="permMethod">
+      <script><![CDATA[
+        if(this.showAvailableTable==false){
+            return false;
+        }
+        // false - if it is null or false
+        return true;
+      ]]></script>
+    </method>
+    <method name="setDescriptionLabel" type="uimthd">
+      <parameterList>
+        <parameter name="label" type="rifp">
+          <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      Label show in the header of the descritpion column in selected items &#xd;
+      table&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script>this.labelDescription = label;</script>
+    </method>
+    <method name="DynamicLabelDescription" type="uimthd">
+      <parameterList>
+        <parameter name="label" type="rifp">
+          <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      Label show in the header of the descritpion column in selected items &#xd;
+      table&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script>return this.labelDescription;</script>
+    </method>
+    <method name="orderByPriority" type="uimthd">
+      <script><![CDATA[
+        if(this.selectedItems.length>0){
+            var i=0;
+            do{
+                var item = this.selectedItems[i];
+                if(item.priority!=i){
+                    this.selectedItems.remove(item);
+                    this.selectedItems.add(item.priority,item);
+                }else{
+                    i++;
+                }
+            }while(i<this.selectedItems.length);
+        }
+      ]]></script>
+    </method>
+    <method name="filter_applyOnAvailable" type="uimthd">
+      <script><![CDATA[
+        var textFilter='';
+        var textTmp='';
+        var pattern=null;
+        var id='';
+        var description='';
+
+        if(this.TextFilterAvailable==null || this.TextFilterAvailable=='') {
+            textFilter = '%'
+        } else {
+            textFilter = this.TextFilterAvailable;
+        }
+
+        for(var i=0;i<textFilter.length;i++){
+            if(textFilter[i]=='%'){
+                textTmp=textTmp+'.*'; //the % is used like * by the user
+            }else {
+                textTmp=textTmp + textFilter[i]; //escaping char for each char of the search string
+            }
+        }
+
+        //clear list
+        while(this.availableItems.length>0){
+            this.availableItems.delete(0);
+        }
+
+        pattern= new RegExp('^'+ textTmp +'$','i'); //casi insensitive match
+        for(var i=0;i<this.availableItemsNoFilter.length;i++){
+            id = this.availableItemsNoFilter[i].id;
+            description = this.availableItemsNoFilter[i].description;
+            if(description.match(pattern)!=null) {
+                this.availableItems.addLast(this.availableItemsNoFilter[i]);
+            }
+        }
+        this.availableItems.updateList;
+
+        //test external data object list filter
+        var dbl = new DataObjectList;
+        dbl = cm_spoc.getFilteredDataObject(this.availableItemsNoFilter, 'description', this.TextFilterAvailable);
+        dbl=dbl;
+      ]]></script>
+    </method>
+    <method name="filter_clearOnAvailable" type="uimthd">
+      <script><![CDATA[
+        //clear list
+        while(this.availableItems.length>0){
+            this.availableItems.delete(0);
+        }
+        for(var i=0;i<this.availableItemsNoFilter.length;i++){
+            this.availableItems.addLast(this.availableItemsNoFilter[i]);
+        }
+        this.TextFilterAvailable = "";
+        this.availableItems.updateList;
+      ]]></script>
+    </method>
+    <method name="filter_applyOnSelected" type="uimthd">
+      <script><![CDATA[
+        var textFilter='';
+        var textTmp='';
+        var pattern=null;
+        var id='';
+        var description='';
+
+        if(this.TextFilterSelected==null || this.TextFilterSelected=='') {
+            textFilter = '%'
+        } else {
+            textFilter = this.TextFilterSelected;
+        }
+
+        for(var i=0;i<textFilter.length;i++){
+            if(textFilter[i]=='%'){
+                textTmp=textTmp+'.*'; //the % is used like * by the user
+            }else {
+                textTmp=textTmp + textFilter[i]; //escaping char for each char of the search string
+            }
+        }
+
+        //clear list
+        while(this.selectedItems.length>0){
+            this.selectedItems.delete(0);
+        }
+
+        pattern= new RegExp('^'+ textTmp +'$','i'); //casi insensitive match
+        for(var i=0;i<this.selectedItemsNoFilter.length;i++){
+            id = this.selectedItemsNoFilter[i].id;
+            description = this.selectedItemsNoFilter[i].description;
+            if(description.match(pattern)!=null) {
+                this.selectedItems.addLast(this.selectedItemsNoFilter[i]);
+            }
+        }
+        this.selectedItems.updateList;
+      ]]></script>
+    </method>
+    <method name="filter_clearOnSelected" type="uimthd">
+      <script><![CDATA[
+        //clear list
+        while(this.selectedItems.length>0){
+            this.selectedItems.delete(0);
+        }
+        for(var i=0;i<this.selectedItemsNoFilter.length;i++){
+            this.selectedItems.addLast(this.selectedItemsNoFilter[i]);
+        }
+        this.TextFilterSelected = "";
+        this.selectedItems.updateList;
+      ]]></script>
+    </method>
+    <method name="changeItemPosNoFilter" type="uimthd">
+      <parameterList>
+        <parameter name="item" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+        <parameter name="newPos" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.Integer</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(newPos>this.selectedItemsNoFilter.length-1){
+            newPos=this.selectedItemsNoFilter.length-1;
+        }else if(newPos<0){
+            newPos = 0;
+        }
+
+        this.inputIndex=newPos;
+        this.selectedItemsNoFilter.remove(item);
+        this.selectedItemsNoFilter.add(newPos,item);
+        this.selectedItemsNoFilter.setSelected(item);
+        this.selectedItemsNoFilter.updateList;
+        this.refreshPriorityValues();
+        if(this.modelCallback) this.modelCallback(this.selectedItemsNoFilter);
+      ]]></script>
+    </method>
+    <method name="Click_ButtonListSearch" type="uimthd">
+      <script>this.showsSearchBars=!this.showsSearchBars;</script>
+    </method>
+    <method name="permission_ShowsSearchBars" type="permMethod">
+      <script>return this.showsSearchBars</script>
+    </method>
+    <method name="permission_ShowsButtonListSearch" type="permMethod">
+      <script>return this.showsButtonListSearch;</script>
+    </method>
+    <method name="loadItemsSelectedPreviously" type="uimthd">
+      <parameterList>
+        <parameter name="pl" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+        <parameter name="avaiableItems" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+        <parameter name="selectedItems" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var itemSelected = false;
+        for(var i=0;i<avaiableItems.length;i++){
+            var item = new cm_spoc.PickListDS();
+            item.id = avaiableItems[i].itemCode;
+            item.description = avaiableItems[i].itemCode;
+            itemSelected = false;
+            if(selectedItems.length!=0){
+                for(var j=0;j<selectedItems.length;j++)
+                {
+                    if(selectedItems[j] == item.id){
+                        pl.selectedItems.addLast(item);
+                        itemSelected = true;
+                        break;
+                    }
+                }
+            }
+            if(itemSelected == false){
+                pl.availableItems.addLast(item);
+            }
+        }
+      ]]></script>
+    </method>
+    <method name="onClickOK" type="uimthd">
+      <script>this.parent.cwDialogClose();</script>
+    </method>
+  </methodList>
+</userInterface>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.testChangeEntity">
+  <group>testScripts</group>
+  <label>testChangeEntity</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="xmlFileName" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="owner" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var log = cm_pws.test.clsLog();var testCaseInfo =  eval("arguments.callee.name") + " - ";log.newLine();log.setCheckPoint("STARTED");log.writeLn(testCaseInfo+ log.getCheckPoint());
+    /////////////////////////////////////////////////////////////
+    try{
+        log.writeLn("running for: " + xmlFileName);
+        var sessionId = owner.getProperty("sessionId");
+        sessionId = sessionId != null ? sessionId : Global.getSessionParameter("SESSION_ID");
+
+        var input = cm_pws.test.createRequest(xmlFileName, "OCSConfigurationOperation.v1.types.ChangeEntity",  sessionId);
+        log.setCheckPoint("Request Created.");
+
+        var result = Global.invokeInterface("cm_pws.services.OCSConfigurationPort", "changeEntity", input);
+        log.setCheckPoint("Response received.");
+
+        assertFalse(!(result[0] instanceof OCSConfigurationOperation.v1.types.ChangeEntityResponse), "Error!");
+
+    }
+    catch(exp){
+        var chkpntmsg = "[LastCheckPosition:"+log.getCheckPoint()+"]";log.writeLn(log.FAIL +"\t"+exp);log.setFailed(true);log.flush();
+        // to have a valid server log for test cases since it is supposed to fail
+        assertTrue(false, testCaseInfo+":"+chkpntmsg);
+    }
+    finally{
+        if(!log.isFailed())log.writeLn(log.SUCCESS);
+    }
+  ]]></script>
+</script>

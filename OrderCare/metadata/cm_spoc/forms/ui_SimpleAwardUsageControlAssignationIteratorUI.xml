@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.SimpleAwardUsageControlAssignationIteratorUI">
+  <group>Promotion</group>
+  <label>SimpleAwardUsageControlAssignationIteratorUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.SimpleAwardUsageControlAssi</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <width>1000px</width>
+              <elementList>
+                <element name="Headers" type="elgrd">
+                  <numOfCols>6</numOfCols>
+                  <width>1000px</width>
+                  <elementList>
+                    <element name="Selected" type="elchk">
+                      <columnSpan>0</columnSpan>
+                      <labelAsTitle>false</labelAsTitle>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.SimpleAwardUsageControlAssignationIteratorUI/leaf_Selected</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>30px</width>
+                    </element>
+                    <element name="CellSpacer" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="OperationOnUsageControl" type="elslct">
+                      <columnSpan>0</columnSpan>
+                      <label>Operation over the control</label>
+                      <labelOrientation>top</labelOrientation>
+                      <removeLabelLine>true</removeLabelLine>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.SimpleAwardUsageControlAssignationIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.SimpleAwardUsageControlAssi/dstruct_OperationOnUsageControl</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100px</width>
+                    </element>
+                    <element name="CellSpacer5" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="UsageControl" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <columnSpan>0</columnSpan>
+                      <label>Cyclic action</label>
+                      <labelOrientation>top</labelOrientation>
+                      <rowSpan>0</rowSpan>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.SimpleAwardUsageControlAssignationIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.SimpleAwardUsageControlAssi/dstruct_UsageControl</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100px</width>
+                    </element>
+                    <element name="UsageControlButton" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.SimpleAwardUsageControlAssignationIteratorUI/usrActionMethod_FinderUsageControlReferenceDialog</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <icon>/cwf/finder.gif</icon>
+                      <rowSpan>0</rowSpan>
+                      <showLabel>false</showLabel>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>22px</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="FinderUsageControlReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_UsageControl");
+        newDetail.parentUI = this;
+        newDetail.modelCallback = this.setUsageControl;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="setUsageControl" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script>this.parentUI.model.UsageControl = selected.itemCode;</script>
+    </method>
+  </methodList>
+</userInterface>

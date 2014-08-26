@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.pwsValidation_PositiveNumber">
+  <label>pwsValidation_PositiveNumber</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="inputValue" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try {
+        var number = null;
+
+        if(inputValue == null || inputValue == "")
+            return 0;
+        else {
+            var y = parseInt(inputValue);
+            if (isNaN(y)) {
+                var fault = api_common.createFault("E123", "Te received value is not a number.");    //Correct error code
+                return fault;
+            }
+            if(y < 0) {
+                var fault = api_common.createFault("E123", "Te received is not a positive number.");    //Correct error code
+                return fault;
+            }
+
+            return y;
+        }
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

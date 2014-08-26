@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cw_etltool._export.writeXMLFile_SF">
+  <activity name="start" type="seqActivity">
+    <guid>{192060a2-d347-4dff-b2c4-450197324686}</guid>
+    <label>Start</label>
+    <x>109.0</x>
+    <y>20.0</y>
+    <childList>
+      <child name="LoadMasterExcelSheet" type="scriptActivity">
+        <guid>{8059768d-5e56-4b24-a337-ff1fc1bbcccc}</guid>
+        <label>Load Master Excel Sheet</label>
+        <x>99.0</x>
+        <y>117.0</y>
+        <childList>
+          <child name="rollBack" type="compensateActivity">
+            <guid>{a4585b28-e606-43db-a626-ed47d93d2851}</guid>
+            <label>Roll Back</label>
+            <x>106.0</x>
+            <y>219.0</y>
+            <childList>
+              <child name="rollBackScript" type="scriptActivity">
+                <guid>{7712cb86-e3a4-4828-afeb-934bbede305c}</guid>
+                <label>Roll Back Script</label>
+                <x>382.0</x>
+                <y>129.0</y>
+                <methodList>
+                  <method name="cwOnProcActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script>cw_etltool._import.fileReaderRollBack(process, document);</script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script>cw_etltool._import.fileReader(process, document);</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="errorValidation" type="subflowActivity">
+        <element>proc_cw_etltool._import.errorValidation</element>
+        <guid>{28787bca-a61a-4e8f-afc8-010c694274d1}</guid>
+        <label>Error Validation</label>
+        <x>105.0</x>
+        <y>253.0</y>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script>//cw_etltool.common.getConfig().setIsError(false) ;</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="loadMasterExcelSheet" type="onExceptionActivity">
+        <element>excp_cw_etltool._import.systemException</element>
+        <guid>{5b343166-eba6-41b5-97bb-3b15f798219d}</guid>
+        <label>Load Master Excel Sheet Exception</label>
+        <x>109.0</x>
+        <y>119.0</y>
+        <childList>
+          <child name="systemVerification" type="subflowActivity">
+            <element>proc_cw_etltool._import.systemExceptionHandler</element>
+            <guid>{702fb890-acfc-4838-9271-c7dbf2375359}</guid>
+            <label>System Exception Handler</label>
+            <x>462.0</x>
+            <y>11.0</y>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              Global.logInfo("\n\n $$$$$$$$$$$$$$$$$$$$$$$ On File Reading Exception : Before Script $$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+            ]]></script>
+          </method>
+          <method name="cwOnProcActAfter" type="action">
+            <category>script</category>
+            <system>true</system>
+            <script><![CDATA[
+              Global.logInfo("\n\n $$$$$$$$$$$$$$$$$$$$$$$ On File Reading Exception : After Script $$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+    </childList>
+    <methodList>
+      <method name="cwOnProcActBefore" type="action">
+        <category>before</category>
+        <system>true</system>
+        <script><![CDATA[Global.logInfo("\n\n\nRead File Sub-Flow Start Activity : Before Script ");]]></script>
+      </method>
+      <method name="cwOnProcActAfter" type="action">
+        <category>script</category>
+        <system>true</system>
+        <script><![CDATA[Global.logInfo("\n\n\nRead File Sub-Flow Start Activity : After Script ");]]></script>
+      </method>
+    </methodList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{f41e7b8a-1a21-481d-85f1-ed8d0bbff900}</guid>
+  <label>Write XML To File</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <type>Sub-flow</type>
+</process>

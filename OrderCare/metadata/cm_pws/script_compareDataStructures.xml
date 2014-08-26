@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.compareDataStructures">
+  <group>scripts</group>
+  <label>compareDataStructures</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="object" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="expectedObject" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="objectName" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="operatorMap" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var result;
+
+    if(expectedObject) {
+        //careExt.WSExt.testCase.myAssertNotNull(object, ": result is null.");
+    }
+    else{
+        //careExt.WSExt.testCase.myAssertNull(object, ": result is Not null.");
+        return;
+    }
+
+    var nodes = expectedObject.getNodeNames();
+    for(var i=0; i<nodes.length; i++)
+    {
+        var elementName = objectName +"."+ nodes[i];
+        if(!(operatorMap && (typeof operatorMap[elementName] != 'undefined')) || operatorMap[elementName] != null)
+        {
+
+            var operatorName = null;
+            if(operatorMap != null && (typeof operatorMap[elementName] != 'undefined'))
+                operatorName = operatorMap[elementName];
+
+            var expNode = expectedObject[nodes[i]];
+            try{
+                var node = object[nodes[i]];
+            }catch(exp){
+                //careExt.WSExt.testCase.assertElement(true, false, elementName + " was expected but not found!");
+                //continue;
+                result = false;
+                return result;
+            }
+
+            if(!expNode){
+                //careExt.WSExt.testCase.assertElement(node, expNode, elementName, operatorName);
+                result = assertElement(node, expNode, elementName, operatorName);
+                if(!result)
+                    return result;
+            }
+            else if(expNode instanceof DataStructure)
+            {
+                result = assertElement(node.length, expNode.length, elementName +" length is expected " + expNode.length + " but received " + node.length);
+                if(!result)
+                    return result;
+                if(expNode.array){ // isCollection()
+                    for(var j=0; j < expNode.length; j++) {
+                        result = cm_pws.test.compareDataStructures(node[j], expNode[j], elementName + "[" + j + "]", operatorMap);
+                        if(!result)
+                            return result;
+                    }
+                }
+                else if(expNode.length > 0) {
+                    result = cm_pws.test.compareDataStructures(node, expNode, elementName, operatorMap);
+                    if(!result)
+                        return result;
+                }
+            }
+            else if(expNode.array)
+            {
+                for(var j=0; j<expNode.length; j++) {
+                    result = assertElement(node[j], expNode[j], elementName + ": index " + j +" out of " + expNode.length, operatorName);
+                    if(!result)
+                        return result;
+                }
+            }
+            else {
+                result = assertElement(node, expNode, elementName, operatorName);
+                if(!result)
+                    return result;
+            }
+        }
+    }
+
+    ////////////////////////////////////////////
+    function assertElement(element,expElement,message,operators) {
+        var value = element;
+        var valueToCompare = expElement;
+        var result  = true;
+
+        /*
+        if(expElement == null){
+            careExt.WSExt.testCase.myAssertNull(element, "expecting NULL but recieved not null in "+ script +": " + message);
+            return;
+        }else if(element == null){
+            careExt.WSExt.testCase.myAssertNotNull(element, "expecting NOT NULL but recieved null in "+ script +": " + message);
+            return;
+        }
+        */
+
+        if(element instanceof Date) {
+            value = element.toString();
+        }
+
+        if(expElement instanceof Date) {
+            valueToCompare = expElement.toString();
+        }
+        if(!(operators instanceof Array))
+            operators = [operators];
+
+        var operator;
+        for(var i=0; i<operators.length; i++){
+            operator = operators[i];
+            if(operator == null) {
+                result = result && (value == valueToCompare);//Equal in default
+            } else if(operator == "EQ") {
+                result = result && (value == valueToCompare);
+            } else if(operator == "NE") {
+                result = result && (value != valueToCompare);
+            } else if(operator == "LT") {
+                result = result && (value < valueToCompare);
+            } else if(operator == "LE") {
+                result = result && (value <= valueToCompare);
+            } else if(operator == "GT") {
+                result = result && (value > valueToCompare);
+            } else if(operator == "GE") {
+                result = result && (value >= valueToCompare);
+            } else if(operator == "NN") {
+                result = result && (value != null);
+            } else if(operator == "EN") {
+                result = result && (value == null);
+            } else
+                result = false;    //operator is not null and also not matched anything
+
+            if(!result)
+                break;
+        }
+
+        //careExt.WSExt.testCase.myAssertTrue(result, script + ": expected '" + valueToCompare + "' but received '" + value + "' for " + message);
+        return result;
+    }
+    //////////////////////////////////////////
+  ]]></script>
+</script>

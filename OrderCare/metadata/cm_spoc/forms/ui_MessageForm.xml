@@ -1,0 +1,1357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.MessageForm">
+  <group>Messages</group>
+  <label>MessageForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.Message</valueType>
+    </variable>
+    <variable name="textEnglish" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="textSpanish" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="textGerman" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="availableEnglish" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="availableSpanish" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="availableGerman" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="messageTypologyUIDoc" type="leaf">
+      <valueType>doc_cm_spoc.data.messageTypologyUIDoc</valueType>
+    </variable>
+    <variable name="patronTable" type="leaf">
+      <valueType>findSql_cm_spoc.patronSQLFinder/ui_UserInterface</valueType>
+    </variable>
+    <variable name="tabSelected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="codeArrayEnglish" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="codeArraySpanish" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="codeArrayGerman" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="messageTypologyEditable" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="Tabset" type="eltset">
+                  <width>500px</width>
+                  <elementList>
+                    <element name="TabFrame" type="eltab">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.MessageForm/frmui_Forms</variablePath>
+                          <variablePath>ui_cm_spoc.forms.MessageForm/frmui_Forms/vform_General</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <label>General Parameters</label>
+                      <width>100px</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="General" type="vform">
+          <label>General</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="VerticalLayout2" type="elvlt">
+                <alignment>right,center</alignment>
+                <elementList>
+                  <element name="MessageCode" type="elfld">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/permMethod_setIsPrimaryKey</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <labeAlign>left</labeAlign>
+                    <label>Message Code</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Message/dstruct_MessageCode</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="MessageDescription" type="elfld">
+                    <labeAlign>left</labeAlign>
+                    <label>Message Description</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Message/dstruct_MessageDescription</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="MessageTypology" type="elslct">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/permMethod_editableMessageTypology</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <labeAlign>left</labeAlign>
+                    <label>Message Typology</label>
+                    <labelOrientation>left</labelOrientation>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/uimthd_resetTriggerMessageTypology</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Message/dstruct_MessageTypology</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="subtypology" type="elslct">
+                    <labeAlign>left</labeAlign>
+                    <label>Message Subtypology</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/uimthd_resetTrigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/leaf_messageTypologyUIDoc</variablePath>
+                        <variablePath>doc_cm_spoc.data.messageTypologyUIDoc/leaf_subtypology</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/permMethod_showSubTypology</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                </elementList>
+              </element>
+              <element name="VerticalLayout22" type="elvlt">
+                <alignment>left,center</alignment>
+                <elementList>
+                  <element name="LayoutSpacer24" type="ellsp">
+                    <height>5px</height>
+                  </element>
+                  <element name="MessageType" type="elrgrp">
+                    <label>Message Type</label>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/uimthd_resetTrigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Message/dstruct_MessageType</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="LayoutSpacer" type="ellsp">
+                    <height>5px</height>
+                  </element>
+                </elementList>
+              </element>
+              <element name="VerticalLayout23" type="elvlt">
+                <alignment>right,center</alignment>
+                <elementList>
+                  <element name="ServiceProviderEnum" type="elslct">
+                    <labeAlign>left</labeAlign>
+                    <label>Service Provider</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/uimthd_resetTrigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <onEnter type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/usrActionMethod_updateServiceProvider</variablePath>
+                      </variablePathList>
+                    </onEnter>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Message/dstruct_ServiceProviderEnum</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/permMethod_SPServiceProviderIdVisRule</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="MessageNumberService" type="elfld">
+                    <labeAlign>left</labeAlign>
+                    <label>Service Number</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Message/dstruct_MessageNumberService</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/permMethod_MMessageNumberServiceVisRule</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                </elementList>
+              </element>
+              <element name="LayoutSpacer2" type="ellsp">
+                <height>10px</height>
+              </element>
+              <element name="VerticalLayout235" type="elvlt">
+                <alignment>left,center</alignment>
+                <elementList>
+                  <element name="Tabset" type="eltset">
+                    <dataSource type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/leaf_tabSelected</variablePath>
+                      </variablePathList>
+                    </dataSource>
+                    <tabChangedMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/usrActionMethod_tabSelectedMethod</variablePath>
+                      </variablePathList>
+                    </tabChangedMethod>
+                    <width>800px</width>
+                    <elementList>
+                      <element name="English" type="eltab">
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/frmui_Forms</variablePath>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/frmui_Forms/vform_English</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <label>English</label>
+                        <width>100px</width>
+                      </element>
+                      <element name="Spanish" type="eltab">
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/frmui_Forms</variablePath>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/frmui_Forms/vform_Spanish</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <label>Spanish</label>
+                        <width>100px</width>
+                      </element>
+                      <element name="German" type="eltab">
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/frmui_Forms</variablePath>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/frmui_Forms/vform_German</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <label>German</label>
+                        <width>100px</width>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+              <element name="VerticalLayout236" type="elvlt">
+                <alignment>left,center</alignment>
+                <elementList>
+                  <element name="LayoutSpacer3" type="ellsp">
+                    <height>5px</height>
+                  </element>
+                  <element name="MessageCanBeSent" type="elchk">
+                    <cellAlignment>left,center</cellAlignment>
+                    <label>Message Can Be Sent</label>
+                    <labelOrientation>left</labelOrientation>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/uimthd_resetTrigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Message/dstruct_MessageCanBeSent</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/permMethod_MMessageCanBeSentVisRule</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="English" type="vform">
+          <label>English</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="VerticalLayout235" type="elvlt">
+                <alignment>left,center</alignment>
+                <elementList>
+                  <element name="HorizontalLayout" type="elhlt">
+                    <alignment>left,center</alignment>
+                    <elementList>
+                      <element name="texto" type="eltxtArea">
+                        <autoFocusNextField>false</autoFocusNextField>
+                        <height>240px</height>
+                        <label>Text message</label>
+                        <onChangeMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/uimthd_availableLettersEnglish</variablePath>
+                          </variablePathList>
+                        </onChangeMethod>
+                        <onEnter type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/uimthd_availableLettersEnglish</variablePath>
+                          </variablePathList>
+                        </onEnter>
+                        <tooltipWidth>200</tooltipWidth>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/leaf_textEnglish</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <elementList>
+                          <element name="FormFrame" type="elovf">
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MessageForm/leaf_patronTable</variablePath>
+                                <variablePath>findSql_cm_spoc.patronSQLFinder/ui_UserInterface/frmui_Forms</variablePath>
+                                <variablePath>findSql_cm_spoc.patronSQLFinder/ui_UserInterface/frmui_Forms/exov_Result</variablePath>
+                              </variablePathList>
+                            </formReference>
+                            <height>200px</height>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MessageForm/leaf_patronTable</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>400px</width>
+                          </element>
+                          <element name="available" type="elfld">
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <label>Characters left</label>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MessageForm/leaf_availableEnglish</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>50px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+              <element name="VerticalLayout236" type="elvlt">
+                <alignment>left,center</alignment>
+                <elementList>
+                  <element name="LayoutSpacer3" type="ellsp">
+                    <height>5px</height>
+                  </element>
+                  <element name="Button" type="elbtn">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/usrActionMethod_validateMessageEnglish</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <label>Validate Message</label>
+                    <width>150px</width>
+                  </element>
+                  <element name="LayoutSpacer4" type="ellsp">
+                    <height>5px</height>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="Spanish" type="vform">
+          <label>Spanish</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="VerticalLayout235" type="elvlt">
+                <alignment>left,center</alignment>
+                <elementList>
+                  <element name="HorizontalLayout" type="elhlt">
+                    <alignment>left,center</alignment>
+                    <elementList>
+                      <element name="textSpanish" type="eltxtArea">
+                        <autoFocusNextField>false</autoFocusNextField>
+                        <height>240px</height>
+                        <label>Text message</label>
+                        <onChangeMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/uimthd_availableLettersSpanish</variablePath>
+                          </variablePathList>
+                        </onChangeMethod>
+                        <onEnter type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/uimthd_availableLettersSpanish</variablePath>
+                          </variablePathList>
+                        </onEnter>
+                        <tooltipWidth>200</tooltipWidth>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/leaf_textSpanish</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <elementList>
+                          <element name="FormFrame" type="elovf">
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MessageForm/leaf_patronTable</variablePath>
+                                <variablePath>findSql_cm_spoc.patronSQLFinder/ui_UserInterface/frmui_Forms</variablePath>
+                                <variablePath>findSql_cm_spoc.patronSQLFinder/ui_UserInterface/frmui_Forms/exov_Result</variablePath>
+                              </variablePathList>
+                            </formReference>
+                            <height>200px</height>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MessageForm/leaf_patronTable</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>400px</width>
+                          </element>
+                          <element name="availableSpanish" type="elfld">
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <label>Characters left</label>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MessageForm/leaf_availableSpanish</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>50px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+              <element name="VerticalLayout236" type="elvlt">
+                <alignment>left,center</alignment>
+                <elementList>
+                  <element name="LayoutSpacer3" type="ellsp">
+                    <height>5px</height>
+                  </element>
+                  <element name="Button" type="elbtn">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/usrActionMethod_validateMessageSpanish</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <label>Validate Message</label>
+                    <width>150px</width>
+                  </element>
+                  <element name="LayoutSpacer4" type="ellsp">
+                    <height>5px</height>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="German" type="vform">
+          <label>German</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="VerticalLayout235" type="elvlt">
+                <alignment>left,center</alignment>
+                <elementList>
+                  <element name="HorizontalLayout" type="elhlt">
+                    <alignment>left,center</alignment>
+                    <elementList>
+                      <element name="textGerman" type="eltxtArea">
+                        <autoFocusNextField>false</autoFocusNextField>
+                        <height>240px</height>
+                        <label>Text message</label>
+                        <onChangeMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/uimthd_availableLettersGerman</variablePath>
+                          </variablePathList>
+                        </onChangeMethod>
+                        <onEnter type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/uimthd_availableLettersGerman</variablePath>
+                          </variablePathList>
+                        </onEnter>
+                        <tooltipWidth>200</tooltipWidth>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.MessageForm/leaf_textGerman</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <elementList>
+                          <element name="FormFrame" type="elovf">
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MessageForm/leaf_patronTable</variablePath>
+                                <variablePath>findSql_cm_spoc.patronSQLFinder/ui_UserInterface/frmui_Forms</variablePath>
+                                <variablePath>findSql_cm_spoc.patronSQLFinder/ui_UserInterface/frmui_Forms/exov_Result</variablePath>
+                              </variablePathList>
+                            </formReference>
+                            <height>200px</height>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MessageForm/leaf_patronTable</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>400px</width>
+                          </element>
+                          <element name="availableGerman" type="elfld">
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <label>Characters left</label>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.MessageForm/leaf_availableGerman</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>50px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+              <element name="VerticalLayout236" type="elvlt">
+                <alignment>left,center</alignment>
+                <elementList>
+                  <element name="LayoutSpacer3" type="ellsp">
+                    <height>5px</height>
+                  </element>
+                  <element name="Button" type="elbtn">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.MessageForm/usrActionMethod_validateMessageGerman</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <label>Validate Message</label>
+                    <width>150px</width>
+                  </element>
+                  <element name="LayoutSpacer4" type="ellsp">
+                    <height>5px</height>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$codeArrayGerman" type="laction">
+      <path>ui_cm_spoc.forms.MessageForm/leaf_codeArrayGerman</path>
+      <type>initializer</type>
+      <script>return new Array();</script>
+    </method>
+    <method name="cwLeafInitAction$codeArraySpanish" type="laction">
+      <path>ui_cm_spoc.forms.MessageForm/leaf_codeArraySpanish</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.MessageForm/leaf_codeArraySpanish</valueType>
+      <script>return new Array();</script>
+    </method>
+    <method name="cwLeafInitAction$messageTypologyUIDoc" type="laction">
+      <path>ui_cm_spoc.forms.MessageForm/leaf_messageTypologyUIDoc</path>
+      <type>initializer</type>
+      <script><![CDATA[return new Document("cm_spoc.data.messageTypologyUIDoc");]]></script>
+    </method>
+    <method name="cwLeafInitAction$codeArrayEnglish" type="laction">
+      <path>ui_cm_spoc.forms.MessageForm/leaf_codeArrayEnglish</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.MessageForm/leaf_codeArrayEnglish</valueType>
+      <script>return new Array();</script>
+    </method>
+    <method name="cwLeafInitAction$patronTable" type="laction">
+      <path>ui_cm_spoc.forms.MessageForm/leaf_patronTable</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.MessageForm/leaf_patronTable</valueType>
+      <script><![CDATA[
+        var patronFinder = new cm_spoc.patronSQLFinder.UserInterface(null,this);
+
+        if(this.model.MessageTypology != null){
+            patronFinder.model.searchDocument.cod_tipmensa = this.model.MessageTypology;
+            patronFinder.result = patronFinder.model.search();
+        }
+
+        return patronFinder;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.MessageForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var model = this.model;
+        if(!model.specificationCode){
+            var MessageTextLanguageArr = cm_spoc.initInnerDS("base_MessageTextLanguageArr");
+            model.MessageTextLanguageArrDS = MessageTextLanguageArr;
+            this.messageTypologyEditable = true;
+            return model;
+        }
+        else{
+             this.messageTypologyEditable = false;
+            var s = new epc.data.Specification();
+            s.project =  cwa_epc.getDefaultProj();
+
+            s.specificationCode = model.MessageTextLanguageArr;
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+               model.MessageTextLanguageArrDS=r;
+            }
+
+            var MessageTextLanguageRel =  model.MessageTextLanguageArrDS.List;
+            var MessageTextLanguageDS =  model.MessageTextLanguageArrDS.ListDS;
+            for(var i=0;i<MessageTextLanguageRel.length;i++){
+                s.specificationCode = MessageTextLanguageRel[i];
+                var r = epc.getSpecificationByKey(s);
+                if(!api_common.isFault(r)){
+                    MessageTextLanguageDS[i]=r;
+                }
+            }
+
+            //init the values
+            this.textEnglish = "";
+            this.textSpanish = "";
+            this.textGerman  = "";
+
+            for(var b = 0; b < MessageTextLanguageDS.length; b++){
+                if(MessageTextLanguageDS[b].MessageTextLanguage == "English")
+                    this.textEnglish = MessageTextLanguageDS[b].MessageTextCode;
+                else if(MessageTextLanguageDS[b].MessageTextLanguage == "Spanish")
+                    this.textSpanish = MessageTextLanguageDS[b].MessageTextCode;
+                else if(MessageTextLanguageDS[b].MessageTextLanguage == "German")
+                    this.textGerman = MessageTextLanguageDS[b].MessageTextCode;
+            }
+
+            return model;
+        }
+      ]]></script>
+    </method>
+    <method name="MMessageCanBeSentVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.MessageTypology;
+        if (value != "LQNTS" && value != "SALDOTRAS" && value != "TAR_DINAM" && value != "LLAM_CAIDA" && value != "HOME_ZONE" && value != "UMBRESTR" && value != "BARRINGSMS" )return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="MMessageNumberServiceVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.MessageTypology;
+        if (value != "LQNTS" && value != "SALDOTRAS" && value != "TAR_DINAM" && value != "LLAM_CAIDA" && value != "HOME_ZONE" && value != "UMBRESTR" && value != "BARRINGSMS" )return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="SPServiceProviderIdVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.MessageTypology;
+        if (value != "LQNTS" && value != "SALDOTRAS" && value != "TAR_DINAM" && value != "LLAM_CAIDA" && value != "HOME_ZONE" && value != "UMBRESTR" && value != "BARRINGSMS" )return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="availableLettersEnglish" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        var textAreaEnglish  = this.textEnglish;
+        var availableEnglish = this.availableEnglish;
+        var finaly    = 400;
+        var start     = 400;
+        var codeArray = this.codeArrayEnglish;
+
+        var codesInMessage = this.textEnglish ? this.textEnglish.match(/<<(.*?)>>/g) : null;
+
+        validateCodesInMessage();
+
+        if(textAreaEnglish)
+            finaly = start - calculateRealLength();
+
+        this.availableEnglish = finaly;
+
+        this.textEnglish = textAreaEnglish;
+        this.updateStructure();
+
+        return finaly;
+
+        function validateCodesInMessage(){
+            var codeArrayInMsg = new Array();
+            var codeInTheMsg;
+            var found;
+            if(codesInMessage){
+                for(var i = 0 ; i < codesInMessage.length; i ++){
+                    found = false;
+                    codeInTheMsg = codesInMessage[i].replace(/<</g,'');
+                    codeInTheMsg = codeInTheMsg.replace(/>>/g,'');
+                    codeArrayInMsg.push(codeInTheMsg);
+                    for(var a = 0; a < codeArray.length; a++){
+                        if(codeArray[a][0] == codeInTheMsg)
+                            found = true;
+                    }
+                    if(!found){
+                        var size = findSize(codeInTheMsg);
+                        if(size && size > 0){
+                            var newCode = new Array();
+                            newCode = [codeInTheMsg,size];
+                            codeArray.push(newCode);
+                        }
+                        else{
+                            textAreaEnglish = replaceAll("<<"+codeInTheMsg+">>",'',textAreaEnglish);
+                        }
+                    }
+                }
+            }
+
+            for(var x = 0 ; x < codeArray.length; x++){
+                if(codeArrayInMsg.indexOf(codeArray[x][0]) == -1)
+                    codeArray.splice(x);
+            }
+        }
+
+        function calculateRealLength(){
+            var codesSize = 0;
+            for(var i = 0 ; i < codeArray.length; i++){
+                codesSize += parseInt(codeArray[i][1]);
+            }
+            var msgWithoutCodes = textAreaEnglish.replace(/<<(.*?)>>/g, "");
+            msgWithoutCodes = msgWithoutCodes.replace("  "," ");
+            msgWithoutCodes = msgWithoutCodes.replace("   "," ");
+
+            return msgWithoutCodes.length + codesSize;
+        }
+
+        function findSize(code){
+            var finder = new Finder("cm_spoc.patronSQLFinder");
+            finder.searchDocument.cod_patronmensa = code;
+            var result = finder.search();
+
+            if(result && result.length > 0)
+                return result[0].max_size;
+
+            return 0;
+        }
+
+        function replaceAll(find, replace, str) {
+          return str.replace(new RegExp(find, 'g'), replace);
+        }
+      ]]></script>
+    </method>
+    <method name="availableLettersGerman" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        var textAreaGerman= this.textGerman;
+        var availableGerman = this.availableGerman;
+        var finaly    = 400;
+        var start     = 400;
+        var codeArray = this.codeArrayGerman;
+
+        var codesInMessage = this.textGerman ? this.textGerman.match(/<<(.*?)>>/g) : null;
+
+        validateCodesInMessage();
+
+        if(textAreaGerman)
+            finaly = start - calculateRealLength();
+
+        this.availableGerman = finaly;
+
+        this.textGerman = textAreaGerman;
+        this.updateStructure();
+
+        return finaly;
+
+        function updateStructure(DS,text){
+            var exists = false;
+
+            for(var b = 0 ; b < DS.length; b++){
+                if(DS[b].MessageTextLanguage == 'German'){
+                    DS[b].MessageTextCode     = text;
+                    exists = true;
+                }
+            }
+            if(!exists){
+                var DSLength = DS.length;
+                DS[DSLength] = cm_spoc.initInnerDS("base_MessageText");
+                DS[DSLength].MessageTextLanguage = 'German';
+                DS[DSLength].MessageTextCode     = text;
+            }
+        }
+
+        function validateCodesInMessage(){
+            var codeArrayInMsg = new Array();
+            var codeInTheMsg;
+            var found;
+            if(codesInMessage){
+                for(var i = 0 ; i < codesInMessage.length; i ++){
+                    found = false;
+                    codeInTheMsg = codesInMessage[i].replace(/<</g,'');
+                    codeInTheMsg = codeInTheMsg.replace(/>>/g,'');
+                    codeArrayInMsg.push(codeInTheMsg);
+                    for(var a = 0; a < codeArray.length; a++){
+                        if(codeArray[a][0] == codeInTheMsg)
+                            found = true;
+                    }
+                    if(!found){
+                        var size = findSize(codeInTheMsg);
+                        if(size && size > 0){
+                            var newCode = new Array();
+                            newCode = [codeInTheMsg,size];
+                            codeArray.push(newCode);
+                        }
+                        else{
+                            textAreaGerman = replaceAll("<<"+codeInTheMsg+">>",'',textAreaGerman);
+                        }
+                    }
+                }
+            }
+
+            for(var x = 0 ; x < codeArray.length; x++){
+                if(codeArrayInMsg.indexOf(codeArray[x][0]) == -1)
+                    codeArray.splice(x);
+            }
+        }
+
+        function calculateRealLength(){
+            var codesSize = 0;
+            for(var i = 0 ; i < codeArray.length; i++){
+                codesSize += parseInt(codeArray[i][1]);
+            }
+            var msgWithoutCodes = textAreaGerman.replace(/<<(.*?)>>/g, "");
+            msgWithoutCodes = msgWithoutCodes.replace("  "," ");
+            msgWithoutCodes = msgWithoutCodes.replace("   "," ");
+
+            return msgWithoutCodes.length + codesSize;
+        }
+
+        function findSize(code){
+            var finder = new Finder("cm_spoc.patronSQLFinder");
+            finder.searchDocument.cod_patronmensa = code;
+            var result = finder.search();
+
+            if(result && result.length > 0)
+                return result[0].max_size;
+
+            return 0;
+        }
+
+        function replaceAll(find, replace, str) {
+          return str.replace(new RegExp(find, 'g'), replace);
+        }
+      ]]></script>
+    </method>
+    <method name="availableLettersSpanish" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        var textAreaSpanish  = this.textSpanish;
+        var availableSpanish = this.availableSpanish;
+        var finaly    = 400;
+        var start     = 400;
+        var codeArray = this.codeArraySpanish;
+
+        var codesInMessage = this.textSpanish ? this.textSpanish.match(/<<(.*?)>>/g) : null;
+
+        validateCodesInMessage();
+
+        if(textAreaSpanish)
+            finaly = start - calculateRealLength();
+
+        this.availableSpanish = finaly;
+
+        this.textSpanish = textAreaSpanish;
+        this.updateStructure();
+
+        return finaly;
+
+        function updateStructure(DS,text){
+            var exists = false;
+
+            for(var b = 0 ; b < DS.length; b++){
+                if(DS[b].MessageTextLanguage == 'Spanish'){
+                    DS[b].MessageTextCode     = text;
+                    exists = true;
+                }
+            }
+            if(!exists){
+                var DSLength = DS.length;
+                DS[DSLength] = cm_spoc.initInnerDS("base_MessageText");
+                DS[DSLength].MessageTextLanguage = 'Spanish';
+                DS[DSLength].MessageTextCode     = text;
+            }
+        }
+
+        function validateCodesInMessage(){
+            var codeArrayInMsg = new Array();
+            var codeInTheMsg;
+            var found;
+            if(codesInMessage){
+                for(var i = 0 ; i < codesInMessage.length; i ++){
+                    found = false;
+                    codeInTheMsg = codesInMessage[i].replace(/<</g,'');
+                    codeInTheMsg = codeInTheMsg.replace(/>>/g,'');
+                    codeArrayInMsg.push(codeInTheMsg);
+                    for(var a = 0; a < codeArray.length; a++){
+                        if(codeArray[a][0] == codeInTheMsg)
+                            found = true;
+                    }
+                    if(!found){
+                        var size = findSize(codeInTheMsg);
+                        if(size && size > 0){
+                            var newCode = new Array();
+                            newCode = [codeInTheMsg,size];
+                            codeArray.push(newCode);
+                        }
+                        else{
+                            textAreaSpanish = replaceAll("<<"+codeInTheMsg+">>",'',textAreaSpanish);
+                        }
+                    }
+                }
+            }
+
+            for(var x = 0 ; x < codeArray.length; x++){
+                if(codeArrayInMsg.indexOf(codeArray[x][0]) == -1)
+                    codeArray.splice(x);
+            }
+        }
+
+        function calculateRealLength(){
+            var codesSize = 0;
+            for(var i = 0 ; i < codeArray.length; i++){
+                codesSize += parseInt(codeArray[i][1]);
+            }
+            var msgWithoutCodes = textAreaSpanish.replace(/<<(.*?)>>/g, "");
+            msgWithoutCodes = msgWithoutCodes.replace("  "," ");
+            msgWithoutCodes = msgWithoutCodes.replace("   "," ");
+
+            return msgWithoutCodes.length + codesSize;
+        }
+
+        function findSize(code){
+            var finder = new Finder("cm_spoc.patronSQLFinder");
+            finder.searchDocument.cod_patronmensa = code;
+            var result = finder.search();
+
+            if(result && result.length > 0)
+                return result[0].max_size;
+
+            return 0;
+        }
+
+        function replaceAll(find, replace, str) {
+          return str.replace(new RegExp(find, 'g'), replace);
+        }
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$availableEnglish" type="laction">
+      <path>ui_cm_spoc.forms.MessageForm/leaf_availableEnglish</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.MessageForm/leaf_availableEnglish</valueType>
+      <script><![CDATA[
+        var model = this.model;
+
+        if(!model.specificationCode)
+            return '400';
+        else
+            this.availableEnglish = (this.textEnglish && this.textEnglish.length > 0) ? 400 - this.textEnglish.length : '400';
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$availableGerman" type="laction">
+      <path>ui_cm_spoc.forms.MessageForm/leaf_availableGerman</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var model = this.model;
+
+        if(!model.specificationCode)
+            return '400';
+        else
+            this.availableGerman = (this.textGerman && this.textGerman.length > 0) ? 400 - this.textGerman.length : '400';
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$availableSpanish" type="laction">
+      <path>ui_cm_spoc.forms.MessageForm/leaf_availableSpanish</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.MessageForm/leaf_availableSpanish</valueType>
+      <script><![CDATA[
+        var model = this.model;
+
+        if(!model.specificationCode)
+            return '400';
+        else
+            this.availableSpanish = (this.textSpanish && this.textSpanish.length > 0) ? 400 - this.textSpanish.length : '400';
+      ]]></script>
+    </method>
+    <method name="resetTrigger" type="uimthd">
+      <script><![CDATA[
+        this.model.MessageIsSpecifiedBy = this.model.ServiceProviderEnum;
+        this.model.MessageSubtypology = this.messageTypologyUIDoc.subtypology;
+        return;
+      ]]></script>
+    </method>
+    <method name="resetTriggerMessageTypology" type="uimthd">
+      <script><![CDATA[
+        this.messageTypologyUIDoc.typology = this.model.MessageTypology;
+        this.messageTypologyUIDoc.subtypology = null;
+
+        this.patronTable.model.searchDocument.cod_tipmensa = this.model.MessageTypology;
+        this.patronTable.result = this.patronTable.model.search();
+
+        var value=this.model.MessageTypology;
+        if (value == "LQNTS" || value == "SALDOTRAS" || value == "TAR_DINAM" || value == "LLAM_CAIDA" || value == "HOME_ZONE" || value == "UMBRESTR" || value == "BARRINGSMS" ){
+              this.model.MessageNumberService=null;
+              this.model.MessageCanBeSent=null;
+          //  this.MessageAssociationToOperati.ServiceProvider=null;
+        }
+        return;
+      ]]></script>
+    </method>
+    <method name="showSubTypology" type="permMethod">
+      <script><![CDATA[
+        var itemFinder;
+        itemFinder = new Finder("cm_spoc.messageTypologyFinder");
+        itemFinder.searchDocument.typology = this.messageTypologyUIDoc.typology;
+
+        var result = itemFinder.search();
+
+        if(result && result.length > 0 && this.messageTypologyUIDoc.typology != null)
+            return true;
+        else if(this.model.MessageTypology != null && this.model.MessageSubtypology != null){
+            this.messageTypologyUIDoc.typology = this.model.MessageTypology;
+            this.messageTypologyUIDoc.subtypology = this.model.MessageSubtypology;
+            return true;
+        }
+        else
+            return false;
+      ]]></script>
+    </method>
+    <method name="subTypologyUpdate" type="usrActionMethod">
+      <script><![CDATA[
+        this.messageTypologyUIDoc.typology = this.model.MessageTypology;
+        this.messageTypologyUIDoc.subtypology = null;
+
+        this.patronTable.model.searchDocument.cod_tipmensa = this.model.MessageTypology;
+        this.patronTable.result = this.patronTable.model.search();
+      ]]></script>
+    </method>
+    <method name="tabSelectedMethod" type="usrActionMethod">
+      <script><![CDATA[
+        this.tabSelected = this.tabSelected;
+        this.patronTable.model.searchDocument.cod_tipmensa = this.model.MessageTypology;
+        if(this.patronTable.result.selected && this.patronTable.result.selected.length > 0)
+            this.patronTable.result.selected[0] = null;
+        this.patronTable.result = this.patronTable.model.search();
+      ]]></script>
+    </method>
+    <method name="updateServiceProvider" type="usrActionMethod">
+      <script>this.model.MessageIsSpecifiedBy = this.model.ServiceProviderEnum;</script>
+    </method>
+    <method name="updateTextCallback" type="uimthd">
+      <parameterList>
+        <parameter name="cod_tipmensa" type="rifp">
+          <type>dtype_cm_spoc.cod_tipmensa</type>
+        </parameter>
+        <parameter name="max_size" type="rifp">
+          <type>dtype_cm_spoc.max_size</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var tabSelected = this.tabSelected;
+
+        if(tabSelected == "English"){
+            if(this.textEnglish != null)
+                this.textEnglish = this.textEnglish + " <<" + cod_tipmensa + ">>";
+            else
+                this.textEnglish = "<<" + cod_tipmensa + ">>";
+
+            var newArray = [cod_tipmensa,max_size];
+            this.codeArrayEnglish.push(newArray);
+            this.availableLettersEnglish();
+        }
+        else if(tabSelected == "Spanish"){
+            if(this.textSpanish != null)
+                this.textSpanish = this.textSpanish + " <<" + cod_tipmensa + ">>";
+            else
+                this.textSpanish = "<<" + cod_tipmensa + ">>";
+
+            var newArray = [cod_tipmensa,max_size];
+            this.codeArraySpanish.push(newArray);
+            this.availableLettersSpanish();
+        }
+        else if(tabSelected == "German"){
+            if(this.textGerman != null)
+                this.textGerman = this.textGerman + " <<" + cod_tipmensa + ">>";
+            else
+                this.textGerman = "<<" + cod_tipmensa + ">>";
+
+            var newArray = [cod_tipmensa,max_size];
+            this.codeArrayGerman.push(newArray);
+            this.availableLettersGerman();
+        }
+
+        if(this.patronTable.result.selected && this.patronTable.result.selected.length > 0)
+            this.patronTable.result.selected[0] = null;
+        this.patronTable.result = this.patronTable.model.search();
+      ]]></script>
+    </method>
+    <method name="validateMessageEnglish" type="usrActionMethod">
+      <parameterList>
+        <parameter name="dialog" type="rifp">
+          <type>ui_com.conceptwave.system.Dialog</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var text = "";
+        if(this.textEnglish == null)
+            text = "The Message should not be empty.";
+        else{
+            if(!validate(this.textEnglish)){
+                text = "The Codes used in the message are not well formatted (Check the << and/or >> signs).";
+            }
+            if(this.availableEnglish < 0 ){
+                if(text == "")
+                    text = "<br /><br />";
+                text += "The message length is over the limit (400 characters).";
+            }
+
+            if(text == "")
+                text = "Valid Message";
+        }
+
+        Global.showUserMessage(text);
+
+
+        function validate(text){
+            var count;
+            var validWords = text.split(" ");
+            for(var i = 0 ; i<validWords.length; i ++){
+                if(validWords[i].substring(0,2) == '<<' && validWords[i].substring(validWords[i].length-2,validWords[i].length) != '>>')
+                    return false;
+                else if(validWords[i].substring(0,2) != '<<' && validWords[i].substring(validWords[i].length-2,validWords[i].length) == '>>')
+                    return false;
+                count = validWords[i].match(/>>/g);
+                if(count && count.length > 1 )
+                    return false;
+                count = validWords[i].match(/<</g);
+                if(count && count.length > 1 )
+                    return false;
+            }
+            return true;
+        }
+      ]]></script>
+    </method>
+    <method name="validateMessageGerman" type="usrActionMethod">
+      <parameterList>
+        <parameter name="dialog" type="rifp">
+          <type>ui_com.conceptwave.system.Dialog</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var text = "";
+
+        if(this.textGerman == null)
+            text = "The message should not be empty.";
+        else{
+            if(!validate(this.textGerman)){
+                text = "The Codes used in the message are not well formatted (Check the << and/or >> signs).";
+            }
+            if(this.availableGerman < 0 ){
+                if(text == "")
+                    text = "<br /><br />";
+                text += "The message length is over the limit (400 characters).";
+            }
+            if(text == "")
+                text = "Valid Message";
+        }
+        Global.showUserMessage(text);
+
+
+        function validate(text){
+            var count;
+            var validWords = text.split(" ");
+            for(var i = 0 ; i<validWords.length; i ++){
+                if(validWords[i].substring(0,2) == '<<' && validWords[i].substring(validWords[i].length-2,validWords[i].length) != '>>')
+                    return false;
+                else if(validWords[i].substring(0,2) != '<<' && validWords[i].substring(validWords[i].length-2,validWords[i].length) == '>>')
+                    return false;
+                count = validWords[i].match(/>>/g);
+                if(count && count.length > 1 )
+                    return false;
+                count = validWords[i].match(/<</g);
+                if(count && count.length > 1 )
+                    return false;
+            }
+            return true;
+        }
+      ]]></script>
+    </method>
+    <method name="validateMessageSpanish" type="usrActionMethod">
+      <parameterList>
+        <parameter name="dialog" type="rifp">
+          <type>ui_com.conceptwave.system.Dialog</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var text = "";
+        if(this.textSpanish == null)
+            text = "The message should not be empty.";
+        else{
+            if(!validate(this.textSpanish)){
+                text = "The Codes used in the message are not well formatted (Check the << and/or >> signs).";
+            }
+            if(this.availableSpanish < 0 ){
+                if(text == "")
+                    text = "<br /><br />";
+                text += "The message length is over the limit (400 characters).";
+            }
+
+            if(text == "")
+                text = "Valid Message";
+        }
+        Global.showUserMessage(text);
+
+
+        function validate(text){
+            var count;
+            var validWords = text.split(" ");
+            for(var i = 0 ; i<validWords.length; i ++){
+                if(validWords[i].substring(0,2) == '<<' && validWords[i].substring(validWords[i].length-2,validWords[i].length) != '>>')
+                    return false;
+                else if(validWords[i].substring(0,2) != '<<' && validWords[i].substring(validWords[i].length-2,validWords[i].length) == '>>')
+                    return false;
+                count = validWords[i].match(/>>/g);
+                if(count && count.length > 1 )
+                    return false;
+                count = validWords[i].match(/<</g);
+                if(count && count.length > 1 )
+                    return false;
+            }
+            return true;
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script>return true;</script>
+    </method>
+    <method name="editableMessageTypology" type="permMethod">
+      <script>return this.messageTypologyEditable;</script>
+    </method>
+    <method name="updateStructure" type="uimthd">
+      <script><![CDATA[
+        var exists = false;
+        var listDS = this.model.MessageTextLanguageArrDS.ListDS;
+        var list = this.model.MessageTextLanguageArrDS.List;
+        var tmpListDS = listDS;
+        var tmpList = list;
+        var englishDone = false;
+        var spanishDone = false;
+        var germanDone = false;
+
+        var somethingToDelete = false;
+
+        for(var i = 0 ; i < listDS.length; i++){
+            if(listDS[i].MessageTextLanguage == 'English'){
+                listDS[i].MessageTextCode = this.textEnglish;
+                englishDone = true;
+            }
+            else if(listDS[i].MessageTextLanguage == 'Spanish'){
+                listDS[i].MessageTextCode = this.textSpanish;
+                spanishDone = true;
+            }
+            else if(listDS[i].MessageTextLanguage == 'German'){
+                listDS[i].MessageTextCode = this.textGerman;
+                germanDone = true;
+            }
+        }
+
+        var DSLength = listDS.length;
+        if(!englishDone && (this.textEnglish != null && this.textEnglish != '')){
+            listDS[DSLength] = cm_spoc.initInnerDS("base_MessageText");
+            listDS[DSLength].MessageTextLanguage = 'English';
+            listDS[DSLength].MessageTextCode     = this.textEnglish;
+        }
+        DSLength = listDS.length;
+        if(!spanishDone && (this.textSpanish != null && this.textSpanish != '')){
+            listDS[DSLength] = cm_spoc.initInnerDS("base_MessageText");
+            listDS[DSLength].MessageTextLanguage = 'Spanish';
+            listDS[DSLength].MessageTextCode     = this.textSpanish;
+        }
+        DSLength = listDS.length;
+        if(!germanDone && (this.textGerman != null && this.textGerman != '')){
+            listDS[DSLength] = cm_spoc.initInnerDS("base_MessageText");
+            listDS[DSLength].MessageTextLanguage = 'German';
+            listDS[DSLength].MessageTextCode     = this.textGerman
+        }
+
+
+        listDS = null;
+        list = null;
+        var MessageTextLanguageArr = cm_spoc.initInnerDS("base_MessageTextLanguageArr");
+        this.model.MessageTextLanguageArrDS = MessageTextLanguageArr;
+        listDS = this.model.MessageTextLanguageArrDS.ListDS;
+        list = this.model.MessageTextLanguageArrDS.List;
+        var c = 0;
+        for(var a = 0 ; a < tmpListDS.length; a++){
+            if(tmpListDS[a].MessageTextCode != null && tmpListDS[a].MessageTextCode != ''){
+                listDS[c] = tmpListDS[a];
+                list[c] = tmpListDS[a].specificationCode;
+                c++;
+            }
+        }
+      ]]></script>
+    </method>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+  </methodList>
+</userInterface>

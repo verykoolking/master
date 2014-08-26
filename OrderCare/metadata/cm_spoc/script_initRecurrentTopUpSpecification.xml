@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initRecurrentTopUpSpecification">
+  <group>ui_scripts.CyclicActions</group>
+  <label>initRecurrentTopUpSpecification</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+       var CATUCycleChngeSpecification =  cm_spoc.initInnerDS("base_CATUCycleChngeSpecification");
+       model.CATUCycleChngeSpecificationDS = CATUCycleChngeSpecification;
+
+    }else{
+
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+
+       s.specificationCode = model.CATUCycleChngeSpecification;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.CATUCycleChngeSpecificationDS=r;
+       }
+    }
+    return model;
+  ]]></script>
+</script>

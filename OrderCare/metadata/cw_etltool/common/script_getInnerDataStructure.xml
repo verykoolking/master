@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool.common.getInnerDataStructure">
+  <label>getInnerDataStructure</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="item" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_OCSEntity.v1.types.OCSEntityType</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var nodes = item.getNodeNames();
+    for(var i=0; i<nodes.length; i++)
+    {
+        if(item[nodes[i]] && item[nodes[i]] instanceof DataStructure && item[nodes[i]].identifier.dn.valuePairs.nameValuePairs.item[0].value)
+            return item[nodes[i]];
+    }
+    return null;
+    //item.oCSProductOffering.identifier.dn.valuePairs.nameValuePairs.item[0].value
+  ]]></script>
+</script>

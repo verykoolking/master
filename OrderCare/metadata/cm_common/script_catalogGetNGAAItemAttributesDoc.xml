@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.catalogGetNGAAItemAttributesDoc">
+  <group>api</group>
+  <label>Get Item Attributes Document From Catalog</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="attributeCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="readDefinitions" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="parentItemCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="topItemCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(readDefinitions)
+        theCatalog.catalogTestModeOnOff(true);
+
+    var itemCat = theCatalog.getItem(itemCode);
+
+    if(itemCat==null)
+        throw ("No Catalog Item found with code " + itemCode);
+
+    var attDocArr = new Array();
+    var attCatArr = itemCat.getItemAttributes();
+
+    var itemDoc = cm_common.catalogGetItemDoc(itemCode, readDefinitions);
+
+    var mainResult = getFinderAtts(itemCode, attributeCode);
+    var baseResult = getFinderAtts(itemDoc.baseItemCode.itemCode, attributeCode);
+
+
+    for(var i=0; i<attCatArr.length; i++) {
+
+        if(attributeCode!=null && attributeCode!=attCatArr[i].code)
+            continue;
+
+        var attItemDoc = getAttributeDoc(mainResult, itemCode, attCatArr[i].code, true);
+
+        if(attributeCode!=null)
+            return attItemDoc;
+
+        if(attItemDoc!=null)
+            attDocArr[attDocArr.length] = attItemDoc;
+        else
+            attItemDoc = null;
+    }
+
+    if(readDefinitions)
+        theCatalog.catalogTestModeOnOff(false);
+
+    return attDocArr;
+
+
+    function getAttributeDoc(list, itemCode, itemAttributeCode, includeBase) {
+
+        var attDoc = getAttributeFromList(list, itemAttributeCode);
+        if(attDoc!=null)
+            return attDoc;
+
+        if(includeBase) {
+            var attDoc = getAttributeFromList(baseResult, itemAttributeCode);
+            if(attDoc!=null)
+                return attDoc;
+            itemCode = itemDoc.baseItemCode.itemCode;
+        }
+
+        var childItemDoc = cm_common.catalogGetItemDoc(itemCode, readDefinitions);
+        if(childItemDoc.baseItemCode!=null) {
+            var list2 = getFinderAtts(childItemDoc.baseItemCode.itemCode, itemAttributeCode);
+            return getAttributeDoc(list2, childItemDoc.baseItemCode.itemCode, itemAttributeCode, false);
+        }
+    }
+
+    function getFinderAtts(itemCode, attributeCode) {
+        var finder = new Finder("cm_common.ngaa_itemAttributeFinder");
+        finder.searchDocument.itemCode = itemCode;
+        finder.searchDocument.catalogObjectType = "item";
+        if(attributeCode!=null)
+            finder.searchDocument.itemAttributeCode = attributeCode;
+        if(topItemCode!=null)
+            finder.searchDocument.topItemCode = topItemCode;
+        else
+            finder.searchDocument.topItemCode = itemCode;
+        if(parentItemCode!=null)
+            finder.searchDocument.parentItemCode = parentItemCode;
+        else
+            finder.searchDocument.parentItemCode = itemCode;
+        return finder.search();
+    }
+
+
+    function getAttributeFromList(list, itemAttributeCode) {
+        for(var i=0;i<list.size;i++)
+            if(list[i].itemAttributeCode == itemAttributeCode)
+                    return list[i];
+        return null;
+    }
+  ]]></script>
+</script>

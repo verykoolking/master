@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_TUOSPTSOSSourceRelativeFromDayCondRule">
+  <group>rules_scripts.TopUp</group>
+  <label>rule_TUOSPTSOSSourceRelativeFromDayCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute must be saved only if:
+    //- The related TopUpOriginSOSProperties attribute is checked and
+    //- The SOSSourceRelativeTemp attribute has tha value shown in column H.
+    //      TopUpOriginSOSProperties
+    //SOSSourceRelativeFromDay
+    //TopUpOriginSOSProperties
+    //SOSSourceRelativePeriod
+    //FALSE
+    /*
+    var entity=data.TopUpOriginSOSPropertiesDS;
+
+    if((entity.SOSSourceRelativeFromDay && !entity.SOSSourceRelativePeriod && entity.SOSSourceRelativeTemp)
+        ||
+       (entity.SOSSourceRelativeFromDay && entity.SOSSourceRelativePeriod && !entity.SOSSourceRelativeTemp))
+    {
+    errList.addErrorMessage(data,["SOSSourceRelativeFromDay does not match with SOSSourceRelativeTemp and SOSSourceRelativePeriod"],"NGAA_003","E");
+    }
+    return false;*/
+
+    var entity=data.TopUpOriginSOSPropertiesDS;
+
+    if(entity.SOSSourceRelativeFromDay && (entity.SOSSourceRelativePeriod!="R" || entity.SOSSourceRelativeTemp!="W")){
+        errList.addErrorMessage(data,["SOS Source Relative From Day must be empty for these SOS Source Relative Temp and SOS Source Relative Period"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

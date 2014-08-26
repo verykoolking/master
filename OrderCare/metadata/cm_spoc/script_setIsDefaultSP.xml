@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.setIsDefaultSP">
+  <group>ui_scripts.Calendars.Helpers</group>
+  <label>setIsDefaultSP</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="spec" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    spec.isDefaultSP = false;
+    if (  spec.SpDayServiceProviderArrDS && spec.SpDayServiceProviderArrDS.List && spec.SpDayServiceProviderArrDS.List.length > 0 ) {
+
+         for (var i = 0 ; i<spec.SpDayServiceProviderArrDS.List.length;i++) {
+             if (spec.SpDayServiceProviderArrDS.List[i].ServiceProviderId == "*" )  spec.isDefaultSP = true;
+         }
+
+     }
+  ]]></script>
+</script>

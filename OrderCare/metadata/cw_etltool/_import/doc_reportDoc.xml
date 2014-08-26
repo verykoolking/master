@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cw_etltool._import.reportDoc">
+  <dbSchema>ORDER</dbSchema>
+  <extends>doc_com.conceptwave.system.Document</extends>
+  <guid>{27f65de5-93c6-4963-9bb8-5d3359717865}</guid>
+  <label>Report Document</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="cwDocId" type="leaf">
+      <key>1</key>
+      <valueType>dtype_cwf.cwDocId</valueType>
+    </variable>
+    <variable name="cwCreatedBy" type="leaf">
+      <valueType>dtype_cwf.cwCreatedBy</valueType>
+    </variable>
+    <variable name="cwOrderCreationDate" type="leaf">
+      <valueType>dtype_cwf.cwOrderCreationDate</valueType>
+    </variable>
+    <variable name="cwCreated" type="leaf">
+      <valueType>dtype_cwf.cwCreated</valueType>
+    </variable>
+    <variable name="cwOrderId" type="leaf">
+      <valueType>dtype_cwf.cwOrderId</valueType>
+    </variable>
+    <variable name="lastUpdatedDate" type="leaf">
+      <valueType>dtype_cwf.lastUpdatedDate</valueType>
+    </variable>
+    <variable name="cwParentId" type="leaf">
+      <valueType>dtype_cwf.cwParentId</valueType>
+    </variable>
+    <variable name="updatedBy" type="leaf">
+      <valueType>dtype_cwf.updatedBy</valueType>
+    </variable>
+    <variable name="cwDocStamp" type="leaf">
+      <valueType>dtype_cwf.cwDocStamp</valueType>
+    </variable>
+    <variable name="StartImportDate" type="leaf">
+      <propertyElement type="eldatetime">
+        <displayFormat>dd/MM/yyyy HH:mm</displayFormat>
+        <label>Import Start Date</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.DateTime</valueType>
+    </variable>
+    <variable name="EndImportDate" type="leaf">
+      <propertyElement type="eldatetime">
+        <displayFormat>dd/MM/yyyy HH:mm</displayFormat>
+        <label>Import End Date</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.DateTime</valueType>
+    </variable>
+    <variable name="OrderStatus" type="leaf">
+      <valueType>dtype_cw_etltool._import.orderStatus</valueType>
+    </variable>
+    <variable name="FilesCount" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="ProjectName" type="leaf">
+      <propertyElement type="elref">
+        <label>Project Name</label>
+      </propertyElement>
+      <valueType>dtype_cw_etltool._import.projectName</valueType>
+    </variable>
+    <variable name="IsNeedUpdateAA" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="ProcessId" type="leaf">
+      <valueType>dtype_cwf.processId</valueType>
+    </variable>
+    <variable name="StartLoadingDate" type="leaf">
+      <propertyElement type="eldatetime">
+        <displayFormat>dd/MM/yyyy HH:mm</displayFormat>
+        <label>Loading Start Date</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.DateTime</valueType>
+    </variable>
+    <variable name="EndLoadingDate" type="leaf">
+      <propertyElement type="eldatetime">
+        <displayFormat>dd/MM/yyyy HH:mm</displayFormat>
+        <label>Loading End Date</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.DateTime</valueType>
+    </variable>
+    <variable name="ErrorMessage" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="setStatus" type="uimthd">
+      <parameterList>
+        <parameter name="status" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.OrderStatus = status ;
+        this.save();
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_com.conceptwave.system.Document/ui_UserInterface</extends>
+    <variableList>
+      <variable name="iohUI" type="leaf">
+        <valueType>doc_cw_etltool._import.importOrderHeader/ui_UserInterface</valueType>
+      </variable>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cw_etltool._import.reportDoc</valueType>
+      </variable>
+      <variable name="fileDocUI" type="leaf">
+        <valueType>doc_cw_etltool._import.fileDoc/ui_UserInterface</valueType>
+      </variable>
+      <variable name="entityDocUI" type="leaf">
+        <valueType>doc_cw_etltool._import.entityDoc/ui_UserInterface</valueType>
+      </variable>
+      <variable name="fileDocFinderUI" type="leaf">
+        <valueType>findDoc_cw_etltool._import.fileDocFinder/ui_UserInterface</valueType>
+      </variable>
+      <variable name="entityDocFinderUI" type="leaf">
+        <valueType>findDoc_cw_etltool._import.entityDocFinder/ui_UserInterface</valueType>
+      </variable>
+      <variable name="OrderUserInterface" type="leaf">
+        <valueType>tree_com.conceptwave.system.OrderUserInterface</valueType>
+      </variable>
+      <variable name="importOrderUI" type="leaf">
+        <valueType>ui_cw_etltool.presentation.importOrderUI</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="ImportReport" type="vform">
+            <label>ImportReport</label>
+            <root name="VerticalLayout" type="elvlt">
+              <width>100%</width>
+              <elementList>
+                <element name="LayoutSpacer10" type="ellsp">
+                  <height>1px</height>
+                </element>
+                <element name="Header_HL" type="elhlt">
+                  <width>100%</width>
+                  <elementList>
+                    <element name="LayoutSpacer8" type="ellsp">
+                      <width>1%</width>
+                    </element>
+                    <element name="Header" type="elsectnstck">
+                      <visibilityMode>multiple</visibilityMode>
+                      <elementList>
+                        <element name="Section" type="elsect">
+                          <elementList>
+                            <element name="SectionHeader" type="elsecth">
+                              <label>Header</label>
+                            </element>
+                            <element name="FormFrame" type="elovf">
+                              <formReference type="varPath">
+                                <variablePathList>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/frmui_Forms</variablePath>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/frmui_Forms/vform_Header</variablePath>
+                                </variablePathList>
+                              </formReference>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="LayoutSpacer9" type="ellsp">
+                      <width>1%</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpacer" type="ellsp">
+                  <height>1px</height>
+                </element>
+                <element name="Files_HL" type="elhlt">
+                  <width>100%</width>
+                  <elementList>
+                    <element name="LayoutSpacer5" type="ellsp">
+                      <width>1%</width>
+                    </element>
+                    <element name="FilesList" type="elvlt">
+                      <height>207px</height>
+                      <width>35%</width>
+                      <elementList>
+                        <element name="SectionStack1" type="elsectnstck">
+                          <elementList>
+                            <element name="Section1" type="elsect">
+                              <elementList>
+                                <element name="SectionHeader1" type="elsecth">
+                                  <label>Files List</label>
+                                </element>
+                                <element name="FormFrame1" type="elovf">
+                                  <formReference type="varPath">
+                                    <variablePathList>
+                                      <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/leaf_fileDocFinderUI</variablePath>
+                                      <variablePath>findDoc_cw_etltool._import.fileDocFinder/ui_UserInterface/frmui_Forms</variablePath>
+                                      <variablePath>findDoc_cw_etltool._import.fileDocFinder/ui_UserInterface/frmui_Forms/vform_report</variablePath>
+                                    </variablePathList>
+                                  </formReference>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/leaf_fileDocFinderUI</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="LayoutSpacer3" type="ellsp">
+                      <height>1px</height>
+                      <width>1%</width>
+                    </element>
+                    <element name="FileDetail" type="elvlt">
+                      <height>205px</height>
+                      <width>67%</width>
+                      <elementList>
+                        <element name="SectionStack11" type="elsectnstck">
+                          <width>100%</width>
+                          <elementList>
+                            <element name="Section11" type="elsect">
+                              <elementList>
+                                <element name="SectionHeader5" type="elsecth">
+                                  <label>Files List</label>
+                                </element>
+                                <element name="FormFrame2" type="elovf">
+                                  <formReference type="varPath">
+                                    <variablePathList>
+                                      <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/leaf_fileDocUI</variablePath>
+                                      <variablePath>doc_cw_etltool._import.fileDoc/ui_UserInterface/frmui_Forms</variablePath>
+                                      <variablePath>doc_cw_etltool._import.fileDoc/ui_UserInterface/frmui_Forms/vform_Report</variablePath>
+                                    </variablePathList>
+                                  </formReference>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/leaf_fileDocUI</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="LayoutSpacer4" type="ellsp">
+                      <height>1px</height>
+                      <width>1%</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpacer1" type="ellsp">
+                  <height>1px</height>
+                </element>
+                <element name="Entities_HL" type="elhlt">
+                  <width>100%</width>
+                  <elementList>
+                    <element name="LayoutSpacer7" type="ellsp">
+                      <height>1px</height>
+                      <width>1%</width>
+                    </element>
+                    <element name="EntitiesList" type="elvlt">
+                      <height>176px</height>
+                      <width>35%</width>
+                      <elementList>
+                        <element name="SectionStack12" type="elsectnstck">
+                          <visibilityMode>multiple</visibilityMode>
+                          <elementList>
+                            <element name="Section12" type="elsect">
+                              <elementList>
+                                <element name="EntityListHeader" type="elsecth">
+                                  <label>Entity List</label>
+                                </element>
+                                <element name="EntityDocFinderUI" type="elovf">
+                                  <formReference type="varPath">
+                                    <variablePathList>
+                                      <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/leaf_entityDocFinderUI</variablePath>
+                                      <variablePath>findDoc_cw_etltool._import.entityDocFinder/ui_UserInterface/frmui_Forms</variablePath>
+                                      <variablePath>findDoc_cw_etltool._import.entityDocFinder/ui_UserInterface/frmui_Forms/vform_report</variablePath>
+                                    </variablePathList>
+                                  </formReference>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/leaf_entityDocFinderUI</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="LayoutSpacer2" type="ellsp">
+                      <height>1px</height>
+                      <width>1%</width>
+                    </element>
+                    <element name="EntityDetail" type="elvlt">
+                      <height>170px</height>
+                      <width>67%</width>
+                      <elementList>
+                        <element name="EntityDetail_SS" type="elsectnstck">
+                          <elementList>
+                            <element name="EntityDetail_Section" type="elsect">
+                              <elementList>
+                                <element name="EntityDetail_SectionHeader" type="elsecth">
+                                  <label>Entity Detail</label>
+                                </element>
+                                <element name="EntityDocUI" type="elovf">
+                                  <formReference type="varPath">
+                                    <variablePathList>
+                                      <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/leaf_entityDocUI</variablePath>
+                                      <variablePath>doc_cw_etltool._import.entityDoc/ui_UserInterface/frmui_Forms</variablePath>
+                                      <variablePath>doc_cw_etltool._import.entityDoc/ui_UserInterface/frmui_Forms/vform_Report</variablePath>
+                                    </variablePathList>
+                                  </formReference>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/leaf_entityDocUI</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="LayoutSpacer6" type="ellsp">
+                      <height>1px</height>
+                      <width>1%</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpacer11" type="ellsp">
+                  <height>1px</height>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="Header" type="vform">
+            <label>Header</label>
+            <root name="HorizontalLayout" type="elhlt">
+              <width>100%</width>
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <elementList>
+                        <element name="GridLayout" type="elgrd">
+                          <alignment>left,center</alignment>
+                          <colWidths>150px</colWidths>
+                          <labelOrientation>left</labelOrientation>
+                          <numOfCols>8</numOfCols>
+                          <width>100%</width>
+                          <elementList>
+                            <element name="RowSpacer" type="elrsp">
+                              <height>2px</height>
+                              <rowSpan>2px</rowSpan>
+                            </element>
+                            <element name="ProjectName" type="elref">
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/uivar_model</variablePath>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/leaf_ProjectName</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="ProcessId" type="elfld">
+                              <dataLength>9</dataLength>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/uivar_model</variablePath>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/leaf_ProcessId</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="cwOrderId" type="elfld">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/uivar_model</variablePath>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/leaf_cwOrderId</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="OrderStatus" type="elslct">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/uivar_model</variablePath>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/leaf_OrderStatus</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="StartImportDate" type="eldate">
+                              <labelOrientation>left</labelOrientation>
+                              <startRow>true</startRow>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/uivar_model</variablePath>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/leaf_StartImportDate</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="EndImportDate" type="eldate">
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/uivar_model</variablePath>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/leaf_EndImportDate</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="StartLoadingDate" type="eldate">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/uivar_model</variablePath>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/leaf_StartLoadingDate</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="EndLoadingDate" type="eldate">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/uivar_model</variablePath>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/leaf_EndLoadingDate</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="ErrorMessage" type="eltxtArea">
+                              <columnSpan>7</columnSpan>
+                              <height>42px</height>
+                              <label>Error Message</label>
+                              <titleVAlign>top</titleVAlign>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/uivar_model</variablePath>
+                                  <variablePath>doc_cw_etltool._import.reportDoc/leaf_ErrorMessage</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="RowSpacer1" type="elrsp">
+                              <height>2px</height>
+                              <rowSpan>2px</rowSpan>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="VerticalLayout" type="elvlt">
+                <showResizeBar>true</showResizeBar>
+                <useDefaultHeight>true</useDefaultHeight>
+                <width>100%</width>
+                <elementList>
+                  <element name="SectionStack" type="elsectnstck">
+                    <elementList>
+                      <element name="Section" type="elsect">
+                        <elementList>
+                          <element name="SectionHeader" type="elsecth">
+                            <label>Order Header</label>
+                          </element>
+                          <element name="FormFrame" type="elovf">
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/frmui_Forms</variablePath>
+                                <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/frmui_Forms/vform_Header</variablePath>
+                              </variablePathList>
+                            </formReference>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="orderUI" type="vform">
+            <label>orderUI</label>
+            <root name="FormFrame" type="elovf">
+              <formReference type="varPath">
+                <variablePathList>
+                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/leaf_OrderUserInterface</variablePath>
+                  <variablePath>tree_com.conceptwave.system.OrderUserInterface/frmui_Forms</variablePath>
+                  <variablePath>tree_com.conceptwave.system.OrderUserInterface/frmui_Forms/exov_Default</variablePath>
+                </variablePathList>
+              </formReference>
+              <variable type="varPath">
+                <variablePathList>
+                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/leaf_OrderUserInterface</variablePath>
+                </variablePathList>
+              </variable>
+            </root>
+          </overlay>
+          <overlay name="order" type="vform">
+            <label>order</label>
+            <root name="FormFrame" type="elovf">
+              <formReference type="varPath">
+                <variablePathList>
+                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/leaf_importOrderUI</variablePath>
+                  <variablePath>ui_cw_etltool.presentation.importOrderUI/frmui_Forms</variablePath>
+                  <variablePath>ui_cw_etltool.presentation.importOrderUI/frmui_Forms/vform_order</variablePath>
+                </variablePathList>
+              </formReference>
+              <variable type="varPath">
+                <variablePathList>
+                  <variablePath>doc_cw_etltool._import.reportDoc/ui_UserInterface/leaf_importOrderUI</variablePath>
+                </variablePathList>
+              </variable>
+            </root>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="onInit" type="action">
+        <valueType>nmeta_com.conceptwave.system.Object</valueType>
+        <script><![CDATA[
+          this.cw$super_onInit();
+          /*
+          this.iohUI = new cw_etltool._import.importOrderHeader.UserInterface(null,this);
+          this.fileDocUI = new cw_etltool._import.fileDoc.UserInterface(null,this);
+          this.entityDocUI = new cw_etltool._import.entityDoc.UserInterface(null,this);
+          this.fileDocFinderUI = new cw_etltool._import.fileDocFinder.UserInterface(null,this);
+          this.entityDocFinderUI = new cw_etltool._import.entityDocFinder.UserInterface(null,this);
+          */
+
+          this.importOrderUI = new cw_etltool.presentation.importOrderUI(null,this);
+        ]]></script>
+      </method>
+      <method name="loadFilesList" type="uimthd">
+        <script><![CDATA[
+          this.fileDocFinderUI.search.model.cwOrderId = this.model.cwOrderId;
+          this.fileDocFinderUI.searchAction();
+        ]]></script>
+      </method>
+      <method name="loadEntitiesList" type="uimthd">
+        <parameterList>
+          <parameter name="fileID" type="rifp">
+            <mandatory>true</mandatory>
+            <type>dtype_com.conceptwave.system.String</type>
+          </parameter>
+        </parameterList>
+        <script><![CDATA[
+          this.entityDocFinderUI.search.model.cwOrderId = this.model.cwOrderId;
+          this.entityDocFinderUI.search.model.FileID = fileID
+          this.entityDocFinderUI.searchAction();
+        ]]></script>
+      </method>
+      <method name="loadFileDetail" type="uimthd">
+        <parameterList>
+          <parameter name="FileDoc" type="rifp">
+            <mandatory>true</mandatory>
+            <type>nmeta_com.conceptwave.system.Object</type>
+          </parameter>
+        </parameterList>
+        <script><![CDATA[
+          this.fileDocUI.model = FileDoc;
+          this.loadEntitiesList(FileDoc.FileID);
+        ]]></script>
+      </method>
+      <method name="loadEntityDetail" type="uimthd">
+        <parameterList>
+          <parameter name="entityDoc" type="rifp">
+            <mandatory>true</mandatory>
+            <type>doc_cw_etltool._import.entityDoc</type>
+          </parameter>
+        </parameterList>
+        <script>this.entityDocUI.model = entityDoc;</script>
+      </method>
+      <method name="initOrderUI" type="uimthd">
+        <parameterList>
+          <parameter name="order" type="rifp">
+            <mandatory>true</mandatory>
+            <type>order_cw_etltool._import.importOrder</type>
+          </parameter>
+        </parameterList>
+        <script><![CDATA[
+          this.OrderUserInterface = new cw_etltool._import.importOrder.UserInterface(order,this);
+          this.OrderUserInterface.validateTheNode(true);
+        ]]></script>
+      </method>
+    </methodList>
+  </UserInterface>
+</document>

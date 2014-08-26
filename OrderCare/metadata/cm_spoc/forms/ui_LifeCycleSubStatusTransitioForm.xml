@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.LifeCycleSubStatusTransitioForm">
+  <group>LifeCycles</group>
+  <label>LifeCycleSubStatusTransitioForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.LifeCycleSubStatusTransitio</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="GeneralParameters" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.LifeCycleSubStatusTransitioForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.LifeCycleSubStatusTransitioForm/frmui_Forms/vform_GeneralParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="GeneralParameters" type="vform">
+          <label>GeneralParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>750px</width>
+            <elementList>
+              <element name="GridLayout1" type="elgrd">
+                <colWidths>50px</colWidths>
+                <numOfCols>4</numOfCols>
+                <width>200px</width>
+                <elementList>
+                  <element name="RowSpacer" type="elrsp"/>
+                  <element name="LifeCycleEnum" type="elslct">
+                    <columnSpan>4</columnSpan>
+                    <labeAlign>left</labeAlign>
+                    <label>Life Cycle</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.LifeCycleSubStatusTransitioForm/uimthd_LifeCycleTrigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.LifeCycleSubStatusTransitioForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.LifeCycleSubStatusTransitio/dstruct_LifeCycleEnum</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="LifeCycleInternalSubstatusEnum1" type="elslct">
+                    <columnSpan>4</columnSpan>
+                    <labeAlign>left</labeAlign>
+                    <label>Life Cycle Internal Substatus 1</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.LifeCycleSubStatusTransitioForm/uimthd_LifeCycleInternalSubStatus1Trigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.LifeCycleSubStatusTransitioForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.LifeCycleSubStatusTransitio/dstruct_TransIncludesADestSubStatusEnum</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="LifeCycleInternalSubstatusEnum2" type="elslct">
+                    <columnSpan>4</columnSpan>
+                    <labeAlign>left</labeAlign>
+                    <label>Life Cycle Internal Substatus 2</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.LifeCycleSubStatusTransitioForm/uimthd_LifeCycleInternalSubStatus2Trigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.LifeCycleSubStatusTransitioForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.LifeCycleSubStatusTransitio/dstruct_TransIncludesAnOrigSubStatusEnum</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$cwShowHover" type="laction">
+      <path>ui_com.conceptwave.system.UserInterface/leaf_cwShowHover</path>
+      <type>initializer</type>
+      <script>return false;</script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.LifeCycleSubStatusTransitioForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initLifeCycleSubstatusTransitio(this.model);
+        return m;
+      ]]></script>
+    </method>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+    <method name="LifeCycleTrigger" type="uimthd">
+      <script>this.model.LifeCycle=this.model.LifeCycleEnum;</script>
+    </method>
+    <method name="LifeCycleInternalSubStatus1Trigger" type="uimthd">
+      <script><![CDATA[
+        this.model.TransIncludesADestSubStatus=this.model.TransIncludesADestSubStatusEnum;
+        this.isLifeCycleInternalSubstatus2=true;
+      ]]></script>
+    </method>
+    <method name="LifeCycleInternalSubStatus2Trigger" type="uimthd">
+      <script>this.model.TransIncludesAnOrigSubStatus=this.model.TransIncludesAnOrigSubStatusEnum;</script>
+    </method>
+    <method name="deleteModelAction" type="usrActionMethod">
+      <script><![CDATA[
+        try{
+                var project = cwa_epc.getDefaultProj();
+                var response=cm_common.plmRemoveItem(this.model,project);
+                if(response instanceof api_common.data.fault)
+                     this.setModelStatus(response);
+                else{
+                    this.cancelAction();
+                    this.parent.parent.model.searchDocument.specification.specificationCode=null;
+                    this.setModelStatus(null,"CWA_EPC_REMOVE_002",true, this.model.metadataTypeLabel);
+                    this.parent.parent.resultUI.result=this.parent.parent.model.search();
+                }
+
+        }catch(ex){
+            var fault = api_common.createException(ex, "COM_ERR_0001");
+            this.setModelStatus(fault);
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+  </methodList>
+</userInterface>

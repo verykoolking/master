@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cm_aaca.publishAltamiraProductionGlobalProc">
+  <activity name="start" type="seqActivity">
+    <guid>{e8e861f5-9ea6-47a2-8176-db6e5fca5871}</guid>
+    <label>start</label>
+    <x>30.0</x>
+    <y>69.55176</y>
+    <childList>
+      <child name="inPublish" type="opActivity">
+        <element>iface_cm_aaca.publishAltamiraInt/oper_publishProduction</element>
+        <guid>{06241d32-e481-4702-84b6-f28c712bfcc7}</guid>
+        <label>In Publish Production</label>
+        <x>122.0</x>
+        <y>37.350586</y>
+        <methodList>
+          <method name="cwOnProcActAfter" type="action">
+            <category>script</category>
+            <system>true</system>
+            <script>cm_aaca.readPublishData(process.processDocument, document);</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="configurationAdapter" type="subflowActivity">
+        <element>proc_cm_aaca.configurationAdapterSubFlow</element>
+        <guid>{5cb03db2-9243-4187-bd78-1cadc53e4c25}</guid>
+        <label>Configuration Adapter</label>
+        <x>223.69922</x>
+        <y>29.0</y>
+      </child>
+      <child name="loopBack" type="repeatActivity">
+        <element>proc_cm_aaca.publishAltamiraProductionGlobalProc/seqActivity_start</element>
+        <guid>{e627aed7-9938-43eb-8a0c-7a21d4407cf8}</guid>
+        <label>Loop Back</label>
+        <x>342.07812</x>
+        <y>67.20117</y>
+      </child>
+    </childList>
+    <methodList>
+      <method name="cwOnProcActBefore" type="action">
+        <category>before</category>
+        <system>true</system>
+        <script><![CDATA[process.processDocument.destination = "PRD";]]></script>
+      </method>
+    </methodList>
+  </activity>
+  <curRevision>true</curRevision>
+  <document>doc_cm_aaca.globalPublishProcessDoc</document>
+  <guid>{41fbdfdc-26fa-41a3-8198-dd1efc83d432}</guid>
+  <interface>iface_cm_aaca.publishAltamiraInt</interface>
+  <label>CM-AACA Publish in Altamira Production</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <revision>3</revision>
+  <type>Global</type>
+</process>

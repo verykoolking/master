@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.doSetOrCreate">
+  <group>scripts</group>
+  <label>doSetOrCreate</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+    <parameter name="project" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    return cm_common.setOrCreateSpecification(model, project, "S");
+    /*model.project=project;
+    cwa_epc.setSpecificationLeafs(model);
+    model.baseSpecificationCode = cwa_epc.getBaseSpecificationCode(model);
+    model.specificationType = cwa_epc.getSpecificationType(model);
+    model.specificationSubType = cwa_epc.getSpecificationSubType(model);
+    var res = null;
+    var fault = api_common.createFault();
+
+    var existingItem = cm_spoc.getExistingItem(model.specificationCode);
+    if(existingItem) model.catalogEntity=existingItem.baseItemCode;
+    if(!model.baseSpecificationCode) model.baseSpecificationCode=model.catalogEntity;
+
+    var nodeNames = model.getNodeNames();
+    var node, refNode, association;
+
+    var baseCatalogItem = theCatalog.getItem(model.baseSpecificationCode);
+    var typeCatalogItemStr = baseCatalogItem.CW_SPECTYPE.getDefaultValue();
+    var typeCatalogItem =  theCatalog.getItem(typeCatalogItemStr);
+
+    var associations = typeCatalogItem.getAssociations();
+
+    for(var i=0;i<associations.length;i++){
+        for(var j=0;j<nodeNames.length;j++){
+            if(associations[i].code == nodeNames[j]){
+                node=model[nodeNames[j]];
+                refNode = null;
+                association =null;
+                if(model.has(nodeNames[j]+"DS")) refNode=model[nodeNames[j]+"DS"];
+                    if(refNode!=null){
+                        if(refNode.isCollection() && refNode.length>0){
+                            for(var k=0;k<refNode.length;k++){
+                                if(refNode[k].specificationCode && refNode[k].specificationCode!=""){
+                                    doSetOrCreate(refNode[k],project);
+                                    if(model[nodeNames[j]][k] && model[nodeNames[j]][k] instanceof DataStructure && "CW_REFID" in model[nodeNames[j]][k]){
+                                        model[nodeNames[j]][k].CW_REFID = refNode[k].specificationCode;
+                                    }
+                                    else model[nodeNames[j]][k]=refNode[k].specificationCode;
+                                }
+                            }
+                        }
+                        else if(!refNode.isCollection() && refNode.specificationCode && refNode.specificationCode!=""){
+                            doSetOrCreate(refNode,project);
+                            model[nodeNames[j]]=refNode.specificationCode;
+                        }
+                    }
+            }
+        }
+    }
+
+    if(model.has("ItemCharges")) model.ItemCharges=null;
+
+    if(existingItem){
+        res = cm_common.doCheckForSet(model,project);
+    }
+    else{
+         res = epc.createSpecificationByValue(model);
+    }
+
+    return res;*/
+  ]]></script>
+</script>

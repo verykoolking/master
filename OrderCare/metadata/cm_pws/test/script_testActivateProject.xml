@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.testActivateProject">
+  <group>testScripts</group>
+  <label>testActivateProject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="owner" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var log = cm_pws.test.clsLog();var testCaseInfo =  eval("arguments.callee.name") + " - ";log.newLine();log.setCheckPoint("STARTED");log.writeLn(testCaseInfo+ log.getCheckPoint());
+    /////////////////////////////////////////////////////////////
+    try{
+        /*
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_PROJECT SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_ATTRIBUTE SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_ITEM SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_ITEMATTRIBUTE_V SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_CHARGETYPE_V SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_RESTRICTION_V SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_TAX_V SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_ITEMCHARGE_V SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_ITEMRULE_V SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_ITEMIMAGE_V SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_ITEMATTACHMENT_V SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_CATALOGHIERARCHY SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_ITEMHIERARCHY SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_ASSOCIATIONTYPE SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_ITEMRELATION_V SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_ITEMLABEL_V SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_ITEMGROUP_V SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_INFOMODEL SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_CATALOGRULE_V SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_TAXMODEL_V SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_INFOTABLE SET STATUS = 'ACT'");
+        Global.runDBUpdate("CATALOG", "UPDATE CWPC_CONTEXT SET STATUS = 'ACT'");
+        */
+
+        var projectCode = Global.getSessionParameter("SESSION_ID");
+        var projectSearchDS = new cwt_pcmaintapi.projectSearchDS();
+        projectSearchDS.projectCode = projectCode;
+
+        var projectDS = cwt_pcmaintapi.projectSearch(projectSearchDS);
+        projectDS = projectDS.projects[0];
+
+        //change the startDate of the project
+        projectDS.effectiveDate = new Date(projectDS.effectiveDate.getTime() + 10*60*60*1000);// =  - (new Date()).getTime() - (10*60*60*1000);
+        var response = cwt_pcmaintapi.projectUpdate(projectDS);
+        if(cwt_pcmaintapi.isFault(response))
+        {
+            log.writeLn("Error updating project: " + response.toXML());
+            assertTrue(false);
+        }
+
+        var projectDS = new cwt_pcmaintapi.projectsActivationDS();
+        projectDS.projectCodes[0] = projectCode;
+        response = cwt_pcmaintapi.projectActive(projectDS);
+        if(cwt_pcmaintapi.isFault(response) || response.code == "ERROR"){
+            log.writeLn("Error activating project: " + response.toXML());
+            assertTrue(false);
+        }
+
+    }
+    catch(exp){
+        var ex = exp;var chkpntmsg = "[LastCheckPosition:"+log.getCheckPoint()+"]";log.writeLn(log.FAIL +"\t"+exp);log.setFailed(true);log.flush();
+        // to have a valid server log for test cases since it is supposed to fail
+        assertTrue(false, testCaseInfo+":"+chkpntmsg);
+    }
+    finally{
+        if(!log.isFailed())log.writeLn(log.SUCCESS);
+    }
+  ]]></script>
+</script>

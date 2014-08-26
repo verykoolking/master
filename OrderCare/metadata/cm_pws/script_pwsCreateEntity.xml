@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.pwsCreateEntity">
+  <group>scripts</group>
+  <label>pwsCreateEntity</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="entityDs" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var entityType = entityDs.identifier.entityType;
+
+    var entityStruct = cm_spoc.getSpecificationModel("base_" + entityType);
+    entityStruct.project = projectCode;
+
+    entityStruct.specificationCode = entityDs.identifier.dn.scheme;
+    entityStruct.label = entityDs.identifier.dn.scheme;
+    entityStruct.project = projectCode;
+    entityStruct.state = 'DEF';
+    entityStruct.startDate = new Date();
+    entityStruct.effectiveDate = new Date();
+
+    cm_common.cmInitModelEntity(entityStruct);
+
+
+    return entityStruct;
+  ]]></script>
+</script>

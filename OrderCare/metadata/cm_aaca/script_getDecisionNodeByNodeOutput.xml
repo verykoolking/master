@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.getDecisionNodeByNodeOutput">
+  <group>RatingTree</group>
+  <label>getDecisionNodeByNodeOutput</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="parentNode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_aaca.NodoDecision</type>
+    </parameter>
+    <parameter name="nodeOutput" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_aaca.NodeOutput</type>
+    </parameter>
+    <parameter name="nodeName" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cm_aaca.NodoDecision</valueType>
+  <script><![CDATA[
+    for(var i=0; i<parentNode.NodoDecision.length; i++){
+        if(isNodeOutputEqual(nodeOutput, parentNode.NodoDecision[i].Output))
+            if(parentNode.NodoDecision[i].Name != nodeName)
+                Global.throwException("Non-Unique path found in the tree: " + parentNode.Name + "->" + nodeName + " and " + parentNode.Name + "->" + parentNode.NodoDecision[i].Name);
+            else
+                return parentNode.NodoDecision[i];
+    }
+    return null;
+
+    /***************************************************************************
+    * FUNCTIONS
+    ***************************************************************************/
+
+    function isNodeOutputEqual(source, target){
+
+        if(source.output.length != target.output.length)
+            return false;
+
+        for(var i=0; i<source.output.length; i++)
+            if(source.output[i] != target.output[i])
+                return false;
+
+            return true;
+    }
+  ]]></script>
+</script>

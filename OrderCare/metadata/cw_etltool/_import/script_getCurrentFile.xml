@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.getCurrentFile">
+  <label>Get Current File</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="process" type="rifp">
+      <mandatory>true</mandatory>
+      <type>doc_cwf_pm.CWPROCESS</type>
+    </parameter>
+    <parameter name="document" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+    <parameter name="fileID" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var order = process.processOrder;
+    var fileGroup = null;
+
+    for (var i=0; order.files && i < order.files.length; i++){
+
+        if(fileID != null && fileID != ""){
+
+            if(order.files[i].fileDoc.FileID == fileID){
+
+                fileGroup = order.files[i];
+                break;
+            }
+        }else{
+
+           if(order.files[i].fileDoc.ImportSequence ==  process.processDocument.ProcessedFilesCount){
+                fileGroup = order.files[i];
+                process.processDocument.CurrentFileID = fileGroup.fileDoc.FileID;
+                break;
+            }
+        }
+    }
+
+    return fileGroup;
+  ]]></script>
+</script>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initChargingModeGuidingUI">
+  <group>ui_scripts.Common.ChargingMode.init</group>
+  <label>initChargingModeGuidingUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <mandatory>true</mandatory>
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.ChargingModeGuidingContainerUI.ChargingModeGuidingUI.ChargingModeGuidingIterator = new Array();
+
+
+    if(ui.model.specificationCode){
+        var baseItemCode = ui.model.baseSpecificationCode ? ui.model.baseSpecificationCode : ui.model.catalogEntity;
+        if (!baseItemCode &&  ui.model.specificationCode) baseItemCode = cm_spoc.getAndUpdateBaseItemCode(ui.model);
+
+        var nameArrayDS = cm_spoc.getBaseChargingModeGuidingArrayName(baseItemCode)+"DS";
+
+        var arrayDS = ui.model[nameArrayDS].ListDS;
+        cm_spoc.loadListElements(ui.ChargingModeGuidingContainerUI.ChargingModeGuidingUI, arrayDS,"cm_spoc.forms.ChargingModeGuidingRuleUI", "ChargingModeGuidingIterator");
+    }
+  ]]></script>
+</script>

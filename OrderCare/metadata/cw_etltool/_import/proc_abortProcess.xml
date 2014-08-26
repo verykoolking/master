@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cw_etltool._import.abortProcess">
+  <activity name="start" type="seqActivity">
+    <guid>{ff2adb43-5495-4561-a32b-69e93f7a9517}</guid>
+    <label>Start</label>
+    <x>117.0</x>
+    <y>12.0</y>
+    <childList>
+      <child name="abortProcess" type="scriptActivity">
+        <guid>{b017d651-cfdd-4817-85f4-03376d02ccbd}</guid>
+        <label>Abort Process</label>
+        <x>118.0</x>
+        <y>148.0</y>
+        <childList>
+          <child name="rollback" type="compensateActivity">
+            <guid>{a0af2cd8-196a-4752-af67-310e41637970}</guid>
+            <label>Rollback</label>
+            <x>118.0</x>
+            <y>247.0</y>
+            <childList>
+              <child name="rollback" type="scriptActivity">
+                <guid>{6f48ff0d-7dc4-47c0-a7ff-41c8f30725cc}</guid>
+                <label>Rollback</label>
+                <x>382.0</x>
+                <y>157.0</y>
+                <methodList>
+                  <method name="cwOnProcActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$  Abort Process RollBack Script $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+                      var order =  process.processOrder;
+                      order.header.ErrorMessage = "";
+                      order.save();
+                      process.processDocument.IsError = false;
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script>cw_etltool._import.abort(process, document);</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="errorValidation" type="subflowActivity">
+        <element>proc_cw_etltool._import.errorValidation</element>
+        <guid>{46b419b0-4a49-4eaa-893f-e39ad4df7f4a}</guid>
+        <label>Error Validation</label>
+        <x>113.0</x>
+        <y>280.0</y>
+      </child>
+      <child name="onabortException" type="onExceptionActivity">
+        <element>excp_cw_etltool._import.systemException</element>
+        <guid>{4fdd2650-60a2-4874-9659-e21585c7148d}</guid>
+        <label>Abort Exception</label>
+        <x>373.0</x>
+        <y>11.0</y>
+        <childList>
+          <child name="systemExceptionHandler" type="subflowActivity">
+            <element>proc_cw_etltool._import.systemExceptionHandler</element>
+            <guid>{eddbc5ce-4923-4fd3-8f3c-92470815bbcc}</guid>
+            <label>System Exception Handler</label>
+            <x>373.0</x>
+            <y>11.0</y>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              Global.logInfo("\n\n $$$$$$$$$$$$$$$$$$$$$$$ On Abort Process Exception : Before Script $$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+            ]]></script>
+          </method>
+          <method name="cwOnProcActAfter" type="action">
+            <category>script</category>
+            <system>true</system>
+            <script><![CDATA[
+              Global.logInfo("\n\n $$$$$$$$$$$$$$$$$$$$$$$ On Abort Process Exception : After Script $$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{1d2cc25e-43d2-4302-abc3-cada51080aaa}</guid>
+  <label>Abort Process</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <type>Sub-flow</type>
+</process>

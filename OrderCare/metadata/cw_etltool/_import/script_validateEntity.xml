@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.validateEntity">
+  <group>services</group>
+  <highlight>2</highlight>
+  <label>validateEntity</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="entity" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_OCSEntity.v1.types.OCSEntityType</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!entity)
+        return api_common.createFault("E404", "The entity is null!");    //TODO: provide the correct code
+
+    var response;
+
+    for(var i=0; i<entity.relations.relation.length; i++){
+        response = checkDS(entity.relations.relation[i]);
+        if(api_common.isFault(response))
+            return response;
+    }
+
+
+    var innerDS;
+
+    switch(entity.metadataType){
+        case "OCSEntity.v1.types:OCSComponentProdOfferPriceType":
+        innerDS = entity.oCSProdOfferPriceCharacteristic;
+        break;
+        case "OCSEntity.v1.types:OCSProductOfferingType":
+        innerDS = entity.oCSProductSpecCharValueUse;
+        break;
+        case "OCSEntity.v1.types:OCSProductSpecificationType":
+        innerDS = entity.oCSProductSpecCharacteristic;
+        break;
+        case "OCSEntity.v1.types:OCSCustomerFacingServiceSpecType":
+        innerDS = entity.oCSServiceSpecCharacteristic;
+        break;
+        default:
+        return api_common.createFault("E302", "The entity type is not ssupported!");    //TODO: provide the correct code
+    }
+
+    for(var i=0; i<innerDS.complexCharacteristic.length; i++){
+        response = checkDS(innerDS.complexCharacteristic[i]);
+        if(api_common.isFault(response))
+            return response;
+    }
+
+
+    //DS is valid.
+    return true;
+
+    //******************************************//
+    //////////////////////////////////////////////
+    function checkDS(DS){
+        var hasItem = DS.individualItemUpdate ? DS.individualItemUpdate : false;
+        if(hasItem && DS.item.length == 0)
+            return api_common.createFault("E304", "The item must be present for the entity.");    //TODO: provide the correct code
+
+        var operation;
+        for(var i=0; i<DS.item.length; i++){
+            operation = DS.item[i].operation;
+            if(hasItem && !(operation && operation.trim() != ""))
+                return api_common.createFault("E304", "The operation must be present for the entity.");    //TODO: provide the correct code
+            else if(!hasItem && (operation && operation.trim() !=""))
+                return api_common.createFault("E305", "The item must NOT be present for the entity.");    //TODO: provide the correct code
+        }
+
+    }
+  ]]></script>
+</script>

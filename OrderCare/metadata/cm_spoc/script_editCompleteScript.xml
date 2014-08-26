@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.editCompleteScript">
+  <group>ui_scripts.UsageControl.AccumulationConditions</group>
+  <label>editCompleteScript</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var result=ui.parent.owner.result;
+
+    result = new DataObjectList();
+
+    var UCArr;
+    if(ui.parent.owner.parent.positive){
+    UCArr=ui.parent.owner.parent.model.UCPositiveConUCACArrDS;
+    }else{
+    UCArr=ui.parent.owner.parent.model.UCNegativeConUCACArrDS;
+    }
+
+    for ( var i=0; i < UCArr.ListDS.length; i++) {
+
+        result[i]=UCArr.ListDS[i];
+    }
+
+    mapToOutputDoc(result);
+
+    ui.parent.owner.model.updateUI()
+    ui.parent.owner.model.setList(result);
+     ui.model.UCSimAppConditStaticRelEnum=null;
+
+
+    function mapToOutputDoc(result) {
+
+        for (var t=0;t<result.length;t++ ) {
+            var doc = new cm_spoc.UCSimpleAccumulationConditionsDoc();
+            result[t]=result[t].mapTo(doc,"cm_spoc.SimpleApplicabilityConditionsCM")[0];
+
+        }
+    }
+  ]]></script>
+</script>

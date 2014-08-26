@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.pwsMap">
+  <label>pwsMap</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="fromDS" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_OCSEntity.v1.types.OCSEntityType</type>
+    </parameter>
+    <parameter name="toDS" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var fieldList = fromDS.getNodeNames();
+    for(var i=0; i<fieldList.length;i++){
+        if(fromDS[fieldList[i]] instanceof OCSEntity.v1.types.ArrayOfCharacteristicValueType){
+            var res = cm_pws.services.pwsMap_GenericItem(fromDS[fieldList[i]], toDS);
+            if(api_common.isFault(res)) {
+                return res;
+            }
+            break;
+        }
+    }
+
+    var res = cm_pws.services.pwsMap_GenericRelations(fromDS, toDS);
+    if(api_common.isFault(res)) {
+        return res;
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cw_etltool.common.etlConfig">
+  <extends>doc_cwt_common.templateConfig</extends>
+  <guid>{654dafb1-7bc7-4dc0-98ab-1c9e8055a28a}</guid>
+  <label>ETL Config</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="isError" type="leaf">
+      <propertyElement type="elchk">
+        <label>Is Error</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="totalEntities" type="leaf">
+      <propertyElement type="elfld">
+        <label>Total Entities</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="totalFiles" type="leaf">
+      <propertyElement type="elfld">
+        <label>Total Files</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="isMore" type="leaf">
+      <propertyElement type="elchk">
+        <label>Is More To Process</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="isDefaultReportView" type="leaf">
+      <propertyElement type="elchk">
+        <label>Default Report View</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="cwLeafInitAction$isDefaultReportView" type="laction">
+      <path>doc_cw_etltool.common.etlConfig/leaf_isDefaultReportView</path>
+      <type>initializer</type>
+      <script>false;</script>
+    </method>
+    <method name="cwLeafInitAction$isMore" type="laction">
+      <path>doc_cw_etltool.common.etlConfig/leaf_isMore</path>
+      <type>initializer</type>
+      <script>false;</script>
+    </method>
+    <method name="cwLeafInitAction$isError" type="laction">
+      <path>doc_cw_etltool.common.etlConfig/leaf_isError</path>
+      <type>initializer</type>
+      <valueType>doc_cw_etltool.common.etlConfig/leaf_isError</valueType>
+      <script>false;</script>
+    </method>
+    <method name="setIsError" type="uimthd">
+      <parameterList>
+        <parameter name="value" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.Boolean</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.isError = value;
+        this.save();
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_cwt_common.templateConfig/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cw_etltool.common.etlConfig</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_cwt_common.templateConfig/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Default" type="exov">
+            <base>doc_cwt_common.templateConfig/ui_UserInterface/frmui_Forms/exov_Default</base>
+            <extends>doc_cwt_common.templateConfig/ui_UserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="templateConfigGrid_vCentering" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="templateConfigGrid" type="elgrd">
+                    <colWidths>160</colWidths>
+                    <numOfCols>4</numOfCols>
+                    <width>110px</width>
+                    <elementList>
+                      <element name="templateConfigHeader" type="elhdr">
+                        <label>Template Config</label>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="name" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cwt_common.templateConfig/ui_UserInterface/uivar_model</variablePath>
+                            <variablePath>doc_cwt_common.templateConfig/leaf_name</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="userId" type="elref">
+                        <dataLength>15</dataLength>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cwt_common.templateConfig/ui_UserInterface/uivar_model</variablePath>
+                            <variablePath>doc_cwt_common.templateConfig/leaf_userId</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="Group" type="elgroup">
+                        <alignment>left,center</alignment>
+                        <label>ETL Import Settings</label>
+                        <width>460px</width>
+                        <elementList>
+                          <element name="totalFiles" type="elfld">
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>doc_cw_etltool.common.etlConfig/ui_UserInterface/uivar_model</variablePath>
+                                <variablePath>doc_cw_etltool.common.etlConfig/leaf_totalFiles</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="noOfEntities" type="elfld">
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>doc_cw_etltool.common.etlConfig/ui_UserInterface/uivar_model</variablePath>
+                                <variablePath>doc_cw_etltool.common.etlConfig/leaf_totalEntities</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="isError" type="elchk">
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>doc_cw_etltool.common.etlConfig/ui_UserInterface/uivar_model</variablePath>
+                                <variablePath>doc_cw_etltool.common.etlConfig/leaf_isError</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="isMore" type="elchk">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>doc_cw_etltool.common.etlConfig/ui_UserInterface/uivar_model</variablePath>
+                                <variablePath>doc_cw_etltool.common.etlConfig/leaf_isMore</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="isDefaultReportView" type="elchk">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>doc_cw_etltool.common.etlConfig/ui_UserInterface/uivar_model</variablePath>
+                                <variablePath>doc_cw_etltool.common.etlConfig/leaf_isDefaultReportView</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+</document>

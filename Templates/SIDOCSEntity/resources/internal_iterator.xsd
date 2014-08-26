@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201206291233 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company/TIP_Soap_Generator(1.1) (1.1)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) 2010 Members of the TIP Open Source Community
+
+Licensed to Members of the TIP Open Source Community under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+Members of the TIP Open Source Community licences this file to You under the Apache License,
+Version 2.0 (the 'License'); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an 'AS IS' BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/tip/internal/iterator" xmlns:exceptions="http://www.tmforum.org/xml/tip/internal/exceptions" targetNamespace="http://www.tmforum.org/xml/tip/internal/iterator" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.1">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: TIP_Generator_Internal_Model
+                        at version: 1.1
+      for all artifacts in package: org.tmforum.tip.internal.iterator
+      Model Description:
+      Internal Framework model used by Tigerstripe generators
+      Package Description:
+      The package with all implicit (injected) TIP Model interface definitions used by operation specifications based on the Iterator Pattern.
+      Package data summary information:
+            entities: 0
+ Association Classes: 0
+           datatypes: 7
+        enumerations: 0
+              events: 0
+          exceptions: 2
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/exceptions" schemaLocation="internal_exceptions.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** -->
+   <xsd:element name="commonRequest" type="tns:CommonRequest"/>
+   <xsd:complexType name="CommonRequest">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The data structure with all the common iterator request parameters.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="maxElements" type="xsd:int" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>The maximum number of elements (items) to be included in the requested batch of data. Default (omitted by the client) shall be set by the server.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="startIndex" type="xsd:long" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>The index of the first element (item) in the overall dataset to be included in the requested batch of data. This directive allows a pagination style data retrieval (any pages of the overall dataset can be requested any time). Default (omitted by the client) shall be the next subsequent batch/page of data.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="timeOut" type="xsd:long" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>The maximum number of milliseconds expected for the retrieval of the next batch of data. Default (omitted by the client) shall be supported by the server.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="expirationTime" type="xsd:long" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>The maximum number of milliseconds expected for the full transfer of data (overall iterator life-cycle/usage). Default (omitted by the client) shall be supported by the server.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfCommonRequest">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:CommonRequest" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="commonResponse" type="tns:CommonResponse"/>
+   <xsd:complexType name="CommonResponse">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The data structure with all the common iterator response parameters.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="startIndex" type="xsd:long" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>The index in the overall dataset of the first element (item) that is returned in the batch of data included in this response.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="endIndex" type="xsd:long" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>The index in the overall dataset of the last element (item) that is returned in the batch of data included in this response.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="endOfSequence" type="xsd:boolean" minOccurs="1" maxOccurs="1" default="true">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>The sequence of responses is exhausted. Indicates that no more elements are available from this iterator.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  mandatory</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfCommonResponse">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:CommonResponse" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="getNextRequest" type="tns:GetNextRequest"/>
+   <xsd:complexType name="GetNextRequest">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The data structure of the getNext operation request message parameters.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:CommonRequest">
+            <xsd:sequence>
+               <xsd:element name="iteratorId" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>The unique identifier of this iterator instance from a data server standpoint. It should match the value of the same iteratorId returned in the response of the very first service operation invokation.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfGetNextRequest">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:GetNextRequest" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="getNextResponse" type="tns:GetNextResponse"/>
+   <xsd:complexType name="GetNextResponse">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The data structure of the getNext operation response message parameters.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:CommonResponse">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfGetNextResponse">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:GetNextResponse" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="iteratorInfo" type="tns:IteratorInfo"/>
+   <xsd:complexType name="IteratorInfo">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The data structure of all the parameters that provides all necessary information to describe an iterator instance.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:CommonResponse">
+            <xsd:sequence>
+               <xsd:element name="iteratorId" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>The unique identifier of this iterator instance from a data server standpoint.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="size" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>The overall number of elements/items in the dataset that is covered by this iterator instance.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="sep" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>The Service End-Point for access of this iterator instance operations. Default (omitted) is the same SEP as the initial service operation.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfIteratorInfo">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:IteratorInfo" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="releaseRequest" type="tns:ReleaseRequest"/>
+   <xsd:complexType name="ReleaseRequest">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The data structure of the release operation request message parameters.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="iteratorId" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>The unique identifier of this iterator instance from a data server standpoint. It should match the value of the same iteratorId returned in the response of the very first service operation invokation.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfReleaseRequest">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ReleaseRequest" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="releaseResponse" type="tns:ReleaseResponse"/>
+   <xsd:complexType name="ReleaseResponse">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The data structure of the release operation response message parameters.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence/>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfReleaseResponse">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ReleaseResponse" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Entity definitions --><!-- ************************** --><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+   <xsd:complexType name="InvalidEnumerationContext">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This exception is raised when calling GetNextRequest after the EndOfSequence was returned from a previous call or if an exception ws previously raised while
+calling the operation.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="exceptions:ExceptionBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="IteratorNotFound">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>No matching Iterator can be found.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="exceptions:ExceptionBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

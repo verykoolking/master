@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initPromotionAfterTopUp">
+  <group>ui_scripts.Promotion.PromotionAfterTopUp.init</group>
+  <label>initPromotionAfterTopUp</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!model.specificationCode){
+        model = cm_spoc.initModelForCreation(model);
+    }else{
+        model = cm_spoc.initModelForModification(model);
+
+        if(model.PromotionWithoutWindowDS.specificationCode != null){
+
+            var listRel = model.PromotionWithoutWindowDS.PWWPromWithoutWRuleArrDS.ListDS;
+            for( var i = 0; i< listRel.length; i++ ){
+                listRel[i].BoltOnEnum = listRel[i].BoltOn;
+                var tpList = listRel[i].PWWRuleTUODestPairArrDS.ListDS;
+                for( var j = 0; j < tpList.length; j++ ){
+                    tpList[j].TopUpOriginEnum = tpList[j].TopUpOrigin;
+                    tpList[j].TopUpDestinationEnum = tpList[j].TopUpDestination;
+                }
+            }
+        }
+
+        if(model.PromotionUsingWindowDS.specificationCode != null){
+            if(model.PromotionUsingWindowDS.PromotionUsingWindowWithoutDS.specificationCode != null){
+                var puwList = model.PromotionUsingWindowDS.PromotionUsingWindowWithoutDS.PUWWRPromUsingWRuleArrDS.ListDS;
+                for ( var k = 0; k < puwList.length; k++ ){
+                    var tpList = puwList[k].PUWRTUODestPairArrDS.ListDS;
+                    for( var j = 0; j < tpList.length; j++ ){
+                        tpList[j].TopUpOriginEnum = tpList[j].TopUpOrigin;
+                        tpList[j].TopUpDestinationEnum = tpList[j].TopUpDestination;
+                    }
+
+                }
+            }
+            if(model.PromotionUsingWindowDS.PromotionUsingWindowWithResDS.specificationCode != null){
+                var tmpModel = model.PromotionUsingWindowDS.PromotionUsingWindowWithResDS;
+                tmpModel.BoltOnEnum = tmpModel.BoltOn;
+                tmpModel.CyclicActionSpecEnum = tmpModel.CyclicActionSpecification;
+                var tpList = tmpModel.PUWWRTUODestPairArrDS.ListDS;
+                for( var j = 0; j < tpList.length; j++ ){
+                    tpList[j].TopUpOriginEnum = tpList[j].TopUpOrigin;
+                    tpList[j].TopUpDestinationEnum = tpList[j].TopUpDestination;
+                }
+            }
+
+        }
+    }
+    return model;
+  ]]></script>
+</script>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initRecurrentBoltOn">
+  <group>ui_scripts.CyclicActions</group>
+  <label>initRecurrentBoltOn</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+        var RecurrentBORenewalPhaseArr = cm_spoc.initInnerDS("base_RecurrentBORenewalPhaseArr");
+        model.RecurrentBORenewalPhaseArrDS = RecurrentBORenewalPhaseArr;
+        return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        var RecurrentBORenewalPhaseRel = model.RecurrentBORenewalPhaseArr;
+        s.specificationCode = RecurrentBORenewalPhaseRel;
+        var a = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(a)){
+            model.RecurrentBORenewalPhaseArrDS = a;
+            RecurrentBORenewalPhaseRel = a.List;
+        }
+        var RecurrentBORenewalPhaseDS = model.RecurrentBORenewalPhaseArrDS.ListDS;
+        for(var i=0;i<RecurrentBORenewalPhaseRel.length;i++){
+            s.specificationCode = RecurrentBORenewalPhaseRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                RecurrentBORenewalPhaseDS[i]=r;
+                var CyclicBoltOnAwardingRel = r.CyclicBoltOnAwarding;
+                s.specificationCode = CyclicBoltOnAwardingRel;
+                var c =  epc.getSpecificationByKey(s);
+                if(!api_common.isFault(c)){
+                    RecurrentBORenewalPhaseDS[i].CyclicBoltOnAwardingDS = c;
+                }
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

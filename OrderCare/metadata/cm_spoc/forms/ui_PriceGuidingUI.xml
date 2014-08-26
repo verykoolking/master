@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.PriceGuidingUI">
+  <group>Common.Price</group>
+  <label>PriceGuidingUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>mdl_com.conceptwave.system.Model</valueType>
+    </variable>
+    <variable name="PriceGuidingIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <visibilityMode>multiple</visibilityMode>
+                  <width>1270px</width>
+                  <elementList>
+                    <element name="PriceGuidingSection" type="elsect">
+                      <removeLabelLine>true</removeLabelLine>
+                      <elementList>
+                        <element name="PriceGuidingHeader" type="elsecth">
+                          <label>Price Guidings</label>
+                        </element>
+                        <element name="PriceGuidingLayout" type="elhlt">
+                          <elementList>
+                            <element name="HorizontalLayout" type="elhlt">
+                              <elementList>
+                                <element name="addButton1" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.PriceGuidingUI/uimthd_addPriceGuidingRule</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/16/notebook_add.png</icon>
+                                  <width>40px</width>
+                                </element>
+                                <element name="deleteButton1" type="elmnu">
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.PriceGuidingUI/uimthd_deletePriceGuidingRule</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/16/delete.png</icon>
+                                  <width>40px</width>
+                                </element>
+                                <element name="priceButton" type="elbtn">
+                                  <canSort>false</canSort>
+                                  <cellAlignment>center,center</cellAlignment>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.PriceGuidingUI/usrActionMethod_openPriceDialog</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <iconHeight>0</iconHeight>
+                                  <label>Price</label>
+                                  <width>70px</width>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="PriceGuidingLabelHeader" type="elgrd">
+                          <alignment>center,center</alignment>
+                          <colWidths>120px</colWidths>
+                          <fixedColWidths>true</fixedColWidths>
+                          <numOfCols>9</numOfCols>
+                          <elementList>
+                            <element name="Select" type="ellab">
+                              <columnSpan>1</columnSpan>
+                              <label>Select</label>
+                            </element>
+                            <element name="TaxApplies" type="ellab">
+                              <columnSpan>1</columnSpan>
+                              <label>Tax Applies</label>
+                            </element>
+                            <element name="PromotionsAppliedOnThePrice" type="ellab">
+                              <canSort>false</canSort>
+                              <columnSpan>2</columnSpan>
+                              <label>Promotions Applied On The Price</label>
+                            </element>
+                            <element name="CustomerProfile" type="ellab">
+                              <columnSpan>1</columnSpan>
+                              <label>Customer Profile</label>
+                            </element>
+                            <element name="Price" type="ellab">
+                              <columnSpan>1</columnSpan>
+                              <fontProperties type="pfnt">
+                                <bold>true</bold>
+                              </fontProperties>
+                              <label>Price*</label>
+                            </element>
+                            <element name="TariffPlan" type="ellab">
+                              <columnSpan>1</columnSpan>
+                              <label>Tariff Plan</label>
+                            </element>
+                            <element name="Province" type="ellab">
+                              <columnSpan>1</columnSpan>
+                              <label>Province</label>
+                            </element>
+                            <element name="ServiceProvider" type="ellab">
+                              <columnSpan>1</columnSpan>
+                              <label>Service Provider</label>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="PriceGuidingVL" type="elvlt">
+                          <width>750px</width>
+                          <elementList>
+                            <element name="PriceGuidingsIterator1" type="eliter">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.PriceGuidingUI/leaf_PriceGuidingIterator</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <elementList>
+                                <element name="PriceGuidingsHL" type="elhlt">
+                                  <width>750px</width>
+                                  <elementList>
+                                    <element name="PriceGuidingsFormFrame" type="elovf">
+                                      <fillSpace>false</fillSpace>
+                                      <formReference type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.PriceGuidingUI/leaf_PriceGuidingIterator</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                        </variablePathList>
+                                      </formReference>
+                                      <width>750px</width>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.PriceGuidingUI/leaf_model</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.PriceGuidingUI/leaf_model</valueType>
+      <script><![CDATA[
+        //var m = cm_spoc.initPriceGuiding(this.model);
+        //cm_spoc.initPriceGuidingUI(this);
+
+        return this.model;
+      ]]></script>
+    </method>
+    <method name="addPriceGuidingRule" type="uimthd">
+      <script><![CDATA[
+        var baseItemCode = this.model.baseSpecificationCode ? this.model.baseSpecificationCode : this.model.catalogEntity;
+        if (!baseItemCode &&  this.model.specificationCode) baseItemCode = cm_spoc.getAndUpdateBaseItemCode(this.model);
+        var nameArray = cm_spoc.getBasePriceGuidingArrayName(baseItemCode);
+        var nameArrayDS = nameArray+"DS";
+        var pgrulesDs= this.model[nameArrayDS].ListDS;
+
+        cm_spoc.addListElement(this,pgrulesDs,"cm_spoc.forms.PriceGuidingRuleUI","base_PriceGuiding","PriceGuidingIterator");
+        cm_spoc.addEventToTheModel( pgrulesDs,this.parent.PriceEvent );
+        cm_spoc.addOperationToTheModel( pgrulesDs,this.parent.PriceEvent );
+      ]]></script>
+    </method>
+    <method name="deletePriceGuidingRule" type="uimthd">
+      <script><![CDATA[
+        var baseItemCode = this.model.baseSpecificationCode ? this.model.baseSpecificationCode : this.model.catalogEntity;
+        if (!baseItemCode &&  this.model.specificationCode) baseItemCode = cm_spoc.getAndUpdateBaseItemCode(this.model);
+        var nameArray = cm_spoc.getBasePriceGuidingArrayName(baseItemCode);
+        var nameArrayDS = nameArray+"DS";
+        var pgrulesDs= this.model[nameArrayDS];
+        pgrulesDs = cm_spoc.removeListElements(this,pgrulesDs,"List","PriceGuidingIterator");
+      ]]></script>
+    </method>
+    <method name="openPriceDialog" type="usrActionMethod">
+      <dialogHeight>400</dialogHeight>
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <dialogWidth>600</dialogWidth>
+      <showInPopup>true</showInPopup>
+      <script>return cm_spoc.priceFinderDialog(this);</script>
+    </method>
+  </methodList>
+</userInterface>

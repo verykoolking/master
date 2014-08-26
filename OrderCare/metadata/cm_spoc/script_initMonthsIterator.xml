@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initMonthsIterator">
+  <group>ui_scripts.Calendars.Init</group>
+  <label>initMonthsIterator</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="result" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.monthsIterator =  new Array();
+
+    var monthlyResultArray = cm_spoc.getMonthlyResultArray(result);
+
+
+    for (var m = 0; m<12;m++){
+
+        ui.monthlyResultElement = monthlyResultArray[m];
+        var fui =  new cm_spoc.forms.MonthForm(monthlyResultArray[m],ui);
+        fui.month = cm_spoc.getMonthName(m);
+        fui.result = monthlyResultArray[m];
+        ui.monthsIterator.push(fui);
+
+    }
+  ]]></script>
+</script>

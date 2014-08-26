@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.copyOfBranchDS">
+  <group>ui_scripts.RatingTree.RTFinder</group>
+  <label>copyOfBranchDS</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var branchDS = cm_spoc.initInnerDS("base_RatingTreeBranch");
+    var brDS = cm_spoc.initModelForCreation(branchDS);
+    var nodeListDS = model.RTBRTNodeOutputArrDS.ListDS;
+    var nodeListRel = model.RTBRTNodeOutputArrDS.List;
+    var nodeListLen = nodeListDS.length;
+    var ci;
+
+    for ( var i = 0; i < nodeListLen; i++ ){
+        var nodeDS = cm_spoc.initInnerDS("base_RatingTreeNodeOutput");
+        var nodeModel = cm_spoc.initModelForCreation(nodeDS);
+
+        var mod = cm_spoc.initModelForModification(nodeListDS[i]);
+        var nodeNames = mod.getNodeNames();
+        nodeModel.NodeName = mod.NodeName;
+        for ( var j = 0; j < nodeNames.length; j++ ){
+            ci = cm_spoc.getDsName(nodeNames[j]);
+
+            if(ci){
+                if(mod[nodeNames[j]].has("List"))  {
+                    if ( nodeNames[j] == "RTNodeOutputArrDS" ){
+                        var nodeOutputArrDS = mod[nodeNames[j]].ListDS;
+                        for ( var k = 0; k < nodeOutputArrDS.length; k++ ){
+                            var node = cm_spoc.initInnerDS("base_RTNodeOutput");
+                            var nodeDS = cm_spoc.initModelForCreation(node);
+                            nodeDS.NodeValue = nodeOutputArrDS[k].NodeValue;
+                            nodeModel[nodeNames[j]].ListDS[nodeModel[nodeNames[j]].ListDS.length] = nodeDS;
+                            nodeModel[nodeNames[j]].List[ nodeModel[nodeNames[j]].List.length] = nodeDS.specificationCode;
+                        }
+                    }
+                    else{
+                        for ( var m = 0; m <  mod[nodeNames[j]].List.length ; m++){
+                            nodeModel[nodeNames[j]].List[m] = mod[nodeNames[j]].List[m];
+                        }
+                    }
+                    brDS.RTBRTNodeOutputArrDS.ListDS[i] = nodeModel;
+                    brDS.RTBRTNodeOutputArrDS.List[i].CW_REFID = nodeModel.specificationCode;
+                    brDS.RTBRTNodeOutputArrDS.List[i].position = nodeListRel[i].position;
+                }
+            }
+        }
+    }
+
+    return brDS;
+  ]]></script>
+</script>

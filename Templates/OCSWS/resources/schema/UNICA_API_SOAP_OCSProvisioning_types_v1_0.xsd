@@ -1,0 +1,1700 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- PA6 -->
+
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" 
+xmlns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+
+    
+<!-- ************************************* Auxiliar ************************************* -->
+
+    <xsd:element name="userCode" type="xsd:string"/>
+                
+    <xsd:complexType name="UnitValueType">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:long">
+                <xsd:attribute name="exponent" type="xsd:int"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+<!-- ************************************* Coin ************************************* -->
+
+    <xsd:complexType name="MonetaryType">
+        <xsd:simpleContent>
+            <xsd:extension base="UnitValueType">
+<!-- Future compatibility -->
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="CurrencyCodeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[a-zA-Z]{3}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:element name="currencyCode" type="CurrencyCodeType"/>
+
+<!-- ************************************* Operation ************************************* -->
+
+    <xsd:element name="appId" type="xsd:string"/>
+    <xsd:element name="numRegs" type="xsd:int"/>
+    <xsd:element name="opCost" type="MonetaryType"/>
+    <xsd:element name="opExecutionDate" type="xsd:dateTime"/>
+    <xsd:element name="opId" type="xsd:string"/>
+    <xsd:element name="reference" type="xsd:string"/>
+    <xsd:element name="token" type="xsd:string"/>
+
+    <xsd:complexType name="OpSubIdListType">
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="1" ref="opId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="opSubIdList" type="OpSubIdListType"/>
+
+    <xsd:complexType name="OpReferenceType">
+        <xsd:sequence>
+            <xsd:element ref="opId"/>
+            <xsd:element minOccurs="0" ref="opSubIdList"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="opReference" type="OpReferenceType"/>
+
+    <xsd:complexType name="AppInfoType">
+        <xsd:sequence>
+            <xsd:element ref="appId"/>
+            <xsd:element ref="reference"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="appInfo" type="AppInfoType"/>
+
+    <xsd:complexType name="ActionCommonInfoType">
+        <xsd:sequence>
+            <xsd:element ref="appInfo"/>
+            <xsd:element ref="userCode"/>
+            <xsd:element minOccurs="0" ref="opCost"/>
+            <xsd:element minOccurs="0" ref="currencyCode"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="actionCommonInfo" type="ActionCommonInfoType"/>
+
+    <xsd:complexType name="OpResultInfoType">
+        <xsd:sequence>
+            <xsd:element ref="opReference"/>
+            <xsd:element ref="opExecutionDate"/>
+            <xsd:element ref="opCost"/>
+            <xsd:element minOccurs="0" ref="balanceActivityInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="AccOpResultInfoType">
+        <xsd:complexContent>
+            <xsd:extension base="OpResultInfoType">
+                <xsd:sequence>
+<!-- Future compatibility -->
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="result" type="AccOpResultInfoType"/>
+
+    <xsd:complexType name="PagingInfoType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" ref="token"/>
+            <xsd:element ref="numRegs"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="pagingInfo" type="PagingInfoType"/>
+
+    <xsd:complexType name="QueryCommonInfoType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" ref="currencyCode"/>
+            <xsd:element minOccurs="0" ref="pagingInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCommonInfo" type="QueryCommonInfoType"/>
+
+<!-- ************************************* Time ************************************* -->
+
+    <xsd:element name="date" type="xsd:dateTime"/>
+    <xsd:element name="specialTime" type="xsd:string"/>
+
+    <xsd:complexType name="TimeOffsetType">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:duration">
+                <xsd:attribute name="timeRoundUnit" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:element name="timeOffset" type="TimeOffsetType"/>
+    
+    <xsd:complexType name="TimeType">
+        <xsd:choice>
+            <xsd:element ref="date"/>
+            <xsd:element ref="timeOffset"/>
+            <xsd:element ref="specialTime"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:element name="startTime" type="TimeType"/>
+    <xsd:element name="endTime" type="TimeType"/>
+
+    <xsd:complexType name="TimeIntervalType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" ref="startTime"/>
+            <xsd:element minOccurs="0" ref="endTime"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="timeInterval" type="TimeIntervalType"/>
+    
+<!-- ************************************* Subscriber Account ************************************* -->
+
+<!-- Subscriber Identification -->
+        
+    <xsd:element name="anyUri" type="xsd:anyURI"/>
+    <xsd:element name="e164Number" type="uct:E164Type"/>
+    <xsd:element name="IMSI" type="uct:ImsiType"/>
+    <xsd:element name="ipAddress" type="uct:IpAddressType"/>
+    <xsd:element name="otherId" type="uct:OtherIdType"/>
+    <xsd:element name="sipUri" type="uct:SipUriType"/>
+    <xsd:element name="userName" type="xsd:string"/>
+        
+    <xsd:complexType name="SubscriberIdType">
+        <xsd:choice>
+            <xsd:element ref="e164Number"/>
+            <xsd:element ref="IMSI"/>
+            <xsd:element ref="sipUri"/>
+            <xsd:element ref="anyUri"/>
+            <xsd:element ref="otherId"/>
+            <xsd:element ref="userName"/>
+            <xsd:element ref="ipAddress"/>
+        </xsd:choice>
+    </xsd:complexType>
+    <xsd:element name="subscriberId" type="SubscriberIdType"/>
+
+    <xsd:simpleType name="ServiceClassType">
+            <xsd:restriction base="xsd:string">
+                <xsd:pattern value="[1-5]" />
+            </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:element name="serviceClass" type="ServiceClassType" />
+
+<!-- ************************************* Account Activity **************************************** -->
+
+    <xsd:element name="areaCode" type="xsd:string"/>
+    <xsd:element name="callDate" type="xsd:dateTime"/>
+    <xsd:element name="callDescription" type="xsd:string"/>
+    <xsd:element name="callDiscount" type="xsd:int"/>
+    <xsd:element name="callDuration" type="xsd:duration"/>
+    <xsd:element name="callingCardSubscriberId" type="SubscriberIdType"/>
+    <xsd:element name="callTypeCode" type="xsd:string"/>
+    <xsd:element name="cellCode" type="xsd:string"/>
+    <xsd:element name="contentDate" type="xsd:dateTime"/>
+    <xsd:element name="contentDescription" type="xsd:string"/>
+    <xsd:element name="contentDuration" type="xsd:duration"/>
+    <xsd:element name="contentTypeCode" type="xsd:string"/>
+    <xsd:element name="destinationPrefixMaskFilter" type="xsd:string"/>
+    <xsd:element name="destinationTypeCode" type="xsd:string"/>
+    <xsd:element name="downloadData" type="xsd:string"/>
+    <xsd:element name="homeZoneOriginatingFlag" type="uct:FlagType"/>
+    <xsd:element name="longDistanceCallCost" type="MonetaryType"/>
+    <xsd:element name="longDistanceCallTax" type="xsd:int"/>
+    <xsd:element name="longDistanceNonDiscountedCallCost" type="MonetaryType"/>
+    <xsd:element name="messageCost" type="MonetaryType"/>
+    <xsd:element name="messageDate" type="xsd:dateTime"/>
+    <xsd:element name="messageDescription" type="xsd:string"/>
+    <xsd:element name="messageTax" type="xsd:int"/>
+    <xsd:element name="messageTypeCode" type="xsd:string"/>
+    <xsd:element name="minAmountFilter" type="MonetaryType"/>
+    <xsd:element name="nonDiscountedMessageCost" type="MonetaryType"/>
+    <xsd:element name="nonDiscountedSessionCost" type="MonetaryType"/>
+    <xsd:element name="onCallChangedTariffFlag" type="uct:FlagType"/>
+    <xsd:element name="onAirCallCost" type="MonetaryType"/>
+    <xsd:element name="onAirCallTax" type="xsd:int"/>
+    <xsd:element name="onAirNonDiscountedCallCost" type="MonetaryType"/>
+    <xsd:element name="operatorLD" type="xsd:string"/>
+    <xsd:element name="provinceCode" type="xsd:string"/>
+    <xsd:element name="regionCode" type="xsd:string"/>
+    <xsd:element name="roamingOperator" type="xsd:string"/>
+    <xsd:element name="sessionCost" type="MonetaryType"/>
+    <xsd:element name="sessionDate" type="xsd:dateTime"/>
+    <xsd:element name="sessionDescription" type="xsd:string"/>
+    <xsd:element name="sessionDuration" type="xsd:duration"/>
+    <xsd:element name="sessionTax" type="xsd:int"/>
+    <xsd:element name="sessionTypeCode" type="xsd:string"/>
+    <xsd:element name="subscriberTaxValue" type="xsd:int"/>
+    <xsd:element name="totalCallCost" type="MonetaryType"/>
+    <xsd:element name="totalCallDuration" type="xsd:duration"/>
+    <xsd:element name="totalNonDiscountedCallCost" type="MonetaryType"/>
+    <xsd:element name="totalSessionDuration" type="xsd:duration"/>
+    <xsd:element name="uploadData" type="xsd:string"/>
+
+    <xsd:element name="destinationSubscriberInfo" type="DestinationMsgSubscriberInfoType"/>
+
+    
+    <xsd:simpleType name="CallCategoryType">
+            <xsd:restriction base="xsd:string">
+            </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:element name="callCategory" type="CallCategoryType"/>
+
+    <xsd:complexType name="CallChargingInfoType">
+        <xsd:sequence>
+            <xsd:element ref="subscriberTaxValue" minOccurs="0"/>
+            <xsd:element ref="onAirCallTax" minOccurs="0"/>
+            <xsd:element ref="longDistanceCallTax" minOccurs="0"/>
+            <xsd:element ref="callDiscount" minOccurs="0"/>
+            <xsd:element ref="totalCallCost" minOccurs="0"/>
+            <xsd:element ref="onAirCallCost" minOccurs="0"/>
+            <xsd:element ref="longDistanceCallCost" minOccurs="0"/>
+            <xsd:element ref="totalNonDiscountedCallCost" minOccurs="0"/>
+            <xsd:element ref="onAirNonDiscountedCallCost" minOccurs="0"/>
+            <xsd:element ref="longDistanceNonDiscountedCallCost" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="callChargingInfo" type="CallChargingInfoType" />
+
+    <xsd:complexType name="MessageChargingInfoType">
+        <xsd:sequence>
+            <xsd:element ref="subscriberTaxValue" minOccurs="0"/>
+            <xsd:element ref="messageTax" minOccurs="0"/>
+            <xsd:element ref="messageCost" minOccurs="0"/>
+            <xsd:element ref="nonDiscountedMessageCost" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="messageChargingInfo" type="MessageChargingInfoType" />
+
+    <xsd:complexType name="SessionChargingInfoType">
+        <xsd:sequence>
+            <xsd:element ref="subscriberTaxValue" minOccurs="0"/>
+            <xsd:element ref="sessionTax" minOccurs="0"/>
+            <xsd:element ref="sessionCost" minOccurs="0"/>
+            <xsd:element ref="nonDiscountedSessionCost" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="sessionChargingInfo" type="SessionChargingInfoType" />
+
+    <xsd:complexType name="CalledSubscriberInfoType">
+        <xsd:sequence>
+            <xsd:element ref="subscriberId"/>
+            <xsd:element ref="subscriberLocationInfo" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="calledSubscriberInfo" type="CalledSubscriberInfoType" />
+
+    <xsd:complexType name="CallExtraInfoType">
+        <xsd:sequence>
+            <xsd:element ref="callingCardSubscriberId" minOccurs="0"/>
+            <xsd:element ref="homeZoneOriginatingFlag"/>
+            <xsd:element ref="onCallChangedTariffFlag"/>
+            <xsd:element ref="roamingOperator" minOccurs="0"/>
+            <xsd:element ref="operatorLD" minOccurs="0"/>
+            <xsd:element ref="cellCode" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="callExtraInfo" type="CallExtraInfoType" />
+
+    <xsd:complexType name="MessageExtraInfoType">
+        <xsd:sequence>
+            <xsd:element ref="roamingOperator" minOccurs="0"/>
+            <xsd:element ref="operatorLD" minOccurs="0"/>
+            <xsd:element ref="cellCode" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="messageExtraInfo" type="MessageExtraInfoType" />
+
+    <xsd:complexType name="SessionExtraInfoType">
+        <xsd:sequence>
+            <xsd:element ref="roamingOperator" minOccurs="0"/>
+            <xsd:element ref="uploadData" minOccurs="0"/>
+            <xsd:element ref="downloadData" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="sessionExtraInfo" type="SessionExtraInfoType" />
+
+    <xsd:simpleType name="ContentCategoryType">
+            <xsd:restriction base="xsd:string">
+            </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:element name="contentCategory" type="ContentCategoryType"/>
+
+    <xsd:simpleType name="DataSessionCategoryType">
+            <xsd:restriction base="xsd:string">
+            </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:element name="dataSessionCategory" type="DataSessionCategoryType"/>
+
+    <xsd:complexType name="LocationInfoType">
+        <xsd:sequence>
+            <xsd:element ref="areaCode" minOccurs="0"/>
+            <xsd:element ref="regionCode" minOccurs="0"/>
+            <xsd:element ref="provinceCode" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscriberLocationInfo" type="LocationInfoType"/>
+    
+    <xsd:complexType name="DestinationMsgSubscriberInfoType">
+        <xsd:sequence>
+            <xsd:element ref="subscriberId"/>
+            <xsd:element ref="subscriberLocationInfo" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="destinationMsgSubscriberInfo" type="DestinationMsgSubscriberInfoType" />
+
+    <xsd:simpleType name="MessageCategoryType">
+            <xsd:restriction base="xsd:string">
+            </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:element name="messageCategory" type="MessageCategoryType"/>
+
+    <xsd:complexType name="CallInfoType">
+        <xsd:sequence>
+            <xsd:element ref="callCategory" minOccurs="0"/>
+            <xsd:element ref="callTypeCode" minOccurs="0"/>
+            <xsd:element ref="callDescription" minOccurs="0"/>
+            <xsd:element ref="callDate" minOccurs="0"/>
+            <xsd:element ref="callDuration" minOccurs="0"/>
+            <xsd:element ref="totalCallDuration" minOccurs="0"/>
+            <xsd:element ref="destinationTypeCode" minOccurs="0"/>
+            <xsd:element ref="timeOffset" minOccurs="0"/>
+            <xsd:element ref="subscriberLocationInfo"/>
+            <xsd:element ref="callChargingInfo"/>
+            <xsd:element ref="callExtraInfo"/>
+            <xsd:element ref="calledSubscriberInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="callInfo" type="CallInfoType" />
+    
+    <xsd:complexType name="CallInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="callInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="callInfoList" type="CallInfoListType" />
+
+    <xsd:complexType name="ContentChargingInfoType">
+        <xsd:sequence>
+            <xsd:element ref="subscriberTaxValue" minOccurs="0"/>
+            <xsd:element ref="sessionTax" minOccurs="0"/>
+            <xsd:element ref="sessionCost" minOccurs="0"/>
+            <xsd:element ref="nonDiscountedSessionCost" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="contentChargingInfo" type="ContentChargingInfoType" />
+
+    <xsd:complexType name="ContentTrafficInfoType">
+        <xsd:sequence>
+            <xsd:element ref="contentCategory" minOccurs="0"/>
+            <xsd:element ref="contentTypeCode" minOccurs="0"/>
+            <xsd:element ref="contentDescription" minOccurs="0"/>
+            <xsd:element ref="contentDate" minOccurs="0"/>
+            <xsd:element ref="contentDuration" minOccurs="0"/>
+            <xsd:element ref="destinationTypeCode" minOccurs="0"/>
+            <xsd:element ref="contentChargingInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="contentTrafficInfo" type="ContentTrafficInfoType" />
+
+    <xsd:complexType name="ContentTrafficInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="contentTrafficInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="contentTrafficInfoList" type="ContentTrafficInfoListType" />
+
+    <xsd:complexType name="DataTrafficInfoType">
+        <xsd:sequence>
+            <xsd:element ref="dataSessionCategory" minOccurs="0"/>
+            <xsd:element ref="sessionTypeCode" minOccurs="0"/>
+            <xsd:element ref="sessionDescription" minOccurs="0"/>
+            <xsd:element ref="sessionDate" minOccurs="0"/>
+            <xsd:element ref="sessionDuration" minOccurs="0"/>
+            <xsd:element ref="totalSessionDuration" minOccurs="0"/>
+            <xsd:element ref="destinationTypeCode" minOccurs="0"/>
+            <xsd:element ref="sessionChargingInfo"/>
+            <xsd:element ref="sessionExtraInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="dataTrafficInfo" type="DataTrafficInfoType" />
+
+    <xsd:complexType name="DataTrafficInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="dataTrafficInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="dataTrafficInfoList" type="DataTrafficInfoListType" />
+
+    <xsd:complexType name="MessageInfoType">
+        <xsd:sequence>
+            <xsd:element ref="messageCategory" minOccurs="0"/>
+            <xsd:element ref="messageTypeCode" minOccurs="0"/>
+            <xsd:element ref="messageDescription" minOccurs="0"/>
+            <xsd:element ref="messageDate" minOccurs="0"/>
+            <xsd:element ref="destinationTypeCode" minOccurs="0"/>
+            <xsd:element ref="subscriberLocationInfo" minOccurs="0"/>
+            <xsd:element ref="messageChargingInfo"/>
+            <xsd:element ref="messageExtraInfo"/>
+            <xsd:element ref="destinationSubscriberInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="messageInfo" type="MessageInfoType" />
+
+    <xsd:complexType name="MessageInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="messageInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="messageInfoList" type="MessageInfoListType" />
+     
+    <xsd:complexType name="OperationInfoType">
+        <xsd:sequence>
+            <xsd:element ref="opCode" />
+            <xsd:element ref="opExecutionDate" />
+            <xsd:element ref="userCode" />
+            <xsd:element ref="opCost" />
+            <xsd:element ref="balance" />
+            <xsd:element ref="promotionCode" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="operationInfo" type="OperationInfoType" />
+
+    <xsd:complexType name="OperationInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="operationInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="operationInfoList" type="OperationInfoListType" />
+
+<!-- ************************************* Account Management **************************************** -->
+
+    <xsd:simpleType name="ICCNumberType">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[0-9]{1,19}" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:element name="accountProfileId" type="xsd:string" />
+    <xsd:element name="actionCauseCode" type="xsd:string" />
+    <xsd:element name="activationDate" type="xsd:dateTime" />
+    <xsd:element name="availableBalanceFlag" type="uct:FlagType"/>
+    <xsd:element name="billingCycleCode" type="xsd:string" />
+    <xsd:element name="cancellableFlag" type="uct:FlagType" />
+    <xsd:element name="cancellationFlag" type="uct:FlagType" />
+    <xsd:element name="cardClassId" type="xsd:string" />
+    <xsd:element name="cardSubClassId" type="xsd:string" />
+    <xsd:element name="cardProfileId" type="xsd:string" />
+    <xsd:element name="cardTypeId" type="xsd:string" />
+    <xsd:element name="categoryCode" type="xsd:string" />
+    <xsd:element name="causeCode" type="xsd:string" />
+    <xsd:element name="chargingModality" type="xsd:int" />
+    <xsd:element name="cycleSpendControlFlag" type="uct:FlagType" />
+    <xsd:element name="deactivateEndDate" type="xsd:dateTime"/>
+    <xsd:element name="deactivateStartDate" type="xsd:dateTime"/>
+    <xsd:element name="destinationNetworkCode" type="xsd:string"/>
+    <xsd:element name="dischargeDate" type="xsd:dateTime"/>
+    <xsd:element name="dischargeReason" type="xsd:string"/>
+    <xsd:element name="expirationNumDays" type="UnitValueType"/>
+    <xsd:element name="expirationThreshold" type="xsd:int"/>
+    <xsd:element name="genericRatingParameter" type="xsd:string" />
+    <xsd:element name="geographicArea" type="xsd:string"/>
+    <xsd:element name="hlrId" type="xsd:string" />
+    <xsd:element name="iccNumber" type="ICCNumberType" />
+    <xsd:element name="IMEI" type="uct:ImeiType"/>        
+    <xsd:element name="immediateFlag" type="uct:FlagType" />    
+    <xsd:element name="incompatibleOperationsFlag" type="uct:FlagType"/>
+    <xsd:element name="initialBalance" type="MonetaryType" />
+    <xsd:element name="invoiceAccount" type="xsd:string"/>
+    <xsd:element name="keyCode" type="xsd:string"/>
+    <xsd:element name="langCode" type="xsd:string"/>
+    <xsd:element name="limitEventFlag" type="uct:FlagType"/>
+    <xsd:element name="lifeCycleStatusDate" type="xsd:dateTime"/>
+    <xsd:element name="locationNumberId" type="xsd:string"/>
+    <xsd:element name="maximum" type="MonetaryType" />
+    <xsd:element name="messageNotificationEventFlag" type="uct:FlagType" />    
+    <xsd:element name="modifiableFlag" type="uct:FlagType"/>
+    <xsd:element name="negativeBalanceUsageFlag" type="uct:FlagType"/>
+    <xsd:element name="newSubscriberId" type="SubscriberIdType"/>
+    <xsd:element name="numNotices" type="xsd:int"/>
+    <xsd:element name="ocsreNodeId" type="xsd:string"/>
+    <xsd:element name="opCode" type="xsd:string"/>
+    <xsd:element name="operationZoneId" type="xsd:string"/>
+    <xsd:element name="opPortabilityId" type="xsd:string"/>
+    <xsd:element name="orderNumber" type="xsd:int"/>
+    <xsd:element name="originNetworkCode" type="xsd:string"/>
+    <xsd:element name="pendingFlag" type="uct:FlagType"/>
+    <xsd:element name="pendingOperations" type="xsd:int"/>
+    <xsd:element name="preActivationDate" type="xsd:dateTime" />
+    <xsd:element name="portabilityRoutingPrefix" type="xsd:string"/>
+    <xsd:element name="pukNumber" type="xsd:string" />
+    <xsd:element name="puk2Number" type="xsd:string" />
+    <xsd:element name="saleModality1" type="xsd:string"/>
+    <xsd:element name="saleModality2" type="xsd:string"/>
+    <xsd:element name="saleModality3" type="xsd:string"/>
+    <xsd:element name="saleModality4" type="xsd:string"/>
+    <xsd:element name="segmentId" type="xsd:string"/>
+    <xsd:element name="segmentReference" type="xsd:string"/>
+    <xsd:element name="serviceEndDate" type="xsd:dateTime"/>
+    <xsd:element name="serviceProviderId" type="xsd:string"/>
+    <xsd:element name="serviceStartDate" type="xsd:dateTime"/>
+    <xsd:element name="serviceStateInactive" type="uct:FlagType"/>
+    <xsd:element name="shortMessage" type="uct:FlagType"/>
+    <xsd:element name="smsSubscriptionDes" type="xsd:string"/>
+    <xsd:element name="smsSubscriptionId" type="xsd:string"/>
+    <xsd:element name="smsSubscriptionFlag" type="uct:FlagType"/>
+    <xsd:element name="spendId" type="xsd:string" />
+    <xsd:element name="spendLimitAmount" type="MonetaryType" />
+    <xsd:element name="spendThresholdValue" type="UnitValueType" />
+    <xsd:element name="spendValue" type="UnitValueType" />
+    <xsd:element name="statusFlagFilter" type="uct:FlagType" />
+    <xsd:element name="subOpCode" type="xsd:string"/>
+    <xsd:element name="subscribedAfterDate" type="xsd:dateTime" />
+    <xsd:element name="subscribedBeforeDate" type="xsd:dateTime" />
+    <xsd:element name="subscriberState" type="xsd:string"/>
+    <xsd:element name="subscriberSubState" type="xsd:string"/>
+    <xsd:element name="subscriptionArea" type="xsd:string"/>
+    <xsd:element name="suspensionIdCode" type="xsd:string"/>
+    <xsd:element name="suspensionTime" type="xsd:duration" />
+    <xsd:element name="tariffPlanId" type="xsd:string" />
+    <xsd:element name="taxCode" type="xsd:string" />
+    <xsd:element name="technologyId" type="xsd:string" />
+    <xsd:element name="threshold" type="UnitValueType"/>
+    <xsd:element name="thresholdAmount" type="UnitValueType"/>
+    <xsd:element name="thresholdEventFlag" type="uct:FlagType"/>
+    <xsd:element name="thresholdId" type="xsd:int"/>
+    <xsd:element name="ZIPCode" type="xsd:string"/>
+
+    
+    <xsd:complexType name="CardIdType">
+        <xsd:sequence>
+            <xsd:element ref="cardClassId" minOccurs="0" />
+            <xsd:element ref="cardSubClassId" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cardId" type="CardIdType" />
+
+    <xsd:complexType name="HomeZoneLocationNumberInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="locationNumberId" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="homeZoneLocationNumberInfoList" type="HomeZoneLocationNumberInfoListType" />
+
+    <xsd:complexType name="LifeCycleStatusType">
+        <xsd:sequence>
+            <xsd:element ref="subscriberState" />
+            <xsd:element ref="subscriberSubState" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="lifeCycleStatus" type="LifeCycleStatusType" />
+    <xsd:element name="nextState" type="LifeCycleStatusType" />
+
+    <xsd:complexType name="NetworkCardInfoType">
+        <xsd:sequence>
+            <xsd:element ref="IMSI" minOccurs="0" />
+            <xsd:element ref="iccNumber" minOccurs="0" />
+            <xsd:element ref="IMEI" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="networkCardInfo" type="NetworkCardInfoType" />
+
+    <xsd:complexType name="SegmentInfoType">
+        <xsd:sequence>
+            <xsd:element ref="segmentId" />
+            <xsd:element ref="segmentReference" minOccurs="0" />
+            <xsd:element ref="timeInterval" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="segmentInfo" type="SegmentInfoType" />
+
+    <xsd:complexType name="SegmentInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="segmentInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="segmentInfoList" type="SegmentInfoListType" />
+
+    <xsd:complexType name="ServicePlansBasicInfoType">
+        <xsd:sequence>
+            <xsd:element ref="serviceClass" minOccurs="0"/>
+            <xsd:element ref="tariffPlanId" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="servicePlansBasicInfo" type="ServicePlansBasicInfoType" />
+
+    <xsd:complexType name="ServicePlansBasicInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="servicePlansBasicInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="servicePlansBasicInfoList" type="ServicePlansBasicInfoListType" />
+
+    <xsd:complexType name="ServicePlansInfoType">
+        <xsd:sequence>
+            <xsd:element ref="tariffPlanId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="servicePlansInfo" type="ServicePlansInfoType" />
+
+    <xsd:complexType name="ServicePlansInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="servicePlansInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="servicePlansInfoList" type="ServicePlansInfoListType" />
+    <xsd:element name="allowedPlansInfoList" type="ServicePlansInfoListType"/>
+
+    <xsd:complexType name="SMSSubscriptionsInfoType">
+        <xsd:sequence>
+            <xsd:element ref="smsSubscriptionId" minOccurs="0"/>
+            <xsd:element ref="smsSubscriptionDes" minOccurs="0"/>
+            <xsd:element ref="smsSubscriptionFlag" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="smsSubscriptionsInfo" type="SMSSubscriptionsInfoType" />
+    
+    <xsd:complexType name="SMSSubscriptionsInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="smsSubscriptionsInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="smsSubscriptionsInfoList" type="SMSSubscriptionsInfoListType" />
+
+    <xsd:complexType name="SpendAttributesInfoType">
+        <xsd:sequence>
+            <xsd:element ref="spendId" />
+            <xsd:element ref="spendLimitAmount" minOccurs="0"/>
+            <xsd:element ref="spendThresholdValue" minOccurs="0"/>
+            <xsd:element ref="spendValue" minOccurs="0"/>
+            <xsd:element ref="limitEventFlag" minOccurs="0" />
+            <xsd:element ref="thresholdEventFlag" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="spendAttributesInfo" type="SpendAttributesInfoType"/>
+
+    <xsd:complexType name="SpendAttributesInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="spendAttributesInfo" minOccurs="1"
+                maxOccurs="unbounded" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="spendAttributesInfoList" type="SpendAttributesInfoListType" />
+
+    <xsd:complexType name="SpendLimitsInfoType">
+        <xsd:sequence>
+            <xsd:element ref="maximum" />
+            <xsd:element ref="spendAttributesInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="spendLimitsInfo" type="SpendLimitsInfoType"/>
+
+    <xsd:complexType name="SubscriberBasicInfoType">
+        <xsd:sequence>
+            <xsd:element ref="serviceProviderId" />
+            <xsd:element ref="tariffPlanId" />
+            <xsd:element ref="networkCardInfo" />
+            <xsd:element ref="lifeCycleStatus" minOccurs="0" />
+            <xsd:element ref="lifeCycleStatusDate" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscriberBasicInfo" type="SubscriberBasicInfoType" />
+
+    <xsd:complexType name="SubscriberDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="serviceProviderId" />
+            <xsd:element ref="tariffPlanId" />
+            <xsd:element ref="networkCardInfo" minOccurs="0" />
+            <xsd:element ref="technologyId" minOccurs="0" />
+            <xsd:element ref="subscriptionArea" minOccurs="0" />
+            <xsd:element ref="lifeCycleStatus" minOccurs="0" />
+            <xsd:element ref="lifeCycleStatusDate" minOccurs="0" />
+            <xsd:element ref="preActivationDate" minOccurs="0" />
+            <xsd:element ref="activationDate" minOccurs="0" />
+            <xsd:element ref="taxCode" minOccurs="0" />
+            <xsd:element ref="categoryCode" minOccurs="0" />
+            <xsd:element ref="genericRatingParameter" minOccurs="0" />
+            <xsd:element ref="messageNotificationEventFlag" />
+            <xsd:element ref="geographicArea" minOccurs="0" />
+            <xsd:element ref="ocsreNodeId" minOccurs="0" />
+            <xsd:element ref="billingCycleCode" minOccurs="0" />
+            <xsd:element ref="pukNumber" minOccurs="0" />
+            <xsd:element ref="puk2Number" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscriberDetailedInfo" type="SubscriberDetailedInfoType" />
+
+    <xsd:complexType name="SubscriberExtendedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="taxCode" minOccurs="0" />
+            <xsd:element ref="categoryCode" minOccurs="0" />
+            <xsd:element ref="genericRatingParameter" minOccurs="0" />
+            <xsd:element ref="subscriptionArea" minOccurs="0" />
+            <xsd:element ref="ocsreNodeId" minOccurs="0" />
+            <xsd:element ref="geographicArea" minOccurs="0" />
+            <xsd:element ref="billingCycleCode" minOccurs="0" />
+            <xsd:element ref="pukNumber" minOccurs="0" />
+            <xsd:element ref="puk2Number" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscriberExtendedInfo" type="SubscriberExtendedInfoType" />
+
+    <xsd:complexType name="SubscriptionInfoType">
+        <xsd:sequence>
+            <xsd:element ref="serviceClass" minOccurs="0"/>
+            <xsd:element ref="invoiceAccount" minOccurs="0"/>
+            <xsd:element ref="serviceStateInactive" minOccurs="0"/>
+            <xsd:element ref="suspensionIdCode" minOccurs="0"/>
+            <xsd:element ref="deactivateStartDate" minOccurs="0"/>
+            <xsd:element ref="deactivateEndDate" minOccurs="0"/>
+            <xsd:element ref="serviceStartDate" minOccurs="0"/>
+            <xsd:element ref="serviceEndDate" minOccurs="0"/>
+            <xsd:element ref="dischargeReason" minOccurs="0"/>
+            <xsd:element ref="subscriberId" minOccurs="0"/>
+            <xsd:element ref="shortMessage" minOccurs="0"/>
+            <xsd:element ref="saleModality1" minOccurs="0"/>
+            <xsd:element ref="saleModality2" minOccurs="0"/>
+            <xsd:element ref="saleModality3" minOccurs="0"/>
+            <xsd:element ref="saleModality4" minOccurs="0"/>
+            <xsd:element ref="dischargeDate" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscriptionInfo" type="SubscriptionInfoType" />
+
+    <xsd:complexType name="SubscriptionInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="subscriptionInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscriptionInfoList" type="SubscriptionInfoListType" />
+
+<!-- ************************************* Administration Management **************************************** -->
+
+    <xsd:element name="error" type="uct:ErrorInformationType"/>
+    <xsd:element name="opStatus" type="xsd:string"/>
+    <xsd:element name="promotionCode" type="xsd:string"/>
+
+<!-- ************************************* Balance Management ************************************* -->
+
+    <xsd:element name="actionCauseTypeCode" type="xsd:string"/>
+    <xsd:element name="adjustedAmount" type="MonetaryType"/>
+    <xsd:element name="adjustmentsTypeCode" type="xsd:string"/>
+    <xsd:element name="adjustmentAmount" type="MonetaryType"/>
+    <xsd:element name="automaticRechargeMaxExecutions" type="xsd:boolean"/>
+    <xsd:element name="balance" type="MonetaryType"/>
+    <xsd:element name="balanceFixingTypeCode" type="xsd:string"/>
+    <xsd:element name="balanceNotAccumulated" type="MonetaryType"/>
+    <xsd:element name="balancePenaltyAmount" type="MonetaryType"/>
+    <xsd:element name="changedBalance" type="MonetaryType"/>
+    <xsd:element name="completeTransact" type="xsd:string"/>
+    <xsd:element name="donorSubscriberId" type="SubscriberIdType"/>
+    <xsd:element name="expirationDate" type="xsd:dateTime"/>
+    <xsd:element name="fixingReferenceCode" type="xsd:string"/>
+    <xsd:element name="installationDate" type="xsd:dateTime"/>
+    <xsd:element name="maxAttempts" type="xsd:int"/>    
+    <xsd:element name="negativeBalance" type="MonetaryType"/>
+    <xsd:element name="negativeBalanceId" type="xsd:string"/>
+    <xsd:element name="noPenaltyPeriod" type="xsd:duration"/>
+    <xsd:element name="partialTopUpFlag" type="uct:FlagType"/>
+    <xsd:element name="payer" type="xsd:string"/>
+    <xsd:element name="receiverSubscriberId" type="SubscriberIdType"/>
+    <xsd:element name="rechargeAmount" type="MonetaryType"/>
+    <xsd:element name="rechargeCode" type="xsd:short"/>
+    <xsd:element name="referenceCode" type="xsd:string"/>
+    <xsd:element name="sharedFlag" type="uct:FlagType"/>
+    <xsd:element name="SOSReferenceCode" type="xsd:string"/>
+    <xsd:element name="SOSTopUpFlag" type="uct:FlagType"/>
+    <xsd:element name="status" type="xsd:string"/>
+    <xsd:element name="statusFlag" type="uct:FlagType"/>
+    <xsd:element name="subscriberStatusFlag" type="uct:FlagType"/>
+    <xsd:element name="taxValue" type="MonetaryType"/>
+    <xsd:element name="topUpAmount" type="MonetaryType"/>
+    <xsd:element name="topUpCancellationSequence" type="xsd:string"/>
+    <xsd:element name="topUpOrigin" type="xsd:string"/>
+    <xsd:element name="topUpReferenceCode" type="xsd:string"/>
+    <xsd:element name="topUpRemainingAmount" type="MonetaryType"/>
+    <xsd:element name="totalFlag" type="uct:FlagType"/>
+    <xsd:element name="transferAmount" type="MonetaryType"/>
+    <xsd:element name="transferCost" type="MonetaryType"/>
+    <xsd:element name="transferDate" type="xsd:dateTime"/>
+    <xsd:element name="transferWalletId" type="xsd:string"/>
+    <xsd:element name="validityPeriod" type="xsd:duration"/>
+    <xsd:element name="walletId" type="xsd:string"/>
+    <xsd:element name="walletRecoveryTriggeredFlag" type="uct:FlagType"/>
+        
+    <xsd:complexType name="InfoFixingDataType">
+        <xsd:sequence>
+            <xsd:element ref="subscriberId"/>
+            <xsd:element ref="opReference"/>
+            <xsd:element ref="adjustmentsTypeCode" minOccurs="0"/>
+            <xsd:element ref="walletId" minOccurs="0"/>
+            <xsd:element ref="actionCauseTypeCode" minOccurs="0"/>
+            <xsd:element ref="actionCauseCode" minOccurs="0"/>
+            <xsd:element ref="adjustmentAmount" minOccurs="0"/>
+            <xsd:element ref="adjustedAmount" minOccurs="0"/>
+            <xsd:element ref="balancePenaltyAmount" minOccurs="0"/>
+            <xsd:element ref="referenceCode" minOccurs="0"/>
+            <xsd:element ref="SOSReferenceCode" minOccurs="0"/>
+            <xsd:element ref="installationDate" minOccurs="0"/>
+            <xsd:element ref="balanceFixingTypeCode" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="infoFixingData" type="InfoFixingDataType" />
+    
+    <xsd:complexType name="InfoFixingDataListType">
+        <xsd:sequence>
+            <xsd:element ref="infoFixingData" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="infoFixingDataList" type="InfoFixingDataListType" />
+
+    <xsd:complexType name="SOSTopUpInfoType">
+        <xsd:sequence>
+            <xsd:element ref="noPenaltyPeriod" minOccurs="0"/>
+            <xsd:element ref="balancePenaltyAmount" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="SOSTopUpInfo" type="SOSTopUpInfoType" />
+    
+    <xsd:complexType name="TaxInfoType">
+        <xsd:sequence>
+            <xsd:element ref="taxCode" minOccurs="0"/>
+            <xsd:element ref="taxValue" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="taxInfo" type="TaxInfoType" />
+
+    <xsd:complexType name="TopUpDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="topUpOrigin"/>
+            <xsd:element ref="topUpReferenceCode" minOccurs="0"/>
+            <xsd:element ref="topUpAmount" minOccurs="0"/>
+            <xsd:element ref="taxInfo" minOccurs="0"/>
+            <xsd:element ref="promotionCode" minOccurs="0"/>
+            <xsd:element ref="walletRecoveryTriggeredFlag" minOccurs="0"/>
+            <xsd:element ref="SOSTopUpFlag" minOccurs="0"/>
+            <xsd:element ref="opReference"/>
+            <xsd:element ref="timeInterval"/>
+            <xsd:element ref="topUpCancellationSequence" minOccurs="0"/>
+            <xsd:element ref="partialTopUpFlag" minOccurs="0"/>
+            <xsd:element ref="topUpRemainingAmount" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="topUpDetailedInfo" type="TopUpDetailedInfoType" />
+
+    <xsd:complexType name="TopUpDetailedInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="topUpDetailedInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="topUpDetailedInfoList" type="TopUpDetailedInfoListType" />
+    
+    <xsd:complexType name="WalletDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="balanceNotAccumulated"/>
+            <xsd:element ref="changedBalance"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="detailedInfo" type="WalletDetailedInfoType"/>
+
+    <xsd:complexType name="WalletInfoType">
+        <xsd:sequence>
+            <xsd:element ref="walletId"/>
+            <xsd:element ref="balance"/>
+            <xsd:element ref="expirationDate"/>
+            <xsd:element ref="status" minOccurs="0" />
+            <xsd:element minOccurs="0" ref="sharedFlag"/>
+            <xsd:element minOccurs="0" ref="detailedInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="walletInfo" type="WalletInfoType"/>
+
+    <xsd:complexType name="WalletInfoListType">
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="1" ref="walletInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="walletInfoList" type="WalletInfoListType"/>
+
+<!-- Balances / Debts -->
+
+    <xsd:complexType name="NegativeBalanceInfoType">
+        <xsd:sequence>
+            <xsd:element ref="negativeBalanceId"/>
+            <xsd:element ref="balance"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="negativeBalanceInfo" type="NegativeBalanceInfoType"/>
+
+    <xsd:complexType name="NegativeBalanceInfoListType">
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="1" ref="negativeBalanceInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="negativeBalanceInfoList" type="NegativeBalanceInfoListType"/>
+
+    <xsd:complexType name="BalanceActivityInfoType">
+        <xsd:sequence>
+            <xsd:element ref="balance"/>
+            <xsd:element minOccurs="0" ref="walletInfoList"/>
+            <xsd:element minOccurs="0" ref="negativeBalance"/>
+            <xsd:element minOccurs="0" ref="negativeBalanceInfoList"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="balanceActivityInfo" type="BalanceActivityInfoType"/>
+
+    <xsd:complexType name="BalanceTransferBasicInfoType">
+        <xsd:sequence>
+            <xsd:element ref="opReference"/>
+            <xsd:element ref="donorSubscriberId"/>
+            <xsd:element ref="receiverSubscriberId"/>
+            <xsd:choice>
+                <xsd:element ref="topUpOrigin"/>
+                <xsd:element ref="boltonIdentifier"/>
+            </xsd:choice>
+            <xsd:element ref="payer"/>
+            <xsd:element ref="transferDate"/>
+            <xsd:element ref="transferCost" minOccurs="0"/>
+            <xsd:element ref="transferAmount"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="balanceTransferBasicInfo" type="BalanceTransferBasicInfoType" />
+
+    <xsd:complexType name="BalanceTransferBasicInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="balanceTransferBasicInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="balanceTransferBasicInfoList" type="BalanceTransferBasicInfoListType" />
+    
+    <xsd:complexType name="BalanceTransferInfoType">
+        <xsd:sequence>
+            <xsd:element ref="transferAmount"/>
+            <xsd:element ref="transferCost" minOccurs="0"/>
+            <xsd:element ref="transferWalletId" minOccurs="0"/>
+            <xsd:choice>
+                <xsd:element ref="topUpOrigin"/>
+                <xsd:element ref="boltonIdentifier"/>
+            </xsd:choice>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="balanceTransferInfo" type="BalanceTransferInfoType" />
+
+<!-- ************************************* Bolton Management **************************************** -->
+
+    <xsd:element name="accumulatedUnits" type="UnitValueType" />
+    <xsd:element name="balanceTransferFlag" type="uct:FlagType" />
+    <xsd:element name="boltonAmount" type="UnitValueType" />
+    <xsd:element name="boltonCode" type="xsd:string" />
+    <xsd:element name="boltonCost" type="MonetaryType" />
+    <xsd:element name="boltonInstance" type="xsd:string" />
+    <xsd:element name="boltonLD" type="UnitValueType" />
+    <xsd:element name="boltonMaxNumberOfSessions" type="UnitValueType" />
+    <xsd:element name="boltonRemainingAmount" type="UnitValueType" />
+    <xsd:element name="boltonRemainingCost" type="MonetaryType" />
+    <xsd:element name="boltonRemainingNumberOfSessions" type="xsd:int" />
+    <xsd:element name="boltonTypeCode" type="xsd:string" />
+    <xsd:element name="freeUnitsUsed" type="UnitValueType" />
+    <xsd:element name="lastStatusChangeDate" type="xsd:dateTime"/>
+    <xsd:element name="maxUnitsPerSession" type="UnitValueType" />
+    <xsd:element name="remainingUnitsForFreeUnits" type="UnitValueType" />
+    <xsd:element name="timeIntervalFilter" type="TimeIntervalType"/>
+    <xsd:element name="sharedBoltonFlag" type="uct:FlagType" />
+    
+    <xsd:complexType name="BoltonBasicInfoType">
+        <xsd:sequence>
+            <xsd:element ref="boltonIdentifier"/>
+            <xsd:element ref="boltonRemainingAmount" minOccurs="0"/>
+            <xsd:element ref="boltonRemainingNumberOfSessions" minOccurs="0"/>
+            <xsd:element ref="boltonStatus"/>
+            <xsd:element ref="boltonModality"/>
+            <xsd:element ref="timeInterval"/>
+            <xsd:element ref="lastStatusChangeDate" minOccurs="0"/>
+            <xsd:element ref="freeUnitsUsed" minOccurs="0"/>
+            <xsd:element ref="accumulatedUnits" minOccurs="0"/>
+            <xsd:element ref="remainingUnitsForFreeUnits" minOccurs="0"/>
+            <xsd:element ref="maxUnitsPerSession" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="boltonBasicInfo" type="BoltonBasicInfoType" />
+
+    <xsd:complexType name="BoltonBasicInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="boltonBasicInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="boltonBasicInfoList" type="BoltonBasicInfoListType" />
+
+    <xsd:complexType name="BoltonIdentifierType">
+        <xsd:sequence>
+            <xsd:element ref="boltonCode" minOccurs="0"/>
+            <xsd:element ref="boltonTypeCode" minOccurs="0"/>
+            <xsd:element ref="boltonInstance" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="boltonIdentifier" type="BoltonIdentifierType"/>
+    <xsd:element name="boltonIdentifierFilter" type="BoltonIdentifierType"/>
+
+    <xsd:complexType name="BoltonInfoType">
+        <xsd:sequence>
+            <xsd:element ref="boltonIdentifier"/>
+            <xsd:element ref="boltonAmount" minOccurs="0"/>
+            <xsd:element ref="boltonLD" minOccurs="0"/>
+            <xsd:element ref="boltonMaxNumberOfSessions" minOccurs="0"/>
+            <xsd:element ref="boltonCost" minOccurs="0"/>
+            <xsd:element ref="chargingModality" minOccurs="0"/>
+            <xsd:element ref="timeInterval" minOccurs="0"/>
+            <xsd:element ref="sharedBoltonFlag" minOccurs="0"/>
+            <xsd:element ref="maxUnitsPerSession" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="boltonInfo" type="BoltonInfoType" />
+
+    <xsd:complexType name="BoltonInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="boltonInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="boltonInfoList" type="BoltonInfoListType" />
+
+    <xsd:simpleType name="BoltonStatusType">
+        <xsd:restriction base="xsd:string" />
+    </xsd:simpleType>
+    <xsd:element name="boltonStatus" type="BoltonStatusType"/>
+    <xsd:element name="boltonStatusFilter" type="BoltonStatusType"/>
+
+    <xsd:complexType name="BoltonStatusListType">
+        <xsd:sequence>
+            <xsd:element ref="boltonStatus" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="boltonStatusList" type="BoltonStatusListType"/>
+    <xsd:element name="boltonStatusFilterList" type="BoltonStatusListType"/>
+
+    <xsd:simpleType name="BoltonModalityType">
+        <xsd:restriction base="xsd:string" />
+    </xsd:simpleType>
+    <xsd:element name="boltonModality" type="BoltonModalityType" />
+
+      <xsd:complexType name="BoltonDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="boltonIdentifier" />
+            <xsd:element ref="boltonAmount" minOccurs="0" />
+            <xsd:element ref="boltonLD" minOccurs="0" />
+            <xsd:element ref="boltonRemainingAmount" minOccurs="0" />
+            <xsd:element ref="boltonMaxNumberOfSessions" minOccurs="0" />
+            <xsd:element ref="boltonRemainingNumberOfSessions" minOccurs="0" />
+            <xsd:element ref="boltonStatus" />
+            <xsd:element ref="boltonModality" />
+            <xsd:element ref="boltonCost" minOccurs="0" />
+            <xsd:element ref="chargingModality" minOccurs="0" />
+            <xsd:element ref="balanceTransferFlag" />
+            <xsd:element ref="opReference" />
+            <xsd:element ref="timeInterval" />
+            <xsd:element ref="sharedBoltonFlag" minOccurs="0"/>
+            <xsd:element ref="maxUnitsPerSession" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="boltonDetailedInfo" type="BoltonDetailedInfoType" />
+    
+    <xsd:complexType name="BoltonDetailedInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="boltonDetailedInfo" minOccurs="1" maxOccurs="unbounded" />
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="boltonDetailedInfoList" type="BoltonDetailedInfoListType" />
+
+<!-- ************************************* Company Management **************************************** -->
+
+    <xsd:element name="companyClientId" type="xsd:string"/>
+    <xsd:element name="companyId" type="xsd:string"/>
+
+    <xsd:complexType name="CompanyClientInfoType">
+        <xsd:sequence>
+            <xsd:element ref="companyClientId"/>
+            <xsd:element ref="companyId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="companyClientInfo" type="CompanyClientInfoType" />
+
+    <xsd:complexType name="CompanyClientInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="companyClientInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="companyClientInfoList" type="CompanyClientInfoListType" />
+
+    <xsd:complexType name="SubscriberIdListType">
+        <xsd:sequence>
+            <xsd:element ref="subscriberId" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscriberIdList" type="SubscriberIdListType" />
+
+<!-- ************************************* Cyclic Actions **************************************** -->
+
+    <xsd:element name="billingCycleFlag" type="uct:FlagType"/>
+    <xsd:element name="billingCycleFlagFilter" type="uct:FlagType"/>
+    <xsd:element name="calcBoltonAmountCode" type="xsd:int"/>
+    <xsd:element name="calcBoltonLDCode" type="xsd:int"/>
+    <xsd:element name="calcBoltonCostCode" type="xsd:int"/>
+    <xsd:element name="calcChargingAmountCode" type="xsd:int"/>
+    <xsd:element name="calcMaxNumberOfSessionsCode" type="xsd:int"/>
+    <xsd:element name="calcTopUpAmountCode" type="xsd:int"/>
+    <xsd:element name="changeExecutionDateFlag" type="uct:FlagType"/>
+    <xsd:element name="chargingAmount" type="MonetaryType"/>
+    <xsd:element name="cyclicActionActivationDate" type="xsd:dateTime"/>
+    <xsd:element name="cyclicActionReferenceDate" type="xsd:dateTime"/>
+    <xsd:element name="cyclicActionState" type="StatusCyclicType"/>
+    <xsd:element name="cyclicCode" type="xsd:string"/>
+    <xsd:element name="cyclicServicesCascadeFlag" type="uct:FlagType"/>
+    <xsd:element name="firstExecutionDate" type="xsd:dateTime"/>
+    <xsd:element name="inactiveFlag" type="uct:FlagType"/>
+    <xsd:element name="latencyPeriods" type="xsd:int"/>
+    <xsd:element name="draggableSurplusAmount" type="xsd:int"/>
+    <xsd:element name="nextExecutionDate" type="xsd:dateTime"/>
+    <xsd:element name="numberOfExecutions" type="xsd:int"/>
+    <xsd:element name="numberOfTimeCyclicBolton" type="xsd:int"/>
+    <xsd:element name="numberOfUsageCyclicBolton" type="xsd:int"/>
+    <xsd:element name="prorateCost" type="MonetaryType"/>
+    <xsd:element name="prorateFlag" type="uct:FlagType"/>
+    <xsd:element name="proratePercentage" type="xsd:string"/>
+    <xsd:element name="prorateTypeCode" type="xsd:string"/>
+    <xsd:element name="renewalDay" type="xsd:string"/>
+    <xsd:element name="retryAfterFailureFlag" type="uct:FlagType"/>
+    <xsd:element name="retryAfterActionFlag" type="uct:FlagType"/>
+    <xsd:element name="topUpCode" type="xsd:string"/>
+
+    <xsd:complexType name="BoltonInfoCalculationType">
+        <xsd:sequence>
+            <xsd:element ref="calcBoltonAmountCode" minOccurs="0"/>
+            <xsd:element ref="calcBoltonLDCode" minOccurs="0"/>
+            <xsd:element ref="calcBoltonCostCode" minOccurs="0"/>
+            <xsd:element ref="calcMaxNumberOfSessionsCode" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="boltonInfoCalculation" type="BoltonInfoCalculationType" />
+
+    <xsd:complexType name="BoltonInfoCycleChangeType">
+        <xsd:sequence>
+            <xsd:element ref="boltonAmount" minOccurs="0"/>
+            <xsd:element ref="boltonLD" minOccurs="0"/>
+            <xsd:element ref="boltonCost" minOccurs="0"/>
+            <xsd:element ref="boltonMaxNumberOfSessions" minOccurs="0"/>
+            <xsd:element ref="chargingModality" minOccurs="0"/>
+            <xsd:element ref="calcBoltonAmountCode" minOccurs="0"/>
+            <xsd:element ref="calcBoltonLDCode" minOccurs="0"/>
+            <xsd:element ref="calcBoltonCostCode" minOccurs="0"/>
+            <xsd:element ref="calcMaxNumberOfSessionsCode" minOccurs="0"/>
+            <xsd:element ref="prorateFlag"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="boltonInfoCycleChange" type="BoltonInfoCycleChangeType" />
+
+    <xsd:complexType name="ChargingCycleChangeType">
+        <xsd:sequence>
+            <xsd:element ref="chargingAmount" minOccurs="0"/>
+            <xsd:element ref="calcChargingAmountCode" minOccurs="0"/>
+            <xsd:element ref="prorateFlag"/>
+            <xsd:element ref="totalFlag"/>
+            <xsd:element ref="chargingModality" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="chargingCycleChange" type="ChargingCycleChangeType" />
+
+    <xsd:complexType name="ChargingInfoType">
+        <xsd:sequence>
+            <xsd:element ref="chargingAmount" minOccurs="0"/>
+            <xsd:element ref="chargingModality" minOccurs="0"/>
+            <xsd:element ref="totalFlag"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="chargingInfo" type="ChargingInfoType" />
+
+    <xsd:complexType name="ChargingInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="chargingInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="chargingInfoList" type="ChargingInfoListType" />
+
+    <xsd:complexType name="TimeCyclicChargingDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="cyclicDetailedInfo"/>
+            <xsd:element ref="chargingInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="timeCyclicDetailedInfo" type="TimeCyclicChargingDetailedInfoType"/>
+
+    <xsd:complexType name="CyclicChargingDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="timeCyclicDetailedInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cyclicChargingDetailedInfo" type="CyclicChargingDetailedInfoType" />
+
+    <xsd:complexType name="CyclicChargingDetailedInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="cyclicChargingDetailedInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cyclicChargingDetailedInfoList" type="CyclicChargingDetailedInfoListType" />
+
+    <xsd:complexType name="TimeCyclicInfoType">
+        <xsd:sequence>
+            <xsd:element ref="firstExecutionDate" minOccurs="0"/>
+            <xsd:element ref="immediateFlag"/>
+            <xsd:element ref="prorateFlag"/>
+            <xsd:element ref="chargingModality" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="timeCyclicInfo" type="TimeCyclicInfoType" />
+
+    <xsd:complexType name="UsageCyclicInfoType">
+        <xsd:sequence>
+            <xsd:element ref="validityPeriod" minOccurs="0"/>
+            <xsd:element ref="numberOfExecutions" minOccurs="0"/>
+            <xsd:element ref="firstPeriodProrate" minOccurs="0"/>
+            <xsd:element ref="transitionalPeriodProrate" minOccurs="0"/>
+            <xsd:element ref="rollOverInfo" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="usageCyclicInfo" type="UsageCyclicInfoType" />
+
+    <xsd:complexType name="CyclicInfoType">
+       <xsd:choice>
+	            <xsd:element ref="timeCyclicInfo" minOccurs="0"/>
+	            <xsd:element ref="usageCyclicInfo" minOccurs="0"/>
+        </xsd:choice>
+    </xsd:complexType>
+    <xsd:element name="cyclicInfo" type="CyclicInfoType" />
+
+    <xsd:complexType name="TimeCyclicDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="cyclicCode"/>
+            <xsd:element ref="lifeCycleInfoDetailedInfo" minOccurs="0"/>
+            <xsd:element ref="numberOfExecutions"/>
+            <xsd:element ref="opCost"/>
+            <xsd:element ref="billingCycleFlag"/>
+            <xsd:element ref="cyclicActionReferenceDate"/>
+            <xsd:element ref="nextExecutionDate" minOccurs="0"/>
+            <xsd:element ref="cyclicActionActivationDate"/>
+            <xsd:element ref="opReference"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cyclicDetailedInfo" type="TimeCyclicDetailedInfoType"/>
+
+    <xsd:complexType name="TimeCyclicTopUpDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="cyclicDetailedInfo"/>
+            <xsd:element ref="topUpInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="timeCyclicTopUpDetailedInfo" type="TimeCyclicTopUpDetailedInfoType" />
+
+    <xsd:complexType name="CyclicTopUpDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="timeCyclicTopUpDetailedInfo" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cyclicTopUpDetailedInfo" type="CyclicTopUpDetailedInfoType" />
+
+    <xsd:complexType name="CyclicTopUpDetailedInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="cyclicTopUpDetailedInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cyclicTopUpDetailedInfoList" type="CyclicTopUpDetailedInfoListType" />
+
+    <xsd:complexType name="LifeCycleDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="cyclicActionState"/>
+            <xsd:element ref="inactiveFlag"/>
+            <xsd:element ref="retryAfterFailureFlag"/>
+            <xsd:element ref="retryAfterActionFlag"/>
+            <xsd:element ref="changeExecutionDateFlag"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="lifeCycleInfoDetailedInfo" type="LifeCycleDetailedInfoType"/>
+
+    <xsd:complexType name="PeriodProrateInfoType">
+        <xsd:sequence>
+            <xsd:element ref="prorateTypeCode" minOccurs="0"/>
+            <xsd:element ref="proratePercentage" minOccurs="0"/>
+            <xsd:element ref="prorateCost" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="firstPeriodProrate" type="PeriodProrateInfoType"/>
+    <xsd:element name="transitionalPeriodProrate" type="PeriodProrateInfoType"/>
+
+    <xsd:complexType name="TimeCyclicBoltonDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="cyclicDetailedInfo"/>
+            <xsd:element ref="boltonInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="timeCyclicBoltonDetailedInfo" type="TimeCyclicBoltonDetailedInfoType" />
+
+    <xsd:complexType name="TopUpInfoCycleChangeType">
+        <xsd:sequence>
+            <xsd:element ref="topUpOrigin" minOccurs="0"/>
+            <xsd:element ref="topUpAmount" minOccurs="0"/>
+            <xsd:element ref="calcTopUpAmountCode" minOccurs="0"/>
+            <xsd:element ref="prorateFlag"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="topUpInfoCycleChange" type="TopUpInfoCycleChangeType" />
+
+    <xsd:complexType name="TopUpInfoType">
+        <xsd:sequence>
+            <xsd:element ref="topUpAmount" minOccurs="0"/>
+            <xsd:element ref="topUpCode" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="topUpInfo" type="TopUpInfoType" />
+
+    <xsd:complexType name="TopUpInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="topUpInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="topUpInfoList" type="TopUpInfoListType" />
+        
+    <xsd:complexType name="RollOverInfoType">
+        <xsd:sequence>
+            <xsd:element ref="latencyPeriods" minOccurs="0"/>
+            <xsd:element ref="draggableSurplusAmount" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="rollOverInfo" type="RollOverInfoType" />
+
+    <xsd:complexType name="UsageCyclicDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="renewalDay" minOccurs="0"/>
+            <xsd:element ref="firstPeriodProrate" minOccurs="0"/>
+            <xsd:element ref="transitionalPeriodProrate" minOccurs="0"/>
+            <xsd:element ref="rollOverInfo" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="usageCyclicDetailedInfo" type="UsageCyclicDetailedInfoType" />
+
+    <xsd:complexType name="UsageCyclicBoltonDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="usageCyclicDetailedInfo"/>
+            <xsd:element ref="boltonInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="usageCyclicBoltonDetailedInfo" type="UsageCyclicBoltonDetailedInfoType" />
+
+
+    <xsd:complexType name="CyclicBoltonDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="timeCyclicBoltonDetailedInfo" minOccurs="0"/>
+            <xsd:element ref="usageCyclicBoltonDetailedInfo" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cyclicBoltonDetailedInfo" type="CyclicBoltonDetailedInfoType" />
+
+    <xsd:complexType name="CyclicBoltonDetailedInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="cyclicBoltonDetailedInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cyclicBoltonDetailedInfoList" type="CyclicBoltonDetailedInfoListType" />
+
+     <xsd:simpleType name="StatusCyclicType">
+      <xsd:restriction base="xsd:string" />
+    </xsd:simpleType>
+    <xsd:element name="statusCyclicFilter" type="StatusCyclicType"/>
+        
+<!-- ************************************* List And Tribe Management **************************************** -->
+
+    <xsd:element name="blockedFlag" type="uct:FlagType"/>
+    <xsd:element name="blockingTime" type="TimeIntervalType"/>
+    <xsd:element name="enabledFlag" type="uct:FlagType"/>
+    <xsd:element name="listCode" type="xsd:string"/>
+    <xsd:element name="listMember" type="SubscriberIdType"/>
+    <xsd:element name="listMemberInsertDate" type="xsd:dateTime"/>
+    <xsd:element name="listTypeCode" type="xsd:string"/>
+    <xsd:element name="maxListExternalMembers" type="xsd:int"/>
+    <xsd:element name="maxListMembers" type="xsd:int"/>
+    <xsd:element name="member" type="SubscriberIdType"/>
+    <xsd:element name="subTribeId" type="xsd:string"/>
+    <xsd:element name="tribeId" type="xsd:string"/>
+    <xsd:element name="unblockDate" type="xsd:dateTime"/>
+
+    <xsd:complexType name="ListBasicInfoType">
+        <xsd:sequence>
+            <xsd:element ref="listCode"/>
+            <xsd:element ref="enabledFlag"/>
+            <xsd:element ref="blockedFlag"/>
+            <xsd:element ref="unblockDate" minOccurs="0"/>
+            <xsd:element ref="listTypeCode"/>
+            <xsd:element ref="maxListMembers"/>
+            <xsd:element ref="maxListExternalMembers" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="listBasicInfo" type="ListBasicInfoType" />
+
+    <xsd:complexType name="ListBasicInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="listBasicInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="listBasicInfoList" type="ListBasicInfoListType" />
+
+    <xsd:complexType name="ListInfoType">
+        <xsd:sequence>
+            <xsd:element ref="listCode"/>
+            <xsd:element ref="listTypeCode"/>
+            <xsd:element ref="maxListMembers"/>
+            <xsd:element ref="maxListExternalMembers" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="listInfo" type="ListInfoType" />
+
+    <xsd:complexType name="ListInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="listInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="allowedListInfoList" type="ListInfoListType"/>
+
+    <xsd:complexType name="ListMemberBasicInfoType">
+        <xsd:sequence>
+            <xsd:element ref="listMember"/>
+            <xsd:element ref="listMemberInsertDate"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="listMemberBasicInfo" type="ListMemberBasicInfoType" />
+
+    <xsd:complexType name="ListMemberBasicInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="listMemberBasicInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="listMemberInfoList" type="ListMemberBasicInfoListType"/>
+
+    <xsd:complexType name="ListMemberListType">
+        <xsd:sequence>
+            <xsd:element ref="member" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="memberList" type="ListMemberListType" />
+
+    <xsd:complexType name="TribeIdentifierType">
+        <xsd:sequence>
+            <xsd:element ref="tribeId"/>
+            <xsd:element ref="subTribeId" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="tribeIdentifier" type="TribeIdentifierType" />
+
+    <xsd:complexType name="TribeBasicInfoType">
+        <xsd:sequence>
+            <xsd:element ref="tribeIdentifier"/>
+            <xsd:element ref="expirationDate" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="tribeBasicInfo" type="TribeBasicInfoType" />
+
+    <xsd:complexType name="TribeBasicInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="tribeBasicInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="tribeInfoList" type="TribeBasicInfoListType"/>
+
+<!-- ************************************* Other Services **************************************** -->
+
+    <xsd:element name="additionalSpendFlag" type="uct:FlagType"/>
+    <xsd:element name="cancellablePeriod" type="xsd:duration"/>
+    <xsd:element name="groupBoltonUsageFlag" type="uct:FlagType"/>
+    <xsd:element name="groupExtendedInfo" type="SubscriberExtendedInfoType"/>
+    <xsd:element name="groupId" type="SubscriberIdType"/>
+    <xsd:element name="groupVPNFlag" type="uct:FlagType"/>
+
+<!-- ************************************* Product Configuration Management **************************************** -->
+
+    <xsd:element name="code" type="xsd:string"/>
+    <xsd:element name="codeDescription" type="xsd:string"/>
+    <xsd:element name="codeType" type="xsd:string"/>
+    <xsd:element name="currencyToInternalMonetaryUnitConversionFactor" type="UnitValueType"/>
+    <xsd:element name="descriptionFlag" type="uct:FlagType"/>
+    <xsd:element name="requiredPrecision" type="UnitValueType"/>
+    <xsd:element name="supplementaryServiceValue" type="xsd:int"/>
+
+    <xsd:complexType name="CodeInfoType">
+        <xsd:sequence>
+            <xsd:element ref="code"/>
+            <xsd:element ref="codeDescription" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="codeInfo" type="CodeInfoType" />
+
+    <xsd:complexType name="CodeInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="codeInfo" maxOccurs="unbounded" minOccurs="1"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="codeInfoList" type="CodeInfoListType" />
+
+<!-- ************************************* Usage Control Counter Management **************************************** -->
+
+    <xsd:element name="uccDeltaValue" type="UnitValueType" />
+    <xsd:element name="uccId" type="xsd:string" />
+    <xsd:element name="usageThresholdSetId" type="xsd:int" />
+    <xsd:element name="usageThresholdActionSetId" type="xsd:string" />
+    <xsd:element name="usageThresholdAmount" type="UnitValueType"/>
+    <xsd:element name="usageRuleCode" type="xsd:int"/>
+    <xsd:element name="usageRuleSetId" type="xsd:string"/>
+    <xsd:element name="value" type="UnitValueType" />
+        
+    <xsd:complexType name="UsageControlCounterBasicInfoType">
+        <xsd:sequence>
+            <xsd:element ref="uccId" />
+            <xsd:element ref="usageThresholdSetId" />
+            <xsd:element ref="usageThresholdActionSetId" minOccurs="0" />
+            <xsd:element ref="value" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="uccBasicInfo" type="UsageControlCounterBasicInfoType"/>
+
+    <xsd:complexType name="UsageControlCounterBasicInfoListType">
+        <xsd:sequence>
+            <xsd:element ref="uccBasicInfo" minOccurs="1"
+                maxOccurs="unbounded" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="uccBasicInfoList" type="UsageControlCounterBasicInfoListType" />
+
+    <xsd:complexType name="UsageControlCounterInfoType">
+        <xsd:sequence>
+            <xsd:element ref="uccId"/>
+            <xsd:element ref="usageThresholdAmount" minOccurs="0"/>
+            <xsd:element ref="timeInterval" minOccurs="0"/>
+            <xsd:element ref="usageRuleCode" minOccurs="0"/>
+            <xsd:element ref="usageRuleSetId" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="usageControlCounterInfo" type="UsageControlCounterInfoType" />
+    <xsd:element name="uccInfo" type="UsageControlCounterInfoType" />
+    
+<!-- ************************************* Voucher Management **************************************** -->
+
+    <xsd:element name="topUpKey" type="xsd:string" />
+
+</xsd:schema>

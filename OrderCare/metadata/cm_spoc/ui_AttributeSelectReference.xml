@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.AttributeSelectReference">
+  <label>Select Item</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="modelCallback" type="leaf">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+    </variable>
+    <variable name="showButton" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="referenceInput" type="leaf">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+    </variable>
+    <variable name="parentUI" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="BaseItemCode" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="itemList" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dstruct_cm_spoc.FinderSelectReferenceDS</valueType>
+    </variable>
+    <variable name="filter" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <alignment>center,center</alignment>
+              <height>100%</height>
+              <visible type="varPath">
+                <variablePathList>
+                  <variablePath>ui_cm_spoc.AttributeSelectReference/permMethod_setPopUpSize</variablePath>
+                </variablePathList>
+              </visible>
+              <width>100%</width>
+              <elementList>
+                <element name="HorizontalLayout1" type="elhlt">
+                  <alignment>center,center</alignment>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="filter" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <label>Code</label>
+                      <labelOrientation>left</labelOrientation>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.AttributeSelectReference/leaf_filter</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="ApplyFilter" type="elbtn">
+                      <cellAlignment>center,center</cellAlignment>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.AttributeSelectReference/uimthd_FilterList</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <height>20px</height>
+                      <icon>/cwt/images/16/funnel_new.png</icon>
+                      <iconHeight>0</iconHeight>
+                      <showLabel>false</showLabel>
+                      <width>20px</width>
+                    </element>
+                    <element name="ClearFilter" type="elbtn">
+                      <cellAlignment>center,center</cellAlignment>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.AttributeSelectReference/uimthd_ClearRefreshList</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <height>20px</height>
+                      <icon>/cwt/images/16/funnel_delete.png</icon>
+                      <iconHeight>0</iconHeight>
+                      <showLabel>false</showLabel>
+                      <width>20px</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpacer" type="ellsp">
+                  <height>20px</height>
+                </element>
+                <element name="Table" type="eltabl">
+                  <height>90%</height>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.AttributeSelectReference/leaf_itemList</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>90%</width>
+                  <elementList>
+                    <element name="itemCode" type="elfld">
+                      <label>Code</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.AttributeSelectReference/leaf_itemList</variablePath>
+                          <variablePath>dstruct_cm_spoc.FinderSelectReferenceDS/dstruct_itemCode</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>50%</width>
+                    </element>
+                    <element name="description" type="elfld">
+                      <label>Description</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.AttributeSelectReference/leaf_itemList</variablePath>
+                          <variablePath>dstruct_cm_spoc.FinderSelectReferenceDS/dstruct_description</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>50%</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="Separator" type="elsep">
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.AttributeSelectReference/permMethod_ShowButtonUI</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="HorizontalLayout" type="elhlt">
+                  <alignment>center,center</alignment>
+                  <height>10%</height>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.AttributeSelectReference/permMethod_ShowButtonUI</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="Accept" type="elbtn">
+                      <cellAlignment>right,center</cellAlignment>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.AttributeSelectReference/uimthd_onClickAccept</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Accept</label>
+                      <width>60px</width>
+                    </element>
+                    <element name="Cancel" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.AttributeSelectReference/uimthd_onClickCancel</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Cancel</label>
+                      <width>60px</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$showButton" type="laction">
+      <path>ui_cm_spoc.AttributeSelectReference/leaf_showButton</path>
+      <type>initializer</type>
+      <script>return true;</script>
+    </method>
+    <method name="setBaseItemCode" type="uimthd">
+      <parameterList>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dstruct_api_common.data.object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var list = new DataObjectList();
+        /*
+        this.FinderBaseItemCode = baseItemCode;
+        var itemFinder = new Finder("cwt_pc.codesEnumFinder");
+        itemFinder.searchDocument.enumeration = baseItemCode;
+
+        var result = itemFinder.search();
+        */
+
+        for(var i=0;i<baseItemCode.length;i++){
+            var item = new cm_spoc.FinderSelectReferenceDS();
+            item.itemCode = baseItemCode[i];
+            //item.description = result[i].description;
+            list.addLast(item);
+        }
+
+        this.itemList=list;
+      ]]></script>
+    </method>
+    <method name="onClickAccept" type="uimthd">
+      <valueType>dstruct_common.v2.AddressType/dstruct_locality</valueType>
+      <script><![CDATA[
+        if(this.itemList.selected != null){
+            var selected = this.itemList.selected[0];
+            if(this.modelCallback) this.modelCallback(selected);
+            else this.parentUI.referenceCallback(selected.itemCode,this.BaseItemCode);
+            this.parent.cwDialogClose();
+        }
+      ]]></script>
+    </method>
+    <method name="onClickCancel" type="uimthd">
+      <script>this.parent.cwDialogClose();</script>
+    </method>
+    <method name="ShowButtonUI" type="permMethod">
+      <script>return this.showButton;</script>
+    </method>
+    <method name="ClearRefreshList" type="uimthd">
+      <script><![CDATA[
+        while(this.itemList.length>0){
+            this.itemList.delete(0);
+        }
+        //this.itemList = this.baseItemList;
+        //this.itemList.updateList;
+        this.setBaseItemCode(this.BaseItemCode);
+      ]]></script>
+    </method>
+    <method name="FilterList" type="uimthd">
+      <script><![CDATA[
+        var newList = new DataObjectList;
+        newList = cm_spoc.getFilteredDataObject(this.itemList,'itemCode','%'+this.filter+"%");
+        while(this.itemList.length>0){
+            this.itemList.delete(0);
+        }
+        this.itemList = newList;
+        this.itemList.updateList;
+      ]]></script>
+    </method>
+    <method name="setPopUpSize" type="permMethod">
+      <script><![CDATA[
+        this.parent.dialogWidth = 300;
+        this.parent.dialogHeight = 300;
+        return true;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

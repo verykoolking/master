@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.updateProjectAssignmentForObject">
+  <group>applicabilityCondition.scripts</group>
+  <label>updateProjectAssignmentForObject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="object" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.baseObject</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+
+        var PAs = cm_plm.getProjectAssignmentForObject(object.objectId);
+        var result;
+        for(var i=0; i<PAs.length; i++){
+            if(PAs[i].projectCode == object.projectCode){    //only the same project can make changes
+                result = cm_plm.setProjectAssignmentByValue(PAs[i]);
+                if(api_common.isFault(result))
+                    return result;
+            }
+        }
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

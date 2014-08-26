@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.inOut_startConfiguration">
+  <group>services</group>
+  <highlight>2</highlight>
+  <label>inOut_startConfiguration</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="input" type="rifp">
+      <type>dstruct_OCSConfigurationOperation.v1.types.StartConfiguration</type>
+    </parameter>
+    <parameter name="impCommonInfo" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cw_etltool._import.impCommonInfo</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_OCSConfigurationOperation.v1.types.StartConfigurationResponse</valueType>
+  <script><![CDATA[
+    try
+    {
+        var OP_REFERENCE = 'START_CONFIGURATION';
+
+
+        var inputError = cm_pws.services.validateRequest(OP_REFERENCE, input);
+        if(api_common.isFault(inputError)) {
+            throw inputError;
+        }
+
+
+        var reference = input.sessionCommonInfo.reference;
+        var configSession = new cm_pws.configSession();
+        configSession.operation = OP_REFERENCE;
+        configSession.request = input.toXML();
+        input.sessionCommonInfo.mapTo(configSession);
+
+        var fault = new api_common.data.fault();
+        var projectCode = cm_pws.pwsGetProjectName();
+        impCommonInfo.projectDS.projectCode = projectCode;
+        var projectMsg = cw_etltool._import.etlCreateProject(impCommonInfo);
+        if (projectMsg.isBasedOn("cm_spoc.fault")) {
+            for(var i=0; i<projectMsg.message.length; i++)
+                fault.addFault( projectMsg.message[i].code,  projectMsg.message[i].text);    //TODO: provide correct error code
+            return fault;
+        }
+
+        var projectRef = epc.getProjectByCode(projectCode);
+        if(api_common.isFault(projectRef))
+            return projectRef;
+
+        configSession.sessionId = projectRef.projectCode;
+        configSession.isExecuted = true;
+        var response = cm_pws.createConfigSessionByValue(configSession);
+        if(api_common.isFault(response))
+        {
+            fault.addFault(response.code, response.text);
+            return fault;
+        }
+
+        var output = new OCSConfigurationOperation.v1.types.StartConfigurationResponse();
+        cm_pws.services.pwsMap_GenericResponse(output.sessionCommonInfoResult, configSession.operation, configSession.sessionId);
+        return output;
+
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

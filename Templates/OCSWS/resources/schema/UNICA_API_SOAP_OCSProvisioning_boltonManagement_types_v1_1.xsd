@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  PA4 -->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" 
+            xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"             
+            xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+            targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" 
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" 
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_1.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" 
+                schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+
+    <!-- ************************************* subscribeBolton ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SubscribeBoltonType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:boltonInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeBolton" type="tns:SubscribeBoltonType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SubscribeBoltonResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element name="extension" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="apt:boltonIdentifier" minOccurs="0" />  <!--  Added due to NGAA 14B PA3 -->
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeBoltonResponse" type="tns:SubscribeBoltonResponseType" />
+
+    <!-- ************************************* unsubscribeBolton ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="UnsubscribeBoltonType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:boltonIdentifier"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeBolton" type="tns:UnsubscribeBoltonType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="UnsubscribeBoltonResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeBoltonResponse" type="tns:UnsubscribeBoltonResponseType" />
+
+    <!-- ************************************* queryBoltonsDetails ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryBoltonsDetailsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId" minOccurs="0" />
+            <xsd:element ref="apt:timeIntervalFilter" minOccurs="0" />
+            <xsd:element ref="apt:opReference" minOccurs="0" />
+            <xsd:element ref="apt:boltonIdentifierFilter" minOccurs="0"/>
+            <xsd:element ref="apt:boltonStatusFilterList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryBoltonsDetails" type="tns:QueryBoltonsDetailsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryBoltonsDetailsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:boltonDetailedInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryBoltonsDetailsResponse" type="tns:QueryBoltonsDetailsResponseType" />
+
+    <!-- ************************************* queryBoltons ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryBoltonsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:boltonIdentifierFilter" minOccurs="0"/>
+            <xsd:element ref="apt:boltonStatusFilterList" minOccurs="0"/>
+            <xsd:element name="extension" minOccurs="0">  <!--  Added due to NGAA 14B PA3 -->
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="apt:boltonInstanceDetailedInfoFlag" minOccurs="0"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryBoltons" type="tns:QueryBoltonsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryBoltonsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:boltonBasicInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryBoltonsResponse" type="tns:QueryBoltonsResponseType" />
+
+</xsd:schema>

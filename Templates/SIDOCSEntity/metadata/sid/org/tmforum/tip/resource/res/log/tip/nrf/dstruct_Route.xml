@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.resource.res.log.tip.nrf.Route">
+  <container>true</container>
+  <description><![CDATA[
+    <p>This object class represents a partially ordered list of Cross-Connects defining the route for a Subnetwork Connection.    See R_TMF518_NRF_I_0035 and R_TMF518_NRF_I_0036.</p>                <p>This entity  is  optional</p>                <p>This entity  is  extendable</p>                <p>This entity   does not generate Object Creation notifications</p>                <p>This entity   does not generate Object Deletion notifications</p>                <p>This entity   does not generate Object Discovery notifications</p>                <p>This entity generates Attribute Value Change notifications.</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{3da915d3-19b6-420d-b0fe-b48837e26290}</guid>
+  <label>Route</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="routeIdentifier" type="dstruct">
+      <description><![CDATA[
+        <p>This attribute contains the unique identifier within the SNC name.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC disabled</p>
+      ]]></description>
+      <element>dstruct_tip.internal.entity.EntityIdentifier</element>
+      <guid>{98a3815e-558a-4806-8f25-84983133d855}</guid>
+      <label>routeIdentifier</label>
+    </child>
+    <child name="crossConnectList" type="dstruct">
+      <description><![CDATA[
+        <p>This attribute represents a route for a Subnetwork Connection. The Cross-Connects are listed from the NE on which the SNC starts (first entry) to the NE on which the SNC ends (last entry) and the aEnd(G)TpList and zEnd(G)TpList will name CTPs of the same or equivalent layer rate only.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC disabled</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.log.tip.nrf.ArrayOfCrossConnect</element>
+      <guid>{5efca3fe-ac90-4f8b-b760-7c77748f15e5}</guid>
+      <label>crossConnectList</label>
+    </child>
+    <child name="isIntendedRoute" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute defines the purpose of the route.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC disabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{cc7c34d6-d27f-46e0-90e6-88ea061d8071}</guid>
+      <label>isIntendedRoute</label>
+    </child>
+    <child name="actualState" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute defines the actual summary state of the Cross-Connects (CCs) associated to the Route.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_sid.org.tmforum.tip.resource.res.log.tip.nrf.ActualState</element>
+      <guid>{12003851-416e-48df-aa11-ac609449fdea}</guid>
+      <label>actualState</label>
+    </child>
+    <child name="isInUseBy" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute defines if at least one of the routes Cross-Connects or CTPs is carrying traffic of another SNC (True).</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC disabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{8995600f-8adb-409d-8060-d8e01e386e77}</guid>
+      <label>isInUseBy</label>
+    </child>
+    <child name="isExclusive" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute defines that not any other routes of other SNCs can share any of the routes Cross Connects or CTPs, even in pending state (True).</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC disabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{462621c9-5fc8-4ec4-bac4-54b12e934094}</guid>
+      <label>isExclusive</label>
+    </child>
+    <child name="additionalInformation" type="dstruct">
+      <description><![CDATA[
+        <p>This attribute allows the communication from the target OS to the requesting OS of additional information which is not explicitly modelled.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dstruct_tip.cbe.base.ArrayOfAttributeValuePair</element>
+      <guid>{145c3ee9-fbb4-430b-a2fb-86f73cdb58e1}</guid>
+      <label>additionalInformation</label>
+    </child>
+    <child name="administrativeState" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute defines administratively the role that the Route shall play for the belonging SNC. There is not any relationship with the actualState attribute of the Route.        It can have the following values:        - "locked", the route is not allowed to be active        - "unlocked", the route is allowed to be active.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_tip.resource.res.nrb.ControlState</element>
+      <guid>{fcabce09-dcaf-459d-aeed-f93e822e7b9d}</guid>
+      <label>administrativeState</label>
+    </child>
+    <child name="subNetworkConnection" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..1</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association SncIsCharacterisedByRoutes</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.log.tip.nrf.SubNetworkConnection</element>
+      <guid>{472b6df6-a413-4cb1-a0ab-aa446a39f5cc}</guid>
+      <label>subNetworkConnection</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.resource.res.log.tip.nrf.Route</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.resource.res.log.tip.nrf.Route</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

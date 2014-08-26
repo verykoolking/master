@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.getProjectsForItems">
+  <group>scripts</group>
+  <label>getProjectsForItems</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemCodes" type="rifp">
+      <array>true</array>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var query = "select distinct p.projectId, p.projectCode, p.name, p.label, p.description, p.status, p.cwcreated from cwpc_project p join cwpc_projectcommand pc on pc.projectid=p.projectid ";
+
+    if (itemCodes.length >0){
+        query = query + "where pc.catalogobjectcode in ('" +itemCodes[0]+ "'";
+        for(var i=1; i<itemCodes.length; i++)
+            query = query + ", '" + itemCodes[i]+ "'";
+        query = query + ")";
+    }
+
+    query  += ' order by p.cwcreated desc';
+    var result = Global.runSQLQuery("CATALOG", "cwt_pc.cwt_project", 10000000, null, query);
+
+    var response = new cwt_pcmaintapi.projectList();
+    for(var i=0; i<result.length; i++){
+        result[i].mapTo(response.projects[i]);
+    }
+
+    return response;
+  ]]></script>
+</script>

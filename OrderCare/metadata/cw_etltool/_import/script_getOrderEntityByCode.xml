@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.getOrderEntityByCode">
+  <label>Get Order Entity By Code</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="orderId" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="entityCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var finder = new cw_etltool._import.entityDocFinder();
+    finder.searchDocument.cwOrderId = orderId;
+    finder.searchDocument.EntityCode = entityCode;
+    var list = finder.search();
+    if(list && list.length > 0)
+        return list[0];
+    return null;
+  ]]></script>
+</script>

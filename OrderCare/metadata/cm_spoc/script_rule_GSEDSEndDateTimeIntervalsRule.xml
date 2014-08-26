@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_GSEDSEndDateTimeIntervalsRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_GSEDSEndDateTimeIntervalsRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var attr1 =  data.GeneralStartEndDateSpecDS.EndDateTime;
+    var attr2 = data.GeneralStartEndDateSpecDS.StartDateTime;
+    if ( attr2 > attr1 ){
+
+    errList.addErrorMessage(data,["Start Date must be before End Date: "],"NGAA_003","E");
+
+    }
+    return false;
+  ]]></script>
+</script>

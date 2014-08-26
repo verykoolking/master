@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.beforeSaveBoltOn">
+  <group>ui_scripts.BoltOn</group>
+  <label>beforeSaveBoltOn</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_spoc.data.BoltOn</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    cm_spoc.synchListElements(model,"SubscriptionOfferingDS.SubscriptionLimitArrDS");
+    cm_spoc.synchListElements(model,"BoltOnSubscriptionArrDS");
+
+    if(model.BOChargingModeGuidingArrDS.ListDS.length == 0){
+        model.BOChargingModeGuidingArrDS = null;
+        model.BOChargingModeGuidingArr = null;
+    }
+
+    if(model.SubscriptionOfferingDS.SubscriptionLimitArrDS.ListDS.length == 0){
+        model.SubscriptionOfferingDS.SubscriptionLimitArrDS = null;
+        model.SubscriptionOfferingDS.SubscriptionLimitArr = null;
+    }
+    if(model.BoltOnSubscriptionArrDS.ListDS.length==0)
+    {
+        model.BoltOnSubscriptionArrDS=null;
+        model.BoltOnSubscriptionArr=null;
+    }
+    if(model.BOAllowedTariffPlanArrDS.List.length==0)
+    {
+           model.BOAllowedTariffPlanArrDS=null;
+           model.BOAllowedTariffPlanArr=null;
+    }
+
+    var value=model.BoltOnTypeModalityCode;
+    if (value=="ME" || value=="MG")
+    {
+        model.SessionOfferingDS=null;
+        model.SessionOffering=null;
+    }
+  ]]></script>
+</script>

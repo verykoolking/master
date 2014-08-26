@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BOVOPercentageReductionInLDMandatoryCondRule">
+  <group>rules_scripts.BoltOn</group>
+  <label>rule_BOVOPercentageReductionInLDMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var percent_mand= data;
+    var reduction_mand= percent_mand.ApplyReductionInLongDistance;
+    var percentage_mand= percent_mand.BoltOnLD;
+
+    if(!percentage_mand && reduction_mand){
+         errList.addErrorMessage(data,["PercentageReductionInLDMandatory", "Validity Reduction is not percent range"],"NGAA_EPC_002","E");
+    }
+    return false;
+  ]]></script>
+</script>

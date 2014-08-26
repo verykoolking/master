@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/voucherManagement/v1/types" 
+            xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"             
+            xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+            targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/voucherManagement/v1/types" 
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" 
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_1.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" 
+    			schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+
+	<!-- ************************************* voucherCardAccount ************************************* -->
+
+	<!-- Request -->
+
+	<xsd:complexType name="VoucherCardAccountType">
+		<xsd:sequence>
+			<xsd:element ref="apt:actionCommonInfo" />
+			<xsd:element ref="apt:subscriberId" />
+			<xsd:element ref="apt:topUpKey" />
+ 			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="voucherCardAccount" type="tns:VoucherCardAccountType" />
+
+	<!-- Response -->
+
+	<xsd:complexType name="VoucherCardAccountResponseType">
+		<xsd:sequence>
+			<xsd:element ref="apt:result" />
+ 			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="voucherCardAccountResponse" type="tns:VoucherCardAccountResponseType" />
+
+</xsd:schema>

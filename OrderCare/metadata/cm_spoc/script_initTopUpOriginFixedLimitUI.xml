@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initTopUpOriginFixedLimitUI">
+  <group>ui_scripts.TopUp.init</group>
+  <label>initTopUpOriginFixedLimitUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="m" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.TopUpOriginFixedLimitIterator = new Array();
+    //var model = ui.model.TopUpOriginFixedLimitArrDS.ListDS;
+    var model =m.TopUpOriginFixedLimitArrDS.ListDS;
+    if(!ui.model.specificationCode){
+       // cm_spoc.addListElement(ui, model,"cm_spoc.forms.TopUpOriginFixedLimitIteratorUI",
+       //                                                 "base_TopUpOriginFixedLimit","TopUpOriginFixedLimitIterator");
+    }else{
+        m.WalletEnum = m.TopUpOriginRecharge;
+        cm_spoc.loadListElements(ui, model, "cm_spoc.forms.TopUpOriginFixedLimitIteratorUI", "TopUpOriginFixedLimitIterator");
+        for (var i=0; i<ui.TopUpOriginFixedLimitIterator.length; i++){
+            ui.TopUpOriginFixedLimitIterator[i].model.TariffPlanEnum=ui.TopUpOriginFixedLimitIterator[i].model.TariffPlan;
+        }
+    }
+  ]]></script>
+</script>

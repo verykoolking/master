@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_sr.createEntity">
+  <label>createEntity</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="subscriberId" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="offerType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="productSerialNumber" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="productOfferingId" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="productNumber" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="productIdAA" type="rifp">
+      <array>true</array>
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="XML" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Service Registry
+     * Create Entity
+     *
+     * @author  Vitor Brasileiro
+     * @date    20140529
+     */
+
+    var request = new cwt_sr.createRequest();
+
+    request.entities.item[0].key.applicationContext.URL = subscriberId;
+    request.entities.item[0].key.type = offerType;
+    request.entities.item[0].key.applicationDN = productSerialNumber;
+
+    request.entities.item[0].describedBy.item[0].characteristic = "productOfferingId";
+    request.entities.item[0].describedBy.item[0].value          =  productOfferingId;
+
+    request.entities.item[0].describedBy.item[1].characteristic = "productNumber";
+    request.entities.item[0].describedBy.item[1].value          =  productNumber;
+
+    if ((productIdAA) && (productIdAA.length > 0)) {
+        for ( var i = 0; i < productIdAA.length; i++) {
+            request.entities.item[0].describedBy.item[2+i].characteristic = (i==0)? "opId" : "productIdAA" + i;
+            request.entities.item[0].describedBy.item[2+i].value          =  productIdAA[i];
+        }
+    }
+
+    var arrayLength = request.entities.item[0].describedBy.item.length;
+
+    for (var s = 0; s < (XML.length/256); s++) //to split the XML into block with 256 chars (SR limitation)
+    {
+        request.entities.item[0].describedBy.item[arrayLength + s].characteristic = "XML_" + ("000" + s).slice(-3);
+        request.entities.item[0].describedBy.item[arrayLength + s].value          = XML.substring(s*256, (s+1)*256);
+    }
+
+    var response = cwt_sr.createServiceByValue(request);
+
+    var messageLength = response.messages.item.length;
+    var errorMsg = "";
+    if (messageLength > 0)
+    {
+        for (var j=0; j < response.messages.item.length; j++)
+        {
+            errorMsg += response.messages.item[j].description;
+        }
+        Global.logDebug(errorMsg);
+    }
+  ]]></script>
+</script>

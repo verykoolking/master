@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.caReadMSConfiguration">
+  <highlight>10</highlight>
+  <label>CM-AACA Read MS Configuration</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="pDoc" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="pData" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var zone = cm_aaca.caGetCurrentMemoryZone(pDoc, pData);
+    var env = cm_aaca.caGetEnvironment(pDoc);
+    var addInfo = env + ' - ' + zone;
+    var phId = cm_plm.startPlmControlPhase(pDoc.projectCode, 'MSVL', addInfo);
+
+    //TODO: Read Tuxedo Data
+    var tuxedoToBeInvoked = Global.getConfigVariable("AACA_" + env + "_TUXEDO_NAME");
+    var host = Global.getConfigVariable("AACA_" + env + "_TUXEDO_HOST");
+    var port = Global.getConfigVariable("AACA_" + env + "_TUXEDO_PORT");
+    var user = Global.getConfigVariable("AACA_" + env + "_TUXEDO_USER");
+    var role = Global.getConfigVariable("AACA_" + env + "_TUXEDO_ROLE");
+    var user_pass = Global.getConfigVariable("AACA_" + env + "_TUXEDO_USER_PASS");
+    var app_pass = Global.getConfigVariable("AACA_" + env + "_TUXEDO_APP_PASS");
+    var timeout = Global.getConfigVariable("AACA_" + env + "_TUXEDO_TIMEOUT");
+    var locale = Global.getConfigVariable("AACA_" + env + "_TUXEDO_LOCALE");
+    var testMode = Global.getConfigVariable("AACA_TUXEDO_TEST");
+
+    cm_aaca.call_addMemoryZoneToPendingQueue(env, zone);
+    var result = cm_aaca.call_invokeTuxedo(env, tuxedoToBeInvoked, host, port, user, role, user_pass, app_pass, timeout, locale, testMode);
+    cm_common.setLastInterfaceMessageCode(pDoc.projectCode);
+
+    if (!result.success) {
+        pDoc.errorOccurred = true;
+        pDoc.errorDescription = result.message;
+    }
+
+    cm_plm.endPlmControlPhase(phId);
+  ]]></script>
+</script>

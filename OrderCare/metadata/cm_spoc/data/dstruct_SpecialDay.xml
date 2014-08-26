@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="cm_spoc.data.SpecialDay">
+  <container>true</container>
+  <extends>dstruct_cm_spoc.data.OCSCustFacingServiceSpec</extends>
+  <group>Calendars</group>
+  <guid>{a501ca13-7a14-4da4-a7b3-7bc3d754f121}</guid>
+  <jsonMap type="jmap"/>
+  <label>SpecialDay</label>
+  <metaVersion>4</metaVersion>
+  <childList>
+    <child name="SpecialDayType" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.SpecialDayTypeEnum</element>
+      <guid>{e826e8dd-c63c-4a01-9a43-536bd89e4e23}</guid>
+      <jsonMap type="jmap"/>
+      <label>SpecialDayType</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="TypeOfDay" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{edae36a7-6e0d-487c-b449-15557efc9605}</guid>
+      <jsonMap type="jmap"/>
+      <label>TypeOfDay</label>
+    </child>
+    <child name="Date" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSDateAttribute</element>
+      <guid>{f239e0d9-26dc-47f2-bf6b-06e62b5acd77}</guid>
+      <jsonMap type="jmap"/>
+      <label>Date</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="SpDayTariffPlanArr" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{eda3187a-cf35-45bd-bb25-4b43459516da}</guid>
+      <jsonMap type="jmap"/>
+      <label>SpDayTariffPlanArr</label>
+    </child>
+    <child name="SpDayTariffPlanArrDS" type="dstruct">
+      <element>dstruct_cm_spoc.data.SpDayTariffPlanArr</element>
+      <guid>{8fc3f533-59b5-4f4f-bc77-c3f92560277c}</guid>
+      <jsonMap type="jmap"/>
+      <label>SpDayTariffPlanArrDS</label>
+    </child>
+    <child name="SpDayServiceProviderArr" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{944fae33-9183-48e2-83c7-ea18c65a2562}</guid>
+      <jsonMap type="jmap"/>
+      <label>SpDayServiceProviderArr</label>
+    </child>
+    <child name="SpDayServiceProviderArrDS" type="dstruct">
+      <element>dstruct_cm_spoc.data.SpDayServiceProviderArr</element>
+      <guid>{23e6bcab-b097-4c60-a936-36765c8c0467}</guid>
+      <jsonMap type="jmap"/>
+      <label>SpDayServiceProviderArrDS</label>
+    </child>
+    <child name="isAnyPlans" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{646e3b74-2d53-42a5-9e1d-95e739815430}</guid>
+      <jsonMap type="jmap"/>
+      <label>isAnyPlans</label>
+    </child>
+    <child name="isDefaultSP" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{13f2f336-22ed-41c6-9768-56e69165d2e0}</guid>
+      <jsonMap type="jmap"/>
+      <label>isDefaultSP</label>
+    </child>
+    <child name="year" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{a7cbd958-4f54-44fc-b39f-c3f6a4434478}</guid>
+      <jsonMap type="jmap"/>
+      <label>year</label>
+    </child>
+    <child name="serviceProvider" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{35c0ba3c-bf80-4070-a151-d7430f70c73c}</guid>
+      <jsonMap type="jmap"/>
+      <label>serviceProvider</label>
+    </child>
+    <child name="TypeOfDayEnum" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.TypeOfDayEnum</element>
+      <guid>{4d12fe23-df32-4bfe-83e8-4e772b37e46f}</guid>
+      <jsonMap type="jmap"/>
+    </child>
+    <child name="ServiceProviderEnum" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.ServiceProviderEnum</element>
+      <guid>{1045cc32-1819-4082-8f71-6fbc9e69358b}</guid>
+      <jsonMap type="jmap"/>
+    </child>
+  </childList>
+  <methodList>
+    <method name="onInit" type="action">
+      <parameterList>
+        <parameter name="document" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <system>true</system>
+      <script><![CDATA[
+        this.cw$super_onInit(document);
+        this.isAnyPlans = false;
+        this.isDefaultSP = false;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_cm_spoc.data.SpecialDay</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_cm_spoc.data.SpecialDay</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

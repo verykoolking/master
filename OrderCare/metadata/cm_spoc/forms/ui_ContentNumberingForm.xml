@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ContentNumberingForm">
+  <group>Numbering</group>
+  <label>ContentNumberingForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ContentNumbering</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="GeneralParameters" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentNumberingForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.ContentNumberingForm/frmui_Forms/vform_GeneralParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                </element>
+                <element name="Features" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ContentNumberingForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.ContentNumberingForm/frmui_Forms/vform_Features</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Features</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="GeneralParameters" type="vform">
+          <label>GeneralParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>right,center</alignment>
+            <elementList>
+              <element name="Separator" type="elsep">
+                <width>400px</width>
+              </element>
+              <element name="Header" type="elhdr">
+                <cellAlignment>left,center</cellAlignment>
+                <label>Look up Criteria</label>
+              </element>
+              <element name="AnalysisTypeContent" type="elslct">
+                <editable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ContentNumberingForm/permMethod_setIsPrimaryKey</variablePath>
+                  </variablePathList>
+                </editable>
+                <label>Analysis Type (XNT)</label>
+                <labelOrientation>left</labelOrientation>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ContentNumberingForm/uimthd_initializeFields</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_AnalysisTypeContent</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="TonEnum" type="elslct">
+                <label>Type of Number (TON)</label>
+                <labelOrientation>left</labelOrientation>
+                <multiselect>false</multiselect>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ContentNumberingForm/uimthd_TonTrigger</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <optional type="varPath">
+                  <variablePathList>
+                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                  </variablePathList>
+                </optional>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_TonEnum</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="GridLayout1" type="elhlt">
+                <elementList>
+                  <element name="LayoutSpacer1" type="ellsp">
+                    <width>40px</width>
+                  </element>
+                  <element name="GridLayout" type="elhlt">
+                    <elementList>
+                      <element name="ContentServiceProviderInputFor" type="elfld">
+                        <editable type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </editable>
+                        <label>Content Service Provider</label>
+                        <labelOrientation>left</labelOrientation>
+                        <optional type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </optional>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_ContentServiceProviderInputFor</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Button" type="elbtn">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.ContentNumberingForm/usrActionMethod_FinderSelectReferenceDialog</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <icon>/cwf/finder.gif</icon>
+                        <width>22px</width>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+              <element name="HorizontalLayout" type="elhlt">
+                <elementList>
+                  <element name="ContentTypeInputFor" type="elfld">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>Content Type</label>
+                    <labelOrientation>left</labelOrientation>
+                    <optional type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </optional>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_ContentTypeInputFor</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="Button1" type="elbtn">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/usrActionMethod_FinderContentTypeReferenceDialog</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/finder.gif</icon>
+                    <width>22px</width>
+                  </element>
+                </elementList>
+              </element>
+              <element name="HorizontalLayout1" type="elhlt">
+                <elementList>
+                  <element name="ContentIdInputFor" type="elfld">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>Content ID</label>
+                    <labelOrientation>left</labelOrientation>
+                    <optional type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </optional>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_ContentIdInputFor</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="Button3" type="elbtn">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/usrActionMethod_FinderContentIdReferenceDialog</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/finder.gif</icon>
+                    <width>22px</width>
+                  </element>
+                </elementList>
+              </element>
+              <element name="HorizontalLayout2" type="elhlt">
+                <elementList>
+                  <element name="TariffPlanContentInputFor" type="elfld">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>Tariff Plan</label>
+                    <labelOrientation>left</labelOrientation>
+                    <optional type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </optional>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_TariffPlanContentInputFor</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="Button2" type="elbtn">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/usrActionMethod_FinderTariffReferenceDialog</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/finder.gif</icon>
+                    <width>22px</width>
+                  </element>
+                </elementList>
+              </element>
+              <element name="Separator1" type="elsep">
+                <width>400px</width>
+              </element>
+              <element name="LayoutSpacer" type="ellsp">
+                <height>5px</height>
+              </element>
+              <element name="HorizontalLayout3" type="elhlt">
+                <elementList>
+                  <element name="DestinationTypeContentOutputOf" type="elfld">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>Destination Type</label>
+                    <labelOrientation>left</labelOrientation>
+                    <optional type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </optional>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_DestinationTypeContentOutputOf</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="Button4" type="elbtn">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/usrActionMethod_FinderDestinationReferenceDialog</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/finder.gif</icon>
+                    <width>22px</width>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="Features" type="vform">
+          <label>Features</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="Free" type="elchk">
+                <label>Free</label>
+                <labelOrientation>right</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_Free</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="HorizontalLayout" type="elhlt">
+                <elementList>
+                  <element name="LayoutSpacer" type="ellsp">
+                    <width>74px</width>
+                  </element>
+                  <element name="VerticalLayout1" type="elvlt">
+                    <alignment>right,center</alignment>
+                    <elementList>
+                      <element name="Profile" type="elslct">
+                        <label>Profile</label>
+                        <labelOrientation>left</labelOrientation>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_Profile</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>175px</width>
+                      </element>
+                      <element name="ValidityTime" type="elfld">
+                        <label>Validity Time</label>
+                        <labelOrientation>left</labelOrientation>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_ValidityTime</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>175px</width>
+                      </element>
+                      <element name="MaximumVolume" type="elfld">
+                        <label>Maximum Volume</label>
+                        <labelOrientation>left</labelOrientation>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_MaximumVolume</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>175px</width>
+                      </element>
+                      <element name="MaximumTime" type="elfld">
+                        <label>Maximum Time</label>
+                        <labelOrientation>left</labelOrientation>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_MaximumTime</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>175px</width>
+                      </element>
+                      <element name="VolumeType" type="elslct">
+                        <label>Volume Type</label>
+                        <labelOrientation>left</labelOrientation>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_VolumeType</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>175px</width>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+              <element name="ApplicationOfQoS" type="elchk">
+                <label>Application of QoS</label>
+                <labelOrientation>right</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_ApplicationOfQoS</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="AllowRoaming" type="elchk">
+                <label>Allow Roaming</label>
+                <labelOrientation>right</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_AllowRoaming</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="VerticalLayout2" type="elvlt">
+                <alignment>right,center</alignment>
+                <elementList>
+                  <element name="UnitsType" type="elslct">
+                    <label>Units Type</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_UnitsType</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>175px</width>
+                  </element>
+                  <element name="FailureHandling" type="elslct">
+                    <label>Failure Handling</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_FailureHandling</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>175px</width>
+                  </element>
+                  <element name="ContextSetByBalance" type="elslct">
+                    <label>Context set by balance</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_ContextSetByBalance</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>175px</width>
+                  </element>
+                  <element name="Failover" type="elslct">
+                    <label>Failover</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_Failover</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>175px</width>
+                  </element>
+                  <element name="RoamingContextSetByBalance" type="elslct">
+                    <label>Roaming Context set by balance</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_RoamingContextSetByBalance</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>175px</width>
+                  </element>
+                  <element name="ThresholdVolume" type="elfld">
+                    <label>Threshold Volume</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_ThresholdVolume</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>175px</width>
+                  </element>
+                </elementList>
+              </element>
+              <element name="ChangeUnitType" type="elchk">
+                <label>Change Unit Type</label>
+                <labelOrientation>right</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_ChangeUnitType</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="VerticalLayout3" type="elhlt">
+                <elementList>
+                  <element name="LayoutSpacer2" type="ellsp">
+                    <width>107px</width>
+                  </element>
+                  <element name="LimitType" type="elslct">
+                    <label>Limit Type</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ContentNumbering/dstruct_LimitType</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>175px</width>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.ContentNumberingForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        cm_spoc.initContentNumbering(this.model);
+        return this.model;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="setContentServiceProvider" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItem" type="rifp">
+          <type>dstruct_cm_spoc.FinderSelectReferenceDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var aux = this;
+
+        var aux  =selectedItem;
+      ]]></script>
+    </method>
+    <method name="referenceCallback" type="uimthd">
+      <parameterList>
+        <parameter name="itemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        switch(baseItemCode){
+            case "base_ContentServiceProvider":
+                this.model.ContentServiceProviderInputFor =itemCode;
+                break;
+            case "base_ContentType":
+                this.model.ContentTypeInputFor = itemCode;
+                break;
+            case "base_ContentId":
+                this.model.ContentIdInputFor = itemCode;
+                break;
+            case "base_TariffPlan":
+                this.model.TariffPlanContentInputFor = itemCode;
+                break;
+             case "base_DestinationType":
+                this.model.DestinationTypeContentOutputOf = itemCode;
+                break;
+
+        }
+      ]]></script>
+    </method>
+    <method name="FinderSelectReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_ContentServiceProvider",null,null,"CntSrvProvXnt",this.model.AnalysisTypeContent);
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="FinderContentTypeReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_ContentType",null,null,"CntTypeXnt",this.model.AnalysisTypeContent);
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="FinderContentIdReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_ContentId",null,null,"CntXnt",this.model.AnalysisTypeContent);
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="FinderTariffReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_TariffPlan");
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="FinderDestinationReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_DestinationType");
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="TonTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode=this.model.TonEnum;
+        this.model.TonContentInputFor = btCode;
+      ]]></script>
+    </method>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+    <method name="initializeFields" type="uimthd">
+      <script><![CDATA[
+        this.model.ContentIdInputFor = null;
+        this.model.ContentServiceProviderInputFor = null;
+        this.model.ContentTypeInputFor = null;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

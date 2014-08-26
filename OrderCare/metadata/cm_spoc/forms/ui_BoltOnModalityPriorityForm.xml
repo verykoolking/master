@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.BoltOnModalityPriorityForm">
+  <group>Configuration.BoltOnModalityPriority</group>
+  <label>BoltOnModalityPriorityForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.BoltOnModalityPriority</valueType>
+    </variable>
+    <variable name="tariffPlan" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="modalityList" type="leaf">
+      <valueType>dstruct_cm_spoc.PickListDS/tree_UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>700px</width>
+              <elementList>
+                <element name="BOMPriority" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.BoltOnModalityPriorityForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.BoltOnModalityPriorityForm/frmui_Forms/vform_BOMPriority</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Bolt On Modality Priority</label>
+                </element>
+                <element name="BOMTariffPlan" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.BoltOnModalityPriorityForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.BoltOnModalityPriorityForm/frmui_Forms/vform_BOMTariffPlan</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Tariff Plans</label>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.BoltOnModalityPriorityForm/permMethod_isDefaultUnchecked</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="BOMPriority" type="vform">
+          <label>BOMPriority</label>
+          <root name="VerticalLayout" type="elvlt">
+            <edgeSize>1</edgeSize>
+            <width>100%</width>
+            <elementList>
+              <element name="DefaultPriority" type="elchk">
+                <editable type="varPath">
+                  <variablePathList>
+                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                  </variablePathList>
+                </editable>
+                <label>Use default Bolt On Modality Priorities</label>
+                <labelOrientation>left</labelOrientation>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnModalityPriorityForm/uimthd_runTrigger</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnModalityPriorityForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.BoltOnModalityPriority/dstruct_DefaultPriority</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="FormFrame" type="elovf">
+                <fillSpace>false</fillSpace>
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnModalityPriorityForm/leaf_modalityList</variablePath>
+                    <variablePath>dstruct_cm_spoc.PickListDS/tree_UserInterface/frmui_Forms</variablePath>
+                    <variablePath>tree_com.conceptwave.system.NavigationTreeWithTabs/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>330px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnModalityPriorityForm/leaf_modalityList</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>350px</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="BOMTariffPlan" type="vform">
+          <label>BOMTariffPlan</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>left,center</alignment>
+            <edgeSize>1</edgeSize>
+            <width>100%</width>
+            <elementList>
+              <element name="FormFrame" type="elovf">
+                <fillSpace>false</fillSpace>
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnModalityPriorityForm/leaf_tariffPlan</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>250px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnModalityPriorityForm/leaf_tariffPlan</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>500px</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$modalityList" type="laction">
+      <path>ui_cm_spoc.forms.BoltOnModalityPriorityForm/leaf_modalityList</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var ui = new cm_spoc.PickList(null,this);
+        ui.priorityButtonsEnabled = true;
+        ui.showAvailableTable = false;
+        ui.selectedItems = new DataObjectList();
+        ui.modelCallback = this.refreshPriority;
+        ui.model=this.model;
+        ui.labelDescription = "Bolt On Type Modality";
+
+        var listDS = this.model.BOMPriorityArrDS.ListDS;
+
+        for(var i=0;i<listDS.length;i++){
+            var item = new cm_spoc.PickListDS();
+            item.id = listDS[i].BoltOnTypeModality;
+            item.description = listDS[i].BoltOnTypeModality;
+            item.priority = listDS[i].Priority;
+            ui.selectedItems.addLast(item);
+        }
+        ui.orderByPriority();
+
+
+        return ui;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.BoltOnModalityPriorityForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initBoltOnModalityPriority(this.model);
+        cm_spoc.initBoltOnModalityPriorityUi(this);
+        return m;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$tariffPlan" type="laction">
+      <path>ui_cm_spoc.forms.BoltOnModalityPriorityForm/leaf_tariffPlan</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var ui = new cm_spoc.PickList(null,this);
+        ui.modelCallback = this.setModelAC;
+        ui.availableItems = new DataObjectList();
+        ui.selectedItems = new DataObjectList();
+
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TariffPlan"
+        var result = itemFinder.search();
+
+        var list = this.model.BOMPTariffPlanArrDS.List;
+        for(var i=0;i<result.length;i++){
+
+            var item = new cm_spoc.PickListDS();
+            item.id = result[i].itemCode;
+            item.description = result[i].itemCode;
+            ui.availableItems.addLast(item);
+
+            for(var j=0;j<list.length;j++){
+                if(item.id == list[j]){
+                     ui.availableItems.remove(item);
+                     ui.selectedItems.addLast(item);
+                    break;
+                }
+            }
+
+        }
+
+        return ui;
+      ]]></script>
+    </method>
+    <method name="refreshPriority" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var listDS = this.parent.model.BOMPriorityArrDS.ListDS;
+        for(var i=0;i<selectedItems.length;i++){
+            for(var j=0;j<listDS.length;j++){
+                if(listDS[j].BoltOnTypeModality==selectedItems[i].id){
+                    listDS[j].Priority=selectedItems[i].priority;
+                    break;
+                }
+            }
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="setModelAC" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <mandatory>true</mandatory>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.BOMPTariffPlanArrDS.List.clear();
+        if(selectedItems != null){
+           for(var i=0;i<selectedItems.length;i++){
+
+                this.parent.model.BOMPTariffPlanArrDS.List[i] =  selectedItems[i].id;
+            }
+        }
+      ]]></script>
+    </method>
+    <method name="isDefaultUnchecked" type="permMethod">
+      <script>return !this.model.DefaultPriority;</script>
+    </method>
+    <method name="runTrigger" type="uimthd"/>
+  </methodList>
+</userInterface>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initCyclicActionLifeCycle">
+  <group>ui_scripts.CyclicActions</group>
+  <label>initCyclicActionLifeCycle</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+        var caLifCycleTransitionArr = cm_spoc.initInnerDS("base_CALifCycleTransitionArr");
+        model.CALifCycleTransitionArrDS = caLifCycleTransitionArr;
+
+
+        return model;
+    }
+    else{
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+       s.specificationCode = model.CALifCycleTransitionArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.CALifCycleTransitionArrDS=r;
+             }
+
+       var caLifeCycleRel= model.CALifCycleTransitionArrDS.List;
+       var caLifeCycleDS= model.CALifCycleTransitionArrDS.ListDS;
+       for(var i=0;i<caLifeCycleRel.length;i++){
+           s.specificationCode = caLifeCycleRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               caLifeCycleDS[i]=r;
+           }
+       }
+
+       return model;
+    }
+  ]]></script>
+</script>

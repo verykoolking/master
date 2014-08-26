@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_LCGPRMessageCondRule">
+  <group>rules_scripts.LifeCycles</group>
+  <label>rule_LCGPRMessageCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**Conditional
+     *
+     * LCGPRMessageCondRule
+     *
+     * The attribute must be saved only if the related attribute assumes one of the values shown in column H.
+     *
+     * LifeCycleGracePeriodRule
+     * Message (RecoveredBalanceMessage)
+     *
+     * LifeCycleGracePeriodRule
+     * SMSInfoOfBalanceRetrievedAfterTU
+     *
+     * TRUE
+    */
+
+    var entity=data;
+
+
+    if(entity.RecoveredBalanceMessage && !entity.SMSInfoOfBalanceRetrievedAfterTU)
+    {
+    errList.addErrorMessage(data,["Recovered Balance Message can be saved only if SMS Info Of Balance Retrieved After TU is TRUE"],"NGAA_003","E");
+    }
+
+    /**Conditional
+     *
+     * LCGPRMessageCondRule
+     *
+     * The attribute must be saved only if the related attribute assumes one of the values shown in column H.
+     *
+     * LifeCycleGracePeriodRules
+     * Message (SaveBalanceMessage)
+     *
+     * LifeCycleGracePeriodRules
+     * SMSInfoOfBalanceRetrievedAfterTU
+     *
+     * TRUE
+    */
+
+    if(entity.SaveBalanceMessage && !entity.SMSInfoOfBalanceRetrievedAfterTU)
+    {
+    errList.addErrorMessage(data,["Save Balance Message can be saved only if SMS Info Of Balance Retrieved After TU is TRUE"],"NGAA_003","E");
+    }
+
+    /**Conditional
+     *
+     * LCGPRMessageCondRule
+     *
+     * The attribute must be saved only if the related attribute assumes one of the values shown in column H.
+     *
+     * LifeCycleGracePeriodRules
+       Message (SaveTotalBalanceMessage)
+
+     *
+     * LifeCycleGracePeriodRules
+     * SMSInfoOfBalanceRetrievedAfterTU
+     *
+     * TRUE
+    */
+
+    if(entity.SaveTotalBalanceMessage && !entity.SMSInfoOfBalanceRetrievedAfterTU)
+    {
+    errList.addErrorMessage(data,["Save Total Balance Message can be saved only if SMS Info Of Balance Retrieved After TU is TRUE"],"NGAA_003","E");
+    }
+
+    return false;
+  ]]></script>
+</script>

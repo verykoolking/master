@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.removeSpecificationByKey">
+  <description><![CDATA[
+    <p style="margin-top: 0">
+      Remove a specification from the catalog
+    </p>
+  ]]></description>
+  <group>api</group>
+  <label>removeSpecificationByKey</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="specification" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try
+    {
+        var itemSearchDS = new cwt_pcmaintapi.itemSearchDS();
+        itemSearchDS.itemCode = specification.specificationCode;
+        var item = cwt_pcmaintapi.itemRead(itemSearchDS);
+        if(cwt_pcmaintapi.isFault(item))
+        {
+            var fault = api_common.createFault(item.code, item.message);
+            return fault;
+        }
+
+        var response;
+        if(item.status == "ACT")
+        {
+            var endDate = new Date();
+            //the item is active, so it cannot be deleted and can only be end dateed
+
+            //first check if the item is already end dated, if it is end dated to an earlier date then the end date cannot be moved forward (backward is possible)
+            if(item.endDate && item.endDate < endDate)
+            {
+                var fault = api_common.createFault("E104", "The item is already removed.");
+                return fault;
+            }
+
+            //Now we have to delete any items/relations which are not in ACT mode belonging to this item, along with its containing items
+            response = cm_common.removeItem(item, true, "contains", projectCode);
+            if(api_common.isFault(response))
+                return response;
+
+            //now the item can be end dated, along with its containing items.
+            response = cm_common.endDateItem(item, projectCode,endDate, true, "contains");
+        }
+        else{
+
+            //the item belongs to the same project, so it can be deleted
+            //target items for relations of type "CONTAIN" have to also be deleted
+            response = cm_common.removeItem(item, true, "contains", projectCode);
+        }
+
+        return response;
+
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

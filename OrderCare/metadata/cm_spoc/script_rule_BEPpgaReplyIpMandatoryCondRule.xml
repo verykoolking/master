@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BEPpgaReplyIpMandatoryCondRule">
+  <group>rules_scripts.TopUp</group>
+  <label>rule_BEPpgaReplyIpMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute will be mandatory if the related attribute assumes the value shown in the colum H.
+    //BankEntity
+    //PpgaReplyIp
+    //BankEntity
+    //ClientServerMode
+    //TR
+
+    var entity=data.BankEntity;  //Is this entity in input?
+
+    if(!entity.PpgaReplyIp && entity.ClientServerMode == "TR") {
+        errList.addErrorMessage(data,["Ppga Reply Ip is mandatory if Client Server Mode = 'Traditional'"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

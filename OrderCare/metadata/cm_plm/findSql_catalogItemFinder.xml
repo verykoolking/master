@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findSql name="cm_plm.catalogItemFinder">
+  <autoMap>false</autoMap>
+  <dbSchema>CATALOG</dbSchema>
+  <doubleClickSelect>true</doubleClickSelect>
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <getOutput>doc_cm_plm.cwt_item</getOutput>
+  <group>overridden.finders</group>
+  <input>doc_cm_plm.catalogItemFinderSearch</input>
+  <label>Item Finder</label>
+  <maxRowsLimit>9999</maxRowsLimit>
+  <metaVersion>4</metaVersion>
+  <output>doc_cm_plm.cwt_item</output>
+  <type>SQL</type>
+  <vDetailForm>doc_cm_plm.cwt_item/ui_UserInterface/frmui_Forms/exov_Detail</vDetailForm>
+  <methodList>
+    <method name="cwOnFinderSQLSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        select distinct {+i+} from CWPC_ITEM i {[5], cwpc_itemrelation_v r} where 1=1
+        {[13] and i.ITEMTYPE != ?}
+        {[14] and i.ITEMTYPE != ?}
+        {[15] and i.ITEMTYPE != ?}
+        {[16] and i.ITEMTYPE != ?}
+        {[0] and i.ITEMCODE like ? || '%'}
+        {[1] and}
+        {[12] (}
+        {[1] i.BASEITEMCODE = ?}
+        {[:topItemCode] and i.TOPITEMCODE = ?}
+        {[12] or i.BASEITEMCODE in ?}
+        {[12] )}
+        {[2] and i.ITEMTYPE = ?}
+        {[3] and i.name = ?}
+        {[4] and i.STATUS = ?}
+        {[5] and i.itemcode = r.itemrelationtarget and r.itemrelationtarget = ?}
+        {[6] and i.name like ? || '%'}
+        {[10] and i.ITEMCODE = ? }
+        {[7] and i.itemcode in (select catalogobjectcode from cwpc_projectCommand where projectid = ? and objecttype = 'cwt_pc:cwt_item')}
+        and ((
+        {[9] 1 = ? and } i.ORDERABLE = 1
+        ) or (
+        {[9] 0 = ? and } (i.ORDERABLE = 0 or i.ORDERABLE is null)
+        ) or (
+        {[9] 2 = ? and } (i.ORDERABLE = 0 or i.ORDERABLE = 1 or i.ORDERABLE is null)
+        ))
+      ]]></script>
+    </method>
+    <method name="cwOnFinderSQLGet" type="action">
+      <system>true</system>
+      <script>select {+*+} from CWPC_ITEM where ITEMCODE = ?</script>
+    </method>
+    <method name="editablePerm" type="permMethod">
+      <script><![CDATA[
+        if (this.refFinderDocument!=null) {
+              return true;
+        } else {
+              return this.cw$super_editablePerm($psCondition);
+        }
+      ]]></script>
+    </method>
+    <method name="cwOnFilter" type="action">
+      <system>true</system>
+      <script>return cwt_pc.domainsFilter( input );</script>
+    </method>
+    <method name="cwOnFinderCompleteSearch" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        if (this.controllerOwner && this.controllerOwner.parent && this.controllerOwner.parent instanceof cwt_pc.itemTree) {
+
+            this.controllerOwner.parent.numberOfItemsFound = this.list.length;
+
+            for (var i=this.list.length-1; i>=this.searchDocument.numberOfResults; i--)
+               this.list.remove(this.list[i]);
+        }
+      ]]></script>
+    </method>
+    <method name="cwOnInitSearch" type="uimthd">
+      <script><![CDATA[
+        this.cw$super_cwOnInitSearch();
+
+        if (this.searchDocument.allDescendants == true && this.searchDocument.baseItemCode) {
+              var arr = new Array();
+              arr.push(this.searchDocument.baseItemCode);
+              cwt_pc.getListOfBaseItemCodes(arr);
+              var searchString = convertSearchString(arr);
+              this.searchDocument.baseItemList = searchString;
+
+        } else if (!this.searchDocument.allDescendants) {
+              this.searchDocument.baseItemList = null;
+
+        }
+
+        function convertSearchString(arr) {
+              var str = "";
+              for (var i=0; i<arr.length; i++) {
+                    if (i > 0)
+                          str = str + ",";
+                    str = str + "'" + arr[i] + "'";
+              }
+              return str; //"(" + str + ")";
+        }
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <label>cwt_item</label>
+        <valueType>doc_cm_plm.cwt_item</valueType>
+      </variable>
+      <variable name="globalUI" type="leaf">
+        <label>globalUI</label>
+        <valueType>ui_cwt_pc.globalUI</valueType>
+      </variable>
+      <variable name="targetResult" type="leaf">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <label>cwt_item</label>
+        <valueType>doc_cwt_pc.cwt_item</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cm_plm.catalogItemFinderSearch/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cm_plm.cwt_item/ui_UserInterface</valueType>
+      </variable>
+      <variable name="isInitialLoad" type="leaf">
+        <label>Boolean</label>
+        <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="topStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>650px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="FormFrame" type="elovf">
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_search</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemSearch/ui_UserInterface/frmui_Forms</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemSearch/ui_UserInterface/frmui_Forms/exov_Default</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_search</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="Section1" type="elsect">
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                    <elementList>
+                      <element name="FormFrame1" type="elovf">
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/frmui_Forms</variablePath>
+                            <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/frmui_Forms/exov_Result</variablePath>
+                          </variablePathList>
+                        </formReference>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elhlt">
+                <width>650px</width>
+                <elementList>
+                  <element name="SectionStack" type="elsectnstck">
+                    <visibilityMode>multiple</visibilityMode>
+                    <elementList>
+                      <element name="Section" type="elsect">
+                        <elementList>
+                          <element name="SectionHeader" type="elsecth">
+                            <label>Items</label>
+                          </element>
+                          <element name="Table" type="eltabl">
+                            <doubleClickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/action_showDetailAction</variablePath>
+                              </variablePathList>
+                            </doubleClickMethod>
+                            <height>400px</height>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="itemCode" type="elfld">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cwt_pc.cwt_itemNew/leaf_itemCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>150px</width>
+                              </element>
+                              <element name="name" type="elfld">
+                                <label>Name</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cwt_pc.cwt_itemNew/leaf_name</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>200px</width>
+                              </element>
+                              <element name="itemType" type="elslct">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cwt_pc.cwt_itemNew/leaf_itemType</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>150px</width>
+                              </element>
+                              <element name="status" type="elslct">
+                                <label>Status</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cwt_pc.cwt_itemNew/leaf_status</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>150px</width>
+                              </element>
+                              <element name="baseItemCode" type="elref">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cwt_pc.cwt_itemNew/leaf_baseItemCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>150px</width>
+                              </element>
+                              <element name="orderable" type="elchk">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cwt_pc.cwt_itemNew/leaf_orderable</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="FormFrame" type="elovf">
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/leaf_globalUI</variablePath>
+                                <variablePath>ui_cwt_pc.globalUI/frmui_Forms</variablePath>
+                                <variablePath>ui_cwt_pc.globalUI/frmui_Forms/vform_ItemFinderMainMenu</variablePath>
+                              </variablePathList>
+                            </formReference>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/leaf_globalUI</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/permMethod_menuVisible</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Usage" type="vform">
+            <label>Usage</label>
+            <root name="HorizontalLayout" type="elhlt">
+              <elementList>
+                <element name="Table" type="eltabl">
+                  <height>200px</height>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>500px</width>
+                  <elementList>
+                    <element name="itemCode" type="elfld">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cwt_pc.cwt_itemNew/leaf_itemCode</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="Menu" type="exov">
+            <base>ui_com.conceptwave.system.BaseFinderUserInterface/frmui_Forms/exov_Menu</base>
+            <extends>ui_com.conceptwave.system.BaseFinderUserInterface/frmui_Forms/exov_Menu</extends>
+            <label>Menu</label>
+            <overrideList>
+              <override name="finderMenuLayout" type="elhlt">
+                <alignment>left,center</alignment>
+                <width>100%</width>
+                <elementList>
+                  <element name="cwfSearch" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/action_searchAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconSearch.gif</icon>
+                    <label>Search</label>
+                    <showFocused>true</showFocused>
+                    <style>selectedMenu</style>
+                    <tooltip>Search</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_searchVisible</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfSelect" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/action_showDetailAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconSelect.gif</icon>
+                    <label>Select</label>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/permMethod_cwfSelectView</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfAdd" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/action_addAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconAdd.gif</icon>
+                    <tooltip>Add</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.UserInterface/uivar_model</variablePath>
+                        <variablePath>mdl_com.conceptwave.system.Model/permMethod_addPerm</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfCopy" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/action_copyAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconCopy.gif</icon>
+                    <tooltip>Copy</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.UserInterface/uivar_model</variablePath>
+                        <variablePath>mdl_com.conceptwave.system.Model/permMethod_addPerm</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfUpdate" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/action_updateAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconEdit.gif</icon>
+                    <label>Detail</label>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.UserInterface/uivar_model</variablePath>
+                        <variablePath>mdl_com.conceptwave.system.Model/permMethod_editablePerm</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfDelete" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/usrActionMethod_deleteAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconDelete.gif</icon>
+                    <tooltip>Delete</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/permMethod_canDelete</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="detailMenu" type="elovf">
+                    <formReference type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_detail</variablePath>
+                        <variablePath>doc_cwt_pc.cwt_itemNew/ui_UserInterface/frmui_Forms</variablePath>
+                        <variablePath>doc_cwt_pc.cwt_itemNew/ui_UserInterface/frmui_Forms/exov_Menu</variablePath>
+                      </variablePathList>
+                    </formReference>
+                    <overflow>visible</overflow>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_plm.catalogItemFinder/ui_UserInterface/uivar_detail</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>1px</width>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Chart" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Chart</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Chart</extends>
+            <label>Chart</label>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="hideDetailAction" type="action">
+        <script><![CDATA[
+          this.detail = null;
+          this.isSearchFormVisible = true;
+          this.isSearchButtonVisible = true;
+          this.searchAction();
+        ]]></script>
+      </method>
+      <method name="showDetailAction" type="action">
+        <script><![CDATA[
+          //if this finder is being displayed as a reference finder, return the currently selected
+          //document instead of displaying the detail document.
+          var leafName = this.model.parentLeafName;
+          if(this.result.selected==null) {
+                this.setReferenceData(null);
+                return;
+          }
+          if(this.model.refFinderDocument!=null && !this.model.refFinderDocument.isTranslation(leafName)){
+             this.setReferenceData(this.result.selected[0]);
+          }else if (this.result.selected != null && this.result.selected.length == 1 && this.detailForm!=null){
+                      if(this.result.selected[0].metadata!=null){
+                            this.isSearchFormVisible = false;
+                            this.isSearchButtonVisible = false;
+                            this.detail = new this.result.selected[0].metadata.UserInterface(this.result.selected[0]);
+                            this.detail.parent = this;
+                            this.detail.loadVersions(this.result.selected[0]);
+                            this.detail.isAdd = false;
+                       }
+          } else {
+            this.detail = null;
+          }
+
+          if(this.cwSelectCallback!=null){
+                var args = new Array();
+                this.parent.owner[this.cwSelectCallback](this.result.selected, this.result.selected!=null?this.result.selected[0]:null);
+                this.parent.parent.cwChildDialogClose();
+          }
+        ]]></script>
+      </method>
+      <method name="extendAction" type="usrActionMethod">
+        <script><![CDATA[
+          if (this.result.selected==null && this.result.selected.length != 1) {
+                cwt_pc.showUserMessage("CWTPC0048");
+              return;
+          }
+
+          this.detail = new cwt_pc.cwt_item.UserInterface();
+          this.detail.parent = this;
+          this.detail.model = this.result.selected[0].copyDocument(false, true);
+          this.detail.model.baseItemCode = this.result.selected[0].itemCode;
+          this.detail.model.itemCode = null;
+          this.detail.model.status = "DEF";
+          this.detail.model.ownerId = UserProfile.userProfile().positionId;
+          this.detail.isAdd = true;
+          this.isSearchFormVisible = false;
+          this.isSearchButtonVisible = false;
+        ]]></script>
+      </method>
+      <method name="deleteAction" type="usrActionMethod">
+        <confirmation>ui_com.conceptwave.system.BaseFinderUserInterface/uimthd_onDeleteConfirm</confirmation>
+        <script><![CDATA[
+          /*
+          for (var j = 0; j < this.result.selected.length; j++) {
+                var itemFinderUI = new cwt_pc.cwt_itemFinder.UserInterface(null, this);
+                itemFinderUI.search.model.baseItemCode = this.result.selected[j].itemCode;
+                itemFinderUI.searchAction();
+                if (itemFinderUI.result.length > 0) {
+                      Global.showUserMessage(Global.translateText("CWTPC0136", null, [this.result.selected[j].itemCode]));
+                      return;
+                }
+          }
+
+
+          var finder = this.model.metadata;
+          for (var i = 0; i < this.result.selected.length; i++) {
+              var itemVersionFinderUI = new cwt_pc.cwt_itemFinder.UserInterface(null, this);
+              itemVersionFinderUI.search.model.itemCode = this.result.selected[i].itemCode;
+              itemVersionFinderUI.searchAction();
+              for (var j = 0; j < itemVersionFinderUI.result.length; j++) {
+                    itemVersionFinderUI.result[j].deleteItem();
+                }
+              this.result.selected[i].deleteItem();
+              cwt_pc.deleteReferencedObjects(this.result.selected[i]);
+          }
+          this.searchAction();
+          */
+          var finder = this.model.metadata;
+          var i;
+          for (i = 0; i < this.result.selected.length; i++) {
+            var toDelete = this.result.selected[i];
+            cwt_pc.setDeletedObjectRecord( toDelete );
+            finder.operations.deleteOp.invoke(toDelete, this.invokeContext);
+            cwt_pc.deleteReferencedObjects(toDelete);
+
+            if (this.detail!= null) {
+              this.detail = null;
+            }
+          }
+          this.searchAction();
+        ]]></script>
+      </method>
+      <method name="addAction" type="action">
+        <parameterList>
+          <parameter name="addParam" type="rifp">
+            <type>doc_com.conceptwave.system.Document</type>
+          </parameter>
+        </parameterList>
+        <script><![CDATA[
+          this.detail = new cwt_pc.cwt_item.UserInterface();
+          this.detail.parent = this;
+          this.detail.model.ownerId = UserProfile.userProfile().positionId;
+          this.detail.isAdd = true;
+          this.isSearchFormVisible = false;
+          this.isSearchButtonVisible = false;
+        ]]></script>
+      </method>
+      <method name="onInit" type="action">
+        <script><![CDATA[
+          this.cw$super_onInit();
+          this.isInitialLoad = true;
+          this.globalUI = new cwt_pc.globalUI(null, this);
+        ]]></script>
+      </method>
+      <method name="copyAction" type="action"/>
+      <method name="showUsageAction" type="usrActionMethod">
+        <showInPopup>true</showInPopup>
+        <script><![CDATA[
+          if(this.result.selected != null && this.result.selected.length == 1) {
+                return this.result.selected[0].showUsage();
+          }else {
+                return null;
+          }
+        ]]></script>
+      </method>
+      <method name="menuVisible" type="permMethod">
+        <script><![CDATA[
+          if( this.model.refFinderDocument != null ) {
+                return false;
+          }else {
+                return true;
+          }
+        ]]></script>
+      </method>
+      <method name="updateAction" type="action">
+        <script><![CDATA[
+          this.cw$super_updateAction();
+
+          if (this.detail && this.result.selected && this.result.selected[0]) {
+                this.detail.loadVersions(this.result.selected[0]);
+          }
+        ]]></script>
+      </method>
+      <method name="resultVisible" type="permMethod">
+        <script><![CDATA[
+          if (this.model && this.model.parent && this.model.parent.metadata && this.model.parent.metadata instanceof cwt_pc.cwt_itemRelation) {
+              if (this.model.parent.itemRelationTarget || !this.isInitialLoad) {
+                return true;
+              } else {
+                return this.isInitialLoad==false;
+              }
+          }
+
+
+          if (this.isInitialLoad) {
+                return false;
+          } else {
+                return this.cw$super_resultVisible($psCondition);
+          }
+        ]]></script>
+      </method>
+      <method name="searchAction" type="action">
+        <parameterList>
+          <parameter name="doValidate" type="rifp">
+            <type>dtype_com.conceptwave.system.Boolean</type>
+          </parameter>
+        </parameterList>
+        <script><![CDATA[
+          this.cw$super_searchAction(doValidate);
+          this.isInitialLoad = false;
+        ]]></script>
+      </method>
+    </methodList>
+  </UserInterface>
+  <viewList>
+    <view name="defaultView" type="findVView">
+      <inputOverlay>doc_cwt_pc.cwt_itemSearch/ui_UserInterface/frmui_Forms/exov_Default</inputOverlay>
+      <label>defaultView</label>
+      <outputOverlay>findSql_cm_plm.catalogItemFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+      <showSearchForm>true</showSearchForm>
+    </view>
+  </viewList>
+</findSql>

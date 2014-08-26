@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initModelForModification">
+  <group>ui_scripts.utils</group>
+  <label>initModelForModification</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var nodeNames=model.getNodeNames();
+    var ci,r,arrRels,arrDS;
+    var s = new epc.data.Specification();
+    s.project =  cwa_epc.getDefaultProj();
+
+    for(var i=0;i<nodeNames.length;i++){
+        ci = cm_spoc.getDsName(nodeNames[i]);
+        if(ci){
+            //ci = nodeNames[i].substring(0,nodeNames[i].indexOf("DS"));
+            if(nodeNames[i]!="ListDS"){
+                s.specificationCode = model[ci];
+                r = epc.getSpecificationByKey(s);
+                if(!api_common.isFault(r)){
+                    model[nodeNames[i]]=r;
+                }
+                if("List" in model[nodeNames[i]] && model[nodeNames[i]].List!=null && model[nodeNames[i]].List.isCollection()){
+                    if(!model[nodeNames[i]].has("specificationCode")) model[nodeNames[i]] = cm_spoc.initInnerDS("base_"+model[nodeNames[i]].metadataType.substring(model[nodeNames[i]].metadataType.indexOf("data")+5));
+                    arrRels = model[nodeNames[i]].List;
+                    arrDS = model[nodeNames[i]].ListDS;
+                    for(var j=0;j<arrRels.length;j++){
+                        if(arrRels[j] instanceof DataStructure && "CW_REFID" in arrRels[j]) s.specificationCode = arrRels[j].CW_REFID;
+                        else s.specificationCode = arrRels[j];
+                        r = epc.getSpecificationByKey(s);
+                        if(!api_common.isFault(r)){
+                            arrDS[j]=r;
+                            initModelForModification(arrDS[j]);
+                        }
+                    }
+                }
+                initModelForModification(model[nodeNames[i]]);
+            }
+        }
+    }
+
+    return model;
+  ]]></script>
+</script>

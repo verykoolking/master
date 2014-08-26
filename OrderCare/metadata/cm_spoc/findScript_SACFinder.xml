@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cm_spoc.SACFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <group>ui_scripts.UsageControl.AccumulationConditions</group>
+  <input>doc_cwt_pc.cwt_itemSearch</input>
+  <label>Simple Accumulation Conditions Finder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_cm_spoc.UCSimpleAccumulationConditionsDoc</output>
+  <type>script</type>
+  <volatility>0</volatility>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script>return;</script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="displayDesc" type="leaf">
+        <valueType>dstruct_cm_spoc.data.UCEnumContainer</valueType>
+      </variable>
+      <variable name="inputIndex" type="leaf">
+        <valueType>dtype_com.conceptwave.system.Integer</valueType>
+      </variable>
+      <variable name="selectedItems" type="leaf">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cm_spoc.UCSimpleAccumulationConditionsDoc</valueType>
+      </variable>
+      <variable name="filtered" type="leaf">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cm_spoc.UCSimpleAccumulationConditionsDoc</valueType>
+      </variable>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cm_spoc.UCSimpleAccumulationConditionsDoc</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cwt_pc.cwt_itemSearch/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <fillSpace>false</fillSpace>
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="VerticalLayout" type="elvlt">
+                    <alignment>center,center</alignment>
+                    <height>100%</height>
+                    <width>100%</width>
+                    <elementList>
+                      <element name="HorizontalLayout2" type="elhlt">
+                        <elementList>
+                          <element name="GridLayout" type="elgrd">
+                            <numOfCols>3</numOfCols>
+                            <elementList>
+                              <element name="Add" type="elbtn">
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_addSAC</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>Add New</label>
+                              </element>
+                              <element name="Delete" type="elbtn">
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_deleteSAC</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>Delete</label>
+                              </element>
+                              <element name="UCDisplayEnum" type="elslct">
+                                <canSort>false</canSort>
+                                <iconHeight>16</iconHeight>
+                                <iconWidth>16</iconWidth>
+                                <label> Display:</label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_changeTableState</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <padding>0</padding>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/leaf_displayDesc</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.UCEnumContainer/dstruct_UCDisplayEnum</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="HorizontalLayout" type="elhlt">
+                        <alignment>center,center</alignment>
+                        <edgeSize>2</edgeSize>
+                        <height>90%</height>
+                        <membersMargin>2</membersMargin>
+                        <showEdge>true</showEdge>
+                        <width>100%</width>
+                        <elementList>
+                          <element name="PriorityButtonsVL" type="elvlt">
+                            <elementList>
+                              <element name="ButtonUpDouble" type="elbtn">
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_clickArrowUpTop</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <icon>/cwt/images/16/navigate_up2.png</icon>
+                                <width>22px</width>
+                              </element>
+                              <element name="ButtonUp" type="elbtn">
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_clickArrowUp</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <icon>/cwt/images/16/navigate_up.png</icon>
+                                <width>22px</width>
+                              </element>
+                              <element name="ButtonDown" type="elbtn">
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_clickArrowDown</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <icon>/cwt/images/16/navigate_down.png</icon>
+                                <width>22px</width>
+                              </element>
+                              <element name="ButtonDownDouble" type="elbtn">
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_clickArrowDownBottom</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <icon>/cwt/images/16/navigate_down2.png</icon>
+                                <width>22px</width>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="SACFinderResultTable" type="eltabl">
+                            <canReOrder type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                              </variablePathList>
+                            </canReOrder>
+                            <cellWidth>150</cellWidth>
+                            <doubleClickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/usrActionMethod_openDialogSACAttributeDetail</variablePath>
+                              </variablePathList>
+                            </doubleClickMethod>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <filterFullData>true</filterFullData>
+                            <onSelectChange type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                              </variablePathList>
+                            </onSelectChange>
+                            <showFilter>true</showFilter>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="selected" type="elchk">
+                                <label>Select</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_selected</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="specificationCode" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_specificationCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="AccumulationConditionId" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Accumulation Condition Id</label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_AccumulationConditionId</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="RelationshipWithUCSimpleAppCond" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Relations </label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_RelationshipWithUCSimpleAppCond</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="AccountType" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Account Type </label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_AccountType</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TariffClassCode" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Tariff Class ID</label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_TariffClassCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TariffClassDesc" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Tariff Class Description</label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_TariffClassDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TariffClassCodeDesc" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>TariffClass</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_TariffClassCodeDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ServiceProviderId" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Service Provider ID</label>
+                                <onEnter type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onEnter>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ServiceProviderId</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ServiceProviderDesc" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Service Provider Description</label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ServiceProviderDescription</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ServiceTariffPlanGroupDesc" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Service Tariff Plan Group Description</label>
+                                <onEnter type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onEnter>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ServiceTariffPlanGroupDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ListCodeSDP" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>List ID</label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ListCodeSDP</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ListDesc" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>List Description</label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ListDescription</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ListCodeSDPDesc" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>List</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ListCodeSDPDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TonCode" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Ton ID</label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_TonCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TonDesc" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Ton Description</label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_TonDescription</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="TonIdDesc" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Ton</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_TonCodeDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ServiceTariffPlanGroupID" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Service Tariff Plan Group ID</label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ServiceTariffPlanGroupID</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ServiceTariffPlanGroupIdDesc" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Service Tariff Plan Group </label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ServiceTariffPlanGroupIdDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ServiceProviderIdDesc" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Service Provider </label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_ServiceProviderIdDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="DestTypeId" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Destination Type ID</label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_DestTypeId</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="DestTypeDesc" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Destination Type Desc </label>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uimthd_keepSync</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_DestTypeDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="DestTypeIdDesc" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Destination Type  </label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_DestTypeIdDesc</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="UCSimpleAppConWalletArrDS" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Wallet</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_UCSimpleAppConWalletArrDS</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="UCSApConTrafficTypeArrDS" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Traffic Type</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_UCSApConTrafficTypeArrDS</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="UCSApConHappyPeriodArrDS" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Happy Period</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.UCSimpleAccumulationConditionsDoc/leaf_UCSApConHappyPeriodArrDS</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="cwLeafInitAction$tableState" type="laction">
+        <path>ui_com.conceptwave.system.BaseFinderUserInterface/leaf_tableState</path>
+        <type>initializer</type>
+        <script>return cm_spoc.initTableState(this);</script>
+      </method>
+      <method name="cwLeafInitAction$displayDesc" type="laction">
+        <path>findScript_cm_spoc.SACFinder/ui_UserInterface/leaf_displayDesc</path>
+        <type>initializer</type>
+        <script><![CDATA[
+          var ds= new DataStructure("cm_spoc.data.UCEnumContainer");
+          ds.UCDisplayEnum= "id";
+          return ds;
+        ]]></script>
+      </method>
+      <method name="clickArrowUp" type="uimthd">
+        <script>return cm_spoc.clickArrowUp(this);</script>
+      </method>
+      <method name="clickArrowUpTop" type="uimthd">
+        <script>return cm_spoc.clickArrowUpTop(this);</script>
+      </method>
+      <method name="clickArrowDownBottom" type="uimthd">
+        <script>return cm_spoc.clickArrowDownBottom(this);</script>
+      </method>
+      <method name="clickArrowDown" type="uimthd">
+        <script>return cm_spoc.clickArrowDown(this);</script>
+      </method>
+      <method name="changeItemPos" type="uimthd">
+        <parameterList>
+          <parameter name="item" type="rifp">
+            <mandatory>true</mandatory>
+            <type>dstruct_cm_spoc.PickListDS</type>
+          </parameter>
+          <parameter name="newPos" type="rifp">
+            <mandatory>true</mandatory>
+            <type>dtype_com.conceptwave.system.Integer</type>
+          </parameter>
+        </parameterList>
+        <script>return cm_spoc.changeItemPos(item,newPos,this);</script>
+      </method>
+      <method name="getSingleSelectedIndex" type="uimthd">
+        <script>return cm_spoc.getSingleSelectedIndex(this);</script>
+      </method>
+      <method name="addToSelected" type="uimthd">
+        <script>return cm_spoc.addToSelected(this);</script>
+      </method>
+      <method name="removeFromSelected" type="uimthd">
+        <script>return cm_spoc.removeFromSelected(this);</script>
+      </method>
+      <method name="addSAC" type="uimthd">
+        <script>cm_spoc.addSAC(this);</script>
+      </method>
+      <method name="keepSync" type="uimthd">
+        <script>cm_spoc.keepSync(this);</script>
+      </method>
+      <method name="changeTableState" type="uimthd">
+        <script>cm_spoc.changeTableState(this);</script>
+      </method>
+      <method name="openDialogSACAttributeDetail" type="usrActionMethod">
+        <dialogHeight>500</dialogHeight>
+        <dialogWidth>600</dialogWidth>
+        <showInPopup>true</showInPopup>
+        <script><![CDATA[
+          if(!this.parent.parent.model.readonly){
+
+          var ui = new cm_spoc.forms.UCSimAppConSingleAssignmentPopUp(null,this);
+          return ui;
+          }else{
+          }
+        ]]></script>
+      </method>
+      <method name="onDblClickTariffClass" type="uimthd">
+        <script><![CDATA[this.openDialogSACAttributeDetail("base_TariffClass");]]></script>
+      </method>
+      <method name="onDblClickList" type="uimthd">
+        <script><![CDATA[this.openDialogSACAttributeDetail("base_List");]]></script>
+      </method>
+      <method name="onDblClickTon" type="uimthd">
+        <script><![CDATA[this.openDialogSACAttributeDetail("base_Ton");]]></script>
+      </method>
+      <method name="deleteSAC" type="uimthd">
+        <script>cm_spoc.deleteSAC(this);</script>
+      </method>
+    </methodList>
+  </UserInterface>
+  <viewList>
+    <view name="priceFinderView" type="findVView">
+      <label>Applicability Conditions</label>
+      <outputOverlay>findScript_cm_spoc.SACFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findScript>

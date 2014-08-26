@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/hw" xmlns:equip="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/equip" xmlns:itf="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/itf" xmlns:phy="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy" xmlns:composite="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/holder/composite" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" xmlns:network="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/network" xmlns:compound="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/compound" xmlns:ent="http://www.tmforum.org/xml/sid/org/tmforum/tip/enterprise/risk/sec/ent" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/hw" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.resource.res.phy.hw
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 6
+ Association Classes: 1
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/equip" schemaLocation="sid_org_tmforum_tip_resource_res_phy_equip.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/itf" schemaLocation="sid_org_tmforum_tip_resource_res_log_itf.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy" schemaLocation="sid_org_tmforum_tip_resource_res_phy.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/holder/composite" schemaLocation="sid_org_tmforum_tip_resource_res_phy_holder_composite.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/network" schemaLocation="sid_org_tmforum_tip_resource_res_log_network.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/compound" schemaLocation="sid_org_tmforum_tip_resource_res_compound.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/enterprise/risk/sec/ent" schemaLocation="sid_org_tmforum_tip_enterprise_risk_sec_ent.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="cable" type="tns:Cable"/>
+   <xsd:complexType name="Cable">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A container of conductors or fibres. At least two connectors will be attached to a cable.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfCable">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:Cable" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="hardware" type="tns:Hardware"/>
+   <xsd:complexType name="Hardware" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract base class that represents any type of hardware entity that exists as an atomic unit that is not a PhysicalLink or a PhysicalConnector. Hardware is defined as any component that has a distinct physical identity and can be a component of a PhysicalDevice. An object has a physical identity if it has a physical manifestation that enables it to be held and have a label attached to it. Thus, software, files, protocols, and policies are not physical objects.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="commonPlatformEnumeration" type="ent:CommonPlatformEnumeration" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  unique</p>
+                        <p>This association end  is  an end of association HardwareIdentifiedByCPEName</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfHardware">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:Hardware" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="managedHardware" type="tns:ManagedHardware"/>
+   <xsd:complexType name="ManagedHardware" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract base class that adds additional semantics to the Hardware base class. These semantics are used to provide management information on the hardware. For example, attributes defined by this class can provide the administrative and operational state of the entity, and tell whether it has any alarms.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfManagedHardware">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ManagedHardware" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="physicalConnector" type="tns:PhysicalConnector"/>
+   <xsd:complexType name="PhysicalConnector">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is a concrete class that represents any type of hardware unit that is used to connect to other hardware units and transmit signals and/or power between them.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="inUse" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a boolean attribute that, if TRUE, indicates that this PhysicalConnector is in use by some other component of the system. This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="pinDescription" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a free-form string describing the pin configuration and signal usage of a PhysicalConnector.
+
+This is a REQUIRED attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="gender" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the gender type of the connector. Values are:
+
+0: Unknown
+1: Not Applicable
+2: Male
+3: Female
+
+This is a REQUIRED attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="cableType" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer, and defines the particular type of cable that is attached to this connector. Values include:
+
+0: Unknown
+1: RS-232
+2: RS-422
+3: RS-423
+4: RS-449
+5: RS-485
+6: RS-530
+7: V.35
+8: X.21
+9: 9 um single-mode
+10: 62.5/125 um multi-mode
+11: USB
+
+to be continued, not done!
+
+This is a REQUIRED attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="typeOfConnector" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the type of connector that this instance is. Values include:
+
+0: Unknown
+1: DB-9
+2: DB-15
+3: DB-25
+4: DB-36
+5: DB-60
+6: SC
+7: SG
+
+to be continued, not done!
+
+This is a REQUIRED attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="physicalLink" type="phy:PhysicalLink" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association LinkHasConnector</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="physicalConnector" type="tns:ArrayOfPhysicalConnector" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association ConnectedTo</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="physicalConnector1" type="tns:ArrayOfPhysicalConnector" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association ConnectedTo</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="physicalPort" type="tns:ArrayOfPhysicalPort" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association PlugsInto</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPhysicalConnector">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PhysicalConnector" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="physicalContainer" type="tns:PhysicalContainer"/>
+   <xsd:complexType name="PhysicalContainer" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract class that is used to add additional semantics to the ManagedHardware class. Its attributes define whether a ManagedHardware object can be removed and/or replaced, and whether this action requires power to be removed or not when the action is performed.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPhysicalContainer">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PhysicalContainer" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="physicalPort" type="tns:PhysicalPort"/>
+   <xsd:complexType name="PhysicalPort">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents an actual or potential end point of a topological (physical) link, and corresponds directly to a physical port on a topology map. PhysicalPorts are always contained by another physical object - they can't exist by themselves. The two most common examples are PhysicalPorts on a Card and on a Chassis.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="portNumber" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-zero integer that uniquely identifies this PhysicalPort instance from all other instances. This is a REQUIRED attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="vendorPortName" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string that contains the vendor-specific name of this port. This is different from the commonName attribute, which represents a system-wide naming structure for all ManagedEntities.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="duplexMode" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the duplex mode of this port. Values are:
+
+0: Unknown
+1: Full Duplex
+2: Half Duplex
+
+This is a REQUIRED attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="typeOfPPort" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the particular type of PhysicalPort this instance is. Values include:
+
+0: Unknown
+1: Ethernet
+2: FastEthernet
+3: Auto-Sensing
+4: GigabitEthernet
+5: FastGigabitEthernet
+6: DS-0
+7: DS-1
+8: DS-3
+9: T1
+10: T3
+11: E1
+12: E3
+13: OC-3
+14: OC-12
+15: OC-48
+16: OC-192
+17: RS-232C
+
+This is a REQUIRED attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ifType" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer, and specifies the particular media type of the link. This attribute provides additional detail beyond that provided in the ifType of an ifEntry of a MIB (e.g., distinguishing between 10Base and 100Base ethernet). Values include:
+
+0: Unknown
+1: 10BaseT
+2: 100BaseT
+3: 10-100BaseT
+4: 1000BaseT
+5: 10000BaseT
+6: DS-0
+7: DS-1
+8: DS-3
+9: OC-3
+10: OC-12
+11: OC-48
+12: OC-192
+
+This is a REQUIRED attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="deviceInterface" type="itf:ArrayOfDeviceInterface" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association DeviceInterfacePPortDetails</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="network" type="network:Network" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association PortsInNetwork</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="card" type="equip:Card" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association PortsOnCard</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="chassis" type="composite:Chassis" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association PortsOnChassis</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="resourcePort" type="compound:ResourcePort" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association PPortAspectCompoundResourceDetails</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="physicalConnector" type="tns:ArrayOfPhysicalConnector" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association PlugsInto</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPhysicalPort">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PhysicalPort" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* -->
+   <xsd:element name="pPortAspectCompoundResourceDetails" type="tns:PPortAspectCompoundResourceDetails"/>
+   <xsd:complexType name="PPortAspectCompoundResourceDetails">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class is a concrete class that defines the semantics of the PhysicalPortsInResourcePort aggregation. For example, it will describe characteristics and behavior of the PhysicalPorts that make up this particular ResourcePort in terms of dependencies and how a PhysicalPort interacts with other PhysicalPorts.</p>
+            <p>This association class  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence/>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPPortAspectCompoundResourceDetails">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PPortAspectCompoundResourceDetails" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.cbe.policy.struct.action.PolicyActionAtomic">
+  <container>true</container>
+  <description><![CDATA[
+    <p>This is the base class for all simple PolicyActions. A simple PolicyAction consists of a single Boolean clause, which is used to perform a single action. This consists of a single occurrence of a PolicyStatement, which is of the form:    {SET | CLEAR} PolicyVariable to PolicyValue    This is distinctly different from the PolicyActionVendor, which does not use a PolicyStatement.    PolicyActionAtomic objects can also be used to form more complex action structures. A PolicyActionComposite object can be used to contain a group of PolicyActionAtomic objects - this grouping enables multiple PolicyActionAtomic objects to be executed as a group. Alternatively, a PolicyActionAtomic object can contain one or more PolicyActionAtomic objects (and also PolicyActionComposite groups if desired) to provide the semantics of a compound PolicyAction. In either case, the aggregation is done using the containedPolicyActions aggregation.</p>                <p>This entity  is  optional</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{706771f8-4a2e-466e-93b6-1d0c7502ac01}</guid>
+  <label>PolicyActionAtomic</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="hasSubActions" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is a Boolean attribute that, if TRUE, signifies that this PolicyAction has one or more sub-actions. Sub-actions are used to enforce a hierarchical nesting of actions, so that parent actions may control the evaluation and other semantics of the sub-actions that they contain.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{60f8f072-f7a1-4ea1-9167-ef7b14c6cd8a}</guid>
+      <label>hasSubActions</label>
+    </child>
+    <child name="hasExecuted" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is an enumerated integer that is set by a policy application to define the state of execution of this policyAction. Values include:        0: not yet executed        1: executed with no errors        2: executed with errors but successfully rolled back        3: executed with errors and did not roll back        4: did not complete execution but successfully rolled back        5: did not complete execution and did not roll back</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{05dda0f2-1b4e-4c23-9ffb-eb0f83bca3bc}</guid>
+      <label>hasExecuted</label>
+    </child>
+    <child name="actionSequenceNumber" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute is a non-negative integer and represents the particular sequence in which this element is executed as part of the overall policy structure.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{509496f4-8413-4ec1-a334-7d093dbf4eef}</guid>
+      <label>actionSequenceNumber</label>
+    </child>
+    <child name="policyStatement" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..1</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association PolicyStatementInPolicyAction</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.cbe.policy.struct.stat.PolicyStatement</element>
+      <guid>{7abc844b-b524-4bb2-a28d-a3b405a96904}</guid>
+      <label>policyStatement</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.cbe.policy.struct.action.PolicyActionAtomic</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.cbe.policy.struct.action.PolicyActionAtomic</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

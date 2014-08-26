@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findDoc name="cm_spoc.WorkListDocFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <group>overridden.UI.RatingCatalogApp.overridden</group>
+  <input>doc_cwf_pm.WorklistSearch</input>
+  <label>WorkListDocFinder</label>
+  <maxRowsLimit>9999</maxRowsLimit>
+  <metaVersion>4</metaVersion>
+  <output>doc_cwf_pm.BaseWorklist</output>
+  <overrides>findDoc_cwf_pm.BaseWorklistFinder</overrides>
+  <rtConfigurable>true</rtConfigurable>
+  <type>document</type>
+  <uiQueryTimeout>0</uiQueryTimeout>
+  <vDetailForm>doc_cwf_pm.BaseWorklist/ui_UserInterface/frmui_Forms/vform_Default</vDetailForm>
+  <volatility>0</volatility>
+  <searchList>
+    <search type="sitem">
+      <document>doc_cwf_pm.WorklistSearch</document>
+      <mappedDocument>doc_cwf_pm.BaseWorklist</mappedDocument>
+      <mappedPath>doc_cwf_pm.BaseWorklist/leaf_disable</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cwf_pm.WorklistSearch/leaf_disable</path>
+    </search>
+    <search type="sitem">
+      <document>doc_cwf_pm.WorklistSearch</document>
+      <mappedDocument>doc_cwf_pm.BaseWorklist</mappedDocument>
+      <mappedPath>doc_cwf_pm.BaseWorklist/leaf_Flags</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cwf_pm.WorklistSearch/leaf_Flags</path>
+    </search>
+    <search type="sitem">
+      <document>doc_cwf_pm.WorklistSearch</document>
+      <mappedDocument>doc_cwf_pm.BaseWorklist</mappedDocument>
+      <mappedPath>doc_cwf_pm.BaseWorklist/leaf_userId</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cwf_pm.WorklistSearch/leaf_userId</path>
+    </search>
+  </searchList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface</extends>
+    <overrides>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface</overrides>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cwf_pm.BaseWorklist</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cwf_pm.WorklistSearch/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cwf_pm.BaseWorklist/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.SplitFinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.SplitFinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="WorkListFinderResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="Participant" type="elfld">
+                        <dataLength>25</dataLength>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_Participant</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Priority" type="elslct">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_Priority</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="SenderId" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_SenderId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="OrderId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_OrderId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="OrderVK" type="elfld">
+                        <dataLength>40</dataLength>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_OrderVK</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="DueDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_DueDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="StartDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_StartDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="AssignedDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_AssignedDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Flags" type="elslct">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_Flags</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="SenderType" type="elfld">
+                        <dataLength>25</dataLength>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_SenderType</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Operation" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_Operation</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="userId" type="elfld">
+                        <dataLength>30</dataLength>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_userId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="createDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_createDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="orderItemId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_orderItemId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="MetadataVer" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_MetadataVer</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="actIndex" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_actIndex</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Effort" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_Effort</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="disable" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_disable</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="assocId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_assocId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="distributionType" type="elslct">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_distributionType</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="changed" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_changed</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="revisionNo" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_revisionNo</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwDocId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_cwDocId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/frmui_Forms/exov_Default</base>
+            <extends>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="finderHeader" type="eldel"/>
+              <override name="resultFrame" type="eldel"/>
+              <override name="SectionStack" type="eldel"/>
+              <override name="sStack" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="detailFrame2" type="elovf">
+                    <fillSpace>false</fillSpace>
+                    <formReference type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                      </variablePathList>
+                    </formReference>
+                    <height>100%</height>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_detail</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Menu" type="exov">
+            <base>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/frmui_Forms/exov_Menu</base>
+            <extends>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/frmui_Forms/exov_Menu</extends>
+            <label>Menu</label>
+            <overrideList>
+              <override name="finderMenuLayout" type="elhlt">
+                <alignment>left,center</alignment>
+                <width>100%</width>
+                <elementList>
+                  <element name="cwfDetail" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/action_updateAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <label>Detail</label>
+                    <tooltip>Edit</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="TaskMenu" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <label>Task</label>
+                    <showDown>true</showDown>
+                    <showMenuDropDown>true</showMenuDropDown>
+                    <showRollOver>true</showRollOver>
+                    <elementList>
+                      <element name="StartWorkMenu" type="elmnu">
+                        <menuAccel type="mAccelP"/>
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/usrActionMethod_cwStartWork</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <label>Start Work</label>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="GetAvailableMenu" type="elmnu">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/usrActionMethod_cwFetchAvailableTasks</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <label>Get Available</label>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="DelegateTaskMenu" type="elmnu">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/usrActionMethod_cwAssignUser</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <label>Delegate Task(s)</label>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/permMethod_permDelegateTask</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="TakeFromUserMenu" type="elmnu">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/usrActionMethod_cwTakeFromUser</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <label>Take From User</label>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="AcknowledgeMenu" type="elmnu">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/usrActionMethod_cwAcknowledgeAlert</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <label>Acknowledge</label>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="AssignTasksMenu" type="elmnu">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/usrActionMethod_cwAssignTask</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <label>Assign Tasks</label>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="ReturnToQueueMenu" type="elmnu">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/usrActionMethod_cwReturnToQueue</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <label>Return To Queue</label>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/permMethod_permReturnToQueue</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="detailMenuEx" type="elovf">
+                    <formReference type="varPath">
+                      <variablePathList>
+                        <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_detail</variablePath>
+                        <variablePath>doc_cwf_pm.BaseWorklist/ui_UserInterface/frmui_Forms</variablePath>
+                        <variablePath>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/vform_Menu</variablePath>
+                      </variablePathList>
+                    </formReference>
+                    <overflow>visible</overflow>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/uivar_detail</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>1px</width>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="cwRefreshWL" type="uimthd">
+        <parameterList>
+          <parameter name="workitem" type="rifp">
+            <type>doc_cwf_pm.BaseWorklist</type>
+          </parameter>
+        </parameterList>
+        <script><![CDATA[
+          this.cw$super_cwRefreshWL(workitem);
+          if(this.parent && this.parent["refreshAfterContinue"]){
+              this.parent.refreshAfterContinue();
+          }
+        ]]></script>
+      </method>
+      <method name="onTimer" type="action">
+        <script>return;</script>
+      </method>
+    </methodList>
+  </UserInterface>
+  <viewList>
+    <view name="WorkListFinderView" type="findVView">
+      <outputOverlay>findDoc_cm_spoc.WorkListDocFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+      <searchImmediately>true</searchImmediately>
+    </view>
+  </viewList>
+</findDoc>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initRatingLogicTechnicalPropertUi">
+  <group>ui_scripts.RatingLogicTechnicalPropert</group>
+  <label>initRatingLogicTechnicalPropertUi</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //ui.testIterator = new Array();
+    //var destinationTypeDS=ui.model.RLTPDestinationTypeArrDS.ListDS;
+
+    if(!ui.model.specificationCode){
+     /*   cm_spoc.addListElement(ui, subsLimitsDS,"cm_spoc.forms.SubscriptionLimitsUI","base_SubscriptionLimit","SubLimitsIterator");
+        subsLimitsDS[0].Period="DAY";
+        cm_spoc.addListElement(ui, subsIncompDS,"cm_spoc.forms.BoltOnSubscriptionUI","base_BoltOnSubscription","SubsIncompatibilitiesIterator"); */
+    }
+    else{
+            for(var i=0;i<ui.model.RLTPDestinationTypeArrDS.List.length;i++){
+
+            var found = false;
+
+            for(var j=0;j<ui.finalDestinationPickList.availableItems.length;j++){
+            var item = ui.finalDestinationPickList.availableItems[j];
+                if(item.id == ui.model.RLTPDestinationTypeArrDS.List[i]){
+                    found = true;
+                    break;
+                }
+            }
+
+            if(found){
+                ui.finalDestinationPickList.selectedItems.addLast(item);
+                ui.finalDestinationPickList.availableItems.remove(item);
+            }
+        }
+
+    }
+  ]]></script>
+</script>

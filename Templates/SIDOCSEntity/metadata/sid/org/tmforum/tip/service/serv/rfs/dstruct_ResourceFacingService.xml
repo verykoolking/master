@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.service.serv.rfs.ResourceFacingService">
+  <abstract>true</abstract>
+  <container>true</container>
+  <description><![CDATA[
+    <p>This is an abstract base class for ResourceFacingServices. A ResourceFacingService is an abstraction that defines the characteristics and behavior of a particular Service that is not directly seen or purchased by the Customer. ResourceFacingServices are internal Services that are required to support a CustomerFacingService. The Customer obtains CustomerFacingServices via Products, and is not aware of the ResourceFacingServices which support the CustomerFacingService(s) that is being obtained directly by the Customer via a Product. For example, a VPN is an example of a CustomerFacingService. This particular type of VPN may require BGP to support it. Customers don't purchase BGP, and hopefully aren't even aware that BGP is running. Therefore, BGP is an example of a ResourceFacingService.    CustomerFacingServices are directly related to Products as well as to ResourceFacingServices. ResourceFacingServices are indirectly related to Products through the relationship between Product and Resource. This enforces the relationship to Products while keeping Services that are not directly obtainable via Products (i.e., ResourceFacingServices) separated from Products.</p>                <p>This entity  is  abstract</p>                <p>This entity  is  optional</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{5d1d2a24-1034-4cd2-99ab-544e6f4a8882}</guid>
+  <label>ResourceFacingService</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="rfsStatus" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is an enumerated integer that defines the status of this particular ResourceFacingService. Values include:        0: Operational and supporting CFS        1: Degraded but supporting CFS        2: In Violation and not supporting CFS        3: Operational but not yet supporting a CFS        4: Being Tested        5: Being Deployed        6: Failed        Value 0 means that this ResourceFacingService is acting per specification, and is also currently supporting one or more CustomerFacingServices.        Value 1 means that this ResourceFacingService is operational, but is currently in a degraded state. This degraded state indicates congestion or some other problem, but has not yet comprimised the operation of its associated CustomerFacingServices.        Value 2 means that this ResourceFacingService is operational, but is currently in violation of its associated specification(s). This in turn means that its associated CustomerFacingServices are violating their contractual specification(s) unless automatic fail-over has been enabled.        Value 3 means that this ResourceFacingService is acting per specification, but is not yet currently supporting one or more CustomerFacingServices.        Value 4 means that this ResourceFacingService is currently being tested, and is not yet ready to support a CustomerFacingService.        Value 5 means that this ResourceFacingService is currently being deployed, and is not yet ready to support a CustomerFacingService.        Value 6 means that this ResourceFacingService has currently failed. The set of actions that should be taken, as well as whether this service can still be billed or not, are determined by its associated Policy for handling service violations.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{7b036be1-1689-445d-ba04-b545a2c38586}</guid>
+      <label>rfsStatus</label>
+    </child>
+    <child name="deviceInterface" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..1</p>                                <p>This association end  has  aggregation shared</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association ServiceDeviceInterfaceDetails</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.log.itf.DeviceInterface</element>
+      <guid>{fadaabe5-0fcc-428c-9b82-5d3352518190}</guid>
+      <label>deviceInterface</label>
+    </child>
+    <child name="customerFacingService" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation shared</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association CFServiceRequiresRFServices</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.service.serv.cfs.ArrayOfCustomerFacingService</element>
+      <guid>{09c5e5b8-355f-49e3-903a-aefdf01265c9}</guid>
+      <label>customerFacingService</label>
+    </child>
+    <child name="protocol" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association ProtocolServiceDetails</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.log.proto.ArrayOfProtocol</element>
+      <guid>{084c6d63-a707-4824-a6e6-5295dda17db6}</guid>
+      <label>protocol</label>
+    </child>
+    <child name="resourceFacingServiceComposite" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..1</p>                                <p>This association end  has  aggregation shared</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association RFSCompositeHasRFServices</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.service.serv.rfs.ResourceFacingServiceComposite</element>
+      <guid>{a854fa40-c857-44ca-bda3-13df405f2b4d}</guid>
+      <label>resourceFacingServiceComposite</label>
+    </child>
+    <child name="resourceFacingServiceRole" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association RFServiceHasRFSRoles</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.service.serv.rfs.role.ArrayOfResourceFacingServiceRole</element>
+      <guid>{0c361517-91ae-45db-92b8-6435c043f88e}</guid>
+      <label>resourceFacingServiceRole</label>
+    </child>
+    <child name="serviceCandidate" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association ServiceCandidateToResourceFacingService</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.service.spec.catalog.ArrayOfServiceCandidate</element>
+      <guid>{303bea45-b4f2-4bad-9911-9cf68ddd4602}</guid>
+      <label>serviceCandidate</label>
+    </child>
+    <child name="resourceFacingServiceSpec" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..1</p>                                <p>This association end  has  aggregation shared</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association SpecifiesResourceFacingService</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.service.spec.rfs.ResourceFacingServiceSpec</element>
+      <guid>{a4bf7894-128e-4fc1-a22d-cb385bbcccbe}</guid>
+      <label>resourceFacingServiceSpec</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.service.serv.rfs.ResourceFacingService</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.service.serv.rfs.ResourceFacingService</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

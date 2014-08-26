@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BoltOnValidityOfferingMinCondRule">
+  <group>rules_scripts.BoltOn</group>
+  <label>rule_BoltOnValidityOfferingMinCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Conditional      BoltOn
+     *
+     * ValidityOfferingMinCondRule
+     *
+     * The attribute  must be saved only if Hours assumes a value greater than 0. Otherwise, an error is to be arisen
+     *
+     * BoltOnValidityOffering
+     * Minutes
+     *
+     * BoltOnValidityOffering
+     *       Hours
+     *
+     *       >0
+
+
+     *
+     */
+
+     var contr = data;
+
+     if ( contr.Minutes && (!contr.Hours || contr.Hours <  1 )  )  {
+
+        // return true;
+        errList.addErrorMessage(data,["Minutes", "Hours are not set"],"NGAA_EPC_002","E");
+     }
+         return false;
+  ]]></script>
+</script>

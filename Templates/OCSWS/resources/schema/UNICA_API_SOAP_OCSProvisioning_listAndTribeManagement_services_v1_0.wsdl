@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- PA2 -->
+
+<wsdl:definitions 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/listAndTribeManagement/v1/services"
+    xmlns:latns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/listAndTribeManagement/v1/types"
+    xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+    xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/04/secext"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    targetNamespace="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/listAndTribeManagement/v1/services">
+    
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+            <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/listAndTribeManagement/v1/types"
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_listAndTribeManagement_types_v1_0.xsd"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                schemaLocation="addressing" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2002/04/secext"
+                schemaLocation="secext.xsd" />
+	        <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+  			    schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>	
+        </xsd:schema>
+    </wsdl:types>
+    
+    <!--
+        Header
+    -->
+    <wsdl:message name="OCSHeaderInfo">
+        <wsdl:part name="messageID" element="wsa:MessageID" />
+        <wsdl:part name="replyTo" element="wsa:ReplyTo" />
+        <wsdl:part name="security" element="wsse:Security" />
+    </wsdl:message>
+  
+	<!--
+	    Messages
+	-->
+	
+    <wsdl:message name="AddTribeMemberRequest">
+        <wsdl:part name="parameters" element="latns:addTribeMember" />
+    </wsdl:message>
+    <wsdl:message name="AddTribeMemberResponse">
+        <wsdl:part name="parameters" element="latns:addTribeMemberResponse" />
+    </wsdl:message>
+    <wsdl:message name="BlockListRequest">
+        <wsdl:part name="parameters" element="latns:blockList" />
+    </wsdl:message>
+    <wsdl:message name="BlockListResponse">
+        <wsdl:part name="parameters" element="latns:blockListResponse" />
+    </wsdl:message>
+    <wsdl:message name="DeleteTribeMemberRequest">
+        <wsdl:part name="parameters" element="latns:deleteTribeMember" />
+    </wsdl:message>
+    <wsdl:message name="DeleteTribeMemberResponse">
+        <wsdl:part name="parameters" element="latns:deleteTribeMemberResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryListMembersRequest">
+        <wsdl:part name="parameters" element="latns:queryListMembers" />
+    </wsdl:message>
+    <wsdl:message name="QueryListMembersResponse">
+        <wsdl:part name="parameters" element="latns:queryListMembersResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryListsBasicsRequest">
+        <wsdl:part name="parameters" element="latns:queryListsBasics" />
+    </wsdl:message>
+    <wsdl:message name="QueryListsBasicsResponse">
+        <wsdl:part name="parameters" element="latns:queryListsBasicsResponse" />
+    </wsdl:message>
+    <wsdl:message name="SetListMembersRequest">
+        <wsdl:part name="parameters" element="latns:setListMembers" />
+    </wsdl:message>
+    <wsdl:message name="SetListMembersResponse">
+        <wsdl:part name="parameters" element="latns:setListMembersResponse" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeListRequest">
+        <wsdl:part name="parameters" element="latns:subscribeList" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeListResponse">
+        <wsdl:part name="parameters" element="latns:subscribeListResponse" />
+    </wsdl:message>
+    <wsdl:message name="UnblockListRequest">
+        <wsdl:part name="parameters" element="latns:unblockList" />
+    </wsdl:message>
+    <wsdl:message name="UnblockListResponse">
+        <wsdl:part name="parameters" element="latns:unblockListResponse" />
+    </wsdl:message>
+    <wsdl:message name="UnsubscribeListRequest">
+        <wsdl:part name="parameters" element="latns:unsubscribeList" />
+    </wsdl:message>
+    <wsdl:message name="UnsubscribeListResponse">
+        <wsdl:part name="parameters" element="latns:unsubscribeListResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryTribesBasicsRequest">
+        <wsdl:part name="parameters" element="latns:queryTribesBasics" />
+    </wsdl:message>
+    <wsdl:message name="QueryTribesBasicsResponse">
+        <wsdl:part name="parameters" element="latns:queryTribesBasicsResponse" />
+    </wsdl:message>
+    <wsdl:message name="DisableListRequest">
+        <wsdl:part name="parameters" element="latns:disableList" />
+    </wsdl:message>
+    <wsdl:message name="DisableListResponse">
+        <wsdl:part name="parameters" element="latns:disableListResponse" />
+    </wsdl:message>
+    <wsdl:message name="EnableListRequest">
+        <wsdl:part name="parameters" element="latns:enableList" />
+    </wsdl:message>
+    <wsdl:message name="EnableListResponse">
+        <wsdl:part name="parameters" element="latns:enableListResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryListsAllowedRequest">
+        <wsdl:part name="parameters" element="latns:queryListsAllowed" />
+    </wsdl:message>
+    <wsdl:message name="QueryListsAllowedResponse">
+        <wsdl:part name="parameters" element="latns:queryListsAllowedResponse" />
+    </wsdl:message>
+
+    <wsdl:message name="ServerException">
+      <wsdl:part name="ServerException" element="uct:serverException"/>
+    </wsdl:message>
+    <wsdl:message name="ClientException">
+      <wsdl:part name="ClientException" element="uct:clientException"/>
+    </wsdl:message>
+
+	<!--
+	    Port
+	-->
+	
+	<wsdl:portType name="ListAndTribeManagementPort_v1_0">
+        <wsdl:operation name="addTribeMember">
+            <wsdl:input message="tns:AddTribeMemberRequest" />
+            <wsdl:output message="tns:AddTribeMemberResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="blockList">
+            <wsdl:input message="tns:BlockListRequest" />
+            <wsdl:output message="tns:BlockListResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="deleteTribeMember">
+            <wsdl:input message="tns:DeleteTribeMemberRequest" />
+            <wsdl:output message="tns:DeleteTribeMemberResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryListMembers">
+            <wsdl:input message="tns:QueryListMembersRequest" />
+            <wsdl:output message="tns:QueryListMembersResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryListsBasics">
+            <wsdl:input message="tns:QueryListsBasicsRequest" />
+            <wsdl:output message="tns:QueryListsBasicsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="setListMembers">
+            <wsdl:input message="tns:SetListMembersRequest" />
+            <wsdl:output message="tns:SetListMembersResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="subscribeList">
+            <wsdl:input message="tns:SubscribeListRequest" />
+            <wsdl:output message="tns:SubscribeListResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="unblockList">
+            <wsdl:input message="tns:UnblockListRequest" />
+            <wsdl:output message="tns:UnblockListResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="unsubscribeList">
+            <wsdl:input message="tns:UnsubscribeListRequest" />
+            <wsdl:output message="tns:UnsubscribeListResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryTribesBasics">
+            <wsdl:input message="tns:QueryTribesBasicsRequest" />
+            <wsdl:output message="tns:QueryTribesBasicsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="disableList">
+            <wsdl:input message="tns:DisableListRequest" />
+            <wsdl:output message="tns:DisableListResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="enableList">
+            <wsdl:input message="tns:EnableListRequest" />
+            <wsdl:output message="tns:EnableListResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryListsAllowed">
+            <wsdl:input message="tns:QueryListsAllowedRequest" />
+            <wsdl:output message="tns:QueryListsAllowedResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+	</wsdl:portType>
+	
+	<!-- Binding -->
+	
+	<wsdl:binding name="ListAndTribeManagementServiceSOAPBinding_v1_0" type="tns:ListAndTribeManagementPort_v1_0">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+	
+        <wsdl:operation name="addTribeMember">
+            <soap:operation soapAction="addTribeMember" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="blockList">
+            <soap:operation soapAction="blockList" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="deleteTribeMember">
+            <soap:operation soapAction="deleteTribeMember" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryListMembers">
+            <soap:operation soapAction="queryListMembers" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryListsBasics">
+            <soap:operation soapAction="queryListsBasics" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="setListMembers">
+            <soap:operation soapAction="setListMembers" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="subscribeList">
+            <soap:operation soapAction="subscribeList" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="unblockList">
+            <soap:operation soapAction="unblockList" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="unsubscribeList">
+            <soap:operation soapAction="unsubscribeList" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryTribesBasics">
+            <soap:operation soapAction="queryTribesBasics" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="disableList">
+            <soap:operation soapAction="disableList" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="enableList">
+            <soap:operation soapAction="enableList" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryListsAllowed">
+            <soap:operation soapAction="queryListsAllowed" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+	</wsdl:binding>
+	
+	<!--
+	    Service
+	-->
+	
+	<wsdl:service name="ListAndTribeManagementService_v1">
+		<wsdl:port name="ListAndTribeManagement_v1_0" binding="tns:ListAndTribeManagementServiceSOAPBinding_v1_0">
+			<soap:address location="http://localhost/UNICA/OCSProvisioning/ListAndTribeManagement_v1"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

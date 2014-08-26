@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  PA3 -->
+
+<wsdl:definitions 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/services"
+    xmlns:bns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types"
+    xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+    xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/04/secext"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    targetNamespace="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/services">
+    
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+            <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types"
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_boltonManagement_types_v1_0.xsd"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                schemaLocation="addressing" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2002/04/secext"
+                schemaLocation="secext.xsd" />
+	        <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+  			    schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>	
+        </xsd:schema>
+    </wsdl:types>
+    
+    <!--
+        Header
+    -->
+    <wsdl:message name="OCSHeaderInfo">
+        <wsdl:part name="messageID" element="wsa:MessageID" />
+        <wsdl:part name="replyTo" element="wsa:ReplyTo" />
+        <wsdl:part name="security" element="wsse:Security" />
+    </wsdl:message>
+  
+    <!--
+        Messages
+    -->
+    
+    <wsdl:message name="SubscribeBoltonRequest">
+        <wsdl:part name="parameters" element="bns:subscribeBolton" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeBoltonResponse">
+        <wsdl:part name="parameters" element="bns:subscribeBoltonResponse" />
+    </wsdl:message>
+    <wsdl:message name="UnsubscribeBoltonRequest">
+        <wsdl:part name="parameters" element="bns:unsubscribeBolton" />
+    </wsdl:message>
+    <wsdl:message name="UnsubscribeBoltonResponse">
+        <wsdl:part name="parameters" element="bns:unsubscribeBoltonResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryBoltonsDetailsRequest">
+        <wsdl:part name="parameters" element="bns:queryBoltonsDetails" />
+    </wsdl:message>
+    <wsdl:message name="QueryBoltonsDetailsResponse">
+        <wsdl:part name="parameters" element="bns:queryBoltonsDetailsResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryBoltonsRequest">
+        <wsdl:part name="parameters" element="bns:queryBoltons" />
+    </wsdl:message>
+    <wsdl:message name="QueryBoltonsResponse">
+        <wsdl:part name="parameters" element="bns:queryBoltonsResponse" />
+    </wsdl:message>
+
+    <wsdl:message name="ServerException">
+      <wsdl:part name="ServerException" element="uct:serverException"/>
+    </wsdl:message>
+    <wsdl:message name="ClientException">
+      <wsdl:part name="ClientException" element="uct:clientException"/>
+    </wsdl:message>
+
+    <!--
+        Port
+    -->
+    
+    <wsdl:portType name="BoltonManagementPort_v1_0">
+        <wsdl:operation name="subscribeBolton">
+            <wsdl:input message="tns:SubscribeBoltonRequest" />
+            <wsdl:output message="tns:SubscribeBoltonResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="unsubscribeBolton">
+            <wsdl:input message="tns:UnsubscribeBoltonRequest" />
+            <wsdl:output message="tns:UnsubscribeBoltonResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryBoltonsDetails">
+            <wsdl:input message="tns:QueryBoltonsDetailsRequest" />
+            <wsdl:output message="tns:QueryBoltonsDetailsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryBoltons">
+            <wsdl:input message="tns:QueryBoltonsRequest" />
+            <wsdl:output message="tns:QueryBoltonsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <!-- Binding -->
+    
+    <wsdl:binding name="BoltonManagementServiceSOAPBinding_v1_0" type="tns:BoltonManagementPort_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    
+        <wsdl:operation name="subscribeBolton">
+            <soap:operation soapAction="subscribeBolton" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="unsubscribeBolton">
+            <soap:operation soapAction="unsubscribeBolton" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryBoltonsDetails">
+            <soap:operation soapAction="queryBoltonsDetails" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryBoltons">
+            <soap:operation soapAction="queryBoltons" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+    
+    </wsdl:binding>
+    
+    <!--
+        Service
+    -->
+    
+    <wsdl:service name="BoltonManagementService_v1">
+        <wsdl:port name="BoltonManagement_v1_0" binding="tns:BoltonManagementServiceSOAPBinding_v1_0">
+            <soap:address location="http://localhost/UNICA/OCSProvisioning/BoltonManagement_v1"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

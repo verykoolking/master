@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201206291233 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company/TIP_Soap_Generator(1.1) (1.1)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) 2010 Members of the TIP Open Source Community
+
+Licensed to Members of the TIP Open Source Community under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+Members of the TIP Open Source Community licences this file to You under the Apache License,
+Version 2.0 (the 'License'); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an 'AS IS' BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/tip/internal/filter" targetNamespace="http://www.tmforum.org/xml/tip/internal/filter" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.1">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: TIP_Generator_Internal_Model
+                        at version: 1.1
+      for all artifacts in package: org.tmforum.tip.internal.filter
+      Model Description:
+      Internal Framework model used by Tigerstripe generators
+      Package Description:
+      
+      Package data summary information:
+            entities: 0
+ Association Classes: 0
+           datatypes: 5
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** -->
+   <xsd:element name="choiceFilter" type="tns:ChoiceFilter"/>
+   <xsd:complexType name="ChoiceFilter">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A choice filter allows the choice at run time of providing a template filter or a query filter</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:FilterBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfChoiceFilter">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ChoiceFilter" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="filterBase" type="tns:FilterBase"/>
+   <xsd:complexType name="FilterBase" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>Base Filter</p>
+            <p>This datatype  is  abstract</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence/>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfFilterBase">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:FilterBase" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="queryFilter" type="tns:QueryFilter"/>
+   <xsd:complexType name="QueryFilter" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A Query Language based Filter
+
+Normally contains a filtering expressions.
+
+An XPATH Filter is an example of such a filter.</p>
+            <p>This datatype  is  abstract</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:FilterBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfQueryFilter">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:QueryFilter" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="templateFilter" type="tns:TemplateFilter"/>
+   <xsd:complexType name="TemplateFilter">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A Template Filter used to filter entiities based on associative lookup.
+
+A TemplateFilter is normally a container for an array of Templates.</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:FilterBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfTemplateFilter">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:TemplateFilter" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="xPathQueryFilter" type="tns:XPathQueryFilter"/>
+   <xsd:complexType name="XPathQueryFilter">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p/>
+            <p>This datatype  is  not extendable</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:QueryFilter">
+            <xsd:sequence>
+               <xsd:element name="xpathExpression" type="xsd:string" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  mandatory</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfXPathQueryFilter">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:XPathQueryFilter" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Entity definitions --><!-- ************************** --><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

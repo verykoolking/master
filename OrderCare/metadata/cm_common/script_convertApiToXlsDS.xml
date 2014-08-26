@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.convertApiToXlsDS">
+  <group>overridden.itemAttributeChanges</group>
+  <label>convertApiToXlsDS</label>
+  <metaVersion>4</metaVersion>
+  <overrides>script_cwt_pcmaintapi.convertApiToXlsDS</overrides>
+  <parameterList>
+    <parameter name="catalogApiDS" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="includeDomains" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if ( null == catalogApiDS ) {
+          Global._throwException("CWTCO001");
+    }
+
+    //parse the catalogAPI DS and create Excel export DS
+    var xlsDS = null;
+    var reader = Global.getRCSegment("/Excel Template/Template.xml");
+
+    if (reader != null) {
+          xlsDS = reader.getItemsFromXML("cwt_pcmaintimport:Workbook");
+    }
+
+    if (xlsDS == null || xlsDS[0] == null) {
+          Global._throwException("CWTCO001");
+    }
+
+    xlsDS = xlsDS[0];
+    if (xlsDS.Worksheet == null) {
+          Global._throwException("CWTCO001");
+    }
+
+    // currentSheet indicates the sheet number which is working on
+    for(var currentSheet = 0; currentSheet < xlsDS.Worksheet.length; currentSheet++) {
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_attribute") {
+                var sheetRow = 0;
+                for (var i=0; i<catalogApiDS.attribute.length; i++) {
+                      if(null == catalogApiDS.attribute[i]) {
+                            continue;
+                      }
+                      sheetRow++;
+                      var fieldIndex = 0;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.attribute[i].attributeCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.attribute[i].name;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.attribute[i].startDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.attribute[i].endDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.attribute[i].status;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.attribute[i].type;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.attribute[i].label;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.attribute[i].description;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.attribute[i].length;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.attribute[i].precision;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.attribute[i].codeTableName;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.attribute[i].orgChartName;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.attribute[i].createdBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.attribute[i].createDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.attribute[i].updatedBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.attribute[i].updateDate);
+
+                }
+                xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_catalogDomain") {
+                xlsDS = cwt_pcmaintapi.convertApiCatalogDomainToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_catalogHierarchy") {
+                xlsDS = cwt_pcmaintapi.convertApiCatalogHierarchyToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+           if(xlsDS.Worksheet[currentSheet].Name == "cwt_catalogRule") {
+                var sheetRow = 0;
+                for (var i=0; i<catalogApiDS.catalogRule.length; i++) {
+                      if(null == catalogApiDS.catalogRule[i]) {
+                            continue;
+                      }
+                      sheetRow++;
+                      var fieldIndex = 0;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.catalogRule[i].ruleName;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.catalogRule[i].status;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.catalogRule[i].name;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.catalogRule[i].startDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.catalogRule[i].endDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.catalogRule[i].ruleType;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.catalogRule[i].returnType;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.catalogRule[i].ruleScript;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.catalogRule[i].label;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.catalogRule[i].description;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.catalogRule[i].language;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.catalogRule[i].orgChartName;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.catalogRule[i].createdBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.catalogRule[i].createDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.catalogRule[i].updatedBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.catalogRule[i].updateDate);
+
+                }
+                xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_chargeType") {
+                xlsDS = cwt_pcmaintapi.convertApiChargeTypeToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if (xlsDS.Worksheet[currentSheet].Name == "cwt_chargeTypeAttribute") {
+                xlsDS = cwt_pcmaintapi.convertApiChargeTypeAttributeToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_context") {
+                xlsDS = cwt_pcmaintapi.convertApiContextToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+
+            if(xlsDS.Worksheet[currentSheet].Name == "cwt_contextAttribute") {
+                var sheetRow = 0;
+                for (var i=0; i<catalogApiDS.contextAttribute.length; i++) {
+                      if(null == catalogApiDS.contextAttribute[i]) {
+                            continue;
+                      }
+                      sheetRow++;
+                      var fieldIndex = 0;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.contextAttribute[i].contextCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.contextAttribute[i].attributeCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.contextAttribute[i].contextVariableName;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.contextAttribute[i].name;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.contextAttribute[i].label;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.contextAttribute[i].createdBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.contextAttribute[i].createDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.contextAttribute[i].updatedBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.contextAttribute[i].updateDate);
+                }
+                xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_infoModel") {
+                xlsDS = cwt_pcmaintapi.convertApiInfoModelToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_infoModelAttribute") {
+                var sheetRow = 0;
+                for (var i=0; i<catalogApiDS.infoModelAttribute.length; i++) {
+                      if(null == catalogApiDS.infoModelAttribute[i]) {
+                            continue;
+                      }
+                      sheetRow++;
+                      var fieldIndex = 0;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoModelAttribute[i].infoModelCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoModelAttribute[i].attributeCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoModelAttribute[i].modelAttrName;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoModelAttribute[i].name;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoModelAttribute[i].label;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoModelAttribute[i].sequence;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoModelAttribute[i].isNull;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoModelAttribute[i].isSearch;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoModelAttribute[i].descending;
+
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoModelAttribute[i].createdBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.infoModelAttribute[i].createDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoModelAttribute[i].updatedBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.infoModelAttribute[i].updateDate);
+
+                }
+                xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_infoTable") {
+                var sheetRow = 0;
+                for (var i=0; i<catalogApiDS.infoTable.length; i++) {
+                      if(null == catalogApiDS.infoTable[i]) {
+                            continue;
+                      }
+                      sheetRow++;
+                      var fieldIndex = 0;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoTable[i].infoModelCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.infoTable[i].startDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.infoTable[i].endDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoTable[i].status;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoTable[i].createdBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.infoTable[i].createDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.infoTable[i].updatedBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.infoTable[i].updateDate);
+
+                }
+                xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_item") {
+                var sheetRow = 0;
+                for (var i=0; i<catalogApiDS.item.length; i++) {
+                      if(null == catalogApiDS.item[i]) {
+                            continue;
+                      }
+                      sheetRow++;
+                      var fieldIndex = 0;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.item[i].itemCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.item[i].baseItemCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.item[i].itemType;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.item[i].name;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.item[i].status;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.item[i].startDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.item[i].endDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.item[i].orderable;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.item[i].label;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.item[i].description;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.item[i].orgChartName;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.item[i].createdBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.item[i].createDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.item[i].updatedBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.item[i].updateDate);
+                }
+                xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_itemAttachment") {
+                var sheetRow = 0;
+                for (var i=0; i<catalogApiDS.itemAttachment.length; i++) {
+                      if(null == catalogApiDS.itemAttachment[i]) {
+                            continue;
+                      }
+                      sheetRow++;
+                      var fieldIndex = 0;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.itemAttachment[i].itemCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.itemAttachment[i].itemAttachmentCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.itemAttachment[i].type;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.itemAttachment[i].name;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.itemAttachment[i].status;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.itemAttachment[i].startDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.itemAttachment[i].endDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.itemAttachment[i].cancel;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.itemAttachment[i].label;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.itemAttachment[i].createdBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.itemAttachment[i].createDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.itemAttachment[i].updatedBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.itemAttachment[i].updateDate);
+                }
+                xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_itemAttribute") {
+                xlsDS = cwt_pcmaintapi.convertApiItemAttributeToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_itemCharge") {
+                xlsDS = cwt_pcmaintapi.convertApiItemChargeToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if (xlsDS.Worksheet[currentSheet].Name == "cwt_itemChargeTypeAttribute") {
+                xlsDS = cwt_pcmaintapi.convertApiItemChargeTypeAttributeToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_itemDescription") {
+                xlsDS = cwt_pcmaintapi.convertApiItemDescriptionToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_itemGroup") {
+                xlsDS = cwt_pcmaintapi.convertApiItemGroupToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_itemGroupTarget") {
+                xlsDS = cwt_pcmaintapi.convertApiItemGroupTargetToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_itemHierarchy") {
+                xlsDS = cwt_pcmaintapi.convertApiItemHierarchyToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_itemImage") {
+                xlsDS = cwt_pcmaintapi.convertApiItemImageToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_itemRelation") {
+                xlsDS = cwt_pcmaintapi.convertApiItemRelationToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_itemRule") {
+                xlsDS = cwt_pcmaintapi.convertApiItemRuleToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_project") {
+                var sheetRow = 0;
+                for (var i=0; i<catalogApiDS.project.length; i++) {
+                      if(null == catalogApiDS.project[i]) {
+                            continue;
+                      }
+                      sheetRow++;
+                      var fieldIndex = 0;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.project[i].projectCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.project[i].name;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.project[i].effectiveDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.project[i].status;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.project[i].parentProjectCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.project[i].label;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.project[i].description;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.project[i].orgChartName;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.project[i].createdBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.project[i].createDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.project[i].updatedBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.project[i].updateDate);
+                }
+                xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_projectAssignment") {
+                var sheetRow = 0;
+                for (var i=0; i<catalogApiDS.projectAssignment.length; i++) {
+                      if(null == catalogApiDS.projectAssignment[i]) {
+                            continue;
+                      }
+                      if (catalogApiDS.projectAssignment[i].objectType == "cwt_pc:cwt_infoTable") {
+                            continue
+                      }
+                      sheetRow++;
+                      var fieldIndex = 0;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.projectAssignment[i].projectCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.projectAssignment[i].endDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.projectAssignment[i].objectType;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.projectAssignment[i].objectCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.projectAssignment[i].objectStartDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.projectAssignment[i].objectAssociationCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.projectAssignment[i].objectAdditional;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.projectAssignment[i].objectAdditional2;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.projectAssignment[i].objectAdditional3;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.projectAssignment[i].objectAdditional4;
+
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.projectAssignment[i].createdBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.projectAssignment[i].createDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.projectAssignment[i].updatedBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.projectAssignment[i].updateDate);
+                }
+                xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_relationType") {
+                var sheetRow = 0;
+                for (var i=0; i<catalogApiDS.relationType.length; i++) {
+                      if(null == catalogApiDS.relationType[i]) {
+                            continue;
+                      }
+                      sheetRow++;
+                      var fieldIndex = 0;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationType[i].relationTypeCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationType[i].category;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationType[i].status;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationType[i].name;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationType[i].ruleType;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationType[i].label;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationType[i].description;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.relationType[i].startDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.relationType[i].endDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationType[i].orgChartName;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationType[i].createdBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.relationType[i].createDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationType[i].updatedBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.relationType[i].updateDate);
+                }
+                xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_relationTypeAttribute") {
+                var sheetRow = 0;
+                for (var i=0; i<catalogApiDS.relationTypeAttribute.length; i++) {
+                      if(null == catalogApiDS.relationTypeAttribute[i]) {
+                            continue;
+                      }
+                      sheetRow++;
+                      var fieldIndex = 0;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationTypeAttribute[i].relationTypeCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationTypeAttribute[i].attributeCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationTypeAttribute[i].relationAttrName;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationTypeAttribute[i].sequence;
+
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationTypeAttribute[i].createdBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.relationTypeAttribute[i].createDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.relationTypeAttribute[i].updatedBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.relationTypeAttribute[i].updateDate);
+                }
+                xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+                continue;
+          }
+
+         if(xlsDS.Worksheet[currentSheet].Name == "cwt_associationTypeAttrValue") {
+                xlsDS = cwt_pcmaintapi.convertApiAssociationTypeAttrValueToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+         }
+
+         if(xlsDS.Worksheet[currentSheet].Name == "cwt_restriction") {
+                xlsDS = cwt_pcmaintapi.convertApiRestrictionToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+         }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_ruleParameters") {
+                var sheetRow = 0;
+                for (var i=0; i<catalogApiDS.ruleParameters.length; i++) {
+                      if(null == catalogApiDS.ruleParameters[i]) {
+                            continue;
+                      }
+                      sheetRow++;
+                      var fieldIndex = 0;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ruleParameters[i].ruleName;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ruleParameters[i].attributeCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ruleParameters[i].paramName;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ruleParameters[i].sequence;
+
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ruleParameters[i].createdBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.ruleParameters[i].createDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ruleParameters[i].updatedBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.ruleParameters[i].updateDate);
+                }
+                xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_systemIdentifier") {
+                var sheetRow = 0;
+                for (var i=0; i<catalogApiDS.systemIdentifier.length; i++) {
+                      if(null == catalogApiDS.systemIdentifier[i]) {
+                            continue;
+                      }
+                      sheetRow++;
+                      var fieldIndex = 0;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.systemIdentifier[i].systemId;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.systemIdentifier[i].itemCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.systemIdentifier[i].chargeTypeCode;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.systemIdentifier[i].name;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.systemIdentifier[i].value;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.systemIdentifier[i].label;
+
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.systemIdentifier[i].createdBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.systemIdentifier[i].createDate);
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.systemIdentifier[i].updatedBy;
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+                      xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = cwt_pcmaintapi.formatDateTime(catalogApiDS.systemIdentifier[i].updateDate);
+                }
+                xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_tax") {
+                xlsDS = cwt_pcmaintapi.convertApiTaxToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_taxModel") {
+                xlsDS = cwt_pcmaintapi.convertApiTaxModelToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "cwt_taxModelItem") {
+                xlsDS = cwt_pcmaintapi.convertApiTaxModelItemToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+          if(xlsDS.Worksheet[currentSheet].Name == "codeTable") {
+                xlsDS = cwt_pcmaintapi.convertApiCodeTableToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+
+          if(xlsDS.Worksheet[currentSheet].Name == "deletedObjectRecord") {
+                xlsDS = cwt_pcmaintapi.convertApiDeletedObjectRecordToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+           if(xlsDS.Worksheet[currentSheet].Name == "ngaaItemAttributeExtension") {
+                xlsDS = cm_common.convertApiNGAAItemAttributeExtensionToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+           if(xlsDS.Worksheet[currentSheet].Name == "ngaaItemExtension") {
+                xlsDS = cm_common.convertApiNGAAItemExtensionToXlsDS(catalogApiDS, xlsDS, currentSheet);
+                continue;
+          }
+
+    }
+
+    //return xlsDS;
+    return cwt_pcmaintapi.convertWorkBook(xlsDS);
+
+
+    function formatDate (date) {
+          return date?(Calendar._formatDate(date, "yyyy-MM-dd")):null;
+    }
+
+    function formatDateTime (date) {
+          var str1 = date?(Calendar._formatDate(date, "yyyy-MM-dd hh:mm:ss")):null;
+          if (str1 == null) return null;
+          var str2 = str1.substring(0, 10) + "T" + str1.substring(11, 19);
+          return str2;
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.saveUCBOTAssociation">
+  <group>ui_scripts.UsageControl.UCBoltOnTypeAssociation.FinderHelpers</group>
+  <label>saveUCBOTAssociation</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var arrList = ui.parent.model.UCBOASUCBoltOnTypeAssArrDS.List;
+    var arrListDS = ui.parent.model.UCBOASUCBoltOnTypeAssArrDS.ListDS;
+    var arrListSize = arrList.length;
+    var arrListDSSize = arrListDS.length;
+    if(arrListDSSize > 0 ){
+        for ( var i = 0; i< arrListDSSize; i++ ){
+            if ( arrListDS[i].specificationCode == ui.model.specificationCode) {
+
+                cm_spoc.updateFinder(ui.parent, arrListDS[i]);
+                ui.parent.UCBoltOnTypeAssociationUI = null;
+                return;
+            }
+        }
+        arrList[arrListSize] = ui.model.specificationCode;
+        arrListDS[arrListDSSize] = ui.model;
+        cm_spoc.updateFinder(ui.parent, null);
+        ui.parent.UCBoltOnTypeAssociationUI = null;
+        return;
+    }
+    else {
+        arrList[arrListSize] = ui.model.specificationCode;
+        arrListDS[arrListDSSize] = ui.model;
+        cm_spoc.updateFinder(ui.parent, null);
+        ui.parent.UCBoltOnTypeAssociationUI = null;
+        return;
+    }
+  ]]></script>
+</script>

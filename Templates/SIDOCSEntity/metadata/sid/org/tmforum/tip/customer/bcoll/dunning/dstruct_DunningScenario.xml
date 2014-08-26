@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.customer.bcoll.dunning.DunningScenario">
+  <container>true</container>
+  <description><![CDATA[
+    <p>A dunning scenario describes the company's dunning strategy. It must be easily configurable to describe the dunning rules to apply to a case, the order in which applying them, the events that trigger dunning rules evaluation, the actions that must be done.    If a DunningScenario is assigned to a CustomerAcount, the DunningCase will follow this DunningScenario in case of debt; else it will follow a default DunningScenario.    DunningScenario is assigned to a CustomerAccount, depending on the Holder quality.</p>                <p>This entity  is  optional</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{daba2f18-f4d8-4078-b0fd-cb8d4acb00cc}</guid>
+  <label>DunningScenario</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="iD" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>A unique identifier.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  mandatory</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{13c35b2d-bd3a-452f-a961-2e50a1706422}</guid>
+      <label>iD</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="name" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{c590c8bb-6c8f-4428-a96b-7e1f6ce6673d}</guid>
+      <label>name</label>
+    </child>
+    <child name="isDefault" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>If true, indicates that the DunningScenario is the one to use by default if no specific DunningScenario is specified for the CustomerAccount.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{6c9f03fa-b160-4b19-8bc1-6a00500be0b6}</guid>
+      <label>isDefault</label>
+    </child>
+    <child name="dunningCase" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association DunningCaseApplies</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.customer.bcoll.dunning.ArrayOfDunningCase</element>
+      <guid>{1059c73e-d77a-400e-9192-e23c7c85c198}</guid>
+      <label>dunningCase</label>
+    </child>
+    <child name="dunningCaseRule" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..*</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association DunningScenarioContains</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.customer.bcoll.dunning.ArrayOfDunningRule</element>
+      <guid>{b718e888-8067-4663-ab07-be5b8fc4a610}</guid>
+      <label>dunningCaseRule</label>
+    </child>
+    <child name="customerAccount" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association CustomerAccountFollows</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.customer.cust.ArrayOfCustomerAccount</element>
+      <guid>{3719349e-a6b7-4493-8508-c21633e6169d}</guid>
+      <label>customerAccount</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.customer.bcoll.dunning.DunningScenario</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.customer.bcoll.dunning.DunningScenario</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

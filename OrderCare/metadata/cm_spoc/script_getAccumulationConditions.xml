@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getAccumulationConditions">
+  <group>ui_scripts.UsageControl.AccumulationConditions</group>
+  <label>getAccumulationConditions</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="finder" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var polarity = this.parent.metadata;
+    var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+
+    itemFinder.searchDocument.baseItemCode = "base_UC"+polarity+"Conditions";
+    var result = itemFinder.search();
+
+    //cm_spoc.resultFromCItemToDs(result);
+
+
+
+    return result;
+
+
+    //var result = cm_spoc.getAllSpecialDays();
+
+    //cm_spoc.filterByServiceProviderAndYear(result,serviceProvider,year);
+
+    //cm_spoc.setProperties(result);
+
+    // mapToOutputDoc(result);
+
+    return result;
+
+
+    function mapToOutputDoc(result) {
+
+        for (var t=0;t<result.length;t++ ) {
+            var doc = new cm_spoc.UCSimpleAccumulationConditionsDoc();
+            result[t]=result[t].mapTo(doc,"cm_spoc.SpecialDayCM")[0];
+
+        }
+    }
+  ]]></script>
+</script>

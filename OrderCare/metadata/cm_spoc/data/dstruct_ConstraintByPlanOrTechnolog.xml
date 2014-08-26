@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="cm_spoc.data.ConstraintByPlanOrTechnolog">
+  <container>true</container>
+  <extends>dstruct_cm_spoc.data.OCSCustFacingServiceSpec</extends>
+  <group>Operation</group>
+  <guid>{1a517e33-3c80-4c5c-bbad-c36d46560ad2}</guid>
+  <jsonMap type="jmap"/>
+  <label>ConstraintByPlanOrTechnolog</label>
+  <metaVersion>4</metaVersion>
+  <childList>
+    <child name="Operation" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{923bf968-731e-49aa-a815-f67fc32dfc82}</guid>
+      <jsonMap type="jmap"/>
+      <label>Operation</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="SubOperation" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{3c66a178-7c58-4f07-8b5f-d701bf1df5b6}</guid>
+      <jsonMap type="jmap"/>
+      <label>SubOperation</label>
+    </child>
+    <child name="SubOperationDS" type="dstruct">
+      <element>dstruct_cm_spoc.data.SubOperation</element>
+      <guid>{e641131c-60a2-49fd-b151-1a8c4bfbc57a}</guid>
+      <jsonMap type="jmap"/>
+      <label>SubOperationDS</label>
+    </child>
+    <child name="BanningConditionedByOpCost" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSBooleanAttribute</element>
+      <guid>{798d4713-9f97-435d-bbfa-9704649786c7}</guid>
+      <jsonMap type="jmap"/>
+      <label>BanningConditionedByOpCost</label>
+    </child>
+    <child name="BanningByTechnologyOrByTP" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.BanningByTechnologyOrByTPEnum</element>
+      <guid>{19d1c050-7212-4a3a-a060-533863073502}</guid>
+      <jsonMap type="jmap"/>
+      <label>BanningByTechnologyOrByTP</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="Technology" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSString4Attribute</element>
+      <guid>{aefaf5cf-b737-4d60-92b2-ef8558be7005}</guid>
+      <jsonMap type="jmap"/>
+      <label>Technology</label>
+    </child>
+    <child name="TariffPlan" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{9bd4a297-209a-4395-95ef-65de95987b48}</guid>
+      <jsonMap type="jmap"/>
+      <label>TariffPlan</label>
+    </child>
+  </childList>
+  <methodList>
+    <method name="onInit" type="action">
+      <parameterList>
+        <parameter name="document" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <system>true</system>
+      <script><![CDATA[
+        this.cw$super_onInit(document);
+        this.BanningConditionedByOpCost = false;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_cm_spoc.data.ConstraintByPlanOrTechnolog</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_cm_spoc.data.ConstraintByPlanOrTechnolog</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

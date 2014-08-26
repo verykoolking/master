@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/component" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/component" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.resource.res.phy.component
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 6
+ Association Classes: 0
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="aSIC" type="tns:ASIC"/>
+   <xsd:complexType name="ASIC">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>An ASIC is an Application Specific Integrated Circuit.
+
+This class represents a special type of Chip that is used to upgrade the functionality of a networking device. Examples include upgrading the modem function of a device, increasing the processing capability of a Card or Device, and implementing some type of networking functionality, such as fast switching, directly in hardware (as opposed to emulating it in software).</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="isMandatoryASIC" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, signifies that this ASIC is mandatory for the correct operation of the PhysicalResource that contains it.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="functionalPurpose" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the functional purpose of this ASIC. Values include:
+
+0: Unknown
+1: Routing Traffic
+2: Forwarding Traffic
+3: Encrypting Traffic
+4: Firewalling
+5: Encoding
+6: General Computational Functions
+
+Additional values will be added in the next release of DEN-ng.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfASIC">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ASIC" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="backplane" type="tns:Backplane"/>
+   <xsd:complexType name="Backplane">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class models the backplane that is present in devices.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfBackplane">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:Backplane" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="chip" type="tns:Chip"/>
+   <xsd:complexType name="Chip">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is a concrete class that models different types of chips that are either directly configurable by the end-user (e.g., a programmable device) and/or represent FRUs (e.g., a special ASIC that can be upgraded by replacing it with a new version of that same ASIC).
+
+Note that capacity characteristics (e.g., how much memory can a Flash chip hold) are defined through the PhysicalCapacity association.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="formFactor" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the form factor of this PhysicalComponent. Values include:
+
+0: Unknown
+1: Other
+2: Custom
+3: SIP
+4: DIP
+5: ZIP
+6: SOJ
+7: SIMM
+8: DIMM
+9: PGA
+10: RIMM
+11: SRIMM
+12: SODIMM
+13: SOIC
+14: LCC
+15: PLCC
+
+This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfChip">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:Chip" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="flashDisk" type="tns:FlashDisk"/>
+   <xsd:complexType name="FlashDisk">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>Flash are memory-based devices that conform to the PC Card (formerly PCMCIA) standard, and that present an ATA (AT Attachment) interface to the device. The Flash Disk has controller circuitry that allows it to emulate a hard disk and that automatically maps out bad blocks and performs automatic block erasure. Furthermroe, the Flash Disk provides the capability to allocate noncontiguous sectors, which a Flash memory device can't.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="memorySize" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is the size of the Flash disk in MBytes.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfFlashDisk">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:FlashDisk" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="memoryComponent" type="tns:MemoryComponent"/>
+   <xsd:complexType name="MemoryComponent">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents memory devices that are implemented as Chips. Note that this only represents the physical packaging of the Memory Chip - the logical functionality is defined in a separate class, called Memory, that is part of the LogicalResource model.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="typeOfMemoryComponent" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the type of memory that this Chip is. Values include:
+
+0: Unknown
+1: Proprietary
+2: RAM
+3: DRAM
+4: Synchronous DRAM
+5: Cache DRAM
+6: EDRAM
+7: VRAM
+8: SRAM
+9: EDO
+10: ROM
+11: PROM
+12: EPROM
+13: EEPROM
+14: FEPROM
+15: Flash
+16: CDRAM
+17: 3DRAM
+18: SDRAM
+19: SGRAM
+20: RDRAM
+21: DDR
+
+This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfMemoryComponent">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:MemoryComponent" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="physicalComponent" type="tns:PhysicalComponent"/>
+   <xsd:complexType name="PhysicalComponent" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is the base class for different types of PhysicalComponents that can reside either in an Equipment or an EquipmentHolder object. They can NOT be used as a stand-alone object.
+
+From a management point-of-view, this object either can not or does not need to be split into its constituent parts. For example, an ASIC (or Chip) can not , and a tape for data storage does not, need to be split up into their constituent parts. Any piece of hardware that is not a PhysicalLink, PhysicalConnector, Equipment, or EquipmentHolder, is a subclass of this class.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="isConfigurable" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, means that this PhysicalComponent is configurable by the end-user. This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPhysicalComponent">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PhysicalComponent" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

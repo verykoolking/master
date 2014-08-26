@@ -1,0 +1,3044 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.catalogMain">
+  <blockUIOnAction>true</blockUIOnAction>
+  <extends>ui_cwt_pc.catalogMain</extends>
+  <group>overridden.UI</group>
+  <label>Rating Catalog</label>
+  <metaVersion>4</metaVersion>
+  <overrides>ui_cwa_epc.catalogMain</overrides>
+  <variableList>
+    <variable name="language" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="contentLeftForm" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="isBannerLayout" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="showStatus" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="modelStatus" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="modelStatusType" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="modelStatusTrim" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="isModelStatusMenuVisible" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="statusWidth" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="rightUI" type="uivar">
+      <flags enum-type="metadataFlag">VALIDATE</flags>
+      <label>User Interface</label>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="isContentLeftVisible" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="isContentRightVisible" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="leftUI" type="uivar">
+      <flags enum-type="metadataFlag">VALIDATE</flags>
+      <label>User Interface</label>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="isMenuVisible" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_cwt_pc.catalogMain/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Menu" type="exov">
+          <base>ui_cwt_pc.catalogMain/frmui_Forms/exov_Menu</base>
+          <extends>ui_cwt_pc.catalogMain/frmui_Forms/exov_Menu</extends>
+          <label>Menu</label>
+          <overrideList>
+            <override name="HorizontalLayout" type="elvlt">
+              <style>cwAppGradientHeader</style>
+              <width>100%</width>
+              <elementList>
+                <element name="appHeaderLayout" type="elhlt">
+                  <alignment>left,center</alignment>
+                  <height>36px</height>
+                  <membersMargin>6</membersMargin>
+                  <style>cwAppHeader</style>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="returnAppMenuLabel" type="ellab">
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <style>cwAppLabel</style>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/uimthd_returnAppMenuLabel</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <wrap>false</wrap>
+                    </element>
+                    <element name="LayoutSpacer2" type="ellsp">
+                      <style>cwHeaderSpacer</style>
+                      <width>5%</width>
+                    </element>
+                    <element name="HorizontalLayout1" type="elhlt">
+                      <alignment>left,center</alignment>
+                      <height>100%</height>
+                      <width>100%</width>
+                      <elementList>
+                        <element name="HorizontalLayoutForMenuItems" type="elhlt">
+                          <alignment>left,center</alignment>
+                          <width>100%</width>
+                          <elementList>
+                            <element name="homeIcon" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_goToHomePage</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/24/home.png</icon>
+                              <iconHeight>24px</iconHeight>
+                              <iconWidth>24px</iconWidth>
+                              <showRollOver>true</showRollOver>
+                              <style>CgMEIDef</style>
+                              <tooltip>Home</tooltip>
+                            </element>
+                            <element name="LayoutSpacer" type="ellsp">
+                              <width>15px</width>
+                            </element>
+                            <element name="MenuItem" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <icon>/cwt/images/24/data_edit.png</icon>
+                              <showMenuDropDown>true</showMenuDropDown>
+                              <style>CgMEIDef</style>
+                              <tooltip>Catalog Designer</tooltip>
+                              <elementList>
+                                <element name="attributes" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_attributeCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/cubes.png</icon>
+                                  <label>Attribute Types</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewAttribute</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="catalogRule" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_catalogRuleCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/component.png</icon>
+                                  <label>Catalog Rules</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewCatalogRule</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="Separator5" type="elsep"/>
+                                <element name="tax" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_taxCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/money2_add.png</icon>
+                                  <label>Taxes</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewTax</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="taxModel" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_taxModelCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/16/moneybag.png</icon>
+                                  <label>Tax Models</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewTax</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="chargeType" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_chargeTypeCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/currency_dollar.png</icon>
+                                  <label>Charge Types</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewChargeType</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="infoModel" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_infoModelCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/funnel.png</icon>
+                                  <label>Info Models</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewInfoModel</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="versionCT" type="elmnu">
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_vCTcommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/tables.png</icon>
+                                  <label>Version Code Tables</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewVCT</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="Separator6" type="elsep"/>
+                                <element name="contexts" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_contextCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/preferences.png</icon>
+                                  <label>Contexts</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewContext</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="relationType" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_relationTypeCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/branch_element.png</icon>
+                                  <label>Association Types</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewRelationType</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="catalogHierarchy" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_hierarchyTreeCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/shoppingcart.png</icon>
+                                  <label>Catalog Hierarchies</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewCatalogHierarchy</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="Separator4" type="elsep"/>
+                                <element name="projectTree" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_projectTreeCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/folder.png</icon>
+                                  <label>Projects</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewProject</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="itemTree" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_itemTreeCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/registry.png</icon>
+                                  <label>Items</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewItem</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="itemTypeTree" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_itemTypeTreeCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/registry.png</icon>
+                                  <label>Item Types</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                              </elementList>
+                            </element>
+                            <element name="Configuration" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <icon>/cwt/images/24/registry.png</icon>
+                              <showMenuDropDown>true</showMenuDropDown>
+                              <style>CgMEIDef</style>
+                              <tooltip>Configuration</tooltip>
+                              <elementList>
+                                <element name="codeTables" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_codeTableCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/table_view.png</icon>
+                                  <label>Code Tables</label>
+                                </element>
+                                <element name="catalogConfig" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_catalogConfig</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/preferences.png</icon>
+                                  <label>Catalog Configuration</label>
+                                </element>
+                                <element name="configurePLM" type="elmnu">
+                                  <icon>/cwt/images/24/preferences.png</icon>
+                                  <label>Configure PLM</label>
+                                  <showMenuDropDown>true</showMenuDropDown>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canAccessPLM</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                  <elementList>
+                                    <element name="configureTemplates" type="elmnu">
+                                      <clickMethod type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_configurePLMTemplates</variablePath>
+                                        </variablePathList>
+                                      </clickMethod>
+                                      <icon>/cwt/images/16/preferences.png</icon>
+                                      <label>Configure Templates</label>
+                                    </element>
+                                    <element name="configureStages" type="elmnu">
+                                      <clickMethod type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_stage_menu</variablePath>
+                                        </variablePathList>
+                                      </clickMethod>
+                                      <icon>/cwt/images/16/preferences.png</icon>
+                                      <label>Configure Stages</label>
+                                    </element>
+                                    <element name="configureParticipants" type="elmnu">
+                                      <clickMethod type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_participant_menu</variablePath>
+                                        </variablePathList>
+                                      </clickMethod>
+                                      <icon>/cwt/images/16/preferences.png</icon>
+                                      <label>Configure Participants</label>
+                                    </element>
+                                    <element name="configureMicroflows" type="elmnu">
+                                      <clickMethod type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_microflow_menu</variablePath>
+                                        </variablePathList>
+                                      </clickMethod>
+                                      <icon>/cwt/images/16/preferences.png</icon>
+                                      <label>Configure Microflows</label>
+                                    </element>
+                                  </elementList>
+                                </element>
+                                <element name="Separator" type="elsep"/>
+                                <element name="importCatalogEXCEL" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_ImportXls</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/import2.png</icon>
+                                  <label>Import Catalog</label>
+                                </element>
+                                <element name="exportCatalogToEXCEL" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_exportXls</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/export1.png</icon>
+                                  <label>Export Entire Catalog</label>
+                                </element>
+                                <element name="exportCatalogObject" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_exportCatalogObject</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/export1.png</icon>
+                                  <label>Export Selected Object(s)</label>
+                                </element>
+                                <element name="importCatalogAttach" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_importCatalogAttach</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/import2.png</icon>
+                                  <label>Import Image/Attachment</label>
+                                </element>
+                                <element name="exportCatalogAttach" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_exportCatalogAttach</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/export1.png</icon>
+                                  <label>Export Entire Image/Attachment</label>
+                                </element>
+                                <element name="exportCatalogObjectAttach" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_exportCatalogObjectAttach</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/export1.png</icon>
+                                  <label>Export Selected Item Image/Attachment</label>
+                                </element>
+                                <element name="importCatalogFromServer" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_importFromServer</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/import2.png</icon>
+                                  <label>Import Catalog From Server</label>
+                                </element>
+                                <element name="Separator7" type="elsep"/>
+                                <element name="exportCatalogThroughSql" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_exportCatalogThroughSQL</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/export1.png</icon>
+                                  <label>Export Catalog Through SQL</label>
+                                </element>
+                                <element name="exportCatalogObjectThroughSql" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_exportCatalogObjectThroughSql</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/export1.png</icon>
+                                  <label>Export Selected Object(s) Through SQL</label>
+                                </element>
+                                <element name="importCatalogThroughSql" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_importCatalogThroughSQL</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/24/import2.png</icon>
+                                  <label>Import Catalog Through SQL</label>
+                                </element>
+                              </elementList>
+                            </element>
+                            <element name="Tools" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <icon>/cwt/images/24/toolbox.png</icon>
+                              <showMenuDropDown>true</showMenuDropDown>
+                              <style>CgMEIDef</style>
+                              <tooltip>Tools</tooltip>
+                              <elementList>
+                                <element name="EventLog" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_eventLog</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwf/eventr.gif</icon>
+                                  <label>Event Log</label>
+                                </element>
+                                <element name="WorklistManager" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_WorklistManager</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwf/MenuIconTaskMgr.gif</icon>
+                                  <label>Worklist Manager</label>
+                                </element>
+                                <element name="Separator1" type="elsep"/>
+                                <element name="SelectApplication" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_selectApplication</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwf/choice.gif</icon>
+                                  <label>Select Application</label>
+                                </element>
+                                <element name="Logout" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_LogOut</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwf/MenuIconLogout.gif</icon>
+                                  <label>Logout</label>
+                                </element>
+                                <element name="ChangePassword" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_changePassword</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwf/key.gif</icon>
+                                  <label>Change Password</label>
+                                </element>
+                              </elementList>
+                            </element>
+                            <element name="Test" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <icon>/cwt/images/24/debug.png</icon>
+                              <showMenuDropDown>true</showMenuDropDown>
+                              <style>CgMEIDef</style>
+                              <tooltip>Test Mode</tooltip>
+                              <elementList>
+                                <element name="setContextAttributes" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_setAttributes</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwf/choice.gif</icon>
+                                  <label>Set Context Attributes</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_testOffPerm</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="Browse" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_browseCatalogCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwf/choice.gif</icon>
+                                  <label>Browse</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_testOffPerm</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="Basket" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_basketFinderCommand</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwf/choice.gif</icon>
+                                  <label>Basket</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_testOffPerm</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="TestOn" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_testOn</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwf/choice.gif</icon>
+                                  <label>Test On</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_testOnPerm</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="TestOff" type="elmnu">
+                                  <menuAccel type="mAccelP"/>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_testOff</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwf/choice.gif</icon>
+                                  <label>Test Off</label>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cwt_pc.catalogMain/permMethod_testOffPerm</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="HorizontalLayoutForUserWorklist" type="elhlt">
+                          <alignment>right,center</alignment>
+                          <elementList>
+                            <element name="loginUser" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <iconHeight>18px</iconHeight>
+                              <iconVariable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cwt_pc.catalogMain/leaf_loginUserImage</variablePath>
+                                </variablePathList>
+                              </iconVariable>
+                              <iconWidth>18px</iconWidth>
+                              <showRollOver>true</showRollOver>
+                              <tooltip>Login User</tooltip>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cwt_pc.catalogMain/leaf_loginUser</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewProject</variablePath>
+                                </variablePathList>
+                              </visible>
+                            </element>
+                            <element name="Separator8" type="elsep">
+                              <width>10px</width>
+                            </element>
+                            <element name="defaultProject" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_projectTreeCommand</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <iconHeight>18px</iconHeight>
+                              <iconVariable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cwt_pc.catalogMain/leaf_projectImage</variablePath>
+                                </variablePathList>
+                              </iconVariable>
+                              <iconWidth>18px</iconWidth>
+                              <showRollOver>true</showRollOver>
+                              <tooltip>Projects</tooltip>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cwt_pc.catalogMain/leaf_defaultProject</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewProject</variablePath>
+                                </variablePathList>
+                              </visible>
+                            </element>
+                            <element name="Separator3" type="elsep">
+                              <width>10px</width>
+                            </element>
+                            <element name="helpURL" type="htmlElement">
+                              <style>CgMEIDef</style>
+                              <tooltip>Help</tooltip>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cwt_pc.catalogMain/leaf_helpURL</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="Separator2" type="elsep">
+                              <width>10px</width>
+                            </element>
+                            <element name="dummywrklist" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_dummyWorklist</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwf/MenuIconTask.gif</icon>
+                              <iconHeight>18px</iconHeight>
+                              <iconWidth>18px</iconWidth>
+                              <imageOnRight>true</imageOnRight>
+                              <showRollOver>true</showRollOver>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cwt_pc.catalogMain/permMethod_isWorklistParticipantPerm</variablePath>
+                                </variablePathList>
+                              </visible>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="LayoutSpacer1" type="ellsp">
+                          <width>30px</width>
+                        </element>
+                        <element name="Logo" type="elimg">
+                          <imageUrl>/cwf/css/logo.jpg</imageUrl>
+                          <padding>0</padding>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="noWrapLayout" type="elgrd">
+                      <alignment>right,center</alignment>
+                      <cellPadding>0</cellPadding>
+                      <fillSpace>false</fillSpace>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>150px</width>
+                      <elementList>
+                        <element name="topSpacer" type="elrsp">
+                          <height>1px</height>
+                          <rowSpan>1px</rowSpan>
+                          <style>cwHeaderTopSpacer</style>
+                        </element>
+                        <element name="returnUserId" type="ellab">
+                          <canSort>false</canSort>
+                          <editable type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </editable>
+                          <icon>/images/user_loggedin.png</icon>
+                          <removeLabelLine>true</removeLabelLine>
+                          <showLabel>false</showLabel>
+                          <style>cwUserId</style>
+                          <textAlign>right</textAlign>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.catalogMain/uimthd_returnUserId</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <width>150px</width>
+                          <wrap>false</wrap>
+                        </element>
+                        <element name="bottomSpacer" type="elrsp">
+                          <height>1px</height>
+                          <rowSpan>1px</rowSpan>
+                          <style>cwHeaderTopSpacer</style>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="userIdMenu" type="elmnu">
+                      <canFocus>false</canFocus>
+                      <icon>/images/user_loggedin.png</icon>
+                      <iconHeight>20px</iconHeight>
+                      <iconSpacing>12</iconSpacing>
+                      <iconWidth>14px</iconWidth>
+                      <label>test</label>
+                      <removeLabelLine>true</removeLabelLine>
+                      <style>cwUserId</style>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/uimthd_returnUserId</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="logoutMenu" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_logout</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>| Logout </label>
+                      <style>cwAppHeaderMenu</style>
+                    </element>
+                    <element name="exitAppMenu" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_exitApp</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>| Exit Application</label>
+                      <style>cwAppHeaderMenu</style>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="BannerLayout" type="elhlt">
+                  <alignment>center,center</alignment>
+                  <style>cwAppHeaderBanner</style>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.catalogMain/permMethod_isBannerLayoutVisible</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="returnAppLabel" type="ellab">
+                      <cellAlignment>right,center</cellAlignment>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <style>cwAppLabelWithLogo</style>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/uimthd_returnAppLabel</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100%</width>
+                      <wrap>false</wrap>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+            <override name="HorizontalLayoutForMenuItems" type="elhlt">
+              <alignment>left,center</alignment>
+              <height>100%</height>
+              <width>100%</width>
+              <elementList>
+                <element name="homeIcon" type="elmnu">
+                  <menuAccel type="mAccelP"/>
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_goToHomePage</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <height>100%</height>
+                  <iconHeight>24px</iconHeight>
+                  <iconWidth>24px</iconWidth>
+                  <label>Home</label>
+                  <showDown>true</showDown>
+                  <showRollOver>true</showRollOver>
+                  <style>cwAppSpecificMenu</style>
+                </element>
+                <element name="LayoutSpacer" type="ellsp">
+                  <width>15px</width>
+                </element>
+                <element name="MenuItem" type="elmnu">
+                  <height>100%</height>
+                  <label>Manage</label>
+                  <showDown>true</showDown>
+                  <showRollOver>true</showRollOver>
+                  <style>cwAppSpecificMenu</style>
+                  <elementList>
+                    <element name="attributes" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_attributeCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Attribute Types</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewAttribute</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="catalogRule" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_catalogRuleCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Catalog Rules</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewCatalogRule</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="Separator999" type="elsep">
+                      <style>cwAppSpecificSeparator</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>100%</width>
+                    </element>
+                    <element name="tax" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_taxCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Taxes</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewTax</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="taxModel" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_taxModelCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Tax Models</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewTax</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="chargeType" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_chargeTypeCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Charge Types</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewChargeType</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="infoModel" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_infoModelCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Info Models</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewInfoModel</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="versionCT" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_vCTcommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Version Code Tables</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewVCT2</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="Separator6" type="elsep">
+                      <style>cwAppSpecificSeparator</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="contexts" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_contextCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Contexts</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewContext</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="relationType" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_relationTypeCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Association Types</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewRelationType</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="catalogHierarchy" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_hierarchyTreeCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Catalog Hierarchies</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewCatalogHierarchy</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="Separator4" type="elsep">
+                      <style>cwAppSpecificSeparator</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="projectTree" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_projectTreeCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Projects</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewProject</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="itemTree" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_itemTreeCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Items</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewItem</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="itemTypeTree" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_itemTypeTreeCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Item Types</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="Separator9" type="elsep">
+                      <style>cwAppSpecificSeparator</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="DynamicUI" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_testDynamicUI</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>DynamicUI</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="DynamicUIServiceOffering" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_serviceOfferingDynamicUI</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>DynamicUI Service Offering</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="catalogItem" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_showCatalogItem</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Catalog Item</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="showExpressions" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_expressionTreeEPCMenu</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Algorithms</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewShowExpr</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="epcPricePlansMenu" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_showEPCPricePlans</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>EPC Price Plans</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="epcProductsMenu" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_showEPCProducts</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>EPC Products</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="ngaaMenu" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_showEPCProducts</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>NGAA Catalog</label>
+                      <showRollOver>true</showRollOver>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="Configuration" type="elmnu">
+                  <menuAccel type="mAccelP"/>
+                  <height>100%</height>
+                  <label>Configure</label>
+                  <showDown>true</showDown>
+                  <showRollOver>true</showRollOver>
+                  <style>cwAppSpecificMenu</style>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewConfigure</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <elementList>
+                    <element name="codeTables" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_codeTableCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Code Tables</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                    <element name="catalogConfig" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_catalogConfig</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Catalog Configuration</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                    <element name="configurePLM" type="elmnu">
+                      <label>Configure PLM</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/permMethod_canAccessPLM</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <elementList>
+                        <element name="configureTemplates" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_configurePLMTemplates</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <label>Configure Templates</label>
+                          <showRollOver>true</showRollOver>
+                          <style>cwAppSpecificSubMenu</style>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewPLMTSP</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="configureStages" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_stage_menu</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <label>Configure Stages</label>
+                          <showRollOver>true</showRollOver>
+                          <style>cwAppSpecificSubMenu</style>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewPLMTSP</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="configureParticipants" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_participant_menu</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <label>Configure Participants</label>
+                          <showRollOver>true</showRollOver>
+                          <style>cwAppSpecificSubMenu</style>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewPLMTSP</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="configureMicroflows" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_microflow_menu</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <label>Configure Microflows</label>
+                          <showRollOver>true</showRollOver>
+                          <style>cwAppSpecificSubMenu</style>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewMicroFlow</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="Separator" type="elsep">
+                      <style>cwAppSpecificSeparator</style>
+                    </element>
+                    <element name="importCatalogEXCEL" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_ImportXls</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Import Catalog</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewImgAttachments</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="exportCatalogToEXCEL" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_exportXls</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Export Entire Catalog</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewImgAttachments</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="exportCatalogObject" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_exportCatalogObject</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Export Selected Object(s)</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewImgAttachments</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="importCatalogAttach" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_importCatalogAttach</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Import Image/Attachment</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewImgAttachments</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="exportCatalogAttach" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_exportCatalogAttach</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Export Entire Image/Attachment</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewImgAttachments</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="exportCatalogObjectAttach" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_exportCatalogObjectAttach</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Export Selected Item Image/Attachment</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewImgAttachments</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="importCatalogFromServer" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_importFromServer</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Import Catalog From Server</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewImgAttachments</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="Separator7" type="elsep">
+                      <style>cwAppSpecificSeparator</style>
+                    </element>
+                    <element name="exportCatalogThroughSql" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_exportCatalogThroughSQL</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Export Catalog Through SQL</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewImgAttachments</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="exportCatalogObjectThroughSql" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_exportCatalogObjectThroughSql</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Export Selected Object(s) Through SQL</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewImgAttachments</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="importCatalogThroughSql" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_importCatalogThroughSQL</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Import Catalog Through SQL</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewImgAttachments</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="Separator10" type="elsep">
+                      <style>cwAppSpecificSeparator</style>
+                    </element>
+                    <element name="ruleSets" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_showRuleSets</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Rule Sets</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                    <element name="displaySets" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_showDisplaySets</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Display Sets</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="Tools" type="elmnu">
+                  <menuAccel type="mAccelP"/>
+                  <height>100%</height>
+                  <label>Tools</label>
+                  <showDown>true</showDown>
+                  <showRollOver>true</showRollOver>
+                  <style>cwAppSpecificMenu</style>
+                  <elementList>
+                    <element name="EventLog" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_eventLog</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Event Log</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewEventLog</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="WorklistManager" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_WorklistManager</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Worklist Manager</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewWrkList</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="Separator1" type="elsep">
+                      <style>cwAppSpecificSeparator</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="SelectApplication" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_selectApplication</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Select Application</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                    <element name="Logout" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_LogOut</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Logout</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                    <element name="ChangePassword" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_changePassword</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Change Password</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                    <element name="helpMenu" type="elmnu">
+                      <label>Help</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewHelpMenu</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <elementList>
+                        <element name="catalogHelp" type="elmnu">
+                          <label>Catalog</label>
+                          <showRollOver>true</showRollOver>
+                          <style>cwAppSpecificSubMenu</style>
+                        </element>
+                        <element name="epcHelp" type="elmnu">
+                          <label>EPC</label>
+                          <showRollOver>true</showRollOver>
+                          <style>cwAppSpecificSubMenu</style>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="messLog" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_msgLogFnd</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Message Log Finder</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewMessLog</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="Test" type="elmnu">
+                  <menuAccel type="mAccelP"/>
+                  <height>100%</height>
+                  <label>Test</label>
+                  <showDown>true</showDown>
+                  <showRollOver>true</showRollOver>
+                  <style>cwAppSpecificMenu</style>
+                  <tooltip>Test Mode</tooltip>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.catalogMain/permMethod_canViewTest</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <elementList>
+                    <element name="setContextAttributes" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_setAttributes</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Set Context Attributes</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/permMethod_testOffPerm</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="Browse" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_browseCatalogCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Browse</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/permMethod_testOffPerm</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="Basket" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_basketFinderCommand</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Basket</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/permMethod_testOffPerm</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="TestOn" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_testOn</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Test On</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/permMethod_testOnPerm</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="TestOff" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_testOff</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Test Off</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/permMethod_testOffPerm</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="Publish_Test" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_epcPublish</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Publish Test Mapping</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                    <element name="Publish_Flow_test" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_publishToInterface</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Publish Test Interface</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                    <element name="interfaces" type="elmnu">
+                      <label>Interfaces</label>
+                      <showMenuDropDown>true</showMenuDropDown>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <elementList>
+                        <element name="contactSearch" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.catalogMain/uimthd_contactsSearch</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <label>contactSearch</label>
+                          <showRollOver>true</showRollOver>
+                          <style>cwAppSpecificSubMenu</style>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="Specifications" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_showSpecs</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Specifications</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                    <element name="bnfComponent" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_bnfComponent</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>BNF Component</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                    <element name="serviceCSV" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_serviceCSV</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Service CSV</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                    <element name="setProjectTest" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_setProjectTest</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Set Project Test</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                    <element name="epcUiByModel" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_getEpcUIByModel</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>EPC UI By Model</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                    <element name="relation" type="elmnu">
+                      <label>Relation</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                      <elementList>
+                        <element name="relationMenu" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_relationMenu</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <label>Relation Form</label>
+                          <showRollOver>true</showRollOver>
+                          <style>cwAppSpecificSubMenu</style>
+                        </element>
+                        <element name="relationChargeMenu" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_relationChargeMenu</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <label>Item Charge Form</label>
+                          <showRollOver>true</showRollOver>
+                          <style>cwAppSpecificSubMenu</style>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="specSubTypeMenu" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_specificationSubTypeAction</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>SpecificationSubType</label>
+                      <showRollOver>true</showRollOver>
+                      <style>cwAppSpecificSubMenu</style>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+            <override name="HorizontalLayoutForUserWorklist" type="elhlt">
+              <alignment>right,center</alignment>
+              <style>cwAppHeaderMenu</style>
+              <elementList>
+                <element name="loginUser" type="elmnu">
+                  <menuAccel type="mAccelP"/>
+                  <iconHeight>18px</iconHeight>
+                  <iconVariable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwt_pc.catalogMain/leaf_loginUserImage</variablePath>
+                    </variablePathList>
+                  </iconVariable>
+                  <iconWidth>18px</iconWidth>
+                  <showRollOver>true</showRollOver>
+                  <tooltip>Login User</tooltip>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwt_pc.catalogMain/leaf_loginUser</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="Separator8" type="elsep">
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <width>10px</width>
+                </element>
+                <element name="defaultProject" type="elmnu">
+                  <menuAccel type="mAccelP"/>
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_projectTreeCommand</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <iconHeight>18px</iconHeight>
+                  <iconWidth>18px</iconWidth>
+                  <label>Project: </label>
+                  <style>cwAppHeaderMenu</style>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwt_pc.catalogMain/leaf_defaultProject</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwt_pc.catalogMain/permMethod_canViewProject</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="Separator3" type="elsep">
+                  <width>10px</width>
+                </element>
+                <element name="helpURL" type="htmlElement">
+                  <label>Help</label>
+                  <style>CgMEIDef</style>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwt_pc.catalogMain/leaf_helpURL</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.catalogMain/permMethod_menuVisible</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="Separator2" type="elsep">
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.catalogMain/permMethod_menuVisible</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <width>10px</width>
+                </element>
+                <element name="dummywrklist" type="elmnu">
+                  <menuAccel type="mAccelP"/>
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cwt_pc.catalogMain/usrActionMethod_dummyWorklist</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <iconHeight>18px</iconHeight>
+                  <iconWidth>18px</iconWidth>
+                  <imageOnRight>true</imageOnRight>
+                  <label>Task</label>
+                  <style>cwAppHeaderMenu</style>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.catalogMain/permMethod_isWorklistParticipantPerm</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="hideMenu" type="ellab">
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.catalogMain/uimthd_toggleMenu</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <dynStyle type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.catalogMain/uimthd_returnToggleMenuStyle</variablePath>
+                    </variablePathList>
+                  </dynStyle>
+                  <height>20px</height>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showLabel>false</showLabel>
+                  <style>cweCollapsableHorizontalLeft</style>
+                  <width>20px</width>
+                  <wrap>false</wrap>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="Page" type="expg">
+          <base>ui_cwt_pc.catalogMain/frmui_Forms/expg_Page</base>
+          <extends>ui_cwt_pc.catalogMain/frmui_Forms/expg_Page</extends>
+          <label>Page</label>
+          <overrideList>
+            <override name="vLayout" type="elvlt">
+              <alignment>center,top</alignment>
+              <height>100%</height>
+              <overflow>auto</overflow>
+              <style>cwPageBackground</style>
+              <width>100%</width>
+              <elementList>
+                <element name="middlevLayout" type="elvlt">
+                  <height>100%</height>
+                  <style>cwPageContentBackground</style>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="dialog1" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Window/uivar_dialog</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Dialog/frmui_Forms</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Dialog/frmui_Forms/exov_Default</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <unmanaged>true</unmanaged>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Window/uivar_dialog</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="bannerLayout1" type="elhlt">
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <elementList>
+                        <element name="banner" type="elimg"/>
+                      </elementList>
+                    </element>
+                    <element name="HorizontalLayout" type="elhlt">
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <elementList>
+                        <element name="Image" type="elimg">
+                          <showLabel>false</showLabel>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="mLayout1" type="elhlt">
+                      <width>100%</width>
+                      <elementList>
+                        <element name="menu" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.catalogMain/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.catalogMain/frmui_Forms/exov_Menu</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <width>100%</width>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="status" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.catalogMain/frmui_Forms</variablePath>
+                          <variablePath>ui_cm_spoc.catalogMain/frmui_Forms/vform_status</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <height>27px</height>
+                      <style>cwStatusFrame</style>
+                      <width>100%</width>
+                    </element>
+                    <element name="HorizontalLayout1" type="elhlt">
+                      <height>100%</height>
+                      <overflow>auto</overflow>
+                      <width>100%</width>
+                      <elementList>
+                        <element name="leftFormLayout" type="elhlt">
+                          <height>100%</height>
+                          <width>20px</width>
+                          <elementList>
+                            <element name="leftForm" type="elovf">
+                              <formReference type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.catalogMain/leaf_contentLeftForm</variablePath>
+                                </variablePathList>
+                              </formReference>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_com.conceptwave.system.Window/uivar_content</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.catalogMain/permMethod_contentLeftVisible</variablePath>
+                                </variablePathList>
+                              </visible>
+                              <width>200px</width>
+                            </element>
+                            <element name="hideLeftFormMenu" type="ellab">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.catalogMain/uimthd_toggleContentLeft</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <dynStyle type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.catalogMain/uimthd_returnToggleLeftStyle</variablePath>
+                                </variablePathList>
+                              </dynStyle>
+                              <height>20px</height>
+                              <removeLabelLine>true</removeLabelLine>
+                              <showLabel>false</showLabel>
+                              <style>cweCollapsableHorizontalLeft</style>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.catalogMain/permMethod_contentLeftMenuVisible</variablePath>
+                                </variablePathList>
+                              </visible>
+                              <width>20px</width>
+                              <wrap>false</wrap>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="contentVLayout" type="elvlt">
+                          <height>100%</height>
+                          <width>100%</width>
+                          <elementList>
+                            <element name="content1" type="elovf">
+                              <formReference type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_com.conceptwave.system.Window/uivar_contentForm</variablePath>
+                                </variablePathList>
+                              </formReference>
+                              <height>100%</height>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_com.conceptwave.system.Window/uivar_content</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>100%</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="rightFormLayout" type="elhlt">
+                          <height>100%</height>
+                          <width>20px</width>
+                          <elementList>
+                            <element name="hideRightFormMenu" type="ellab">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.catalogMain/uimthd_toggleContentRight</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <dynStyle type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.catalogMain/uimthd_returnToggleRightStyle</variablePath>
+                                </variablePathList>
+                              </dynStyle>
+                              <height>20px</height>
+                              <removeLabelLine>true</removeLabelLine>
+                              <showLabel>false</showLabel>
+                              <style>cweCollapsableHorizontalRight</style>
+                              <width>20px</width>
+                            </element>
+                            <element name="rightForm" type="elovf">
+                              <formReference type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.catalogMain/frmui_Forms</variablePath>
+                                  <variablePath>ui_cm_spoc.catalogMain/frmui_Forms/vform_rightForm</variablePath>
+                                </variablePathList>
+                              </formReference>
+                              <height>100%</height>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.catalogMain/permMethod_contentRightVisible</variablePath>
+                                </variablePathList>
+                              </visible>
+                              <width>200px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="contentMenu1" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Window/uivar_content</variablePath>
+                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Menu</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Window/uivar_content</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cwt_pc.catalogMain/permMethod_isNotHomePage</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>100%</width>
+                    </element>
+                    <element name="DownloadElement" type="eldload">
+                      <fileName type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Download/leaf_fileName</variablePath>
+                        </variablePathList>
+                      </fileName>
+                      <heightVar type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Download/leaf_height</variablePath>
+                        </variablePathList>
+                      </heightVar>
+                      <isSimpleText type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Download/leaf_isSimpleText</variablePath>
+                        </variablePathList>
+                      </isSimpleText>
+                      <mimeType type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Download/leaf_mimeType</variablePath>
+                        </variablePathList>
+                      </mimeType>
+                      <simpleContent type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Download/leaf_simpleText</variablePath>
+                        </variablePathList>
+                      </simpleContent>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <widthVar type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Download/leaf_width</variablePath>
+                        </variablePathList>
+                      </widthVar>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+          <skin>Enterprise</skin>
+          <stylesheet>/cbio.css</stylesheet>
+          <title>Catalog Designer</title>
+          <visible type="varPath">
+            <variablePathList>
+              <variablePath>ui_cm_spoc.catalogMain/permMethod_menuVisible</variablePath>
+            </variablePathList>
+          </visible>
+        </overlay>
+        <overlay name="status" type="vform">
+          <label>status</label>
+          <root name="statusLayout" type="elvlt">
+            <alignment>center,center</alignment>
+            <height>100%</height>
+            <style>cwStatusLayout</style>
+            <width>100%</width>
+            <elementList>
+              <element name="statusBoxLayout" type="elhlt">
+                <alignment>center,center</alignment>
+                <dynStyle type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.catalogMain/uimthd_returnModelStatusStyle</variablePath>
+                  </variablePathList>
+                </dynStyle>
+                <fillSpace>false</fillSpace>
+                <height>100%</height>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.catalogMain/permMethod_statusVisible</variablePath>
+                  </variablePathList>
+                </visible>
+                <width>100%</width>
+                <elementList>
+                  <element name="LayoutSpacer" type="ellsp"/>
+                  <element name="modelStatusTrim" type="ellab">
+                    <columnSpan>2</columnSpan>
+                    <dynStyle type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.catalogMain/uimthd_returnModelStatusLabelStyle</variablePath>
+                      </variablePathList>
+                    </dynStyle>
+                    <label>Model Status</label>
+                    <padding>0</padding>
+                    <removeLabelLine>true</removeLabelLine>
+                    <showLabel>false</showLabel>
+                    <textAlign>center</textAlign>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.catalogMain/leaf_modelStatusTrim</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <wrap>false</wrap>
+                  </element>
+                  <element name="modelStatusMenu" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.catalogMain/usrActionMethod_modelStatusAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <height>15px</height>
+                    <label>more</label>
+                    <style>cwModelStatusMenu</style>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.catalogMain/permMethod_modelStatusMenuVisible</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="LayoutSpacer2" type="ellsp"/>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="rightForm" type="vform">
+          <label>rightForm</label>
+          <root name="formVLayout" type="elvlt">
+            <height>100%</height>
+            <style>cwFormVLNoBorder</style>
+            <width>100%</width>
+            <elementList>
+              <element name="Label" type="ellab">
+                <label>Task Detail</label>
+                <wrap>false</wrap>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$isMenuVisible" type="laction">
+      <path>ui_cm_spoc.catalogMain/leaf_isMenuVisible</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.catalogMain/leaf_isMenuVisible</valueType>
+      <script>return false;</script>
+    </method>
+    <method name="cwLeafInitAction$contentLeftForm" type="laction">
+      <path>ui_cm_spoc.catalogMain/leaf_contentLeftForm</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.catalogMain/leaf_contentLeftForm</valueType>
+      <script><![CDATA[return "leftForm";]]></script>
+    </method>
+    <method name="balanceFinder" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        return new cwa_epc.balanceSpecFinder.UserInterface(null,this);
+      ]]></script>
+    </method>
+    <method name="bnfComponent" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var exp = bnf.createExpressionByType("ACTION_RATE_BY_TIME");
+        var ui = new cwa_epc.expressionComponent(exp,this);
+        return ui;
+      ]]></script>
+    </method>
+    <method name="canViewConfigure" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewEPCSearch" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"epcSpec");]]></script>
+    </method>
+    <method name="canViewEventLog" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+      <script><![CDATA[//return cwt_pc.canView(null,"eventLog");]]></script>
+    </method>
+    <method name="canViewImgAttachments" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"importExport");]]></script>
+    </method>
+    <method name="canViewMicroFlow" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"microFlow");]]></script>
+    </method>
+    <method name="canViewPLMTSP" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"PLMTSP");]]></script>
+    </method>
+    <method name="canViewSettings" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"settings");]]></script>
+    </method>
+    <method name="canViewTest" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewWrkList" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+      <script><![CDATA[//return cwt_pc.canView(null,"wrkListMgr");]]></script>
+    </method>
+    <method name="cbioConfiguration" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var ui= new ADMX.serviceInstancesUI();
+        return ui;
+      ]]></script>
+    </method>
+    <method name="charIndInterfFnd" type="usrActionMethod">
+      <dialogObject>ui_cwa_epc.dialogExtend</dialogObject>
+      <parameterList>
+        <parameter name="dialog" type="rifp">
+          <type>ui_cwa_epc.dialogExtend</type>
+        </parameter>
+      </parameterList>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        this.resetModelStatus();
+        if(dialog == null)
+            dialog = new cwa_epc.dialogExtend;
+        dialog.contentWidth = cwa_epc.getDialogWidth(false);
+        var ui = new cwa_epc.chargIndFnd.UserInterface(null,this);
+        return ui;
+      ]]></script>
+    </method>
+    <method name="chargeTypeFinder" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        return new cwa_epc.chargeTypeSpecFinder.UserInterface(null,this)
+      ]]></script>
+    </method>
+    <method name="contactsSearch" type="uimthd">
+      <script><![CDATA[
+        //ADMX.contactssearchTest();
+
+
+        var req=new ADMX.ws_CIL_5.contractssearch.contractsSearchRequest();
+        req.inputAttributes.searcher="SearchContractsByResource";
+        req.inputAttributes.smNum="895550591210015652";
+        req.sessionChangeRequest[0].values.item[0].key="BU_ID";
+        req.sessionChangeRequest[0].values.item[0].value="2";
+        var res=ADMX.publishADMX("ADMX.ws_CIL_5.ContractsSearchService", "contractsSearch", req);
+        if (res!=null&&res instanceof Array)
+            res=res[0];
+      ]]></script>
+    </method>
+    <method name="contentLeftMenuVisible" type="permMethod">
+      <script>return !this.isContentLeftVisible;</script>
+    </method>
+    <method name="contentLeftVisible" type="permMethod">
+      <script>return this.isContentLeftVisible;</script>
+    </method>
+    <method name="contentRightVisible" type="permMethod">
+      <script>return this.isContentRightVisible</script>
+    </method>
+    <method name="currenciesMnu" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var ui= new ADMX.currenciesUI();
+        return ui;
+      ]]></script>
+    </method>
+    <method name="cwChildDialogClose" type="action">
+      <script><![CDATA[
+        if(this.dialog.owner instanceof cwa_epc.wrappedRelationFinder.UserInterface){
+            //this.dialog.owner.hideDetailAction();
+            if(this.dialog.owner.parent instanceof cwa_epc.epcItem)
+                this.dialog.owner.parent.isCancelMenuVisible = false;
+
+        }
+        if(this.dialog.owner instanceof cwa_epc.relationTree){
+            var tree = this.dialog.owner;
+            var root = tree.getRoot();
+            tree.setSelection(root, true);
+        }
+
+        this.cw$super_cwChildDialogClose();
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$isBannerLayout" type="laction">
+      <path>ui_cm_spoc.catalogMain/leaf_isBannerLayout</path>
+      <type>initializer</type>
+      <script>return false;</script>
+    </method>
+    <method name="cwLeafInitAction$isContentLeftVisible" type="laction">
+      <path>ui_cm_spoc.catalogMain/leaf_isContentLeftVisible</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.catalogMain/leaf_isContentLeftVisible</valueType>
+      <script>return true;</script>
+    </method>
+    <method name="cwLeafInitAction$isContentRightVisible" type="laction">
+      <path>ui_cm_spoc.catalogMain/leaf_isContentRightVisible</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.catalogMain/leaf_isContentRightVisible</valueType>
+      <script>return true;</script>
+    </method>
+    <method name="cwLeafInitAction$isModelStatusMenuVisible" type="laction">
+      <path>ui_cm_spoc.catalogMain/leaf_isModelStatusMenuVisible</path>
+      <type>initializer</type>
+      <script>return true;</script>
+    </method>
+    <method name="cwLeafInitAction$showStatus" type="laction">
+      <path>ui_cm_spoc.catalogMain/leaf_showStatus</path>
+      <type>initializer</type>
+      <script>return false;</script>
+    </method>
+    <method name="cwLeafInitAction$statusWidth" type="laction">
+      <path>ui_cm_spoc.catalogMain/leaf_statusWidth</path>
+      <type>initializer</type>
+      <script>return 120;</script>
+    </method>
+    <method name="epcPublish" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var project = Global.getSessionParameter("project");
+        if (project == null) {
+            Global.showUserMessage("Please select a current project!");
+            return;
+        }
+        cwa_epc.epcPublish(project.projectCode, null);
+        return;
+      ]]></script>
+    </method>
+    <method name="exitApp" type="usrActionMethod">
+      <script>UserProfile.selectApp();</script>
+    </method>
+    <method name="expressionTreeEPCMenu" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        return new cwa_epc.expressionTreeEPCFinder;
+      ]]></script>
+    </method>
+    <method name="isBannerLayoutVisible" type="permMethod">
+      <script>return this.isBannerLayout;</script>
+    </method>
+    <method name="isWorklistParticipantPerm" type="permMethod">
+      <script><![CDATA[return this.isWorklistParticipant && this.isMenuVisible;]]></script>
+    </method>
+    <method name="logout" type="usrActionMethod">
+      <script>UserProfile.logout();</script>
+    </method>
+    <method name="menuVisible" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogDesigner</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="modelStatusAction" type="usrActionMethod">
+      <dialogObject>ui_cwa_epc.dialogExtend</dialogObject>
+      <parameterList>
+        <parameter name="dialog" type="rifp">
+          <type>ui_cwa_epc.dialogExtend</type>
+        </parameter>
+      </parameterList>
+      <showInPopup>true</showInPopup>
+      <script>return cwa_epc.getStatusMessageDialog(dialog,this);</script>
+    </method>
+    <method name="modelStatusMenuVisible" type="permMethod">
+      <script><![CDATA[return this.showStatus && this.modelStatus!=this.modelStatusTrim && this.isModelStatusMenuVisible;]]></script>
+    </method>
+    <method name="msgLogFnd" type="usrActionMethod">
+      <dialogHeight>800</dialogHeight>
+      <dialogWidth>800</dialogWidth>
+      <form>findSql_cwl_plm.msgLogFinder/ui_UserInterface/frmui_Forms/exov_Default</form>
+      <showInPopup>true</showInPopup>
+      <userInterface>findSql_cwl_plm.msgLogFinder</userInterface>
+      <valueType>findSql_cwl_plm.msgLogFinder</valueType>
+    </method>
+    <method name="onInit" type="action">
+      <script><![CDATA[
+        var worklistMeta = this.metadata.worklist;
+        if(worklistMeta){
+              this.workListFinder = new worklistMeta.UserInterface();
+              if(!this.hasWorklist())
+                    return;
+                this.workListFinder.cwRefreshWL();
+        }
+
+        this.isTesting = false;
+
+        var curUser = Global.getUserId();
+        var isAvail = UserProfile.isAvailable(curUser);
+
+        if(isAvail){
+              this.worklistImage = "/cwf/MenuIconTaskAvail.gif";
+        }else{
+              this.worklistImage = "/cwf/MenuIconTaskUnavail.gif";
+        }
+        //Global.startTimer(this);
+
+        this.projectImage = "/cwt/images/24/folder.png";
+        var proj = cwt_pc.getDefaultProject();
+        if (proj)
+              this.defaultProject = "Project : " + proj.name;
+
+        else
+              this.defaultProject = "Project : NONE";
+
+        this.loginUserImage = "/cwt/images/24/user3.png"
+        var curUserProfile = UserProfile.getUserProfile(curUser);
+        if (curUserProfile) {
+              this.loginUser = "Login User: " +curUserProfile.userName;
+        } else {
+              this.loginUser = "User Unknown";
+        }
+
+        var docUrl = "/cwf/r/help/index.html";
+        var imgUrl = "/cwf/r/images/16/help.png";
+        this.helpURL = "<html><body><a href=\"" + docUrl + "\" target=\"_blank\"><img src=\"" + imgUrl + "\" border=\"0\" width=\"18\" height=\"18\" /></a></body> </html>";
+        this.isHomePage = true;
+
+        var allow = UserProfile.getUserParticipants(UserProfile.userId());
+        if (!allow || allow.length == 0)
+              this.isWorklistParticipant = false;
+        else
+              this.isWorklistParticipant = true;
+
+        return new cwt_pc.homePage(null, this);
+      ]]></script>
+    </method>
+    <method name="projectTreeCommand" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var model = new cm_spoc.cwl_project;
+        this.isHomePage = false;
+        var ui = new cm_spoc.ProjectTree(model,this);
+        var proj = cwt_pc.getDefaultProject();
+        if(ui.loaded)
+            ui.loadChildren();
+        if(proj){
+            var node;
+            if(!ui.childNodes[0].loaded)
+                ui.childNodes[0].loadChildren();
+            for(var i = 0; i < ui.childNodes[0].childNodes.length; i ++){
+                node = ui.childNodes[0].childNodes[i];
+                if(node.model.id == proj.id){
+                    ui.displayNode(node);
+                    break;
+                }
+
+            }
+
+        }else{
+            if(ui.childNodes[0] != null)
+                ui.displayNode(ui.childNodes[0]);
+
+        }
+        return ui;
+      ]]></script>
+    </method>
+    <method name="referenceData" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var ui= new synchronization.referenceData();
+        return ui;
+      ]]></script>
+    </method>
+    <method name="relationChargeMenu" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var ui = new cwa_epc.itemChargeEPCComponent(new epc.data.ItemChargeEpc,this);
+        ui.setDebug(true);
+        return ui;
+      ]]></script>
+    </method>
+    <method name="relationMenu" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var ui = new cwa_epc.newRelationComponent(new cwa_epc.newRelationDS,this);
+        ui.setDebug(true);
+        return ui;
+      ]]></script>
+    </method>
+    <method name="resetModelStatus" type="uimthd">
+      <script>cwa_epc.resetStatusMessage(this);</script>
+    </method>
+    <method name="returnAppLabel" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        if(this.isBannerLayout)
+            return Global.getAppTitle();
+      ]]></script>
+    </method>
+    <method name="returnAppMenuLabel" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        if(!this.isBannerLayout)
+            return Global.getAppTitle();
+      ]]></script>
+    </method>
+    <method name="showDisplaySets" type="usrActionMethod">
+      <userInterface>findDoc_cwa_epc.displaySetFinder</userInterface>
+      <valueType>findDoc_cwa_epc.displaySetFinder</valueType>
+      <script>this.resetModelStatus();</script>
+    </method>
+    <method name="returnModelStatusLabelStyle" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script>return cwa_epc.returnModelStatusLabelStyle(this);</script>
+    </method>
+    <method name="returnModelStatusStyle" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script>return cwa_epc.returnModelStatusStyle(this);</script>
+    </method>
+    <method name="returnToggleLeftStyle" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        if(this.isContentLeftVisible)
+            return "cweCollapsableHorizontalLeft";
+        return "cweCollapsableHorizontalRight";
+      ]]></script>
+    </method>
+    <method name="returnToggleMenuStyle" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        if(this.isMenuVisible)
+            return "cweCollapsableHorizontalRight";
+        return "cweCollapsableHorizontalLeft";
+      ]]></script>
+    </method>
+    <method name="returnToggleRightStyle" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        if(this.isContentRightVisible)
+            return "cweCollapsableHorizontalRight";
+        return "cweCollapsableHorizontalLeft";
+      ]]></script>
+    </method>
+    <method name="returnUserId" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[return Global.translateText("CWA_EPC_LOGIN",null,Global.getUserId());]]></script>
+    </method>
+    <method name="serviceCSV" type="usrActionMethod">
+      <userInterface>ui_cwa_epc.testServiceCSV</userInterface>
+      <valueType>ui_cwa_epc.testServiceCSV</valueType>
+      <script>this.resetModelStatus();</script>
+    </method>
+    <method name="serviceOfferingDynamicUI" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var model = new epc.data.serviceOfferingCondition;
+        var ui = new cwa_epc.baseDisplayUIComponent(model,this);
+        return ui;
+      ]]></script>
+    </method>
+    <method name="setDefaultProject" type="uimthd">
+      <parameterList>
+        <parameter name="projectName" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[this.defaultProject = "Project : " + projectName;]]></script>
+    </method>
+    <method name="setProjectTest" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var sessionProject = epc.getProjectByCode("test");
+        Global.setSessionParameter("project", sessionProject);
+        this.setDefaultProject("test");
+        var ui = new cwa_epc.epcItemFinder.UserInterface();
+        ui.searchAction();
+        return ui;
+      ]]></script>
+    </method>
+    <method name="setStatus" type="uimthd">
+      <parameterList>
+        <parameter name="msg" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="doStyle" type="rifp">
+          <type>dtype_com.conceptwave.system.Boolean</type>
+        </parameter>
+        <parameter name="stringParam" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script>cwa_epc.setStatusMessage(this,null,msg,doStyle,null,stringParam);</script>
+    </method>
+    <method name="showCatalogItem" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var model = new cwt_pc.cwt_itemNew;
+
+        var ui = new cwa_epc.catalogItem(model, this);
+        return ui;
+      ]]></script>
+    </method>
+    <method name="showEPCPricePlans" type="usrActionMethod">
+      <userInterface>findScript_cwa_epc.epcPricePlanFinder</userInterface>
+      <valueType>findScript_cwa_epc.epcPricePlanFinder</valueType>
+      <script>this.resetModelStatus();</script>
+    </method>
+    <method name="showEPCProducts" type="usrActionMethod">
+      <userInterface>findScript_cwa_epc.epcItemFinder</userInterface>
+      <valueType>findScript_cwa_epc.epcItemFinder</valueType>
+      <script>this.resetModelStatus();</script>
+    </method>
+    <method name="showExpressionTree" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var treeModel = new epc.data.expressionTreeRoot;
+        var ui = new cwa_epc.expressionTree(treeModel,this);
+        return ui;
+      ]]></script>
+    </method>
+    <method name="showExpressions" type="usrActionMethod">
+      <userInterface>findDoc_cwa_epc.expressionTreeFinder</userInterface>
+      <valueType>findDoc_cwa_epc.expressionTreeFinder</valueType>
+      <script>this.resetModelStatus();</script>
+    </method>
+    <method name="showRuleSets" type="usrActionMethod">
+      <userInterface>findDoc_cwa_epc.ruleSetFinder</userInterface>
+      <valueType>findDoc_cwa_epc.ruleSetFinder</valueType>
+      <script>this.resetModelStatus();</script>
+    </method>
+    <method name="showSpecs" type="usrActionMethod">
+      <userInterface>findScript_cwa_epc.specFinder</userInterface>
+      <valueType>findScript_cwa_epc.specFinder</valueType>
+      <script>this.resetModelStatus();</script>
+    </method>
+    <method name="specificationSubTypeAction" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        return new cwa_epc.specificationSubTypeFinder;
+      ]]></script>
+    </method>
+    <method name="statusVisible" type="permMethod">
+      <script>return this.showStatus;</script>
+    </method>
+    <method name="testDynamicUI" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var model = new epc.data.CostControlPackage;
+        var ui = new cwa_epc.baseDisplayUIComponent(model,this);
+        return ui;
+      ]]></script>
+    </method>
+    <method name="getEpcUIByModel" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var model = new cwa_epc.specificationDoc;
+        model.specificationCode = "PO_SC_6";
+        model.specificationType = "ProductOffering";
+        var ui = cwa_epc.getEpcUIByModel(model);
+        ui.parent = this;
+        return ui;
+      ]]></script>
+    </method>
+    <method name="canViewSynRefData" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"syncRefData");]]></script>
+    </method>
+    <method name="toggleContentLeft" type="uimthd">
+      <script>this.isContentLeftVisible = !this.isContentLeftVisible;</script>
+    </method>
+    <method name="toggleContentRight" type="uimthd">
+      <script>this.isContentRightVisible = !this.isContentRightVisible;</script>
+    </method>
+    <method name="toggleMenu" type="uimthd">
+      <script>this.isMenuVisible = !this.isMenuVisible;</script>
+    </method>
+    <method name="publishToInterface" type="usrActionMethod">
+      <script><![CDATA[
+        this.resetModelStatus();
+        var project = Global.getSessionParameter("project");
+        if (project == null) {
+            Global.showUserMessage("Please select a current project!");
+            return;
+        }
+        cwa_epc.publishProject(project, null);
+      ]]></script>
+    </method>
+    <method name="FAFIndicatorsFnd" type="usrActionMethod">
+      <dialogObject>ui_cwa_epc.dialogExtend</dialogObject>
+      <parameterList>
+        <parameter name="dialog" type="rifp">
+          <type>ui_cwa_epc.dialogExtend</type>
+        </parameter>
+      </parameterList>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        this.resetModelStatus();
+        if(dialog == null)
+            dialog = new cwa_epc.dialogExtend;
+        dialog.contentWidth = cwa_epc.getDialogWidth(false);
+        var ui = new cwa_epc.FAFIndicatorFnd.UserInterface(null,this);
+        return ui;
+      ]]></script>
+    </method>
+    <method name="refillProfileFinder" type="usrActionMethod">
+      <dialogObject>ui_cwa_epc.dialogExtend</dialogObject>
+      <form>findScript_cwa_epc.refillProfileFinder/ui_UserInterface/frmui_Forms/exov_Default</form>
+      <showInPopup>true</showInPopup>
+      <userInterface>findScript_cwa_epc.refillProfileFinder</userInterface>
+      <valueType>findScript_cwa_epc.refillProfileFinder</valueType>
+    </method>
+    <method name="WorklistManager" type="usrActionMethod">
+      <allowInvalidObject>true</allowInvalidObject>
+      <form>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</form>
+      <userInterface>findRule_cwf_pm.BaseWorklistManager</userInterface>
+      <validate>true</validate>
+      <valueType>findRule_cwf_pm.BaseWorklistManager</valueType>
+      <script>return this.cw$super_WorklistManager();</script>
+    </method>
+    <method name="canViewAttribute" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewCatalogRule" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewTax" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewChargeType" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewInfoModel" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewRelationType" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewContext" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewCatalogHierarchy" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewItem" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewVCT2" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewShowExpr" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewSeparator" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewHelpMenu" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="canViewMessLog" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+  </methodList>
+</userInterface>

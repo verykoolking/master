@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cw_etltool._import.entityDocScriptFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <input>doc_cw_etltool._import.entityDocSearch</input>
+  <label>Entity Document Finder</label>
+  <maxRowsLimit>9999</maxRowsLimit>
+  <metaVersion>4</metaVersion>
+  <output>doc_cw_etltool._import.entityDoc</output>
+  <type>script</type>
+  <volatility>0</volatility>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        var result = new DataObjectList();
+
+        if(searchData.cwOrderId == null || searchData.cwOrderId == "" || searchData.FileID == null    || searchData.FileID == "" )
+            return result
+        else{
+            var order =this.parent;//getScriptObject();
+            if((order instanceof Order))
+            {
+
+                for(var f = 0; order.files && f < order.files.length; f++){
+
+                    if(order.files[f].fileDoc.FileID == searchData.FileID){
+                        var entities = order.files[f].entities;
+                        for(var e=0; entities && e < entities.length; e++ ){
+                            result.addLast(entities[e].entityDoc);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cw_etltool._import.entityDoc</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cw_etltool._import.entityDocSearch/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cw_etltool._import.entityDoc/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="entityDocScriptFinderResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="EntityID" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_EntityID</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwOrderId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_cwOrderId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwParentId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_cwParentId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="EntityCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_EntityCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="EntityType" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_EntityType</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="EntityName" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_EntityName</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="EntityStatus" type="elslct">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_EntityStatus</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="ErrorCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_ErrorCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="ErrorMessage" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_ErrorMessage</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Operation" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_Operation</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Sequence" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_Sequence</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="FileID" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_FileID</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="CreationDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_CreationDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="StartProcessDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_StartProcessDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="EndProcessDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_EndProcessDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="XMLString" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_XMLString</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="StartLoadingDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_StartLoadingDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="EndLoadingDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.entityDoc/leaf_EndLoadingDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="report" type="vform">
+            <label>report</label>
+            <root name="table" type="elvlt">
+              <height>100%</height>
+              <width>100%</width>
+              <elementList>
+                <element name="entityDocFinderResultTable" type="eltabl">
+                  <doubleClickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uimthd_loadEntityDetail</variablePath>
+                    </variablePathList>
+                  </doubleClickMethod>
+                  <onSelectChange type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                    </variablePathList>
+                  </onSelectChange>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <elementList>
+                    <element name="EntityID" type="elfld">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cw_etltool._import.entityDoc/leaf_EntityID</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="EntityCode" type="elfld">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cw_etltool._import.entityDoc/leaf_EntityCode</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                    <element name="EntityName" type="elfld">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cw_etltool._import.entityDoc/leaf_EntityName</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>150px</width>
+                    </element>
+                    <element name="EntityType" type="elfld">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cw_etltool._import.entityDoc/leaf_EntityType</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>95px</width>
+                    </element>
+                    <element name="Operation" type="elfld">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cw_etltool._import.entityDoc/leaf_Operation</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>70px</width>
+                    </element>
+                    <element name="EntityStatus" type="elfld">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cw_etltool._import.entityDoc/leaf_EntityStatus</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="Sequence" type="elfld">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cw_etltool._import.entityDoc/leaf_Sequence</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>110px</width>
+                    </element>
+                    <element name="StartProcessDate" type="eldatetime">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cw_etltool._import.entityDoc/leaf_StartProcessDate</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>110px</width>
+                    </element>
+                    <element name="EndProcessDate" type="eldatetime">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cw_etltool._import.entityDoc/leaf_EndProcessDate</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>110px</width>
+                    </element>
+                    <element name="StartLoadingDate" type="eldatetime">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cw_etltool._import.entityDoc/leaf_StartLoadingDate</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>110px</width>
+                    </element>
+                    <element name="EndLoadingDate" type="eldatetime">
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cw_etltool._import.entityDoc/leaf_EndLoadingDate</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>110px</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="loadEntityDetail" type="uimthd">
+        <script><![CDATA[
+          if(this.result.selected != null)
+          this.parent.loadEntityDetail(this.result.selected[0]);
+        ]]></script>
+      </method>
+      <method name="OnSelChanged" type="action">
+        <script><![CDATA[
+          this.cw$super_OnSelChanged();
+          this.loadEntityDetail();
+        ]]></script>
+      </method>
+      <method name="onInit" type="action">
+        <script><![CDATA[
+          this.cw$super_onInit();
+          //this.model.parent = this.parent ;
+        ]]></script>
+      </method>
+      <method name="cwOnVelocityRowstyle" type="action">
+        <parameterList>
+          <parameter name="document" type="rifp">
+            <mandatory>true</mandatory>
+            <type>doc_com.conceptwave.system.Document</type>
+          </parameter>
+        </parameterList>
+        <system>true</system>
+        <valueType>dtype_com.conceptwave.system.String</valueType>
+        <script><![CDATA[
+          if(document.EntityStatus == cw_etltool._import.$CONSTANT().entityStatus.ERROR)
+              return "CwRowErr";
+        ]]></script>
+      </method>
+    </methodList>
+  </UserInterface>
+  <viewList>
+    <view name="fileDocFinderView" type="findVView">
+      <outputOverlay>findScript_cw_etltool._import.entityDocScriptFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findScript>

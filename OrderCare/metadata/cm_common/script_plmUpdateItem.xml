@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.plmUpdateItem">
+  <group>api</group>
+  <label>plmUpdateItem</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="entityData" type="rifp">
+      <type>dstruct_com.conceptwave.system.DataStructure</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_epc.data.Specification/dstruct_attributes</valueType>
+  <script><![CDATA[
+    var response = cm_common.validateItemAvailability(entityData, projectCode);
+    if(api_common.isFault(response))
+        return response;
+
+    response = cm_common.setSpecificationByValue(entityData,projectCode); //recursively Saves or Modify the catalog entities
+    if(api_common.isFault(response))
+        return response;
+
+    cm_plm.setTopItemCode(entityData.specificationCode, projectCode);
+
+    var ord = cm_plm.getPLMOrderFromProjectCode(projectCode);
+    if(ord!=null)
+        cm_plm.registerItemInOrder(entityData.specificationCode, projectCode, 'CHANGE');
+
+    return response;
+  ]]></script>
+</script>

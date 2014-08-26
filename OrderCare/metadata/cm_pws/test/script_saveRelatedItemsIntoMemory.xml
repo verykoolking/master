@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.saveRelatedItemsIntoMemory">
+  <group>scripts</group>
+  <label>saveRelatedItemsIntoMemory</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="input" type="rifp"/>
+    <parameter name="owner" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var item = new cwt_pcmaintapi.item();
+    var entityDs =cm_pws.getInnerDataStructure(input.oCSEntity);
+    item.itemCode = entityDs.identifier.dn.scheme;
+    var relatedItems = cm_common.getRelatedItems(item, "contains");
+    owner.setProperty("RELATED_ITEMS", relatedItems);
+  ]]></script>
+</script>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._export.getEntityTypes">
+  <label>getEntityTypes</label>
+  <metaVersion>4</metaVersion>
+  <script><![CDATA[
+    /*
+    var codes  = Global.getCodes("cm_common.baseSpecificationCode"); // return only active enumeration while getAllCodes return all active and inactive codes
+
+    var list = new DataObjectList();
+
+    for(var i = 0; codes && i< codes.length; i=i+2 ){
+        var doc = new Document("cw_etltool._export.codeTableDoc");
+        doc.code = codes[i];
+        doc.description = Global.getCodeDescription("cm_common.baseSpecificationCode", doc.code,null);
+        list.addLast(doc);
+    }
+    return list;
+    */
+
+
+     var search = new epc.data.SpecificationSearch();
+     search.specification.specificationType = 'ProductOffering'
+     search.specification.baseSpecificationCode = 'base_BoltOn'
+
+     var queryResults = epc.querySpecification(search);
+      if(api_common.isFault(queryResults)) {
+            var fault = api_common.createFault("E111", "Error searching for Specifications.");
+            return fault;
+        }
+
+        // Pagination variables:
+        var maxResults = 0;
+        if(queryResults && queryResults.specification) {
+            maxResults = queryResults.specification.length;
+        }
+
+        // Create the method response:
+        var output = new OCSConfigurationOperation.v1.types.QueryEntityResponse();
+        output.queryCommonInfoResult = new OCSConfigurationOperation.v1.types.QueryEntity();
+
+        // Map the Specifications to the Entity Structure:
+        var listEntity = new OCSEntity.v1.types.ArrayOfOCSEntityType();
+        var counter = 0;
+        for(var i=0; i<maxResults; i++) {
+            var spec = queryResults.specification[i];
+            spec = cm_common.getSpecificationByKey(spec);
+
+            // Map the entity structure:
+            var entity = new OCSEntity.v1.types.OCSEntityType();
+            var result = cm_pws.services.pwsMap_SpecificationToEntityDS(spec, entity);
+            if(api_common.isFault(result)) {
+                var fault = api_common.createFault("E111", "Internal error while mapping values for the Entity with code='" + spec.specificationCode + "'");
+                return fault;
+            }
+            listEntity.oCSEntity[counter] = entity;
+            counter ++;
+        }
+
+        output.oCSEntityList = listEntity;
+        /*
+        // Create de updated token to return:
+        var returnedToken = new OCSOperation.v1.types.QueryCommonInfoType();
+        returnedToken.token = "TOKEN_RESULTS_" + paginationFrom + "_" + paginationTo;
+        output.queryCommonInfoResult = returnedToken;
+        */
+        return output;
+  ]]></script>
+</script>

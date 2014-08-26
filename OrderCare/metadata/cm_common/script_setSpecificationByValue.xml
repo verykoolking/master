@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.setSpecificationByValue">
+  <flags enum-type="metadataFlag">FINAL</flags>
+  <description><![CDATA[
+    <p style="margin-top: 0">
+      Updates a specification version in the catalog, may implicitly create a
+      new version of the specification if not exist in the project
+    </p>
+  ]]></description>
+  <group>api</group>
+  <label>setSpecificationByValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="specification" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_epc.data.Specification</valueType>
+  <script><![CDATA[
+    try
+    {
+        var existingItem = cm_spoc.getExistingItem(specification.specificationCode);
+
+       if(!existingItem) {
+            var fault = api_common.createFault("E106", "The item doesn't exist");
+            return fault;
+        }
+        else
+            return cm_common.doSetOrCreate(specification, projectCode)
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="cm_spoc.data.ConstraintByStatus">
+  <container>true</container>
+  <extends>dstruct_cm_spoc.data.OCSCustFacingServiceSpec</extends>
+  <group>Operation</group>
+  <guid>{ada231fc-5ca3-436a-ae2e-3f4aff4ec8af}</guid>
+  <jsonMap type="jmap"/>
+  <label>ConstraintByStatus</label>
+  <metaVersion>4</metaVersion>
+  <childList>
+    <child name="Operation" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{5494f3e7-75b9-42c2-afa2-92d6fafd639f}</guid>
+      <jsonMap type="jmap"/>
+      <label>Operation</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="SubOperation" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{5198c56e-becd-43c3-b291-d6a139a6a1e0}</guid>
+      <jsonMap type="jmap"/>
+      <label>SubOperation</label>
+    </child>
+    <child name="SubOperationDS" type="dstruct">
+      <element>dstruct_cm_spoc.data.SubOperation</element>
+      <guid>{fe95bdba-092e-41c6-af92-231087f50105}</guid>
+      <jsonMap type="jmap"/>
+      <label>SubOperationDS</label>
+    </child>
+    <child name="BanningConditionedByOpCost" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSBooleanAttribute</element>
+      <guid>{3a69f40b-88d9-4a0f-94b2-91dc703b3088}</guid>
+      <jsonMap type="jmap"/>
+      <label>BanningConditionedByOpCost</label>
+    </child>
+    <child name="LifeCycleSubStatus" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{7c3a92d3-1e10-4126-a772-8289e54fcc8e}</guid>
+      <jsonMap type="jmap"/>
+      <label>LifeCycleSubStatus</label>
+      <mandatory>true</mandatory>
+    </child>
+  </childList>
+  <methodList>
+    <method name="onInit" type="action">
+      <parameterList>
+        <parameter name="document" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <system>true</system>
+      <script><![CDATA[
+        this.cw$super_onInit(document);
+        this.BanningConditionedByOpCost = false;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_cm_spoc.data.ConstraintByStatus</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_cm_spoc.data.ConstraintByStatus</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

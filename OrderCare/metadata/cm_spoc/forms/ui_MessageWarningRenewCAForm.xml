@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.MessageWarningRenewCAForm">
+  <group>Messages</group>
+  <label>MessageWarningRenewCAForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.MessageWarningRenewCA</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <width>750px</width>
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <elementList>
+                        <element name="SectionHeader" type="elsecth">
+                          <label>Warning Prior to Cyclic Action Renewal</label>
+                        </element>
+                        <element name="GridLayout" type="elgrd">
+                          <elementList>
+                            <element name="RowSpacer" type="elrsp">
+                              <height>10px</height>
+                              <rowSpan>10px</rowSpan>
+                            </element>
+                            <element name="CyclicActionSpecEnum" type="elslct">
+                              <labeAlign>left</labeAlign>
+                              <label>For The Cyclic Action</label>
+                              <labelOrientation>left</labelOrientation>
+                              <multiselect>false</multiselect>
+                              <onChangeMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageWarningRenewCAForm/uimthd_CyclicActionSpecificationTrigger</variablePath>
+                                </variablePathList>
+                              </onChangeMethod>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageWarningRenewCAForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.MessageWarningRenewCA/dstruct_CyclicActionSpecEnum</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>300px</width>
+                            </element>
+                            <element name="MessageEnum" type="elslct">
+                              <labeAlign>left</labeAlign>
+                              <label>It Will Send The Message</label>
+                              <labelOrientation>left</labelOrientation>
+                              <multiselect>false</multiselect>
+                              <onChangeMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageWarningRenewCAForm/uimthd_MessageTrigger</variablePath>
+                                </variablePathList>
+                              </onChangeMethod>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageWarningRenewCAForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.MessageWarningRenewCA/dstruct_MessageEnum</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>300px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="VerticalLayout2" type="elvlt">
+                          <elementList>
+                            <element name="HorizontalLayout" type="elhlt">
+                              <elementList>
+                                <element name="LayoutSpacer" type="ellsp">
+                                  <height>10px</height>
+                                </element>
+                                <element name="WRIntTemp1" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <labelOrientation>left</labelOrientation>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageWarningRenewCAForm/usrActionMethod_checkWRIntTemp</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageWarningRenewCAForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.MessageWarningRenewCA/dstruct_WRIntTemp</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>80px</width>
+                                </element>
+                                <element name="WRCodTemp" type="elslct">
+                                  <label>Before Cyclic Date</label>
+                                  <labelOrientation>right</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageWarningRenewCAForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.MessageWarningRenewCA/dstruct_WRCodTemp</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>285px</width>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$cwShowHover" type="laction">
+      <path>ui_com.conceptwave.system.UserInterface/leaf_cwShowHover</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initMessageWarningRenewCA(this.model);
+        return m;
+      ]]></script>
+    </method>
+    <method name="MessageTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode = this.model.MessageEnum;
+        this.model.Message = btCode;
+      ]]></script>
+    </method>
+    <method name="CyclicActionSpecificationTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode = this.model.CyclicActionSpecEnum;
+        this.model.CyclicActionSpecification = btCode;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script>//return true;</script>
+    </method>
+    <method name="checkWRIntTemp" type="usrActionMethod">
+      <script><![CDATA[
+        if(this.model.WRIntTemp < 0 || this.model.WRIntTemp == null)
+            this.model.WRIntTemp = 0;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

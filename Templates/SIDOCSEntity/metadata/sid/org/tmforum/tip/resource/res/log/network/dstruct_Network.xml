@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.resource.res.log.network.Network">
+  <container>true</container>
+  <description><![CDATA[
+    <p>The Network class is derived from M.3100; DEN-ng has enhanced this definition by providing additional semantics that enable objects defined in the ITU to interact with objects defined in the IETF and the TMF.    A Network is a managed object that represents an aggregation of interconnected telecommunications and management objects capable of exchanging information. The reason that a Network is subclassed from ResourceCollection is that it is important that a Network be able to represent physical as well as logical characteristics and behavior of this collection of telecommunications and management objects.    A Network has the additional semantics of having one or more common characteristics and/or behavior. For example, a network may be owned by a single customer or provider, or be associated with the delivery of a specific set of services. A network may be nested within another (larger) network, thereby forming a containment relationship. An example of a network that is contained in another network is a transmission sub-network. It is owned by a single Administration and can only perform transmission functions.    The m.3100 SystemTitle attribute is NOT implemented in this class, we're using UserLabel instead.    Note that the LocationName attribute of m.3100 and MTNM is NOT implemented in this class, but rather is defined through an association to the Location object class in order to represent more generic types of associations.    The MTNM managedElementName, nativeEMSName, communucationState, and emsInSyncState attributes are NOT implemented in this class, as all SHOULD be derived from the ManagedDevices association. Note that there can be multiple EMSes that manage any given ManagedElement.    The MTNM owner attribute is NOT implemented in this class, as it is derived from the MEOwner association. Note that there can be multiple owners for any given ManagedElement.    The MTNM connectionRate attribute is NOT implemented in this class, as not all ManagedElements have the ability to communicate.    The MTNM softwareVersion attribute is NOT implemented in this class, as not all ManagedElements have software associated with them.</p>                <p>This entity  is  optional</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{2f443c98-eb69-426d-945d-ef534ac2d17f}</guid>
+  <label>Network</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="isNetworkOperational" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute is used to define the operational status of the Network, and is implemented as a Boolean: TRUE means that the Network is currently operational, and FALSE means that the Network is not currently operational.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Boolean</element>
+      <guid>{a97fe2d7-70c4-43f4-b072-f783dfc95dff}</guid>
+      <label>isNetworkOperational</label>
+    </child>
+    <child name="layerRates" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is a comma-separated Sequence of string attributes. Each string identifies a communication rate that is supported by this Network.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{4dec9dec-c65e-4076-aa01-3d65b18699f9}</guid>
+      <label>layerRates</label>
+    </child>
+    <child name="networkAlarmStatus" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is an enumerated integer that indicates the occurrence of an abnormal condition relating to one or more managed objects that are contained in this Network. This attribute may also function as a summary indicator of alarm conditions associated with a specific resource. It is used to indicate the existence of an alarm condition, a pending alarm condition such as threshold situations, or (when used as a summary indicator) the highest severity of active alarm conditions. Values include:        0: unknown error        1: active - Critical        2: active - Major        3: active - Minor        4: active - Indeterminate        5: active - Warning        6: active - PendingDecision        7: active - UnderRepair        8: active - BeingReplaced        9: cleared</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{33990518-dff2-41d4-9421-cce465a64ad8}</guid>
+      <label>networkAlarmStatus</label>
+    </child>
+    <child name="networkAdministrativeState" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute is an enumerated integer that defines the administrative state of the Network. Values include:        0: Unknown        1: Unlocked        2: Locked        3: Shutting Down        4: Starting Up        5: Testing        6: Maintenance</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{d521cfdc-2abc-4937-9125-400fa67864d8}</guid>
+      <label>networkAdministrativeState</label>
+    </child>
+    <child name="networkComposite" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..1</p>                                <p>This association end  has  aggregation shared</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association HasNetworks</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.log.network.NetworkComposite</element>
+      <guid>{726e53d4-048e-490c-9b9c-4a00f0a0d54a}</guid>
+      <label>networkComposite</label>
+    </child>
+    <child name="physicalPort" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..*</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association PortsInNetwork</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.phy.hw.ArrayOfPhysicalPort</element>
+      <guid>{7fe8587b-def1-48b4-8f98-bd7d9312f4a3}</guid>
+      <label>physicalPort</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.resource.res.log.network.Network</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.resource.res.log.network.Network</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

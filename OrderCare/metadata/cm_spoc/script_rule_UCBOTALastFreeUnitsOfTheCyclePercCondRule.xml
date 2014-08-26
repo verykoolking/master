@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_UCBOTALastFreeUnitsOfTheCyclePercCondRule">
+  <group>rules_scripts.UsageControl</group>
+  <label>rule_UCBOTALastFreeUnitsOfTheCyclePercCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var listDS = data.UCBOASUCBoltOnTypeAssArrDS.ListDS;
+    for ( var i = 0; i<listDS.length; i++ ) {
+    var perc = listDS[i].LastFreeUnitsOfTheCycle;
+        if ( listDS[i].UnitsOrPercentageThreshold == 'P' && ( perc < 0 || perc > 100 ) )
+
+        errList.addErrorMessage(data,["Invalida value for Last Free Units ","For Percentage"],"NGAA_EPC_002","E");
+    }
+    return false;
+  ]]></script>
+</script>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initNAbyStatus">
+  <group>ui_scripts.Operation</group>
+  <label>initNAbyStatus</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+    var ConstraintsCByStatusArr = cm_spoc.initInnerDS("base_ConstraintsCByStatusArr");
+    model.ConstraintsCByStatusArrDS = ConstraintsCByStatusArr;
+
+    return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        var ConstraintsCByStatusArrRel = model.ConstraintsCByStatusArr;
+        s.specificationCode = ConstraintsCByStatusArrRel;
+        var a = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(a)){
+            model.ConstraintsCByStatusArrDS = a;
+            ConstraintsCByStatusArrRel = a.List;
+        }
+        var ConstraintsCByStatusDS = model.ConstraintsCByStatusArrDS.ListDS;
+        for(var i=0;i<ConstraintsCByStatusArrRel.length;i++){
+            s.specificationCode = ConstraintsCByStatusArrRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                ConstraintsCByStatusDS[i]=r;
+                var SubOperationRel = r.SubOperation;
+                s.specificationCode = SubOperationRel;
+                var c =  epc.getSpecificationByKey(s);
+                if(!api_common.isFault(c)){
+                    ConstraintsCByStatusDS[i].SubOperationDS = c;
+                }
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.caApplyMSConfiguration">
+  <highlight>34</highlight>
+  <label>CM-AACA Apply MS Configuration</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="pDoc" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="pData" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var env = cm_aaca.caGetEnvironment(pDoc);
+    var curEntityIdx = pDoc.currentMSEntityIndex;
+    var aaData = pData.msData.aaData[curEntityIdx];
+    var xmlData = aaData.aaItem;
+    var procedures = aaData.procedureName;
+    var msName = "AACA_" + env + "_MS";
+    var addInfo = env + ' - ' + xmlData.name;
+    var phId = cm_plm.startPlmControlPhase(pDoc.projectCode, 'MSCF', addInfo);
+
+
+    for (var j = 0; j < procedures.length; j++) {
+        var outPar = cm_aaca.caCallProcedure(msName, procedures[j], xmlData, pDoc.projectCode, pDoc.processId);
+
+        if (outPar.RESULT_CODE != 0) {
+            pDoc.errorOccurred = true;
+            pDoc.errorCode = outPar.RESULT_CODE;
+            pDoc.errorDescription = outPar.RESULT_TEXT;
+            //TODO: Error managment
+            return;
+        }
+
+        var ret = Global.getItemsFromXML(outPar.RESULT_TEXT, "cm_aaca.outXML");
+
+        if (ret != null && ret.length > 0 && ret[0].SERVICE.length > 0) {
+            var services = ret[0].SERVICE;
+            for (var i = 0; i < services.length; i++) {
+                if (services[i].ZONE.length > 0) {
+                    for (var j = 0; j < services[i].ZONE.length; j++) {
+                        mergeZone(services[i].ZONE[j]);
+                    }
+                }
+            }
+        }
+    }
+
+    cm_plm.endPlmControlPhase(phId);
+
+    function mergeZone(zone) {
+        var zoneList = pData.msData.ZONE;
+        var foundZone = false;
+        for(var i=0; i<zoneList.length; i++)
+            if(zoneList[i] == zone)
+                foundZone = true;
+
+        if(!foundZone)
+            zoneList[zoneList.length] = zone;
+    }
+  ]]></script>
+</script>

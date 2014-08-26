@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.validateItemAvailability">
+  <group>api</group>
+  <label>validateItemAvailability</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="entityData" type="rifp">
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(entityData.specificationCode==null)
+        return api_common.createFault("E103", "Missing Item Code.");
+
+    var project = cm_common.validateProject(projectCode);
+    if(api_common.isFault(project))
+        return project;
+
+    var itemDS = cm_common.getItemByCode(entityData.specificationCode);
+    if(api_common.isFault(itemDS))
+        return itemDS;
+
+    //We have to check if the item belongs to this project
+    if(itemDS!=null && itemDS.status != 'ACT' && itemDS.projectCode != projectCode){
+        var fault = api_common.createFault("E103", "The item is being mainatained in another project and cannot be modified in this project.");
+        return fault;
+    }
+
+    var response = cm_common.validateItemRelationsForNonActiveStatus(entityData, projectCode, true, null);
+    if(api_common.isFault(response))
+        return response;
+  ]]></script>
+</script>

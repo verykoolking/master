@@ -1,0 +1,950 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.RatingHomePage">
+  <group>overridden.UI.RatingCatalogApp</group>
+  <label>RatingHomePage</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="detailFormMenuUI" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="isTopFormVisible" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="isBottomFormVisible" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="isLeftMenuVisible" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="epcItemFinderUI" type="leaf">
+      <valueType>findScript_cm_spoc.epcItemFinder/ui_UserInterface</valueType>
+    </variable>
+    <variable name="availTaskArr" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dstruct_cm_spoc.TaskTable</valueType>
+    </variable>
+    <variable name="taskArr" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dstruct_cm_spoc.TaskTable</valueType>
+    </variable>
+    <variable name="detailFormUI" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="detailForm" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="detailFormMenu" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <alignment>center,top</alignment>
+              <fillSpace>false</fillSpace>
+              <height>100%</height>
+              <redrawOnResize>true</redrawOnResize>
+              <width>100%</width>
+              <elementList>
+                <element name="VerticalLayoutSpacer1" type="elvlt">
+                  <height>1%</height>
+                  <elementList>
+                    <element name="LayoutSpacer" type="ellsp">
+                      <height>5px</height>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="HorizontalLayout1" type="elhlt">
+                  <height>75%</height>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.RatingHomePage/permMethod_ShowTopForm</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <width>96%</width>
+                  <elementList>
+                    <element name="VerticalLayout123" type="elvlt">
+                      <alignment>center,top</alignment>
+                      <fillSpace>false</fillSpace>
+                      <height>100%</height>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.RatingHomePage/permMethod_ShowLeftMenu</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>28%</width>
+                      <elementList>
+                        <element name="FormTask" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.RatingHomePage/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.RatingHomePage/frmui_Forms/vform_tasks</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <height>40%</height>
+                          <width>100%</width>
+                        </element>
+                        <element name="LayoutSpacer3" type="ellsp">
+                          <height>10px</height>
+                        </element>
+                        <element name="FormAvailableTask" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.RatingHomePage/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.RatingHomePage/frmui_Forms/vform_availableTasks</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <height>40%</height>
+                          <width>100%</width>
+                        </element>
+                        <element name="LayoutSpacer4" type="ellsp">
+                          <height>10px</height>
+                        </element>
+                        <element name="FormAvailableTaskMenu" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.RatingHomePage/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.RatingHomePage/frmui_Forms/vform_availableTaskMenu</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <width>100%</width>
+                        </element>
+                        <element name="AddPLMProject" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.RatingHomePage/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.RatingHomePage/frmui_Forms/vform_ProjectMenu</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <width>100%</width>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="LayoutSpacer1" type="ellsp">
+                      <width>2%</width>
+                    </element>
+                    <element name="VerticalLayout1" type="elvlt">
+                      <fillSpace>false</fillSpace>
+                      <height>100%</height>
+                      <width>70%</width>
+                      <elementList>
+                        <element name="FormFrameDetail" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.RatingHomePage/leaf_detailForm</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <height>90%</height>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.RatingHomePage/leaf_detailFormUI</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <width>100%</width>
+                        </element>
+                        <element name="FormFrameDetailMenu" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.RatingHomePage/leaf_detailFormMenu</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <height>10%</height>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.RatingHomePage/leaf_detailFormMenuUI</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.RatingHomePage/permMethod_ShowDetailFormMenu</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <width>100%</width>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="VerticalLayout2" type="elvlt">
+                  <edgeOffset>2</edgeOffset>
+                  <fillSpace>false</fillSpace>
+                  <height>35%</height>
+                  <redrawOnResize>true</redrawOnResize>
+                  <width>96%</width>
+                  <elementList>
+                    <element name="VerticalLayoutSpacer2" type="elvlt">
+                      <height>1%</height>
+                      <elementList>
+                        <element name="LayoutSpacer5" type="ellsp">
+                          <height>5px</height>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="VerticalLayout4" type="elvlt">
+                      <edgeOffset>2</edgeOffset>
+                      <edgeSize>1</edgeSize>
+                      <height>100%</height>
+                      <showEdge>true</showEdge>
+                      <width>100%</width>
+                      <elementList>
+                        <element name="HorizontalLayout" type="elhlt">
+                          <elementList>
+                            <element name="hideTopForm" type="ellab">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.RatingHomePage/uimthd_toggleTopFormVisible</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <height>20px</height>
+                              <removeLabelLine>true</removeLabelLine>
+                              <showLabel>false</showLabel>
+                              <style>cweCollapsableVerticalUp</style>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.RatingHomePage/permMethod_ShowTopForm</variablePath>
+                                </variablePathList>
+                              </visible>
+                              <width>20px</width>
+                            </element>
+                            <element name="showTopForm" type="ellab">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.RatingHomePage/uimthd_toggleTopFormVisible</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <height>20px</height>
+                              <removeLabelLine>true</removeLabelLine>
+                              <showLabel>false</showLabel>
+                              <style>cweCollapsableVerticalDown</style>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.RatingHomePage/permMethod_isTopFormHide</variablePath>
+                                </variablePathList>
+                              </visible>
+                              <width>20px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="HorizontalLayout2" type="elhlt">
+                          <alignment>center,top</alignment>
+                          <fillSpace>false</fillSpace>
+                          <height>100%</height>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.RatingHomePage/permMethod_ShowBottomForm</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <width>100%</width>
+                          <elementList>
+                            <element name="FormFrame1" type="elovf">
+                              <formReference type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.RatingHomePage/leaf_epcItemFinderUI</variablePath>
+                                  <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/frmui_Forms</variablePath>
+                                  <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/frmui_Forms/exov_searchClassicVL</variablePath>
+                                </variablePathList>
+                              </formReference>
+                              <height>100%</height>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.RatingHomePage/leaf_epcItemFinderUI</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>25%</width>
+                            </element>
+                            <element name="FormFrame" type="elovf">
+                              <formReference type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.RatingHomePage/leaf_epcItemFinderUI</variablePath>
+                                  <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/frmui_Forms</variablePath>
+                                  <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/frmui_Forms/exov_Default</variablePath>
+                                </variablePathList>
+                              </formReference>
+                              <height>100%</height>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.RatingHomePage/leaf_epcItemFinderUI</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>75%</width>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="ProjectMenu" type="vform">
+          <label>ProjectMenu</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="HorizontalLayout" type="elhlt">
+                <elementList>
+                  <element name="viewPLMProjectButton" type="elbtn">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.RatingHomePage/uimthd_goToViewProjects</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <height>25px</height>
+                    <label>View PLM Project</label>
+                    <showFocused>true</showFocused>
+                    <showRollOverIcon>true</showRollOverIcon>
+                    <width>130px</width>
+                  </element>
+                  <element name="viewPLMProjectACTButton" type="elbtn">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.RatingHomePage/uimthd_goToViewActProjects</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <height>25px</height>
+                    <label>View ACT PLM Project</label>
+                    <showFocused>true</showFocused>
+                    <showRollOverIcon>true</showRollOverIcon>
+                    <width>130px</width>
+                  </element>
+                </elementList>
+              </element>
+              <element name="addPLMProjectButton" type="elbtn">
+                <clickMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.RatingHomePage/uimthd_goToAddPLMProject</variablePath>
+                  </variablePathList>
+                </clickMethod>
+                <height>25px</height>
+                <label>Add PLM Project</label>
+                <showFocused>true</showFocused>
+                <showRollOverIcon>true</showRollOverIcon>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.RatingHomePage/permMethod_ShowAddPLMProject</variablePath>
+                  </variablePathList>
+                </visible>
+                <width>130px</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="availableTaskMenu" type="vform">
+          <label>availableTaskMenu</label>
+          <root name="HorizontalLayout" type="elhlt">
+            <elementList>
+              <element name="refreshTaskAction" type="elmnu">
+                <menuAccel type="mAccelP"/>
+                <clickMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.RatingHomePage/usrActionMethod_refreshTaskLists</variablePath>
+                  </variablePathList>
+                </clickMethod>
+                <icon>/cwt/images/16/refresh.png</icon>
+                <label>Refresh Task(s)</label>
+                <style>CgMenuBtnBlack</style>
+              </element>
+              <element name="selectTaskAction" type="elmnu">
+                <menuAccel type="mAccelP"/>
+                <clickMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.RatingHomePage/usrActionMethod_selectTaskAction</variablePath>
+                  </variablePathList>
+                </clickMethod>
+                <icon>/cwt/images/16/checkbox.png</icon>
+                <label>Select Task(s)</label>
+                <style>CgMenuBtnBlack</style>
+              </element>
+              <element name="takeFromUserAction" type="elmnu">
+                <menuAccel type="mAccelP"/>
+                <clickMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.RatingHomePage/usrActionMethod_cwTakeFromUser</variablePath>
+                  </variablePathList>
+                </clickMethod>
+                <icon>/cwt/images/16/user_view.png</icon>
+                <label>Take from User</label>
+                <style>CgMenuBtnBlack</style>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="availableTasks" type="vform">
+          <label>availableTasks</label>
+          <root name="VerticalLayout" type="elvlt">
+            <height>100%</height>
+            <width>100%</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <height>100%</height>
+                <visibilityMode>multiple</visibilityMode>
+                <width>100%</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Available Tasks</label>
+                      </element>
+                      <element name="Table" type="eltabl">
+                        <height>100%</height>
+                        <showDetailColumn>false</showDetailColumn>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.RatingHomePage/leaf_availTaskArr</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>100%</width>
+                        <elementList>
+                          <element name="date" type="elfld">
+                            <cellAlignment>center,center</cellAlignment>
+                            <label>Date</label>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.RatingHomePage/leaf_availTaskArr</variablePath>
+                                <variablePath>dstruct_cm_spoc.TaskTable/dstruct_date</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>60px</width>
+                          </element>
+                          <element name="description" type="elfld">
+                            <label>Description</label>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.RatingHomePage/leaf_availTaskArr</variablePath>
+                                <variablePath>dstruct_cm_spoc.TaskTable/dstruct_description</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>100%</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="projectFinder" type="vform">
+          <label>projectFinder</label>
+          <root name="VerticalLayout" type="elvlt">
+            <height>100%</height>
+            <width>100%</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>100%</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Projects</label>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <width>100%</width>
+                        <elementList>
+                          <element name="FormFrame" type="elovf">
+                            <width>100%</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="tasks" type="vform">
+          <label>tasks</label>
+          <root name="VerticalLayout" type="elvlt">
+            <height>100%</height>
+            <width>100%</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>100%</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>My Tasks</label>
+                      </element>
+                      <element name="Table" type="eltabl">
+                        <height>100%</height>
+                        <onSelectChange type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.RatingHomePage/uimthd_openWorklist</variablePath>
+                          </variablePathList>
+                        </onSelectChange>
+                        <showDetailColumn>false</showDetailColumn>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.RatingHomePage/leaf_taskArr</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>100%</width>
+                        <elementList>
+                          <element name="date" type="elfld">
+                            <cellAlignment>center,center</cellAlignment>
+                            <label>Date</label>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.RatingHomePage/leaf_taskArr</variablePath>
+                                <variablePath>dstruct_cm_spoc.TaskTable/dstruct_date</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>60px</width>
+                          </element>
+                          <element name="description" type="elfld">
+                            <label>Description</label>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.RatingHomePage/leaf_taskArr</variablePath>
+                                <variablePath>dstruct_cm_spoc.TaskTable/dstruct_description</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>100%</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="ShowBottomForm" type="permMethod">
+      <script>return this.isBottomFormVisible;</script>
+    </method>
+    <method name="ShowLeftMenu" type="permMethod">
+      <script>return this.isLeftMenuVisible;</script>
+    </method>
+    <method name="containsPLM" type="permMethod">
+      <script>return cwt_pc.containsPLM();</script>
+    </method>
+    <method name="getAvailableTasks" type="uimthd">
+      <script><![CDATA[
+        var result = new DataObjectList();
+
+        if (this.containsPLM()) {
+              var finder = new Finder("cwf_pm:GetSelectTasks");
+              var fr = finder.search();
+              for (var i=0; i<fr.length; i++) {
+                    var item = fr[i];
+                    var ord = this.getCatalogOrder(item);
+                    if (ord != null) {
+                          var taskRow = new cm_spoc.TaskTable();
+                          taskRow.id = item.cwDocId;
+                          taskRow.date =  this.getDate(item.DueDate);
+                          taskRow.description = this.getTaskDescription(ord,item);
+                          result.addLast(taskRow);
+                    }
+              }
+        }
+        return result;
+      ]]></script>
+    </method>
+    <method name="getCatalogOrder" type="uimthd">
+      <parameterList>
+        <parameter name="doc" type="rifp">
+          <type>doc_cwf_pm.BaseWorklist</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var wi = new WorklistItem(doc);
+        var taskUI = new wi.metadata.UserInterface(wi);
+
+        //set default project
+        var order = taskUI.model.processOrder;
+        if (order == null || !order.isBasedOn(cwt_pclm.getChangeRequestOrder()))
+              return null;
+        else
+              return order;
+      ]]></script>
+    </method>
+    <method name="getDate" type="uimthd">
+      <parameterList>
+        <parameter name="date" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if (!date)
+              return null;
+        var month = "";
+        switch(date.getMonth()) {
+              case 0:
+                    month = "Jan";
+                    break;
+              case 1:
+                    month = "Feb";
+                    break;
+              case 2:
+                    month = "Mar";
+                    break;
+              case 3:
+                    month = "Apr";
+                    break;
+              case 4:
+                    month = "May";
+                    break;
+              case 5:
+                    month = "Jun";
+                    break;
+              case 6:
+                    month = "Jul";
+                    break;
+              case 7:
+                    month = "Aug";
+                    break;
+              case 8:
+                    month = "Sept";
+                    break;
+              case 9:
+                    month = "Oct";
+                    break;
+              case 10:
+                    month = "Nov";
+                    break;
+              case 11:
+                    month = "Dec";
+                    break;
+        }
+        return  month + " " + date.getDate();
+      ]]></script>
+    </method>
+    <method name="getTaskDescription" type="uimthd">
+      <parameterList>
+        <parameter name="ord" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+        <parameter name="task" type="rifp"/>
+      </parameterList>
+      <script><![CDATA[
+        /*
+              var wi = new WorklistItem(doc);
+              var taskUI = new wi.metadata.UserInterface(wi);
+
+              //set default project
+              var order = taskUI.model.processOrder;
+              if (order == null || (!order.isBasedOn("cwt_pclm:createRequestOrder") && !order.isBasedOn("cwt_pclm:changeRequestOrder")))
+                    return null;
+        */
+        var des = task.OrderVK;
+        if (des == null && ord.change.projectID) {
+            var projDoc = ord.change.projectID.refData;
+            if (projDoc == null) {
+                des = "*Error " + ord.visualKey
+            } else if (projDoc.description) {
+                des = projDoc.description;
+            } else {
+                des = projDoc.name;
+            }
+        } else {
+            des = ord.visualKey;
+        }
+
+        return task.Operation? des + " - " + task.Operation.substring(task.Operation.lastIndexOf("/")+1) : des;
+      ]]></script>
+    </method>
+    <method name="goToAddPLMProject" type="uimthd">
+      <script><![CDATA[
+        this.resetUI();
+        var ui =  new cm_plm.plmOrder.UserInterface(null,this);
+        this.detailFormUI = ui;
+        this.detailForm = "Default";
+        this.detailFormMenuUI = ui;
+        this.detailFormMenu = "Menu";
+      ]]></script>
+    </method>
+    <method name="getTasks" type="uimthd">
+      <script><![CDATA[
+        var result = new DataObjectList();
+
+        if (this.containsPLM()) {
+              var finder = new Finder("cwf_pm:BaseWorklistFinder");
+              finder.searchDocument.userId = UserProfile.userId();
+
+              var fr = finder.search();
+              for (var i=0; i<fr.length; i++) {
+                    var item = fr[i];
+                    var ord = this.getCatalogOrder(item);
+                    if (ord != null) {
+                            var taskRow = new cm_spoc.TaskTable();
+                          taskRow.id = item.cwDocId;
+                          taskRow.date =  this.getDate(item.DueDate);
+                          taskRow.description = this.getTaskDescription(ord,item);
+                          result.addLast(taskRow);
+                    }
+              }
+        }
+        return result;
+      ]]></script>
+    </method>
+    <method name="onInit" type="action">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+      <script><![CDATA[
+        this.cw$super_onInit();
+        this.goToViewProjects(false);
+
+        this.resetEpcItemFinderUI();
+
+        this.taskArr = this.getTasks();
+        this.availTaskArr = this.getAvailableTasks();
+
+        this.isLeftMenuVisible = true;
+        this.isBottomFormVisible = true;
+        this.isTopFormVisible = true;
+      ]]></script>
+    </method>
+    <method name="toggleBottomFormVisible" type="uimthd">
+      <script>this.isBottomFormVisible = !this.isBottomFormVisible;</script>
+    </method>
+    <method name="goToViewProjects" type="uimthd">
+      <parameterList>
+        <parameter name="filterAct" type="rifp">
+          <type>dtype_com.conceptwave.system.Boolean</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.resetUI();
+
+        var ui = new cm_spoc.cwtProjectFinder.UserInterface(null, this);
+
+        if(filterAct){
+            ui.search.model.status = "ACT";
+        }else{
+            ui.search.model.status = "DEF";
+        }
+        ui.parent = this;
+        ui.searchAction();
+
+        this.detailFormUI = ui;
+        this.detailForm = "homePageView";
+      ]]></script>
+    </method>
+    <method name="toggleLefMenuVisible" type="uimthd">
+      <script>this.isLeftMenuVisible = !this.isLeftMenuVisible;</script>
+    </method>
+    <method name="setDefaultProject" type="uimthd">
+      <parameterList>
+        <parameter name="projectName" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[this.parent.defaultProject = "Project : " + projectName;]]></script>
+    </method>
+    <method name="ShowTopForm" type="permMethod">
+      <script>return this.isTopFormVisible;</script>
+    </method>
+    <method name="toggleTopFormVisible" type="uimthd">
+      <script>this.isTopFormVisible = !this.isTopFormVisible;</script>
+    </method>
+    <method name="resetUI" type="uimthd">
+      <script><![CDATA[
+        this.detailFormUI = null;
+        this.detailForm = null;
+        this.detailFormMenu = null;
+        this.detailFormMenuUI = null;
+        this.parent.resetModelStatus();
+      ]]></script>
+    </method>
+    <method name="openWorklist" type="uimthd">
+      <script><![CDATA[
+        if(this.taskArr.selected){
+            this.resetUI();
+            var selected = this.taskArr.selected[0];
+            this.taskArr.deselectAllRecords();
+            this.taskArr.setSelected(selected);
+
+            var selectionId = selected.id;
+            //var wFinder = new cwt_pclm.plmBaseWorklistFinder.UserInterface(null, this);
+            var wFinder = new cm_spoc.WorkListDocFinder.UserInterface(null,this);
+            var doc = Document.readDoc("cwf_pm:BaseWorklist", selectionId);
+
+            var wi = new WorklistItem(doc);
+            wi.setReadonly(false);
+            var started = true;
+            if(doc.StartDate==null || doc.StartDate == "")
+                  started = false;
+
+            // open task
+            var opened = wi.openWorkItem(true, true, true);
+            if(!opened)
+                  Global.throwException('UU0110');
+
+            var taskUI = new wi.metadata.UserInterface(wi);
+            taskUI.parent = this;
+
+            var item = wFinder.result.findById(selectionId);
+            if(item != null){
+                wFinder.result.setSelected(item);
+            }
+            //display Task User Interface
+            wFinder.detail = taskUI;
+            wFinder.detailForm = "Default";
+
+            //set default project
+            var ord = taskUI.model.processOrder;
+            var projDoc = epc.getProjectByCode(ord.change.projectCode);
+            if(projDoc){
+                Global.setSessionParameter("project", projDoc);
+                this.parent.defaultProject = "Current Project: " + projDoc.name;
+
+                this.detailFormUI = wFinder;
+                this.detailForm = "Default";
+                this.detailFormMenuUI = wFinder;
+                this.detailFormMenu = "Menu";
+
+                this.resetEpcItemFinderUI();
+            }
+        }
+      ]]></script>
+    </method>
+    <method name="selectTaskAction" type="usrActionMethod">
+      <script><![CDATA[
+        var wlFinder = new Finder("cwf_pm:BaseWorklistFinder");
+        Global.setApplicationWorklist(wlFinder);
+        /*
+        for (var i=0; i<this.availTaskArr.length; i++) {
+              if (this.availTaskArr[i].model.select == true) {
+                    var sel = Document.readDoc("cwf_pm:BaseWorklist", this.availTaskArr[i].model.id);
+                    //var updateSize = (new Finder("cwf_pm:BaseWorklistFinder")).selectTasks(sel);
+                    var updateSize = Global.getWorkListFinder().selectTasks(sel);
+                    if(updateSize==0)
+                     Global.throwException('UU0135', sel.cwDocId);
+              }
+        }*/
+        var selected = this.availTaskArr.selected;
+        if(selected){
+            for(var i=0;i<selected.length;i++){
+                var sel = Document.readDoc("cwf_pm:BaseWorklist", selected[i].id);
+                var updateSize = Global.getWorkListFinder().selectTasks(sel);
+                if(updateSize==0)
+                    Global.throwException('UU0135', sel.cwDocId);
+            }
+        }
+        this.refreshTaskLists();
+      ]]></script>
+    </method>
+    <method name="refreshTaskLists" type="usrActionMethod">
+      <script><![CDATA[
+        this.taskArr = this.getTasks();
+        this.availTaskArr = this.getAvailableTasks();
+      ]]></script>
+    </method>
+    <method name="displayProject" type="usrActionMethod">
+      <parameterList>
+        <parameter name="projectDoc" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var ord = cm_plm.getPLMOrderFromProjectCode(projectDoc.projectCode);
+
+        if(ord!=null) {
+            Global.setSessionParameter("project", projectDoc);
+            this.parent.defaultProject = "Current Project: " + projectDoc.name;
+            var orderUI = new cm_plm.plmOrder.UserInterface(ord);
+            orderUI.parent = this.parent;
+
+            this.detailFormUI = orderUI;
+            this.detailForm = "Default";
+        }
+        else {
+            var projTree = new NavTree("cm_spoc.ProjectTree");
+            var node = projTree.findNodeByID("ProjectTree/ProjectRoot/FinderChild#" + projectDoc.id);
+            if (node) {
+                  node.setSelected(true);
+                  projTree.displayNode(node)
+            }
+            projTree.parent = this.parent;
+            this.detailFormUI = projTree;
+            this.detailForm = "Default";
+        }
+
+        this.resetEpcItemFinderUI();
+      ]]></script>
+    </method>
+    <method name="resetEpcItemFinderUI" type="uimthd">
+      <script><![CDATA[
+        var ui = new cm_spoc.epcItemFinder.UserInterface(null, this);
+        ui.isSearchLayoutVisible = false;
+        ui.parent = this;
+        this.epcItemFinderUI = ui;
+      ]]></script>
+    </method>
+    <method name="isTopFormHide" type="permMethod">
+      <script>return !this.isTopFormVisible;</script>
+    </method>
+    <method name="ShowDetailFormMenu" type="permMethod">
+      <script>return this.detailFormMenuUI!=null;</script>
+    </method>
+    <method name="ShowAddPLMProject" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>marketingPriv</privilege>
+        </privileges>
+        <privileges type="ppriv">
+          <privilege>technicalPriv</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="goToViewActProjects" type="uimthd">
+      <script>this.goToViewProjects(true);</script>
+    </method>
+    <method name="closeProject" type="uimthd">
+      <script><![CDATA[
+        Global.setSessionParameter("project", null);
+        this.parent.defaultProject = "Project : NONE";
+      ]]></script>
+    </method>
+    <method name="refreshAfterContinue" type="uimthd">
+      <script><![CDATA[
+        this.refreshTaskLists();
+        this.closeProject();
+        this.resetEpcItemFinderUI();
+        this.resetUI();
+      ]]></script>
+    </method>
+    <method name="resetModelStatus" type="uimthd">
+      <script>cwa_epc.resetStatusMessage(this);</script>
+    </method>
+    <method name="cwTakeFromUser" type="usrActionMethod">
+      <allowInvalidObject>true</allowInvalidObject>
+      <autosave>true</autosave>
+      <dialogForm>ReferenceForm</dialogForm>
+      <dialogHeight>400</dialogHeight>
+      <dialogWidth>900</dialogWidth>
+      <showInPopup>true</showInPopup>
+      <validate>true</validate>
+      <script><![CDATA[
+        if(UserProfile.hasPrivilege("WTakeOn")){
+              var f = new Finder("cwf_pm:GetTakeTasks");
+              f.search();
+              return f;
+        }else{
+              Global.throwException('UU0114');
+        }
+      ]]></script>
+    </method>
+    <method name="cwRefreshWL" type="uimthd">
+      <script>this.refreshTaskLists();</script>
+    </method>
+  </methodList>
+</userInterface>

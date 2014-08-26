@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.getBestInterface">
+  <label>Get Best Interface</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="namespace" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+     * Returns the best interface to invoke
+     *
+     * @author  Daniel Gomes
+     * @date    2014/07
+     *
+     * @param {string}      namespace - namespace of the operation
+     *
+     * @return {string}     best interface available
+     */
+
+    var ns                 = MetadataElement.getElement(namespace);
+    var interfaces         = MetadataElement.getMetadataItems(10,ns); // 10 = Interface
+    var interfacesName     = new Array();
+
+    for(var i = 0; interfaces && i < interfaces.length; i++)
+        interfacesName.push(interfaces[i].name);
+
+    interfacesName.sort();
+
+    for(var i = (interfacesName.length - 1); i >= 0; i--)
+        if(Global.getInterfaceDelay(namespace + '.' + interfacesName[i]) >= 0)
+            return namespace + '.' + interfacesName[i];
+
+    return null;
+  ]]></script>
+</script>

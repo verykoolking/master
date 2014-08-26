@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.RecoveryConditionForm">
+  <group>LifeCycles</group>
+  <label>RecoveryConditionForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.RecoveryCondition</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="GridLayout" type="elhlt">
+              <width>750px</width>
+              <elementList>
+                <element name="LayoutSpacer1" type="ellsp">
+                  <width>25px</width>
+                </element>
+                <element name="Selected" type="elchk">
+                  <columnSpan>1</columnSpan>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RecoveryConditionForm/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>30px</width>
+                </element>
+                <element name="LayoutSpacer2" type="ellsp">
+                  <width>40px</width>
+                </element>
+                <element name="WalletEnum" type="elslct">
+                  <columnSpan>3</columnSpan>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RecoveryConditionForm/uimthd_WalletTrigger</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RecoveryConditionForm/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.RecoveryCondition/dstruct_WalletEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>150px</width>
+                </element>
+                <element name="LayoutSpacer3" type="ellsp">
+                  <width>120px</width>
+                </element>
+                <element name="RetrievableAC" type="elchk">
+                  <columnSpan>1</columnSpan>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RecoveryConditionForm/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.RecoveryCondition/dstruct_RetrievableAC</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>30px</width>
+                </element>
+                <element name="LayoutSpacer4" type="ellsp">
+                  <width>150px</width>
+                </element>
+                <element name="RetrievablePC" type="elchk">
+                  <columnSpan>1</columnSpan>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RecoveryConditionForm/uimthd_onSettingPCTrigger</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.RecoveryConditionForm/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.RecoveryCondition/dstruct_RetrievablePC</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>30px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="WalletTrigger" type="uimthd">
+      <script>this.model.Wallet=this.model.WalletEnum;</script>
+    </method>
+    <method name="onSettingPCTrigger" type="uimthd">
+      <script>this.parent.Checked =this.model.RetrievablePC;</script>
+    </method>
+    <method name="readOnly" type="permMethod">
+      <script>this.parent.Checked =this.model.RetrievablePC;</script>
+    </method>
+  </methodList>
+</userInterface>

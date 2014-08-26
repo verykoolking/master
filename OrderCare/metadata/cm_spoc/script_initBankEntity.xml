@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initBankEntity">
+  <group>ui_scripts.TopUp</group>
+  <label>initBankEntity</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+        var bankEntityZone = cm_spoc.initInnerDS("base_BankEntityZone");
+        model= bankEntityZone;
+    /*
+        var bankEntitySubdistributor = cm_spoc.initInnerDS("base_BankEntitySubdistributor");
+        model= bankEntitySubdistributor;
+
+        var automaticTopUpMode = cm_spoc.initInnerDS("base_AutomaticTopUpMode");
+        model= automaticTopUpMode;*/
+
+       var itemFinder = new Finder("cm_spoc.BankEntityFinder");
+       var result = itemFinder.search();
+
+        if(result.length>0){
+           var btCode=result[0].itemCode;
+           var btCode2=result[0].description;
+           model.BankEntityEnum=btCode2;
+          /* model.ZoneDescription=btCode2;*/
+       }
+    /*
+       for(var i=0;i<result.length;i++){
+            model.BankEntityEnum=result[i].itemCode;
+           /* model.ZoneAssociatedGres=result[i].description;
+        }*/
+
+    /*
+        var bankEntityWorkingDaysLimit = cm_spoc.initInnerDS("base_BankEntityWorkingDaysLimit");
+        model.BankEntityWorkingDaysLimitDS = bankEntityWorkingDaysLimit;
+
+        var bankEntityTemporaryLimit = cm_spoc.initInnerDS("base_BankEntityTemporaryLimit");
+        model.BankEntityTemporaryLimitDS = bankEntityTemporaryLimit;
+
+    }else{
+    /*  var s = new epc.data.Specification();
+      s.project =  cwa_epc.getDefaultProj();
+
+      s.specificationCode = model;
+      var r = epc.getSpecificationByKey(s);
+      if(!api_common.isFault(r)){
+           model= r;
+      }
+
+      s.specificationCode = model.BankEntityWorkingDaysLimit[0];
+      var r = epc.getSpecificationByKey(s);
+      if(!api_common.isFault(r)){
+           model.BankEntityWorkingDaysLimitDS = r;
+      }
+
+      s.specificationCode = model.BankEntityTemporaryLimit[0];
+      var r = epc.getSpecificationByKey(s);
+      if(!api_common.isFault(r)){
+           model.BankEntityTemporaryLimitDS = r;
+      }
+
+    */
+    }
+    return model;
+  ]]></script>
+</script>

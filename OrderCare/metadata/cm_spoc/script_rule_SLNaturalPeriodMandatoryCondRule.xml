@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_SLNaturalPeriodMandatoryCondRule">
+  <group>rules_scripts.BoltOn</group>
+  <label>rule_SLNaturalPeriodMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>dstruct_cm_spoc.data.BoltOn</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var ds = [data];
+
+    for (var i = 0; i < ds.length; i++)
+    {
+        if(ds[i] != null && (ds[i].NaturalPeriod==null))
+        {
+            errList.addErrorMessage(data,["NaturalPeriod must be mandatory"],"NGAA_003","E");
+        }
+    }
+    return false;
+  ]]></script>
+</script>

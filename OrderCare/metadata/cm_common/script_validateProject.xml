@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.validateProject">
+  <group>scripts</group>
+  <label>validateProject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cwt_pcmaintapi.project</valueType>
+  <script><![CDATA[
+    try
+    {
+        var project = cm_common.getProjectDocByCode(projectCode);
+        if(!project)
+        {
+            var fault = api_common.createFault("E101", "Invalid Project Code.");
+            return fault;
+        }
+
+        if(project.status == "ACT")
+        {
+            var fault = api_common.createFault("E102", "The project is in Active mode and no changes are allowed in this mode.");
+            return fault;
+
+        }
+
+        return project;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

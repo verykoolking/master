@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findSql name="cm_common.itemArrayRelationsFinder">
+  <dbSchema>CATALOG</dbSchema>
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <getOutput>doc_cwa_epc.cwt_itemRelation</getOutput>
+  <input>doc_cm_common.itemArrayRelationsSearch</input>
+  <label>Item Array Relations finder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_cwa_epc.cwt_itemRelation</output>
+  <type>SQL</type>
+  <vDetailForm>doc_cwt_pc.cwt_itemRelation/ui_UserInterface/frmui_Forms/exov_Default</vDetailForm>
+  <methodList>
+    <method name="cwOnFinderSQLGet" type="action">
+      <system>true</system>
+      <script>select {+*+} from CWPC_ITEMRELATION_V where ITEMRELATIONVERSIONID = ?</script>
+    </method>
+    <method name="cwOnFinderSQLSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        select distinct {+r+}
+        from CWPC_ITEMRELATION_V r, CWPC_PROJECTCOMMAND rp, CWPC_PROJECT p
+        where r.ITEMRELATIONVERSIONID = rp.CATALOGOBJECTID
+            and rp.PROJECTID = p.PROJECTID
+            {[:itemCode] and r.ITEMCODE = ?}
+            {[:status] and r.STATUS = ?}
+            {[:projectCode] and p.PROJECTCODE = ?}
+            {[:deleteMode] and rp.ENDDATE<=SYSDATE}
+      ]]></script>
+    </method>
+    <method name="cwOnFinderCompleteSearch" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        for (var i=0; i<this.list.length; i++) {
+            this.list[i].isValidTargetCodeProperty = true;
+        }
+      ]]></script>
+    </method>
+    <method name="cwOnFilter" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        if (input.type == 'CwTreeItemLink' || input.type == 'CwTreeNodeLink' || input.type == 'CwAvailabilityItemInclude' || input.type == 'CwAvailabilityItemExclude' || input.type == 'CwAvailabilityNodeLink') {
+            return false;
+        } else {
+            return true;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cwa_epc.cwt_itemRelation</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cm_common.itemArrayRelationsSearch/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cwa_epc.cwt_itemRelation/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="itemRelationOrderedFinderResultTable1" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="itemRelationVersionId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_itemRelationVersionId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="itemRelationCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_itemRelationCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="itemRelationTarget" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_itemRelationTarget</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="type" type="elslct">
+                        <multiselect>false</multiselect>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_type</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="itemCode" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_itemCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="name" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_name</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="label" type="eltrnsltion">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_label</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="sequence" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_sequence</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="minQuantity" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_minQuantity</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="maxQuantity" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_maxQuantity</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="startDate" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_startDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="endDate" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_endDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="ownerId" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_ownerId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="updatedBy" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_updatedBy</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="lastUpdatedDate" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_lastUpdatedDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwCreated" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_cwCreated</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwDocStamp" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_cwDocStamp</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="inherited" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_inherited</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="oldItemRelationVersionId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_oldItemRelationVersionId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="status" type="elslct">
+                        <multiselect>false</multiselect>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_status</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cancel" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_cancel</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="inheritedItemCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_inheritedItemCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="projectRef" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_projectRef</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="parentNode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_parentNode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="isTargetSelected" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_isTargetSelected</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="canBeCanceled" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_canBeCanceled</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="isOverrideDocument" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_isOverrideDocument</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="isValidTargetCodeProperty" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_isValidTargetCodeProperty</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="hadUIValidationErrors" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_hadUIValidationErrors</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="defaultQuantity" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemRelation/leaf_defaultQuantity</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="itemRelationOrderedFinderView" type="findVView">
+      <outputOverlay>findSql_cm_common.itemArrayRelationsFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findSql>

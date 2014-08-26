@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findSql name="cm_plm.plmProjectItemFinder">
+  <autoMap>false</autoMap>
+  <dbSchema>CATALOG</dbSchema>
+  <doubleClickSelect>true</doubleClickSelect>
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <input>doc_cwf_oe.Project</input>
+  <label>Item Finder</label>
+  <maxRowsLimit>9999</maxRowsLimit>
+  <metaVersion>4</metaVersion>
+  <output>doc_cm_plm.cwt_item</output>
+  <type>SQL</type>
+  <volatility>0</volatility>
+  <methodList>
+    <method name="cwOnFinderSQLSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        select distinct {+i+}
+        from CWPC_ITEM i, CWPC_PROJECTCOMMAND c, CWPC_PROJECT p
+        where i.ITEMCODE=c.CATALOGOBJECTCODE
+        and c.OBJECTTYPE = 'cwt_pc:cwt_item'
+        and c.PROJECTID=p.PROJECTID
+        {[:projectName] and p.PROJECTCODE = ?}
+        {[:projectStatus] and p.STATUS = ?}
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <label>cwt_item</label>
+        <valueType>doc_cm_plm.cwt_item</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cwf_oe.Project/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cm_plm.cwt_item/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_plm.plmProjectItemFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_plm.plmProjectItemFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="defaultView" type="findVView">
+      <inputOverlay>doc_cwt_pc.cwt_itemSearch/ui_UserInterface/frmui_Forms/exov_Default</inputOverlay>
+      <label>defaultView</label>
+      <outputOverlay>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</outputOverlay>
+      <showSearchForm>true</showSearchForm>
+    </view>
+  </viewList>
+</findSql>

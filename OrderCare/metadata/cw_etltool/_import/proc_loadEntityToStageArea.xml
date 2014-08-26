@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cw_etltool._import.loadEntityToStageArea">
+  <activity name="start" type="seqActivity">
+    <guid>{28a62b09-6541-4057-b605-8beed5177f78}</guid>
+    <label>Start</label>
+    <x>140.0</x>
+    <y>21.0</y>
+    <childList>
+      <child name="loadEntities" type="scriptActivity">
+        <guid>{23cbb7b9-04f2-4787-914c-deba5826cd00}</guid>
+        <label>Load Entities</label>
+        <x>143.0</x>
+        <y>140.0</y>
+        <childList>
+          <child name="rollback" type="compensateActivity">
+            <guid>{982f1b6b-5e3f-4e2e-877e-8df26ce0b255}</guid>
+            <label>Rollback</label>
+            <x>139.0</x>
+            <y>240.0</y>
+            <childList>
+              <child name="rollbackScript" type="scriptActivity">
+                <guid>{a5b67184-f970-4779-82d0-078b58a933fa}</guid>
+                <label>Rollback Script</label>
+                <x>456.0</x>
+                <y>140.0</y>
+                <methodList>
+                  <method name="cwOnProcActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$ Entity Management RollBack Script $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+                      var order =  process.processOrder;
+                      order.header.ErrorMessage = "";
+                      order.save();
+                      process.processDocument.IsError = false;
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              cw_etltool._import.entitiesManagement(process, document);
+              //cw_etltool._import.loadEntity(process, document);
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+      <child name="errorValidation" type="subflowActivity">
+        <element>proc_cw_etltool._import.errorValidation</element>
+        <guid>{327361d6-901e-445d-bf1a-b06c8be4257c}</guid>
+        <label>Error Validation</label>
+        <x>136.0</x>
+        <y>278.0</y>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script>//cw_etltool.common.getConfig().setIsError(true) ;</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="entityManagementException" type="onExceptionActivity">
+        <element>excp_cw_etltool._import.systemException</element>
+        <guid>{efe6b7f6-ef52-4aa1-a747-bbdd6de27c12}</guid>
+        <label>Entity Management Exception</label>
+        <x>152.0</x>
+        <y>123.0</y>
+        <childList>
+          <child name="systemExceptionHandler" type="subflowActivity">
+            <element>proc_cw_etltool._import.systemExceptionHandler</element>
+            <guid>{64589829-75b7-4683-bf68-b8f7e229272a}</guid>
+            <label>System Exception Handler</label>
+            <x>483.0</x>
+            <y>11.0</y>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              Global.logInfo("\n\n $$$$$$$$$$$$$$$$$$$$$$$ On Entity Management Exception : Before Script $$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+            ]]></script>
+          </method>
+          <method name="cwOnProcActAfter" type="action">
+            <category>script</category>
+            <system>true</system>
+            <script><![CDATA[
+              Global.logInfo("\n\n $$$$$$$$$$$$$$$$$$$$$$$ On Entity Management Exception : Before Script $$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+    </childList>
+    <methodList>
+      <method name="cwOnProcActBefore" type="action">
+        <category>before</category>
+        <system>true</system>
+        <script><![CDATA[
+          Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$ Entity Management SubFlow Start Activity : Before Script $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+        ]]></script>
+      </method>
+      <method name="cwOnProcActAfter" type="action">
+        <category>script</category>
+        <system>true</system>
+        <script><![CDATA[
+          Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$ Entity Management SubFlow Start Activity : After Script $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+        ]]></script>
+      </method>
+    </methodList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{37681ab2-047a-486d-af38-d748172aa321}</guid>
+  <label>Load Entities To Stage Area</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <type>Sub-flow</type>
+</process>

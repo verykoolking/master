@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.NAbyServiceProviderIteratorUI">
+  <group>Operation</group>
+  <label>NAbyServiceProviderIteratorUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ConstraintByServiceProvider</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="subOpRelations" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="subOpComplex" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="subOpCPtype" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="subOpValues" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="SubOpType" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="subOperation" type="leaf">
+      <valueType>dtype_cwt_pcdd.catalogCode</valueType>
+    </variable>
+    <variable name="subOpEntity" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="subOpEntityLabel" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="subOpCodeTable" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="SubOperationCode" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="subOpComplexLabel" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="SubOperationCodeValue" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <width>1500px</width>
+              <elementList>
+                <element name="NAbyPromotionalProfileHeaders" type="elgrd">
+                  <numOfCols>13</numOfCols>
+                  <width>1500px</width>
+                  <elementList>
+                    <element name="Selected" type="elchk">
+                      <columnSpan>1</columnSpan>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/leaf_Selected</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>30px</width>
+                    </element>
+                    <element name="CellSpacer" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="Operation" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <canSort>false</canSort>
+                      <columnSpan>1</columnSpan>
+                      <label>Operation</label>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/uimthd_defineSubOperationsByOperation</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.ConstraintByPromotionalProf/dstruct_Operation</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>60px</width>
+                    </element>
+                    <element name="OperationButton" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/usrActionMethod_FinderOperationReferenceDialog</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <icon>/cwf/finder.gif</icon>
+                      <width>22px</width>
+                    </element>
+                    <element name="CellSpacer1" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="subOperation" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <canSort>false</canSort>
+                      <columnSpan>1</columnSpan>
+                      <dynLabel type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/leaf_subOpEntityLabel</variablePath>
+                        </variablePathList>
+                      </dynLabel>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/permMethod_subOperationEditable</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/uimthd_defineSubOperationsByOperation</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/leaf_subOperation</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>150px</width>
+                    </element>
+                    <element name="SubOperationButton" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/usrActionMethod_FinderSubOperationReferenceDialog</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <disabled type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/permMethod_subOperationButtonDisabled</variablePath>
+                        </variablePathList>
+                      </disabled>
+                      <icon>/cwf/finder.gif</icon>
+                      <width>22px</width>
+                    </element>
+                    <element name="CellSpacer13" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="SubOperationCodeValue" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <canSort>false</canSort>
+                      <columnSpan>1</columnSpan>
+                      <dynLabel type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/leaf_subOpComplexLabel</variablePath>
+                        </variablePathList>
+                      </dynLabel>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/permMethod_CodeValueEditable</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/uimthd_defineSubOperationsByOperation</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/leaf_SubOperationCodeValue</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>150px</width>
+                    </element>
+                    <element name="CodeValueButton2" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/usrActionMethod_AttributeSelectReferenceDialog</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <disabled type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/permMethod_CodeValueButtonDisabled</variablePath>
+                        </variablePathList>
+                      </disabled>
+                      <icon>/cwf/finder.gif</icon>
+                      <width>22px</width>
+                    </element>
+                    <element name="CellSpacer2" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="ServiceProviderId" type="elfld">
+                      <canSort>false</canSort>
+                      <columnSpan>1</columnSpan>
+                      <label>Service Provider</label>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.ConstraintByServiceProvider/dstruct_ServiceProvider</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>150px</width>
+                    </element>
+                    <element name="ServiceProviderIdButton" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.NAbyServiceProviderIteratorUI/usrActionMethod_FinderServiceProviderReferenceDialog</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <icon>/cwf/finder.gif</icon>
+                      <width>22px</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="defineSubOperationsByOperation" type="uimthd">
+      <script>return true;</script>
+    </method>
+    <method name="referenceCallback" type="uimthd">
+      <parameterList>
+        <parameter name="itemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        s.specificationCode = itemCode;
+        var operation = epc.getSpecificationByKey(s);
+        if(operation)
+        {
+            var subOperationByOperationFinder = new Finder("cm_spoc.SubOperationsByOperationScriptFinder");
+            subOperationByOperationFinder.searchDocument.Operation = operation.OperationId;
+            var result = subOperationByOperationFinder.search();
+        }
+        if(result.length>0)
+        {
+            this.subOperation = null;
+            this.SubOperationCodeValue = null;
+            cm_spoc.initSubOperation([this.model]);
+
+            this.model.Operation = itemCode;
+
+            if(result[0].Entity == true){
+                this.subOpEntityLabel = result[0].Label;
+                this.SubOpType = result[0].SubOperation;
+                this.subOpEntity = true;
+                this.subOpCodeTable = false;
+                this.subOpComplex = false;
+            }
+            else{
+                if(result[0].Entity == false){
+                    switch(result[0].Complex){
+                    case 1:
+                        this.subOpEntityLabel = result[0].Label;
+                        this.SubOpType = result[0].SubOperation;
+                        this.SubOperationCode = result[0].SubOperationCode;
+                        this.subOpRelations =  result[0].Relations;
+                        this.subOpCPtype = result[0].Complex;
+                        this.subOpComplex = true;
+                        this.subOpCodeTable = true;
+                        this.subOpEntity = false;
+                        break;
+                    case 2:
+                        this.subOpEntityLabel = result[0].Label;
+                        this.SubOpType = result[0].SubOperation;
+                        this.SubOperationCode = result[0].SubOperationCode;
+                        this.subOpRelations =  result[0].Relations;
+                        this.subOpCPtype = result[0].Complex;
+                        this.subOpComplex = true;
+                        this.subOpCodeTable = true;
+                        this.subOpEntity = false;
+                        break;
+                     default:
+                        this.subOpEntityLabel = result[0].Label;
+                        this.SubOpType = result[0].SubOperation;
+                        this.SubOperationCode = result[0].SubOperationCode;
+                        this.subOpComplex = false;
+                        this.subOpCodeTable = true;
+                        this.subOpEntity = false;
+                    }
+                }
+            }
+        }
+        else{
+            this.model.Operation = itemCode;
+            this.subOperation = null;
+            this.SubOperationCodeValue = null;
+            this.model.SubOperation = null;
+            this.model.SubOperationDS = null;
+            this.subOpComplex = null;
+            this.subOpCodeTable = null;
+            this.subOpEntity = null;
+        }
+      ]]></script>
+    </method>
+    <method name="FinderOperationReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_Operation");
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="AttributeSelectReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.AttributeSelectReference(null,this);
+        newDetail.setBaseItemCode(this.subOpValues);
+        newDetail.modelCallback = this.setAttributeCP;
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="FinderSubOperationReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        if(this.subOpEntity == true)
+        {
+            var newDetail = new cm_spoc.FinderSelectReference(null,this);
+            newDetail.setBaseItemCode('base_'+this.SubOpType);
+            newDetail.modelCallback = this.setSubOperation;
+            newDetail.parentUI = this;
+            return newDetail;
+        }
+        else{
+            switch(this.subOpCPtype){
+            case 1:
+                var entity = this.subOpRelations.split(":");
+                var newDetail = new cm_spoc.FinderSelectReference(null,this);
+                newDetail.setBaseItemCode('base_'+entity[0]);
+                newDetail.modelCallback = this.setSubOperationCP1;
+                newDetail.parentUI = this;
+                return newDetail;
+                break;
+            case 2:
+                var entity = this.subOpRelations.split(":");
+                var newDetail = new cm_spoc.AttributeFinderSelectReference(null,this);
+                newDetail.setBaseItemCode('base_'+entity[0]);
+                newDetail.modelCallback = this.setSubOperationCP2;
+                newDetail.parentUI = this;
+                return newDetail;
+                break;
+            default:
+                var newDetail = new cm_spoc.CodeTableFinderSelectReference(null,this);
+                var BIC = this.SubOperationCode+"CodeTable";
+                BIC = BIC.substring(0,32);
+                newDetail.setBaseItemCode(BIC);
+                newDetail.modelCallback = this.setSubOperationCT;
+                newDetail.parentUI = this;
+                return newDetail;
+            }
+        }
+      ]]></script>
+    </method>
+    <method name="setAttributeCP" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parentUI.model.SubOperationDS.getValueByName(this.parentUI.SubOpType+"DS").putValueByName(this.parentUI.SubOperationCode,selected.itemCode);
+        this.parentUI.SubOperationCodeValue = selected.itemCode;
+      ]]></script>
+    </method>
+    <method name="subOperationButtonDisabled" type="permMethod">
+      <script><![CDATA[
+        if((this.subOpEntity == false || this.subOpEntity == null) && (this.subOpCodeTable == false
+            || this.subOpCodeTable == null) && (this.subOpComplex == false || this.subOpComplex == null))
+            return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="setSubOperationCP1" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var SubOperationTypeEnum = Global.getCTCodesAndDescriptions("SubOperationTypeCodeTable");
+
+        var SubOperationType = null;
+
+        var entity = this.parentUI.subOpRelations.split(":");
+
+        for(var i=0;i<SubOperationTypeEnum.length;i=i+2)
+        {
+            if(SubOperationTypeEnum[i+1] == this.parentUI.SubOpType){
+                var SubOperationType = SubOperationTypeEnum[i];
+                break;
+            }
+        }
+
+        if(SubOperationType!=null)
+        {
+            this.parentUI.model.SubOperationDS.SubOperationType = SubOperationType;
+
+            cm_spoc.initSubOpFromCT(this.parentUI.model.SubOperationDS,this.parentUI.SubOpType);
+
+            this.parentUI.model.SubOperationDS.getValueByName(this.parentUI.SubOpType+"DS").putValueByName(entity[0],selected.itemCode);
+            this.parentUI.subOperation = selected.itemCode;
+
+            var entity0 = selected.itemCode;
+
+            var s = new epc.data.Specification();
+            s.project =  cwa_epc.getDefaultProj();
+
+            var codeTemp = entity0;
+            for(var i=0;i<entity.length-2;i++)
+            {
+                s.specificationCode = codeTemp;
+                var c =  epc.getSpecificationByKey(s);
+                if(!api_common.isFault(c)){
+                    codeTemp = c.getValueByName(entity[i+1]);
+                }
+            }
+            var values = new Array();
+            if(codeTemp)
+            {
+                for(var i=0; i<codeTemp.length;i++)
+                {
+                    s.specificationCode = codeTemp[i];
+                    var c =  epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(c)){
+                        values[i] = c.getValueByName(entity[entity.length-1]);
+                    }
+                }
+            }else{
+                Global.showUserMessage("Error on the configuration of the entity selected");
+            }
+            this.parentUI.subOpComplexLabel = this.parentUI.SubOperationCode
+            this.parentUI.subOpValues = values;
+        }
+      ]]></script>
+    </method>
+    <method name="setSubOperation" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var SubOperationTypeEnum = Global.getCTCodesAndDescriptions("SubOperationTypeCodeTable");
+
+        var SubOperationType = null;
+
+        for(var i=0;i<SubOperationTypeEnum.length;i=i+2)
+        {
+            if(SubOperationTypeEnum[i+1] == this.parentUI.SubOpType){
+                var SubOperationType = SubOperationTypeEnum[i];
+                break;
+            }
+        }
+        if(SubOperationType!=null)
+        {
+            this.parentUI.model.SubOperationDS.SubOperationType = SubOperationType;
+            this.parentUI.model.SubOperationDS.putValueByName(this.parentUI.SubOpType,selected.itemCode);
+            this.parentUI.subOperation = selected.itemCode;
+        }
+      ]]></script>
+    </method>
+    <method name="setSubOperationCT" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var SubOperationTypeEnum = Global.getCTCodesAndDescriptions("SubOperationTypeCodeTable");
+
+        var SubOperationType = null;
+
+        for(var i=0;i<SubOperationTypeEnum.length;i=i+2)
+        {
+            if(SubOperationTypeEnum[i+1] == this.parentUI.SubOpType){
+                var SubOperationType = SubOperationTypeEnum[i];
+                break;
+            }
+        }
+        if(SubOperationType!=null)
+        {
+            this.parentUI.model.SubOperationDS.SubOperationType = SubOperationType;
+
+            cm_spoc.initSubOpFromCT(this.parentUI.model.SubOperationDS,this.parentUI.SubOpType);
+
+            this.parentUI.model.SubOperationDS.getValueByName(this.parentUI.SubOpType+"DS").putValueByName(this.parentUI.SubOperationCode,selected.itemCode);
+            this.parentUI.subOperation = selected.itemCode;
+        }
+      ]]></script>
+    </method>
+    <method name="CodeValueButtonDisabled" type="permMethod">
+      <script><![CDATA[
+        if(this.subOpComplex == true && this.subOperation != null && this.subOpCPtype == 1)
+            return false;
+        else return true;
+      ]]></script>
+    </method>
+    <method name="subOperationEditable" type="permMethod">
+      <script><![CDATA[
+        if(this.subOpEntity == true || this.subOpCodeTable == true || this.subOpComplex == true)
+            return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="CodeValueEditable" type="permMethod">
+      <script><![CDATA[
+        if(this.subOpComplex == true && this.subOperation != null && this.subOpCPtype == 1)
+            return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="setSubOperationCP2" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var SubOperationTypeEnum = Global.getCTCodesAndDescriptions("SubOperationTypeCodeTable");
+
+        var SubOperationType = null;
+        var entity = this.parentUI.subOpRelations.split(":");
+        var subAtt = this.parentUI.SubOperationCode.split(':');
+
+        for(var i=0;i<SubOperationTypeEnum.length;i=i+2)
+        {
+            if(SubOperationTypeEnum[i+1] == this.parentUI.SubOpType){
+                var SubOperationType = SubOperationTypeEnum[i];
+                break;
+            }
+        }
+
+        if(SubOperationType!=null)
+        {
+            this.parentUI.model.SubOperationDS.SubOperationType = SubOperationType;
+
+            cm_spoc.initSubOpFromCT(this.parentUI.model.SubOperationDS,this.parentUI.SubOpType);
+            for(var i = 0; i<subAtt.length; i++){
+            this.parentUI.model.SubOperationDS.getValueByName(this.parentUI.SubOpType+"DS").putValueByName(subAtt[i],selected.getValueByName(subAtt[i]));
+            }
+            this.parentUI.subOperation = selected.CyclicActionSpecification;
+        }
+      ]]></script>
+    </method>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+    <method name="FinderServiceProviderReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_ServiceProvider");
+        newDetail.modelCallback = this.setServiceProviderSelected;
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="setServiceProviderSelected" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script>this.parentUI.model.ServiceProvider = selected.itemCode;</script>
+    </method>
+    <method name="onInit" type="action">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+      <script><![CDATA[
+        //return this.cw$super_onInit();
+        this.subOpEntityLabel = " ";
+        this.subOpComplexLabel = " ";
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

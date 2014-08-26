@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.checkUniquePrimaryKey">
+  <group>rules_scripts</group>
+  <label>checkUniquePrimaryKey</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="baseItemCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="itemAttributeCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if( cm_spoc.getExistingItem(data.specificationCode) )
+       return false;
+
+    var itemFinder = new Finder("cm_spoc.GenericUniqueIDFinder");
+    itemFinder.searchDocument.defaultValue = data[itemAttributeCode];
+    itemFinder.searchDocument.baseItemCode = baseItemCode;
+    itemFinder.searchDocument.itemAttributeCode= itemAttributeCode;
+    var result = itemFinder.search();
+    if(result.length > 0)
+    {
+        return false;
+    }
+    return true;
+  ]]></script>
+</script>

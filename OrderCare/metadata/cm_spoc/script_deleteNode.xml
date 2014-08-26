@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.deleteNode">
+  <group>ui_scripts.RatingTree.NodesUI</group>
+  <label>deleteNode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var code = ui.code;
+    var specificationCode = ui.model.specificationCode;
+
+    //voiding the model
+    ui.parent.model.RTBRTNodeOutputArrDS.ListDS.remove(ui.model);
+
+    var len = ui.parent.model.RTBRTNodeOutputArrDS.List.length;
+
+    for (var i=0;i<len;i++) {
+
+        if (ui.parent.model.RTBRTNodeOutputArrDS.List[i].CW_REFID == specificationCode ) ui.parent.model.RTBRTNodeOutputArrDS.List.remove(ui.parent.model.RTBRTNodeOutputArrDS.List[i]);
+
+    }
+
+    //updating the lists
+    for (var i = 0; i<ui.parent.selectedNodes.length;i++) {
+
+        if (ui.parent.selectedNodes[i].code == code ) {
+
+            ui.parent.availableNodes.addLast( ui.parent.selectedNodes[i]);
+
+            ui.parent.selectedNodes.delete(i);
+        }
+    }
+
+    //ui.parent.availableNodes.sort(function(a,b){return (a.code > b.code) ? 1 : ((b.code > a.code) ? -1 : 0);});
+
+    ui.parent.availableNodes.updateList;
+
+    //voiding the ui
+    var ilen = ui.parent.nodesIterator.length;
+    var tmpArr = [];
+    for (var l=0;l<ilen;l++) {
+
+        if (ui.parent.nodesIterator[l].code != code ) {
+            tmpArr.push( ui.parent.nodesIterator[l]);
+
+
+        }
+    }
+     ui.parent.nodesIterator=tmpArr;
+
+    function compare (a, b) {
+        if (a.code > b.code)
+            return 1;
+        if (a.code < b.code)
+            return -1;
+        // a must be equal to b
+        return 0;
+    }
+  ]]></script>
+</script>

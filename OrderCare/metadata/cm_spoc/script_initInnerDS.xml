@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initInnerDS">
+  <group>ui_scripts.utils</group>
+  <label>initInnerDS</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="catalogItem" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var ds = cm_spoc.getSpecificationModel(catalogItem);
+
+    /*var ci = theCatalog.getItem(catalogItem);
+    var ciAttrs = ci.getItemAttributes();
+    var dsNodes = ds.getNodeNames();
+
+    for(var i=0;i<ciAttrs.length;i++){
+        for(var j=0;j<dsNodes.length;j++){
+            if(ciAttrs[i].code == dsNodes[j]){
+                try{
+                    ds[dsNodes[j]]=ciAttrs[i].getDefaultValue();
+                }
+                catch(e){
+                    continue;
+                }
+            }
+        }
+    }*/
+
+    cwa_epc.setSpecificationLeafs(ds);
+    ds.baseSpecificationCode = cm_spoc.getBaseSpecificationCode(ds);
+    ds.specificationType=cm_spoc.getSpecificationType(ds);
+    ds.specificationSubType=cm_spoc.getSpecificationSubType(ds);
+    ds.project = cwa_epc.getDefaultProj();
+    ds.effectiveDate = new Date();
+    var entName=catalogItem.substring(catalogItem.indexOf("_")+1);
+    ds.specificationCode=entName+Global.nextInSequence("NGAA_ENTITY_SEQ");
+    if(ds.specificationCode.length>32){
+        var trucLen = ds.specificationCode.length - 32;
+        var truncEntName = entName.substring(0,entName.length-trucLen);
+        ds.specificationCode=truncEntName+Global.nextInSequence("NGAA_ENTITY_SEQ");
+    }
+    return ds;
+  ]]></script>
+</script>

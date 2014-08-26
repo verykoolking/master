@@ -1,0 +1,1283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.homePage">
+  <group>overridden.UI</group>
+  <label>homePage</label>
+  <metaVersion>4</metaVersion>
+  <overrides>ui_cwa_epc.homePage</overrides>
+  <variableList>
+    <variable name="taskArr" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>doc_cwt_pc.taskResult/ui_UserInterface</valueType>
+    </variable>
+    <variable name="availTaskArr" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>doc_cwt_pc.taskResult/ui_UserInterface</valueType>
+    </variable>
+    <variable name="projArr" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>doc_cm_spoc.cwl_project/ui_UserInterface</valueType>
+    </variable>
+    <variable name="projectFinderUI" type="leaf">
+      <valueType>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="tasks" type="vform">
+          <label>tasks</label>
+          <root name="VerticalLayout" type="elvlt">
+            <height>100%</height>
+            <width>100%</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>My Tasks</label>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <height>100%</height>
+                        <overflow>scroll</overflow>
+                        <width>100%</width>
+                        <elementList>
+                          <element name="Iterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.homePage/leaf_taskArr</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="HorizontalLayout" type="elhlt">
+                                <elementList>
+                                  <element name="FormFrame" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.homePage/leaf_taskArr</variablePath>
+                                        <variablePath>doc_cwt_pc.taskResult/ui_UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>doc_cwt_pc.taskResult/ui_UserInterface/frmui_Forms/exov_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="HorizontalLayout" type="elhlt">
+              <width>100%</width>
+              <elementList>
+                <element name="LayoutSpacer9" type="ellsp">
+                  <width>20px</width>
+                </element>
+                <element name="HorizontalLayout1" type="elhlt">
+                  <width>430px</width>
+                  <elementList>
+                    <element name="VerticalLayout" type="elvlt">
+                      <width>430px</width>
+                      <elementList>
+                        <element name="LayoutSpacer11" type="ellsp">
+                          <height>20px</height>
+                        </element>
+                        <element name="FormFrame6" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms/vform_projectFinder</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/permMethod_isManager</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="FormFrame5" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms/vform_ProjectMenu</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/permMethod_containsPLM</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpacer8" type="ellsp">
+                  <width>20px</width>
+                </element>
+                <element name="HorizontalLayout2" type="elhlt">
+                  <width>490px</width>
+                  <elementList>
+                    <element name="VerticalLayout1" type="elvlt">
+                      <width>490px</width>
+                      <elementList>
+                        <element name="LayoutSpacer2" type="ellsp">
+                          <height>20px</height>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/permMethod_containsPLM</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="FormFrame" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms/vform_tasks</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <height>150px</height>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/permMethod_containsPLM</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="FormFrame2" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms/vform_taskCreationMenu</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="LayoutSpacer" type="ellsp">
+                          <height>20px</height>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/permMethod_containsPLM</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="FormFrame3" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms/vform_availableTasks</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <height>150px</height>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/permMethod_canViewAvailable</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <width>100%</width>
+                        </element>
+                        <element name="FormFrame4" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms/vform_availableTaskMenu</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/permMethod_containsPLM</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="LayoutSpacer1" type="ellsp">
+                          <height>20px</height>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/permMethod_containsPLM</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="FormFrame1" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.homePage/frmui_Forms/vform_shortcuts</variablePath>
+                            </variablePathList>
+                          </formReference>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpacer10" type="ellsp">
+                  <width>20px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="shortcuts" type="vform">
+          <label>shortcuts</label>
+          <root name="VerticalLayout" type="elvlt">
+            <height>100%</height>
+            <width>100%</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.homePage/permMethod_visShortCut</variablePath>
+                  </variablePathList>
+                </visible>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Shortcuts</label>
+                      </element>
+                      <element name="HorizontalLayout" type="elhlt">
+                        <elementList>
+                          <element name="LayoutSpacer2" type="ellsp">
+                            <width>10px</width>
+                          </element>
+                          <element name="VerticalLayout1" type="elvlt">
+                            <elementList>
+                              <element name="project" type="elmnu">
+                                <menuAccel type="mAccelP"/>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_projectTreeCommand</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>Projects</label>
+                                <style>taskDate</style>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/permMethod_canViewProject</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="attributes" type="elmnu">
+                                <menuAccel type="mAccelP"/>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_attributeCommand</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>Attributes</label>
+                                <style>taskDate</style>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/permMethod_canViewAttribute</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="items" type="elmnu">
+                                <menuAccel type="mAccelP"/>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_itemTreeCommand</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>Items</label>
+                                <style>taskDate</style>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/permMethod_canViewItem</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="catalogRules" type="elmnu">
+                                <menuAccel type="mAccelP"/>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_catalogRuleCommand</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>Catalog Rules</label>
+                                <style>taskDate</style>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/permMethod_canViewCatalogRule</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="associationTypes" type="elmnu">
+                                <menuAccel type="mAccelP"/>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_relationTypeCommand</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>Association Types</label>
+                                <style>taskDate</style>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/permMethod_canViewRelationType</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="catalogHierarchies" type="elmnu">
+                                <menuAccel type="mAccelP"/>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_hierarchyTreeCommand</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>Catalog Hierarchies</label>
+                                <style>taskDate</style>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/permMethod_canViewCatalogHierarchy</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="LayoutSpacer" type="ellsp">
+                            <width>50px</width>
+                          </element>
+                          <element name="VerticalLayout2" type="elvlt">
+                            <elementList>
+                              <element name="taxes" type="elmnu">
+                                <menuAccel type="mAccelP"/>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_taxCommand</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>Taxes</label>
+                                <style>taskDate</style>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/permMethod_canViewTax</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="taxModels" type="elmnu">
+                                <menuAccel type="mAccelP"/>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_taxModelCommand</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>Tax Models</label>
+                                <style>taskDate</style>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/permMethod_canViewTax</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="chargeTypes" type="elmnu">
+                                <menuAccel type="mAccelP"/>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_chargeTypeCommand</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>Charge Types</label>
+                                <style>taskDate</style>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/permMethod_canViewChargeType</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="infoModels" type="elmnu">
+                                <menuAccel type="mAccelP"/>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_infoModelCommand</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>Info Models</label>
+                                <style>taskDate</style>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/permMethod_canViewInfoModel</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="contexts" type="elmnu">
+                                <menuAccel type="mAccelP"/>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_contextCommand</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>Contexts</label>
+                                <style>taskDate</style>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/permMethod_canViewContext</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="epcPricePlansMenu" type="elmnu">
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_showEPCPricePlans</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>EPC Price Plans</label>
+                                <style>taskDate</style>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="epcProductsMenu" type="elmnu">
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_showEPCProducts</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <label>EPC Products</label>
+                                <style>taskDate</style>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="taskCreationMenu" type="vform">
+          <label>taskCreationMenu</label>
+          <root name="HorizontalLayout" type="elhlt">
+            <visible type="varPath">
+              <variablePathList>
+                <variablePath>ui_cm_spoc.homePage/permMethod_isManager</variablePath>
+              </variablePathList>
+            </visible>
+            <elementList>
+              <element name="changeRequest" type="elmnu">
+                <menuAccel type="mAccelP"/>
+                <clickMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_initiateChangeStatusTask</variablePath>
+                  </variablePathList>
+                </clickMethod>
+                <icon>/cwt/images/24/branch_element.png</icon>
+                <label>Change Request</label>
+                <style>CgMenuBtnBlack</style>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="createRequest" type="elmnu">
+                <menuAccel type="mAccelP"/>
+                <clickMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_initiateCreateTask</variablePath>
+                  </variablePathList>
+                </clickMethod>
+                <icon>/cwt/images/24/add.png</icon>
+                <label>Create Request</label>
+                <style>CgMenuBtnBlack</style>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="availableTasks" type="vform">
+          <label>availableTasks</label>
+          <root name="VerticalLayout" type="elvlt">
+            <height>100%</height>
+            <width>100%</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Available Tasks</label>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <height>100%</height>
+                        <overflow>scroll</overflow>
+                        <width>100%</width>
+                        <elementList>
+                          <element name="Iterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.homePage/leaf_availTaskArr</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="HorizontalLayout" type="elhlt">
+                                <elementList>
+                                  <element name="FormFrame1" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.homePage/leaf_availTaskArr</variablePath>
+                                        <variablePath>doc_cwt_pc.taskResult/ui_UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>doc_cwt_pc.taskResult/ui_UserInterface/frmui_Forms/vform_availableTask</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="availableTaskMenu" type="vform">
+          <label>availableTaskMenu</label>
+          <root name="HorizontalLayout" type="elhlt">
+            <elementList>
+              <element name="selectTaskAction" type="elmnu">
+                <menuAccel type="mAccelP"/>
+                <clickMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.homePage/usrActionMethod_selectTaskAction</variablePath>
+                  </variablePathList>
+                </clickMethod>
+                <icon>/cwt/images/16/checkbox.png</icon>
+                <label>Select Task(s)</label>
+                <style>CgMenuBtnBlack</style>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="projectStatus" type="vform">
+          <label>projectStatus</label>
+          <root name="VerticalLayout" type="elvlt">
+            <height>100%</height>
+            <width>100%</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Projects</label>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <elementList>
+                          <element name="Iterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.homePage/leaf_projArr</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="HorizontalLayout" type="elhlt">
+                                <elementList>
+                                  <element name="FormFrame" type="elovf"/>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="projectFinder" type="vform">
+          <label>projectFinder</label>
+          <root name="VerticalLayout" type="elvlt">
+            <height>100%</height>
+            <width>100%</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Projects</label>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <width>100%</width>
+                        <elementList>
+                          <element name="FormFrame" type="elovf">
+                            <fillSpace>false</fillSpace>
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.homePage/leaf_projectFinderUI</variablePath>
+                                <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/frmui_Forms</variablePath>
+                                <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/frmui_Forms/vform_homePageView</variablePath>
+                              </variablePathList>
+                            </formReference>
+                            <height>400px</height>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.homePage/leaf_projectFinderUI</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>100%</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="ProjectMenu" type="vform">
+          <label>ProjectMenu</label>
+          <root name="HorizontalLayout" type="elhlt">
+            <visible type="varPath">
+              <variablePathList>
+                <variablePath>ui_cm_spoc.homePage/permMethod_isManager</variablePath>
+              </variablePathList>
+            </visible>
+            <elementList>
+              <element name="VerticalLayout" type="elvlt">
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.homePage/permMethod_isLicensed</variablePath>
+                  </variablePathList>
+                </visible>
+                <elementList>
+                  <element name="HorizontalLayout1" type="elhlt">
+                    <elementList>
+                      <element name="addProject" type="elmnu">
+                        <menuAccel type="mAccelP"/>
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.homePage/usrActionMethod_initiateChangeStatusTask</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <icon>/cwt/images/24/branch_element.png</icon>
+                        <label>Add Project</label>
+                        <style>CgMenuBtnBlack</style>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="configureTemplates" type="elmnu">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.homePage/usrActionMethod_configurePLMTemplates</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <icon>/cwt/images/24/preferences.png</icon>
+                        <label>Configure Templates</label>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="configureStages" type="elmnu">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.homePage/usrActionMethod_stage_menu</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <icon>/cwt/images/24/preferences.png</icon>
+                        <label>Configure Stages</label>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="addPLMProjectButton" type="elbtn">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.homePage/usrActionMethod_initiateChangeStatusTask</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <height>25px</height>
+                        <label>Add PLM Project</label>
+                        <showFocused>true</showFocused>
+                        <showRollOverIcon>true</showRollOverIcon>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="HorizontalLayout2" type="elhlt">
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                    <elementList>
+                      <element name="configureParticipants" type="elmnu">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.homePage/usrActionMethod_participant_menu</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <icon>/cwt/images/24/preferences.png</icon>
+                        <label>Configure Participants</label>
+                      </element>
+                      <element name="configureMicroflows" type="elmnu">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.homePage/usrActionMethod_microflow_menu</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <icon>/cwt/images/24/preferences.png</icon>
+                        <label>Configure Microflows</label>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="onInit" type="action">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+      <script><![CDATA[
+        this.cw$super_onInit();
+        this.taskArr = this.getTasks();
+        this.availTaskArr = this.getAvailableTasks();
+        //this.projArr = this.getProjects();
+        this.projectFinderUI = new cm_spoc.cwt_projectFinder.UserInterface(null, this);
+        this.projectFinderUI.searchAction();
+        this.filterProjectResult(this.projectFinderUI.model);
+      ]]></script>
+    </method>
+    <method name="attributeCommand" type="usrActionMethod">
+      <form>ui_cwt_pc.attributeMain/frmui_Forms/exov_Default</form>
+      <userInterface>ui_cwt_pc.attributeMain</userInterface>
+      <valueType>ui_cwt_pc.attributeMain</valueType>
+      <script><![CDATA[
+        this.parent.content = null;
+        return this.parent.attributeCommand();
+      ]]></script>
+    </method>
+    <method name="chargeTypeCommand" type="usrActionMethod">
+      <form>ui_cwt_pc.chargeTypeMain/frmui_Forms/exov_Default</form>
+      <userInterface>ui_cwt_pc.chargeTypeMain</userInterface>
+      <valueType>ui_cwt_pc.chargeTypeMain</valueType>
+      <script><![CDATA[
+        this.parent.content = null;
+        return this.parent.chargeTypeCommand();
+      ]]></script>
+    </method>
+    <method name="getTasks" type="uimthd">
+      <script><![CDATA[
+        var result = new Array();
+
+        if (this.containsPLM()) {
+              var finder = new Finder("cwf_pm:BaseWorklistFinder");
+              finder.searchDocument.userId = UserProfile.userId();
+
+              var fr = finder.search();
+              for (var i=0; i<fr.length; i++) {
+                    var item = fr[i];
+                    var ord = this.getCatalogOrder(item);
+                    if (ord != null) {
+                          var docUI = new cwt_pc.taskResult.UserInterface(null, this);
+                          docUI.model.id = item.cwDocId;
+                          docUI.model.date = this.getDate(item.DueDate);
+                          //docUI.model.task = item.OrderVK;
+                          var des = this.getTaskDescription(ord,item);
+                          docUI.model.task = des;
+                          result[result.length] = docUI;
+                    }
+              }
+        }
+        return result;
+      ]]></script>
+    </method>
+    <method name="openWorklist" type="uimthd">
+      <parameterList>
+        <parameter name="selection" type="rifp">
+          <type>doc_cwt_pc.taskResult</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.context = null;
+        this.parent.isHomePage = false;
+
+        var wFinder = new cwt_pclm.plmBaseWorklistFinder.UserInterface(null, this);
+        var doc = Document.readDoc("cwf_pm:BaseWorklist", selection.id);
+
+        var wi = new WorklistItem(doc);
+        wi.setReadonly(false);
+        var started = true;
+        if(doc.StartDate==null || doc.StartDate == "")
+              started = false;
+
+        // open task
+        var opened = wi.openWorkItem(true, true, true);
+        if(!opened)
+              Global.throwException('UU0110');
+
+        var taskUI = new wi.metadata.UserInterface(wi);
+        taskUI.parent = this;
+
+        //display Task User Interface
+        wFinder.detail = taskUI;
+        wFinder.detailForm = "Default";
+
+        //set default project
+        var ord = taskUI.model.processOrder;
+        var projDoc = epc.getProjectByCode(ord.change.projectCode);
+        Global.setSessionParameter("project", projDoc);
+        this.parent.defaultProject = "Current Project: " + projDoc.name;
+
+        return wFinder;
+      ]]></script>
+    </method>
+    <method name="initiateCreateTask" type="usrActionMethod">
+      <flags enum-type="metadataFlag">PRIVATE</flags>
+      <script><![CDATA[
+        this.parent.content = null;
+        this.parent.isHomePage = false;
+        var ord = new Order(cwt_pclm.getCreateRequestOrder());
+        return ord;
+      ]]></script>
+    </method>
+    <method name="initiateChangeStatusTask" type="usrActionMethod">
+      <flags enum-type="metadataFlag">PRIVATE</flags>
+      <script><![CDATA[
+        this.parent.content = null;
+        this.parent.isHomePage = false;
+        var ord = new Order(cwt_pclm.getChangeRequestOrder());
+        return ord;
+      ]]></script>
+    </method>
+    <method name="isManager" type="permMethod">
+      <script><![CDATA[return UserProfile.hasPrivilege("cwpc_Manager") || UserProfile.hasPrivilege("productManager");]]></script>
+    </method>
+    <method name="getAvailableTasks" type="uimthd">
+      <script><![CDATA[
+        var result = new Array();
+
+        if (this.containsPLM()) {
+              var finder = new Finder("cwf_pm:GetSelectTasks");
+              var fr = finder.search();
+              for (var i=0; i<fr.length; i++) {
+                    var item = fr[i];
+                    var ord = this.getCatalogOrder(item);
+                    if (ord != null) {
+                          var docUI = new cwt_pc.taskResult.UserInterface(null, this);
+                          docUI.model.id = item.cwDocId;
+                          docUI.model.date = this.getDate(item.DueDate);
+                          //docUI.model.task = item.OrderVK;
+                          var des = this.getTaskDescription(ord,item);
+                          docUI.model.task = des;
+                          docUI.model.select = false;
+                          result[result.length] = docUI;
+                    }
+              }
+        }
+        return result;
+      ]]></script>
+    </method>
+    <method name="canViewAvailable" type="permMethod">
+      <script><![CDATA[
+        if(this.containsPLM() && (UserProfile.hasPrivilege("WGSelect") || UserProfile.hasPrivilege("WGAvailable"))){
+              return true;
+        } else
+              return false;
+      ]]></script>
+    </method>
+    <method name="getDate" type="uimthd">
+      <parameterList>
+        <parameter name="date" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if (!date)
+              return null;
+        var month = "";
+        switch(date.getMonth()) {
+              case 0:
+                    month = "Jan";
+                    break;
+              case 1:
+                    month = "Feb";
+                    break;
+              case 2:
+                    month = "Mar";
+                    break;
+              case 3:
+                    month = "Apr";
+                    break;
+              case 4:
+                    month = "May";
+                    break;
+              case 5:
+                    month = "Jun";
+                    break;
+              case 6:
+                    month = "Jul";
+                    break;
+              case 7:
+                    month = "Aug";
+                    break;
+              case 8:
+                    month = "Sept";
+                    break;
+              case 9:
+                    month = "Oct";
+                    break;
+              case 10:
+                    month = "Nov";
+                    break;
+              case 11:
+                    month = "Dec";
+                    break;
+        }
+        return  month + " " + date.getDate();
+      ]]></script>
+    </method>
+    <method name="getTaskDescription" type="uimthd">
+      <parameterList>
+        <parameter name="ord" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+        <parameter name="task" type="rifp"/>
+      </parameterList>
+      <script><![CDATA[
+        /*
+              var wi = new WorklistItem(doc);
+              var taskUI = new wi.metadata.UserInterface(wi);
+
+              //set default project
+              var order = taskUI.model.processOrder;
+              if (order == null || (!order.isBasedOn("cwt_pclm:createRequestOrder") && !order.isBasedOn("cwt_pclm:changeRequestOrder")))
+                    return null;
+        */
+        var des = task.OrderVK;
+        if (des == null && ord.change.projectID) {
+            var projDoc = ord.change.projectID.refData;
+            if (projDoc == null) {
+                des = "*Error " + ord.visualKey
+            } else if (projDoc.description) {
+                des = projDoc.description;
+            } else {
+                des = projDoc.name;
+            }
+        } else {
+            des = ord.visualKey;
+        }
+
+        return task.Operation? des + " - " + task.Operation.substring(task.Operation.lastIndexOf("/")+1) : des;
+      ]]></script>
+    </method>
+    <method name="selectTaskAction" type="usrActionMethod">
+      <script><![CDATA[
+        var wlFinder = new Finder("cwf_pm:BaseWorklistFinder");
+        Global.setApplicationWorklist(wlFinder);
+        for (var i=0; i<this.availTaskArr.length; i++) {
+              if (this.availTaskArr[i].model.select == true) {
+                    var sel = Document.readDoc("cwf_pm:BaseWorklist", this.availTaskArr[i].model.id);
+                    //var updateSize = (new Finder("cwf_pm:BaseWorklistFinder")).selectTasks(sel);
+                    var updateSize = Global.getWorkListFinder().selectTasks(sel);
+                    if(updateSize==0)
+                     Global.throwException('UU0135', sel.cwDocId);
+              }
+        }
+        this.refreshTaskLists();
+      ]]></script>
+    </method>
+    <method name="refreshTaskLists" type="usrActionMethod">
+      <script><![CDATA[
+        this.taskArr = this.getTasks();
+        this.availTaskArr = this.getAvailableTasks();
+      ]]></script>
+    </method>
+    <method name="getProjects" type="uimthd">
+      <script><![CDATA[
+        var finder = new Finder("cm_spoc:cwt_projectFinder");
+        finder.search();
+        this.filterProjectResult(finder);
+        var fr = finder.list;
+        var result = new Array();
+
+        for (var i=0; i<fr.length; i++) {
+              var projUI = new cm_spoc.cwl_project.UserInterface(fr[i], this);
+              result[result.length] = projUI;
+        }
+
+        return result;
+      ]]></script>
+    </method>
+    <method name="displayProject" type="usrActionMethod">
+      <parameterList>
+        <parameter name="projectDoc" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.content = null;
+        this.parent.isHomePage = false;
+
+        var ord = cm_plm.getPLMOrderFromProjectCode(projectDoc.projectCode);
+
+        if(ord!=null) {
+            Global.setSessionParameter("project", projectDoc);
+            this.parent.defaultProject = "Current Project: " + projectDoc.name;
+            var orderUI = new cm_plm.plmOrder.UserInterface(ord);
+            orderUI.parent = this.parent;
+            this.parent.content = orderUI;
+        }
+        else {
+            var projTree = new NavTree("cm_spoc.ProjectTree");
+            var node = projTree.findNodeByID("ProjectTree/ProjectRoot/FinderChild#" + projectDoc.id);
+            if (node) {
+                  node.setSelected(true);
+                  projTree.displayNode(node)
+            }
+            projTree.parent = this.parent;
+            this.parent.content = projTree;
+        }
+      ]]></script>
+    </method>
+    <method name="filterProjectResult" type="uimthd">
+      <parameterList>
+        <parameter name="projFinder" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        for (var i = 0; i < projFinder.list.length; i++) {
+              if (projFinder.list[i].status == "ACT") {
+                    projFinder.list.remove(projFinder.list[i]);
+                    i--;
+              }
+        }
+      ]]></script>
+    </method>
+    <method name="containsPLM" type="permMethod">
+      <script>return cwt_pc.containsPLM();</script>
+    </method>
+    <method name="canViewAttribute" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"attribute");]]></script>
+    </method>
+    <method name="canViewCatalogRule" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"catalogRule");]]></script>
+    </method>
+    <method name="canViewTax" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"tax");]]></script>
+    </method>
+    <method name="canViewInfoModel" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"infoModel");]]></script>
+    </method>
+    <method name="canViewChargeType" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"chargeType");]]></script>
+    </method>
+    <method name="canViewRelationType" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"relationType");]]></script>
+    </method>
+    <method name="canViewContext" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"context");]]></script>
+    </method>
+    <method name="canViewProject" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"project");]]></script>
+    </method>
+    <method name="canViewCatalogHierarchy" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"catalogHierarchy");]]></script>
+    </method>
+    <method name="canViewItem" type="permMethod">
+      <script><![CDATA[return cwt_pc.canView(null,"item");]]></script>
+    </method>
+    <method name="projectTreeCommand" type="usrActionMethod">
+      <userInterface>tree_cm_spoc.ProjectTree</userInterface>
+      <valueType>tree_cm_spoc.ProjectTree</valueType>
+      <script><![CDATA[
+        this.parent.content = null;
+        return this.parent.projectTreeCommand();
+      ]]></script>
+    </method>
+    <method name="catalogRuleCommand" type="usrActionMethod">
+      <form>ui_cwt_pc.catalogRuleMain/frmui_Forms/exov_Default</form>
+      <userInterface>ui_cwt_pc.catalogRuleMain</userInterface>
+      <valueType>ui_cwt_pc.catalogRuleMain</valueType>
+      <script><![CDATA[
+        this.parent.content = null;
+        return this.parent.catalogRuleCommand();
+      ]]></script>
+    </method>
+    <method name="taxCommand" type="usrActionMethod">
+      <form>ui_cwt_pc.taxMain/frmui_Forms/exov_Default</form>
+      <userInterface>ui_cwt_pc.taxMain</userInterface>
+      <valueType>ui_cwt_pc.taxMain</valueType>
+      <script><![CDATA[
+        this.parent.content = null;
+        return this.parent.taxCommand();
+      ]]></script>
+    </method>
+    <method name="taxModelCommand" type="usrActionMethod">
+      <form>ui_cwt_pc.taxModelMain/frmui_Forms/exov_Default</form>
+      <userInterface>ui_cwt_pc.taxModelMain</userInterface>
+      <valueType>ui_cwt_pc.taxModelMain</valueType>
+      <script><![CDATA[
+        this.parent.content = null;
+        return this.parent.taxModelCommand();
+      ]]></script>
+    </method>
+    <method name="infoModelCommand" type="usrActionMethod">
+      <form>ui_cwt_pc.infoModelMain/frmui_Forms/exov_Default</form>
+      <userInterface>ui_cwt_pc.infoModelMain</userInterface>
+      <valueType>ui_cwt_pc.infoModelMain</valueType>
+      <script><![CDATA[
+        this.parent.content = null;
+        return this.parent.infoModelCommand();
+      ]]></script>
+    </method>
+    <method name="contextCommand" type="usrActionMethod">
+      <form>ui_cwt_pc.contextMain/frmui_Forms/exov_Default</form>
+      <userInterface>ui_cwt_pc.contextMain</userInterface>
+      <valueType>ui_cwt_pc.contextMain</valueType>
+      <script><![CDATA[
+        this.parent.content = null;
+        return this.parent.contextCommand();
+      ]]></script>
+    </method>
+    <method name="relationTypeCommand" type="usrActionMethod">
+      <form>ui_cwt_pc.relationTypeMain/frmui_Forms/exov_Default</form>
+      <userInterface>ui_cwt_pc.relationTypeMain</userInterface>
+      <valueType>ui_cwt_pc.relationTypeMain</valueType>
+      <script><![CDATA[
+        this.parent.content = null;
+        return this.parent.relationTypeCommand();
+      ]]></script>
+    </method>
+    <method name="hierarchyTreeCommand" type="usrActionMethod">
+      <userInterface>tree_cwt_pc.CatalogHierarchy</userInterface>
+      <valueType>tree_cwt_pc.CatalogHierarchy</valueType>
+      <script><![CDATA[
+        this.parent.content = null;
+        return this.parent.hierarchyTreeCommand();
+      ]]></script>
+    </method>
+    <method name="itemTreeCommand" type="usrActionMethod">
+      <form>tree_cwt_pc.itemTree/frmui_Forms/exov_Default</form>
+      <userInterface>tree_cwt_pc.itemTree</userInterface>
+      <valueType>tree_cwt_pc.itemTree</valueType>
+      <script><![CDATA[
+        this.parent.content = null;
+        return this.parent.itemTreeCommand();
+      ]]></script>
+    </method>
+    <method name="setDefaultProject" type="uimthd">
+      <parameterList>
+        <parameter name="projectName" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        //the parent of cwt_pc.homePage should be cwt_pc.catalogMain
+        this.parent.setDefaultProject(projectName);
+      ]]></script>
+    </method>
+    <method name="getCatalogOrder" type="uimthd">
+      <parameterList>
+        <parameter name="doc" type="rifp">
+          <type>doc_cwf_pm.BaseWorklist</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var wi = new WorklistItem(doc);
+        var taskUI = new wi.metadata.UserInterface(wi);
+
+        //set default project
+        var order = taskUI.model.processOrder;
+        if (order == null || !order.isBasedOn(cwt_pclm.getChangeRequestOrder()))
+              return null;
+        else
+              return order;
+      ]]></script>
+    </method>
+    <method name="isLicensed" type="permMethod">
+      <flags enum-type="metadataFlag">PRIVATE</flags>
+      <script><![CDATA[return Global.isLicensedFeature("ProductLifecycleManagement");]]></script>
+    </method>
+    <method name="configurePLMTemplates" type="usrActionMethod">
+      <script><![CDATA[
+        var ui = new cwt_pclm.changeRequest.UserInterface(null, this);
+        ui.hideProject = true;
+        return ui;
+      ]]></script>
+    </method>
+    <method name="stage_menu" type="usrActionMethod">
+      <script><![CDATA[
+        this.parent.isHomePage = false;
+        return new cwt_pclm.plmStageFinder(null, this);
+      ]]></script>
+    </method>
+    <method name="participant_menu" type="usrActionMethod">
+      <script><![CDATA[
+        this.parent.isHomePage = false;
+        return new cwt_pclm.plmParticipantFinder(null, this);
+      ]]></script>
+    </method>
+    <method name="microflow_menu" type="usrActionMethod">
+      <script><![CDATA[
+        this.parent.isHomePage = false;
+        return new cwt_sof.microflowFinder(null, this);
+      ]]></script>
+    </method>
+    <method name="showEPCPricePlans" type="usrActionMethod">
+      <userInterface>findScript_cwa_epc.epcPricePlanFinder</userInterface>
+      <valueType>findScript_cwa_epc.epcPricePlanFinder</valueType>
+      <script>this.resetModelStatus();</script>
+    </method>
+    <method name="showEPCProducts" type="usrActionMethod">
+      <userInterface>findScript_cwa_epc.epcItemFinder</userInterface>
+      <valueType>findScript_cwa_epc.epcItemFinder</valueType>
+      <script>this.resetModelStatus();</script>
+    </method>
+    <method name="resetModelStatus" type="uimthd">
+      <script>cwa_epc.resetStatusMessage(this);</script>
+    </method>
+    <method name="visShortCut" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>CatalogAdmin</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+  </methodList>
+</userInterface>

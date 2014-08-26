@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.loadNGAAAttributes">
+  <group>api</group>
+  <label>loadNGAAAttributes</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="attDoc" type="rifp">
+      <type>doc_cm_common.cwt_itemAttribute</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(
+     attDoc.isOverride != null ||
+     attDoc.isPrimaryKey != null ||
+     attDoc.isMandatory != null ||
+     attDoc.isSent2Altamira != null ||
+     attDoc.minValue != null ||
+     attDoc.maxValue != null ||
+     attDoc.RE_Release != null ||
+     attDoc.MS_Release != null
+    )
+    return;
+
+    var itemDoc = cm_common.catalogGetItemDoc(attDoc.itemCode, true);
+    if(itemDoc.baseItemCode != null) {
+        var attBase = cm_common.catalogGetNGAAItemAttributesDoc(itemDoc.baseItemCode.itemCode, attDoc.itemAttributeCode, true);
+        if(attBase!=null) {
+            //cm_common.loadNGAAAttributes(attBase); it shouldnt but its causing problems
+
+            setPropBaseValue('isOverride', false);
+            setPropBaseValue('isPrimaryKey', false);
+            setPropBaseValue('isMandatory', false);
+            setPropBaseValue('isSent2Altamira', false);
+            setPropBaseValue('minValue');
+            setPropBaseValue('maxValue');
+            setPropBaseValue('RE_Release');
+            setPropBaseValue('MS_Release');
+        }
+    }
+
+
+    function setPropBaseValue(prop, defVal) {
+       if(attDoc[prop]==null && attBase[prop]!=null)
+            attDoc[prop] = attBase[prop];
+        else if(attBase[prop]==null)
+            attDoc[prop] = defVal;
+    }
+  ]]></script>
+</script>

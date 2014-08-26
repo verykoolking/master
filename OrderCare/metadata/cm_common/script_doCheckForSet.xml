@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.doCheckForSet">
+  <group>scripts</group>
+  <label>doCheckForSet</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="specification" type="rifp">
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //Check if it is possible do update
+    try
+    {
+        var itemSearchDS = new cwt_pcmaintapi.itemSearchDS();
+        itemSearchDS.itemCode = specification.specificationCode;
+        var item = cwt_pcmaintapi.itemRead(itemSearchDS);
+        if(cwt_pcmaintapi.isFault(item))
+        {
+            var fault = api_common.createFault(item.code, item.message);
+            return fault;
+        }
+
+        var response;
+        if(item.status == "ACT")
+        {
+            var endDate = new Date();
+
+            //first check if the item is already end dated, if it is end dated to an earlier date then the end date cannot be moved forward (backward is possible)
+            if(item.endDate && item.endDate < endDate)
+            {
+                var fault = api_common.createFault("E104", "The item is already removed.");
+                return fault;
+            }
+
+            //Now we have to update any items/relations which are not in ACT mode belonging to this item, along with its containing items
+            var response = cm_common.preSetSpec(specification);
+            if(api_common.isFault(response))
+                return response;
+        }
+        else{
+            //the item belongs to the same project, so it can be modified
+            var response = cm_common.preSetSpec(specification);
+        }
+
+        return response;
+
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

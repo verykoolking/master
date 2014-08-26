@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TemporalApplicabilityIteratorUI">
+  <group>Common.ApplicabilityCondition</group>
+  <label>TemporalApplicabilityIteratorUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="lastStartHour" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="lastEndHour" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="AppConditionEnum" type="leaf">
+      <valueType>dstruct_cm_spoc.data.AppConditionEnum</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.SimpleTemporalAppCondition</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="GridLayout" type="elgrd">
+              <colWidths>50px</colWidths>
+              <numOfCols>10</numOfCols>
+              <width>750px</width>
+              <elementList>
+                <element name="isChecked" type="elchk">
+                  <label>Boolean</label>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TemporalApplicabilityIteratorUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>50px</width>
+                </element>
+                <element name="TypeOfDayEnum" type="elslct">
+                  <columnSpan>3</columnSpan>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TemporalApplicabilityIteratorUI/uimthd_setTypeOfDay</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TemporalApplicabilityIteratorUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SimpleTemporalAppCondition/dstruct_TypeOfDayEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="StartHourEnum" type="elslct">
+                  <columnSpan>3</columnSpan>
+                  <editable type="varPath">
+                    <independant>true</independant>
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TemporalApplicabilityIteratorUI/permMethod_onTypeOfDaySelect</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TemporalApplicabilityIteratorUI/uimthd_calculateHour</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showEmpty>false</showEmpty>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TemporalApplicabilityIteratorUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SimpleTemporalAppCondition/dstruct_StartHourEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="EndHourEnum" type="elslct">
+                  <columnSpan>3</columnSpan>
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TemporalApplicabilityIteratorUI/permMethod_onTypeOfDaySelect</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TemporalApplicabilityIteratorUI/uimthd_calculateHour</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showEmpty>false</showEmpty>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TemporalApplicabilityIteratorUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SimpleTemporalAppCondition/dstruct_EndHourEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$lastStartHour" type="laction">
+      <path>ui_cm_spoc.forms.TemporalApplicabilityIteratorUI/leaf_lastStartHour</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.TemporalApplicabilityIteratorUI/leaf_lastStartHour</valueType>
+      <script>return 0;</script>
+    </method>
+    <method name="cwLeafInitAction$lastEndHour" type="laction">
+      <path>ui_cm_spoc.forms.TemporalApplicabilityIteratorUI/leaf_lastEndHour</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.TemporalApplicabilityIteratorUI/leaf_lastEndHour</valueType>
+      <script>return 0;</script>
+    </method>
+    <method name="onTypeOfDaySelect" type="permMethod">
+      <script><![CDATA[
+        if(this.model.readonly)
+            return false;
+        var val = this.model.TypeOfDayEnum;
+        if (val){
+            this.calculateHour();
+            return true;
+        }
+        return false;
+      ]]></script>
+    </method>
+    <method name="calculateHour" type="uimthd">
+      <script><![CDATA[
+        //
+        var startHours = ["00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00",
+        "11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"];
+        var endHours = ["00:59","01:59","02:59","03:59","04:59","05:59","06:59","07:59","08:59","09:59","10:59","11:59",
+        "12:59","13:59","14:59","15:59","16:59","17:59","18:59","19:59","20:59","21:59","22:59","23:59",];
+        var start = this.model.StartHourEnum;
+        var end = this.model.EndHourEnum;
+        var s = 0;
+        var e = 0;
+        if (start)
+            s = parseInt(start,10);
+        if (end)
+            e = parseInt(end,10);
+        if (s>e){
+            Global.showUserMessage( "'Start Hour' can't be greater than 'End Hour'");
+            this.model.StartHourEnum = startHours[this.lastStartHour];
+            this.model.EndHourEnum = endHours[this.lastEndHour];
+            return;
+        }
+        //old value
+        this.lastEndHour = e;
+        this.lastStartHour = s;
+
+        var result = "";
+        for (var i =0; i<24;i++){
+            if (i>=s && i<=e)
+                result+="1";
+            else
+                result+="0";
+        }
+        this.model.Hours = result;
+      ]]></script>
+    </method>
+    <method name="setTypeOfDay" type="uimthd">
+      <script><![CDATA[
+        this.model.TypeOfDay = this.model.TypeOfDayEnum;
+        if (!this.model.TypeOfDay)
+            this.model.Hours = null;
+      ]]></script>
+    </method>
+    <method name="alert" type="usrActionMethod">
+      <dialogHeight>100</dialogHeight>
+      <dialogWidth>100</dialogWidth>
+      <dialogx>300</dialogx>
+      <dialogy>300</dialogy>
+      <parameterList>
+        <parameter name="msg" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="type" type="rifp">
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <showInPopup>true</showInPopup>
+      <userInterface>ui_cwa_epc.baseMessage</userInterface>
+      <valueType>ui_cwa_epc.baseMessage</valueType>
+      <script><![CDATA[
+        var baseMsg = new cwa_epc.baseMessage();
+        baseMsg.setText(msg);
+        baseMsg.type = type;
+        return  baseMsg;
+      ]]></script>
+    </method>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+  </methodList>
+</userInterface>

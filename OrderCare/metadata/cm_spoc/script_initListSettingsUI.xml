@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initListSettingsUI">
+  <group>ui_scripts.Lists</group>
+  <label>initListSettingsUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(ui.model.specificationCode){
+     for(var i=0; i<ui.model.ListAllowedStateArrDS.List.length; i++){
+
+            var found = false;
+
+            for(var j=0;j<ui.ListSettingsPickList.availableItems.length;j++){
+            var item = ui.ListSettingsPickList.availableItems[j];
+                if(item.id == ui.model.ListAllowedStateArrDS.List[i]){
+                    found = true;
+                    break;
+                }
+            }
+
+            if(found){
+                ui.ListSettingsPickList.selectedItems.addLast(item);
+                ui.ListSettingsPickList.availableItems.remove(item);
+            }
+        }
+
+    }
+  ]]></script>
+</script>

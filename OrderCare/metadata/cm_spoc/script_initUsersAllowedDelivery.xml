@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initUsersAllowedDelivery">
+  <group>ui_scripts.Operation</group>
+  <label>initUsersAllowedDelivery</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+    var UsersAllowedDeliveryArr = cm_spoc.initInnerDS("base_UsersAllowedDeliveryArr");
+    model.UsersAllowedDeliveryArrDS = UsersAllowedDeliveryArr;
+
+    return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        var UsersAllowedDeliveryArrRel = model.UsersAllowedDeliveryArr;
+        s.specificationCode = UsersAllowedDeliveryArrRel;
+        var a = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(a)){
+            model.UsersAllowedDeliveryArrDS = a;
+            UsersAllowedDeliveryArrRel = a.List;
+        }
+        var UsersAllowedDeliveryDS = model.UsersAllowedDeliveryArrDS.ListDS;
+        for(var i=0;i<UsersAllowedDeliveryArrRel.length;i++){
+            s.specificationCode = UsersAllowedDeliveryArrRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                UsersAllowedDeliveryDS[i]=r;
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

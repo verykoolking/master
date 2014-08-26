@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initIncompatibility">
+  <group>ui_scripts.Operation</group>
+  <label>initIncompatibility</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+    var ConstraintsCByOpArr = cm_spoc.initInnerDS("base_ConstraintsCByOpArr");
+    model.ConstraintsCByOpArrDS = ConstraintsCByOpArr;
+
+    return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        var ConstraintsCByOpRel = model.ConstraintsCByOpArr;
+        s.specificationCode = ConstraintsCByOpRel;
+        var a = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(a)){
+            model.ConstraintsCByOpArrDS = a;
+            ConstraintsCByOpRel = a.List;
+        }
+        var ConstraintsCByOpDS = model.ConstraintsCByOpArrDS.ListDS;
+        for(var i=0;i<ConstraintsCByOpRel.length;i++){
+            s.specificationCode = ConstraintsCByOpRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                ConstraintsCByOpDS[i]=r;
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

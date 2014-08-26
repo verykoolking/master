@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_TSEndDateMandatoryCondRule">
+  <group>rules_scripts.Tribes</group>
+  <label>rule_TSEndDateMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    // The attribute (EndDate) will be mandatory only if the related attribute (InfiniteDate) assumes the value shown in the column H (FALSE).
+
+    var dt=data;
+    if (dt.InfiniteDate==false && !dt.EndDate){
+        errList.addErrorMessage(data,["EndDate is mandatory when InfiniteDate is uncheck"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

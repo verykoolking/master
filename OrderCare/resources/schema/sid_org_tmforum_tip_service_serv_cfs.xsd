@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/cfs" xmlns:prod="http://www.tmforum.org/xml/sid/org/tmforum/tip/product/prod" xmlns:rfs="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/rfs" xmlns:catalog="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/spec/catalog" xmlns:role="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/cfs/role" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" xmlns:cfs="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/spec/cfs" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/cfs" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.service.serv.cfs
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      The Service ABE contains entities that are used to represent two fundamentally different types of Services, called CustomerFacingServices and ResourceFacingServices.
+
+A CustomerFacingService defines the characteristics and behavior of a particular Service as seen by the Customer or other appropriate PartyRole. In contrast, a ResourceFacingService is an abstraction that defines the characteristics and behavior of a particular Service that is not directly seen or purchased by the PartyRole. ResourceFacingServices are "internal" Services that are required to support a CustomerFacingService.
+
+Entities in this ABE provide different views to examine, analyze, configure, monitor and repair Services of all types. Entities in this ABE are derived from Service Specification entities.
+      Package data summary information:
+            entities: 6
+ Association Classes: 0
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/product/prod" schemaLocation="sid_org_tmforum_tip_product_prod.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/rfs" schemaLocation="sid_org_tmforum_tip_service_serv_rfs.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/spec/catalog" schemaLocation="sid_org_tmforum_tip_service_spec_catalog.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/cfs/role" schemaLocation="sid_org_tmforum_tip_service_serv_cfs_role.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/spec/cfs" schemaLocation="sid_org_tmforum_tip_service_spec_cfs.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="connectivity" type="tns:Connectivity"/>
+   <xsd:complexType name="Connectivity" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract base class that is the parent for different types of traffic conditioning services defined in the DEN-ng Service model. TrafficConditioningServices are one example of a ResourceFacingService, in that the Customer is not able to control them. In fact, the Customer is not even aware that they are there. However, they must be implemented in order for different CoSs to be differentiated from each other, and hence for different Customers to receive different CoSs.
+
+Please see the DEN-ng Service model for more details.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfConnectivity">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:Connectivity" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="customerFacingService" type="tns:CustomerFacingService"/>
+   <xsd:complexType name="CustomerFacingService" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A CustomerFacingService defines the properties of a particular related Service that represents a realization of a Product within an organization's infrastructure; This is in direct contrast to ResourceFacingServices, which support the network/infrastructure facing part of the service. For example, a VPN is an example of a CustomerFacingService, while the sub-services that perform different types of routing between network devices making up the VPN are examples of ResourceFacingServices.
+
+CustomerFacingServices are directly related to Products as well as to ResourceFacingServices. ResourceFacingServices are indirectly related to Products through the relationship between Product and CustomerFacingServices. This enforces the relationship to Products while keeping Services that are not directly realized by Products (i.e., ResourceFacingServices) separated from Products.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="cfsStatus" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the status of this particular CustomerFacingService. Values include:
+
+0: Operational and billable
+1: Degraded but billable
+2: In Violation and billable
+3: Operational but not billable
+4: In Test and not billable
+5: Being Deployed and not billable
+6: Failed
+
+Value 0 means that this CustomerFacingService is acting per specification, and is fully billable.
+
+Value 1 means that this CustomerFacingService is operational, but is currently in a degraded state. However, it has not violated any contractual specification and is fully billable.
+
+Value 2 means that this CustomerFacingService is operational, but is currently in violation of its associated contractual specification(s). Whether it is billable or not is determined by its associated Policy for handling service violations.
+
+Value 3 means that this CustomerFacingService is currently operational, but has not been enabled for this particular customer yet and is therefore not billable for this customer.
+
+Value 4 means that this CustomerFacingService is currently being tested, and is not yet ready to be enabled for this particular customer. Consequently, it is therefore not billable for this customer.
+
+Value 5 means that this CustomerFacingService is currently being deployed, and therefore has not been enabled for this particular customer yet. Consequently, it is therefore not billable for this customer.
+
+Value 6 means that this CustomerFacingService has currently failed. The set of actions that should be taken, as well as whether this service can still be billed or not, are determined by its associated Policy for handling service violations.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="product" type="prod:ArrayOfProduct" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  unique</p>
+                        <p>This association end  is  an end of association ProductRealizedAsCFService</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="customerFacingServiceComposite" type="tns:CustomerFacingServiceComposite" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association CFSCompositeHasCFServices</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="customerFacingServiceRole" type="role:ArrayOfCustomerFacingServiceRole" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association CFServiceHasCFSRoles</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="resourceFacingService" type="rfs:ArrayOfResourceFacingService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association CFServiceRequiresRFServices</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="serviceCandidate" type="catalog:ArrayOfServiceCandidate" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  unique</p>
+                        <p>This association end  is  an end of association CustomerFacingServiceToServiceCandidate</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="customerFacingServiceSpec" type="cfs:CustomerFacingServiceSpec" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association SpecifiesCustomerFacingService</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfCustomerFacingService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:CustomerFacingService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="customerFacingServiceAtomic" type="tns:CustomerFacingServiceAtomic"/>
+   <xsd:complexType name="CustomerFacingServiceAtomic" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract base class that defines a stand-alone CustomerFacingService that meets the needs of a Product. Stand-alone CustomerFacingServices may be linked directly to a Product or aggregated by a CustomerFacingServiceProduct.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfCustomerFacingServiceAtomic">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:CustomerFacingServiceAtomic" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="customerFacingServiceComposite" type="tns:CustomerFacingServiceComposite"/>
+   <xsd:complexType name="CustomerFacingServiceComposite" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract base class that defines an integrated set of CustomerFacingServices that collectively meets the needs of a Product. For example, the Customer may have requested "GoldService", which is a ServicePackage that defines a set of ServiceBundles, each of which has its own QoS. This enables "GoldService" to be abstracted and treated as a managed object that provides a CustomerFacingService.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="customerFacingService" type="tns:ArrayOfCustomerFacingService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association CFSCompositeHasCFServices</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfCustomerFacingServiceComposite">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:CustomerFacingServiceComposite" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="iPsecVPNService" type="tns:IPsecVPNService"/>
+   <xsd:complexType name="IPsecVPNService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p/>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="iPsecVPNServiceSpecification" type="cfs:IPsecVPNServiceSpecification" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association SpecifiesIPsecVPNServices</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfIPsecVPNService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:IPsecVPNService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="servicePackage" type="tns:ServicePackage"/>
+   <xsd:complexType name="ServicePackage">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A ServicePackage is derived from an associated ServicePackageSpec. The ServicePackageSpec defines the invariant attributes, methods, relationships, and constraints for all ServicePackage instances that are derived from it. This enables each individual ServicePackage to add its own application-specific changeable characteristics and behavior.
+
+Note that there is no specific aggregation used to relate a particular ServicePackage to the ServicePackageSpec that it is derived from. This is because the ServicePackageSpec and ServicePackage both inherit the SpecifiesService aggregation, and at this (the business level) view, there are no new semantics that are required to represent this relationship.
+
+Finally, while the composite pattern could be applied to ServicePackage, there is no perceived need to do so. Multiple ServicePackages will simply be aggregated by a ProductBundle, and appear as separate ProductComponents.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="serviceBundle" type="rfs:ArrayOfServiceBundle" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association ServicePackageUsesServiceBundles</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfServicePackage">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ServicePackage" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

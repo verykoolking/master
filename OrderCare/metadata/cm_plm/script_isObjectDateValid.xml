@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.isObjectDateValid">
+  <group>applicabilityCondition.scripts</group>
+  <label>isObjectDateValid</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="object" type="rifp">
+      <type>dstruct_cm_plm.baseObject</type>
+    </parameter>
+    <parameter name="endDate" type="rifp">
+      <type>dtype_com.conceptwave.system.Date</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var PAs = cm_plm.getProjectAssignmentForObject(object);
+    var now = endDate? endDate : new Date();
+
+    for(var i=0; i<PAs.length; i++){
+        if(PAs[i].endDate && PAs[i].endDate <= now)
+            return false;
+    }
+
+    return true;
+  ]]></script>
+</script>

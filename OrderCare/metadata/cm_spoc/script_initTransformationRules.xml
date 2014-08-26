@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initTransformationRules">
+  <group>ui_scripts.Numbering</group>
+  <label>initTransformationRules</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+        var TransformationRuleOutputArr = cm_spoc.initInnerDS("base_TransformationRuleOutputArr");
+        model.TransformationRuleOutputArrDS = TransformationRuleOutputArr;
+
+        return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        var TransformationRuleOutputRel = model.TransformationRuleOutputArr;
+        s.specificationCode = TransformationRuleOutputRel;
+        var a = epc.getSpecificationByKey(s);
+        TransformationRuleOutputRel = a.List;
+        var TransformationRuleOutputDS= model.TransformationRuleOutputArrDS.ListDS;
+        for(var i=0;i<TransformationRuleOutputRel.length;i++){
+            s.specificationCode = TransformationRuleOutputRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                TransformationRuleOutputDS[i]=r;
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

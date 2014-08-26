@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- PA2 -->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/listAndTribeManagement/v1/types" 
+            xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"             
+            xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+            targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/listAndTribeManagement/v1/types" 
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" 
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_0.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" 
+    			schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+
+    <!-- ************************************* addTribeMember ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="AddTribeMemberType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:tribeIdentifier"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="addTribeMember" type="tns:AddTribeMemberType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="AddTribeMemberResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="addTribeMemberResponse" type="tns:AddTribeMemberResponseType" />
+
+    <!-- ************************************* blockList ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="BlockListType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:listCode"/>
+            <xsd:element ref="apt:blockingTime"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="blockList" type="tns:BlockListType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="BlockListResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="blockListResponse" type="tns:BlockListResponseType" />
+
+    <!-- ************************************* deleteTribeMember ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="DeleteTribeMemberType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:tribeIdentifier"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deleteTribeMember" type="tns:DeleteTribeMemberType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="DeleteTribeMemberResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deleteTribeMemberResponse" type="tns:DeleteTribeMemberResponseType" />
+
+    <!-- ************************************* queryListMembers ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryListMembersType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:listCode"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryListMembers" type="tns:QueryListMembersType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryListMembersResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:listMemberInfoList"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryListMembersResponse" type="tns:QueryListMembersResponseType" />
+
+    <!-- ************************************* queryListsBasics ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryListsBasicsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryListsBasics" type="tns:QueryListsBasicsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryListsBasicsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:listBasicInfoList"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryListsBasicsResponse" type="tns:QueryListsBasicsResponseType" />
+
+    <!-- ************************************* setListMembers ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SetListMembersType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:listCode"/>
+            <xsd:element ref="apt:memberList"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="setListMembers" type="tns:SetListMembersType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SetListMembersResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="setListMembersResponse" type="tns:SetListMembersResponseType" />
+
+    <!-- ************************************* subscribeList ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SubscribeListType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:listCode"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeList" type="tns:SubscribeListType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SubscribeListResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeListResponse" type="tns:SubscribeListResponseType" />
+
+    <!-- ************************************* unblockList ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="UnblockListType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:listCode"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unblockList" type="tns:UnblockListType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="UnblockListResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unblockListResponse" type="tns:UnblockListResponseType" />
+
+    <!-- ************************************* unsubscribeList ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="UnsubscribeListType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:listCode"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeList" type="tns:UnsubscribeListType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="UnsubscribeListResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeListResponse" type="tns:UnsubscribeListResponseType" />
+
+    <!-- ************************************* queryTribesBasics ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryTribesBasicsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:tribeIdentifier" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryTribesBasics" type="tns:QueryTribesBasicsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryTribesBasicsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:tribeInfoList" minOccurs="0"/>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryTribesBasicsResponse" type="tns:QueryTribesBasicsResponseType" />
+
+    <!-- ************************************* disableList ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="DisableListType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:listCode"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="disableList" type="tns:DisableListType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="DisableListResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="disableListResponse" type="tns:DisableListResponseType" />
+
+    <!-- ************************************* enableList ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="EnableListType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:listCode"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="enableList" type="tns:EnableListType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="EnableListResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="enableListResponse" type="tns:EnableListResponseType" />
+
+    <!-- ************************************* queryListsAllowed ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryListsAllowedType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryListsAllowed" type="tns:QueryListsAllowedType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryListsAllowedResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:allowedListInfoList"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryListsAllowedResponse" type="tns:QueryListsAllowedResponseType" />
+
+
+</xsd:schema>

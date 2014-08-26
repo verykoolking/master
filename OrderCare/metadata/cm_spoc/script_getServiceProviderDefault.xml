@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getServiceProviderDefault">
+  <group>ui_scripts.Calendars.FinderScript</group>
+  <label>getServiceProviderDefault</label>
+  <metaVersion>4</metaVersion>
+  <script><![CDATA[
+    var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+    itemFinder.searchDocument.baseItemCode = "base_ServiceProvider";
+    var spResult = itemFinder.search();
+
+    var attributeFinder = new Finder("cwt_pc:cwt_itemAttributeFinder");
+    var spAttribute = "ServiceProviderId";
+    var spDefaultID = "*";
+    var spDefault;
+    var spAttributeResult;
+
+    for ( var i = 0; i < spResult.length; i++)
+    {
+        attributeFinder.searchDocument.itemCode = spResult[i].itemCode;
+        spAttributeResult = attributeFinder.search();
+
+        for ( var j = 0; j < spAttributeResult.length; j++ )
+        {
+            if (spAttributeResult[j].name == spAttribute && spAttributeResult[j].defaultValue == spDefaultID)
+            {
+                spDefault = spResult[i];
+            }
+        }
+    }
+
+    return spDefault;
+  ]]></script>
+</script>

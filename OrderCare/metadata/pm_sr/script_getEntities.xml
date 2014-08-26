@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_sr.getEntities">
+  <label>getEntities</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="subscriberId" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="offerType" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="productSerialNumber" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="productOfferingId" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="productNumber" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="productIdAA" type="rifp">
+      <array>true</array>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="startDate" type="rifp">
+      <type>dtype_com.conceptwave.system.Date</type>
+    </parameter>
+    <parameter name="endDate" type="rifp">
+      <type>dtype_com.conceptwave.system.Date</type>
+    </parameter>
+    <parameter name="startIndex" type="rifp">
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+    <parameter name="paging" type="rifp">
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_api_common.data.object</valueType>
+  <script><![CDATA[
+    /**
+     * Service Registry
+     * Get entity
+     *
+     * @author  Vitor Brasileiro
+     * @date    20140529
+     */
+
+    var f = new Finder("pm_sr:getEntityFinder");
+    var sdoc = f.searchDocument;
+
+    if (startIndex == null)
+        startIndex = 1;
+
+    if (paging != null)
+        paging = startIndex + paging;
+
+    sdoc.subscriberId           = subscriberId;
+    sdoc.offerType              = offerType;
+    sdoc.productSerialNumber    = productSerialNumber;
+    //sdoc.productIdAA            = productIdAA;
+    //sdoc.productIdAA            = productIdAA;
+    if ((productIdAA) && (productIdAA.length > 0)) {
+        for ( var i = 0; i < productIdAA.length; i++) {
+            if ( i == 0 ) sdoc.opId         = productIdAA[i];
+            if ( i == 1 ) sdoc.productIdAA1 = productIdAA[i];
+            if ( i == 2 ) sdoc.productIdAA2 = productIdAA[i];
+            if ( i == 3 ) sdoc.productIdAA3 = productIdAA[i];
+        }
+    }
+    sdoc.productNumber          = productNumber;
+    sdoc.productOfferingId      = productOfferingId;
+    sdoc.startDate              = startDate;
+    sdoc.endDate                = endDate;
+    sdoc.startIndex             = startIndex;
+    sdoc.paging                 = paging;
+
+    if (startDate != null) {
+        sdoc.actTable = false;
+        sdoc.nonActTable = true;
+    }
+    else {
+        sdoc.actTable = true;
+        sdoc.nonActTable = false;
+    }
+
+    f.search();
+
+    var entities = (f.list && f.list.length > 0) ?  f.list : null;
+    return entities;
+  ]]></script>
+</script>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.CMWalletApplicationRuleUI">
+  <group>Common.ChargingMode</group>
+  <label>CMWalletApplicationRuleUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.WalletApplication</valueType>
+    </variable>
+    <variable name="WalletUsageRule" type="leaf">
+      <valueType>dstruct_cm_spoc.data.WalletUsageRule</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="HorizontalLayout" type="elhlt">
+              <alignment>center,center</alignment>
+              <width>450px</width>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <cellAlignment></cellAlignment>
+                  <columnSpan>0</columnSpan>
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CMWalletApplicationRuleUI/permMethod_readOnly</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <labelAsTitle>false</labelAsTitle>
+                  <labelOrientation>right</labelOrientation>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CMWalletApplicationRuleUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>25px</width>
+                </element>
+                <element name="Wallet" type="ellab">
+                  <cellAlignment></cellAlignment>
+                  <columnSpan>0</columnSpan>
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CMWalletApplicationRuleUI/permMethod_readOnly</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <label>wallet</label>
+                  <labelOrientation>left</labelOrientation>
+                  <showLabel>false</showLabel>
+                  <textAlign>center</textAlign>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CMWalletApplicationRuleUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.WalletApplication/dstruct_Wallet</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100px</width>
+                </element>
+                <element name="WalletUsageRuleEnum" type="elslct">
+                  <columnSpan>0</columnSpan>
+                  <emptyValueText>Balance can never be used</emptyValueText>
+                  <label>Usage Rule</label>
+                  <labelOrientation>left</labelOrientation>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CMWalletApplicationRuleUI/uimthd_usageRuleChange</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <showLabel>false</showLabel>
+                  <sorted>true</sorted>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CMWalletApplicationRuleUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.WalletApplication/dstruct_WalletUsageRuleEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>175px</width>
+                </element>
+                <element name="getRuleType" type="ellab">
+                  <cellAlignment></cellAlignment>
+                  <columnSpan>0</columnSpan>
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <label>Rule Type</label>
+                  <labelOrientation>left</labelOrientation>
+                  <showLabel>false</showLabel>
+                  <textAlign>center</textAlign>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CMWalletApplicationRuleUI/uimthd_getRuleType</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="usageRuleChange" type="uimthd">
+      <script><![CDATA[
+        //var parentUI = this.parent.parent;
+
+        //var index = parentUI.CMTariffPlanGroupUI.currentTariffPlanGroup;
+
+        this.model.WalletUsageRule=this.model.WalletUsageRuleEnum;
+      ]]></script>
+    </method>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+    <method name="getLabel" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        if(this.model.WalletUsageRule==null){
+            return "Balance can never be used";
+        }
+
+        return this.model.WalletUsageRule;
+      ]]></script>
+    </method>
+    <method name="getRuleType" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        if(this.model.WalletUsageRule){
+           var s = new epc.data.Specification();
+            s.project =  cwa_epc.getDefaultProj();
+            s.specificationCode = this.model.WalletUsageRule;
+
+            var ds = epc.getSpecificationByKey( s );
+            if(!api_common.isFault(ds)){
+                return Global.getCodeDescription("cm_spoc.data.ConditionTypeEnum",ds.ConditionType,null);
+           }
+        }
+        return "";
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

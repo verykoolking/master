@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BEPpgaRequestIpMandatoryCondRule">
+  <group>rules_scripts.TopUp</group>
+  <label>rule_BEPpgaRequestIpMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**Conditional
+
+          BEPpgaRequestIpMandatoryCondRule
+
+     The attribute will be mandatory if the related attribute assumes the value shown in the colum H.
+
+     BankEntity
+     PpgaRequestIp
+
+     BankEntity
+     ClientServerMode
+
+     TR
+
+
+     */
+
+    var entity=data.BankEntity;
+
+    if(!entity.PpgaRequestIp       && entity.ClientServerMode=='TR')
+    {
+    errList.addErrorMessage(data,["PpgaRequestIp       can be saved only if ClientServerMode is TR"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

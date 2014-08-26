@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/cyclicActionsManagement/v1/types" 
+            xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"             
+            xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+            targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/cyclicActionsManagement/v1/types" 
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+<!-- PA1 -->
+
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" 
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_1.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" 
+    			schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+
+    <!-- ************************************* queryCyclicBoltonsDetails ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryCyclicBoltonsDetailsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:statusCyclicFilter" minOccurs="0"/>
+            <xsd:element ref="apt:billingCycleFlagFilter" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCyclicBoltonsDetails" type="tns:QueryCyclicBoltonsDetailsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryCyclicBoltonsDetailsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:cyclicBoltonDetailedInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCyclicBoltonsDetailsResponse" type="tns:QueryCyclicBoltonsDetailsResponseType" />
+
+    <!-- ************************************* queryCyclicChargingServicesDetails ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryCyclicChargingServicesDetailsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:statusCyclicFilter" minOccurs="0"/>
+            <xsd:element ref="apt:billingCycleFlagFilter" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCyclicChargingServicesDetails" type="tns:QueryCyclicChargingServicesDetailsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryCyclicChargingServicesDetailsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:cyclicChargingDetailedInfoList"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCyclicChargingServicesDetailsResponse" type="tns:QueryCyclicChargingServicesDetailsResponseType" />
+
+    <!-- ************************************* queryCyclicTopUpsDetails ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryCyclicTopUpsDetailsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:statusCyclicFilter" minOccurs="0"/>
+            <xsd:element ref="apt:billingCycleFlagFilter" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCyclicTopUpsDetails" type="tns:QueryCyclicTopUpsDetailsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryCyclicTopUpsDetailsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:cyclicTopUpDetailedInfoList"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCyclicTopUpsDetailsResponse" type="tns:QueryCyclicTopUpsDetailsResponseType" />
+
+    <!-- ************************************* subscribeCyclicBoltons ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SubscribeCyclicBoltonsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:cyclicCode"/>
+            <xsd:element ref="apt:cyclicInfo"/>
+            <xsd:element ref="apt:boltonInfoList" minOccurs="0"/>
+            <xsd:element ref="apt:boltonInfoCalculation" minOccurs="0"/>
+            <xsd:element ref="apt:boltonInfoCycleChange" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeCyclicBoltons" type="tns:SubscribeCyclicBoltonsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SubscribeCyclicBoltonsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeCyclicBoltonsResponse" type="tns:SubscribeCyclicBoltonsResponseType" />
+
+    <!-- ************************************* subscribeCyclicTopUps ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SubscribeCyclicTopUpsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:cyclicCode"/>
+            <xsd:element ref="apt:cyclicInfo"/>
+            <xsd:element ref="apt:topUpInfoList" minOccurs="0"/>
+            <xsd:element ref="apt:calcTopUpAmountCode" minOccurs="0"/>
+            <xsd:element ref="apt:topUpInfoCycleChange" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeCyclicTopUps" type="tns:SubscribeCyclicTopUpsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SubscribeCyclicTopUpsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeCyclicTopUpsResponse" type="tns:SubscribeCyclicTopUpsResponseType" />
+
+    <!-- ************************************* unsubscribeCyclicServices ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="UnsubscribeCyclicServicesType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:choice>
+                <xsd:element ref="apt:opReference"/>
+                <xsd:element ref="apt:cyclicCode"/>
+                <xsd:element ref="apt:boltonIdentifier"/>  <!--  Added due to NGAA 14B PA1 -->
+            </xsd:choice>
+            <xsd:element ref="apt:cyclicServicesCascadeFlag" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeCyclicServices" type="tns:UnsubscribeCyclicServicesType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="UnsubscribeCyclicServicesResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeCyclicServicesResponse" type="tns:UnsubscribeCyclicServicesResponseType" />
+
+    <!-- ************************************* subscribeCyclicChargingServices ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SubscribeCyclicChargingServicesType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:cyclicCode"/>
+            <xsd:element ref="apt:cyclicInfo"/>
+            <xsd:element ref="apt:chargingInfoList" minOccurs="0"/>
+            <xsd:element ref="apt:calcChargingAmountCode" minOccurs="0"/>
+            <xsd:element ref="apt:chargingCycleChange" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeCyclicChargingServices" type="tns:SubscribeCyclicChargingServicesType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SubscribeCyclicChargingServicesResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeCyclicChargingServicesResponse" type="tns:SubscribeCyclicChargingServicesResponseType" />
+
+    <!-- ************************************* queryCyclicBalanceTransfersDetails ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryCyclicBalanceTransfersDetailsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:donorSubscriberId"/>
+            <xsd:element ref="apt:statusCyclicFilter" minOccurs="0"/>
+            <xsd:element ref="apt:billingCycleFlagFilter" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCyclicBalanceTransfersDetails" type="tns:QueryCyclicBalanceTransfersDetailsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryCyclicBalanceTransfersDetailsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:cyclicBalanceTransferDetailedInfoList"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCyclicBalanceTransfersDetailsResponse" type="tns:QueryCyclicBalanceTransfersDetailsResponseType" />
+
+    <!-- ************************************* subscribeCyclicBalanceTransfers ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SubscribeCyclicBalanceTransfersType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:donorSubscriberId"/>
+            <xsd:element ref="apt:receiverSubscriberId"/>
+            <xsd:element ref="apt:payer"/>
+            <xsd:element ref="apt:cyclicCode"/>
+            <xsd:element ref="apt:cyclicInfo"/>
+            <xsd:element ref="apt:balanceTransferInfoList" minOccurs="0"/>
+            <xsd:element ref="apt:balanceTransferInfoCalculation" minOccurs="0"/>
+            <xsd:element ref="apt:balanceTransferCycleChange" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeCyclicBalanceTransfers" type="tns:SubscribeCyclicBalanceTransfersType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SubscribeCyclicBalanceTransfersResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeCyclicBalanceTransfersResponse" type="tns:SubscribeCyclicBalanceTransfersResponseType" />
+
+</xsd:schema>
+

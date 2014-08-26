@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._export.loadMasterExcelSheet">
+  <label>Load Master Excel Sheet</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="process" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="document" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var MasterExcelDoc = Global.LoadExcelDocumentFromResource("MasterExcel",false);
+    var EntitySheetDoc = MasterExcelDoc.getSheet("Entities");
+    var EntitySheetRows = EntitySheetDoc.getRows();
+
+    for(var i = 0 ; i<EntitySheetRows.length; i++ ){
+        var res = validateEntity(EntitySheetRows.getCell(2))
+        if(res){
+
+            var exportEntityDS = new DataStructure("cw_etltool._export.exportEntityDS");
+            exportEntityDS.entityName =       EntitySheetRows[i].getCell(4).getValue();
+            exportEntityDS.parentName       = EntitySheetRows[i].getCell(6).getValue();
+            exportEntityDS.sidEntity       = EntitySheetRows[i].getCell(2).getValue();
+            exportEntityDS.minOccurs       = null;
+            exportEntityDS.maxOccurs       = null;
+        }
+        exportEntityDSArray[i]= exportEntityDS;
+    }
+
+
+
+
+    function validateEntity(sidEntity){
+        return true
+
+    }
+  ]]></script>
+</script>

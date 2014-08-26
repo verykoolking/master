@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.testVerifyQueryStatus">
+  <group>testScripts</group>
+  <label>testVerifyQueryStatus</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="xmlFileName" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="expectedStatus" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="owner" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var log = cm_pws.test.clsLog();var testCaseInfo =  eval("arguments.callee.name") + " - ";log.newLine();log.setCheckPoint("STARTED");log.writeLn(testCaseInfo+ log.getCheckPoint());
+    /////////////////////////////////////////////////////////////
+    try{
+        log.writeLn("running for: " + xmlFileName);
+
+        var itemStatus = expectedStatus;
+
+        var input = cm_pws.test.createRequest(xmlFileName, "OCSConfigurationOperation.v1.types.QueryEntityStatus");
+        log.setCheckPoint("Request Created.");
+
+        var result = Global.invokeInterface("cm_pws.services.OCSConfigurationPort", "queryEntityStatus", input);
+        log.setCheckPoint("Response received.");
+
+        assertFalse(!(result[0] instanceof OCSConfigurationOperation.v1.types.QueryEntityStatusResponse), "Error!");
+
+        if(result[0].oCSEntityStatus.oCSEntityStatus[0] != null) {
+            for(var i=0; i<result[0].oCSEntityStatus.oCSEntityStatus.length; i++) {
+                var oCSEntityStatus = result[0].oCSEntityStatus.oCSEntityStatus[i];
+                if(oCSEntityStatus.entityStatus != itemStatus) {
+                    log.writeLn("Error: Expecting status '" + itemStatus + "' but found status '" + oCSEntityStatus.entityStatus + "'.");
+                    assertTrue(false);
+                }
+            }
+        }
+        else {
+            log.writeLn("Error finding the item: " + result[0].toXML());
+            assertFalse(true);
+        }
+
+    }
+    catch(exp){
+        var chkpntmsg = "[LastCheckPosition:"+log.getCheckPoint()+"]";log.writeLn(log.FAIL +"\t"+exp);log.setFailed(true);log.flush();
+        // to have a valid server log for test cases since it is supposed to fail
+        assertTrue(false, testCaseInfo+":"+chkpntmsg);
+    }
+    finally{
+        if(!log.isFailed())log.writeLn(log.SUCCESS);
+    }
+  ]]></script>
+</script>

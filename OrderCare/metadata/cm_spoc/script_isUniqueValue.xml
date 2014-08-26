@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.isUniqueValue">
+  <group>ui_scripts.utils</group>
+  <label>isUniqueValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="baseItem" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="attributeArr" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="currSpecificationCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var attributeResult;
+
+    //Ricerca degli item (tutti)
+    var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+    itemFinder.searchDocument.baseItemCode = baseItem;
+    var resultBaseItems = itemFinder.search();
+
+
+    //Ricerca degli inputAttribute
+    var attributeFinder = new Finder("cwt_pc:cwt_itemAttributeFinder");
+    for ( var i = 0; i < resultBaseItems.length; i++)
+    {
+        attributeFinder.searchDocument.itemCode = resultBaseItems[i].itemCode;
+        attributeResult = attributeFinder.search();
+        var c = 0;
+        for ( var j = 0; j < attributeResult.length; j++ )
+        {
+            for (var k =0; k<attributeArr.length; k++)
+            {
+                if(attributeResult[j].name == attributeArr[k].name)
+                {
+                    if( (attributeResult[j].defaultValue == attributeArr[k].value) && (currSpecificationCode != resultBaseItems[i].itemCode) )
+                    {
+                        c++;
+                        if(c == attributeArr.length)
+                            return resultBaseItems[i].itemCode;
+                    }
+                }
+            }
+        }
+    }
+
+    return false;
+
+
+    /*
+    for ( var j = 0; j < attributeResult.length; j++ ) {
+        for (var k =0 ; k<attributeArr.length; k++)
+    {
+        if(attributeResult[j].name == attributeArr[k].name && attributeResult[j].defaultValue == attributeArr[k].value){
+            return resultBaseItems[i].itemCode;
+    }
+    }
+    }*/
+  ]]></script>
+</script>

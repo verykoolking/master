@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.depthSynchListElements">
+  <group>ui_scripts.utils</group>
+  <label>depthSynchListElements</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    /*var nodeNames=model.getNodeNames();
+
+    var dsSubs;
+    for(var i=0;i<nodeNames.length;i++){
+        dsSubs=cm_spoc.getDsName(nodeNames[i]);
+        if(dsSubs){
+
+
+
+    }
+
+    }
+
+    if(nodeNames[i] == "ListDS"){
+        //cm_spoc.synchListElements(model,dsSubs+"DS");
+        for(var j=0 ;j< model[nodeNames[i]].ListDS.length; j++){
+            depthSynchListElements(model[nodeNames[i]].ListDS[j]);
+    }
+    }
+
+    }
+    */
+    try{
+        if(cm_spoc.getExistingItem(model.specificationCode)){
+            var newModel;
+            var oldModel;
+            var s = new epc.data.Specification();
+            s.project =  cwa_epc.getDefaultProj();
+            s.specificationCode = model.specificationCode;
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                oldModel=r;
+                oldModel = cm_spoc.initModelForModification(oldModel);
+            }
+
+            if(oldModel){
+
+
+                var nodeNames=oldModel.getNodeNames();
+
+                var dsSubs;
+                for(var t=0;t<nodeNames.length;t++){
+                    dsSubs=cm_spoc.getDsName(nodeNames[t]);
+                    if(dsSubs){
+
+                        if("List" in oldModel[nodeNames[t]] && "ListDS" in oldModel[nodeNames[t]]){
+
+                            if(oldModel[nodeNames[t]].specificationCode != null){
+                            //also check specification code != null
+
+                            //confronto Array
+                            newModel = eval("model."+dsSubs+"DS");
+                           var oldModelTemp = eval("oldModel."+dsSubs+"DS");
+
+                            var relsNew = newModel.List;
+                            var relsOld = oldModelTemp.List;
+
+                            for(var i=0;i<relsOld.length;i++){
+                                for(var j=0;j<relsNew.length;j++){
+                                    if(relsNew[j]==relsOld[i]) relsOld[i]=null;
+                                }
+                            }
+
+                            for(var k=0;k<relsOld.length;k++){
+                                depthSynchListElements(oldModelTemp.ListDS[k]);
+                                if(relsOld[k]) cm_spoc.deleteRelatedItem(oldModelTemp.id, relsOld[k]);
+
+                            }
+
+                            }
+
+                        }else{
+
+
+                            cm_spoc.depthSynchListElements(oldModel[nodeNames[t]]);
+
+                          // cm_spoc.deleteRelatedItem(oldModel.id, dsSubs, oldModel[nodeNames[t]].specificationCode);
+                        }
+
+
+
+
+                    }
+
+                }
+
+
+
+
+            }
+        }
+    }
+    catch(e){
+        var mees = e.message;
+        Global.logDebug("synchListElements:"+e.message);
+    }
+  ]]></script>
+</script>

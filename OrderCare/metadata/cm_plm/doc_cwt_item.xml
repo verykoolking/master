@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cm_plm.cwt_item">
+  <extends>doc_cwt_pc.cwt_itemNew</extends>
+  <group>overridden</group>
+  <guid>{feca40bc-8122-43af-bd20-c46a3afaa2ef}</guid>
+  <label>Item Catalog for EPC</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="topItemCode" type="leaf">
+      <column>TOPITEMCODE</column>
+      <table>cwpc_item</table>
+      <valueType>dtype_cwt_pcdd.catalogCode</valueType>
+    </variable>
+  </variableList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_cwt_pc.cwt_itemNew/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cm_plm.cwt_item</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_cwt_pc.cwt_itemNew/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Detail" type="exov">
+            <base>doc_cwt_pc.cwt_itemNew/ui_UserInterface/frmui_Forms/vform_Detail</base>
+            <extends>doc_cwt_pc.cwt_itemNew/ui_UserInterface/frmui_Forms/vform_Detail</extends>
+            <label>Detail</label>
+            <overrideList>
+              <override name="GridLayout" type="elext">
+                <elementList>
+                  <element name="topItemCode" type="elref">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemNew/ui_UserInterface/permMethod_detailEditable</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <iconAction type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemNew/ui_UserInterface/usrActionMethod_onRefClickForItem</variablePath>
+                      </variablePathList>
+                    </iconAction>
+                    <label>Top Item</label>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_plm.cwt_item/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cm_plm.cwt_item/leaf_topItemCode</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </override>
+              <override name="VerticalLayout" type="elext"/>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+</document>

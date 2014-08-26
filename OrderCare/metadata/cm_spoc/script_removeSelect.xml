@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.removeSelect">
+  <group>ui_scripts.UsageControl.UCBoltOnTypeAssociation.FinderHelpers</group>
+  <label>removeSelect</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var result = ui.BoltOnTypeModalityFinder.result;
+    var modelObj = ui.model.UCBOASUCBoltOnTypeAssArrDS;
+    var tmpModel = modelObj["ListDS"];
+    var tmpRelations = modelObj["List"];
+    modelObj["ListDS"] = null;
+    modelObj["List"] = null;
+    var len = tmpModel.length;
+    var count = 0;
+
+    for( var i = result.length-1; i>=0; i--) {
+        if(!result[i].selectItem){
+            for( var j = 0; j < len; j++ ) {
+                if( tmpModel[j].specificationCode == result[i].itemCode ){
+                    modelObj["ListDS"][count] = tmpModel[j];
+                    modelObj["List"][count] = tmpRelations[j];
+                    count++;
+                    break;
+                }
+            }
+        }
+        else
+        result.remove(result[i]);
+    }
+
+    ui.BoltOnTypeModalityFinder.model.updateUI();
+  ]]></script>
+</script>

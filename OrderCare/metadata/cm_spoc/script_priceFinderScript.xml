@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.priceFinderScript">
+  <group>ui_scripts.Common.Price</group>
+  <label>priceFinderScript</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="priceEvent" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+    itemFinder.searchDocument.baseItemCode = "base_Price";
+    itemFinder.searchDocument.project =cwt_pc.getDefaultProject().id;
+    var result = itemFinder.search();
+
+    cm_spoc.cleanResult(result, priceEvent);
+
+    return result;
+  ]]></script>
+</script>

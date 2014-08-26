@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.calculateDateProjectEffectiveDate">
+  <label>Calculate Date Project Effective Date</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="proc" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <valueType>dtype_com.conceptwave.system.Date</valueType>
+  <script><![CDATA[
+    if(proc && proc.processDocument && proc.processDocument.projectCode)
+    {
+        var projDoc       = cm_common.getProjectDocByCode(proc.processDocument.projectCode);
+        var effectiveDate = projDoc.effectiveDate;
+
+        if(effectiveDate!=null)
+            return effectiveDate;
+
+    }
+
+    return new Date();
+  ]]></script>
+</script>

@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ListForm">
+  <group>Lists</group>
+  <label>ListForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="ChargingModeGuidingContainerUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.ChargingModeGuidingContainerUI</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.List</valueType>
+    </variable>
+    <variable name="PickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="PriceGuidingContainerUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.PriceGuidingContainerUI</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <width>400px</width>
+              <elementList>
+                <element name="Tabset" type="eltset">
+                  <width>750px</width>
+                  <elementList>
+                    <element name="generalParameters" type="eltab">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.ListForm/frmui_Forms</variablePath>
+                          <variablePath>ui_cm_spoc.forms.ListForm/frmui_Forms/vform_generalParameters</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <label>General Parameters</label>
+                    </element>
+                    <element name="price" type="eltab">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.ListForm/frmui_Forms</variablePath>
+                          <variablePath>ui_cm_spoc.forms.ListForm/frmui_Forms/vform_price</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <label>Price</label>
+                    </element>
+                    <element name="associationListCode" type="eltab">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.ListForm/frmui_Forms</variablePath>
+                          <variablePath>ui_cm_spoc.forms.ListForm/frmui_Forms/vform_associationListCode</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <label>Association allowed per List</label>
+                    </element>
+                    <element name="ChargingMode" type="eltab">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.ListForm/frmui_Forms</variablePath>
+                          <variablePath>ui_cm_spoc.forms.ListForm/frmui_Forms/vform_chargingMode</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <label>Charging Mode</label>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="generalParameters" type="vform">
+          <label>generalParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <height>400px</height>
+            <width>750px</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <height>400px</height>
+                <width>750px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>List Specification</label>
+                      </element>
+                      <element name="layout" type="elvlt">
+                        <alignment>right,center</alignment>
+                        <elementList>
+                          <element name="HorizontalLayout1" type="elhlt">
+                            <elementList>
+                              <element name="ListCode" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListForm/permMethod_setPKEditability</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <labeAlign>left</labeAlign>
+                                <label>List Code</label>
+                                <labelOrientation>left</labelOrientation>
+                                <textAlign>left</textAlign>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.List/dstruct_ListCode</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ListCodePopUp" type="elbtn">
+                                <cellAlignment></cellAlignment>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListForm/usrActionMethod_showListCodes</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <disabled type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListForm/permMethod_buttonsDisable</variablePath>
+                                  </variablePathList>
+                                </disabled>
+                                <icon>/cwf/finder.gif</icon>
+                                <width>22px</width>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="ListDescription" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <labeAlign>left</labeAlign>
+                            <label>List Description</label>
+                            <labelOrientation>left</labelOrientation>
+                            <textAlign>left</textAlign>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.List/dstruct_ListDescription</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="HorizontalLayout2" type="elhlt">
+                            <elementList>
+                              <element name="ListCodeSDP" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListForm/permMethod_setPKEditability</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <labeAlign>left</labeAlign>
+                                <label>SDP List Code</label>
+                                <labelOrientation>left</labelOrientation>
+                                <textAlign>left</textAlign>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.List/dstruct_ListCodeSDP</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ListSdpCodePopUp" type="elbtn">
+                                <cellAlignment></cellAlignment>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListForm/usrActionMethod_showListSdpCodes</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <disabled type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListForm/permMethod_buttonsDisable</variablePath>
+                                  </variablePathList>
+                                </disabled>
+                                <icon>/cwf/finder.gif</icon>
+                                <width>22px</width>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="ListSpecificationEnum" type="elslct">
+                            <cellAlignment></cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>List Specification</label>
+                            <labelOrientation>left</labelOrientation>
+                            <multiselect>false</multiselect>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListForm/uimthd_ListSpecificationTrigger</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.List/dstruct_ListSpecificationEnum</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="price" type="vform">
+          <label>price</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="PriceEventEnum" type="elslct">
+                <canSort>false</canSort>
+                <label>Price Event</label>
+                <multiselect>false</multiselect>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ListForm/uimthd_onSelectPriceEventTrigger</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <showEmpty>false</showEmpty>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ListForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.List/dstruct_ListPriceGuidingArrDS</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.ListPriceGuidingArr/dstruct_PriceEventEnum</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>400px</width>
+              </element>
+              <element name="Price" type="elovf">
+                <fillSpace>false</fillSpace>
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ListForm/leaf_PriceGuidingContainerUI</variablePath>
+                    <variablePath>ui_cm_spoc.forms.PriceGuidingContainerUI/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.forms.PriceGuidingContainerUI/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>400px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ListForm/leaf_PriceGuidingContainerUI</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>100%</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="associationListCode" type="vform">
+          <label>associationListCode</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>750px</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>750px</width>
+                <elementList>
+                  <element name="LockDaysSection" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader1" type="elsecth">
+                        <label>Tariff Plans with this allowed list</label>
+                        <elementList>
+                          <element name="GridLayout" type="elgrd"/>
+                        </elementList>
+                      </element>
+                      <element name="FormFrame2" type="elovf">
+                        <cellAlignment>center,center</cellAlignment>
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.ListForm/leaf_PickList</variablePath>
+                            <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                            <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <height>350px</height>
+                        <padding>0</padding>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.ListForm/leaf_PickList</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>750px</width>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="chargingMode" type="vform">
+          <label>chargingMode</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>right,center</alignment>
+            <elementList>
+              <element name="ChargingMode" type="elovf">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ListForm/leaf_ChargingModeGuidingContainerUI</variablePath>
+                    <variablePath>ui_cm_spoc.forms.ChargingModeGuidingContainerUI/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.forms.ChargingModeGuidingContainerUI/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>400px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ListForm/leaf_ChargingModeGuidingContainerUI</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>100%</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$cwShowHover" type="laction">
+      <path>ui_com.conceptwave.system.UserInterface/leaf_cwShowHover</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        // return cm_spoc.initPriceGuidingContainerUI(this);
+        // fatto da giuseppe
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$PickList" type="laction">
+      <path>ui_cm_spoc.forms.ListForm/leaf_PickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.ListForm/leaf_PickList</valueType>
+      <script><![CDATA[
+        /* prima era così ora è cambiato ???? */
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TariffPlan";
+        var result = itemFinder.search();
+        var pl = cm_spoc.initPickList(this,result,this.model.ListAllowedPerTariffPlanArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setPickListModel;
+        return pl;
+
+
+
+        /* questo metodo da errore perchè non c'è la struttura
+          da provare
+        var pl = new cm_spoc.PickList(null,this);
+        pl.availableItems = new DataObjectList();
+
+        pl.modelCallback = this.setModel;
+
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TariffPlan";
+
+        var result = itemFinder.search();
+
+        var listSel=this.model.AllowedTariffPlanListArrayDS.List;
+        for(var i=0;i<result.length;i++){
+
+                var item = new cm_spoc.PickListDS();
+                item.id = result[i].itemCode;
+                item.description = result[i].itemCode;
+
+                if(listSel ==null)
+                {
+                 pl.availableItems.addLast(item);
+                }
+                else
+                {
+
+                    var found = false;
+                    for(var j=0;j<listSel.length;j++)
+                       if(listSel[j].equals(result[i].itemCode))
+                        {
+                            found = true;
+                        }
+
+                    if( found){
+                        pl.selectedItems.addLast(item);
+
+                    }else{
+
+                         pl.availableItems.addLast(item);
+                    }
+
+                }
+
+
+        }
+
+        return pl;*/
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$PriceGuidingContainerUI" type="laction">
+      <path>ui_cm_spoc.forms.ListForm/leaf_PriceGuidingContainerUI</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.ListForm/leaf_PriceGuidingContainerUI</valueType>
+      <script>return cm_spoc.initPriceGuidingContainerUI(this);</script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.ListForm/leaf_model</path>
+      <type>initializer</type>
+      <script>return cm_spoc.initList(this.model);</script>
+    </method>
+    <method name="cwLeafInitAction$ChargingModeGuidingContainerUI" type="laction">
+      <path>ui_cm_spoc.forms.ListForm/leaf_ChargingModeGuidingContainerUI</path>
+      <type>initializer</type>
+      <script>return cm_spoc.initChargingModeGuidingContainerUI(this);</script>
+    </method>
+    <method name="setPickListModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.ListAllowedPerTariffPlanArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script><![CDATA[
+        for(var i=0;i<this.PriceGuidingContainerUI.PriceGuidingUI.PriceGuidingIterator.length;i++){
+            this.PriceGuidingContainerUI.PriceGuidingUI.PriceGuidingIterator[i].model.readonly = this.model.readonly;
+        }
+
+        for(var i=0;i<this.ChargingModeGuidingContainerUI.ChargingModeGuidingUI.ChargingModeGuidingIterator.length;i++){
+            this.ChargingModeGuidingContainerUI.ChargingModeGuidingUI.ChargingModeGuidingIterator[i].model.readonly = this.model.readonly;
+        }
+      ]]></script>
+    </method>
+    <method name="ListSpecificationTrigger" type="uimthd">
+      <script>this.model.ListSpecification=this.model.ListSpecificationEnum;</script>
+    </method>
+    <method name="onSelectPriceEventTrigger" type="uimthd">
+      <script>cm_spoc.onSelectPriceEvent(this);</script>
+    </method>
+    <method name="showListCodes" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_List","ListCode","ListDescription");
+        newDetail.showButton=false;
+        newDetail.parentUI = this;
+        newDetail.modelCallback=this.referenceCallback;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="buttonsDisable" type="permMethod">
+      <script>return this.model.readonly;</script>
+    </method>
+    <method name="showListSdpCodes" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_List","ListCodeSDP","ListDescription");
+        newDetail.showButton=false;
+        newDetail.parentUI = this;
+        newDetail.modelCallback=this.referenceCallback;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="setPKEditability" type="permMethod">
+      <script>return cm_spoc.setPKEditability(this);</script>
+    </method>
+  </methodList>
+</userInterface>

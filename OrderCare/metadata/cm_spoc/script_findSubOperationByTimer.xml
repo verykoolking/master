@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.findSubOperationByTimer">
+  <group>ui_scripts.TopUp</group>
+  <label>findSubOperationByTimer</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="timerCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+    itemFinder.searchDocument.baseItemCode="base_SubOperation";
+    var items = itemFinder.search();
+
+    var relationFinder = new Finder("cwt_pc.cwt_itemRelationFinder");
+
+    for(var i=0;i<items.length;i++){
+        relationFinder.searchDocument.itemCode = items[i].itemCode;
+        var result = relationFinder.search();
+        for (var j=0;j<result.length;j++){
+            if (result[j].itemRelationTarget==timerCode){
+                return items[i].itemCode;
+                //this.model.OperationEnumTopUp = items[i].itemCode;
+                //this.subOperationSelected();
+                //break;
+            }
+        }
+    }
+  ]]></script>
+</script>

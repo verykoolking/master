@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.beforeSaveOperation">
+  <group>ui_scripts.Operation</group>
+  <label>beforeSaveOperation</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_spoc.data.Operation</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    cm_spoc.synchListElements(model,"DebtCausesArrDS");
+    cm_spoc.synchListElements(model,"OpOperationLiteralArrDS");
+
+    if(model.OpOperationLiteralArrDS.ListDS.length==0)
+    {
+           model.OpOperationLiteralArrDS = null;
+           model.OpOperationLiteralArr = null;
+    }
+  ]]></script>
+</script>

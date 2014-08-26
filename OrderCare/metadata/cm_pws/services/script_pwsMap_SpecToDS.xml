@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.pwsMap_SpecToDS">
+  <label>pwsMap_SpecToDS</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="fromDs" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="toDs" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var relations;
+    if(fromDs.specificationCode)
+        relations = cm_common.catalogGetItemRelationsDoc(fromDs.specificationCode);
+
+    var relationNames = getArrayOfRelationNames(relations);
+
+    var nodeNames = fromDs.getNodeNames();
+    var element;
+    for(var i=0; i<nodeNames.length; i++) {
+        element = fromDs[nodeNames[i]];
+        if(element) {
+
+            var externalName = cm_pws.services.getExternalName(nodeNames[i], fromDs.metadataType);
+
+            if(nodeNames[i] == "options") {
+                continue;
+            }
+
+            //Ckecks if the element is a characteristic or a relation:
+            var position;
+            if((position = relationNames.indexOf(element)) > -1) {
+                var relation = new OCSEntity.v1.types.RelationType();
+                relation.name = relations[position].itemRelationCode;
+                relation.oCSTargetEntityType = relations[position].itemRelationTarget;
+                relation.oCSAssociationEntityType = relations[position].itemCode;
+                relation.minOccurs = relations[position].minQuantity;
+                relation.maxOccurs = relations[position].maxQuantity;
+
+                toDs.relations.relation[toDs.relations.relation.length] = relation;
+
+                relationNames[position] = null;
+
+                continue;
+            }
+
+            //Special Cases for 'attributes':
+            if(nodeNames[i] == "attributes" && element.length > 0) {
+                var complexCharacteristic = new OCSEntity.v1.types.ArrayOfComplexCharacteristicValueType();
+                complexCharacteristic.name = externalName;
+                for(var j=0; j<element.length; j++) {
+                    var characteristic = new OCSEntity.v1.types.CharacteristicValueType();
+                    characteristic.name = element[j].name;
+                    characteristic.value = element[j].value;
+                    characteristic.type = element[j].type;
+                    complexCharacteristic.item[0].characteristic[j] = characteristic;
+                }
+                toDs.complexCharacteristic[toDs.complexCharacteristic.length] = complexCharacteristic;
+
+                continue;
+            }
+
+            if(element instanceof DataStructure) {    // Complex Characteristics:
+                if(element.isCollection() && element.length > 0) {        //1. isCollection
+                    var complexCharacteristic = new OCSEntity.v1.types.ArrayOfComplexCharacteristicValueType();
+                    complexCharacteristic.name = externalName;
+                    for(var j=0; j<element.length; j++) {
+                        cm_pws.services.pwsMap_SpecToDS(element[i], complexCharacteristic);
+                    }
+
+                    toDs.complexCharacteristic[toDs.complexCharacteristic.length] = complexCharacteristic;
+                }
+                else if(nodeNames[i].substring(0, nodeNames[i].length - 2).endsWith("Arr")) {    //2. Is an Array
+                    if(nodeNames[i].endsWith("DS")) {
+                        externalName = cm_pws.services.getExternalName(nodeNames[i].substring(0, nodeNames[i].length - 2), fromDs.metadataType);
+                    }
+
+                    var complexCharacteristic = new OCSEntity.v1.types.ArrayOfComplexCharacteristicValueType();
+                    complexCharacteristic.name = externalName;
+
+                    var list = element["ListDS"];
+                    if(list.length > 0) {
+                        for(var j=0; j<list.length; j++) {
+                            var itemList = list[j];
+                            var item = new OCSEntity.v1.types.ArrayOfCharacteristicValueType();
+                            cm_pws.services.pwsMap_SpecToDS(itemList, item);
+                            complexCharacteristic.item[complexCharacteristic.item.length] = item;
+                        }
+
+                        cm_pws.services.pwsMap_SpecToDS(element, complexCharacteristic.item[complexCharacteristic.item.length]);
+
+                        toDs.complexCharacteristic[toDs.complexCharacteristic.length] = complexCharacteristic;
+                    }
+                }
+                else {
+                    for(var j=0; j<element.length; j++) {
+                        var complexCharacteristic = new OCSEntity.v1.types.ArrayOfComplexCharacteristicValueType();
+                        complexCharacteristic.name = externalName;
+                        cm_pws.services.pwsMap_SpecToDS(element, complexCharacteristic.item[j]);
+
+                        toDs.complexCharacteristic[toDs.complexCharacteristic.length] = complexCharacteristic;
+                    }
+
+                }
+            }
+            else {    // Simple Characteristics:
+                var characteristic = new OCSEntity.v1.types.CharacteristicValueType();
+                characteristic.name = externalName;
+                characteristic.value = fromDs[nodeNames[i]];
+
+                toDs.characteristic[toDs.characteristic.length] = characteristic;
+            }
+        }
+    }
+
+    /* Returns an array with the name of the relations */
+    function getArrayOfRelationNames(relations) {
+        var result = new Array();
+
+        if(relations) {
+            for(var i=0; i<relations.length; i++) {
+                result[i] = relations[i].itemRelationTarget.toString();
+            }
+        }
+
+        return result;
+    }
+  ]]></script>
+</script>

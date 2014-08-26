@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.fromResultToUCSApConditDs">
+  <group>ui_scripts.UsageControl.AccumulationConditions</group>
+  <label>fromResultToUCSApConditDs</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="result" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * This script gets the item code from the result set of an item finder a instantiate corrisponding DS.
+     * The DS is then substituted in the same set
+     */
+
+
+
+    for (var i = 0; i<result.length;i++) {
+
+        var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+       s.specificationCode = result[i].itemCode;
+
+
+       var ds = epc.getSpecificationByKey( s );
+       if(!api_common.isFault(ds)){
+
+
+
+            //UCSApConTrafficTypeArr
+           s.specificationCode =  ds.UCSApConTrafficTypeArr;
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+                 ds.UCSApConTrafficTypeArrDS=r;
+           }
+
+            //UCSApConHappyPeriodArr
+           s.specificationCode =  ds.UCSApConHappyPeriodArr;
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+                 ds.UCSApConHappyPeriodArrDS=r;
+           }
+
+            //.UCSimpleAppConWalletArr
+           s.specificationCode =  ds.UCSimpleAppConWalletArr;
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+                 ds.UCSimpleAppConWalletArrDS=r;
+           }
+
+            result[i]=ds;
+
+         }
+
+
+
+    }
+  ]]></script>
+</script>

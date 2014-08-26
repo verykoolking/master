@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.plmCreateProject">
+  <group>api</group>
+  <label>plmCreateProject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="projectDescription" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cwt_common.response</valueType>
+  <script><![CDATA[
+    var projectMsg =  synchronization.createProject(projectCode, projectDescription);
+    if (projectMsg.isBasedOn("cm_spoc.fault"))
+        return projectMsg;
+
+
+    var ord = new Order("cm_plm.plmOrder");
+    ord.change.projectCode = projectCode;
+    ord.plmControl.projectCode = projectCode;
+    ord.notes.projectCode = projectCode;
+    ord.save();
+
+    return projectMsg;
+  ]]></script>
+</script>

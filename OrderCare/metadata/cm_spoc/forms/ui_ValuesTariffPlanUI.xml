@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ValuesTariffPlanUI">
+  <group>Wallets</group>
+  <label>ValuesTariffPlanUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.WalletValuesPerPlan</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="GridLayout" type="elgrd">
+              <alignment>left,center</alignment>
+              <colWidths>50px</colWidths>
+              <fixedColWidths>true</fixedColWidths>
+              <numOfCols>9</numOfCols>
+              <width>750px</width>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <columnSpan>1</columnSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ValuesTariffPlanUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>30px</width>
+                </element>
+                <element name="TariffPlanEnum" type="elslct">
+                  <columnSpan>2</columnSpan>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ValuesTariffPlanUI/uimthd_TariffPlanTrigger</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ValuesTariffPlanUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.WalletValuesPerPlan/dstruct_TariffPlanEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>150px</width>
+                </element>
+                <element name="RealTimeExpirationChecking" type="elchk">
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ValuesTariffPlanUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.WalletValuesPerPlan/dstruct_RealTimeExpirationChecking</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>150px</width>
+                </element>
+                <element name="ZeroBalanceEventEnabled" type="elchk">
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ValuesTariffPlanUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.WalletValuesPerPlan/dstruct_ZeroBalanceEventEnabled</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>180px</width>
+                </element>
+                <element name="ExpirationEventEnabled" type="elchk">
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ValuesTariffPlanUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.WalletValuesPerPlan/dstruct_ExpirationEventEnabled</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>125px</width>
+                </element>
+                <element name="WalletInformationOnBalanceQuery" type="elchk">
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ValuesTariffPlanUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.WalletValuesPerPlan/dstruct_WalletInformationOnBalanceQuery</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>190px</width>
+                </element>
+                <element name="ExpirationInforOnBalanceQuery" type="elchk">
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ValuesTariffPlanUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.WalletValuesPerPlan/dstruct_ExpirationInforOnBalanceQuery</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>200px</width>
+                </element>
+                <element name="MaximumBalanceFromEachPlan" type="elfld">
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ValuesTariffPlanUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.WalletValuesPerPlan/dstruct_MaximumBalanceFromEachPlan</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>150px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="TariffPlanTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode = this.model.TariffPlanEnum;
+        this.model.TariffPlan = btCode;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

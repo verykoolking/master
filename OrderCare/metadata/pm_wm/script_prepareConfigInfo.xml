@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.prepareConfigInfo">
+  <label>prepareConfigInfo</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Prepare Config Info (Creates the structures and variables to support the workflow - Load information from the configuration tables in memory.)
+     * Sets the variables for the steps below:
+     *     Query SR  (If should consider retrieve information from Service Registry)
+     *     Altamira  (If should consider send a request to Altamira)
+     *     Update SR (If should consider update Service Register with response information)
+     *
+     * @author  Ramon Barrasa / Luis Amorim
+     * @date    201405
+     */
+
+    Global.logDebug("prepareConfigInfo");
+    dtree.pmOperation             = new Array();
+    dtree.pmOperationFieldToAA    = new Array();
+    var fnd                       = null;
+
+
+    try {
+        // INI 20140707LA
+        if (!(dtree.offerType)) {
+            var itcode;
+            if (dtree.catalogData.oCSProductSpecificationItemcode ) {
+                itcode = dtree.catalogData.oCSProductSpecificationItemcode;
+            }
+            if ( dtree.catalogData.oCSProductOfferingItemcode ) {
+                itcode = dtree.catalogData.oCSProductOfferingItemcode;
+            }
+            if (dtree.catalogData.oCSProductOfferingType) {
+                dtree.offerType =  dtree.catalogData.oCSProductOfferingType;
+            }
+
+            //missing synchronization with SR - for Product Instance the Ids will come from SR
+
+            if ((!(dtree.offerType)) && (itcode)) {
+                var fnd = null;
+                fnd = new Finder('pm_wm.readOfferNameFromCatalogFinder');
+                fnd.searchDocument.itemcode = itcode;
+                fnd.search();
+                dtree.offerType = fnd.list.length > 0 ? fnd.list[0].offerName : "";
+                dtree.catalogData.oCSProductOfferingType = dtree.offerType;
+            }
+        }
+        // FIM 20140707LA
+
+        // Read Operation Config Info (for the offer and External Operation)
+        fnd = new Finder('pm_wm.pmOperationFinder');
+        fnd.searchDocument.provisioningOperationType   = dtree.operation;
+        fnd.searchDocument.operationId                 = dtree.operationId;
+        fnd.searchDocument.offername                   = dtree.offerType;
+        fnd.search();
+
+        for(var x = 0; fnd.list && x < fnd.list.length; x++){
+            if(cm_common.isAAVersionValid(fnd.list[x].release)){
+                dtree.pmOperation.push(fnd.list[x]);
+            }
+        }
+
+        // Operation Info returned?
+        if ( dtree.pmOperation.length == 0 ) {
+            dtree.errorcode.push("ER_WF_101");
+            dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_101"));
+            return false;
+        }
+
+        // Needs Altamira?
+        dtree.sendToAltamira = (dtree.pmOperation[0].invokeAltamira=="1");
+
+        // Read Mappings To Altamira
+        if ((dtree.pmOperation[0].pmOperationID) && (dtree.sendToAltamira)){
+            fnd = new Finder('pm_wm.pmOperationFieldFinder');
+            fnd.searchDocument.pmOperationID = dtree.pmOperation[0].pmOperationID;
+            fnd.search();
+
+            for(var x = 0; fnd.list && x < fnd.list.length; x++){
+                if(cm_common.isAAVersionValid(fnd.list[x].release)){
+                    dtree.pmOperationFieldToAA.push(fnd.list[x]);
+                }
+            }
+
+            //Some operations don't send anything to AA, so we can't verify this
+            /*if (dtree.pmOperationFieldToAA.length == 0){
+                dtree.errorcode.push("ER_WF_102");
+                dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_102"));
+                return false;
+            }*/
+        } else {
+            dtree.pmOperationFieldToAA = new Array();
+        }
+        // Mapping returned?
+
+        //Initialize response structure
+        dtree.response = pm_wm.inicializeSuccessResponse(dtree);
+    }
+
+    catch(err)
+    {
+            dtree.errorcode.push("ER_WF_199");
+            dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_199", [err]));
+            return false;
+    }
+
+    return true;
+  ]]></script>
+</script>

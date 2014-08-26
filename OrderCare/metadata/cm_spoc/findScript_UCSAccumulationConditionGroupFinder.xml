@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cm_spoc.UCSAccumulationConditionGroupFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <input>doc_cwt_pc.cwt_itemSearch</input>
+  <label>UCSAccumulationConditionGroupFinder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_cwt_pc.cwt_item</output>
+  <type>script</type>
+  <volatility>0</volatility>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        /*var itemFinder = new Finder("cwa_epc.catalogItemFinder");
+        itemFinder.searchDocument.baseItemCode = "base_UsageControlApplicabilityCo";
+        var result = itemFinder.search();
+        return result;*/
+
+        var UCAppType=this.parent.UCAccumulationTypeEnum;
+
+        //var itemFinder = new Finder("cwa_epc.catalogItemFinder");
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode ="base_UsageControlApplicabilityCo";
+        var result = itemFinder.search();
+
+        //se non è specificato un tipo restiruisco il finder completo
+        if (UCAppType==null) return result;
+
+        //pulisco il valore attualmente salvato nella combo per conformità di comportamento della form
+        //this.parent.UCAccumulationConditionGroupEnum=null;
+
+        itemFinder.searchDocument.baseItemCode ="base_UsageControlApplicabilityCo";
+        var result = itemFinder.search();
+        /*
+        //istanzio un finder sulle le relazioni di base_UsageControlSpecification
+        var UCSRelationFinder = new Finder("cwt_pc.cwt_itemRelationFinder");
+        var UCSRelationResult;
+        */
+        var currentResult = new DataObjectList();
+        //ciclo su tutte le item del tipo base_UsageControlApplicabilityCo create nel catalog
+        for ( var i = 0; i < result.length; i++){
+            //istanzio il finder che cerca nel catalog gli attributi di una determinata item
+            var attrFinder = new Finder ("cm_spoc.ItemCodeAttributeFinder");
+            //specifico di quale item deve resituirmi gli attributi passandogli l'itemcode
+            attrFinder.searchDocument.itemCode = result[i].itemCode;
+            var itemSpec = epc.getItemSpecificationByKey(result[i].itemCode);
+            var attrResult = attrFinder.search();
+
+            for ( var j = 0; j < attrResult.length; j++){
+                // cerco l'attributo richiesto e controllo se il valore dell'attributo è quello che si vuole mostrare
+                //"attributeName" :  attrResult[j].itemAttribute, "defaultValue" :attrResult[j].defaultValue;
+                if (attrResult[j].itemAttribute=="UnitType" && attrResult[j].defaultValue==UCAppType) {
+                    // salvo il risultato nel dataobject da resituire alla combo
+                    currentResult.add(i,result[i])
+                    /*
+                    UCSRelationFinder.searchDocument.itemCode = attrResult[j].itemCode;
+                    UCSRelationResult = UCSRelationFinder.search();
+                    for ( var y = 0; y < UCSRelationResult.length; y++){
+                        currentResult.add(i,UCSRelationResult[y]);
+                    }*/
+                }
+            }
+        }
+        return currentResult;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cwt_pc.cwt_item</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cwt_pc.cwt_itemSearch/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cwt_pc.cwt_item/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="UCBoltOnTypeAssociationIdentifierFinderResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="itemCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_itemCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="baseItemCode" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_baseItemCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="itemType" type="elslct">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_itemType</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="label" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_label</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="status" type="elslct">
+                        <multiselect>false</multiselect>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_status</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="startDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_startDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="endDate" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_endDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="orderable" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_orderable</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="ownerId" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_ownerId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="updatedBy" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_updatedBy</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="lastUpdatedDate" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_lastUpdatedDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwCreatedBy" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_cwCreatedBy</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwCreated" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_cwCreated</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwDocStamp" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_cwDocStamp</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="oldItemCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_oldItemCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="projectRef" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_item/leaf_projectRef</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="UCBoltOnTypeAssociationIdentifierFinderView" type="findVView">
+      <outputOverlay>findScript_cm_spoc.UCSAccumulationConditionGroupFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findScript>

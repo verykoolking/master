@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_SOActivationEndDateIntervalsCondRule">
+  <group>rules_scripts.BoltOn</group>
+  <label>rule_SOActivationEndDateIntervalsCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+     * Conditional
+     * SOActivationEndDateIntervalsCondRule
+     * The date value must be higher than the related attribute value for Start field.
+     *
+     * SubscriptionOffering
+     * ActivationEndDate
+     *
+     * SubscriptionOffering
+     * ActivationStartDate
+     *
+     * NOT EMPTY
+
+    var attr1 =  data.SubscriptionOfferingDS.ActivationEndDate;
+    var attr2 = data.SubscriptionOfferingDS.ActivationStartDate;
+    if ( attr2 > attr1 ){
+
+    errList.addErrorMessage(data,["Date Error: "],"NGAA_003","E");
+
+    }
+    return false;
+    */
+    var var1 =  data.SubscriptionOfferingDS.ActivationEndDate;
+    var var2 =  data.SubscriptionOfferingDS.ActivationStartDate;
+    if ( var2 > var1 ){
+
+    errList.addErrorMessage(data,["Activation Start Date must be before Activation End Date"],"NGAA_003","E");
+
+    }
+    return false;
+  ]]></script>
+</script>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.CMTariffPlanGroupUI">
+  <group>Common.ChargingMode</group>
+  <label>CMTariffPlanGroupUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ChargingMode</valueType>
+    </variable>
+    <variable name="CMTariffPlanGroupIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_cm_spoc.forms.CMTariffPlanGroupRuleUI</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <width>136px</width>
+              <elementList>
+                <element name="HorizontalLayout2" type="elhlt">
+                  <edgeSize>1</edgeSize>
+                  <style>cwExpressionGradientLayout</style>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="addButton1" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.CMTariffPlanGroupUI/usrActionMethod_FinderSelectReferenceDialog</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <icon>/cwt/images/16/notebook_add.png</icon>
+                      <width>20px</width>
+                    </element>
+                    <element name="deleteButton1" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.CMTariffPlanGroupUI/uimthd_delTariffPlanGroup</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <enable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.CMTariffPlanGroupUI/permMethod_enabledDeleteButton</variablePath>
+                        </variablePathList>
+                      </enable>
+                      <icon>/cwt/images/16/delete.png</icon>
+                      <width>20px</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="SectionStack" type="elsectnstck">
+                  <width>100%</width>
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <elementList>
+                        <element name="VerticalLayout1" type="elvlt">
+                          <height>200px</height>
+                          <width>100%</width>
+                          <elementList>
+                            <element name="TariffGroupIterator" type="eliter">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.CMTariffPlanGroupUI/leaf_CMTariffPlanGroupIterator</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <elementList>
+                                <element name="TariffGroupHL" type="elhlt">
+                                  <width>100%</width>
+                                  <elementList>
+                                    <element name="FormFrame" type="elovf">
+                                      <formReference type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.CMTariffPlanGroupUI/leaf_CMTariffPlanGroupIterator</variablePath>
+                                          <variablePath>ui_cm_spoc.forms.CMTariffPlanGroupRuleUI/frmui_Forms</variablePath>
+                                          <variablePath>ui_cm_spoc.forms.CMTariffPlanGroupRuleUI/frmui_Forms/exov_Default</variablePath>
+                                        </variablePathList>
+                                      </formReference>
+                                      <width>100%</width>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="SectionHeader" type="elsecth">
+                          <label>Tariff Plan Group</label>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="delTariffPlanGroup" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.removeListElements(this,this.model.CMCMByPlanGroupArrDS,"List","CMTariffPlanGroupIterator");
+        var index = this.CMTariffPlanGroupIterator.length-1;
+        if(index >= 0){
+            this.CMTariffPlanGroupIterator[index].Selected = true;
+
+        }
+
+        this.parent.refreshWalletApplicationUI(index);
+      ]]></script>
+    </method>
+    <method name="FinderSelectReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_TariffPlanGroup");
+        newDetail.showButton=true;
+        newDetail.parentUI = this;
+
+        for(var i=0;i<this.CMTariffPlanGroupIterator.length;i++){
+            var itemCode = this.CMTariffPlanGroupIterator[i].model.TariffPlanGroup;
+            for(var j=0;j<newDetail.itemList.length;j++){
+                if(newDetail.itemList[j].itemCode == itemCode){
+                    newDetail.itemList.delete(j);
+                    break;
+                }
+            }
+        }
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="referenceCallback" type="uimthd">
+      <parameterList>
+        <parameter name="itemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        switch(baseItemCode){
+            case "base_TariffPlanGroup":
+                var listDs= this.model.CMCMByPlanGroupArrDS.ListDS;
+                cm_spoc.addListElement(this,listDs,"cm_spoc.forms.CMTariffPlanGroupRuleUI","base_ChargingModeByPlanGroup","CMTariffPlanGroupIterator");
+                var index = listDs.length-1;
+                var item = listDs[index];
+                item.TariffPlanGroup = itemCode;
+                item.CMBPGWalletApplicationArrDS = cm_spoc.initInnerDS("base_CMBPGWalletApplicationArr");
+                //this.refreshSelectedTariffPlanGroup(this.CMTariffPlanGroupIterator[index]);
+                this.parent.loadWalletApplications(index);
+                this.refreshCheckBoxStatus(index);
+
+                break;
+        }
+      ]]></script>
+    </method>
+    <method name="refreshSelectedTariffPlanGroup" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>ui_cm_spoc.forms.CMTariffPlanGroupRuleUI</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        // Refresh all UIs when selecting a different created tariffPlanGroup from the list
+        var iterator = this.CMTariffPlanGroupIterator;
+
+        for(var i=0; i<iterator.length;i++){
+            if(iterator[i]==selected){
+                this.parent.refreshWalletApplicationUI(i);
+                this.refreshCheckBoxStatus(i);
+                break;
+            }
+        }
+      ]]></script>
+    </method>
+    <method name="enabledDeleteButton" type="permMethod">
+      <script><![CDATA[return this.CMTariffPlanGroupIterator.length>0 && !this.model.readonly;]]></script>
+    </method>
+    <method name="refreshCheckBoxStatus" type="uimthd">
+      <parameterList>
+        <parameter name="currentIndex" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.Integer</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var iterator = this.CMTariffPlanGroupIterator;
+
+        for(var i=0; i<iterator.length;i++){
+            iterator[i].Selected = (i==currentIndex);
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

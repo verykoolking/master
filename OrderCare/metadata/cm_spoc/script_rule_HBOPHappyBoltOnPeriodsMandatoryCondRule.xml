@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_HBOPHappyBoltOnPeriodsMandatoryCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_HBOPHappyBoltOnPeriodsMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute must be mandatory only if the related attribute assumes the value shown in the column H.
+    //HappyBoltOnPeriods
+    //HappyBoltOnPeriods
+    //BoltOnType
+    //BoltOnTypeModality
+    //PH
+
+    var entity = data.HappyBoltOnSpecificationDS.HappyBoltOnPeriodArrDS.ListDS;
+
+    if (entity.length > 0 && data.BoltOnTypeModality == "PH") {
+        for (var i=0; i<entity.length;i++)
+        {
+            if(entity[i].Year==null || entity[i].Year=="")
+            {
+                errList.addErrorMessage(data,["Year field must be filled for this type modality: Happy Period"],"NGAA_003","E");
+            }
+             if(entity[i].Month==null || entity[i].Month=="")
+             {
+                errList.addErrorMessage(data,["Month field must be filled for this type modality: Happy Period"],"NGAA_003","E");
+             }
+             if(entity[i].Day==null || entity[i].Day=="")
+             {
+                errList.addErrorMessage(data,["Day field must be filled for this type modality: Happy Period"],"NGAA_003","E");
+             }
+             if(entity[i].Hour==null || entity[i].Hour=="")
+             {
+                errList.addErrorMessage(data,["Hour field must be filled for this type modality: Happy Period"],"NGAA_003","E");
+             }
+             if(entity[i].WeekDay==null || entity[i].WeekDay=="")
+             {
+                errList.addErrorMessage(data,["Week Day field must be filled for this type modality: Happy Period"],"NGAA_003","E");
+             }
+             if(entity[i].Duration==null || entity[i].Duration=="")
+             {
+                errList.addErrorMessage(data,["Duration field must be filled for this type modality: Happy Period"],"NGAA_003","E");
+             }
+
+        }
+
+
+    }
+
+        return false;
+  ]]></script>
+</script>

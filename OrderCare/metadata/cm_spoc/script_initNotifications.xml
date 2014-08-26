@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initNotifications">
+  <group>ui_scripts.Operation</group>
+  <label>initNotifications</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+    var NotificationsNotOpRuleArr = cm_spoc.initInnerDS("base_NotificationsNotOpRuleArr");
+    model.NotificationsNotOpRuleArrDS = NotificationsNotOpRuleArr;
+
+    return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        var NotificationsNotOpRuleArrRel = model.NotificationsNotOpRuleArr;
+        s.specificationCode = NotificationsNotOpRuleArrRel;
+        var a = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(a)){
+            model.NotificationsNotOpRuleArrDS = a;
+            NotificationsNotOpRuleArrRel = a.List;
+        }
+        var NotificationsNotOpRuleDS = model.NotificationsNotOpRuleArrDS.ListDS;
+        for(var i=0;i<NotificationsNotOpRuleArrRel.length;i++){
+            s.specificationCode = NotificationsNotOpRuleArrRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                NotificationsNotOpRuleDS[i]=r;
+                var SubOperationRel = r.SubOperation;
+                s.specificationCode = SubOperationRel;
+                var c =  epc.getSpecificationByKey(s);
+                if(!api_common.isFault(c)){
+                    NotificationsNotOpRuleDS[i].SubOperationDS = c;
+                }
+                var ENNRel = r.ExternalNotifNodeArr;
+                s.specificationCode = ENNRel;
+                var c =  epc.getSpecificationByKey(s);
+                if(!api_common.isFault(c)){
+                    NotificationsNotOpRuleDS[i].ExternalNotifNodeArrDS = c;
+                }
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

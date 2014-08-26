@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/accountActivity/v1/services"
+    xmlns:ans="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/accountActivity/v1/types"
+    xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+    xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/04/secext"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    targetNamespace="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/accountActivity/v1/services">
+      
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+            <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/accountActivity/v1/types"
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_accountActivity_types_v1_0.xsd"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                schemaLocation="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2002/04/secext"
+                schemaLocation="http://schemas.xmlsoap.org/ws/2002/04/secext/secext.xsd" />
+            <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+                schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/> 
+        </xsd:schema>
+    </wsdl:types>
+    
+    <!--
+        Header
+    -->
+    <wsdl:message name="OCSHeaderInfo">
+        <wsdl:part name="messageID" element="wsa:MessageID" />
+        <wsdl:part name="replyTo" element="wsa:ReplyTo" />
+        <wsdl:part name="security" element="wsse:Security" />
+    </wsdl:message>
+  
+    <!--
+        Messages
+    -->
+    <wsdl:message name="QueryOperationDetailsRequest">
+        <wsdl:part name="parameters" element="ans:queryOperationDetails" />
+    </wsdl:message>
+    <wsdl:message name="QueryOperationDetailsResponse">
+        <wsdl:part name="parameters" element="ans:queryOperationDetailsResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryVoiceTrafficRequest">
+        <wsdl:part name="parameters" element="ans:queryVoiceTraffic" />
+    </wsdl:message>
+    <wsdl:message name="QueryVoiceTrafficResponse">
+        <wsdl:part name="parameters" element="ans:queryVoiceTrafficResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryDataTrafficRequest">
+        <wsdl:part name="parameters" element="ans:queryDataTraffic" />
+    </wsdl:message>
+    <wsdl:message name="QueryDataTrafficResponse">
+        <wsdl:part name="parameters" element="ans:queryDataTrafficResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryMessageTrafficRequest">
+        <wsdl:part name="parameters" element="ans:queryMessageTraffic" />
+    </wsdl:message>
+    <wsdl:message name="QueryMessageTrafficResponse">
+        <wsdl:part name="parameters" element="ans:queryMessageTrafficResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryContentTrafficRequest">
+        <wsdl:part name="parameters" element="ans:queryContentTraffic" />
+    </wsdl:message>
+    <wsdl:message name="QueryContentTrafficResponse">
+        <wsdl:part name="parameters" element="ans:queryContentTrafficResponse" />
+    </wsdl:message>
+    
+    <wsdl:message name="ServerException">
+      <wsdl:part name="ServerException" element="uct:serverException"/>
+    </wsdl:message>
+    <wsdl:message name="ClientException">
+      <wsdl:part name="ClientException" element="uct:clientException"/>
+    </wsdl:message>
+
+    <!--
+        Port
+    -->
+    <wsdl:portType name="AccountActivityPort_v1_0">
+        <wsdl:operation name="queryOperationDetails">
+            <wsdl:input message="tns:QueryOperationDetailsRequest" />
+            <wsdl:output message="tns:QueryOperationDetailsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryVoiceTraffic">
+            <wsdl:input message="tns:QueryVoiceTrafficRequest" />
+            <wsdl:output message="tns:QueryVoiceTrafficResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryDataTraffic">
+            <wsdl:input message="tns:QueryDataTrafficRequest" />
+            <wsdl:output message="tns:QueryDataTrafficResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryMessageTraffic">
+            <wsdl:input message="tns:QueryMessageTrafficRequest" />
+            <wsdl:output message="tns:QueryMessageTrafficResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryContentTraffic">
+            <wsdl:input message="tns:QueryContentTrafficRequest" />
+            <wsdl:output message="tns:QueryContentTrafficResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+    </wsdl:portType>    
+
+    <!-- Binding -->
+
+    <wsdl:binding name="AccountActivityServiceSOAPBinding_v1_0" type="tns:AccountActivityPort_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+
+        <wsdl:operation name="queryOperationDetails">
+            <soap:operation soapAction="urn:queryOperationDetails" style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryVoiceTraffic">
+            <soap:operation soapAction="urn:queryVoiceTraffic" style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
+        <wsdl:operation name="queryDataTraffic">
+            <soap:operation soapAction="urn:queryDataTraffic" style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
+        <wsdl:operation name="queryMessageTraffic">
+            <soap:operation soapAction="urn:queryMessageTraffic" style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
+        <wsdl:operation name="queryContentTraffic">
+            <soap:operation soapAction="urn:queryContentTraffic" style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
+    </wsdl:binding>
+    
+    <!--
+        Service
+    -->
+
+    <wsdl:service name="AccountActivityService_v1">
+        <wsdl:port name="AccountActivity_v1_0" binding="tns:AccountActivityServiceSOAPBinding_v1_0">
+            <soap:address location="http://localhost/UNICA/OCSProvisioning/AccountActivity_v1"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

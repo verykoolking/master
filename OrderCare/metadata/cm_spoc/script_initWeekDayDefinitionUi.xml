@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initWeekDayDefinitionUi">
+  <group>ui_scripts.Calendars</group>
+  <label>initWeekDayDefinitionUi</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.DayDefinitionIterator = new Array();
+    var dayDefinitionDS = ui.model.WDDDayDefinitionArrDS.ListDS;
+
+
+    if(!ui.model.specificationCode)
+    {
+        addListElements(ui, dayDefinitionDS, "cm_spoc.forms.DayDefinitionForm", "base_DayDefinition", "DayDefinitionIterator");
+    }
+    else
+    {
+        loadListElements(ui, dayDefinitionDS, "cm_spoc.forms.DayDefinitionForm", "DayDefinitionIterator");
+    }
+
+
+    function addListElements (parentUi, model, uiMDType, modelCatalogItem, iteratorName)
+    {
+        var it=parentUi[iteratorName];
+        if(!it) throw "you must initialize the iterator as a new Array before calling this script";
+        var len = 7;
+        var listUi;
+        for(var i = 0; i < len; i++)
+        {
+        model[i] = cm_spoc.initInnerDS(modelCatalogItem);
+        listUi = new com.conceptwave.system.UserInterface(uiMDType);
+        if('parentUI' in listUi){
+            listUi.setParentUI(parentUi);
+        } else {
+
+            listUi.parent = parentUi;
+        }
+        listUi.model = model[i];
+        //listUi.dayLabel = getDayName(i);
+        listUi.model.DayLabel = getDayName(i);
+        listUi.model.dayOfTheWeek = "" + (i+1);
+        it.push(listUi);
+        }
+        return model;
+    }
+
+
+
+    function loadListElements (parentUi, model, uiMDType, iteratorName)
+    {
+        var it = parentUi[iteratorName];
+        if(!it)  throw "you must initialize the iterator as a new Array before calling this script";
+        var len = 7;
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        var listUi;
+        for(var i = 0; i < len; i++){
+            listUi = new com.conceptwave.system.UserInterface(uiMDType);
+            if('parentUI' in listUi)
+            {
+                listUi.setParentUI(parentUi);
+            }
+            listUi.model = model[i];
+            //listUi.dayLabel = getDayName(i);
+            listUi.model.DayLabel = getDayName(i);
+            listUi.model.dayOfTheWeek = "" + (i+1);
+            listUi.model.TypeOfDayEnum = listUi.model.TypeOfDay;
+            it.push(listUi);
+        }
+    }
+
+    function getDayName(k)
+    {
+       switch (k)
+       {
+           case 0: return "Monday";
+           break;
+
+           case 1: return "Tuesday";
+           break;
+
+           case 2: return "Wednesday";
+           break;
+
+           case 3: return "Thursday";
+           break;
+
+           case 4: return "Friday";
+           break;
+
+           case 5: return "Saturday";
+           break;
+
+           case 6: return "Sunday";
+           break;
+       }
+    }
+  ]]></script>
+</script>

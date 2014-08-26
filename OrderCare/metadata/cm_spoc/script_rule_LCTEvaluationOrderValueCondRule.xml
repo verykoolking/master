@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_LCTEvaluationOrderValueCondRule">
+  <group>rules_scripts.LifeCycles</group>
+  <label>rule_LCTEvaluationOrderValueCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var itemFinder = new Finder("cm_spoc.LifeCycleTimerFinder");
+    var res = itemFinder.search();
+    for (var i=0; i<res.length;i++){
+        if (res[i].evaluationOrder==data.EvaluationOrder){
+            errList.addErrorMessage(data,["EvaluationOrder must be unique"],"NGAA_003","E");
+            break;
+        }
+    }
+    return false;
+  ]]></script>
+</script>

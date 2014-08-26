@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.endPlmControlPhase">
+  <label>endPlmControlPhase</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="phaseId" type="rifp">
+      <type>dtype_cwf.cwDocId</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    Global.beginTransaction("ORDER");
+    var plmControlPhaseDoc = new Document('cm_plm.plmControlPhaseDoc', phaseId);
+    if(plmControlPhaseDoc.endDate == null) {
+        plmControlPhaseDoc.endDate = new Date();
+        plmControlPhaseDoc.save();
+    }
+    Global.commitTransaction("ORDER");
+  ]]></script>
+</script>

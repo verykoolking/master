@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.activateACProject">
+  <group>applicabilityCondition.scripts</group>
+  <label>activateACProject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+
+        var PA = new cm_plm.projectAssignment();
+        PA.projectCode = projectCode;
+        var list = cm_plm.queryProjectAssignment(PA);
+        var update = false;
+        var object, objectDoc;
+
+        for(var i=0; i<list.length; i++){
+            object = new DataStructure(list[i].objectType);
+            object.objectId = list[i].objectId;
+            objectDoc = cm_plm.getObjectDoc(object);
+            if(api_common.isFault(objectDoc))
+                return objectDoc;
+
+            if((list[i].endDate && (!objectDoc.endDate || objectDoc.endDate < list[i].endDate))){
+
+                objectDoc.endDate = list[i].endDate;
+                objectDoc.save();
+            }
+        }
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

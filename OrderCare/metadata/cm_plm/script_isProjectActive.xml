@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.isProjectActive">
+  <group>applicabilityCondition.scripts</group>
+  <label>isProjectActive</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var projectDoc = cm_common.getProjectDocByCode(projectCode);
+    if(!projectDoc)
+        Global.throwException("Project was not found: " + projectCode+ " [project code]");
+
+    return projectDoc.status == "ACT";
+  ]]></script>
+</script>

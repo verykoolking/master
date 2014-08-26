@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.cleanDs">
+  <group>utilities</group>
+  <label>cleanDs</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var json =
+          {"data" :
+                [
+                      {
+                            "dataExclusionList" : ["conflictResolution","objVisualKey","options","specificationType","specificationCode","baseSpecificationCode","label","description","startDate","effectiveDate","endDate","project","state","attributes","externalIdentifier","externalSource","specificationSubType","ItemCharges","catalogEntity"]
+
+                      }
+
+                ]
+          };
+
+
+    /**
+     * We Clean the DS in order to loop only on th useful DS
+     */
+    var nodes = data.getNodeNames();
+
+
+    for (var n=0; n< nodes.length;n++) {
+        var nname=nodes[n];
+        for (var nex=0;nex<json.data[0].dataExclusionList.length; nex++) {
+            if (nname==json.data[0].dataExclusionList[nex]) {
+                nodes.splice(n,1);
+                n=n-1;
+                break;
+            }
+        }
+    }
+
+    /**
+     * Now the Nodes Array has only the useful attirbutes
+     */
+    var hasOnlyNulls=true;
+
+    for (var n=0; n< nodes.length;n++) {
+        var nname=nodes[n];
+
+        if (data[nname]) {
+
+            hasOnlyNulls = false;
+            if(cm_common.getUltimateBaseObject(data[nname]) == "com.conceptwave.system.DataStructure" )cm_common.cleanDs(data[nname]);
+        }
+
+    }
+
+    if (hasOnlyNulls) data = null;
+  ]]></script>
+</script>

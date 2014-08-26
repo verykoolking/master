@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initBoltOnPrioritizationRule">
+  <group>ui_scripts.BoltOn</group>
+  <label>initBoltOnPrioritizationRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!model.specificationCode){
+        var prBoltOnTypeArr = cm_spoc.initInnerDS("base_BPRBoltOnTypeArr");
+        model.BPRBoltOnTypeArr = prBoltOnTypeArr.specificationCode;
+        model.BPRBoltOnTypeArrDS = prBoltOnTypeArr;
+    }else{
+        var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+      s.specificationCode = model.BPRBoltOnTypeArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.BPRBoltOnTypeArr=r;
+       }
+
+     s.specificationCode = model.ApplicabilityCondition
+        model.ApplicabilityConditionEnum = s.specificationCode ;
+    /*   var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.ApplicabilityCondition=r;
+       }*/
+       var listRel = model.BPRBoltOnTypeArr.List;
+       var list  = model.BPRBoltOnTypeArr.ListDS;
+       for (var i=0;i<listRel.length;i++){
+           s.specificationCode = listRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r))
+              model.BPRBoltOnTypeArr.ListDS[i]=r;
+       }
+    }
+    return model;
+  ]]></script>
+</script>

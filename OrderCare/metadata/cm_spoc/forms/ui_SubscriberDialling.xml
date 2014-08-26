@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.SubscriberDialling">
+  <group>Promotion</group>
+  <label>SubscriberDialling</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="DiallingIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.PromotionalSegment</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <width>400px</width>
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <width>850px</width>
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <elementList>
+                        <element name="SectionHeader" type="elsecth">
+                          <label>Subscriber dialling codes</label>
+                        </element>
+                        <element name="HorizontalLayout" type="elhlt">
+                          <elementList>
+                            <element name="add" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SubscriberDialling/uimthd_addDialling</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/notebook_add.png</icon>
+                            </element>
+                            <element name="delete" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SubscriberDialling/uimthd_deleteDialling</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/delete.png</icon>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="HeaderLayout" type="elgrd">
+                          <colWidths>50px</colWidths>
+                          <fixedColWidths>true</fixedColWidths>
+                          <numOfCols>6</numOfCols>
+                          <width>750px</width>
+                          <elementList>
+                            <element name="Select" type="ellab">
+                              <columnSpan>1</columnSpan>
+                              <width>30px</width>
+                            </element>
+                            <element name="ExpiryDateLabel" type="ellab">
+                              <columnSpan>2</columnSpan>
+                              <label>Dialling codes of the promotional segment</label>
+                              <width>220px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="IteratorLayout" type="elvlt">
+                          <height>200px</height>
+                          <elementList>
+                            <element name="Iterator" type="eliter">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SubscriberDialling/leaf_DiallingIterator</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <elementList>
+                                <element name="HorizontalLayout1" type="elhlt">
+                                  <elementList>
+                                    <element name="FormFrame" type="elovf">
+                                      <formReference type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SubscriberDialling/leaf_DiallingIterator</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                        </variablePathList>
+                                      </formReference>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="VerticalLayout1" type="elhlt">
+                          <alignment>right,center</alignment>
+                          <elementList>
+                            <element name="OK" type="elbtn">
+                              <cellAlignment>right,center</cellAlignment>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SubscriberDialling/uimthd_onClickOk</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <label>Accept</label>
+                            </element>
+                            <element name="Cancel" type="elbtn">
+                              <canSort>false</canSort>
+                              <cellAlignment>center,center</cellAlignment>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SubscriberDialling/uimthd_onClickCancel</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <label>Cancel</label>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.SubscriberDialling/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        //var m = cm_spoc.initSegmentablePromotion(this.model);
+        cm_spoc.initDiallingCodeCriterionUi(this);
+        //return m;
+      ]]></script>
+    </method>
+    <method name="onClickCancel" type="uimthd">
+      <script>this.parent.cwDialogClose();</script>
+    </method>
+    <method name="onClickOk" type="uimthd">
+      <script><![CDATA[
+        this.parent.owner.model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS = this.model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS;
+        if( this.parent.owner.model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS.ListDS.length > 0 ){
+            if( this.parent.owner.ListSelected == null )
+                this.parent.owner.ListSelected = new DataObjectList();
+            //Check if the label was added
+            var exist = false;
+            for(var j=0; j< this.parent.owner.ListSelected.length; j++){
+                if( this.parent.owner.ListSelected[j].description == "Subscriber's dialling code"){
+                     exist=true;
+                }
+            }
+            if(!exist){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Subscriber's dialling code";
+                this.parent.owner.ListSelected.addLast(item);
+                this.parent.owner.ListSelected.updateList;
+            }
+        }else{
+            if( this.parent.owner.ListSelected == null )
+                this.parent.owner.ListSelected = new DataObjectList();
+            for(var k=0; k< this.parent.owner.ListSelected.length; k++){
+                if( this.parent.owner.ListSelected[k].description == "Subscriber's dialling code")
+                     this.parent.owner.ListSelected.delete(k);
+            }
+            this.parent.owner.ListSelected.updateList;
+        }
+        this.parent.cwDialogClose();
+      ]]></script>
+    </method>
+    <method name="addDialling" type="uimthd">
+      <script><![CDATA[
+        if(this.parent.owner.model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS.ListDS.length==0)
+        {
+            var subsDiallArr = cm_spoc.initInnerDS("base_SDCodeCriterionArr");
+            this.parent.owner.model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS = subsDiallArr;
+        }
+
+        var subsDiallValues = this.model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS.ListDS;
+        cm_spoc.addListElement(this, subsDiallValues, "cm_spoc.forms.subscribersDiallUI","base_SDCodeCriterion","DiallingIterator");
+      ]]></script>
+    </method>
+    <method name="deleteDialling" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.removeListElements(this,this.parent.owner.model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS,"List", "DiallingIterator");
+        if(this.parent.owner.model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS.ListDS.length == 0)
+        {
+            this.parent.owner.model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS = null;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

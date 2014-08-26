@@ -1,0 +1,1593 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TopUpOriginForm">
+  <group>TopUp</group>
+  <label>TopUpOriginForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="SOSTopUpInvitationDS" type="leaf">
+      <valueType>dstruct_cm_spoc.data.SOSTopUpInvitation</valueType>
+    </variable>
+    <variable name="PickListProfiles" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="PickListTariff" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="PickListTechnology" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TopUpOrigin</valueType>
+    </variable>
+    <variable name="WalletPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="LifeCyclesPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="AvTariffPlansPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="SelectAllFixedLimit" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="TopUpOriginFixedLimitIterator" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="SelectAllTemporaryLimit" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="TopUpOriginTemporaryLimitIterator" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Origin" type="vform">
+          <label>Origin</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>800px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Top Up Origin</label>
+                      </element>
+                      <element name="GridLayout" type="elgrd">
+                        <alignment>center,center</alignment>
+                        <numOfCols>2</numOfCols>
+                        <width>500px</width>
+                        <elementList>
+                          <element name="DefaultTopUpOrEnum" type="elslct">
+                            <label>Top Up Origin default for balance transfer funcionality</label>
+                            <labelOrientation>left</labelOrientation>
+                            <multiselect>false</multiselect>
+                            <width>150px</width>
+                          </element>
+                          <element name="DefaultTopUpPromo" type="elslct">
+                            <label>Default promotional top up origin</label>
+                            <labelOrientation>left</labelOrientation>
+                            <multiselect>false</multiselect>
+                            <width>150px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="SOS" type="vform">
+          <label>SOS</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>800px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>SOS TopUp Requests</label>
+                      </element>
+                      <element name="GridLayout1" type="elgrd">
+                        <numOfCols>2</numOfCols>
+                        <width>500px</width>
+                        <elementList>
+                          <element name="Outstanding" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <label>Initial period in &quot;Outstanding&quot; status when a SOS Top Up can still be requested</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="Outstanding1" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <label>Initial period in &quot;Outstanding1&quot; status when a SOS Top Up can still be requested</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="PeriodRequested" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <label>Period of time after last top-up when a SOS Top Up can still be requested</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="MinimumActivePeriod" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <label>Minimum period of time in Active status required in order to request a SOS Top Up</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="MaximumSubscriberBalance" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <label>Maximum Subscriber Balance to request a SOS Top Up</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="MinimumAmount" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <label>Minimum amount if last top up required to request a SOS Top Up</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="SubscriberBalance" type="elchk">
+                            <label>Subscriber Balance to make a SOS Top Up will be checked at real time</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="DebtPenaltiesAndCompensations" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader1" type="elsecth">
+                        <label>SOS Debt Penalties &amp; Compensations</label>
+                      </element>
+                      <element name="GridLayout" type="elgrd">
+                        <numOfCols>2</numOfCols>
+                        <width>500px</width>
+                        <elementList>
+                          <element name="PeriodCompensation" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <label>Period of time to execute a compesation of SOS debt without penalty</label>
+                            <labelOrientation>left</labelOrientation>
+                            <width>200px</width>
+                          </element>
+                          <element name="Minimum" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <label>Minimum Top Up Amount to compensate pending SOS Top Ups</label>
+                            <labelOrientation>left</labelOrientation>
+                            <width>200px</width>
+                          </element>
+                          <element name="DefaultPenalty" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <label>Default penalty (after period of time without penalty)</label>
+                            <labelOrientation>left</labelOrientation>
+                            <width>200px</width>
+                          </element>
+                          <element name="CompensationRule" type="elslct">
+                            <height>65px</height>
+                            <label>Compensation Rule</label>
+                            <labelOrientation>left</labelOrientation>
+                            <multiselect>false</multiselect>
+                            <width>200px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="GeneralParameters" type="eltab">
+                  <errorOrientation>right</errorOrientation>
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TopUpOriginForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.TopUpOriginForm/frmui_Forms/vform_GeneralParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                </element>
+                <element name="Origin" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TopUpOriginForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.TopUpOriginForm/frmui_Forms/vform_TopUpOriginLimits</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Origin</label>
+                </element>
+                <element name="Sos" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TopUpOriginForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.TopUpOriginForm/frmui_Forms/vform_SOSProperties</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>SOS Properties</label>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="Recharger" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TopUpOriginForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.TopUpOriginForm/frmui_Forms/vform_Recharger</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Recharger</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="GeneralParameters" type="vform">
+          <label>GeneralParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>left,center</alignment>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>850px</width>
+                <elementList>
+                  <element name="GeneralSect" type="elsect">
+                    <cellAlignment>left,center</cellAlignment>
+                    <removeLabelLine>true</removeLabelLine>
+                    <elementList>
+                      <element name="GeneralHeader" type="elsecth">
+                        <label>General</label>
+                      </element>
+                      <element name="GridLayout2" type="elgrd">
+                        <colWidths>300px</colWidths>
+                        <edgeShowCenter>true</edgeShowCenter>
+                        <edgeSize>2</edgeSize>
+                        <labeAlign>center</labeAlign>
+                        <numOfCols>2</numOfCols>
+                        <width>600px</width>
+                        <elementList>
+                          <element name="TopUpOrCode" type="elfld">
+                            <labeAlign>left</labeAlign>
+                            <label>Top Up Code</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOrCode</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="TopUpOrDescription" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Top Up Origin Description</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOrDescription</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="TopUpOrTypeEnum" type="elslct">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Top Up Origin Type</label>
+                            <labelOrientation>left</labelOrientation>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/uimthd_setTopUpType</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <showEmpty>false</showEmpty>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginGeneralParameterDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginGeneralParameter/dstruct_TopUpOrTypeEnum</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>150px</width>
+                          </element>
+                          <element name="RowSpacer" type="elrsp"/>
+                          <element name="Label3" type="ellab">
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#003168</color>
+                              <family>Arial</family>
+                              <size>11</size>
+                            </fontProperties>
+                            <label>Top ups of this orgin will be billed</label>
+                          </element>
+                          <element name="TopUpOrWillBilled" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labelAsTitle>false</labelAsTitle>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginGeneralParameterDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginGeneralParameter/dstruct_TopUpOrWillBilled</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="Label2" type="ellab">
+                            <canSort>false</canSort>
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#003168</color>
+                              <family>Arial</family>
+                              <size>11</size>
+                            </fontProperties>
+                            <label>Tax is deducted from top ups of this origin</label>
+                          </element>
+                          <element name="TopUpOrTaxDeducted" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labelAsTitle>false</labelAsTitle>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginGeneralParameterDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginGeneralParameter/dstruct_TopUpOrTaxDeducted</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="Label" type="ellab">
+                            <canSort>false</canSort>
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#003168</color>
+                              <family>Arial</family>
+                              <size>11</size>
+                            </fontProperties>
+                            <label>Tax is applied to top up of this origin in the operations record</label>
+                          </element>
+                          <element name="TopUpOrTaxApplied" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labelAsTitle>false</labelAsTitle>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginGeneralParameterDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginGeneralParameter/dstruct_TopUpOrTaxApplied</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="LabelNGIN" type="ellab">
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#003168</color>
+                              <family>Arial</family>
+                              <size>11</size>
+                            </fontProperties>
+                            <label>The origin top up is valid for NGIN top ups (Only for non-promotional)</label>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/permMethod_OGPTopUpOrForNGINVisRule</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="TopUpOrForNGIN" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labelAsTitle>false</labelAsTitle>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginGeneralParameterDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginGeneralParameter/dstruct_TopUpOrForNGIN</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/permMethod_OGPTopUpOrForNGINVisRule</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="LabelBackOffice" type="ellab">
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#003168</color>
+                              <family>Arial</family>
+                              <size>11</size>
+                            </fontProperties>
+                            <label>Top-ups of this origin may be performed from Back Office</label>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/permMethod_OGPTopUpOrBackOfficeVisRule</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="TopUpOrBackOffice" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labelAsTitle>false</labelAsTitle>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginGeneralParameterDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginGeneralParameter/dstruct_TopUpOrBackOffice</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/permMethod_OGPTopUpOrBackOfficeVisRule</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="RowSpacer1" type="elrsp"/>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="LastTopUpSect" type="elsect">
+                    <padding>0</padding>
+                    <elementList>
+                      <element name="LastTopUpHeader" type="elsecth">
+                        <label>Last Top Up</label>
+                      </element>
+                      <element name="TopUpOrLastTopUp" type="elchk">
+                        <label>A top up from this origin can be the last subscriber&apos;s top up</label>
+                        <labelOrientation>left</labelOrientation>
+                        <padding>10</padding>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginGeneralParameterDS</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.TopUpOriginGeneralParameter/dstruct_TopUpOrLastTopUp</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="ElectronicRechargesSect" type="elsect">
+                    <padding>0</padding>
+                    <elementList>
+                      <element name="ElectronicRechargesHeader" type="elsecth">
+                        <label>Electronic Recharges</label>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <elementList>
+                          <element name="GridLayout1" type="elgrd">
+                            <elementList>
+                              <element name="TopUpOrElectronicAllowed" type="elchk">
+                                <label>Electronic top ups are allowed</label>
+                                <labelOrientation>left</labelOrientation>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginGeneralParameterDS</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.TopUpOriginGeneralParameter/dstruct_TopUpOrElectronicAllowed</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.TopUpOriginForm/permMethod_TOUOGPTopUpOrElectronicAllowedVisRule</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="Recharger" type="vform">
+          <label>Recharger</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>850px</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>850px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="GridLayout1" type="elgrd">
+                        <colWidths>400px</colWidths>
+                        <numOfCols>2</numOfCols>
+                        <width>850px</width>
+                        <elementList>
+                          <element name="Label" type="ellab">
+                            <label>Wallet where top-ups of this origin are stored:</label>
+                          </element>
+                          <element name="WalletEnum" type="elslct">
+                            <multiselect>false</multiselect>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/uimthd_setWallet</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_WalletEnum</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="Label2" type="ellab">
+                            <label>Top-ups of this origin will be added to the existing wallet balance</label>
+                          </element>
+                          <element name="TopUpOrIncreaseWalletBalance" type="elchk">
+                            <labelAsTitle>false</labelAsTitle>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginGeneralParameterDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginGeneralParameter/dstruct_TopUpOrIncreaseWalletBalance</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="WalletSection" type="elsect">
+                    <elementList>
+                      <element name="WalletHeader" type="elsecth">
+                        <label>Wallet whose expiry date will be affected by top-ups of this origin</label>
+                      </element>
+                      <element name="FormFrame" type="elovf">
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_WalletPickList</variablePath>
+                            <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                            <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <height>350px</height>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_WalletPickList</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>850px</width>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="LifeCycleSection" type="elsect">
+                    <elementList>
+                      <element name="LifeCycleHeader" type="elsecth">
+                        <label>Life Cycles are not permitted for the selected recharger top up origin code</label>
+                      </element>
+                      <element name="FormFrame1" type="elovf">
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_LifeCyclesPickList</variablePath>
+                            <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                            <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <height>350px</height>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_LifeCyclesPickList</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>850px</width>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="NotAllowedTariffSection" type="elsect">
+                    <elementList>
+                      <element name="NotAllowedTariffHeader" type="elsecth">
+                        <label>Not allowed tariff plans for the selected recharger top up origin code</label>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <elementList>
+                          <element name="FormFrame2" type="elovf">
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_AvTariffPlansPickList</variablePath>
+                                <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                                <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                              </variablePathList>
+                            </formReference>
+                            <height>350px</height>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_AvTariffPlansPickList</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>850px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="SOSTopUpSection" type="elsect">
+                    <elementList>
+                      <element name="SOSTopUpHeader" type="elsecth">
+                        <label>The top up origin will be a S.O.S. top up origin</label>
+                      </element>
+                      <element name="GridLayout2" type="elgrd">
+                        <colWidths>400px</colWidths>
+                        <numOfCols>2</numOfCols>
+                        <width>850px</width>
+                        <elementList>
+                          <element name="Label3" type="ellab">
+                            <label>The recharger top-up origin code can offset a SOS top-up</label>
+                          </element>
+                          <element name="TopUpOrCanCompesateSOS" type="elchk">
+                            <labelAsTitle>false</labelAsTitle>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_com.conceptwave.system.UserInterface/action_onClick</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginGeneralParameterDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginGeneralParameter/dstruct_TopUpOrCanCompesateSOS</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="Label4" type="ellab">
+                            <label>S.O.S. top up can be decompensated</label>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/permMethod_TUORTopUpOrOpgeSOStopUpDecompensatedVisRule</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="TopUpOrCanDecompensateSOS" type="elchk">
+                            <labelAsTitle>false</labelAsTitle>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginGeneralParameterDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginGeneralParameter/dstruct_TopUpOrCanDecompensateSOS</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/permMethod_TUORTopUpOrOpgeSOStopUpDecompensatedVisRule</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="Label6" type="ellab">
+                            <label>Threshold</label>
+                          </element>
+                          <element name="TopUpOrThresholdCompensateSOS" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <dataLength>50</dataLength>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginGeneralParameterDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginGeneralParameter/dstruct_TopUpOrThresholdCompensateSOS</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="Label1" type="ellab">
+                            <label>Subscriber&apos;s maximum balance for request a S.O.S. top up</label>
+                          </element>
+                          <element name="TopUpOrMaxBalanceForReqSOS" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginSOSPropertiesDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginSOSProperties/dstruct_TopUpOrMaxBalanceForReqSOS</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="SOSProperties" type="vform">
+          <label>SOSProperties</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>100%</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>100%</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="GridLayout" type="elgrd">
+                        <fixedColWidths>true</fixedColWidths>
+                        <labeAlign>left</labeAlign>
+                        <labelOrientation>left</labelOrientation>
+                        <numOfCols>3</numOfCols>
+                        <width>150px</width>
+                        <elementList>
+                          <element name="TopUpOriginSOSisSOS" type="elchk">
+                            <label>The top up origin will be a S.O.S. top up origin</label>
+                            <labelOrientation>left</labelOrientation>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_com.conceptwave.system.UserInterface/action_onClick</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginSOSPropertiesDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginSOSProperties/dstruct_TopUpOriginSOSisSOS</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="CellSpacer" type="elcsp"/>
+                          <element name="TopUpOriginSOSwithInvitation" type="elchk">
+                            <label>The S.O.S. top up of this origin requires invitation</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginSOSPropertiesDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginSOSProperties/dstruct_TopUpOriginSOSwithInvitation</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/permMethod_TUOSPSOSPropertiesVisRule</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="Image" type="elimg">
+                            <canSort>false</canSort>
+                            <cellAlignment>left,center</cellAlignment>
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/usrActionMethod_showSOSInvitation</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <imageUrl>/cwt/images/16/message.png</imageUrl>
+                            <showLabel>false</showLabel>
+                            <tooltipWidth>1</tooltipWidth>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/permMethod_TUOSPSOSPropertiesVisRule</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="TopUpOriginSOSTUReferredForSOS" type="elchk">
+                            <columnSpan>2</columnSpan>
+                            <label>The Top Up SOS of this origin no-SOS will be referred in th previuos filter top up for get SOS</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOrigin/dstruct_TopUpOriginGeneralParameterDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.TopUpOriginGeneralParameter/dstruct_TopUpOriginSOSTUReferredForSOS</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/permMethod_TUOSPTopUpOriginSOSTopUpReferredForSOSVisRule</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>SOS Properties</label>
+                      </element>
+                      <element name="LayoutSpacer" type="ellsp">
+                        <height>25px</height>
+                      </element>
+                      <element name="GL1" type="elgrd">
+                        <labeAlign>left</labeAlign>
+                        <labelOrientation>left</labelOrientation>
+                        <numOfCols>3</numOfCols>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.TopUpOriginForm/permMethod_TUOSPSOSPropertiesVisRule</variablePath>
+                          </variablePathList>
+                        </visible>
+                        <elementList>
+                          <element name="Image1" type="elimg">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/usrActionMethod_openSOSFilterConfigurationPopUp</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <columnSpan>4</columnSpan>
+                            <imageUrl>/cwt/images/16/edit.png</imageUrl>
+                            <label>Maximum number SOS uncompensated or partially compensated over a period of time</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="TopUpOriginLimits" type="vform">
+          <label>TopUpOriginLimits</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>500px</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>500px</width>
+                <elementList>
+                  <element name="fixedLimitSection" type="elsect">
+                    <elementList>
+                      <element name="fixedLimitHeader" type="elsecth">
+                        <label>Fixed Limits</label>
+                      </element>
+                      <element name="fixedLimitButtonsLayout" type="elhlt">
+                        <elementList>
+                          <element name="addFixedLimitButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/uimthd_addFixedLimit</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                          </element>
+                          <element name="deleteFixedLimitButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/uimthd_deleteFixedLimit</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_delete.png</icon>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="fixedLimitHeaders" type="elgrd">
+                        <colWidths>50px</colWidths>
+                        <fixedColWidths>true</fixedColWidths>
+                        <numOfCols>9</numOfCols>
+                        <width>500px</width>
+                        <elementList>
+                          <element name="SelectAllFixedLimit" type="elchk">
+                            <columnSpan>1</columnSpan>
+                            <label>SelectAllFixedLimits</label>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/laction_cwLeafTriggerAction$SelectAllFixedLimit</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_SelectAllFixedLimit</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>30px</width>
+                          </element>
+                          <element name="TariffPlanFixedLimit" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Tariff Plan </label>
+                            <width>100px</width>
+                          </element>
+                          <element name="MinimumLimit" type="ellab">
+                            <columnSpan>3</columnSpan>
+                            <label>Minimum Limit</label>
+                            <width>150px</width>
+                          </element>
+                          <element name="MaximumLimit" type="ellab">
+                            <columnSpan>3</columnSpan>
+                            <label>Maximum Limit</label>
+                            <width>150px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="FixedLimitVL" type="elvlt">
+                        <height>200px</height>
+                        <overflow>auto</overflow>
+                        <width>500px</width>
+                        <elementList>
+                          <element name="FixedLimitIterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_TopUpOriginFixedLimitIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="FixedLimitIteratorHL" type="elhlt">
+                                <width>500px</width>
+                                <elementList>
+                                  <element name="FixedLimitFormFrame" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_TopUpOriginFixedLimitIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+              <element name="SectionStack1" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>500px</width>
+                <elementList>
+                  <element name="temporaryAccumulationLimit" type="elsect">
+                    <elementList>
+                      <element name="temporaryAccumulationLimitHeader" type="elsecth">
+                        <label>Temporary Accumulation Limits</label>
+                      </element>
+                      <element name="temporaryLimitButtonsLayout" type="elhlt">
+                        <elementList>
+                          <element name="addTemporaryLimitButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/uimthd_addTemporaryLimit</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                          </element>
+                          <element name="deleteTemporaryLimitButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/uimthd_deleteTemporaryLimit</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_delete.png</icon>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="temporaryLimitsHeaders" type="elgrd">
+                        <colWidths>50px</colWidths>
+                        <fixedColWidths>true</fixedColWidths>
+                        <numOfCols>9</numOfCols>
+                        <width>500px</width>
+                        <elementList>
+                          <element name="SelectAllTemporaryLimit" type="elchk">
+                            <columnSpan>1</columnSpan>
+                            <label>SelectAllFixAccLim</label>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_SelectAllTemporaryLimit</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>30px</width>
+                          </element>
+                          <element name="TariffPlanTemporaryLimit" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Tariff Plan</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="DailyLimit" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Daily Limit</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="MonthlyLimit" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Monthly Limit</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="ResetDay" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Reset Day</label>
+                            <width>100px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="TemporaryLimitVL" type="elvlt">
+                        <height>200px</height>
+                        <overflow>auto</overflow>
+                        <width>500px</width>
+                        <elementList>
+                          <element name="TemporaryLimitIterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_TopUpOriginTemporaryLimitIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="TemporaryLimitIteratorHL" type="elhlt">
+                                <width>500px</width>
+                                <elementList>
+                                  <element name="TemporaryLimitFormFrame" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.TopUpOriginForm/leaf_TopUpOriginTemporaryLimitIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.TopUpOriginForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initTopUp(this.model);
+
+         cm_spoc.initTopUpOriginTemporaryLimitUI(this,m);
+         cm_spoc.initTopUpOriginFixedLimitUI(this,m);
+
+        //m.TopUpOriginSOSPropertiesDS.TopUpOriginSOSisSOS=false;
+        return m;
+      ]]></script>
+    </method>
+    <method name="cwLeafTriggerAction$SelectAllTemporaryLimit" type="laction">
+      <path>ui_cm_spoc.forms.TopUpOriginForm/leaf_SelectAllTemporaryLimit</path>
+      <type>trigger</type>
+      <script><![CDATA[
+        /*
+        if(this.SelectAllTemporaryLimitIterator){
+            for (var i = 0;i<this.TopUpOriginTemporaryLimitIterator.length; i++){
+
+                this.TopUpOriginTemporaryLimitIterator[i].Selected = true;
+            }
+        }
+        else {
+            for (var i = 0;i<this.TopUpOriginTemporaryLimitIterator.length; i++){
+
+                this.TopUpOriginTemporaryLimitIterator[i].Selected = false;
+            }
+        }
+        */
+            for (var i = 0;i<this.TopUpOriginTemporaryLimitIterator.length; i++){
+                this.TopUpOriginTemporaryLimitIterator[i].Selected = this.SelectAllTemporaryLimit;
+            }
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$WalletPickList" type="laction">
+      <path>ui_cm_spoc.forms.TopUpOriginForm/leaf_WalletPickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.TopUpOriginForm/leaf_WalletPickList</valueType>
+      <script><![CDATA[
+        var pl = new cm_spoc.PickList(null,this);
+        pl.availableItems = new DataObjectList();
+
+        pl.modelCallback = this.setModelWalletPickList;
+        /*
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_Wallet";
+        var result = itemFinder.search();
+        */
+        var itemFinder = new Finder("cm_spoc.walletFinderTopUp");
+        //itemFinder.searchDocument.baseItemCode = "base_TariffPlan";
+        var result = itemFinder.search();
+
+        //var itemFinder = new Finder("cwa_epc.catalogItemFinder");
+        //itemFinder.searchDocument.baseItemCode = "base_Wallet";
+        //var result = itemFinder.search();
+
+
+        var listSel=this.model.TopUpAffectValOfWalletArrDS.List;// TopUpOriginRechargerDS.WalletExDateAfecByTopUpOrArrayDS.List;
+        /*
+            for (var i=0;i<listRel.length;i++){
+               if(!api_common.isFault(r)){
+                  var item = new cm_spoc.PickListDS();
+                item.id = r.itemCode;
+                item.description =r.itemCode;
+                 pl.selectedItems.addLast(item);
+                 }
+           }
+        */
+        for(var i=0;i<result.length;i++){
+                var item = new cm_spoc.PickListDS();
+                item.id = result[i].itemCode;
+                item.description = result[i].msgToDisp;
+                if(listSel ==null){
+                     pl.availableItems.addLast(item);
+               }else{
+                    var found = false;
+                    for(var j=0;j<listSel.length;j++)
+                       if(listSel[j].equals(result[i].itemCode)){
+                            found = true;
+                            break;
+                       }
+
+                    if( found){
+                        pl.selectedItems.addLast(item);
+                    }else{
+                         pl.availableItems.addLast(item);
+                    }
+               }
+        }
+
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$PickListProfiles" type="laction">
+      <path>ui_cm_spoc.forms.TopUpOriginForm/leaf_PickListProfiles</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var pl = new cm_spoc.PickList(null,this);
+        pl.availableItems = new DataObjectList();
+
+        pl.modelCallback = this.setModel;
+
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TariffClass";
+        var result = itemFinder.search();
+
+
+        for(var i=0;i<result.length;i++){
+
+                var item = new cm_spoc.PickListDS();
+                item.id = result[i].itemCode;
+                item.description = result[i].itemCode;
+                pl.availableItems.addLast(item);
+
+        }
+
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$AvTariffPlansPickList" type="laction">
+      <path>ui_cm_spoc.forms.TopUpOriginForm/leaf_AvTariffPlansPickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.TopUpOriginForm/leaf_AvTariffPlansPickList</valueType>
+      <script><![CDATA[
+        var pl = new cm_spoc.PickList(null,this);
+        pl.availableItems = new DataObjectList();
+
+        pl.modelCallback = this.setModelAvTariffPlanPickList;
+        /*
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TariffPlan";
+        var result = itemFinder.search();
+        */
+        var itemFinder = new Finder("cm_spoc.tariffPlanFinder");
+        //itemFinder.searchDocument.baseItemCode = "base_TariffPlan";
+        var result = itemFinder.search();
+
+        //var listSel=this.model.TopUpOriginRechargerDS.TariffPlanNotAllowedForArrayDS.List;
+        var listSel=this.model.TariffPlanNotAllowedForArrDS.List;
+        //var listSel=this.model.TopUpOriginGeneralParameterDS. .TariffPlanNotAllowedForArrayDS.List;
+        /*
+            for (var i=0;i<listRel.length;i++){
+               if(!api_common.isFault(r)){
+                  var item = new cm_spoc.PickListDS();
+                item.id = r.itemCode;
+                item.description =r.itemCode;
+                 pl.selectedItems.addLast(item);
+                 }
+           }
+        */
+        for(var i=0;i<result.length;i++){
+                var item = new cm_spoc.PickListDS();
+                item.id = result[i].itemCode;
+                item.description = result[i].msgToDisp;
+                if(listSel ==null){
+                     pl.availableItems.addLast(item);
+               }else{
+                    var found = false;
+                    for(var j=0;j<listSel.length;j++)
+                       if(listSel[j].equals(result[i].itemCode)){
+                            found = true;
+                            break;
+                       }
+
+                    if( found){
+                        pl.selectedItems.addLast(item);
+                    }else{
+                         pl.availableItems.addLast(item);
+                    }
+               }
+        }
+
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$LifeCyclesPickList" type="laction">
+      <path>ui_cm_spoc.forms.TopUpOriginForm/leaf_LifeCyclesPickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.TopUpOriginForm/leaf_LifeCyclesPickList</valueType>
+      <script><![CDATA[
+        var pl = new cm_spoc.PickList(null,this);
+        pl.availableItems = new DataObjectList();
+        pl.modelCallback = this.setModelLifeCyclePickList;
+        /*
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_LifeCycle";
+        var result = itemFinder.search();
+        */
+        var itemFinder = new Finder("cm_spoc.lifeCycleFinder");
+        //itemFinder.searchDocument.baseItemCode = "base_TariffPlan";
+        var result = itemFinder.search();
+
+
+        //var listSel=this.model.TopUpOriginRechargerDS.LifeCycleAreNotAllowedArrayDS.List;
+        var listSel=this.model.LifeCycleAreNotAllowedArrDS.List;
+        /*
+            for (var i=0;i<listRel.length;i++){
+               if(!api_common.isFault(r)){
+                  var item = new cm_spoc.PickListDS();
+                item.id = r.itemCode;
+                item.description =r.itemCode;
+                 pl.selectedItems.addLast(item);
+                 }
+           }
+        */
+        for(var i=0;i<result.length;i++){
+                var item = new cm_spoc.PickListDS();
+                item.id = result[i].itemCode;
+                item.description = result[i].msgToDisp;
+                if(listSel ==null){
+                     pl.availableItems.addLast(item);
+               }else{
+                    var found = false;
+                    for(var j=0;j<listSel.length;j++)
+                       if(listSel[j].equals(result[i].itemCode)){
+                            found = true;
+                            break;
+                       }
+
+                    if( found){
+                        pl.selectedItems.addLast(item);
+                    }else{
+                         pl.availableItems.addLast(item);
+                    }
+               }
+        }
+
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafTriggerAction$SelectAllFixedLimit" type="laction">
+      <path>ui_cm_spoc.forms.TopUpOriginForm/leaf_SelectAllFixedLimit</path>
+      <type>trigger</type>
+      <script><![CDATA[
+        /*
+        if(this.SelectAllFixedLimitIterator){
+            for (var i = 0;i<this.TopUpOriginFixedLimitIterator.length; i++){
+                this.TopUpOriginFixedLimitIterator[i].Selected = true;
+            }
+        }
+        else {
+            for (var i = 0;i<this.TopUpOriginFixedLimitIterator.length; i++){
+                this.TopUpOriginFixedLimitIterator[i].Selected = false;
+            }
+        }
+        */
+        for (var i = 0;i<this.TopUpOriginFixedLimitIterator.length; i++){
+            this.TopUpOriginFixedLimitIterator[i].Selected = this.SelectAllFixedLimit;
+        }
+      ]]></script>
+    </method>
+    <method name="OGPTopUpOrForNGINVisRule" type="permMethod">
+      <script><![CDATA[
+        var orType = this.model.TopUpOriginGeneralParameterDS.TopUpOrType;
+        if (orType == "Y"){
+            this.model.TopUpOriginGeneralParameterDS.TopUpOrForNGIN = null;
+            return false;
+        }
+        return true;
+      ]]></script>
+    </method>
+    <method name="OGPTopUpOrBackOfficeVisRule" type="permMethod">
+      <script><![CDATA[
+        var orType = this.model.TopUpOriginGeneralParameterDS.TopUpOrType;
+        if (orType == "Y")
+            return true;
+        this.model.TopUpOriginGeneralParameterDS.TopUpOrBackOffice = false;
+        return false;
+      ]]></script>
+    </method>
+    <method name="TUORTopUpOrOpgeSOStopUpDecompensatedVisRule" type="permMethod">
+      <script><![CDATA[
+        var isChecked = this.model.TopUpOriginGeneralParameterDS.TopUpOrCanCompesateSOS;
+        if (isChecked == true)
+            return true;
+        this.model.TopUpOriginGeneralParameterDS.TopUpOrCanDecompensateSOS = false;
+        return false;
+      ]]></script>
+    </method>
+    <method name="BEOpgePetitionsServerVisRule" type="permMethod">
+      <script>//Pendiente de valores en la excel</script>
+    </method>
+    <method name="TUOSPTopUpOriginSOSTopUpReferredForSOSVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.TopUpOriginSOSPropertiesDS.TopUpOriginSOSisSOS;
+        if (value==null)
+            value = false;
+        if (value==false) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TUOSPTopUpOriginSOSLastNoSOSVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.TopUpOriginSOSPropertiesDS.TopUpOriginSOSTopUpReferredForSOS;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TOUOGPTopUpOrElectronicAllowedVisRule" type="permMethod">
+      <script><![CDATA[
+        var orType = this.model.TopUpOriginGeneralParameterDS.TopUpOrType;
+        if (orType == "Y"){
+            this.model.TopUpOriginGeneralParameterDS.TopUpOrElectronicAllowed = null;
+            return false;
+        }
+        return true;
+      ]]></script>
+    </method>
+    <method name="TUOSPMaximumNumberSOSCompensationVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.TopUpOriginSOSPropertiesDS.TopUpOriginSOSisSOS;
+        if (value==null)
+            value = false;
+        if (value==true) return true; //Revisar valor true o VERDADERO
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TUOSPSOSPropertiesVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.TopUpOriginSOSPropertiesDS.TopUpOriginSOSisSOS;
+        if (value==null)
+            value = false;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TUOSPSOSPropertiesByPlanVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.TopUpOriginSOSPropertiesDS.TopUpOriginSOSisSOS;
+        if (value==null)
+            value = false;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TUOSPSOSPropertiesByProfileVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.TopUpOriginSOSPropertiesDS.TopUpOriginSOSisSOS;
+        if (value==null)
+            value = false;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="GeneralParameterVisRule" type="permMethod">
+      <script><![CDATA[
+        var orType = this.model.TopUpOriginGeneralParameterDS.TopUpOrType;
+        if (orType == "S")
+            return false;
+        return true;
+      ]]></script>
+    </method>
+    <method name="TUORTopUpOrOpgeCalcSinceLastTopUpReadORule" type="permMethod">
+      <script><![CDATA[
+        if (this.model.readonly)
+            return false;
+        var isChecked = this.model.TopUpOriginGeneralParameterDS.TopUpOrCanCompesateSOS;
+        if (isChecked == true)
+            return true;
+        return false;
+      ]]></script>
+    </method>
+    <method name="setWallet" type="uimthd">
+      <script>this.model.TopUpOriginRecharge = this.model.WalletEnum;</script>
+    </method>
+    <method name="setModelWalletPickList" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        //this.parent.model.TopUpOriginRechargerDS.WalletExDateAfecByTopUpOrArrayDS.List =null;
+        this.parent.model.TopUpAffectValOfWalletArrDS.List = null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.TopUpAffectValOfWalletArrDS.List[i] = selectedItems[i].id;
+        }
+
+
+        var listRel= this.parent.model.TopUpAffectValOfWalletArrDS.List;// this.model.TopUpOriginRechargerDS.WalletExDateAfecByTopUpOrArrayDS.List;
+        var list  = this.parent.model.TopUpAffectValOfWalletArrDS.ListDS; //this.model.TopUpOriginRechargerDS.WalletExDateAfecByTopUpOrArrayDS.ListDS;
+        for (var i=0;i<listRel.length;i++){
+           s.specificationCode = listRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r))
+               list[i]=r;
+        }
+      ]]></script>
+    </method>
+    <method name="setModelLifeCyclePickList" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        //this.parent.model.TopUpOriginRechargerDS.LifeCycleAreNotAllowedArrayDS.List =null;
+        this.parent.model.LifeCycleAreNotAllowedArrDS.List =null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.LifeCycleAreNotAllowedArrDS.List[i] = selectedItems[i].id;
+        }
+
+
+        var listRel= this.parent.model.LifeCycleAreNotAllowedArrDS.List; //this.model.TopUpOriginRechargerDS.LifeCycleAreNotAllowedArrayDS.List;
+         var list  = this.parent.model.LifeCycleAreNotAllowedArrDS.ListDS; //this.model.TopUpOriginRechargerDS.LifeCycleAreNotAllowedArrayDS.ListDS;
+           for (var i=0;i<listRel.length;i++){
+               s.specificationCode = listRel[i];
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r))
+                   list[i]=r;
+           }
+      ]]></script>
+    </method>
+    <method name="setModelAvTariffPlanPickList" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        //this.parent.model.TopUpOriginRechargerDS.TariffPlanNotAllowedForArrayDS.List =null;
+        this.parent.model.TariffPlanNotAllowedForArrDS.List =null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.TariffPlanNotAllowedForArrDS.List[i] = selectedItems[i].id;
+        }
+
+
+        var listRel= this.parent.model.TariffPlanNotAllowedForArrDS.List; //this.model.TopUpOriginRechargerDS.TariffPlanNotAllowedForArrayDS.List;
+         var list  = this.parent.model.TariffPlanNotAllowedForArrDS.ListDS; //this.model.TopUpOriginRechargerDS.TariffPlanNotAllowedForArrayDS.ListDS;
+           for (var i=0;i<listRel.length;i++){
+               s.specificationCode = listRel[i];
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r))
+                   list[i]=r;
+           }
+      ]]></script>
+    </method>
+    <method name="showSOSInvitation" type="usrActionMethod">
+      <dialogHeight>600</dialogHeight>
+      <dialogWidth>750</dialogWidth>
+      <showInPopup>true</showInPopup>
+      <script>return cm_spoc.sosTopUpInvitationDialog(this);</script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script><![CDATA[
+        for(var i=0;i<this.TopUpOriginFixedLimitIterator.length;i++){
+            this.TopUpOriginFixedLimitIterator[i].model.readonly = this.model.readonly;
+        }
+
+        for(var i=0;i<this.TopUpOriginTemporaryLimitIterator.length;i++){
+            this.TopUpOriginTemporaryLimitIterator[i].model.readonly = this.model.readonly;
+        }
+      ]]></script>
+    </method>
+    <method name="readOnlyPermission" type="permMethod">
+      <script>return this.model.readonly;</script>
+    </method>
+    <method name="TUOSPTSOSSourceCodeVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.TopUpOriginSOSPropertiesDS.SOSSourceOrigin;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TUOSPTSOSSourceFixedStartDateVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.TopUpOriginSOSPropertiesDS.SOSSourceRelativePeriod;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="openSOSFilterConfigurationPopUp" type="usrActionMethod">
+      <dialogHeight>400</dialogHeight>
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <dialogWidth>600</dialogWidth>
+      <showInPopup>true</showInPopup>
+      <script>return cm_spoc.openSOSFilterConfiguration(this);</script>
+    </method>
+    <method name="TUOSPTSOSSourceFixedEndDateVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.TopUpOriginSOSPropertiesDS.SOSSourceRelativePeriod;
+        if (value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="TUOSPTSOSSourceRelativeTempVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.TopUpOriginSOSPropertiesDS.SOSSourceRelativePeriod;
+        if (value==false) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="openSOSPropertiesForOriginPopUp" type="usrActionMethod">
+      <dialogHeight>350</dialogHeight>
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <dialogWidth>900</dialogWidth>
+      <showInPopup>true</showInPopup>
+      <script>return cm_spoc.openSOSPropertiesForOrigin(this);</script>
+    </method>
+    <method name="addFixedLimit" type="uimthd">
+      <script><![CDATA[
+        var model = this.model.TopUpOriginFixedLimitArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.TopUpOriginFixedLimitIteratorUI",
+                                                                "base_TopUpOriginFixedLimit","TopUpOriginFixedLimitIterator");
+      ]]></script>
+    </method>
+    <method name="deleteFixedLimit" type="uimthd">
+      <script><![CDATA[
+        var model = this.model.TopUpOriginFixedLimitArrDS;
+        cm_spoc.removeListElements(this , model ,"List", "TopUpOriginFixedLimitIterator");
+        this.SelectAllFixedLimitIterator = false;
+      ]]></script>
+    </method>
+    <method name="addTemporaryLimit" type="uimthd">
+      <script><![CDATA[
+        var model = this.model.TopUpOriginTempLimitArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.TopUpOriginTemporaryLimitIteratorUI",
+                                                          "base_TopUpOriginTemporaryLimit","TopUpOriginTemporaryLimitIterator");
+      ]]></script>
+    </method>
+    <method name="deleteTemporaryLimit" type="uimthd">
+      <script><![CDATA[
+        var model = this.model.TopUpOriginTempLimitArrDS;
+        cm_spoc.removeListElements(this , model ,"List", "TopUpOriginTemporaryLimitIterator");
+        this.SelectAllTemporaryLimitIterator = false;
+      ]]></script>
+    </method>
+    <method name="setTopUpType" type="uimthd">
+      <script><![CDATA[
+        this.model.TopUpOriginGeneralParameterDS.TopUpOrType = this.model.TopUpOriginGeneralParameterDS.TopUpOrTypeEnum;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

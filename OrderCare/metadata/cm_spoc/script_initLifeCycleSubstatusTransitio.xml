@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initLifeCycleSubstatusTransitio">
+  <group>ui_scripts.LifeCycles</group>
+  <label>initLifeCycleSubstatusTransitio</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+        var lifeCycleInternalSubstatus1 = cm_spoc.initInnerDS("base_LifeCycleInternalSubstatus");
+        model.TransIncludesADestSubStatus = lifeCycleInternalSubstatus1;
+
+        var lifeCycleInternalSubstatus2 = cm_spoc.initInnerDS("base_LifeCycleInternalSubstatus");
+        model.TransIncludesAnOrigSubStatus = lifeCycleInternalSubstatus2;
+
+        var lifeCycle = cm_spoc.initInnerDS("base_LifeCycle");
+        model.LifeCycle = lifeCycle;
+    }
+  ]]></script>
+</script>

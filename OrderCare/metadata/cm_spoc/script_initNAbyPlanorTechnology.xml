@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initNAbyPlanorTechnology">
+  <group>ui_scripts.Operation</group>
+  <label>initNAbyPlanorTechnology</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+    var ConstraintsCByPlanOrTArr = cm_spoc.initInnerDS("base_ConstraintsCByPlanOrTArr");
+    model.ConstraintsCByPlanOrTArrDS = ConstraintsCByPlanOrTArr;
+
+    return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        var ConstraintsCByPlanOrTArrRel = model.ConstraintsCByPlanOrTArr;
+        s.specificationCode = ConstraintsCByPlanOrTArrRel;
+        var a = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(a)){
+            model.ConstraintsCByPlanOrTArrDS = a;
+            ConstraintsCByPlanOrTArrRel = a.List;
+        }
+        var ConstraintByPlanOrTechnologDS = model.ConstraintsCByPlanOrTArrDS.ListDS;
+        for(var i=0;i<ConstraintsCByPlanOrTArrRel.length;i++){
+            s.specificationCode = ConstraintsCByPlanOrTArrRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                ConstraintByPlanOrTechnologDS[i]=r;
+                 var SubOperationRel = r.SubOperation;
+                 s.specificationCode = SubOperationRel;
+                 var c =  epc.getSpecificationByKey(s);
+                 if(!api_common.isFault(c)){
+                     ConstraintByPlanOrTechnologDS[i].SubOperationDS = c;
+                }
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initBoltOnType">
+  <group>ui_scripts.BoltOnType</group>
+  <label>initBoltOnType</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+        model.BoltOnTypeCode = "";
+        var sessionSpecification = cm_spoc.initInnerDS("base_SessionSpecification");
+        model.SessionSpecificationDS = sessionSpecification;
+
+        var eventTechnicalSpecification =  cm_spoc.initInnerDS("base_EventTechnicalSpecification");
+        model.EventTechnicalSpecificationDS = eventTechnicalSpecification;
+
+        var generalBoltOnValuesSpec =  cm_spoc.initInnerDS("base_GeneralBoltOnValuesSpec");
+        model.GeneralBoltOnValuesSpecDS = generalBoltOnValuesSpec;
+
+        var generalStartEndDateSpec =  cm_spoc.initInnerDS("base_GeneralStartEndDateSpec");
+        model.GeneralStartEndDateSpecDS = generalStartEndDateSpec;
+
+        var boltOnGenericSpecification =  cm_spoc.initInnerDS("base_BoltOnGenericSpecification");
+        model.BoltOnGenericSpecificationDS = boltOnGenericSpecification;
+
+        var sessionTechnicalSpec = cm_spoc.initInnerDS("base_SessionTechnicalSpec");
+        model.SessionSpecificationDS.SessionTechnicalSpecDS = sessionTechnicalSpec;
+
+        var UCRelatedSpecification = cm_spoc.initInnerDS("base_UCRelatedSpecification");
+        model.UCRelatedSpecificationDS = UCRelatedSpecification;
+
+        /*var happyBoltOnSpecification = cm_spoc.initInnerDS("base_HappyBoltOnSpecification");
+        model.HappyBoltOnSpecificationDS = happyBoltOnSpecification;
+
+        var reductionCoefficient = cm_spoc.initInnerDS("base_ReductionCoefficient");
+        model.HappyBoltOnSpecificationDS.ReductionCoefficientDS = reductionCoefficient;
+
+         var happyBoltOnPeriodArr = cm_spoc.initInnerDS("base_HappyBoltOnPeriodArr");
+        model.HappyBoltOnSpecificationDS.HappyBoltOnPeriodArrDS = happyBoltOnPeriodArr;
+
+       var happyBoltOnPeriodsArr = cm_spoc.initInnerDS("base_RateSpecificationArr");
+        model.HappyBoltOnSpecificationDS.RateSpecificationArrDS = happyBoltOnPeriodsArr;
+
+        var rateSpecificationArr = cm_spoc.initInnerDS("base_RateSpecificationArr");
+        model.RateSpecificationArrDS = rateSpecificationArr;/
+
+        var thresholdSpecificationArr = cm_spoc.initInnerDS("base_ThresholdSpecificationArr");
+        model.ThresholdSpecificationArrDS = thresholdSpecificationArr;*/
+
+
+        model.BoltOnTypeModality="BD";
+        model.SessionSpecificationDS.BoltOnDuration="NONE";
+        model.GeneralStartEndDateSpecDS.GeneralForBoltOnEnum="false";
+        model.GeneralStartEndDateSpecDS.GeneralForBoltOn=false;
+        model.GeneralBoltOnValuesSpecDS.GeneralForBoltOnEnum="false";
+        model.GeneralBoltOnValuesSpecDS.GeneralForBoltOn=false;
+        model.BoltOnGenericSpecificationDS.BoltOnMustBeParticular=true;
+
+
+
+        return model;
+    }
+    else{
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+
+       s.specificationCode = model.SessionSpecification;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.SessionSpecificationDS=r;
+       }
+
+       s.specificationCode = model.EventTechnicalSpecification;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.EventTechnicalSpecificationDS=r;
+       }
+
+       s.specificationCode = model.GeneralBoltOnValuesSpec;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.GeneralBoltOnValuesSpecDS=r;
+       }
+
+       s.specificationCode = model.GeneralStartEndDateSpec;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.GeneralStartEndDateSpecDS=r;
+       }
+
+       s.specificationCode = model.BoltOnGenericSpecification;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.BoltOnGenericSpecificationDS=r;
+       }
+
+       s.specificationCode = model.SessionSpecificationDS.SessionTechnicalSpec;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.SessionSpecificationDS.SessionTechnicalSpecDS=r;
+       }
+
+       s.specificationCode = model.RateSpecificationArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.RateSpecificationArrDS=r;
+             }
+
+       var rateSpecRel=model.RateSpecificationArrDS.List;
+       var rateSpecDS=model.RateSpecificationArrDS.ListDS;
+       for(var i=0;i<rateSpecRel.length;i++){
+           s.specificationCode = rateSpecRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               rateSpecDS[i]=r;
+           }
+       }
+
+       s.specificationCode = model.ThresholdSpecificationArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.ThresholdSpecificationArrDS=r;
+             }
+
+       var thresholdSpecRel=model.ThresholdSpecificationArrDS.List;
+       var thresholdSpecDS=model.ThresholdSpecificationArrDS.ListDS;
+       for(var i=0;i<thresholdSpecRel.length;i++){
+           s.specificationCode = thresholdSpecRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               thresholdSpecDS[i]=r;
+           }
+       }
+
+       s.specificationCode = model.HappyBoltOnSpecification;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.HappyBoltOnSpecificationDS=r;
+       }
+
+       s.specificationCode = model.HappyBoltOnSpecificationDS.ReductionCoefficient;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.HappyBoltOnSpecificationDS.ReductionCoefficientDS=r;
+       }
+
+       s.specificationCode = model.HappyBoltOnSpecificationDS.HappyBoltOnPeriodArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.HappyBoltOnSpecificationDS.HappyBoltOnPeriodArrDS=r;
+       }
+
+       var happyBoltOnPeriodRel = model.HappyBoltOnSpecificationDS.HappyBoltOnPeriodArrDS.List;
+       var happyBoltOnPeriodDS=model.HappyBoltOnSpecificationDS.HappyBoltOnPeriodArrDS.ListDS;
+       for(var i=0;i<happyBoltOnPeriodRel.length;i++){
+           s.specificationCode = happyBoltOnPeriodRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               happyBoltOnPeriodDS[i]=r;
+           }
+       }
+
+         s.specificationCode = model.HappyBoltOnSpecificationDS.RateSpecificationArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.HappyBoltOnSpecificationDS.RateSpecificationArrDS=r;
+       }
+
+       var rateSpecificationRel = model.HappyBoltOnSpecificationDS.RateSpecificationArrDS.List;
+       var rateSpecificationDS=model.HappyBoltOnSpecificationDS.RateSpecificationArrDS.ListDS;
+       for(var i=0;i<rateSpecificationRel.length;i++){
+           s.specificationCode = rateSpecificationRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               rateSpecificationDS[i]=r;
+           }
+       }
+
+
+       s.specificationCode = model.UCRelatedSpecification;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.UCRelatedSpecificationDS=r;
+       }
+
+        if(model.GeneralBoltOnValuesSpecDS.GeneralForBoltOn == true)
+            model.GeneralBoltOnValuesSpecDS.GeneralForBoltOnEnum="true";
+        else
+             model.GeneralBoltOnValuesSpecDS.GeneralForBoltOnEnum="false";
+
+        if(model.GeneralStartEndDateSpecDS.GeneralForBoltOn == true)
+            model.GeneralStartEndDateSpecDS.GeneralForBoltOnEnum="true";
+        else
+             model.GeneralStartEndDateSpecDS.GeneralForBoltOnEnum="false";
+
+        return model;
+    }
+  ]]></script>
+</script>

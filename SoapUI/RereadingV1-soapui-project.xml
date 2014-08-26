@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="RereadingV1" resourceRoot="" soapui-version="4.6.4" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="RereadingBinding" type="wsdl" bindingName="{urn:webservices.com.tid}RereadingBinding" soapVersion="1_1" anonymous="optional" definition="file:/E:/@Work/ERICSSON/DOCs/RereadingV1.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:\E:\@Work\ERICSSON\DOCs\RereadingV1.wsdl"><con:part><con:url>file:\E:\@Work\ERICSSON\DOCs\RereadingV1.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="urn:webservices.com.tid" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="urn:webservices.com.tid" xmlns:intf="urn:webservices.com.tid" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <schema targetNamespace="urn:webservices.com.tid" xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+      <element name="table_service_object" nillable="true" type="impl:table_service_object"/>
+      <complexType name="table_service_object">
+        <sequence>
+          <element name="tableName" type="xsd:string"/>
+        </sequence>
+      </complexType>
+      <element name="ArrayOf_table_service_object" nillable="true" type="impl:ArrayOf_table_service_object"/>
+      <complexType name="ArrayOf_table_service_object">
+        <complexContent>
+          <restriction base="soapenc:Array">
+            <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:table_service_object[]" xmlns:wsdl1="http://schemas.xmlsoap.org/wsdl/"/>
+          </restriction>
+        </complexContent>
+      </complexType>
+      <element name="deferred_rereading_object" nillable="true" type="impl:deferred_rereading_object"/>
+      <complexType name="deferred_rereading_object">
+        <sequence>
+          <element name="id" type="xsd:string"/>
+          <element name="groupsOfTables" type="xsd:string"/>
+          <element name="date" type="xsd:string"/>
+        </sequence>
+      </complexType>
+      <element name="ArrayOf_deferred_rereading_object" nillable="true" type="impl:ArrayOf_deferred_rereading_object"/>
+      <complexType name="ArrayOf_deferred_rereading_object">
+        <complexContent>
+          <restriction base="soapenc:Array">
+            <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:deferred_rereading_object[]" xmlns:wsdl1="http://schemas.xmlsoap.org/wsdl/"/>
+          </restriction>
+        </complexContent>
+      </complexType>
+      <element name="query_rereading_object" nillable="true" type="impl:query_rereading_object"/>
+      <complexType name="query_rereading_object">
+        <sequence>
+          <element name="state" type="xsd:string"/>
+          <element name="command" type="xsd:string"/>
+          <element name="host" type="xsd:string"/>
+          <element name="process" type="xsd:string"/>
+          <element name="cell" type="xsd:string"/>
+          <element name="instance" type="xsd:string"/>
+          <element name="detail" type="xsd:string"/>
+        </sequence>
+      </complexType>
+      <element name="ArrayOf_query_rereading_object" nillable="true" type="impl:ArrayOf_query_rereading_object"/>
+      <complexType name="ArrayOf_query_rereading_object">
+        <complexContent>
+          <restriction base="soapenc:Array">
+            <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:query_rereading_object[]" xmlns:wsdl1="http://schemas.xmlsoap.org/wsdl/"/>
+          </restriction>
+        </complexContent>
+      </complexType>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="rereadingRequest">
+    <wsdl:part name="command" type="xsd:string"/>
+    <wsdl:part name="sdp" type="xsd:string"/>
+    <wsdl:part name="serviceId" type="xsd:string"/>
+    <wsdl:part name="diferDate" type="xsd:string"/>
+    <wsdl:part name="listOfTables" type="impl:ArrayOf_table_service_object"/>
+  </wsdl:message>
+  <wsdl:message name="rereadingRequestU">
+    <wsdl:part name="command" type="xsd:string"/>
+    <wsdl:part name="sdp" type="xsd:string"/>
+    <wsdl:part name="serviceId" type="xsd:string"/>
+    <wsdl:part name="diferDate" type="xsd:string"/>
+    <wsdl:part name="listOfTables" type="impl:ArrayOf_table_service_object"/>
+    <wsdl:part name="externalUser" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="rereadingResponse">
+    <wsdl:part name="resultCode" type="xsd:string"/>
+    <wsdl:part name="resultDescription" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="queryCommandRequest">
+    <wsdl:part name="commandId" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="queryCommandResponse">
+    <wsdl:part name="resultCode" type="xsd:string"/>
+    <wsdl:part name="resultDescription" type="impl:ArrayOf_query_rereading_object"/>
+  </wsdl:message>
+  <wsdl:message name="rereadingTariffTreeRequest">
+    <wsdl:part name="sdp" type="xsd:string"/>
+    <wsdl:part name="serviceId" type="xsd:string"/>
+    <wsdl:part name="diferDate" type="xsd:string"/>
+    <wsdl:part name="treeType" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="rereadingTariffTreeRequestU">
+    <wsdl:part name="sdp" type="xsd:string"/>
+    <wsdl:part name="serviceId" type="xsd:string"/>
+    <wsdl:part name="diferDate" type="xsd:string"/>
+    <wsdl:part name="treeType" type="xsd:string"/>
+    <wsdl:part name="externalUser" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="queryDeferredRereadingsRequest"/>
+  <wsdl:message name="queryDeferredRereadingsResponse">
+    <wsdl:part name="listOfDeferredRereadings" type="impl:ArrayOf_deferred_rereading_object"/>
+    <wsdl:part name="resultCode" type="xsd:string"/>
+    <wsdl:part name="resultDescription" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="voidDeferredRereadingRequest">
+    <wsdl:part name="id" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="voidDeferredRereadingRequestU">
+    <wsdl:part name="id" type="xsd:string"/>
+    <wsdl:part name="externalUser" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="voidDeferredRereadingResponse">
+    <wsdl:part name="resultCode" type="xsd:string"/>
+    <wsdl:part name="resultDescription" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:portType name="RereadingInterface">
+    <!--##-->
+    <!--performance the re-reading command-->
+    <wsdl:operation name="executeCommand">
+      <wsdl:input message="impl:rereadingRequest" name="rereadingRequest"/>
+      <wsdl:output message="impl:rereadingResponse" name="rereadingResponse"/>
+    </wsdl:operation>
+    <!--##-->
+    <!--performance the re-reading command-->
+    <wsdl:operation name="executeCommandU">
+      <wsdl:input message="impl:rereadingRequestU" name="rereadingRequestU"/>
+      <wsdl:output message="impl:rereadingResponse" name="rereadingResponseU"/>
+    </wsdl:operation>
+    <!--##-->
+    <!--performance the re-reading command-->
+    <wsdl:operation name="executeCommandTariffTreeRereading">
+      <wsdl:input message="impl:rereadingTariffTreeRequest" name="rereadingTariffTreeRequest"/>
+      <wsdl:output message="impl:rereadingResponse" name="rereadingTariffTreeResponse"/>
+    </wsdl:operation>
+    <!--##-->
+    <!--performance the re-reading command-->
+    <wsdl:operation name="executeCommandTariffTreeRereadingU">
+      <wsdl:input message="impl:rereadingTariffTreeRequestU" name="rereadingTariffTreeRequestU"/>
+      <wsdl:output message="impl:rereadingResponse" name="rereadingTariffTreeResponseU"/>
+    </wsdl:operation>
+    <!--##-->
+    <!--##-->
+    <!--query the command-->
+    <wsdl:operation name="queryCommand">
+      <wsdl:input message="impl:queryCommandRequest" name="queryCommandRequest"/>
+      <wsdl:output message="impl:queryCommandResponse" name="queryCommandResponse"/>
+    </wsdl:operation>
+    <!--##-->
+    <!--##-->
+    <!--query deferred re-readings-->
+    <wsdl:operation name="queryDeferredRereadings">
+      <wsdl:input message="impl:queryDeferredRereadingsRequest" name="queryDeferredRereadingsRequest"/>
+      <wsdl:output message="impl:queryDeferredRereadingsResponse" name="queryDeferredRereadingsResponse"/>
+    </wsdl:operation>
+    <!--##-->
+    <!--##-->
+    <!--void deferred re-reading-->
+    <wsdl:operation name="voidDeferredRereading">
+      <wsdl:input message="impl:voidDeferredRereadingRequest" name="voidDeferredRereadingRequest"/>
+      <wsdl:output message="impl:voidDeferredRereadingResponse" name="voidDeferredRereadingResponse"/>
+    </wsdl:operation>
+    <!--##-->
+    <!--##-->
+    <!--void deferred re-reading-->
+    <wsdl:operation name="voidDeferredRereadingU">
+      <wsdl:input message="impl:voidDeferredRereadingRequestU" name="voidDeferredRereadingRequestU"/>
+      <wsdl:output message="impl:voidDeferredRereadingResponse" name="voidDeferredRereadingResponseU"/>
+    </wsdl:operation>
+    <!--##-->
+  </wsdl:portType>
+  <wsdl:binding name="RereadingBinding" type="impl:RereadingInterface">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <!--##-->
+    <!--performance the re-reading command-->
+    <wsdl:operation name="executeCommand">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="rereadingRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="rereadingResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <!--##-->
+    <!--##-->
+    <!--performance the re-reading command-->
+    <wsdl:operation name="executeCommandU">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="rereadingRequestU">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="rereadingResponseU">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <!--##-->
+    <!--##-->
+    <!--performance the re-reading command for tariff tree-->
+    <wsdl:operation name="executeCommandTariffTreeRereading">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="rereadingTariffTreeRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="rereadingTariffTreeResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <!--##-->
+    <!--##-->
+    <!--performance the re-reading command for tariff tree-->
+    <wsdl:operation name="executeCommandTariffTreeRereadingU">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="rereadingTariffTreeRequestU">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="rereadingTariffTreeResponseU">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <!--##-->
+    <!--##-->
+    <!--query the command-->
+    <wsdl:operation name="queryCommand">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="queryCommandRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="queryCommandResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <!--##-->
+    <!--##-->
+    <!--query deferred re-readings-->
+    <wsdl:operation name="queryDeferredRereadings">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="queryDeferredRereadingsRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="queryDeferredRereadingsResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <!--##-->
+    <!--##-->
+    <!--void deferred re-reading-->
+    <wsdl:operation name="voidDeferredRereading">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="voidDeferredRereadingRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="voidDeferredRereadingResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <!--##-->
+    <!--##-->
+    <!--void deferred re-reading-->
+    <wsdl:operation name="voidDeferredRereadingU">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="voidDeferredRereadingRequestU">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="voidDeferredRereadingResponseU">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:webservices.com.tid" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <!--##-->
+  </wsdl:binding>
+  <wsdl:service name="RereadingInterfaceService">
+    <wsdl:port binding="impl:RereadingBinding" name="RereadingV1">
+      <wsdlsoap:address location="http://localhost:8081/axis-rereading/services/RereadingV1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://TP0033W7010:9090/mockRereadingBinding</con:endpoint><con:endpoint>http://localhost:8081/axis-rereading/services/RereadingV1</con:endpoint></con:endpoints><con:operation isOneWay="false" action="" name="executeCommand" bindingOperationName="executeCommand" type="Request-Response" outputName="rereadingResponse" inputName="rereadingRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://tp0033w7010:9090/mockRereadingBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:executeCommand>
+         <command>?</command>
+         <sdp>?</sdp>
+         <serviceId>?</serviceId>
+         <diferDate>?</diferDate>
+         <listOfTables soapenc:arrayType="?" soapenc:offset="?" id="?" href="?"/>
+      </urn:executeCommand>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/rereadingRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="" name="executeCommandTariffTreeRereading" bindingOperationName="executeCommandTariffTreeRereading" type="Request-Response" outputName="rereadingTariffTreeResponse" inputName="rereadingTariffTreeRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8081/axis-rereading/services/RereadingV1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:executeCommandTariffTreeRereading>
+         <sdp>?</sdp>
+         <serviceId>?</serviceId>
+         <diferDate>?</diferDate>
+         <treeType>?</treeType>
+      </urn:executeCommandTariffTreeRereading>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/rereadingTariffTreeRequest"/></con:call></con:operation><con:operation isOneWay="false" action="" name="executeCommandTariffTreeRereadingU" bindingOperationName="executeCommandTariffTreeRereadingU" type="Request-Response" outputName="rereadingTariffTreeResponseU" inputName="rereadingTariffTreeRequestU" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8081/axis-rereading/services/RereadingV1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:executeCommandTariffTreeRereadingU>
+         <sdp>?</sdp>
+         <serviceId>?</serviceId>
+         <diferDate>?</diferDate>
+         <treeType>?</treeType>
+         <externalUser>?</externalUser>
+      </urn:executeCommandTariffTreeRereadingU>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/rereadingTariffTreeRequestU"/></con:call></con:operation><con:operation isOneWay="false" action="" name="executeCommandU" bindingOperationName="executeCommandU" type="Request-Response" outputName="rereadingResponseU" inputName="rereadingRequestU" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8081/axis-rereading/services/RereadingV1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:executeCommandU>
+         <command>?</command>
+         <sdp>?</sdp>
+         <serviceId>?</serviceId>
+         <diferDate>?</diferDate>
+         <listOfTables soapenc:arrayType="?" soapenc:offset="?" id="?" href="?"/>
+         <externalUser>?</externalUser>
+      </urn:executeCommandU>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/rereadingRequestU"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="" name="queryCommand" bindingOperationName="queryCommand" type="Request-Response" outputName="queryCommandResponse" inputName="queryCommandRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://tp0033w7010:9090/mockRereadingBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:queryCommand>
+         <commandId>?</commandId>
+      </urn:queryCommand>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/queryCommandRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="" name="queryDeferredRereadings" bindingOperationName="queryDeferredRereadings" type="Request-Response" outputName="queryDeferredRereadingsResponse" inputName="queryDeferredRereadingsRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8081/axis-rereading/services/RereadingV1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:queryDeferredRereadings/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/queryDeferredRereadingsRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="" name="voidDeferredRereading" bindingOperationName="voidDeferredRereading" type="Request-Response" outputName="voidDeferredRereadingResponse" inputName="voidDeferredRereadingRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8081/axis-rereading/services/RereadingV1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:voidDeferredRereading>
+         <id>?</id>
+      </urn:voidDeferredRereading>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/voidDeferredRereadingRequest"/></con:call></con:operation><con:operation isOneWay="false" action="" name="voidDeferredRereadingU" bindingOperationName="voidDeferredRereadingU" type="Request-Response" outputName="voidDeferredRereadingResponseU" inputName="voidDeferredRereadingRequestU" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8081/axis-rereading/services/RereadingV1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:voidDeferredRereadingU>
+         <id>?</id>
+         <externalUser>?</externalUser>
+      </urn:voidDeferredRereadingU>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/voidDeferredRereadingRequestU"/></con:call></con:operation></con:interface><con:mockService port="9090" path="/mockRereadingBinding" host="TP0033W7010" name="RereadingBinding MockService" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-version">false</con:setting></con:settings><con:mockOperation name="executeCommand" interface="RereadingBinding" operation="executeCommand"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:executeCommandResponse>
+         <resultCode>0</resultCode>
+         <resultDescription>SUCCESS</resultDescription>
+      </urn:executeCommandResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/rereadingResponse"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="executeCommandTariffTreeRereading" interface="RereadingBinding" operation="executeCommandTariffTreeRereading"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:executeCommandTariffTreeRereadingResponse>
+         <resultCode>?</resultCode>
+         <resultDescription>?</resultDescription>
+      </urn:executeCommandTariffTreeRereadingResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/rereadingTariffTreeResponse"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="executeCommandTariffTreeRereadingU" interface="RereadingBinding" operation="executeCommandTariffTreeRereadingU"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:executeCommandTariffTreeRereadingUResponse>
+         <resultCode>?</resultCode>
+         <resultDescription>?</resultDescription>
+      </urn:executeCommandTariffTreeRereadingUResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/rereadingTariffTreeResponseU"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="executeCommandU" interface="RereadingBinding" operation="executeCommandU"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>SUCCESS</con:defaultResponse><con:response name="SUCCESS" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:executeCommandUResponse>
+         <resultCode>0</resultCode>
+         <resultDescription>SUCCESS</resultDescription>
+      </urn:executeCommandUResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/rereadingResponseU"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="queryCommand" interface="RereadingBinding" operation="queryCommand"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response Test" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:queryCommandResponse>
+         <resultCode>1</resultCode>
+         <resultDescription>
+         		<query_rereading_objechjckdsat>
+         			<state>S1</state>
+         			<command>C1</command>
+         			<host>H1</host>
+         			<process>P1</process>
+         			<cell>C1</cell>
+         			<instance>I1</instance>
+         			<detail>D1</detail>
+         		</query_rereading_objechjckdsat>
+         		<query_rereading_objechjckdsat>
+         			<state>S2</state>
+         			<command>C2</command>
+         			<host>H2</host>
+         			<process>P2</process>
+         			<cell>C2</cell>
+         			<instance>I2</instance>
+         			<detail>D2</detail>
+         		</query_rereading_objechjckdsat>
+         </resultDescription>
+      </urn:queryCommandResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/queryCommandResponse"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="queryDeferredRereadings" interface="RereadingBinding" operation="queryDeferredRereadings"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:queryDeferredRereadingsResponse>
+         <listOfDeferredRereadings soapenc:arrayType="?" soapenc:offset="?" id="?" href="?"/>
+         <resultCode>?</resultCode>
+         <resultDescription>?</resultDescription>
+      </urn:queryDeferredRereadingsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/queryDeferredRereadingsResponse"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="voidDeferredRereading" interface="RereadingBinding" operation="voidDeferredRereading"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:voidDeferredRereadingResponse>
+         <resultCode>?</resultCode>
+         <resultDescription>?</resultDescription>
+      </urn:voidDeferredRereadingResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/voidDeferredRereadingResponse"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="voidDeferredRereadingU" interface="RereadingBinding" operation="voidDeferredRereadingU"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:webservices.com.tid">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:voidDeferredRereadingUResponse>
+         <resultCode>?</resultCode>
+         <resultDescription>?</resultDescription>
+      </urn:voidDeferredRereadingUResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:webservices.com.tid/RereadingInterface/voidDeferredRereadingResponseU"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

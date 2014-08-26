@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ListSettingsForm">
+  <group>Lists</group>
+  <label>ListSettingsForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="ListSettingsPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ListSettings</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="generalParameters" type="vform">
+          <label>generalParameters</label>
+          <root name="GridLayout" type="elgrd">
+            <colWidths>160px</colWidths>
+            <edgeShowCenter>true</edgeShowCenter>
+            <edgeSize>2</edgeSize>
+            <labeAlign>center</labeAlign>
+            <numOfCols>2</numOfCols>
+            <width>600px</width>
+            <elementList>
+              <element name="MaxListsPerSubscriber" type="elfld">
+                <labeAlign>left</labeAlign>
+                <label>Maximum number of lists per subscriber</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ListSettingsForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.ListSettings/dstruct_MaxListsPerSubscriber</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="Label4" type="ellab">
+                <cellAlignment>left,center</cellAlignment>
+                <fontProperties type="pfnt">
+                  <color>#003168</color>
+                  <family>Arial</family>
+                  <size>11</size>
+                </fontProperties>
+                <label>Ignore Ton For Voice Lists</label>
+                <width>250px</width>
+              </element>
+              <element name="IgnoreTonForVoiceLists" type="elchk">
+                <cellAlignment>left,center</cellAlignment>
+                <labelAsTitle>false</labelAsTitle>
+                <showLabel>false</showLabel>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ListSettingsForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.ListSettings/dstruct_IgnoreTonForVoiceLists</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="status" type="vform">
+          <label>status</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="FormFrame" type="elovf">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ListSettingsForm/leaf_ListSettingsPickList</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>300px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ListSettingsForm/leaf_ListSettingsPickList</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>600px</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="generalParameters" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ListSettingsForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.ListSettingsForm/frmui_Forms/vform_generalParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                </element>
+                <element name="Status" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ListSettingsForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.ListSettingsForm/frmui_Forms/vform_status</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Status</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$ListSettingsPickList" type="laction">
+      <path>ui_cm_spoc.forms.ListSettingsForm/leaf_ListSettingsPickList</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var pl = new cm_spoc.PickList(null,this);
+        pl.modelCallback = this.setModel;
+
+        pl.availableItems = new DataObjectList();
+        var itemFinder = new Finder("cm_spoc.LifeCycleInternalSubstatusStatusAtribFinder");
+
+
+        var result = itemFinder.search();
+        for(var i=0;i<result.length;i++){
+            var item = new cm_spoc.PickListDS();
+            item.id=result[i].itemCode;
+            //item.description=result[i].description;
+            var msgArray = result[i].msgToDisp.split("-");
+            var msgArray2 = msgArray[0].split(" ");
+            var myCode = msgArray2[0];
+            var ct = Global.getCTCodesAndDescriptions("StatusCodeTable");
+            var statusDescription;
+            for(var j=0; j<ct.length; j++){
+                if(ct[j]==myCode){
+                    var indDesc=j+1;
+                    statusDescription = ct[indDesc];
+                }
+            }
+            var finalLabel = statusDescription + " / " + msgArray[1];
+            item.description = finalLabel;
+            pl.availableItems.addLast(item);
+        }
+
+
+
+        /*var listDS = this.model.ListAllowedStateArrDS.ListDS;
+        for(var i=0;i<listDS.length;i++){
+            var item = new cm_spoc.PickListDS();
+            item.id= listDS.ListDS[i].AllowedSubscriberState;
+            pl.selectedItems.addLast(item);
+        }*/
+
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.ListSettingsForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initListSettings(this.model);
+        cm_spoc.initListSettingsUI(this);
+        return m;
+      ]]></script>
+    </method>
+    <method name="setModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.ListAllowedStateArrDS.List =null;
+        //this.model.ListAllowedStateArrDS.List = null;
+        for(var i=0;i<selectedItems.length;i++){
+            //var item = new cm_spoc.data.ListAllowedState();
+            //item.AllowedSubscriberState = selectedItems[i].id;
+
+           // var item = cm_spoc.initInnerDS("base_LifeCycleInternalSubstatus");
+            //item.Substatus = selectedItems[i].id;
+            //item.Status = selectedItems[i].id;
+            //this.parent.model.ListAllowedStateArrDS.ListDS[i] = item;
+            //this.model.ListAllowedStateArrDS.List[i] = selectedItems[i].id;
+            this.parent.model.ListAllowedStateArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="setPickListModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        for(var i=0;i<selectedItems.length;i++){
+           // this.parent.model.= selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

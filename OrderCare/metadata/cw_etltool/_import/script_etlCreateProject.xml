@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.etlCreateProject">
+  <group>services</group>
+  <highlight>2</highlight>
+  <label>etlCreateProject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="importCommonInfo" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cw_etltool._import.impCommonInfo</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cwt_common.response</valueType>
+  <script><![CDATA[
+    var projectDS = importCommonInfo.projectDS;
+    projectDS.name = projectDS.description;
+    projectDS.label = projectDS.description;
+    projectDS.effectiveDate = new Date();
+    projectDS.createDate = new Date();
+    projectDS.status = "DEF";
+
+    var response = cwt_pcmaintapi.projectCreate( projectDS);
+    if (response.isBasedOn("cwt_pcmaintapi:Fault")) {
+        return cwl_epc.createCommonFault(response);
+    }
+
+    if(importCommonInfo.isNeedUpdateAA){
+        var ord = new Order("cm_plm.plmOrder");
+        ord.change.projectCode = projectDS.projectCode;
+        ord.plmControl.projectCode = projectDS.projectCode;
+        ord.notes.projectCode = projectDS.projectCode;
+        ord.save();
+    }
+
+    return response;
+  ]]></script>
+</script>

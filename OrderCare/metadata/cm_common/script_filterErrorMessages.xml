@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.filterErrorMessages">
+  <group>utilities</group>
+  <label>filterErrorMessages</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="errorList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errorCode" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="regEx" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var ret = new Array();
+    for(var i=0; i<errorList.length; i++) {
+        if(errorList[i]==errorCode) {
+            var m = errorList[i+1].match(regEx);
+            if(m && m.length>0)
+                ret[ret.length] = m[m.length-1];
+        }
+    }
+    return ret;
+  ]]></script>
+</script>

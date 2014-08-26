@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initUCSApConHappyPeriodArr">
+  <group>ui_scripts.UsageControl.HappyPeriod</group>
+  <label>initUCSApConHappyPeriodArr</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*if (!model.specificationCode){
+        model = cm_spoc.initModelForCreation(model);
+    }
+    else
+    {
+       model = cm_spoc.initModelForModification(model);
+
+    }*/
+
+
+    var HPModel;
+    for( var i=0; i<model.UCSApConHappyPeriodArrDS.ListDS.length; i++){
+
+    HPModel=model.UCSApConHappyPeriodArrDS.ListDS[i];
+
+    cm_spoc.initHappyPeriod(ui, HPModel,false);
+
+
+    var tlUi = new cm_spoc.forms.HappyPeriodPopUpTableLineUI( HPModel,ui);
+
+    if(!ui.tableIterator) ui.tableIterator= new Array();
+    ui.tableIterator[ui.tableIterator.length] = tlUi;
+    cm_spoc.loadTableUI(ui);
+
+    }
+
+    return model;
+  ]]></script>
+</script>

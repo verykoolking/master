@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- PA2 -->
+
+<wsdl:definitions 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/balanceManagement/v1/services"
+    xmlns:bans="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/balanceManagement/v1/types"
+    xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+    xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/04/secext"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    targetNamespace="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/balanceManagement/v1/services">
+    
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+            <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/balanceManagement/v1/types"
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_balanceManagement_types_v1_0.xsd"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                schemaLocation="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2002/04/secext"
+                schemaLocation="http://schemas.xmlsoap.org/ws/2002/04/secext/secext.xsd" />
+	        <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+  			    schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>	
+        </xsd:schema>
+    </wsdl:types>
+    
+    <!--
+        Header
+    -->
+    <wsdl:message name="OCSHeaderInfo">
+        <wsdl:part name="messageID" element="wsa:MessageID" />
+        <wsdl:part name="replyTo" element="wsa:ReplyTo" />
+        <wsdl:part name="security" element="wsse:Security" />
+    </wsdl:message>
+  
+	<!--
+	    Messages
+	-->
+	
+    <wsdl:message name="DecrementBalanceRequest">
+        <wsdl:part name="parameters" element="bans:decrementBalance" />
+    </wsdl:message>
+    <wsdl:message name="DecrementBalanceResponse">
+        <wsdl:part name="parameters" element="bans:decrementBalanceResponse" />
+    </wsdl:message>
+    <wsdl:message name="IncrementBalanceRequest">
+        <wsdl:part name="parameters" element="bans:incrementBalance" />
+    </wsdl:message>
+    <wsdl:message name="IncrementBalanceResponse">
+        <wsdl:part name="parameters" element="bans:incrementBalanceResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryTotalBalanceRequest">
+        <wsdl:part name="parameters" element="bans:queryTotalBalance" />
+    </wsdl:message>
+    <wsdl:message name="QueryTotalBalanceResponse">
+        <wsdl:part name="parameters" element="bans:queryTotalBalanceResponse" />
+    </wsdl:message>
+    <wsdl:message name="TopUpAccountRequest">
+        <wsdl:part name="parameters" element="bans:topUpAccount" />
+    </wsdl:message>
+    <wsdl:message name="TopUpAccountResponse">
+        <wsdl:part name="parameters" element="bans:topUpAccountResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryBalancesRequest">
+        <wsdl:part name="parameters" element="bans:queryBalances" />
+    </wsdl:message>
+    <wsdl:message name="QueryBalancesResponse">
+        <wsdl:part name="parameters" element="bans:queryBalancesResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryTopUpsDetailsRequest">
+        <wsdl:part name="parameters" element="bans:queryTopUpsDetails" />
+    </wsdl:message>
+    <wsdl:message name="QueryTopUpsDetailsResponse">
+        <wsdl:part name="parameters" element="bans:queryTopUpsDetailsResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryBalanceAdjustmentRequest">
+        <wsdl:part name="parameters" element="bans:queryBalanceAdjustment" />
+    </wsdl:message>
+    <wsdl:message name="QueryBalanceAdjustmentResponse">
+        <wsdl:part name="parameters" element="bans:queryBalanceAdjustmentResponse" />
+    </wsdl:message>
+    <wsdl:message name="BalanceTransferRequest">
+        <wsdl:part name="parameters" element="bans:balanceTransfer" />
+    </wsdl:message>
+    <wsdl:message name="BalanceTransferResponse">
+        <wsdl:part name="parameters" element="bans:balanceTransferResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryBalanceTransferBasicsRequest">
+        <wsdl:part name="parameters" element="bans:queryBalanceTransferBasics" />
+    </wsdl:message>
+    <wsdl:message name="QueryBalanceTransferBasicsResponse">
+        <wsdl:part name="parameters" element="bans:queryBalanceTransferBasicsResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChargeAccountRequest">
+        <wsdl:part name="parameters" element="bans:chargeAccount" />
+    </wsdl:message>
+    <wsdl:message name="ChargeAccountResponse">
+        <wsdl:part name="parameters" element="bans:chargeAccountResponse" />
+    </wsdl:message>
+    <wsdl:message name="ServerException">
+      <wsdl:part name="ServerException" element="uct:serverException"/>
+    </wsdl:message>
+    <wsdl:message name="ClientException">
+      <wsdl:part name="ClientException" element="uct:clientException"/>
+    </wsdl:message>
+	
+	<!--
+	    Port
+	-->
+	
+	<wsdl:portType name="BalanceManagementPort_v1_0">
+        <wsdl:operation name="decrementBalance">
+            <wsdl:input message="tns:DecrementBalanceRequest" />
+            <wsdl:output message="tns:DecrementBalanceResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="incrementBalance">
+            <wsdl:input message="tns:IncrementBalanceRequest" />
+            <wsdl:output message="tns:IncrementBalanceResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryTotalBalance">
+            <wsdl:input message="tns:QueryTotalBalanceRequest" />
+            <wsdl:output message="tns:QueryTotalBalanceResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="topUpAccount">
+            <wsdl:input message="tns:TopUpAccountRequest" />
+            <wsdl:output message="tns:TopUpAccountResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryBalances">
+            <wsdl:input message="tns:QueryBalancesRequest" />
+            <wsdl:output message="tns:QueryBalancesResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryTopUpsDetails">
+            <wsdl:input message="tns:QueryTopUpsDetailsRequest" />
+            <wsdl:output message="tns:QueryTopUpsDetailsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryBalanceAdjustment">
+            <wsdl:input message="tns:QueryBalanceAdjustmentRequest" />
+            <wsdl:output message="tns:QueryBalanceAdjustmentResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="balanceTransfer">
+            <wsdl:input message="tns:BalanceTransferRequest" />
+            <wsdl:output message="tns:BalanceTransferResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryBalanceTransferBasics">
+            <wsdl:input message="tns:QueryBalanceTransferBasicsRequest" />
+            <wsdl:output message="tns:QueryBalanceTransferBasicsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="chargeAccount">
+            <wsdl:input message="tns:ChargeAccountRequest" />
+            <wsdl:output message="tns:ChargeAccountResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+	</wsdl:portType>
+	
+	<!-- Binding -->
+	
+    <wsdl:binding name="BalanceManagementServiceSOAPBinding_v1_0" type="tns:BalanceManagementPort_v1_0">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+	
+        <wsdl:operation name="decrementBalance">
+            <soap:operation soapAction="decrementBalance" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="incrementBalance">
+            <soap:operation soapAction="incrementBalance" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryTotalBalance">
+            <soap:operation soapAction="queryTotalBalance" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="topUpAccount">
+            <soap:operation soapAction="topUpAccount" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryBalances">
+            <soap:operation soapAction="queryBalances" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryTopUpsDetails">
+            <soap:operation soapAction="queryTopUpsDetails" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryBalanceAdjustment">
+            <soap:operation soapAction="queryBalanceAdjustment" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="balanceTransfer">
+            <soap:operation soapAction="balanceTransfer" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryBalanceTransferBasics">
+            <soap:operation soapAction="queryBalanceTransferBasics" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="chargeAccount">
+            <soap:operation soapAction="chargeAccount" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+	</wsdl:binding>
+	
+	<!--
+	    Service
+	-->
+	
+	<wsdl:service name="BalanceManagementService_v1">
+		<wsdl:port name="BalanceManagement_v1_0" binding="tns:BalanceManagementServiceSOAPBinding_v1_0">
+			<soap:address location="http://localhost/UNICA/OCSProvisioning/BalanceManagement_v1"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

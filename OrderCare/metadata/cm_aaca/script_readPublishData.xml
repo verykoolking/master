@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.readPublishData">
+  <highlight>32</highlight>
+  <label>CM-AACA Read Publish Data</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="pDoc" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="doc" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Read the publish data into into the process document
+     *
+     * @author  Luis Barreira
+     * @date    20-02-2014
+     *
+     * @param {Number} pDoc    The process document
+     * @param {Number} doc     The interface document\data structure
+     */
+
+    pDoc.projectCode = doc.projectCode;
+    pDoc.processId = doc.processId;
+    pDoc.errorOccurred = false;
+    pDoc.errorCode = null;
+    pDoc.errorPhase = null;
+    pDoc.errorDescription = null;
+    pDoc.currentREIndex = -1;
+    pDoc.currentEntityIndex       = -1;
+    pDoc.currentREEntityIndex       = -1;
+    pDoc.currentMSEntityIndex       = -1;
+
+
+    var env = cm_aaca.caGetEnvironment(pDoc);
+    pDoc.delayForQueryCommand = Global.getConfigVariable("AACA_" + env + "_DELAYFORQUERY");
+  ]]></script>
+</script>

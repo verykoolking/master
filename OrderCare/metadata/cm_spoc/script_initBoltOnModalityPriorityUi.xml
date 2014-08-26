@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initBoltOnModalityPriorityUi">
+  <group>ui_scripts.Configuration</group>
+  <label>initBoltOnModalityPriorityUi</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!ui.model.specificationCode){
+        var ctCodes = Global.getCTCodesAndDescriptions("BoltOnModalityCodeTable");
+        var listDS = ui.model.BOMPriorityArrDS.ListDS;
+        var pos = 0;
+        for(var i=0;i<ctCodes.length;i++){
+            var modalityPriority = cm_spoc.initInnerDS("base_BOMPriority");
+            modalityPriority.BoltOnTypeModality = ctCodes[i];
+            modalityPriority.Priority = pos;
+            listDS[pos] = modalityPriority;
+            pos++;
+            i++;
+        }
+    }else{
+
+    }
+  ]]></script>
+</script>

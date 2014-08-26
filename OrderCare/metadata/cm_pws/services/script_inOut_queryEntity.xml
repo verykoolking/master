@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.inOut_queryEntity">
+  <highlight>32</highlight>
+  <label>inOut_queryEntity</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="input" type="rifp">
+      <type>dstruct_OCSConfigurationOperation.v1.types.QueryEntity</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_OCSConfigurationOperation.v1.types.QueryEntityResponse</valueType>
+  <script><![CDATA[
+    try {
+        var OP_REFERENCE = 'QUERY_ENTITY';
+
+        var inputError = cm_pws.services.validateRequest(OP_REFERENCE, input);
+        if(api_common.isFault(inputError)) {
+            throw inputError;
+        }
+
+        var entity = input.oCSEntity;
+        var queryCommonInfo = input.queryCommonInfo;
+        var innerDS = cm_pws.getInnerDataStructure(entity);
+        //validate the session
+        if(!cm_pws.services.isEntityValidForOperation(innerDS)){
+            var fault = api_common.createFault("E102", "Operation is not allowed for this type of entity.");    //TODO: correct code
+            return fault;
+        }
+        var response = cm_pws.services.validateEntity(innerDS);
+        if(api_common.isFault(response[0]))
+            return response[0];
+
+        // Values for result pagination:
+        var paginationFrom  = 0;
+        var paginationTo    = 0;
+
+        var token    = queryCommonInfo.token;
+        var numRegs  = queryCommonInfo.numRegs;
+
+        // Validate token:
+        if(token && token != "") {
+            // Parse the token ('TOKEN_RESULTS_[FROM]_[TO]')
+            var pattern = "^TOKEN_RESULTS_[0-9]+_[0-9]+$";
+            if(cm_common.matchRegularExpression(pattern, token)) {
+                var sb = token.split("_");
+                var lastPaginationTo = cm_pws.services.pwsValidation_PositiveNumber(sb[3]);
+                paginationFrom = lastPaginationTo;
+            }
+            else {
+                var fault = api_common.createFault("E111", "The token has an invalid value. Must match with 'TOKEN_RESULTS_[FROM]_[TO]'.");
+                return fault;
+            }
+        }
+
+        // Validate numRegs:
+        if(numRegs && numRegs != "") {
+            numRegs = cm_pws.services.pwsValidation_PositiveNumber(numRegs);
+            if(api_common.isFault(numRegs)) {
+                var fault = api_common.createFault("E111", "numRegs has an invalid value. Must be a positive number.");
+                return fault;
+            }
+        }
+        else {
+            numRegs = cm_pws.services.pwsValidation_PositiveNumber(0);
+        }
+
+        // Query Specifications
+        var itemCode = innerDS.identifier.dn.scheme;
+        var itemType = innerDS.identifier.entityType;
+        var search = new epc.data.SpecificationSearch();
+
+        if(itemCode == null || "ALL" == itemCode.toUpperCase()) {
+            search.specification.specificationCode = "";
+        }
+        else {
+            search.specification.specificationCode = itemCode;
+        }
+
+        //if(itemType)
+            //search.specification.specificationType = itemType;
+
+        var queryResults = epc.querySpecification(search);
+        if(api_common.isFault(queryResults)) {
+            var fault = api_common.createFault("E111", "Error searching for Specifications.");
+            return fault;
+        }
+
+        // Pagination variables:
+        var maxResults = 0;
+        if(queryResults && queryResults.specification) {
+            maxResults = queryResults.specification.length;
+        }
+
+
+
+        if(maxResults > 0) {
+            if(numRegs == 0) {
+                paginationTo = maxResults - paginationFrom;
+            }
+            else {
+                if(paginationFrom + numRegs > maxResults) {
+                    paginationTo = maxResults;
+                }
+                else {
+                    paginationTo = paginationFrom + numRegs;
+                }
+            }
+        }
+
+        // Create the method response:
+        var output = new OCSConfigurationOperation.v1.types.QueryEntityResponse();
+        output.queryCommonInfoResult = new OCSConfigurationOperation.v1.types.QueryEntity();
+
+        // Map the Specifications to the Entity Structure:
+        var listEntity = new OCSEntity.v1.types.ArrayOfOCSEntityType();
+        var counter = 0;
+        for(var i=paginationFrom; i<paginationTo; i++) {
+            var spec = queryResults.specification[i];
+            spec = cm_common.getSpecificationByKey(spec);
+
+            // Map the entity structure:
+            var entity = new OCSEntity.v1.types.OCSEntityType();
+            var result = cm_pws.services.pwsMap_SpecificationToEntityDS(spec, entity);
+            if(api_common.isFault(result)) {
+                var fault = api_common.createFault("E111", "Internal error while mapping values for the Entity with code='" + spec.specificationCode + "'");
+                return fault;
+            }
+            listEntity.oCSEntity[counter] = entity;
+            counter ++;
+        }
+
+        output.oCSEntityList = listEntity;
+
+        // Create de updated token to return:
+        var returnedToken = new OCSOperation.v1.types.QueryCommonInfoType();
+        returnedToken.token = "TOKEN_RESULTS_" + paginationFrom + "_" + paginationTo;
+        output.queryCommonInfoResult = returnedToken;
+
+        return output;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

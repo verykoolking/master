@@ -1,0 +1,147 @@
+<OCSEntityType>
+	<oCSProductSpecification>
+		<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+		<!-- Attributes inherited from SID EntityBase: identifier -->
+		<!-- Attributes inherited from SID ProductSpecification: name; description; productNumber; validFor; lifeCycleStatus -->
+		<!-- Compulsory SID attributes -->
+		<identifier>
+			<context>
+				<valuePairs/>
+				<scheme>Testing</scheme>
+			</context>
+			<dn>
+				<valuePairs/>
+				<scheme>ListSpecification_T</scheme>
+			</dn>
+			<entityType>ListSpecification</entityType>
+		</identifier>
+		<!-- NGAA attributes -->
+		<type>ListSpecification</type>
+		<oCSProductSpecCharacteristic>
+			<!-- <xsd:annotation> <xsd:documentation><p>Maximum members in the List</annotation> -->
+			<characteristic  type="xsd:long" minValue="1" maxValue="999">
+				<name>MaximumMembers</name>
+			</characteristic>
+			<!-- <xsd:annotation> <xsd:documentation><p>SDP List Code</annotation> -->
+			<characteristic  type="xsd:long" minValue="1" maxValue="9999" defaultValue="0">
+				<name>ListCodeSDP</name>
+			</characteristic>
+			<!-- <xsd:annotation> <xsd:documentation><p>List Priority</annotation> -->
+			<characteristic  type="xsd:long" minValue="0" maxValue="9999">
+				<name>ListPriority</name>
+			</characteristic>
+			<!-- <xsd:annotation> <xsd:documentation><p>Infinite Date</annotation> -->
+			<characteristic  type="xsd:boolean" defaultValue="1">
+				<name>InfiniteDate</name>
+			</characteristic>
+			<!-- <xsd:annotation> <xsd:documentation><p>Start Date</annotation> -->
+			<characteristic  type="xsd:dateTime">
+				<name>StartDate</name>
+			</characteristic>
+			<!-- <xsd:annotation> <xsd:documentation><p>End Date</annotation> -->
+			<characteristic  type="xsd:dateTime">
+				<name>EndDate</name>
+			</characteristic>
+			<!-- <xsd:annotation> <xsd:documentation><p>Voice</annotation> -->
+			<characteristic  type="xsd:boolean" defaultValue="1">
+				<name>Voice</name>
+			</characteristic>
+			<!-- <xsd:annotation> <xsd:documentation><p>SMS Originated</annotation> -->
+			<characteristic  type="xsd:boolean" defaultValue="1">
+				<name>SMSOriginated</name>
+			</characteristic>
+			<!-- <xsd:annotation> <xsd:documentation><p>SMS Terminated</annotation> -->
+			<characteristic  type="xsd:boolean" defaultValue="1">
+				<name>SMSTerminated</name>
+			</characteristic>
+			<!-- <xsd:annotation> <xsd:documentation><p>MMS</annotation> -->
+			<characteristic  type="xsd:boolean" defaultValue="1">
+				<name>MMS</name>
+			</characteristic>
+			<!-- <xsd:annotation> <xsd:documentation><p>Number of lock days when List is full</annotation> -->
+			<characteristic  type="xsd:long" minValue="0" maxValue="999" defaultValue="0">
+				<name>NumberLockDaysListFull</name>
+			</characteristic>
+			<!-- <xsd:annotation> <xsd:documentation><p>Number of lock days when List is not full</annotation> -->
+			<characteristic  type="xsd:long" minValue="0" maxValue="999" defaultValue="0">
+				<name>NumberLockDaysListNotFull</name>
+			</characteristic>
+			<complexCharacteristic minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+				<name>Duo</name>
+				<item>
+					<!-- <xsd:annotation> <xsd:documentation><p>Apply short dialing</annotation> -->
+					<characteristic  type="xsd:boolean" defaultValue="0">
+						<name>ApplyShortDialing</name>
+					</characteristic>
+					<!-- <xsd:annotation> <xsd:documentation><p>Duo Dialing</annotation> -->
+					<characteristic  type="xsd:string" maxLength="28">
+						<name>DuoDialing</name>
+					</characteristic>
+					<!-- <xsd:annotation> <xsd:documentation><p>Check Length</annotation> -->
+					<characteristic  type="xsd:boolean" defaultValue="0">
+						<name>CheckLength</name>
+					</characteristic>
+					<!-- <xsd:annotation> <xsd:documentation><p>Duo Length</annotation> -->
+					<characteristic  type="xsd:long" minValue="-1" maxValue="99">
+						<name>DuoLength</name>
+					</characteristic>
+					<!-- <xsd:annotation> <xsd:documentation><p>Check TON</annotation> -->
+					<characteristic  type="xsd:boolean" defaultValue="0">
+						<name>CheckTon</name>
+					</characteristic>
+
+					<relations>
+						<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+						<relation name="DuoNumberTON" oCSTargetEntityType="Ton" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+							<item>
+								<target>
+									<context>
+										<valuePairs/>
+										<scheme>String</scheme>
+									</context>
+									<dn>
+										<valuePairs/>
+										<scheme>Ton</scheme>
+									</dn>
+									<entityType>DuoNumberTON</entityType>
+								</target>
+							</item>
+						</relation>
+					</relations>
+				</item>
+			</complexCharacteristic>
+			<complexCharacteristic minOccurs="0" individualItemUpdate="true">
+				<name>LSDestGrAndNumbSpec</name>
+				<item operation="A">
+					<!-- <xsd:annotation> <xsd:documentation><p>   Numbering</annotation> -->
+					<characteristic  type="xsd:string" enumValues="0:Other;1:Local;-1">
+						<name>Numbering</name>
+					</characteristic>
+					<!-- <xsd:annotation> <xsd:documentation><p>   Maximum members in the List with the restriction</annotation> -->
+					<characteristic  type="xsd:long" minValue="0" maxValue="999">
+						<name>MaxMembersListWithRestriction</name>
+					</characteristic>
+
+				</item>
+			</complexCharacteristic>
+		</oCSProductSpecCharacteristic>
+		<relations>
+			<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+			<relation name="ListAreApplicableBy" oCSTargetEntityType="Ton" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+				<item>
+					<target>
+						<context>
+							<valuePairs/>
+							<scheme>String</scheme>
+						</context>
+						<dn>
+							<valuePairs/>
+							<scheme>Ton</scheme>
+						</dn>
+						<entityType>ListAreApplicableBy</entityType>
+					</target>
+				</item>
+			</relation>
+		</relations>
+	</oCSProductSpecification>
+</OCSEntityType>

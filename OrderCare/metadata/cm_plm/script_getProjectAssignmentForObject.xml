@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.getProjectAssignmentForObject">
+  <group>applicabilityCondition.scripts</group>
+  <label>getProjectAssignmentForObject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="object" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwf.guid</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var list = Document.searchByFieldContent("cm_plm:projectAssignmentDoc", ["objectId", object.objectId], 99);
+    //if(list.length == 0)
+        //Global.throwException("projectAssignment record was not found for the object: " + object.toXML());
+
+    var result = new DataObjectList();
+
+    for(var i=0; i<list.length; i++){
+
+        var PA = new cm_plm.projectAssignment();
+        list[i].mapTo(PA);
+
+        result[result.length] = PA;
+    }
+    return result;
+  ]]></script>
+</script>

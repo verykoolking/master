@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BOVOCCalendarDateMandatoryCondRule">
+  <group>rules_scripts.BoltOn</group>
+  <label>rule_BOVOCCalendarDateMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute must be mandatory only if the related attribute assumes one of the values shown in the column H.
+
+    //SPOC Entity       -- BoltOnValidityOfferingCal
+    //SPOC Entity attribute       --                         CalendarDate
+    //Related SPOC Entity -- BoltOnValidityOffering
+    //Related SPOC Entity attribute --             BoltOnValidityModality
+    //COLUMN H --       V_CALENDAR
+
+    var entity = data;
+    var bovods = data;
+
+    if (!entity.CalendarDate && (bovods.BoltOnValidityModality == "V_CALENDAR")  ) {
+
+        errList.addErrorMessage(data,["Calendar Date must be set when Validity Modality is 'Calendar Date'"],"NGAA_003","E");
+
+    }
+        return false;
+  ]]></script>
+</script>

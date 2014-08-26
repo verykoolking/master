@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.createEntity">
+  <group>scripts</group>
+  <highlight>32</highlight>
+  <label>createEntity</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="input" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_OCSConfigurationOperation.v1.types.CreateEntity</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try {
+        var OP_REFERENCE = 'CREATE_ENTITY';
+        var entity = input.oCSEntity;
+        var actionCommonInfo = input.actionCommonInfo;
+
+        var projectCode = actionCommonInfo.sessionId;
+        var user = actionCommonInfo.userCode; //TODO: login user
+
+        var project = epc.getProjectByCode(projectCode);
+        if(!project)
+            return  api_common.createFault("E101", "Invalid SessionId.");    //TODO: correct code
+
+        var entityDs = cm_pws.getInnerDataStructure(entity);
+        var itemCode = entityDs.identifier.dn.scheme;
+
+        var entityData = cm_pws.pwsCreateEntity(entityDs, project.projectCode);
+
+        var res = cm_pws.services.pwsMap(entityDs, entityData);
+        if(api_common.isFault(res)) {
+            return res;
+        }
+
+        /* Cardinality rules*/
+        var eList = cm_common.validateDs(entityData);
+        eList = cm_spoc.filterError(entityData, eList)
+        if(eList && eList.length >0)
+        {
+            var fault = api_common.createFault();
+            for (var i = 0; eList != null && i < eList.length; i+=2) {
+                fault.addFault( eList[i], eList[i+1]);
+            }
+            return fault;
+        }
+
+        var response = cm_common.plmCreateItem(entityData,project.projectCode);
+        if(api_common.isFault(response))
+            return response;
+
+        var output = new OCSConfigurationOperation.v1.types.CreateEntityResponse();
+        output = cm_pws.services.pwsMap_ActionCommonInfoResult(output.actionCommonInfoResult, OP_REFERENCE, projectCode);
+
+        return output;
+
+    }catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

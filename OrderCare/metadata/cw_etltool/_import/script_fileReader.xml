@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.fileReader">
+  <label>Read File</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="process" type="rifp">
+      <mandatory>true</mandatory>
+      <type>doc_cwf_pm.CWPROCESS</type>
+    </parameter>
+    <parameter name="document" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$ Read File Script Activity $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+    var order, result, fr, ds, filesGroup, entities, exception, errorMsg, operation, xmlString ;
+    order = result = fr = ds = filesGroup = entities = null;
+    exception = errorMsg = operation = xmlString = "";
+    order =  process.processOrder;
+
+    try{
+        order.header.ProcessId = process.id;
+        isFileAlreadyImported();
+        readFile();
+        validateXSD();
+        parseFile();
+        initiateEntityInstance();
+
+        if(process.processDocument.IsError)
+            setOrderToError();
+        else
+        filesGroup.fileDoc.FileStatus = cw_etltool._import.$CONSTANT().fileStatus.TOBEPROCESSED;
+
+    }catch(ex){
+        exception = ex.message;
+        setOrderToError();
+    }
+    finally{
+        if(order != null)
+            order.save();
+    }
+
+    /*=================================================
+    *    Validate File Already Exist
+    *================================================*/
+
+    function isFileAlreadyImported(){
+
+        try {
+            for (var i=0; order.files && i < order.files.length; i++){
+                if(order.files[i].fileDoc.ImportSequence ==  process.processDocument.ProcessedFilesCount){
+                    filesGroup = order.files[i];
+                    process.processDocument.CurrentFileID = filesGroup.fileDoc.FileID;
+                    break;
+                }
+            }
+
+            result = cw_etltool._import.isFileAlreadyImported(filesGroup.fileDoc);
+            if(result != null){
+                process.processDocument.IsError = true;
+                filesGroup.fileDoc.ErrorCode = "ETL_IMPORT_FILE_ALREADY_PROCESSED";
+                errorMsg = result;
+            }
+
+        }catch(ex){
+            process.processDocument.IsError = true;
+            filesGroup.fileDoc.ErrorCode = "ETL_IMPORT_FILE_ALREADY_PROCESSED";
+            exception = ex.message;
+        }
+    }
+    /*=================================================
+    *    Read File From File System
+    *================================================*/
+    function readFile(){
+
+        try {
+
+            if(!process.processDocument.IsError)
+                fr = new FileReader(filesGroup.fileDoc.PathFileName);
+
+            xmlString = cw_etltool._import.convertToString(fr);
+
+            if(cw_etltool.common.isNullOrEmptyString(xmlString)){
+                process.processDocument.IsError = true;
+                errorMsg = "Unable to read file.";
+            }
+
+        }catch(ex){
+            process.processDocument.IsError = true;
+            filesGroup.fileDoc.ErrorCode = "ETL_IMPORT_READING_ERROR";
+            exception = ex.message;
+        }
+    }
+
+
+    /*=================================================
+    *    Validate XSD Schema
+    *================================================*/
+    function validateXSD(){
+
+        try{
+            if(!process.processDocument.IsError){
+                result = Global.validateXML(xmlString,"/schema/OCS_Configuration_Operation_ETL_v1.xsd");
+                if(result && result.length > 0){
+                    process.processDocument.IsError = true
+                    filesGroup.fileDoc.ErrorCode = "ETL_IMPORT_XSD_VALIDATION_ERROR";
+                    errorMsg = result[0];
+                }
+            }
+        }catch(ex){
+            process.processDocument.IsError = true;
+            filesGroup.fileDoc.ErrorCode = "ETL_IMPORT_XSD_VALIDATION_ERROR";
+            exception = ex.message;
+        }
+    }
+    /*=================================================
+    *    Parse File
+    *================================================*/
+    function parseFile(){
+
+        if(!process.processDocument.IsError){
+
+            try{
+                result = null ;
+                ds = fr.getItemsFromXML("cw_etltool._import.CreateEntity")[0];
+                if(ds != null)
+                    operation = "ADD";
+                else{
+                    ds = fr.getItemsFromXML("cw_etltool._import.ChangeEntity")[0];
+                    if(ds != null)
+                        operation = "UPD";
+                    else{
+                        ds = fr.getItemsFromXML("cw_etltool._import.DeleteEntity")[0];
+                        if(ds != null){
+                            operation = "DEL"
+                        }else{
+                            process.processDocument.IsError = true
+                            errorMsg = "Parse File : Unable to parse file.";
+                        }
+                    }
+                }
+
+                if(ds != null)
+                    result =ds.validate(5,true,false);
+
+                if(result != null){
+                    process.processDocument.IsError = true
+                    errorMsg = "File converted to datastructure has validation error/s : " + result.join();
+                }
+
+                if(process.processDocument.IsError){
+                    filesGroup.fileDoc.ErrorCode = "ETL_IMPORT_PARSER_ERROR";
+                }else{
+                    if(ds &&ds.oCSEntityList &&ds.oCSEntityList.oCSEntity){
+                        filesGroup.fileDoc.EntitiesCount =ds.oCSEntityList.oCSEntity.length;
+                        process.processDocument.setEntitiesCount(ds.oCSEntityList.oCSEntity.length);
+                        process.processDocument.setActionCommonInfo(ds.actionCommonInfo);
+                    }
+                }
+
+            }catch(ex){
+                process.processDocument.IsError = true;
+                filesGroup.fileDoc.ErrorCode = "ETL_IMPORT_PARSER_ERROR";
+                exception = ex.message;
+            }
+        }
+    }
+    /*=================================================
+    *    Initiate Entity Doc Instance
+    *==================================================*/
+    function initiateEntityInstance(){
+
+        if(!process.processDocument.IsError){
+            for( var i=0; ds && ds.length > 0 && i <ds.oCSEntityList.oCSEntity.length; i++){
+
+                try {
+
+                    if(entities == null)
+                        entities = filesGroup.addItem("entities");
+
+                    var entityIns = entities.newInstance();
+                    var oCSEntity = prepareEntityDS(ds.actionCommonInfo,ds.oCSEntityList.oCSEntity[i]);
+                    var entityDs = cm_pws.getInnerDataStructure(ds.oCSEntityList.oCSEntity[i]);
+
+                    entityIns.entityDoc.EntityCode     = entityDs.identifier.dn.scheme;
+                    entityIns.entityDoc.EntityName     = entityDs.identifier.dn.scheme;
+                    entityIns.entityDoc.EntityType     = entityDs.type;
+                    entityIns.entityDoc.EntityStatus   = cw_etltool._import.$CONSTANT().entityStatus.INITIATE;
+                    entityIns.entityDoc.CreationDate   = new Date();
+                    entityIns.entityDoc.FileID         = filesGroup.fileDoc.FileID;
+                    entityIns.entityDoc.XMLString      = oCSEntity.toXML();
+                    entityIns.entityDoc.Operation      = operation;
+                    entityIns.entityDoc.Sequence       = i ;
+
+
+                }catch(ex){
+                    process.processDocument.IsError = true;
+                    entityIns.entityDoc.EntityStatus  = cw_etltool._import.$CONSTANT().entityStatus.ERROR;
+                    exception = ex.message;
+                }
+            }
+        }
+    }
+
+    function setOrderToError(){
+        process.processDocument.IsError = true;
+        order.header.OrderStatus = cw_etltool._import.$CONSTANT().orderStatus.ERROR;
+        order.header.ErrorMessage = errorMsg + "\n" + exception;
+        if(filesGroup != null)
+            filesGroup.fileDoc.FileStatus = cw_etltool._import.$CONSTANT().fileStatus.ERROR;
+
+    }
+    /*=================================================
+    *    Get Entity Structure
+    *================================================*/
+    function prepareEntityDS(actionCommonInfo, entity){
+
+        var resultDS = null;
+
+        if(operation == "ADD"){
+            resultDS = new DataStructure("OCSConfigurationOperation.v1.types.CreateEntity");
+        }else if(operation == "UPD"){
+            resultDS = new DataStructure("OCSConfigurationOperation.v1.types.ChangeEntity");
+        }else if(operation == "DEL"){
+            resultDS = new DataStructure("OCSConfigurationOperation.v1.types.DeleteEntity");
+        }else{
+            return null;
+        }
+
+        resultDS.actionCommonInfo = actionCommonInfo.copy(false) ;
+        resultDS.oCSEntity = entity.copy(false);
+        return resultDS;
+    }
+  ]]></script>
+</script>

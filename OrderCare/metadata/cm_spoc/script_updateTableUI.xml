@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.updateTableUI">
+  <group>ui_scripts.UsageControl.HappyPeriod</group>
+  <label>updateTableUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    for(var i=0; i< ui.parent.tableIterator.length ;i++){
+
+
+        if(ui.parent.tableIterator[i].model.Year == 0){
+            ui.parent.tableIterator[i].yearsSelected= "All";
+        }
+        else if(ui.parent.tableIterator[i].model.Year == null){
+             ui.parent.tableIterator[i].yearsSelected= "None"
+        }
+        else{
+            ui.parent.tableIterator[i].yearsSelected= ui.parent.tableIterator[i].model.Year;
+        }
+
+        ui.parent.tableIterator[i].monthsSelected= cm_spoc.decode(ui,ui.parent.tableIterator[i].model.Months);
+        ui.parent.tableIterator[i].daysSelected= cm_spoc.decode(ui,ui.parent.tableIterator[i].model.Days);
+        ui.parent.tableIterator[i].hoursSelected= cm_spoc.decode(ui,ui.parent.tableIterator[i].model.Hours);
+        ui.parent.tableIterator[i].weekDaysSelected= cm_spoc.decode(ui,ui.parent.tableIterator[i].model.WeekDays);
+
+    }
+  ]]></script>
+</script>

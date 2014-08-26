@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BOVOCCalendarDateCondRule">
+  <group>rules_scripts.BoltOn</group>
+  <label>rule_BOVOCCalendarDateCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute must be saved only if the related attribute assumes one of the values shown in the column H.
+
+    //SPOC Entity       -- BoltOnValidityOfferingCal
+    //SPOC Entity attribute       --                   CalendarDate
+    //Related SPOC Entity -- BoltOnValidityOffering
+    //Related SPOC Entity attribute --             BoltOnValidityModality
+    //COLUMN H --       V_CALENDAR
+
+    var entity = data;
+    var bovods = data;
+
+    if (entity.CalendarDate && (bovods.BoltOnValidityModality != "V_CALENDAR")  ) {
+
+        errList.addErrorMessage(data,["Calendar Date can be saved only if Validity Modality is 'Calendar'"],"NGAA_003","E");
+
+    }
+        return false;
+  ]]></script>
+</script>

@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cw_etltool.common.sharedTaskFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <input>doc_cw_etltool.common.worklistSearch</input>
+  <label>Shared Task Finder</label>
+  <maxRowsLimit>9999</maxRowsLimit>
+  <metaVersion>4</metaVersion>
+  <output>doc_cwf_pm.BaseWorklist</output>
+  <type>script</type>
+  <volatility>0</volatility>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        var find = new Finder("cwf_pm.BaseWorklistFinder");
+        find.searchDocument.userId = null;
+        var list = find.search();
+        var array = list.toArray();
+
+        var result = new DataObjectList();
+
+        for(var i=0; array && i < array.length; i++){
+            var doc = array[i];
+
+            if( (doc.userId == "" || doc.userId == null) && doc.Participant.startsWith("cw_etltool") && isUserParticpant(doc.Participant) &&
+                doc.disable == false && doc.distributionType == 1 && (doc.Flags == 0 || doc.Flags == 2 )){ //Shared Task Filter
+
+                    result.addLast(doc);
+
+
+                }
+        }
+        return result;
+
+        function isUserParticpant(partcipant){
+            var flag =false;
+            var userParticipants = UserProfile.getUserParticipants(UserProfile.userId());
+
+            for(var p=0; p<userParticipants.length;p++){
+                if(userParticipants[p] == partcipant ){
+                    flag=true;
+                    break;
+                }
+            }
+
+            return flag;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cwf_pm.BaseWorklist</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cw_etltool.common.worklistSearch/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cwf_pm.BaseWorklist/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="sharedTaskFinderResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="Participant" type="elfld">
+                        <dataLength>25</dataLength>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_Participant</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Priority" type="elslct">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_Priority</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="SenderId" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_SenderId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="OrderId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_OrderId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="OrderVK" type="elfld">
+                        <dataLength>40</dataLength>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_OrderVK</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="DueDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_DueDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="StartDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_StartDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="AssignedDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_AssignedDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Flags" type="elslct">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_Flags</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="SenderType" type="elfld">
+                        <dataLength>25</dataLength>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_SenderType</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Operation" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_Operation</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="userId" type="elfld">
+                        <dataLength>30</dataLength>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_userId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="createDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwf_pm.BaseWorklist/leaf_createDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Worklist" type="vform">
+            <label>Worklist</label>
+            <root name="result" type="eltabl">
+              <doubleClickMethod type="varPath">
+                <variablePathList>
+                  <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uimthd_assignTaskToCurrentUser</variablePath>
+                </variablePathList>
+              </doubleClickMethod>
+              <onSelectChange type="varPath">
+                <variablePathList>
+                  <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                </variablePathList>
+              </onSelectChange>
+              <variable type="varPath">
+                <variablePathList>
+                  <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                </variablePathList>
+              </variable>
+              <elementList>
+                <element name="image" type="elimg">
+                  <label>!</label>
+                  <width>30px</width>
+                </element>
+                <element name="Participant" type="elfld">
+                  <dataLength>25</dataLength>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                      <variablePath>doc_cwf_pm.BaseWorklist/leaf_Participant</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="Operation" type="elfld">
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                      <variablePath>doc_cwf_pm.BaseWorklist/leaf_Operation</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>25%</width>
+                </element>
+                <element name="OrderVK" type="elfld">
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                      <variablePath>doc_cwf_pm.BaseWorklist/leaf_OrderVK</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>30%</width>
+                </element>
+                <element name="OrderId" type="elfld">
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                      <variablePath>doc_cwf_pm.BaseWorklist/leaf_OrderId</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="SenderId" type="elfld">
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                      <variablePath>doc_cwf_pm.BaseWorklist/leaf_SenderId</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="userId" type="elfld">
+                  <dataLength>30</dataLength>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                      <variablePath>doc_cwf_pm.BaseWorklist/leaf_userId</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="AssignedDate" type="eldatetime">
+                  <displayFormat>MM/dd/yyyy HH:mm</displayFormat>
+                  <label>Assigned</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                      <variablePath>doc_cwf_pm.BaseWorklist/leaf_AssignedDate</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>15%</width>
+                </element>
+                <element name="StartDate" type="eldatetime">
+                  <displayFormat>MM/dd/yyyy HH:mm</displayFormat>
+                  <label>Started</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                      <variablePath>doc_cwf_pm.BaseWorklist/leaf_StartDate</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>15%</width>
+                </element>
+                <element name="DueDate" type="eldatetime">
+                  <displayFormat>MM/dd/yyyy HH:mm</displayFormat>
+                  <label>Due</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/uivar_result</variablePath>
+                      <variablePath>doc_cwf_pm.BaseWorklist/leaf_DueDate</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>15%</width>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="assignTaskToCurrentUser" type="uimthd">
+        <script><![CDATA[
+          if(this.result.selected == null)
+                return;
+
+          var sel = this.result.selected[0];
+          if(!sel)
+                return;
+
+          var selUser = Global.getUserId();
+          var finder = Global.getWorkListFinder();
+          if(finder==null)
+                finder = this.model;
+          if(finder!=null)
+                finder.changeWLItem(this.result.selected, selUser, null, null);
+
+
+          this.searchAction();
+          this.parent.worklistFinderUI.searchAction();
+          this.model.search();
+        ]]></script>
+      </method>
+    </methodList>
+  </UserInterface>
+  <viewList>
+    <view name="sharedTaskFinderView" type="findVView">
+      <outputOverlay>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+      <searchImmediately>true</searchImmediately>
+    </view>
+  </viewList>
+</findScript>

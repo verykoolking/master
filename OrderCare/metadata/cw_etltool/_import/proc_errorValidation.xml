@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cw_etltool._import.errorValidation">
+  <activity name="start" type="seqActivity">
+    <guid>{dab891ab-ef21-4a72-9d79-c3b97d31949d}</guid>
+    <label>Start</label>
+    <x>175.0</x>
+    <y>43.0</y>
+    <childList>
+      <child name="isError" type="switchActivity">
+        <guid>{61261007-3a5f-4199-ada6-b4afdcd29af9}</guid>
+        <label>Is Error</label>
+        <x>178.0</x>
+        <y>143.0</y>
+        <childList>
+          <child name="no" type="caseActivity">
+            <guid>{da2b28e0-65aa-48fd-813d-73d0ddbe98e5}</guid>
+            <label>No</label>
+            <x>65.0</x>
+            <y>143.0</y>
+          </child>
+          <child name="yes" type="caseActivity">
+            <guid>{3e28ab8c-09c3-4c30-bb50-d18e4ccbcb72}</guid>
+            <label>Yes</label>
+            <x>331.0</x>
+            <y>143.0</y>
+            <childList>
+              <child name="systemDefinedException" type="exceptActivity">
+                <element>excp_cw_etltool._import.systemException</element>
+                <guid>{66ffe4e0-76e8-4e54-8d77-700b5c07485f}</guid>
+                <label>System Defined Exception</label>
+                <x>171.0</x>
+                <y>286.0</y>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnProcActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script>return (this.process.processDocument.IsError || cw_etltool.common.getConfig().isError) ;</script>
+              </method>
+            </methodList>
+          </child>
+        </childList>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{fc9ba2ab-7181-4b96-8d41-6b09c9db5164}</guid>
+  <label>Error Validation</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <type>Sub-flow</type>
+</process>

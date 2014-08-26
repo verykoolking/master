@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_LSListPriorityMandatoryCondRule">
+  <group>rules_scripts.Lists</group>
+  <label>rule_LSListPriorityMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+    var attributeName = "ListPriority";
+    var attributeFinder = new Finder("cwt_pc.cwt_itemAttributeFinder");
+    itemFinder.searchDocument.baseItemCode = "base_ListSpecification";
+    var result = itemFinder.search();
+    var attributeResult;
+    var DS = data.ListPriority;
+
+    if (!DS)  {
+         errList.addErrorMessage(data,["No value in mandatory field List Priority."],"NGAA_003","E");
+         return false;
+    }
+
+    for ( var i = 0; i < result.length; i++){
+        attributeFinder.searchDocument.itemCode = result[i].itemCode;
+        attributeResult = attributeFinder.search();
+
+            for ( var j = 0; j < attributeResult.length; j++ ) {
+                if ( ( attributeResult[j].name == attributeName ) && attributeResult[j].defaultValue ) {
+
+                    if((attributeResult[j].defaultValue == DS ) && (attributeResult[j].itemCode != data.specificationCode))  {
+                        errList.addErrorMessage(data,["List Priority must be unique. Value "+ attributeResult[j].defaultValue +" already used."],"NGAA_003","E");
+                        return false;
+                       }
+                }
+            }
+    }
+    return false;
+  ]]></script>
+</script>

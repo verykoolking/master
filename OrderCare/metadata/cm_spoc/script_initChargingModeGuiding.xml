@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initChargingModeGuiding">
+  <group>ui_scripts.Common.ChargingMode.init</group>
+  <label>initChargingModeGuiding</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var baseItemCode = model.baseSpecificationCode ? model.baseSpecificationCode : model.catalogEntity;
+    if (!baseItemCode &&  model.specificationCode) baseItemCode = cm_spoc.getAndUpdateBaseItemCode(model);
+
+    var nameArray = cm_spoc.getBaseChargingModeGuidingArrayName(baseItemCode);
+    var nameArrayDS = nameArray+"DS";
+
+    if(!model.specificationCode){
+
+        var ChargingModeGuiding = cm_spoc.initInnerDS("base_"+nameArray);
+        model[nameArrayDS] = ChargingModeGuiding;
+
+
+
+    }else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        s.specificationCode = model[nameArray];
+        var r = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(r)){
+            model[nameArrayDS]=r;
+        }
+
+
+        var pgRuleList =  model[nameArrayDS].List;
+        var pgRuleListDS= model[nameArrayDS].ListDS;
+        for(var i=0;i<pgRuleList.length;i++){
+           s.specificationCode = pgRuleList[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+
+                pgRuleListDS[i]=r;
+                pgRuleListDS[i].Mode=r.Mode;
+
+                pgRuleListDS[i]=r;
+                pgRuleListDS[i].ChargingMode=r.ChargingMode;
+                pgRuleListDS[i].ChargingModeEnum=r.ChargingMode;
+
+                pgRuleListDS[i]=r;
+                pgRuleListDS[i].Operation=r.Operation;
+                pgRuleListDS[i].OperationEnum=r.Operation;
+
+           }
+        }
+    }
+
+    return model;
+  ]]></script>
+</script>

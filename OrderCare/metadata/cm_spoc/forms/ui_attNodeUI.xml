@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.attNodeUI">
+  <group>RatingTree.NodesUI</group>
+  <label>attNodeUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.RatingTreeNodeOutput</valueType>
+    </variable>
+    <variable name="code" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="nodeType" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="nodeTypeValue" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="description" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="values" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="position" type="leaf">
+      <valueType>dtype_cwf_up.Integer3</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="HorizontalLayout" type="elhlt">
+              <alignment>right,center</alignment>
+              <elementList>
+                <element name="values" type="elfld">
+                  <dynLabel type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.attNodeUI/leaf_description</variablePath>
+                    </variablePathList>
+                  </dynLabel>
+                  <labeAlign>left</labeAlign>
+                  <labelOrientation>left</labelOrientation>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.attNodeUI/uimthd_editionTrigger</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.attNodeUI/leaf_values</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>200px</width>
+                </element>
+                <element name="LayoutSpacer" type="ellsp">
+                  <width>20px</width>
+                </element>
+                <element name="edit" type="elimg">
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.attNodeUI/uimthd_onClickEdit</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <imageUrl>/cwf/MenuIconEdit.gif</imageUrl>
+                  <tooltip>Edit Node</tooltip>
+                </element>
+                <element name="LayoutSpacer2" type="ellsp">
+                  <width>20px</width>
+                </element>
+                <element name="delete" type="elimg">
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.attNodeUI/uimthd_onClickDelete</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <imageUrl>/cwf/MenuIconDelete.gif</imageUrl>
+                  <tooltip>Delete Node</tooltip>
+                </element>
+                <element name="LayoutSpacer1" type="ellsp">
+                  <width>20px</width>
+                </element>
+                <element name="moveup" type="elimg">
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.attNodeUI/uimthd_onClickMoveUp</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <imageUrl>/cwf/up.gif</imageUrl>
+                </element>
+                <element name="movedown" type="elimg">
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.attNodeUI/uimthd_onClickMoveDown</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <imageUrl>/cwf/down.gif</imageUrl>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="onClickDelete" type="uimthd">
+      <script>cm_spoc.deleteNode(this);</script>
+    </method>
+    <method name="onClickEdit" type="uimthd">
+      <script>//this.values.readonly = !this.values.readonly;</script>
+    </method>
+    <method name="openEditNodeDialog" type="usrActionMethod">
+      <dialogHeight>400</dialogHeight>
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <dialogWidth>600</dialogWidth>
+      <showInPopup>true</showInPopup>
+      <script>return cm_spoc.editNodeDialog(this);</script>
+    </method>
+    <method name="onClickMoveUp" type="uimthd">
+      <script>cm_spoc.moveUpNode(this);</script>
+    </method>
+    <method name="onClickMoveDown" type="uimthd">
+      <script>cm_spoc.moveDownNode(this);</script>
+    </method>
+    <method name="editionTrigger" type="uimthd">
+      <script>this.model.RTNodeOutputArrDS.ListDS[0].NodeValue = this.values;</script>
+    </method>
+  </methodList>
+</userInterface>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.getAttributeFromAttributesHierarchy">
+  <highlight>64</highlight>
+  <label>getAttributeFromAttributesHierarchy</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="attributesHierarchy" type="rifp">
+      <array>true</array>
+      <type>doc_pm_wm.hierarchicalAttribute</type>
+    </parameter>
+    <parameter name="field" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="attributepath" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="ignoreItem" type="rifp">
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+  </parameterList>
+  <valueType>doc_pm_wm.hierarchicalAttribute</valueType>
+  <script><![CDATA[
+    /**
+     * Gets attribute from array of hierarquicattributes by attributepath
+     *
+     * @author  Luis Amorim
+     * @date    201403
+     *
+     * @param {Array}          attribute array
+     * @param {String}         attribute path (entityA.entityB.attributename)
+     */
+     var itemsToIgnore = ignoreItem ? ignoreItem : 0;
+
+     for( var i=0; i < attributesHierarchy.length; i++ ){
+        if ( attributesHierarchy[i][field] == attributepath){
+            if(itemsToIgnore == 0)
+                return attributesHierarchy[i];
+            else
+                itemsToIgnore--;
+        }
+     }
+
+    if ( field == "attributepath" )
+        return new Document ("pm_wm.hierarchicalAttribute");
+    else
+        return null;
+  ]]></script>
+</script>

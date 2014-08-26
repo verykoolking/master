@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TariffPlanGroupForm">
+  <group>TariffPlan</group>
+  <label>TariffPlanGroupForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="TariffPlanGroupPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TariffPlanGroup</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="SectionStack1" type="elsectnstck">
+                  <width>652px</width>
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <cellAlignment>center,center</cellAlignment>
+                      <elementList>
+                        <element name="SectionHeader" type="elsecth">
+                          <label>Tariff Plans in the Group</label>
+                        </element>
+                        <element name="VerticalLayout1" type="elvlt">
+                          <alignment>right,center</alignment>
+                          <elementList>
+                            <element name="GroupCode" type="elfld">
+                              <labeAlign>left</labeAlign>
+                              <label>Group Code</label>
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TariffPlanGroupForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.TariffPlanGroup/dstruct_GroupCode</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="GroupDescription" type="elfld">
+                              <labeAlign>left</labeAlign>
+                              <label>Group Description</label>
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TariffPlanGroupForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.TariffPlanGroup/dstruct_GroupDescription</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="ServiceProviderPL" type="elvlt">
+                          <alignment>center,center</alignment>
+                          <width>400px</width>
+                          <elementList>
+                            <element name="LayoutSpacer" type="ellsp">
+                              <height>20px</height>
+                            </element>
+                            <element name="FormFrame1" type="elovf">
+                              <cellAlignment>center,center</cellAlignment>
+                              <formReference type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TariffPlanGroupForm/leaf_TariffPlanGroupPickList</variablePath>
+                                  <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                                  <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                                </variablePathList>
+                              </formReference>
+                              <height>325px</height>
+                              <padding>0</padding>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TariffPlanGroupForm/leaf_TariffPlanGroupPickList</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>400px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$cwShowHover" type="laction">
+      <path>ui_com.conceptwave.system.UserInterface/leaf_cwShowHover</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initTariffPlanGroup(this.model);
+        cm_spoc.initTariffPlanGroupUi(this);
+        return m;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$TariffPlanGroupPickList" type="laction">
+      <path>ui_cm_spoc.forms.TariffPlanGroupForm/leaf_TariffPlanGroupPickList</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TariffPlan";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.TPGTariffPlanArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setPickListModelTariffPlanGroup;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="setPickListModelTariffPlanGroup" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.TPGTariffPlanArrDS.List =null;
+        this.parent.model.TPGTariffPlanArrDS.ListDS =null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.TPGTariffPlanArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+  </methodList>
+</userInterface>

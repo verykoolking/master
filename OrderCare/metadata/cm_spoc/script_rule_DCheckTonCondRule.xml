@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_DCheckTonCondRule">
+  <group>rules_scripts.Lists</group>
+  <label>rule_DCheckTonCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+
+    Conditional
+
+    DCheckTonCondRule
+
+    The attribute must be saved in the catalog only if the related attribute assumes the value shown in the column H.
+
+    Duo
+    CheckTon
+
+    Duo
+    ApplyShortDialing
+
+    TRUE
+
+    */
+    var varCheck = data.Duo;
+
+    if( varCheck.CheckTon && !varCheck.ApplyShortDialing)
+    {
+         errList.addErrorMessage(data,["Check Ton can be saved only if Apply Short Dialing is set"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

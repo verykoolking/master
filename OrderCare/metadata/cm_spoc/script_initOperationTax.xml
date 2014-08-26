@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initOperationTax">
+  <group>ui_scripts.Operation</group>
+  <label>initOperationTax</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+    var OpTaxProvinceArr = cm_spoc.initInnerDS("base_OpTaxProvinceArr");
+    model.OpTaxProvinceArrDS = OpTaxProvinceArr;
+    return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        var OpTaxProvinceArrRel = model.OpTaxProvinceArr;
+        s.specificationCode = OpTaxProvinceArrRel;
+        var a = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(a)){
+            model.OpTaxProvinceArrDS = a;
+            OpTaxProvinceArrRel = a.List;
+        }
+        var OpTaxProvinceArrDS = model.OpTaxProvinceArrDS.ListDS;
+        for(var i=0;i<OpTaxProvinceArrRel.length;i++){
+            s.specificationCode = OpTaxProvinceArrRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                OpTaxProvinceArrDS[i]=r;
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

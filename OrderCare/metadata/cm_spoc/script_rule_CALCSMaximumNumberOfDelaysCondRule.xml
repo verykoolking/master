@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_CALCSMaximumNumberOfDelaysCondRule">
+  <group>rules_scripts.CyclicActions</group>
+  <label>rule_CALCSMaximumNumberOfDelaysCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute must be saved in the catalog only if the related attribute assumes the value shown in the column H
+    var dt = data;
+
+    if(dt.OutstandingExecutionsAreRecovere && dt.MaximumNumberOfDelays == null){
+        errList.addErrorMessage(data,["MaximumNumberOfDelays must be not empty"],"NGAA_003","E");
+    }else{
+        if(!dt.OutstandingExecutionsAreRecovere && dt.MaximumNumberOfDelays != null){
+             errList.addErrorMessage(data,["MaximumNumberOfDelays must be empty"],"NGAA_003","E");
+        }
+    }
+    return false;
+  ]]></script>
+</script>

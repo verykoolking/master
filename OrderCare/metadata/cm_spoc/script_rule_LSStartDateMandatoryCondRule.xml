@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_LSStartDateMandatoryCondRule">
+  <group>rules_scripts.Lists</group>
+  <label>rule_LSStartDateMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**Conditional
+
+    LSStartDateMandatoryCondRule
+
+    The attribute will be mandatory only if the related attribute assumes the value shown in the column H.
+    ListSpecification
+    StartDate
+
+    ListSpecification
+    InfiniteDate
+
+    FALSE
+    */
+
+    var entity = data;
+    if(entity.StartDate == null && !entity.InfiniteDate)
+    {
+         errList.addErrorMessage(data,["Start Date is mandatory when Infinite Date is unchecked."],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

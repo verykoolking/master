@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initList">
+  <group>ui_scripts.Lists</group>
+  <label>initList</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    // QUANDO SARANNO CARICATI GLI ITEM SUL CATALOGO DOVRA' ESSERE COSI
+    if (!model.specificationCode){
+        model = cm_spoc.initModelForCreation(model);
+    }else{
+       model = cm_spoc.initModelForModification(model);
+       model.ListSpecificationEnum = model.ListSpecification;
+    }
+    return model;
+    /*
+
+    if(!model.specificationCode){
+        var ListAllowedPerTariffPlanArr = cm_spoc.initInnerDS("base_ListAllowedPerTariffPlanArr");
+        model.ListAllowedPerTariffPlanArrDS = ListAllowedPerTariffPlanArr;
+    } else {
+        model.ListSpecificationEnum = model.ListSpecification;
+    }
+    return model;*/
+  ]]></script>
+</script>

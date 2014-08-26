@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.getInnerDataStructure">
+  <group>scripts</group>
+  <label>getInnerDataStructure</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="item" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_OCSEntity.v1.types.OCSEntityType</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var nodes = item.getNodeNames();
+    for(var i=0; i<nodes.length; i++)
+    {
+        if(item[nodes[i]] && item[nodes[i]] instanceof DataStructure && item[nodes[i]].identifier.dn.scheme)
+            return item[nodes[i]];
+    }
+    return null;
+  ]]></script>
+</script>

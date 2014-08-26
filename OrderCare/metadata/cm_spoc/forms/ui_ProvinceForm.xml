@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ProvinceForm">
+  <group>Numbering</group>
+  <label>ProvinceForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.Province</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>400px</width>
+              <elementList>
+                <element name="TabFrame" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ProvinceForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.ProvinceForm/frmui_Forms/vform_general</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                  <width>100px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="general" type="vform">
+          <label>general</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>right,center</alignment>
+            <elementList>
+              <element name="ProvinceCode" type="elfld">
+                <editable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ProvinceForm/permMethod_setIsPrimaryKey</variablePath>
+                  </variablePathList>
+                </editable>
+                <labeAlign>left</labeAlign>
+                <label>Province Code</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ProvinceForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.Province/dstruct_ProvinceCode</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="ProvinceDesc" type="elfld">
+                <labeAlign>left</labeAlign>
+                <label>Description</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.ProvinceForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.Province/dstruct_ProvinceDesc</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="setReadOnly" type="uimthd">
+      <script>return true;</script>
+    </method>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+  </methodList>
+</userInterface>

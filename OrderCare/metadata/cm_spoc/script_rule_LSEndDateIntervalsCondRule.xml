@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_LSEndDateIntervalsCondRule">
+  <group>rules_scripts.Lists</group>
+  <label>rule_LSEndDateIntervalsCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**Conditional
+
+    LSEndDateIntervalsCondRule
+
+    The attribute value must be greater than the value of related attribute. Moreover, the related attribute should assume the value shown in the column H.
+
+    ListSpecification
+    EndDate
+
+    ListSpecification
+    StartDate
+
+    Not empty
+    */
+
+    var entity = data;
+
+    if(entity.EndDate && entity.StartDate==null)
+    {
+         errList.addErrorMessage(data,["End Date can be saved only if Start Date is set"],"NGAA_003","E");
+    }
+    if(entity.EndDate < entity.StartDate)
+    {
+         errList.addErrorMessage(data,["End Date must be greater then Start Date "],"NGAA_003","E");
+    }
+
+    return false;
+  ]]></script>
+</script>

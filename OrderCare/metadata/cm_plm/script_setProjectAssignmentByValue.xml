@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.setProjectAssignmentByValue">
+  <group>applicabilityCondition.api</group>
+  <label>setProjectAssignmentByValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectAssignment" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.projectAssignment</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+
+        var doc = Document.readDoc("cm_plm:projectAssignmentDoc", projectAssignment.projectAssignmentId);
+        if(!doc)
+            return api_common.createFault("ERR", "The projectAssignmentId was not found: " + projectAssignment.projectAssignmentId);
+
+        projectAssignment.mapTo(doc);
+        doc.lastUpdatedTime = new Date();
+        doc.orderNum = Global.nextInSequence("NGAA_PROJECTASSIGNMENT_SEQ");
+        doc.save();
+        doc.mapTo(projectAssignment);
+
+        return projectAssignment;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

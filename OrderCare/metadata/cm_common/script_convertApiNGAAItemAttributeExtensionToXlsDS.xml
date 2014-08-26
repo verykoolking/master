@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.convertApiNGAAItemAttributeExtensionToXlsDS">
+  <group>overridden.itemAttributeChanges</group>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="catalogApiDS" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="xlsDS" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="currentSheet" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var sheetRow = 0;
+    for (var i=0; i<catalogApiDS.ngaaItemExtensionExtension.length; i++)
+    {
+          if(null == catalogApiDS.ngaaItemExtensionExtension[i]) {
+                continue;
+          }
+          sheetRow++;
+          var fieldIndex = 0;
+
+          //NGAA
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtensionExtension[i].itemCode;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtensionExtension[i].parentItemCode;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtensionExtension[i].topItemCode;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtensionExtension[i].itemAttributeCode;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtensionExtension[i].isMandatory;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtensionExtension[i].isOverride;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtensionExtension[i].isSent2Altamira;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtensionExtension[i].isPrimaryKey;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtensionExtension[i].minValue;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtensionExtension[i].maxValue;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtensionExtension[i].RE_Release;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtensionExtension[i].MS_Release;
+
+          //NGAA End
+
+    }
+
+    xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+
+    return xlsDS;
+
+    function formatDate (date)
+    {
+          return date?(Calendar._formatDate(date, "yyyy-MM-dd")):null;
+    }
+
+    function formatDateTime (date)
+    {
+          var str1 = date?(Calendar._formatDate(date, "yyyy-MM-dd hh:mm:ss")):null;
+          var str2 = str1.substring(0, 10) + "T" + str1.substring(11, 19);
+          return str2;
+    }
+  ]]></script>
+</script>

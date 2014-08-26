@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="cm_spoc.fault">
+  <container>true</container>
+  <description><![CDATA[
+    <p style="margin-top: 0">
+      Container for a list of messages
+    </p>
+  ]]></description>
+  <group>overridden</group>
+  <guid>{08f44b1b-f838-464c-9373-d2c94c05df3b}</guid>
+  <jsonMap type="jmap"/>
+  <label>Fault</label>
+  <metaVersion>4</metaVersion>
+  <overrides>dstruct_epc.data.fault</overrides>
+  <xmlMap type="xmap">
+    <includeNS>true</includeNS>
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="message" type="dstruct">
+      <array>true</array>
+      <element>dstruct_api_common.data.message</element>
+      <guid>{0518936a-f817-471d-bf63-030915f35cc6}</guid>
+      <jsonMap type="jmap"/>
+      <label>Message</label>
+      <maxInstance>-1</maxInstance>
+    </child>
+  </childList>
+  <methodList>
+    <method name="addFault" type="action">
+      <description><![CDATA[
+        <p style="margin-top: 0">
+          appends a message to this, message contains information about an
+          internal fault
+        </p>
+      ]]></description>
+      <parameterList>
+        <parameter name="code" type="rifp">
+          <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      error code for the internal fault&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+          <type>dtype_api_common.data.code</type>
+        </parameter>
+        <parameter name="text" type="rifp">
+          <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      (Optional) text providing details of the fault. If text is not provided, &#xd;
+      code will be used to retrieve resource defined message as the detail of &#xd;
+      the fault.&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+          <type>dtype_api_common.data.text</type>
+        </parameter>
+        <parameter name="params" type="rifp">
+          <array>true</array>
+          <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+    &#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      (Optional) used to replace placeholders in resource if used to provide &#xd;
+      details of the fault&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="faultType" type="rifp">
+          <type>dtype_api_common.data.faultType</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var m = this.message[this.message.length];
+        m.code = code;
+        if (text == null) {
+            text = Global.translateText(code,null,params);
+        }
+        m.text = text;
+        m.type = faultType == null ? 'F' : faultType;
+        Global.logError(text);
+      ]]></script>
+    </method>
+    <method name="addException" type="action">
+      <description><![CDATA[
+        <p style="margin-top: 0">
+          appends a message to this, message contains information about the
+          exception
+        </p>
+      ]]></description>
+      <parameterList>
+        <parameter name="exp" type="rifp">
+          <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      the exception that occured&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+        </parameter>
+        <parameter name="code" type="rifp">
+          <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      (Optional) error code for the exception. Default value is &lt;i&gt;COM_ERR_0001&lt;/i&gt;&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var m = this.message[this.message.length];
+        m.type = 'X';
+        try {
+            m.code = exp.javaException.code;
+            m.text = exp.javaException.message;
+            m.stack = exp.stack;
+            return;
+        } catch (ex) {
+        }
+        if (code == null) {
+            code = "COM_ERR_0001";
+        }
+        m.code = code;
+        m.text = exp.toString();
+        Global.logError(exp);
+      ]]></script>
+    </method>
+    <method name="throwException" type="action">
+      <script>Global.throwException(this.message[0].code);</script>
+    </method>
+    <method name="size" type="action">
+      <script>return this.message.length;</script>
+    </method>
+    <method name="addErrorMessage" type="action">
+      <description><![CDATA[
+        <p style="margin-top: 0">
+          appends a message to this, message contains information about an
+          internal fault
+        </p>
+      ]]></description>
+      <parameterList>
+        <parameter name="data" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+        <parameter name="params" type="rifp">
+          <array>true</array>
+          <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+    &#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      (Optional) used to replace placeholders in resource if used to provide &#xd;
+      details of the fault&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="code" type="rifp">
+          <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      error code for the internal fault&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+          <type>dtype_api_common.data.code</type>
+        </parameter>
+        <parameter name="faultType" type="rifp">
+          <type>dtype_api_common.data.faultType</type>
+        </parameter>
+        <parameter name="text" type="rifp">
+          <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      (Optional) text providing details of the fault. If text is not provided, &#xd;
+      code will be used to retrieve resource defined message as the detail of &#xd;
+      the fault.&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+          <type>dtype_api_common.data.text</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var m = this.message[this.message.length];
+        m.code = code;
+        if (text == null) {
+            text = Global.translateText(code,null,params);
+        }
+        m.text = text;
+        m.type = faultType == null ? 'F' : faultType;
+
+        if (params) {
+            for (var i=0 ;i<params.length;i++) {
+                 m.params[i]=params[i];
+            }
+
+        }
+        Global.logError(text);
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>/cwf/TreeFolderUnknown.gif</defaultFolderImage>
+    <defaultLeafImage>/cwf/TreeDocUnknown.gif</defaultLeafImage>
+    <element>dstruct_cm_spoc.fault</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_cm_spoc.fault</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

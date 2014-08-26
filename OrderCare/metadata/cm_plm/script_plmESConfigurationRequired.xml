@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.plmESConfigurationRequired">
+  <highlight>32</highlight>
+  <label>CM-PLM ES configuration Required?</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+    * Checks the following PLM Rule:
+          If there is a request to create a commercial entity requiring technical configuration within NGAA;
+    TODO:      If a commercial entity is lacking a link with a mandatory technical entity (exception scenario).
+    *
+    * @author  Luis Barreira
+    * @date    11-03-2014
+    *
+    * @param {String} projectCode    The Catalog Project Code
+    * @return {boolean}     The evaluation of the rule
+    */
+
+    var items = cm_plm.getAllProjectItems(projectCode);
+    var attributes;
+
+    for(var i=0; i<items.length; i++) {
+        attributes = cm_common.catalogGetItemAttributesDoc(items[i].itemCode, null, true);
+        for(var j=0; j<attributes.length; j++) {
+            var attribute = attributes[j];
+            if(attribute.itemAttributeCode.toLowerCase() == 'istechnical')
+                return true;
+        }
+    }
+
+    return false;
+  ]]></script>
+</script>

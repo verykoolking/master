@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getValue">
+  <group>overridden.scripts</group>
+  <label>getValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="type" type="rifp">
+      <type>dtype_cwt_pcdd.string128</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var item=cm_common.getItemByCode(model.baseSpecificationCode);
+    for(var i=0;i<item.itemAttributes.length;i++){
+        if(item.itemAttributes[i].itemAttributeCode==type){
+            return item.itemAttributes[i].defaultValue;
+        }
+    }
+  ]]></script>
+</script>

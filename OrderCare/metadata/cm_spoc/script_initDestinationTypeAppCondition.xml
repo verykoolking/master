@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initDestinationTypeAppCondition">
+  <group>ui_scripts.Common.ApplicabilityCondition</group>
+  <label>initDestinationTypeAppCondition</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*if (!model.specificationCode){
+        var destinationTypeACArr = cm_spoc.initInnerDS("base_DTACDestinationTypeArr");
+        model.DTACDestinationTypeArrDS = destinationTypeACArr;
+    }else{
+        var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+      s.specificationCode = model.DTACDestinationTypeArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.DestinationTypeACArrDS=r;
+       }
+       var listRel = model.DTACDestinationTypeArrDS.List;
+       var list  = model.DTACDestinationTypeArrDS.ListDS;
+       for (var i=0;i<listRel.length;i++){
+           s.specificationCode = listRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r))
+               list[i]=r;
+       }
+    }
+    return model;
+    */
+    if (!model.specificationCode){
+        model = cm_spoc.initModelForCreation(model);
+    }else{
+       model = cm_spoc.initModelForModification(model);
+    }
+
+    return model;
+  ]]></script>
+</script>

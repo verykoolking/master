@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.getReusableGroupIds">
+  <group>applicabilityCondition.scripts</group>
+  <label>getReusableGroupIds</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="reusableGroupIds" type="rifp">
+      <array>true</array>
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //see if there are any groupIds which are not used in Nx24 table, then add them into the list
+    var finder = new cm_plm.unusedGroupIdFinder();
+    finder.searchDocument.endDate = null;
+    var list = finder.search();
+
+    if(!reusableGroupIds)
+        reusableGroupIds = new Array();
+
+    //clear the current list;
+    while(reusableGroupIds.length > 0)
+        reusableGroupIds.pop();
+
+    for(var i=0; i< list.length; i++)
+        reusableGroupIds.push(list[i].AppBoltonTypeGroupId);
+
+    return reusableGroupIds;
+  ]]></script>
+</script>

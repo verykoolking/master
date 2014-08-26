@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BOVOTHoursCondRule">
+  <group>rules_scripts.BoltOn</group>
+  <label>rule_BOVOTHoursCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var hr = data;
+    var modality = hr.BoltOnValidityModality;
+    var hours = hr.Hours;
+
+    if( hours!=0 && !(modality=="V_TIME") ) {
+        errList.addErrorMessage(data,["Hours", "Validity Modality is not time range"],"NGAA_EPC_002","E");
+    }
+    return false;
+  ]]></script>
+</script>

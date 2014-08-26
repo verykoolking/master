@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.checkModality">
+  <group>rules_scripts</group>
+  <label>checkModality</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="modality" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="attribute" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="values" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="admissible" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     *
+     * param1 : modality = current modality (es: model.BoltOnTypeModality)
+     * param2 : attribute = the attribute whose existence is conditioned (es: model.ConsumptionRate)
+     * param3 : values = the list of modality values that could admit (or not) the existence of the attribute (es: ["XN", "PH"])
+     * param4 : admissible =  if the attribute can exist only for the given value of modality => adsmissible is true;
+     *                         if the attribute cannot exists only for the give value of modality => admissible is false
+     *
+     * This metod returs TRUE when the check is ok, otherwise false
+     *
+     * if admissible is true => for a given attribute the current modality must belong to one of the modality values.
+     * if admissible is false => for a given attribute the current modality must NOT belong to one of the modality values.
+     * so if admissible is true and isModalityInTheSet is true => return true;
+     * so if admissible is true and isModalityInTheSet is false => return false;
+     * so if admissible is false and isModalityInTheSet is false => return true;
+     * so if admissible is false and isModalityInTheSet is true => return false;
+    *
+    */
+
+    var isModalityInTheSet = false; //
+          //check if the attribute is set
+          if (attribute) {
+                //if the attribute is set, check the modality
+                for (var i=0; i<values.length;i++)
+                    if(modality==values[i]){ isModalityInTheSet = true; break;
+                }
+          } else return true;
+
+
+
+    return  truthTable(isModalityInTheSet, admissible);
+
+
+    function truthTable(a,b) {
+
+        if( (a && b) || (!a && !b)) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+
+    }
+  ]]></script>
+</script>

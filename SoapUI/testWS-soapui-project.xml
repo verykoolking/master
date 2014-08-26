@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="testWS" resourceRoot="" soapui-version="4.6.4" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="testBindingSOAP" type="wsdl" bindingName="{test/services}testBindingSOAP" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/cwf/services/testInterface?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/cwf/services/testInterface?wsdl"><con:part><con:url>http://localhost:8080/cwf/services/testInterface?wsdl</con:url><con:content><![CDATA[<definitions name="cm_pws.test.service" targetNamespace="test/services" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:cm_pws.test.service="test/services" xmlns:tns="test/services" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="test/services" schemaLocation="testInterface?xsd=cm_pws.test.service.xsd"/>
+    </schema>
+  </types>
+  <message name="output">
+    <part name="output" type="cm_pws.test.service:output"></part>
+  </message>
+  <message name="input">
+    <part name="input" type="cm_pws.test.service:input"></part>
+  </message>
+  <portType name="testInterface">
+    <operation name="runTestSuite">
+      <input message="cm_pws.test.service:input"></input>
+      <output message="cm_pws.test.service:output"></output>
+    </operation>
+    <operation name="runTestCase">
+      <input message="cm_pws.test.service:input"></input>
+      <output message="cm_pws.test.service:output"></output>
+    </operation>
+  </portType>
+  <binding name="testBindingSOAP" type="cm_pws.test.service:testInterface">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="runTestSuite">
+      <soap:operation soapAction="runTestSuite"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="runTestCase">
+      <soap:operation soapAction="runTestCase"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="testService">
+    <port name="testPortSOAP" binding="cm_pws.test.service:testBindingSOAP"></port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:8080/cwf/services/testInterface?xsd=cm_pws.test.service.xsd</con:url><con:content><![CDATA[<schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="test/services" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:cm_pws.test.service="test/services" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <annotation>
+    <documentation>service</documentation>
+  </annotation>
+  <complexType name="input">
+    <annotation>
+      <documentation>input</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" name="testName" type="xsd:string"/>
+      <element minOccurs="0" name="appendResult" type="xsd:boolean"/>
+    </sequence>
+  </complexType>
+  <complexType name="output">
+    <annotation>
+      <documentation>output</documentation>
+    </annotation>
+    <sequence/>
+  </complexType>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://10.95.177.203:7003/cwf/services/testInterface</con:endpoint><con:endpoint>http://localhost:8080/cwf/services/testInterface</con:endpoint></con:endpoints><con:operation isOneWay="false" action="runTestCase" name="runTestCase" bindingOperationName="runTestCase" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.95.177.203:7003/cwf/services/testInterface</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <input>
+
+      </input>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="runTestCase"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="runTestSuite" name="runTestSuite" bindingOperationName="runTestSuite" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.95.177.203:7003/cwf/services/testInterface</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <input>
+
+         <!--Optional:-->
+         <appendResult>true</appendResult>
+      </input>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="runTestSuite"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

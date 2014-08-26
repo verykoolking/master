@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.OperationTaxForm">
+  <group>Operation</group>
+  <label>OperationTaxForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.OperationTax</valueType>
+    </variable>
+    <variable name="ProvincePickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout2" type="elvlt">
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <visibilityMode>multiple</visibilityMode>
+                  <width>800px</width>
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <elementList>
+                        <element name="SectionHeader" type="elsecth">
+                          <label>General Parameters</label>
+                        </element>
+                        <element name="VerticalLayout" type="elvlt">
+                          <elementList>
+                            <element name="LayoutSpacer1" type="ellsp">
+                              <height>20px</height>
+                            </element>
+                            <element name="HorizontalLayout" type="elgrd">
+                              <alignment>right,center</alignment>
+                              <elementList>
+                                <element name="TaxCode" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <editable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.OperationTaxForm/permMethod_setIsPrimaryKey</variablePath>
+                                    </variablePathList>
+                                  </editable>
+                                  <labeAlign>left</labeAlign>
+                                  <label>Code</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.OperationTaxForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.OperationTax/dstruct_TaxCode</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>100px</width>
+                                </element>
+                                <element name="ProfileDescription" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <labeAlign>left</labeAlign>
+                                  <label>Description</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.OperationTaxForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.OperationTax/dstruct_ProfileDescription</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>100px</width>
+                                </element>
+                                <element name="TaxValue" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <labeAlign>left</labeAlign>
+                                  <label>Tax Value (%)</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.OperationTaxForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.OperationTax/dstruct_TaxValue</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>100px</width>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="Section1" type="elsect">
+                      <elementList>
+                        <element name="SectionHeader1" type="elsecth">
+                          <label>Province</label>
+                        </element>
+                        <element name="LayoutSpacer" type="ellsp">
+                          <height>20px</height>
+                        </element>
+                        <element name="FormFrame" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.OperationTaxForm/leaf_ProvincePickList</variablePath>
+                              <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <height>350px</height>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.OperationTaxForm/leaf_ProvincePickList</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <width>550px</width>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$ProvincePickList" type="laction">
+      <path>ui_cm_spoc.forms.OperationTaxForm/leaf_ProvincePickList</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var pl = new cm_spoc.PickList(null,this);
+        pl.modelCallback = this.setModel;
+        pl.availableItems = new DataObjectList();
+
+        var itemFinder = new Finder("cm_spoc.ProvinceFinder");
+        var result = itemFinder.search();
+
+        var ProvincesSelected = this.model.OpTaxProvinceArrDS.List;
+        pl.loadItemsSelectedPreviously(pl,result,ProvincesSelected);
+
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.OperationTaxForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initOperationTax(this.model);
+        //cm_spoc.initTaxProvinceIteratorUI(this);
+
+        return m;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script>//return true;</script>
+    </method>
+    <method name="setModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.OpTaxProvinceArrDS.List.clear();
+        this.parent.model.OpTaxProvinceArrDS.ListDS.clear();
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.OpTaxProvinceArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+  </methodList>
+</userInterface>

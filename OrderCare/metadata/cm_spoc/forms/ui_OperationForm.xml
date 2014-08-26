@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.OperationForm">
+  <group>Operation</group>
+  <label>OperationForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.Operation</valueType>
+    </variable>
+    <variable name="numberLanguages" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="showLanguageAddButton" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="languageIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="pickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="DebtCausesIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="GeneralParameters" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.OperationForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.OperationForm/frmui_Forms/vform_GeneralParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                </element>
+                <element name="Literals" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.OperationForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.OperationForm/frmui_Forms/vform_Literals</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Literals</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="GeneralParameters" type="vform">
+          <label>GeneralParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>left,center</alignment>
+            <elementList>
+              <element name="GridLayout" type="elgrd">
+                <numOfCols>3</numOfCols>
+                <elementList>
+                  <element name="OperationId" type="elfld">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.OperationForm/permMethod_DebtCausesArrOnlyRead</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <labeAlign>left</labeAlign>
+                    <label>Operation ID</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.OperationForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Operation/dstruct_OperationId</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>150px</width>
+                  </element>
+                  <element name="OperationButton" type="elbtn">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.OperationForm/usrActionMethod_FinderOperationReferenceDialog</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/finder.gif</icon>
+                    <showLabel>false</showLabel>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                      </variablePathList>
+                    </visible>
+                    <width>22px</width>
+                  </element>
+                </elementList>
+              </element>
+              <element name="GridLayout4" type="elgrd">
+                <colWidths>160px</colWidths>
+                <edgeShowCenter>true</edgeShowCenter>
+                <edgeSize>2</edgeSize>
+                <labeAlign>center</labeAlign>
+                <numOfCols>2</numOfCols>
+                <width>600px</width>
+                <elementList>
+                  <element name="Label3" type="ellab">
+                    <cellAlignment>left,center</cellAlignment>
+                    <fontProperties type="pfnt">
+                      <color>#003168</color>
+                      <family>Arial</family>
+                      <size>11</size>
+                    </fontProperties>
+                    <label>Visible Operation in the operations detail</label>
+                    <width>250px</width>
+                  </element>
+                  <element name="OperationInOpsDetRecord1" type="elchk">
+                    <cellAlignment>left,center</cellAlignment>
+                    <labelAsTitle>false</labelAsTitle>
+                    <showLabel>false</showLabel>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.OperationForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Operation/dstruct_OperationInOpsDetRecord</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="Label4" type="ellab">
+                    <cellAlignment>left,center</cellAlignment>
+                    <fontProperties type="pfnt">
+                      <bold>true</bold>
+                      <color>#000066</color>
+                      <family>Arial</family>
+                      <size>11</size>
+                    </fontProperties>
+                    <label>Active Operations in OCSMS *</label>
+                    <width>250px</width>
+                  </element>
+                  <element name="ActiveOperationsInOCSMS1" type="elchk">
+                    <cellAlignment>left,center</cellAlignment>
+                    <labelAsTitle>false</labelAsTitle>
+                    <showLabel>false</showLabel>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.OperationForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.Operation/dstruct_ActiveOperationsInOCSMS</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </element>
+              <element name="SectionStack" type="elsectnstck">
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.OperationForm/permMethod_DebtCausesArrVisORule</variablePath>
+                  </variablePathList>
+                </visible>
+                <width>750px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <cellAlignment>center,center</cellAlignment>
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Causes for Debt</label>
+                      </element>
+                      <element name="DebtCausesLayout" type="elvlt">
+                        <alignment>left,center</alignment>
+                        <width>500px</width>
+                        <elementList>
+                          <element name="buttonsLayout" type="elhlt">
+                            <elementList>
+                              <element name="addButton" type="elmnu">
+                                <menuAccel type="mAccelP"/>
+                                <canFocus>false</canFocus>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.OperationForm/uimthd_addDebt</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <icon>/cwt/images/16/notebook_add.png</icon>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.OperationForm/permMethod_ShowAddButton</variablePath>
+                                  </variablePathList>
+                                </visible>
+                                <width>40px</width>
+                              </element>
+                              <element name="deleteButton" type="elmnu">
+                                <menuAccel type="mAccelP"/>
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.OperationForm/uimthd_deleteDebt</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <icon>/cwt/images/16/delete.png</icon>
+                                <width>40px</width>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="HorizontalLayout" type="elhlt">
+                            <width>700px</width>
+                            <elementList>
+                              <element name="Select2" type="ellab">
+                                <columnSpan>1</columnSpan>
+                                <width>20px</width>
+                              </element>
+                              <element name="DebtUseForAdjustmentCauses" type="ellab">
+                                <canSort>false</canSort>
+                                <columnSpan>4</columnSpan>
+                                <label>Debt use for adjustment causes</label>
+                                <textAlign>center</textAlign>
+                                <width>290px</width>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="DebtCausesVL" type="elvlt">
+                            <height>200px</height>
+                            <overflow>auto</overflow>
+                            <width>500px</width>
+                            <elementList>
+                              <element name="DebtCauseIterator" type="eliter">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.OperationForm/leaf_DebtCausesIterator</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <elementList>
+                                  <element name="DebtCauseHL" type="elhlt">
+                                    <width>500px</width>
+                                    <elementList>
+                                      <element name="debtFormFrame" type="elovf">
+                                        <formReference type="varPath">
+                                          <variablePathList>
+                                            <variablePath>ui_cm_spoc.forms.OperationForm/leaf_DebtCausesIterator</variablePath>
+                                            <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                            <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                          </variablePathList>
+                                        </formReference>
+                                        <width>500px</width>
+                                      </element>
+                                    </elementList>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="Literals" type="vform">
+          <label>Literals</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>left,center</alignment>
+            <elementList>
+              <element name="LayoutSpacer" type="ellsp">
+                <height>10px</height>
+              </element>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.OperationForm/permMethod_OperationDescriptionsVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+                <width>750px</width>
+                <elementList>
+                  <element name="languagueSection" type="elsect">
+                    <removeLabelLine>true</removeLabelLine>
+                    <elementList>
+                      <element name="buttonsLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <menuAccel type="mAccelP"/>
+                            <canFocus>false</canFocus>
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.OperationForm/usrActionMethod_LanguagePickListDialog</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.OperationForm/permMethod_ShowAddButton</variablePath>
+                              </variablePathList>
+                            </visible>
+                            <width>40px</width>
+                          </element>
+                          <element name="deleteButton" type="elmnu">
+                            <menuAccel type="mAccelP"/>
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.OperationForm/uimthd_deleteLanguage</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                            <width>40px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="HorizontalLayout" type="elhlt">
+                        <width>700px</width>
+                        <elementList>
+                          <element name="Select2" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <width>20px</width>
+                          </element>
+                          <element name="language" type="ellab">
+                            <canSort>false</canSort>
+                            <columnSpan>4</columnSpan>
+                            <label>Language</label>
+                            <textAlign>center</textAlign>
+                            <width>290px</width>
+                          </element>
+                          <element name="description" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Literals</label>
+                            <textAlign>center</textAlign>
+                            <width>280px</width>
+                          </element>
+                          <element name="LayoutSpacer1" type="ellsp">
+                            <width>170px</width>
+                          </element>
+                          <element name="SubOperation" type="ellab">
+                            <label>Sub Operation and Code Value</label>
+                            <width>200px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="LanguageVL" type="elvlt">
+                        <height>200px</height>
+                        <overflow>auto</overflow>
+                        <width>1200px</width>
+                        <elementList>
+                          <element name="LanguageIterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.OperationForm/leaf_languageIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="languageHL" type="elhlt">
+                                <width>1200px</width>
+                                <elementList>
+                                  <element name="languageFormFrame" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.OperationForm/leaf_languageIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$pickList" type="laction">
+      <path>ui_cm_spoc.forms.OperationForm/leaf_pickList</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        /*var pl = new cm_spoc.PickList(null,this);
+        pl.priorityButtonsEnabled = true;
+        pl.modelCallback = this.setModel;
+
+        pl.availableItems = new DataObjectList();
+        var itemFinder = new Finder("cm_spoc.debtCausePickListFinder");
+        pl.availableItems = itemFinder.search();
+
+        var listDS = this.model.DebtCausesArrDS.List;
+        for(var i=0;i<listDS.length;i++){
+
+            for(var j=0;j<pl.availableItems.length;j++){
+                if(pl.availableItems[j].id ==  this.model.DebtCausesArrDS.List[i]){
+                    var item = pl.availableItems[j];
+                    pl.selectedItems.addLast(item);
+                    pl.availableItems.remove(item);
+                    break;
+                }
+            }
+        }
+        return pl;*/
+
+
+        /*var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_DebtCause";
+        var result = itemFinder.search();*/
+
+        //this.model.DebtCausesArrDS.List
+        return cm_spoc.initPickListFromCodeTable(this,"DebtUseForAdjustmentCausesCodeTa", null);
+
+
+        /*var selected = this.model.;
+        if(selected){
+           selected = this.model.CustomerProfile.split(",");
+           return cm_spoc.initPickListFromCodeTable(this,"DebtUseForAdjustmentCausesCodeTa",selected);
+        }else{
+           return cm_spoc.initPickListFromCodeTable(this,"CustomerProfileCodeTable",null);
+        }*/
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_com.conceptwave.system.UserInterface/uivar_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var model = cm_spoc.initOperations(this.model);
+        cm_spoc.initOperationsUI(this);
+
+        var listDS = this.model.OpOperationLiteralArrDS.ListDS;
+        var iteratorUI = this.languageIterator;
+
+        for(var i=0;i<listDS.length;i++)
+        {
+            iteratorUI[i].OperationId = model.OperationId;
+            cm_spoc.loadSubOperationsInOperations(listDS[i],iteratorUI[i]);
+        }
+        return model;
+      ]]></script>
+    </method>
+    <method name="OperationDescriptionsVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.OperationId;
+        if (value==null || value=="") return false;
+        else return true;
+      ]]></script>
+    </method>
+    <method name="setModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.DebtCausesArrDS.List.clear();
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.DebtCausesArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="deleteLanguage" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.removeListElements(this, this.model.OpOperationLiteralArrDS, "List", "languageIterator");
+        this.showLanguageAddButton=true;
+      ]]></script>
+    </method>
+    <method name="LanguagePickListDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.forms.pickListLanguage2(null,this);
+        newDetail.languages = new DataObjectList();
+        var ct = Global.getCTCodesAndDescriptions("LanguageCodeTable");
+        this.numberLanguages = 0;
+        var util=this.model.OpOperationLiteralArrDS.ListDS;
+
+        for(var i=0;i<ct.length;i++){
+
+            var find = false;
+            for(var j=0;j<util.length;j++){
+                if (ct[i+1]==util[j].Language){
+                    find = true;
+                    break;
+                }
+            }
+            if(!find){
+                var item = new cm_spoc.PickListDS();
+                item.id = ct[i];
+                item.description = ct[i+1];
+                newDetail.languages.addLast(item);
+            }
+            i++;
+            this.numberLanguages++;
+        }
+        newDetail.setParentUI(this);
+        newDetail.model=this.model;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="setParentUI" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <mandatory>true</mandatory>
+          <type>ui_com.conceptwave.system.UserInterface</type>
+        </parameter>
+      </parameterList>
+      <script>this.parentUI = ui;</script>
+    </method>
+    <method name="getParentUI" type="uimthd">
+      <valueType>ui_cm_spoc.forms.BoltOnForm</valueType>
+      <script>return this.parentUI;</script>
+    </method>
+    <method name="addLanguage" type="uimthd">
+      <script><![CDATA[
+        var listDS = this.model.OpOperationLiteralArrDS.ListDS;
+
+        cm_spoc.addListElementWithoutNodes(this, listDS,"cm_spoc.forms.LitLanguageUI","base_OperationLiteral","languageIterator");
+
+        var languageIterator = this.languageIterator;
+        for(var i=0;i<this.languageIterator.length;i++)
+        {
+            if(languageIterator[i].OperationId==null){
+                languageIterator[i].defineSubOperationsByOperation();
+            }
+        }
+      ]]></script>
+    </method>
+    <method name="ShowAddButton" type="permMethod">
+      <script>return this.showLanguageAddButton;</script>
+    </method>
+    <method name="MessageTrigger" type="uimthd">
+      <script><![CDATA[
+        this.model.Message=this.model.MessageEnum;
+        return;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="FinderOperationReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_Operation");
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="referenceCallback" type="uimthd">
+      <parameterList>
+        <parameter name="itemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        s.specificationCode = itemCode;
+        var operation = epc.getSpecificationByKey(s);
+        if(operation)
+        {
+            this.model.OperationId = operation.OperationId;
+        }
+
+        var languageIterator = this.languageIterator;
+        for(var i=0;i<this.languageIterator.length;i++)
+        {
+            if(languageIterator[i].OperationId!=this.model.OperationId){
+                languageIterator[i].defineSubOperationsByOperation();
+            }
+        }
+      ]]></script>
+    </method>
+    <method name="DebtCausesArrVisORule" type="permMethod">
+      <script><![CDATA[
+        if (this.model.OperationId=="AJ")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="addDebt" type="uimthd">
+      <script><![CDATA[
+        /*if(this.model.DebtCausesArrDS.ListDS==null)
+        {
+            var debtCauseArr = cm_spoc.initInnerDS("base_DebtCausesArr");
+            this.model.DebtCausesArrDS = debtCauseArr;
+        }*/
+
+        var debts = this.model.DebtCausesArrDS.ListDS;
+        cm_spoc.addListElement(this, debts,"cm_spoc.forms.debtCausesUI","base_DebtCause","DebtCausesIterator");
+      ]]></script>
+    </method>
+    <method name="deleteDebt" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.removeListElements(this,this.model.DebtCausesArrDS,"List", "DebtCausesIterator");
+        if(this.model.DebtCausesArrDS.ListDS.length==0)
+        {
+            this.model.DebtCausesArrDS=null;
+        }
+      ]]></script>
+    </method>
+    <method name="DebtCausesArrOnlyRead" type="permMethod">
+      <script><![CDATA[
+        if (this.model.OperationId!="AJ"){
+            this.model.DebtCausesArrDS.List.clear();
+            this.model.DebtCausesArrDS.ListDS.clear();
+            this.DebtCausesIterator = new Array();
+        }
+        return false;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

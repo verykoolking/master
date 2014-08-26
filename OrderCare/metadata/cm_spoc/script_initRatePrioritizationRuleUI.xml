@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initRatePrioritizationRuleUI">
+  <group>ui_scripts.Rate</group>
+  <label>initRatePrioritizationRuleUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="model" type="rifp">
+      <type>dstruct_cm_spoc.data.ListSpecification</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(ui.model.specificationCode){
+     for(var i=0; i<ui.model.RPRRateArrDS.List.length; i++){
+
+            var found = false;
+
+           for(var j=0;j<ui.PickList.availableItems.length;j++){
+            var item = ui.PickList.availableItems[j];
+                if(item.id == ui.model.RPRRateArrDS.List[i]){
+                    found = true;
+                    break;
+                }
+            }
+
+            if(found){
+                ui.PickList.selectedItems.addLast(item);
+                ui.PickList.availableItems.remove(item);
+            }
+        }
+
+    }
+  ]]></script>
+</script>

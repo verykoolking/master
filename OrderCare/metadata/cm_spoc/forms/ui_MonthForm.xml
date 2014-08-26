@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.MonthForm">
+  <extends>ui_cwa_epc.baseEpcItem</extends>
+  <group>Calendars</group>
+  <label>MonthForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+    </variable>
+    <variable name="finder" type="leaf">
+      <valueType>findScript_cm_spoc.SDFinder/ui_UserInterface</valueType>
+    </variable>
+    <variable name="month" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_cwa_epc.baseEpcItem/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_cwa_epc.baseItem/frmui_Forms/exov_Default</base>
+          <extends>ui_cwa_epc.baseItem/frmui_Forms/exov_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="baseItemLayout" type="eldel"/>
+            <override name="topStack" type="elvlt">
+              <alignment>center,center</alignment>
+              <width>652px</width>
+              <elementList>
+                <element name="Separator" type="elsep">
+                  <width>652px</width>
+                </element>
+                <element name="month" type="ellab">
+                  <cellAlignment>center,center</cellAlignment>
+                  <height>10px</height>
+                  <label>Month</label>
+                  <padding>0</padding>
+                  <textAlign>center</textAlign>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MonthForm/leaf_month</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>150px</width>
+                </element>
+                <element name="Separator1" type="elsep">
+                  <width>652px</width>
+                </element>
+                <element name="FormFrame" type="elovf">
+                  <cellAlignment>center,center</cellAlignment>
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MonthForm/leaf_finder</variablePath>
+                      <variablePath>findScript_cm_spoc.SDFinder/ui_UserInterface/frmui_Forms</variablePath>
+                      <variablePath>findScript_cm_spoc.SDFinder/ui_UserInterface/frmui_Forms/exov_Result</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <height>100px</height>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.MonthForm/leaf_finder</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>652px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$finder" type="laction">
+      <path>ui_cm_spoc.forms.MonthForm/leaf_finder</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.MonthForm/leaf_finder</valueType>
+      <script>return cm_spoc.initSDFinderUI(this, this.model);</script>
+    </method>
+  </methodList>
+</userInterface>

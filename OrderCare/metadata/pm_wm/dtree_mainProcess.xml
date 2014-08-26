@@ -1,0 +1,1099 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<decisionTree name="pm_wm.mainProcess">
+  <flags enum-type="metadataFlag">DEPRECATED</flags>
+  <activity name="start" type="dtSeqActivity">
+    <guid>{a6b6b74a-ab2a-4962-b6fe-85d12847d504}</guid>
+    <label>start</label>
+    <x>30.0</x>
+    <y>378.3562</y>
+    <childList>
+      <child name="validateMandatoryFields" type="dtScriptActivity">
+        <guid>{d933baa2-a25f-4f73-b540-42b6de424f9e}</guid>
+        <label>validateMandatoryFields</label>
+        <x>123.0</x>
+        <y>376.0056</y>
+        <methodList>
+          <method name="cwOnDTActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              this.whereami = "validateMandatoryFields";
+              Global.logDebug(this.whereami);
+
+              this.isAllOK = this.isAllOK && pm_wm.validateMandatoryFields(this);
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+      <child name="isValidateMandatoryFieldsOK" type="dtSwitchActivity">
+        <guid>{6223a0ee-c92c-40a7-99ae-47f4935b0bb4}</guid>
+        <label>isValidateMandatoryFieldsOK?</label>
+        <x>300.0664</x>
+        <y>376.0056</y>
+        <childList>
+          <child name="yes1" type="dtCaseActivity">
+            <guid>{c42da452-19e3-4f6a-80e8-c304c28ac70b}</guid>
+            <label>yes1</label>
+            <x>512.81445</x>
+            <y>315.54504</y>
+            <childList>
+              <child name="loadConfig" type="dtSeqActivity">
+                <guid>{7129928b-fe95-41de-aaf3-34ddc935836e}</guid>
+                <label>loadConfig</label>
+                <x>592.81445</x>
+                <y>317.89563</y>
+                <childList>
+                  <child name="prepareConfigInfo" type="dtScriptActivity">
+                    <guid>{e1ac5bfd-8cf4-4f1d-89b5-3fb4375a8a83}</guid>
+                    <label>prepareConfigInfo</label>
+                    <x>684.81445</x>
+                    <y>315.54504</y>
+                    <methodList>
+                      <method name="cwOnDTActBefore" type="action">
+                        <category>before</category>
+                        <system>true</system>
+                        <script><![CDATA[
+                          /** Prepare the configuration information
+                           */
+
+                          this.whereami  = "prepareConfigInfo";
+
+                          Global.logDebug(this.whereami + " - before");
+
+                          this.isAllOK = this.isAllOK &&  pm_wm.prepareConfigInfo(this);
+
+                          Global.logDebug(this.whereami + " - after");
+                        ]]></script>
+                      </method>
+                    </methodList>
+                  </child>
+                  <child name="isPrepareConfigInfoOK" type="dtSwitchActivity">
+                    <guid>{fb77c4c6-9ae8-4ab5-bc0e-33793305f1ae}</guid>
+                    <label>isPrepareConfigInfoOK</label>
+                    <x>828.8789</x>
+                    <y>315.54504</y>
+                    <childList>
+                      <child name="yes" type="dtCaseActivity">
+                        <guid>{d4420e84-6790-4c4c-b56b-5afc69c7d12c}</guid>
+                        <label>yes</label>
+                        <x>1000.27734</x>
+                        <y>246.97443</y>
+                        <childList>
+                          <child name="querySR" type="dtSeqActivity">
+                            <guid>{10f0df52-c799-4ce8-88ed-81255d011d2e}</guid>
+                            <label>querySR</label>
+                            <x>1080.2773</x>
+                            <y>249.32501</y>
+                            <childList>
+                              <child name="queryServiceRegistry" type="dtScriptActivity">
+                                <guid>{3946721b-88c1-402a-bbdd-92eb95f4cb2d}</guid>
+                                <label>queryServiceRegistry</label>
+                                <x>1172.2773</x>
+                                <y>246.97443</y>
+                                <methodList>
+                                  <method name="cwOnDTActBefore" type="action">
+                                    <category>before</category>
+                                    <system>true</system>
+                                    <script><![CDATA[
+                                      /**Retrieves from Service Registry the information to continue the workflow, for instance (boltonInstanceId and itemcode).
+                                       * The subscriberId and product instance (if any) could be used to retrieve the data.
+                                       */
+
+                                      this.whereami  = "queryServiceRegistry";
+                                      Global.logDebug(this.whereami + " - before");
+
+                                      this.isAllOK = this.isAllOK && pm_wm.queryServiceRegistry(this);
+
+                                      Global.logDebug(this.whereami + " - after");
+                                    ]]></script>
+                                  </method>
+                                </methodList>
+                              </child>
+                              <child name="isQueryServiceRegistryOK" type="dtSwitchActivity">
+                                <guid>{f84f6faf-6101-4ea0-a9cf-84c698cf641b}</guid>
+                                <label>isQueryServiceRegistryOK?</label>
+                                <x>1334.3184</x>
+                                <y>246.97443</y>
+                                <childList>
+                                  <child name="yes0" type="dtCaseActivity">
+                                    <guid>{10b0a306-a7e1-43e7-9cac-aad004842c14}</guid>
+                                    <label>yes0</label>
+                                    <x>1531.6973</x>
+                                    <y>168.3609</y>
+                                    <childList>
+                                      <child name="fetchDataFromCatalog" type="dtSeqActivity">
+                                        <guid>{db6f6d3d-0112-45dc-ae20-708ac18a1b94}</guid>
+                                        <label>fetchDataFromCatalog</label>
+                                        <x>1589.4089</x>
+                                        <y>170.71149</y>
+                                        <childList>
+                                          <child name="fetchDataFromCatalog" type="dtScriptActivity">
+                                            <guid>{ab336a78-2510-4b34-aa1e-1a5ece1128dd}</guid>
+                                            <label>fetchDataFromCatalog</label>
+                                            <x>1703.6973</x>
+                                            <y>168.36084</y>
+                                            <methodList>
+                                              <method name="cwOnDTActBefore" type="action">
+                                                <category>before</category>
+                                                <system>true</system>
+                                                <script><![CDATA[
+                                                  /** Fetch data from catalog.
+                                                   *
+                                                   */
+
+                                                  this.whereami = "fetchDataFromCatalog";
+                                                  Global.logDebug(this.whereami + " - before");
+
+                                                  this.isAllOK = this.isAllOK && pm_wm.fetchDataFromCatalog(this);
+
+                                                  Global.logDebug(this.whereami + " - after");
+                                                ]]></script>
+                                              </method>
+                                            </methodList>
+                                          </child>
+                                          <child name="isFetchDataFromCatalogOK" type="dtSwitchActivity">
+                                            <guid>{bf222226-26ba-4eb6-916e-08f81755de7a}</guid>
+                                            <label>isFetchDataFromCatalogOK?</label>
+                                            <x>1872.418</x>
+                                            <y>168.36084</y>
+                                            <childList>
+                                              <child name="yes01" type="dtCaseActivity">
+                                                <guid>{a2c8d562-452b-4c6e-a3e8-af0d785ae00f}</guid>
+                                                <label>yes01</label>
+                                                <x>2077.8125</x>
+                                                <y>119.18555</y>
+                                                <childList>
+                                                  <child name="configInfoOK" type="dtSeqActivity">
+                                                    <guid>{cff8f7fb-e8cb-491b-a83f-9ad97261539e}</guid>
+                                                    <label>configInfoOK</label>
+                                                    <x>2157.0908</x>
+                                                    <y>121.53613</y>
+                                                    <childList>
+                                                      <child name="validateRequest" type="dtScriptActivity">
+                                                        <guid>{363e5aec-df02-4748-985b-ecad829f5af7}</guid>
+                                                        <label>validateRequest</label>
+                                                        <x>2251.8477</x>
+                                                        <y>119.18555</y>
+                                                        <methodList>
+                                                          <method name="cwOnDTActBefore" type="action">
+                                                            <category>before</category>
+                                                            <system>true</system>
+                                                            <script><![CDATA[
+                                                              /** Validate the request
+                                                               */
+
+                                                              this.whereami  = "validateRequest";
+
+                                                              Global.logDebug(this.whereami + " - before");
+
+                                                              this.isAllOK = this.isAllOK && pm_wm.validateRequest(this);
+
+                                                              Global.logDebug(this.whereami + " - after");
+                                                            ]]></script>
+                                                          </method>
+                                                        </methodList>
+                                                      </child>
+                                                    </childList>
+                                                  </child>
+                                                </childList>
+                                                <methodList>
+                                                  <method name="cwOnDTActCond" type="action">
+                                                    <category>cond</category>
+                                                    <system>true</system>
+                                                    <script><![CDATA[
+                                                      this.whereami  = "yes01";
+                                                      Global.logDebug(this.whereami);
+                                                      return this.isAllOK;
+                                                    ]]></script>
+                                                  </method>
+                                                </methodList>
+                                              </child>
+                                              <child name="no01" type="dtCaseActivity">
+                                                <guid>{bf41bf83-6718-4674-bdc7-ac8d47ac2164}</guid>
+                                                <label>no01</label>
+                                                <x>2164.8408</x>
+                                                <y>213.53613</y>
+                                                <childList>
+                                                  <child name="dummy_no01" type="dtScriptActivity">
+                                                    <guid>{8b01a64c-6d2a-464b-be00-11c927534f7f}</guid>
+                                                    <label>dummy_no01</label>
+                                                    <x>2271.8691</x>
+                                                    <y>216.65186</y>
+                                                    <methodList>
+                                                      <method name="cwOnDTActBefore" type="action">
+                                                        <category>before</category>
+                                                        <system>true</system>
+                                                        <script><![CDATA[
+                                                          this.whereami  = "dummy_no01";
+                                                          Global.logDebug(this.whereami);
+                                                        ]]></script>
+                                                      </method>
+                                                    </methodList>
+                                                  </child>
+                                                </childList>
+                                              </child>
+                                            </childList>
+                                            <methodList>
+                                              <method name="cwOnDTActCond" type="action">
+                                                <category>cond</category>
+                                                <system>true</system>
+                                                <script><![CDATA[
+                                                  this.whereami  = "isFetchDataFromCatalogOK?";
+                                                  Global.logDebug(this.whereami);
+                                                  return true;
+                                                ]]></script>
+                                              </method>
+                                            </methodList>
+                                          </child>
+                                        </childList>
+                                      </child>
+                                    </childList>
+                                    <methodList>
+                                      <method name="cwOnDTActCond" type="action">
+                                        <category>cond</category>
+                                        <system>true</system>
+                                        <script><![CDATA[
+                                          this.whereami = "yes0";
+                                          Global.logDebug(this.whereami);
+                                          return this.isAllOK;
+                                        ]]></script>
+                                      </method>
+                                    </methodList>
+                                  </child>
+                                  <child name="no0" type="dtCaseActivity">
+                                    <guid>{ec8afc5f-5cdc-424e-b9bf-e93188edcf2e}</guid>
+                                    <label>no0</label>
+                                    <x>1748.0576</x>
+                                    <y>317.58795</y>
+                                    <childList>
+                                      <child name="dummy_no0" type="dtScriptActivity">
+                                        <guid>{a11e7965-a781-44ca-9408-5db4ecbf6440}</guid>
+                                        <label>dummy_no0</label>
+                                        <x>2157.834</x>
+                                        <y>310.2373</y>
+                                        <methodList>
+                                          <method name="cwOnDTActBefore" type="action">
+                                            <category>before</category>
+                                            <system>true</system>
+                                            <script><![CDATA[
+                                              this.whereami  = "dummy_no0";
+                                              Global.logDebug(this.whereami);
+                                            ]]></script>
+                                          </method>
+                                        </methodList>
+                                      </child>
+                                    </childList>
+                                  </child>
+                                </childList>
+                                <methodList>
+                                  <method name="cwOnDTActCond" type="action">
+                                    <category>cond</category>
+                                    <system>true</system>
+                                    <script><![CDATA[
+                                      this.whereami  = "isQueryServiceRegistryOK?";
+                                      Global.logDebug(this.whereami);
+                                      return true;
+                                    ]]></script>
+                                  </method>
+                                </methodList>
+                              </child>
+                              <child name="isAllOK2" type="dtSwitchActivity">
+                                <guid>{e54885b2-02e1-402b-bec2-a9deec9a598e}</guid>
+                                <label>isAllOK2?</label>
+                                <x>2386.9043</x>
+                                <y>224.00244</y>
+                                <childList>
+                                  <child name="yes8" type="dtCaseActivity">
+                                    <guid>{0ad208c9-3e9b-4013-81ac-5d1ffccbac35}</guid>
+                                    <label>yes8</label>
+                                    <x>2486.5918</x>
+                                    <y>169.43921</y>
+                                    <childList>
+                                      <child name="altamira" type="dtSeqActivity">
+                                        <guid>{f600675d-45ea-45c0-aa6a-de72844aec2f}</guid>
+                                        <label>altamira</label>
+                                        <x>2567.5986</x>
+                                        <y>171.7898</y>
+                                        <childList>
+                                          <child name="sendToAltamira" type="dtSwitchActivity">
+                                            <guid>{3e9d1d09-3015-45d0-92c9-7ab178fe42f6}</guid>
+                                            <label>sendToAltamira?</label>
+                                            <x>2660.6055</x>
+                                            <y>168.43921</y>
+                                            <childList>
+                                              <child name="yes888" type="dtCaseActivity">
+                                                <guid>{550fc389-b427-4101-a2cb-15b8d2d021b3}</guid>
+                                                <label>yes888</label>
+                                                <x>2799.6367</x>
+                                                <y>111.66333</y>
+                                                <childList>
+                                                  <child name="askAltamira" type="dtSeqActivity">
+                                                    <guid>{5f6fc4ad-8079-4753-8f86-a5d8d7808d36}</guid>
+                                                    <label>askAltamira</label>
+                                                    <x>2886.6543</x>
+                                                    <y>115.013916</y>
+                                                    <childList>
+                                                      <child name="mapToAltamira" type="dtScriptActivity">
+                                                        <guid>{14bb1831-b6d9-48a3-8fab-2b5553a64e84}</guid>
+                                                        <label>mapToAltamira</label>
+                                                        <x>2978.6543</x>
+                                                        <y>112.66333</y>
+                                                        <methodList>
+                                                          <method name="cwOnDTActBefore" type="action">
+                                                            <category>before</category>
+                                                            <system>true</system>
+                                                            <script><![CDATA[
+                                                              /** Mapping the request to AltamirA
+                                                               */
+
+                                                              this.whereami  = "mapToAltamira";
+
+                                                              Global.logDebug(this.whereami + " - before");
+
+                                                              this.isAllOK = this.isAllOK && pm_wm.mapToAltamira(this);
+
+                                                              Global.logDebug(this.whereami + " - after");
+                                                            ]]></script>
+                                                          </method>
+                                                        </methodList>
+                                                      </child>
+                                                      <child name="isMapToAltamiraOK" type="dtSwitchActivity">
+                                                        <guid>{1c56801f-6926-40c1-b951-6beca6295794}</guid>
+                                                        <label>isMapToAltamiraOK?</label>
+                                                        <x>3108.0117</x>
+                                                        <y>112.66333</y>
+                                                        <childList>
+                                                          <child name="yes9" type="dtCaseActivity">
+                                                            <guid>{212c9dca-8b98-4bf4-a31a-646967159336}</guid>
+                                                            <label>yes9</label>
+                                                            <x>3277.0537</x>
+                                                            <y>48.46216</y>
+                                                            <childList>
+                                                              <child name="mapOK21" type="dtSeqActivity">
+                                                                <guid>{8a696193-72b4-4735-a395-2b17445be3c0}</guid>
+                                                                <label>mapOK21</label>
+                                                                <x>3380.0674</x>
+                                                                <y>50.812744</y>
+                                                                <childList>
+                                                                  <child name="invokeAltamira" type="dtScriptActivity">
+                                                                    <guid>{74f8e568-579a-479e-8ce5-d27bf7d90848}</guid>
+                                                                    <label>invokeAltamira</label>
+                                                                    <x>3473.0742</x>
+                                                                    <y>48.46216</y>
+                                                                    <methodList>
+                                                                      <method name="cwOnDTActBefore" type="action">
+                                                                        <category>before</category>
+                                                                        <system>true</system>
+                                                                        <script><![CDATA[
+                                                                          /** Invoke AltamirA using the request previously created
+                                                                           */
+
+                                                                          this.whereami  = "invokeAltamira";
+
+                                                                          Global.logDebug(this.whereami + " - before");
+
+                                                                          this.isAllOK = this.isAllOK && pm_wm.invokeAltamira(this);
+
+                                                                          Global.logDebug(this.whereami + " - after");
+                                                                        ]]></script>
+                                                                      </method>
+                                                                    </methodList>
+                                                                  </child>
+                                                                </childList>
+                                                              </child>
+                                                            </childList>
+                                                            <methodList>
+                                                              <method name="cwOnDTActCond" type="action">
+                                                                <category>cond</category>
+                                                                <system>true</system>
+                                                                <script><![CDATA[
+                                                                  this.whereami  = "yes9";
+                                                                  Global.logDebug(this.whereami);
+                                                                  return this.isAllOK
+                                                                ]]></script>
+                                                              </method>
+                                                            </methodList>
+                                                          </child>
+                                                          <child name="no9" type="dtCaseActivity">
+                                                            <guid>{0b801fde-c8ef-428d-9a6b-19481cf9b747}</guid>
+                                                            <label>no9</label>
+                                                            <x>3386.0674</x>
+                                                            <y>142.81274</y>
+                                                            <childList>
+                                                              <child name="dummy_no9" type="dtScriptActivity">
+                                                                <guid>{61d19a2e-21f4-47d7-86f3-b6031f32c6f1}</guid>
+                                                                <label>dummy_no9</label>
+                                                                <x>3489.416</x>
+                                                                <y>149.16333</y>
+                                                                <methodList>
+                                                                  <method name="cwOnDTActBefore" type="action">
+                                                                    <category>before</category>
+                                                                    <system>true</system>
+                                                                    <script><![CDATA[
+                                                                      this.whereami  = "dummy_no9";
+                                                                      Global.logDebug(this.whereami);
+                                                                    ]]></script>
+                                                                  </method>
+                                                                </methodList>
+                                                              </child>
+                                                            </childList>
+                                                          </child>
+                                                        </childList>
+                                                        <methodList>
+                                                          <method name="cwOnDTActCond" type="action">
+                                                            <category>cond</category>
+                                                            <system>true</system>
+                                                            <script><![CDATA[
+                                                              this.whereami  = "isMapToAltamiraOK?";
+                                                              Global.logDebug(this.whereami);
+                                                              return true;
+                                                            ]]></script>
+                                                          </method>
+                                                        </methodList>
+                                                      </child>
+                                                    </childList>
+                                                  </child>
+                                                </childList>
+                                                <methodList>
+                                                  <method name="cwOnDTActCond" type="action">
+                                                    <category>cond</category>
+                                                    <system>true</system>
+                                                    <script><![CDATA[
+                                                      this.whereami  = "yes888";
+                                                      Global.logDebug(this.whereami);
+                                                      return this.sendToAltamira;
+                                                    ]]></script>
+                                                  </method>
+                                                </methodList>
+                                              </child>
+                                              <child name="no888" type="dtCaseActivity">
+                                                <guid>{77b8435b-7f44-47e1-8c0b-067bff7c05fc}</guid>
+                                                <label>no888</label>
+                                                <x>3002.6484</x>
+                                                <y>209.3645</y>
+                                                <childList>
+                                                  <child name="dummy_no888" type="dtScriptActivity">
+                                                    <guid>{2f83b8f1-833a-41d3-98a7-9323c498850a}</guid>
+                                                    <label>dummy_no888</label>
+                                                    <x>3378.0605</x>
+                                                    <y>224.4314</y>
+                                                    <methodList>
+                                                      <method name="cwOnDTActBefore" type="action">
+                                                        <category>before</category>
+                                                        <system>true</system>
+                                                        <script><![CDATA[
+                                                          this.whereami  = "dummy_no8";
+                                                          Global.logDebug(this.whereami);
+                                                        ]]></script>
+                                                      </method>
+                                                    </methodList>
+                                                  </child>
+                                                </childList>
+                                              </child>
+                                            </childList>
+                                            <methodList>
+                                              <method name="cwOnDTActCond" type="action">
+                                                <category>cond</category>
+                                                <system>true</system>
+                                                <script><![CDATA[
+                                                  this.whereami = "sendToAltamira?";
+                                                  Global.logDebug(this.whereami);
+                                                  return true;
+                                                ]]></script>
+                                              </method>
+                                            </methodList>
+                                          </child>
+                                        </childList>
+                                      </child>
+                                    </childList>
+                                    <methodList>
+                                      <method name="cwOnDTActCond" type="action">
+                                        <category>cond</category>
+                                        <system>true</system>
+                                        <script><![CDATA[
+                                          this.whereami  = "yes8";
+                                          Global.logDebug(this.whereami);
+
+                                          return this.isAllOK;
+                                        ]]></script>
+                                      </method>
+                                    </methodList>
+                                  </child>
+                                  <child name="no8" type="dtCaseActivity">
+                                    <guid>{72bb95b0-3223-443a-b367-6e395c7158b1}</guid>
+                                    <label>no8</label>
+                                    <x>2802.9844</x>
+                                    <y>265.06567</y>
+                                    <childList>
+                                      <child name="dummy_no8" type="dtScriptActivity">
+                                        <guid>{9df4bf13-e1c7-48e5-8b64-d37f9cafaf0f}</guid>
+                                        <label>dummy_no8</label>
+                                        <x>3270.0469</x>
+                                        <y>215.71509</y>
+                                        <methodList>
+                                          <method name="cwOnDTActBefore" type="action">
+                                            <category>before</category>
+                                            <system>true</system>
+                                            <script><![CDATA[
+                                              this.whereami  = "dummy_no8";
+                                              Global.logDebug(this.whereami);
+                                            ]]></script>
+                                          </method>
+                                        </methodList>
+                                      </child>
+                                    </childList>
+                                  </child>
+                                </childList>
+                                <methodList>
+                                  <method name="cwOnDTActCond" type="action">
+                                    <category>cond</category>
+                                    <system>true</system>
+                                    <script><![CDATA[
+                                      this.whereami  = "isAllOK2?";
+                                      Global.logDebug(this.whereami);
+                                      return true;
+                                    ]]></script>
+                                  </method>
+                                </methodList>
+                              </child>
+                            </childList>
+                          </child>
+                        </childList>
+                        <methodList>
+                          <method name="cwOnDTActCond" type="action">
+                            <category>cond</category>
+                            <system>true</system>
+                            <script><![CDATA[
+                              this.whereami  = "yes2";
+                              Global.logDebug(this.whereami);
+                              return this.isAllOK;
+                            ]]></script>
+                          </method>
+                        </methodList>
+                      </child>
+                      <child name="no" type="dtCaseActivity">
+                        <guid>{e8f07c9b-7168-4eac-8c19-8d6413889c6d}</guid>
+                        <label>no</label>
+                        <x>1935.1152</x>
+                        <y>373.28912</y>
+                        <childList>
+                          <child name="dummy" type="dtScriptActivity">
+                            <guid>{9564b37e-2a30-40ba-be75-478cfeae0f93}</guid>
+                            <label>dummy</label>
+                            <x>2799.3145</x>
+                            <y>373.28906</y>
+                            <methodList>
+                              <method name="cwOnDTActBefore" type="action">
+                                <category>before</category>
+                                <system>true</system>
+                                <script><![CDATA[
+                                  this.whereami  = "dummy_new";
+                                  Global.logDebug(this.whereami);
+                                ]]></script>
+                              </method>
+                            </methodList>
+                          </child>
+                        </childList>
+                      </child>
+                    </childList>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnDTActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[
+                  this.whereami  = "yes1";
+                  Global.logDebug(this.whereami);
+
+                  return this.isAllOK;
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+          <child name="no5" type="dtCaseActivity">
+            <guid>{5c79cbd7-9e97-42bc-aa49-35a8be82ffe7}</guid>
+            <label>no5</label>
+            <x>1531.6973</x>
+            <y>428.9903</y>
+            <childList>
+              <child name="dummy_no5" type="dtScriptActivity">
+                <guid>{d0173367-812f-4a74-b08f-6713e34dab8c}</guid>
+                <label>dummy_no5</label>
+                <x>2566.5918</x>
+                <y>421.63965</y>
+                <methodList>
+                  <method name="cwOnDTActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      this.whereami  = "dummy_no5";
+                      Global.logDebug(this.whereami);
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnDTActCond" type="action">
+            <category>cond</category>
+            <system>true</system>
+            <script><![CDATA[
+              this.whereami  = "isValidateMandatoryFieldsOK?";
+              Global.logDebug(this.whereami);
+              return true;
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+      <child name="isAllOK3" type="dtSwitchActivity">
+        <guid>{434a5a01-593d-495e-a2f1-a6d3168a12b2}</guid>
+        <label>isAllOK3?</label>
+        <x>3629.7715</x>
+        <y>256.83203</y>
+        <childList>
+          <child name="yes11" type="dtCaseActivity">
+            <guid>{195e4832-246c-4562-955a-b6108bc61cf7}</guid>
+            <label>yes11</label>
+            <x>3730.459</x>
+            <y>187.67456</y>
+            <childList>
+              <child name="mapSuccessResponse" type="dtSeqActivity">
+                <guid>{2e43026e-adbb-4df4-ae40-7775f1e76103}</guid>
+                <label>mapSuccessResponse</label>
+                <x>3787.3882</x>
+                <y>190.02515</y>
+                <childList>
+                  <child name="fillMapSuccessResponse" type="dtScriptActivity">
+                    <guid>{08cba6e0-8a5b-46f2-b3e4-8d6f4ffdbb52}</guid>
+                    <label>fillMapSuccessResponse</label>
+                    <x>3902.4805</x>
+                    <y>187.67456</y>
+                    <methodList>
+                      <method name="cwOnDTActBefore" type="action">
+                        <category>before</category>
+                        <system>true</system>
+                        <script><![CDATA[
+                          /** Fill or Map Success Response from AltamirA
+                           */
+
+                          this.whereami  = "fillMapSuccessResponse";
+
+                          Global.logDebug(this.whereami + " - before");
+
+                          this.isAllOK = this.isAllOK && pm_wm.fillMapSuccessResponse(this);
+
+                          Global.logDebug(this.whereami + " - after");
+                        ]]></script>
+                      </method>
+                    </methodList>
+                  </child>
+                  <child name="isFillMapSuccessResponseOK" type="dtSwitchActivity">
+                    <guid>{84ffa389-4104-494b-a287-6ba8256a11d7}</guid>
+                    <label>isFillMapSuccessResponseOK?</label>
+                    <x>4084.543</x>
+                    <y>187.67456</y>
+                    <childList>
+                      <child name="yes22" type="dtCaseActivity">
+                        <guid>{e0aa444d-e037-403d-95d3-67addba84029}</guid>
+                        <label>yes22</label>
+                        <x>4303.2793</x>
+                        <y>98.017334</y>
+                        <childList>
+                          <child name="fillMapSuccessResponseOK" type="dtSeqActivity">
+                            <guid>{e32205e5-3b59-43cc-a977-396aa810e435}</guid>
+                            <label>fillMapSuccessResponseOK</label>
+                            <x>4348.7407</x>
+                            <y>100.36792</y>
+                            <childList>
+                              <child name="updateServiceRegistry" type="dtSwitchActivity">
+                                <guid>{805757dc-c1ef-4369-a8e1-4ad783564847}</guid>
+                                <label>updateServiceRegistry?</label>
+                                <x>4475.301</x>
+                                <y>98.017334</y>
+                                <childList>
+                                  <child name="yes26" type="dtCaseActivity">
+                                    <guid>{d2c060fb-0758-4415-8987-4b3cec0efbe8}</guid>
+                                    <label>yes26</label>
+                                    <x>4657.6973</x>
+                                    <y>30.0</y>
+                                    <childList>
+                                      <child name="updateSR" type="dtSeqActivity">
+                                        <guid>{b5e4767f-b369-4c46-8500-79fd19708ecb}</guid>
+                                        <label>updateSR</label>
+                                        <x>4745.7217</x>
+                                        <y>32.350586</y>
+                                        <childList>
+                                          <child name="updateServiceRegistry" type="dtScriptActivity">
+                                            <guid>{802424c8-656f-49ea-b868-ec94ad09e301}</guid>
+                                            <label>updateServiceRegistry</label>
+                                            <x>4838.7285</x>
+                                            <y>30.0</y>
+                                            <methodList>
+                                              <method name="cwOnDTActBefore" type="action">
+                                                <category>before</category>
+                                                <system>true</system>
+                                                <script><![CDATA[
+                                                  /** Update Service Registry
+                                                   */
+
+                                                  this.whereami  = "updateServiceRegistry";
+
+                                                  Global.logDebug(this.whereami + " - before");
+
+                                                  this.isAllOK = this.isAllOK && pm_wm.updateServiceRegistry(this);
+
+                                                  Global.logDebug(this.whereami + " - after");
+                                                ]]></script>
+                                              </method>
+                                            </methodList>
+                                          </child>
+                                        </childList>
+                                      </child>
+                                    </childList>
+                                    <methodList>
+                                      <method name="cwOnDTActCond" type="action">
+                                        <category>cond</category>
+                                        <system>true</system>
+                                        <script><![CDATA[
+                                          this.whereami  = "yes26";
+                                          Global.logDebug(this.whereami);
+
+                                          return this.pmOperation[0].updateServiceRegistry;
+                                        ]]></script>
+                                      </method>
+                                    </methodList>
+                                  </child>
+                                  <child name="no24" type="dtCaseActivity">
+                                    <guid>{c0962c05-4dd0-49ad-88b1-b49289b3c189}</guid>
+                                    <label>no24</label>
+                                    <x>4751.7217</x>
+                                    <y>124.350586</y>
+                                    <childList>
+                                      <child name="dummy_no24" type="dtScriptActivity">
+                                        <guid>{e8f88f99-0de2-472a-9744-89799c9478a8}</guid>
+                                        <label>dummy_no24</label>
+                                        <x>4876.085</x>
+                                        <y>162.96313</y>
+                                        <methodList>
+                                          <method name="cwOnDTActBefore" type="action">
+                                            <category>before</category>
+                                            <system>true</system>
+                                            <script><![CDATA[
+                                              this.whereami  = "dummy_no24";
+                                              Global.logDebug(this.whereami);
+                                            ]]></script>
+                                          </method>
+                                        </methodList>
+                                      </child>
+                                    </childList>
+                                  </child>
+                                </childList>
+                                <methodList>
+                                  <method name="cwOnDTActCond" type="action">
+                                    <category>cond</category>
+                                    <system>true</system>
+                                    <script><![CDATA[
+                                      this.whereami  = "updateSR?";
+                                      Global.logDebug(this.whereami);
+                                      return true;
+                                    ]]></script>
+                                  </method>
+                                </methodList>
+                              </child>
+                            </childList>
+                          </child>
+                        </childList>
+                        <methodList>
+                          <method name="cwOnDTActCond" type="action">
+                            <category>cond</category>
+                            <system>true</system>
+                            <script><![CDATA[
+                              this.whereami  = "yes22";
+                              Global.logDebug(this.whereami);
+                              return true;
+                            ]]></script>
+                          </method>
+                        </methodList>
+                      </child>
+                      <child name="no22" type="dtCaseActivity">
+                        <guid>{72e384ee-8049-450a-a71a-be7377f11cbb}</guid>
+                        <label>no22</label>
+                        <x>4523.001</x>
+                        <y>228.40234</y>
+                        <childList>
+                          <child name="dummy_no44" type="dtScriptActivity">
+                            <guid>{4c27f100-4c9e-4486-9b2c-0d4f75a40e52}</guid>
+                            <label>dummy_no44</label>
+                            <x>4744.715</x>
+                            <y>221.05176</y>
+                            <methodList>
+                              <method name="cwOnDTActBefore" type="action">
+                                <category>before</category>
+                                <system>true</system>
+                                <script><![CDATA[
+                                  this.whereami  = "dummy_no44";
+                                  Global.logDebug(this.whereami);
+                                ]]></script>
+                              </method>
+                            </methodList>
+                          </child>
+                        </childList>
+                      </child>
+                    </childList>
+                    <methodList>
+                      <method name="cwOnDTActCond" type="action">
+                        <category>cond</category>
+                        <system>true</system>
+                        <script><![CDATA[
+                          this.whereami  = "isFillMapSuccessResponseOK?";
+                          Global.logDebug(this.whereami);
+                          return true;
+                        ]]></script>
+                      </method>
+                    </methodList>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnDTActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[
+                  this.whereami  = "yes11";
+                  Global.logDebug(this.whereami);
+
+                  return this.isAllOK;
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+          <child name="no25" type="dtCaseActivity">
+            <guid>{c18e2515-9ffe-4d40-82f5-b9c1b4fb71c9}</guid>
+            <label>no25</label>
+            <x>4153.911</x>
+            <y>284.37573</y>
+            <childList>
+              <child name="dummy_no25" type="dtScriptActivity">
+                <guid>{dd2b3013-3559-4f6e-92bc-c02ad17c818d}</guid>
+                <label>dummy_no25</label>
+                <x>4650.701</x>
+                <y>277.02515</y>
+                <methodList>
+                  <method name="cwOnDTActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      this.whereami  = "dummy_no25";
+                      Global.logDebug(this.whereami);
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnDTActCond" type="action">
+            <category>cond</category>
+            <system>true</system>
+            <script><![CDATA[
+              this.whereami  = "isAllOK3";
+              Global.logDebug(this.whereami);
+              return true;
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+      <child name="isAllOK4" type="dtSwitchActivity">
+        <guid>{7130ab40-663f-4ed1-8abb-63bbf44ba463}</guid>
+        <label>isAllOK4?</label>
+        <x>5022.455</x>
+        <y>175.98389</y>
+        <childList>
+          <child name="yes66" type="dtCaseActivity">
+            <guid>{7d629877-3a0f-40a0-b867-d0308d364878}</guid>
+            <label>yes66</label>
+            <x>5209.132</x>
+            <y>121.95801</y>
+            <childList>
+              <child name="dummy_yes88" type="dtScriptActivity">
+                <guid>{878854f5-4845-4a53-af53-76ab16ccfc89}</guid>
+                <label>dummy_yes88</label>
+                <x>5323.49</x>
+                <y>114.60742</y>
+                <methodList>
+                  <method name="cwOnDTActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      this.whereami  = "dummy_yes88";
+                      Global.logDebug(this.whereami);
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnDTActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[
+                  this.whereami  = "yes66";
+                  Global.logDebug(this.whereami);
+
+                  return this.isAllOK;
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+          <child name="no66" type="dtCaseActivity">
+            <guid>{9f2e43f7-ee7b-4cce-b5f4-df1a60cae763}</guid>
+            <label>no66</label>
+            <x>5210.1426</x>
+            <y>211.00977</y>
+            <childList>
+              <child name="processFaultResult" type="dtScriptActivity">
+                <guid>{bbfdfdc4-ceff-4dc8-b822-e98fd972bfb4}</guid>
+                <label>processFaultResult</label>
+                <x>5291.1426</x>
+                <y>211.00977</y>
+                <methodList>
+                  <method name="cwOnDTActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      /** Process a Fault Result
+                       */
+
+                      this.whereami  = "processFaultResult";
+
+                      Global.logDebug(this.whereami + " - before");
+
+                      pm_wm.processFaultResult(this);
+
+                      Global.logDebug(this.whereami + " - after");
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnDTActCond" type="action">
+            <category>cond</category>
+            <system>true</system>
+            <script><![CDATA[
+              this.whereami  = "isAllOK4";
+              Global.logDebug(this.whereami);
+              return true;
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+      <child name="complete" type="dtCompleteActivity">
+        <guid>{e7061ab9-7a65-4b95-8f6b-0cc9bc302a54}</guid>
+        <label>complete</label>
+        <x>5461.8516</x>
+        <y>176.98389</y>
+      </child>
+    </childList>
+    <methodList>
+      <method name="cwOnDTActBefore" type="action">
+        <category>before</category>
+        <system>true</system>
+        <script><![CDATA[Global.logDebug("start");]]></script>
+      </method>
+    </methodList>
+  </activity>
+  <highlight>32</highlight>
+  <label>mainProcess</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="request" type="dtparameter">
+      <parameterGenericType>data structure</parameterGenericType>
+    </parameter>
+    <parameter name="soapHeaderRequest" type="dtparameter">
+      <parameterGenericType>data structure</parameterGenericType>
+    </parameter>
+    <parameter name="operation" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="isQueryRequest" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="errorcode" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="errortext" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="errorVariable" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="catalogData" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="response" type="dtparameter">
+      <parameterGenericType>data structure</parameterGenericType>
+    </parameter>
+    <parameter name="whereami" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="altamiraResponse" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="altamiraRequest" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="isAllOK" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="offerType" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="operationId" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="pmOperation" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="pmOperationFieldToAA" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="sendToAltamira" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="requestAttributesHierarchy" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="entitiesSR" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+    <parameter name="errorCategory" type="dtparameter">
+      <parameterGenericType>object</parameterGenericType>
+    </parameter>
+  </parameterList>
+  <methodList>
+    <method name="cwOnDTInit" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        Global.logDebug("BEGIN(cwOnDTInit)");
+        pm_wm.inicializeMainProcess(this);
+      ]]></script>
+    </method>
+    <method name="cwOnCompletion" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        Global.logDebug("this.response = " + this.response.toXML());
+        Global.logDebug("END(cwOnCompletion)");
+      ]]></script>
+    </method>
+  </methodList>
+</decisionTree>

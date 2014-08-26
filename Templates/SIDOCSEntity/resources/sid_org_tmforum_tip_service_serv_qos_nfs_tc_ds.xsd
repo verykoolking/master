@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/ds" xmlns:qs="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/qs" xmlns:tid="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tid" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/ds" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.service.serv.qos.nfs.tc.ds
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 6
+ Association Classes: 1
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/qs" schemaLocation="sid_org_tmforum_tip_service_serv_qos_nfs_tc_qs.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tid" schemaLocation="sid_org_tmforum_tip_service_serv_qos_nfs_tid.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="adaptiveREDDropperService" type="tns:AdaptiveREDDropperService"/>
+   <xsd:complexType name="AdaptiveREDDropperService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an experimental variation of RED that tries to adapt to changing traffic patterns by varying its probability function. This will be completed soon.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfAdaptiveREDDropperService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:AdaptiveREDDropperService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="dropperService" type="tns:DropperService"/>
+   <xsd:complexType name="DropperService" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A DropperService is a basic traffic conditioning building block. A DropperService represents the ability to selectively drop network packets or even flows. This is NOT the same as denying the forwarding of a packet or flow; rather, this represents the conscious act to discard a packet (or possibly even a flow). Compound traffic conditioning elements, such as Policers and Shapers, will implicitly use DropperServices.
+
+Droppers are distinguished by the algorithm that they use to drop traffic. The semantics of these algorithms are different enough to warrant their modeling by using subclasses.
+
+Please see the system view of the DEN-ng QoS model for their definition.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="otherDropAllMetric" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is a string that defines the name of the attribute used when the dropAllMetric is neither queueThreshold or arrivalRate. Thus, this attribute MUST be NULL unless the value of the dropAllMetric is 0 (denoting "Custom").</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="typeOfDropper" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the type of DropperService that this instance is. Values include:
+
+0: Custom Vendor Algorithm
+1: Random Algorithm
+2: Drop from the Head of the Queue
+3: Drop from the Tail of the Queue
+4: Absolute Dropper (i.e., always drop)</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="otherStartMetric" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is a string that defines the name of the attribute used when the startMetric is neither queueThreshold or arrivalRate. Thus, this attribute MUST be NULL unless the value of the startMetric is 0 (denoting "Custom").</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="startMetric" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is an enumerated integer that defines the metric used to trigger the start of dropping packets.
+
+This does NOT mean that all packets entering the interface will be dropped. However, it does mean that SOME packets will start to be dropped. The number and type of packets dropped is a function of the type of algorithm used by this Dropper.
+
+The metric used for starting to drop packets includes:
+
+0: Custom
+1: Queue Threshold
+2: Arrival Rate
+
+The type of metric to be used when the value of this attribute is 0 (i.e., Custom) is defined in the otherStartMetric attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="dropAllMetric" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is an enumerated integer that defines the metric used to trigger when ALL packets are dropped regardless of the type of algorithm used by this dropper.
+
+The metric used for starting to drop ALL packets includes:
+
+0: Custom
+1: Queue Threshold
+2: Arrival Rate
+
+The type of metric to be used when the value of this attribute is 0 (i.e., Custom) is defined in the otherDropAllMetric attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="customDropAlgorithmInfo" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute that is used to describe the type of dropping algorithm that is being used. It should ONLY be used if the value of the typeOfDropper attribute is "0".</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="queueService" type="qs:ArrayOfQueueService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association QueueCalculatedDropping</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfDropperService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:DropperService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="flowREDDropperService" type="tns:FlowREDDropperService"/>
+   <xsd:complexType name="FlowREDDropperService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>Extension of WRED Penalize flows that do not respond to drops (e.g., UDP) Flow-WRED ensures that no single flow can hog all the buffer resources
+Adaptive flows get fair share of resources
+Minimum release 12.0(3)T not VIP</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfFlowREDDropperService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:FlowREDDropperService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="headTailDropperService" type="tns:HeadTailDropperService"/>
+   <xsd:complexType name="HeadTailDropperService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The HeadTailDropper class models the behavior of either a head or tail dropper (e.g., a dropper which drops from the head or tail of its queue, respectively). The inherited attribute typeOfDropper indicates whether a particular instance of this class is a head dropper or a tail dropper.
+
+If this instance is a "HeadDropper", then all newly arriving traffic (which arrives at the head of the queue) will be dropped. In contrast, if this instance is a "TailDropper", then newly arriving traffic will be enqueued, and old traffic at the end of the queue will be dropped to make room for it.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="queueThreshold" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an integer attribute that indicates the queue depth (in bytes) at which traffic is dropped.
+
+If this instance is a "HeadDropper", then all newly arriving traffic (which arrives at the head of the queue) will be dropped. In contrast, if this instance is a "TailDropper", then newly arriving traffic will be enqueued, and old traffic at the end of the queue will be dropped to make room for it.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfHeadTailDropperService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:HeadTailDropperService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="rEDDropperService" type="tns:REDDropperService"/>
+   <xsd:complexType name="REDDropperService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The REDDropperService represents the ability to drop network traffic using a Random Early Detection (RED) type of algorithm. The purpose of a RED algorithm is to avoid congestion (as opposed to managing congestion). Without RED, when the queue fills up, all packets that arrive are dropped. With RED, as opposed to dropping traffic from a fixed location (e.g., from the head or the tail of the queue), the device monitors the average queue size and uses a random algorithm to drop traffic from a random location.
+
+These discards cause TCP-based applications to slow its transmission rate for those connections that experienced the packet discards. Note that UDP-based applicatons aren't affected; this is why the FlowREDDropper subclass was built.
+
+WRED adds a weighting factor to the RED algorithm to enable traffic with different priorities to have different performance characteristics. This is dictated by associating different drop probabilities with different traffic. A weighted algorithm is identified by having its isWeighted attribute to be TRUE.
+
+For example, traffic with different ToS or DSCP values can have different probabilities of being dropped. The same is true for different types of protocols (e.g., trtaffic using RSVP could be given a smaller drop probability). This means that WRED provides separate thresholds and weights for different traffic, instead of a single threshold and weight like RED does.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="isWeighted" type="xsd:boolean" minOccurs="0" maxOccurs="1" default="false">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, defines this algorithm as having the ability to weight the probability of dropping different traffic types differently.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="hasDifferentDropProbabilities" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, defines this algorithm as having the ability to assign different drop probabilities to different types of traffic.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="rEDServiceElement" type="tns:ArrayOfREDServiceElement" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association DropProbabilityDetails</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfREDDropperService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:REDDropperService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="rEDServiceElement" type="tns:REDServiceElement"/>
+   <xsd:complexType name="REDServiceElement">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class defines the drop probability, weighting, and other important parameters for distinguishing one traffic type from another traffic type for applying different dropping behavior. This is usually tied to supporting different classes of service. The class identifies traffic using a set mechanism, such as its DSCP or ToS value, through the MarkingUsedForDropping association.
+
+The REDDropper class (and its subclasses) associate one or more REDServiceElements (for each different type of traffic) using the DefinesCoSDropProbability association. If the algorithm used is RED, then by definition there is only one instance of this (the REDServiceElement) class.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="minQueueDropThreshold" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an integer attribute that defines the minimum queue threshold for dropping traffic. If the average queue length is less than this value, then the arriving traffic is enqueued.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="weightingConstant" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an integer attribute, and is used to configure the weighting factor used in calculating the average queue length for a specific traffic type.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="dropProbabilityThreshold" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that represents the fraction of packets dropped when the average queue depth is at the maximum threshold.
+
+When the average queue depth is above the value of the minQueueDropThreshold attribute, traffic will start being dropped. As long as the average queue depth is between the value of the minQueueDropThreshold and the maxQueueDropThreshold attributes, traffic will be dropped. The probability of this dropping increases linearly between the values of the minQueueDropThreshold and the maxQueueDropThreshold attributes, and is determined by the value of this attribute. For example, if the value of this attribute is 512, one out of every 512 packets is dropped when the average queue is at the maximum threshold.
+
+When the average queue size is above the maximum threshold, all packets are dropped.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="maxQueueDropThreshold" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an integer attribute that defines the maximum queue threshold for dropping traffic. If the average queue length is less than this value but greater than the minQueueDropThreshold, then the arriving traffic is subject to being randomly dropped. Whether the traffic actually is dropped or not is a function of the dro probability for that particular type of traffic.
+
+If the average queue length is equal to or greater than this value, then arriviing traffic will always be dropped, regardless of the specifics of the probability algorithm.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="queueLengthCalcFactor" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is a non-negative integer that is used to determine the average queue size.
+
+For high values of n, the previous average becomes more important. A large factor smooths out the peaks and lows in queue length. The average queue size is unlikely to change very quickly, avoiding drastic swings in size. The WRED process will be slow to start dropping packets, but it may continue dropping packets for a time after the actual queue size has fallen below the minimum threshold. The slow-moving average will accommodate temporary bursts in traffic. If the value of n gets too high, WRED will not react to congestion. Packets will be transmitted or dropped as if WRED were not in effect.
+
+For low values of n, the average queue size closely tracks the current queue size. The resulting average may fluctuate with changes in the traffic levels. In this case, the WRED process responds quickly to long queues. Once the queue falls below the minimum threshold, the process will stop dropping packets. If the value of n gets too low, WRED will overreact to temporary traffic bursts and drop traffic unnecessarily.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="thresholdUnits" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the units for the threshold measurement. Values include:
+
+0: custom implementation
+1: bytes
+2: packets
+3: cells
+4: frames
+5: flows</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="markerService" type="tid:ArrayOfMarkerService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association MarkingUsedForDropping</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfREDServiceElement">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:REDServiceElement" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* -->
+   <xsd:element name="dropProbabilityDetails" type="tns:DropProbabilityDetails"/>
+   <xsd:complexType name="DropProbabilityDetails">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This aggregation is used to define different drop probabilities for each CoS. For example, a different drop probability can be used for individual or group ToS and DSCP values.
+
+If this instance is a simple RED instance, then there will only be a single REDServiceElement. If this instance is a WRED instance, then there will be a set of REDServiceElements, one for each type of traffic that is treated differently.</p>
+            <p>This association class  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="dropperClassID" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This is a string attribute that contains the name of the CoS that this particular REDServiceElement supports. This enables different drop behaviors to be defined for different classes. For example, one could define multiple REDServiceElements, each with their own Dropping Behavior, through this mechanism.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfDropProbabilityDetails">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:DropProbabilityDetails" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

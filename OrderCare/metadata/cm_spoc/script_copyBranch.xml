@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.copyBranch">
+  <group>ui_scripts.RatingTree.RTFinder</group>
+  <label>copyBranch</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var result = ui.RTFinder.result;
+    var modelObj = ui.model.RTRatingTreeBranchArrDS;
+    var modelListDS = modelObj["ListDS"];
+    var modelListRel = modelObj["List"];
+    var len = modelListDS.length;
+    var resLength = result.length;
+
+    for( var i = 0; i < resLength; i++) {
+        if(result[i].selectItem){
+            for( var j = 0; j < len; j++ ) {
+                if( modelListDS[j].specificationCode == result[i].specificationCode){
+                    var newBranch =  cm_spoc.copyOfBranchDS(modelListDS[j]);
+                    modelListDS[modelListDS.length] = newBranch;
+                    modelListRel[modelListRel.length] = newBranch.specificationCode;
+                }
+            }
+            var doc = new cm_spoc.RatingTreeDoc();
+            doc.specificationCode = newBranch.specificationCode;
+
+            var result = ui.RTFinder.result;
+            result[result.length] = newBranch;
+            result[result.length-1]=result[result.length-1].mapTo(doc,"cm_spoc.RatingTreeCM")[0];
+        }
+
+    }
+
+    ui.RTFinder.model.updateUI();
+    ui.RTFinder.model.setList(result);
+  ]]></script>
+</script>

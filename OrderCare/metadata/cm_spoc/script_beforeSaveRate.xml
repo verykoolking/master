@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.beforeSaveRate">
+  <group>ui_scripts.Rate</group>
+  <label>beforeSaveRate</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_spoc.data.Rate</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var currDS1= model.RateRateComponentArrDS.ListDS;
+
+        for(var k =0; k< currDS1.length;k++) {
+            var currDS2 = currDS1[k].RCRatePriceEventPhaseArrDS.ListDS;
+            var num = currDS2.length;
+            for(var i =0; i< num;i++) {
+                if (currDS2[i].MinutesSecondsEnum == "min" &&  currDS2[i].StartUnit>0){
+                    //StartUnit is always saved in seconds
+                    model.RateRateComponentArrDS.ListDS[k].RCRatePriceEventPhaseArrDS.ListDS[i].StartUnit = currDS2[i].StartUnit *60;
+                    model.RateRateComponentArrDS.ListDS[k].RCRatePriceEventPhaseArrDS.ListDS[i].MinutesSecondsEnum = "sec"; //just for display reason
+                }
+            }
+        }
+  ]]></script>
+</script>

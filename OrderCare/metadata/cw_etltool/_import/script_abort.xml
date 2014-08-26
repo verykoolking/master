@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.abort">
+  <label>Abort Process</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="process" type="rifp">
+      <mandatory>true</mandatory>
+      <type>doc_cwf_pm.CWPROCESS</type>
+    </parameter>
+    <parameter name="document" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$ Abort Process Script Activity $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+
+    var  fileGroup, fileDoc, entityDoc, order, actionCommonInfo, oCSEntity, response, errorMsg, exception;
+    fileGroup, fileDoc = entityDoc = oCSEntity =  response = errorMsg = exception = actionCommonInfo = null;
+
+    try{
+        order = process.processOrder;
+
+        if( order.header.StartLoadingDate == null)
+            order.header.StartLoadingDate = new Date();
+
+        response = cw_etltool._import.endConfiguration(process,false);
+        if(api_common.isFault(response)){
+            process.processDocument.IsError = true;
+            exception = response.toXML();
+        }
+
+        while( process.processDocument.isThereFileToProcess() &&  !process.processDocument.IsError){
+
+            fileGroup = cw_etltool._import.getCurrentFile(process, document, process.processDocument.CurrentFileID);
+            fileDoc = fileGroup.fileDoc;
+
+            if(fileDoc.StartLoadingDate == null )
+                fileDoc.StartLoadingDate = new Date();
+
+
+             if(fileGroup.entities != null){
+                process.processDocument.setEntitiesCount(fileGroup.entities.length);
+                process.processDocument.resetProcessedEntitiesCount();
+            }
+
+
+            while( process.processDocument.isThereEntityToProcess() &&  !process.processDocument.IsError){
+
+
+                entityDoc = cw_etltool._import.getCurrentEntity(process, fileGroup, process.processDocument.CurrentEntityID);
+
+                if( entityDoc.StartLoadingDate == null)
+                    entityDoc.StartLoadingDate = new Date();
+
+                if(! process.processDocument.IsError){
+                    entityDoc.EntityStatus   = cw_etltool._import.$CONSTANT().entityStatus.ABORT;
+                    entityDoc.EndLoadingDate = new Date();
+                    process.processDocument.incrementProcessedEntitiesCount();
+                    process.processDocument.resetCurrentEntityID()
+                }
+            }//End of Entities Loop
+
+            if( !process.processDocument.IsError){
+                fileDoc.FileStatus     = cw_etltool._import.$CONSTANT().fileStatus.ABORT;
+                fileDoc.EndLoadingDate = new Date();
+                process.processDocument.incrementProcessedFilesCount();
+                process.processDocument.resetCurrentFileID()
+            }
+
+        }//End of Files Loop
+
+        if( !process.processDocument.IsError){
+            order.header.OrderStatus    = cw_etltool._import.$CONSTANT().orderStatus.ABORT;
+            order.header.EndLoadingDate = new Date();
+        }else{
+            setOrderToError();
+        }
+        //order.save();
+    }catch(ex){
+
+        exception = ex.message;
+        setOrderToError();
+
+    }finally{
+        if(order != null)
+            order.save();
+
+    }
+
+    /*=================================================================================================*/
+
+    function setOrderToError(){
+
+        process.processDocument.IsError = true;
+        order.header.ErrorMessage = exception;
+        order.header.OrderStatus = cw_etltool._import.$CONSTANT().orderStatus.ERROR;
+
+        setFileToError();
+        setEntityToError();
+        generateErrorMsg();
+
+        order.header.ErrorMessage = errorMsg;
+    }
+
+    function setEntityToError(){
+
+        if( entityDoc != null){
+            entityDoc.ErrorCode = "ETL_IMPORT_ENTITY_ABORT_ERROR" ;
+            entityDoc.EntityStatus = cw_etltool._import.$CONSTANT().entityStatus.ERROR;
+        }
+    }
+
+    function setFileToError(){
+
+        if( fileDoc != null){
+            fileDoc.ErrorCode = "ETL_IMPORT_ENTITY_ABORT_ERROR" ;
+            fileDoc.FileStatus = cw_etltool._import.$CONSTANT().fileStatus.ERROR;
+        }
+    }
+
+    function generateErrorMsg(){
+
+        errorMsg = "Abort Process Error :- ErrorCode : ETL_IMPORT_ENTITY_ABORT_ERROR ";
+        if(fileDoc != null)
+            errorMsg += " File Name : " + fileDoc.FileName;
+        if(entityDoc != null)
+            errorMsg += ", Entity Name : "+entityDoc.EntityName;
+
+        errorMsg += "\n" + exception;
+    }
+  ]]></script>
+</script>

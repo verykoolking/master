@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.applyApplicabilityConditions">
+  <group>applicabilityCondition.scripts</group>
+  <highlight>32</highlight>
+  <label>applyApplicabilityConditions</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="boltonType" type="rifp">
+      <type>dstruct_cm_spoc.data.BoltOnType</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        if(!boltonType.ApplicabilityCondition)
+            Global.throwException("BoltonType must have an Applicability Condition.");
+
+        theCatalog.catalogTestModeOnOff(true);
+
+        var AC = getSpecification(boltonType.ApplicabilityCondition, new cm_spoc.data.ApplicabilityCondition());
+        var res, index;
+        var TCDT = new cm_plm.DestTypeAssoTariffClassList();
+
+        var reusableGroupIds = new Array();
+        var reusableNx24Ids = new Array();
+        var allPairs = new Array();
+
+        ////
+        for(var i=0; i<AC.SimpleApplicabilityCondArrDS.ListDS.length; i++){
+
+            var simpleAC = AC.SimpleApplicabilityCondArrDS.ListDS[i];
+            var conditions = getSpecification(simpleAC.TemporalAppCondition, new cm_spoc.data.TemporalAppCondition());//simpleAC.TemporalAppConditionDS.SimpleTemporalAppCondArrDS.ListDS;
+            var tariffClasses = getSpecification(simpleAC.TariffClassAppCondition, new cm_spoc.data.TariffClassAppCondition());//simpleAC.TariffClassAppConditionDS.ACTariffClassArrDS.ListDS;
+            var destinationTypes = getSpecification(simpleAC.DestinationTypeAppCondition, new cm_spoc.data.DestinationTypeAppCondition());//simpleAC.DestinationTypeAppConditionDS.ListDS;
+            conditions = conditions.SimpleTemporalAppCondArrDS.ListDS;
+            updateConditionsID(conditions);
+
+            tariffClasses = tariffClasses.TCACTariffClassArrDS.ListDS;
+            destinationTypes = destinationTypes.DTACDestinationTypeArrDS.ListDS;
+
+            for(var j=0; j<tariffClasses.length; j++){
+                for(var k=0; k<destinationTypes.length; k++){
+                    index = pairExists(allPairs, tariffClasses[j].TariffClassCode, destinationTypes[k].DestTypeId);
+                    if(index >= 0){
+                        updateConditions(allPairs[index], conditions);
+                    }else{
+                        addConditions(allPairs,tariffClasses[j].TariffClassCode, destinationTypes[k].DestTypeId, conditions);
+                    }
+
+                }
+            }
+        }
+
+        for(var i=0; i<allPairs.length; i++){
+
+            TCDT.Nx24AppBoltonTypeListId = null;
+            TCDT.TariffClassCode = allPairs[i][0];
+            TCDT.DestTypeId = allPairs[i][1];
+            TCDT.AppBoltonTypeModality = boltonType.BoltOnTypeModality;
+
+            /*res = cm_plm.getReusableGroupIds(reusableGroupIds);
+            if(api_common.isFault(res))
+            return res;*/
+
+            res = cm_plm.processTCDTPair(boltonType, TCDT, allPairs[i][2], reusableNx24Ids, reusableGroupIds, projectCode);
+            if(api_common.isFault(res))
+                return res;
+        }
+
+        return projectCode;
+    }catch(exp){
+        Global.throwException(exp);
+    }finally{
+        theCatalog.catalogTestModeOnOff(false);
+    }
+
+    /***************************************************************************
+    * FUNCTION
+    **************************************************************************/
+
+    function pairExists(list, tariffClasseCode, destinationTypeId){
+
+        for(var i=0; i<list.length; i++){
+            if((list[i][0] == tariffClasseCode) && (list[i][1] == destinationTypeId))
+                return i;
+        }
+
+        return -1;
+    }
+
+    function updateConditions(list, from){
+        var index;
+        for(var i =0; i<from.length; i++){
+            index = -1;
+            for(var j = 0; j<list[2].length; j++){
+                if(list[2][j].TypeOfDay == from[i].TypeOfDay){
+                    index = j;
+                    break;
+                }
+            }
+            if(index < 0)
+                list[2].push(from[i].copy());
+
+        }
+    }
+
+    function addConditions(list, tariffClasseCode, destinationTypeId, conditions){
+        var condArr = new Array();
+        for(var i =0; i<conditions.length; i++){
+            condArr.push(conditions[i].copy());
+        }
+        list.push([tariffClasseCode, destinationTypeId, condArr]);
+    }
+
+    function updateConditionsID(conditions){
+
+        var typeOfDayDS;
+        for(var i=0; i<conditions.length;i++){
+            typeOfDayDS = getSpecification(conditions[i].TypeOfDay, new cm_spoc.data.TypeOfDay());
+            conditions[i].TypeOfDay = typeOfDayDS.TypeOfDayID;
+            //TODO: REMOVE!!!!!!
+            conditions[i].StartHourEnum = String(parseInt(Math.floor((Math.random() * 23))))
+            conditions[i].EndHourEnum = parseInt(conditions[i].StartHourEnum) + 4 > 23 ? "23" : String(parseInt(conditions[i].StartHourEnum )+ 4);
+            //
+        }
+
+        return conditions;
+
+    }
+
+    function getSpecification(code, DS){
+
+        DS.specificationCode = code;
+        var result = cm_common.getSpecificationByKey(DS);
+        if(api_common.isFault(result))
+            Global.throwException(result.toXML());
+        return result;
+
+    }
+  ]]></script>
+</script>

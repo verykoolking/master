@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_SSMaximumNumberOfSessionsCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_SSMaximumNumberOfSessionsCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>dstruct_cm_spoc.data.BoltOnType</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if ( data.SessionSpecificationDS.MaximumNumberOfSessions &&
+            cm_spoc.checkInclusion(data.BoltOnTypeModality,["ME","MG","XN"] ))
+
+      errList.addErrorMessage(data,["Maximum Number Of Session","Bolt On Type Modality Invalid"],"NGAA_EPC_002","E");
+
+     return false;
+  ]]></script>
+</script>

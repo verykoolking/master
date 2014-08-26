@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.getBoltonTypePriority">
+  <group>applicabilityCondition.scripts</group>
+  <label>getBoltonTypePriority</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="boltonTypeArr" type="rifp">
+      <array>true</array>
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="Nx24AppBoltonType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.Nx24AppBoltonType</type>
+    </parameter>
+    <parameter name="hour" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+    <parameter name="TCDT" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.DestTypeAssoTariffClassList</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var defaultRule,rules, simpleAC, BTList = null;
+
+    ///////////////////////////////////
+    //BTList = new Array(); BTList.push("10");BTList.push("18");BTList.push("12");BTList.push("13");BTList.push("14");
+    //return BTList;
+    //////////////////////////////////
+    var BP = cm_common.getBoltOnPrioritization();
+    if(api_common.isFault(BP))
+        return BP;
+
+    defaultRule = getSpecification(BP.DefaultRule, new cm_spoc.data.BoltOnPrioritizationRule());
+    rules = BP.BPBPrioritizationRuleArrDS.ListDS;
+
+    for(var i=0; i<rules.length; i++){
+        simpleAC = getSpecification(rules[i].ApplicabilityCondition, new cm_spoc.data.ApplicabilityCondition());
+        for(var k=0; k<simpleAC.SimpleApplicabilityCondArrDS.ListDS.length; k++){
+            var tariffClasses = getSpecification(simpleAC.SimpleApplicabilityCondArrDS.ListDS[k].TariffClassAppCondition, new cm_spoc.data.TariffClassAppCondition());//simpleAC.TariffClassAppConditionDS.ACTariffClassArrDS.ListDS;
+            var destinationTypes = getSpecification(simpleAC.SimpleApplicabilityCondArrDS.ListDS[k].DestinationTypeAppCondition, new cm_spoc.data.DestinationTypeAppCondition());//simpleAC.DestinationTypeAppConditionDS.ListDS;
+            tariffClasses = tariffClasses.TCACTariffClassArrDS.ListDS;
+            destinationTypes = destinationTypes.DTACDestinationTypeArrDS.ListDS;
+
+            if(cm_plm.indexOf(tariffClasses,TCDT.TariffClassCode)>0 && cm_plm.indexOf(destinationTypes,TCDT.DestTypeId)>0){
+                var conditions = simpleAC.TemporalAppConditionDS.SimpleTemporalAppCondArrDS.ListDS;
+                updateConditionsID(conditions);
+
+                for(var j=0; i<conditions.length; i++){
+                    if(conditions[j].TypeOfDay == Nx24AppBoltonType.TypeOfDayID){
+                        if (hour >= parseInt(conditions[j].StartHourEnum) && hour <= parseInt(conditions[j].EndHourEnum)){
+                            BTList = preparePriorityList(rules[i].BPRBoltOnTypeArrDS.ListDS, boltonTypeArr);
+                            if(BTList)
+                                return BTList;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    BTList = preparePriorityList(defaultRule.BPRBoltOnTypeArrDS.ListDS, boltonTypeArr);
+    if(!BTList)
+        Global.throwException("No rule is defined for the BoltonTypes: " + boltonTypeArr);
+
+    return BTList;
+
+
+    /***********************************************************************************
+    * FUNCTIONS
+    ***********************************************************************************/
+
+    function preparePriorityList(BTPriorities, BTArray)
+    {
+        var result = new Array();
+        for(var i=0; i<BTPriorities.length; i++){
+            if(cm_plm.indexOf(BTArray, BTPriorities[i].BoltOnTypeID) >= 0)
+                result.push(BTPriorities[i].BoltOnTypeID);
+        }
+
+        if(result.length < BTArray.length)    //meaning that not all the boltontypes were incuded in the priority, so we need to skip this rule
+        return null;
+
+        return result;
+    }
+
+    function updateConditionsID(conditions){
+
+        var typeOfDayDS;
+        for(var i=0; i<conditions.length;i++){
+            typeOfDayDS = getSpecification(conditions[i].TypeOfDay, new cm_spoc.data.TypeOfDay());
+            conditions[i].TypeOfDay = typeOfDayDS.TypeOfDayID;
+            //TODO: REMOVE!!!!!!
+            conditions[i].StartHourEnum = String(parseInt(Math.floor((Math.random() * 23))))
+            conditions[i].EndHourEnum = parseInt(conditions[i].StartHourEnum) + 4 > 23 ? "23" : String(parseInt(conditions[i].StartHourEnum )+ 4);
+            //
+        }
+        return conditions;
+    }
+
+    function getSpecification(code, DS){
+
+        DS.specificationCode = code;
+        var result = cm_common.getSpecificationByKey(DS);
+        if(api_common.isFault(result))
+            Global.throwException(result.toXML());
+        return result;
+
+    }
+  ]]></script>
+</script>

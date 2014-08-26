@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initBankTopUp">
+  <group>ui_scripts.TopUp</group>
+  <label>initBankTopUp</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+        var bankEntity = cm_spoc.initInnerDS("base_BankEntity");
+        model= bankEntity;
+
+        var bankEntityFixedLimitArray = cm_spoc.initInnerDS("base_BankEntityFixedLimitArray");
+        model.BankEntityFixedLimitArrayDS = bankEntityFixedLimitArray;
+
+        var bankEntityTemporaryLimit = cm_spoc.initInnerDS("base_BankEntityTemporaryLimit");
+        model.BankEntityTemporaryLimit = bankEntityTemporaryLimit;
+
+     /*  var bankEntityTemporaryLimit = cm_spoc.initInnerDS("base_BankEntityTemporaryLimit");
+        model.BankEntityTemporaryLimitDS = bankEntityTemporaryLimit;
+
+        var bankWorkingDay = cm_spoc.initInnerDS("base_BankEntityWorkingDaysLimit");
+        model.BankEntityWorkingDaysLimitDS = bankWorkingDay;
+
+        var bankEntityTemporaryLimitDaily = cm_spoc.initInnerDS("base_BEntityTempLimitDailyArray");
+        model.BankEntityTemporaryLimitDS.BEntityTempLimitDailyArrayDS = bankEntityTemporaryLimitDaily;
+
+        var bankEntityTempLimitTP = cm_spoc.initInnerDS("base_BEntityTempLimitByTPArray");
+        model.BankEntityTemporaryLimitDS.BEntityTempLimitByTPArrayDS =  bankEntityTempLimitTP;
+
+        var bankEntityWorkingDaysLimit = cm_spoc.initInnerDS("base_BEWorkDaysLimitExtArray");
+        model.BankEntityWorkingDaysLimitDS.BEWorkDaysLimitExtArrayDS = bankEntityWorkingDaysLimit;
+
+        var bankEntityWorkingDaysSimpLimit = cm_spoc.initInnerDS("base_BEWorkDaysLimitSimpArray");
+        model.BankEntityWorkingDaysLimitDS.BEWorkDaysLimitSimpArrayDS = bankEntityWorkingDaysSimpLimit;
+        */
+
+       var itemFinder = new Finder("cm_spoc.tariffPlanFinder");
+       var result = itemFinder.search();
+       if(result.length>0){
+           var btCode=result[0].itemCode;
+           model.BankEntityFixedLimitArrayDS.ListDS.TariffPlan = btCode;
+           model.BankEntityFixedLimitArrayDS.ListDS.TariffPlanEnum = btCode;
+           model.BankEntityTemporaryLimitArrayDS.ListDS.BEntityTempLimitByTPArrayDS.ListDS.TariffPlan = btCode;
+           model.BankEntityTemporaryLimitArrayDS.ListDS.BEntityTempLimitByTPArrayDS.ListDS.TariffPlanEnum = btCode;
+       }
+
+       var itemFinder = new Finder("cm_spoc.BankEntityZoneFinder");
+       var result = itemFinder.search();
+       if(result.length>0){
+           var btCode=result[0].itemCode;
+           model.BankEntityFixedLimitArrayDS.ListDS.BankEntityZone = btCode;
+           model.BankEntityFixedLimitArrayDS.ListDS.BankEntityZoneEnum = btCode;
+           model.BankEntityTemporaryLimitArrayDS.ListDS.BEntityTempLimitByTPArrayDS.ListDS.BankEntityZone = btCode;
+           model.BankEntityTemporaryLimitArrayDS.ListDS.BEntityTempLimitByTPArrayDS.ListDS.BankEntityZoneEnum = btCode;
+
+       }
+
+
+       var itemFinder = new Finder("cm_spoc.BankEntitySubdistributorFinder");
+       var result = itemFinder.search();
+       if(result.length>0){
+           var btCode=result[0].itemCode;
+           model.BankEntityFixedLimitArrayDS.ListDS.BankEntitySubdistributor = btCode;
+           model.BankEntityFixedLimitArrayDS.ListDS.BankEntitySubdistributorEnum = btCode;
+       }
+
+
+       /*
+       //Bank Entity TemporalLimitByTPArray
+        var tempLimits = cm_spoc.initInnerDS("base_BankEntityTemporaryLimitByTPArray");
+        model.BankEntityTemporaryLimitArrayDS.ListDS.BankEntityTemporaryLimitByTPArrayDS = tempLimits;
+
+        //Bank Entity Working Days Limit Simple Array
+        var workDaysLims = cm_spoc.initInnerDS("base_BankEntityWorkingDaysLimitSimpleArray");
+        model.BankEntityWorkingDaysLimitArrayDS.ListDS.BankEntityWorkingDaysLimitSimpleArrayDS = workDaysLims;
+
+        //Bank Entity Working Days Limit Extension Array
+        var workDaysExt = cm_spoc.initInnerDS("base_BankEntityWorkingDaysLimitExtensionArray");
+        model.BankEntityWorkingDaysLimitArrayDS.ListDS.BankEntityWorkingDaysLimitExtensionArrayDS = workDaysExt;
+     */
+
+    }else{
+      var s = new epc.data.Specification();
+      s.project =  cwa_epc.getDefaultProj();
+
+      s.specificationCode = model;
+      var r = epc.getSpecificationByKey(s);
+      if(!api_common.isFault(r)){
+           model= r;
+      }
+
+      s.specificationCode = model.BankEntityWorkingDaysLimitArray;
+      var r = epc.getSpecificationByKey(s);
+      if(!api_common.isFault(r)){
+           model.BankEntityWorkingDaysLimitArrayDS = r;
+      }
+
+      s.specificationCode = model.BankEntityTemporaryLimitArray;
+      var r = epc.getSpecificationByKey(s);
+      if(!api_common.isFault(r)){
+           model.BankEntityTemporaryLimitArrayDS = r;
+      }
+
+       //Bank Entity Fixed Limit
+       s.specificationCode = model.BankEntityFixedLimitArray;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.BankEntityFixedLimitArrayDS=r;
+       }
+
+
+       var bankFixLimitRel = model.BankEntityFixedLimitArrayDS.List;
+       var bankFixLimitsDS=model.BankEntityFixedLimitArrayDS.ListDS;
+       for(var i=0;i<bankFixLimitRel.length;i++){
+           s.specificationCode = bankFixLimitRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               bankFixLimitsDS[i]=r;
+           }
+       }
+
+       //Bank Entity TemporalLimitByTPArray
+       s.specificationCode = model.BankEntityTemporaryLimit.BEntityTempLimitByTPArray;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.BankEntityTemporaryLimit.BEntityTempLimitByTPArrayDS=r;
+       }
+
+
+       var bankTemporalLimitByTPRel = model.BankEntityTemporaryLimit.BEntityTempLimitByTPArrayDS.List;
+       var bankTemporalLimitByTPDS =  model.BankEntityTemporaryLimit.BEntityTempLimitByTPArrayDS.ListDS;
+       for(var i=0;i<bankTemporalLimitByTPRel.length;i++){
+           s.specificationCode = bankTemporalLimitByTPRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+                bankTemporalLimitByTPDS[i]=r;
+           }
+       }
+
+       //Bank Entity WorkingDaysLimitSimple Array
+       s.specificationCode = model.BankEntityWorkingDaysLimit.BEWorkDaysLimitSimpArray;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+           model.BankEntityWorkingDaysLimit.BEWorkDaysLimitSimpArrayDS=r;
+       }
+
+
+       var bankEntityWorkingRel = model.BankEntityWorkingDaysLimit.BEWorkDaysLimitSimpArrayDS.List;
+       var bankEntityWorkingDS =  model.BankEntityWorkingDaysLimit.BEWorkDaysLimitSimpArrayDS.ListDS;
+       for(var i=0;i< bankEntityWorkingRel.length;i++){
+           s.specificationCode =bankEntityWorkingRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+                bankEntityWorkingDS[i]=r;
+           }
+       }
+
+
+
+       //Bank Entity WorkingDaysLimitExtension Array
+       s.specificationCode = model.BankEntityWorkingDaysLimit.BEWorkDaysLimitExtArrayDS;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+           model.BankEntityWorkingDaysLimit.BEWorkDaysLimitExtArrayDS=r;
+       }
+
+
+       var bankEntityExtensionRel = model.BankEntityWorkingDaysLimit.BEWorkDaysLimitExtArrayDS.List;
+       var bankEntityExtensionDS = model.BankEntityWorkingDaysLimit.BEWorkDaysLimitExtArrayDS.ListDS;
+       for(var i=0;i< bankEntityExtensionRel.length;i++){
+           s.specificationCode =  bankEntityExtensionRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+                 bankEntityExtensionDS [i]=r;
+           }
+       }
+
+
+       model.BankEntityFixedLimitArrayDS.ListDS.TariffPlanEnum =  model.BankEntityFixedLimitArrayDS.ListDS.TariffPlan;
+       model.BankEntityTemporaryLimitArrayDS.ListDS.BEntityTempLimitByTPArrayDS.ListDS.TariffPlanEnum =  model.BankEntityTemporaryLimitArrayDS.ListDS.BEntityTempLimitByTPArrayDS.ListDS.TariffPlan;
+       model.BankEntityFixedLimitArrayDS.ListDS.BankEntityZoneEnum =  model.BankEntityFixedLimitArrayDS.ListDS.BankEntityZone;
+       model.BankEntityTemporaryLimitArrayDS.ListDS.BEntityTempLimitByTPArrayDS.ListDS.BankEntityZoneEnum =  model.BankEntityTemporaryLimitArrayDS.ListDS.BEntityTempLimitByTPArrayDS.ListDS.BankEntityZone;
+       model.BankEntityFixedLimitArrayDS.ListDS.BankEntitySubdistributorEnum = model.BankEntityFixedLimitArrayDS.ListDS.BankEntitySubdistributor;
+
+    }
+    return model;
+  ]]></script>
+</script>

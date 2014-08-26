@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.loadDefaultTariffClassPerNode">
+  <group>ui_scripts.RatingTree</group>
+  <label>loadDefaultTariffClassPerNode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+    <parameter name="nodes" type="rifp">
+      <array>true</array>
+      <type>doc_cm_spoc.RatingTreeNodeTypes</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    for (var i=0;i<nodes.length;i++)  {
+
+        nodes[i].tariffClass = getTariffClassPerNode(ui.model, nodes[i].code);
+
+
+    }
+
+    return nodes;
+
+    function getTariffClassPerNode(model,code) {
+
+        for (var i = 0;i<model.RTDefaultTCPerNodeArrDS.ListDS.length;i++) {
+            if (ui.model.RTDefaultTCPerNodeArrDS.ListDS[i].NodeName == code ) {
+               var ret = ""+ui.model.RTDefaultTCPerNodeArrDS.ListDS[i].TariffClass;
+            return ret;}
+        }
+
+        return "";
+
+    }
+  ]]></script>
+</script>

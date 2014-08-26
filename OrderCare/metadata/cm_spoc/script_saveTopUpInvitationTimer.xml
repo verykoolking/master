@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.saveTopUpInvitationTimer">
+  <group>ui_scripts.TopUp</group>
+  <label>saveTopUpInvitationTimer</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //
+    var saveResp;
+    saveResp = cm_spoc.epcOnSaveModelRec(ui.model,ui);
+
+    if(saveResp!=null && !api_common.isFault(saveResp) ){
+        var arr =  ui.parent.owner.model.SOSTUISOSTUInvTimerArrDS.List;
+        var len = arr.length;
+        arr[len] = ui.model.specificationCode;
+    }
+  ]]></script>
+</script>

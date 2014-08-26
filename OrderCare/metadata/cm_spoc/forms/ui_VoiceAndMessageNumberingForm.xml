@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.VoiceAndMessageNumberingForm">
+  <group>Numbering</group>
+  <label>VoiceAndMessageNumberingForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.VoiceAndMessageNumbering</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>400px</width>
+              <elementList>
+                <element name="TabFrame" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/frmui_Forms/vform_generalParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                  <width>100px</width>
+                </element>
+                <element name="TabFrame1" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/frmui_Forms/vform_features</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Features</label>
+                  <width>100px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="generalParameters" type="vform">
+          <label>generalParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>right,center</alignment>
+            <elementList>
+              <element name="Separator2" type="elsep">
+                <width>400px</width>
+              </element>
+              <element name="Header" type="elhdr">
+                <cellAlignment>left,center</cellAlignment>
+                <label>Look up Criteria</label>
+              </element>
+              <element name="ServiceProviderEnum" type="elslct">
+                <labeAlign>left</labeAlign>
+                <label>Service Provider (SP)</label>
+                <labelOrientation>left</labelOrientation>
+                <multiselect>false</multiselect>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/usrActionMethod_ServiceProviderUpdate</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_ServiceProviderEnum</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="AnalysisType" type="elslct">
+                <editable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_setIsPrimaryKey</variablePath>
+                  </variablePathList>
+                </editable>
+                <labeAlign>left</labeAlign>
+                <label>Analysis Type (XNT)</label>
+                <labelOrientation>left</labelOrientation>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/uimthd_unSetTrigger</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_AnalysisType</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="LayoutSpacer" type="ellsp">
+                <height>5px</height>
+              </element>
+              <element name="Header1" type="elhdr">
+                <cellAlignment>right,center</cellAlignment>
+                <label>Number</label>
+              </element>
+              <element name="NpiEnum" type="elslct">
+                <labeAlign>left</labeAlign>
+                <label>Number Plan Identifier (NPI)</label>
+                <labelOrientation>left</labelOrientation>
+                <multiselect>false</multiselect>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/usrActionMethod_NpiUpdate</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_NpiEnum</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="TonEnum" type="elslct">
+                <label>Type Of Number (TON)</label>
+                <labelOrientation>left</labelOrientation>
+                <multiselect>false</multiselect>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/usrActionMethod_TonUpdate</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_TonEnum</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="HorizontalLayout" type="elhlt">
+                <elementList>
+                  <element name="PatternOfNumberOptionEnum" type="elslct">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_setIsPrimaryKey</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <labeAlign>left</labeAlign>
+                    <label>Pattern Of Number</label>
+                    <labelOrientation>left</labelOrientation>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/uimthd_PatternOfNumberRunTrigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <optional type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </optional>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_PatternOfNumberOptionEnum</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="PatternOfNumberTemp" type="elfld">
+                    <displayFormat>[0-9ABD]{28}</displayFormat>
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_setIsPrimaryKey</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/uimthd_PatternOfNumberRunTrigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <removeLabelLine>true</removeLabelLine>
+                    <showLabel>false</showLabel>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_PatternOfNumberTemp</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </element>
+              <element name="LayoutSpacer2" type="ellsp">
+                <height>5px</height>
+              </element>
+              <element name="Separator" type="elsep">
+                <width>400px</width>
+              </element>
+              <element name="DestinationsTypeEnum" type="elslct">
+                <labeAlign>left</labeAlign>
+                <label>Destination Type</label>
+                <labelOrientation>left</labelOrientation>
+                <multiselect>false</multiselect>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/usrActionMethod_DestinationsTypeUpdate</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_DestinationsTypeEnum</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="DestinationSubTypeEnum" type="elslct">
+                <labeAlign>left</labeAlign>
+                <label>Destination Subtype</label>
+                <labelOrientation>left</labelOrientation>
+                <multiselect>false</multiselect>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/usrActionMethod_DestinationSubTypeUpdate</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_DestinationSubTypeEnum</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="features" type="vform">
+          <label>features</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="RoamingForbidden" type="elchk">
+                <label>Roaming Forbiden</label>
+                <labelOrientation>right</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_RoamingForbidden</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_VAMNRoamingForbiddenVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="SendCallMeIhavenoBalanceSMS" type="elchk">
+                <label>Send &quot;Call me I have no Balance&quot; SMS</label>
+                <labelOrientation>right</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_SendCallMeIhavenoBalanceSMS</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_VAMNSendCallMeIHaveNoBalanceSMSVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="IncludeRoutingPrefix" type="elchk">
+                <label>Include Routing Prefix</label>
+                <labelOrientation>right</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_IncludeRoutingPrefix</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_VAMNIncludeRoutingPrefixVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="CheckRestriction" type="elchk">
+                <label>Check Restriction Rules</label>
+                <labelOrientation>right</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_CheckRestriction</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_VAMNCheckRestrictionRulesVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="CheckPortability" type="elchk">
+                <label>Check Portability For This Range</label>
+                <labelOrientation>right</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_CheckPortability</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_VAMNCheckPortabilityForThisRangeVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="CFwd" type="elchk">
+                <label>CFwd to Destination Free</label>
+                <labelOrientation>right</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_CFwd</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_VAMNCFwdToDestinationFreeVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="DestinationFree" type="elchk">
+                <label>Destination Free</label>
+                <labelOrientation>right</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_DestinationFree</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_VAMNDestinationFreeVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+              <element name="LayoutSpacer" type="ellsp">
+                <height>10px</height>
+              </element>
+              <element name="VerticalLayout1" type="elvlt">
+                <alignment>right,center</alignment>
+                <elementList>
+                  <element name="Slice" type="elfld">
+                    <labeAlign>left</labeAlign>
+                    <label>Slice</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_Slice</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_VAMNSliceVisRule</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="RegionEnum" type="elslct">
+                    <labeAlign>left</labeAlign>
+                    <label>Autonomous Community</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/usrActionMethod_RegionUpdate</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_RegionEnum</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_RRegionCodeVisRule</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="ProvinceEnum" type="elslct">
+                    <labeAlign>left</labeAlign>
+                    <label>Rin</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/usrActionMethod_ProvinceUpdate</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_ProvinceEnum</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_RRinCodeVisRule</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="CityEnum" type="elslct">
+                    <labeAlign>left</labeAlign>
+                    <label>City</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/usrActionMethod_CityUpdate</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_CityEnum</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_CCityCodeVisRule</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="MaxLNHZ" type="elfld">
+                    <labeAlign>left</labeAlign>
+                    <label>Range HZ Max</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_MaxLNHZ</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_VAMNRangeHZMaxVisRule</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="MinLNhZ" type="elfld">
+                    <labeAlign>left</labeAlign>
+                    <label>Range HZ Min</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.VoiceAndMessageNumbering/dstruct_MinLNhZ</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.VoiceAndMessageNumberingForm/permMethod_VAMNRangeHZMinVisRule</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$cwShowHover" type="laction">
+      <path>ui_com.conceptwave.system.UserInterface/leaf_cwShowHover</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initVoiceAndMessageNumbering(this.model);
+        return m;
+      ]]></script>
+    </method>
+    <method name="PatternOfNumberUpdate" type="usrActionMethod">
+      <script><![CDATA[
+        this.model.PatternOfNumber = this.model.PatternOfNumberOptionEnum == 'Begins' ? this.model.PatternOfNumberTemp + '*' : this.model.PatternOfNumberTemp;
+      ]]></script>
+    </method>
+    <method name="ServiceProviderUpdate" type="usrActionMethod">
+      <script>this.model.ServiceProviderVoiceInputFor = this.model.ServiceProviderEnum;</script>
+    </method>
+    <method name="NpiUpdate" type="usrActionMethod">
+      <script>this.model.NpiVoiceInputFor = this.model.NpiEnum;</script>
+    </method>
+    <method name="TonUpdate" type="usrActionMethod">
+      <script>this.model.TonVoiceInputFor = this.model.TonEnum;</script>
+    </method>
+    <method name="DestinationsTypeUpdate" type="usrActionMethod">
+      <script>this.model.DestinationTypeVoiceOutputOf = this.model.DestinationsTypeEnum;</script>
+    </method>
+    <method name="DestinationSubTypeUpdate" type="usrActionMethod">
+      <script>this.model.DestinationSubTypeVoiceOutputOf = this.model.DestinationSubTypeEnum;</script>
+    </method>
+    <method name="RegionUpdate" type="usrActionMethod">
+      <script>this.model.RegionOutputOf = this.model.RegionEnum;</script>
+    </method>
+    <method name="CityUpdate" type="usrActionMethod">
+      <script>this.model.CityOutputOf = this.model.CityEnum;</script>
+    </method>
+    <method name="ProvinceUpdate" type="usrActionMethod">
+      <script>this.model.RinOutputOf = this.model.ProvinceEnum;</script>
+    </method>
+    <method name="VAMNRoamingForbiddenVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AnalysisType;
+        if (value == "BNT" || value == "VLRNT" || value == "C" || value=="VC") return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="VAMNSendCallMeIHaveNoBalanceSMSVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AnalysisType;
+        if (value == "BNT" || value == "C" || value == "VC")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="VAMNIncludeRoutingPrefixVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AnalysisType;
+        if (value == "BNT" || value=="C" || value=="VC")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="VAMNCheckRestrictionRulesVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AnalysisType;
+        if (value == "BNT" || value =="C" || value=="VC")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="VAMNCheckPortabilityForThisRangeVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AnalysisType;
+        if (value == "BNT" || value == "SMS" || value == "MMS" || value == "C" || value == "VC")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="VAMNCFwdToDestinationFreeVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AnalysisType;
+        if (value == "BNT" || value == "C" || value == "VC")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="VAMNDestinationFreeVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AnalysisType;
+        if (value == "BNT" || value == "B_MT" || value == "SMS" || value == "C" || value == "VC") return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="VAMNSliceVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AnalysisType;
+        if (value == "B_MT" || value == "SMS" || value == "C" || value == "VC")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="RRegionCodeVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AnalysisType;
+        if (value == "LNNT" || value == "BNT" || value == "VLRNT" || value == "C" || value == "VC")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="RRinCodeVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AnalysisType;
+        if (value == "BNT" || value == "LNNT" || value== "VLRNT" || value == "ON" || value == "BNT" || value == "C" || value == "VC")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="CCityCodeVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AnalysisType;
+        if (value == "LNNT" || value == "BNT" || value == "VLRNT" || value == "B_MT" || value == "SMS" || value == "MMS" || value=="C" ||value=="VC") return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="VAMNRangeHZMaxVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AnalysisType;
+        if (value == "ANT" || value == "C" || value =="VC")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="VAMNRangeHZMinVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.AnalysisType;
+        if (value == "ANT" || value == "C" || value =="VC")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="unSetTrigger" type="uimthd">
+      <script><![CDATA[
+        this.model.RoamingForbidden=false;
+        this.model.SendCallMeIhavenoBalanceSMS=false;
+        this.model.IncludeRoutingPrefix=false;
+        this.model.CheckRestriction=false;
+        this.model.CheckPortability=false;
+        this.model.CFwd=false;
+        this.model.DestinationFree=false;
+        //this.model.SMSContentAnalysis=false;
+        this.model.Slice=0;
+        this.model.RegionEnum="";
+        this.model.ProvinceEnum="";
+        this.model.CityEnum="";
+        this.model.MaxLNHZ="";
+        this.model.MinLNhZ="";
+
+        return;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script>return true;</script>
+    </method>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+    <method name="PatternOfNumberRunTrigger" type="uimthd">
+      <script><![CDATA[
+        var desp=this.model.PatternOfNumberOptionEnum;
+        var box=this.model.PatternOfNumberTemp;
+
+        if (desp=="Exact"){
+                  this.model.PatternOfNumber=box;
+        }
+        else if (desp=="Begins" && box==null){
+                  this.model.PatternOfNumber="*";
+        }
+        else{
+                  this.model.PatternOfNumber=box+"*";
+        }
+        return;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

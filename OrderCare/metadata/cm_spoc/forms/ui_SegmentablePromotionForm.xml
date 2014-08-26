@@ -1,0 +1,774 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.SegmentablePromotionForm">
+  <group>Promotion</group>
+  <label>SegmentablePromotionForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.SegmentablePromotion</valueType>
+    </variable>
+    <variable name="tableLine" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="SectionStack" type="elsectnstck">
+              <width>850px</width>
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="SectionHeader" type="elsecth">
+                      <label>Segmentable Promotion</label>
+                    </element>
+                    <element name="VerticalLayout" type="elvlt">
+                      <width>100%</width>
+                      <elementList>
+                        <element name="Label" type="ellab">
+                          <label>Select the Segmentable Promotion to modify and enter the desired configuration</label>
+                          <showLabel>false</showLabel>
+                          <width>100%</width>
+                        </element>
+                        <element name="Separator" type="elsep"/>
+                        <element name="VL1" type="elvlt">
+                          <elementList>
+                            <element name="TextField" type="elfld">
+                              <labeAlign>left</labeAlign>
+                              <label>Promotion Description</label>
+                              <labelOrientation>left</labelOrientation>
+                            </element>
+                            <element name="selectField" type="elslct">
+                              <labeAlign>left</labeAlign>
+                              <label>Associeted Message</label>
+                              <labelOrientation>left</labelOrientation>
+                              <width>150px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="LayoutSpacer2" type="ellsp">
+                          <height>30px</height>
+                        </element>
+                        <element name="SectionStack1" type="elsectnstck">
+                          <elementList>
+                            <element name="Section1" type="elsect">
+                              <elementList>
+                                <element name="SectionHeader1" type="elsecth">
+                                  <label>Promotional Segment</label>
+                                </element>
+                                <element name="HLayout1" type="elhlt">
+                                  <elementList>
+                                    <element name="PromotionalSegmentType" type="elrgrp">
+                                      <onChangeMethod type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/action_onClick</variablePath>
+                                        </variablePathList>
+                                      </onChangeMethod>
+                                      <showLabel>false</showLabel>
+                                      <variable type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                          <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_PromotionalSegmentType</variablePath>
+                                        </variablePathList>
+                                      </variable>
+                                      <vertical>true</vertical>
+                                    </element>
+                                    <element name="PromotionalSegmentEnum" type="elslct">
+                                      <cellAlignment>center,center</cellAlignment>
+                                      <label>Promotianal Segment to apply promotion</label>
+                                      <multiselect>false</multiselect>
+                                      <onChangeMethod type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/uimthd_setPromotionalSegment</variablePath>
+                                        </variablePathList>
+                                      </onChangeMethod>
+                                      <variable type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                          <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_PromotionalSegmentEnum</variablePath>
+                                        </variablePathList>
+                                      </variable>
+                                      <visible type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/permMethod_rule_PSPromotionalSegmentCodeVisRule</variablePath>
+                                        </variablePathList>
+                                      </visible>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="LayoutSpacer1" type="ellsp">
+                          <height>30px</height>
+                        </element>
+                        <element name="VerticalLayout2" type="elvlt">
+                          <elementList>
+                            <element name="NumberOfExecutions" type="elfld">
+                              <label>Number of Excutions</label>
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_NumberOfExecutions</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                            <element name="AutomaticPromotion" type="elchk">
+                              <labelOrientation>left</labelOrientation>
+                              <onChangeMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_com.conceptwave.system.UserInterface/action_onClick</variablePath>
+                                </variablePathList>
+                              </onChangeMethod>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_AutomaticPromotion</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="LayoutSpacer" type="ellsp">
+                          <height>30px</height>
+                        </element>
+                        <element name="Separator1" type="elsep"/>
+                        <element name="SectionStack4" type="elsectnstck">
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/permMethod_rule_AutomaticPromotionVisRule</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <elementList>
+                            <element name="Section4" type="elsect">
+                              <elementList>
+                                <element name="HorizontalLayout" type="elhlt">
+                                  <width>100%</width>
+                                  <elementList>
+                                    <element name="VerticalLayout3" type="elvlt">
+                                      <elementList>
+                                        <element name="AUPRStartDate" type="eldate">
+                                          <endYear>2050</endYear>
+                                          <label>Start Date:</label>
+                                          <labelOrientation>left</labelOrientation>
+                                          <variable type="varPath">
+                                            <variablePathList>
+                                              <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                              <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_AUPRStartDate</variablePath>
+                                            </variablePathList>
+                                          </variable>
+                                        </element>
+                                        <element name="AUPREndDate" type="eldate">
+                                          <endYear>2050</endYear>
+                                          <labeAlign>left</labeAlign>
+                                          <label>End Date:   </label>
+                                          <labelOrientation>left</labelOrientation>
+                                          <variable type="varPath">
+                                            <variablePathList>
+                                              <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                              <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_AUPREndDate</variablePath>
+                                            </variablePathList>
+                                          </variable>
+                                        </element>
+                                      </elementList>
+                                    </element>
+                                    <element name="VerticalLayout4" type="elvlt">
+                                      <elementList>
+                                        <element name="AUPRStartTime" type="eldatetime">
+                                          <label>Start Time:</label>
+                                          <labelOrientation>left</labelOrientation>
+                                          <variable type="varPath">
+                                            <variablePathList>
+                                              <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                              <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_AUPRStartTime</variablePath>
+                                            </variablePathList>
+                                          </variable>
+                                        </element>
+                                        <element name="AUPREndTime" type="eldatetime">
+                                          <label>End Time:    </label>
+                                          <labelOrientation>left</labelOrientation>
+                                          <variable type="varPath">
+                                            <variablePathList>
+                                              <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                              <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_AUPREndTime</variablePath>
+                                            </variablePathList>
+                                          </variable>
+                                        </element>
+                                      </elementList>
+                                    </element>
+                                    <element name="SectionStack3" type="elsectnstck">
+                                      <elementList>
+                                        <element name="Section3" type="elsect">
+                                          <elementList>
+                                            <element name="SectionHeader2" type="elsecth">
+                                              <label>Daily Schedule Range</label>
+                                            </element>
+                                            <element name="VerticalLayout5" type="elvlt">
+                                              <elementList>
+                                                <element name="AUPRStartScheduleRange" type="eldatetime">
+                                                  <label>Starting Time:</label>
+                                                  <labelOrientation>left</labelOrientation>
+                                                  <variable type="varPath">
+                                                    <variablePathList>
+                                                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                                      <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_AUPRStartScheduleRange</variablePath>
+                                                    </variablePathList>
+                                                  </variable>
+                                                </element>
+                                                <element name="AUPREndScheduleRange" type="eldatetime">
+                                                  <label>Ending Time:  </label>
+                                                  <labelOrientation>left</labelOrientation>
+                                                  <variable type="varPath">
+                                                    <variablePathList>
+                                                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                                      <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_AUPREndScheduleRange</variablePath>
+                                                    </variablePathList>
+                                                  </variable>
+                                                </element>
+                                              </elementList>
+                                            </element>
+                                          </elementList>
+                                        </element>
+                                      </elementList>
+                                    </element>
+                                  </elementList>
+                                </element>
+                                <element name="VL2" type="elvlt">
+                                  <width>100%</width>
+                                  <elementList>
+                                    <element name="LayoutSpacer3" type="ellsp">
+                                      <height>30px</height>
+                                    </element>
+                                    <element name="AUPRExecDayWeek" type="elslct">
+                                      <label>Execution Days of the Week</label>
+                                      <variable type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                          <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_AUPRExecDayWeek</variablePath>
+                                        </variablePathList>
+                                      </variable>
+                                      <width>150px</width>
+                                    </element>
+                                    <element name="AUPRMinBalance" type="elfld">
+                                      <label>Minimum Balance</label>
+                                      <variable type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                          <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_AUPRMinBalance</variablePath>
+                                        </variablePathList>
+                                      </variable>
+                                    </element>
+                                    <element name="AUPRMaxBalance" type="elfld">
+                                      <label>Maximum Balance</label>
+                                      <variable type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                          <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_AUPRMaxBalance</variablePath>
+                                        </variablePathList>
+                                      </variable>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="LayoutSpacer4" type="ellsp">
+                          <height>30px</height>
+                        </element>
+                        <element name="SectionStack2" type="elsectnstck">
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/permMethod_rule_AutomaticPromotionVisRule</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <width>100%</width>
+                          <elementList>
+                            <element name="Section2" type="elsect">
+                              <elementList>
+                                <element name="SectionHeader3" type="elsecth">
+                                  <label>Promotion Activation</label>
+                                </element>
+                                <element name="OperationEnum" type="elslct">
+                                  <label>Operation that generates the Promotion:</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <multiselect>false</multiselect>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_com.conceptwave.system.UserInterface/action_onClick</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_OperationEnum</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                </element>
+                                <element name="LayoutSpacer8" type="ellsp">
+                                  <height>30px</height>
+                                </element>
+                                <element name="tableControlButtonLayout" type="elhlt">
+                                  <alignment>center,center</alignment>
+                                  <width>100%</width>
+                                  <elementList>
+                                    <element name="AddButton" type="elbtn">
+                                      <clickMethod type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/uimthd_addAction</variablePath>
+                                        </variablePathList>
+                                      </clickMethod>
+                                      <disabled type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/permMethod_buttonControl</variablePath>
+                                        </variablePathList>
+                                      </disabled>
+                                      <icon>/cwt/images/16/notebook_add.png</icon>
+                                      <label>Add Action</label>
+                                      <width>150px</width>
+                                    </element>
+                                    <element name="RemoveButton" type="elbtn">
+                                      <clickMethod type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/uimthd_removeAction</variablePath>
+                                        </variablePathList>
+                                      </clickMethod>
+                                      <disabled type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/permMethod_buttonControl</variablePath>
+                                        </variablePathList>
+                                      </disabled>
+                                      <icon>/cwt/images/16/delete.png</icon>
+                                      <label>Remove Action</label>
+                                      <width>150px</width>
+                                    </element>
+                                  </elementList>
+                                </element>
+                                <element name="TableVL" type="elvlt">
+                                  <fillSpace>false</fillSpace>
+                                  <elementList>
+                                    <element name="TableIterator" type="eliter">
+                                      <variable type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_tableLine</variablePath>
+                                        </variablePathList>
+                                      </variable>
+                                      <elementList>
+                                        <element name="FormFrame6" type="elovf">
+                                          <formReference type="varPath">
+                                            <variablePathList>
+                                              <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_tableLine</variablePath>
+                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                            </variablePathList>
+                                          </formReference>
+                                        </element>
+                                      </elementList>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="LayoutSpacer5" type="ellsp">
+                          <height>30px</height>
+                        </element>
+                        <element name="SectionStack5" type="elsectnstck">
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/permMethod_rule_AutomaticPromotionVisRule</variablePath>
+                            </variablePathList>
+                          </visible>
+                          <elementList>
+                            <element name="Section5" type="elsect">
+                              <elementList>
+                                <element name="SectionHeader4" type="elsecth">
+                                  <label>When the promotion is given</label>
+                                </element>
+                                <element name="WhenItsConditionsAreMet" type="elchk">
+                                  <label> When its conditions are met</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_com.conceptwave.system.UserInterface/action_onClick</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_WhenItsConditionsAreMet</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                </element>
+                                <element name="PromotionGivenMaxTimes" type="elchk">
+                                  <label>   The promotion will be given the maximum number of times defined globally for the whole period of the promotion </label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_com.conceptwave.system.UserInterface/action_onClick</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_PromotionGivenMaxTimes</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <visible type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/permMethod_rule_SPPromotionGivenMaxTimesVisRule</variablePath>
+                                    </variablePathList>
+                                  </visible>
+                                </element>
+                                <element name="LayoutSpacer6" type="ellsp">
+                                  <height>30px</height>
+                                </element>
+                                <element name="SectionStack6" type="elsectnstck">
+                                  <elementList>
+                                    <element name="Section6" type="elsect">
+                                      <visible type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/permMethod_rule_SPTypeOfTimingVisRule</variablePath>
+                                        </variablePathList>
+                                      </visible>
+                                      <elementList>
+                                        <element name="SectionHeader5" type="elsecth">
+                                          <label>Timing</label>
+                                        </element>
+                                        <element name="HorizontalLayout11" type="elhlt">
+                                          <elementList>
+                                            <element name="VerticalLayout7" type="elvlt"/>
+                                          </elementList>
+                                        </element>
+                                        <element name="VL3" type="elvlt">
+                                          <edgeShowCenter>true</edgeShowCenter>
+                                          <elementList>
+                                            <element name="TypeOfTiming" type="elslct">
+                                              <cellAlignment>center,top</cellAlignment>
+                                              <onChangeMethod type="varPath">
+                                                <variablePathList>
+                                                  <variablePath>ui_com.conceptwave.system.UserInterface/action_onClick</variablePath>
+                                                </variablePathList>
+                                              </onChangeMethod>
+                                              <rowSpan>3</rowSpan>
+                                              <showLabel>false</showLabel>
+                                              <variable type="varPath">
+                                                <variablePathList>
+                                                  <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                                  <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_TypeOfTiming</variablePath>
+                                                </variablePathList>
+                                              </variable>
+                                            </element>
+                                            <element name="ForDays" type="elfld">
+                                              <dataLength>3</dataLength>
+                                              <showLabel>false</showLabel>
+                                              <variable type="varPath">
+                                                <variablePathList>
+                                                  <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                                  <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_ForDays</variablePath>
+                                                </variablePathList>
+                                              </variable>
+                                              <visible type="varPath">
+                                                <variablePathList>
+                                                  <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/permMethod_rule_SPForDaysVisRule</variablePath>
+                                                </variablePathList>
+                                              </visible>
+                                            </element>
+                                            <element name="ForMonths" type="elspnr">
+                                              <label>Year: </label>
+                                              <max>31</max>
+                                              <min>1</min>
+                                              <showLabel>false</showLabel>
+                                              <variable type="varPath">
+                                                <variablePathList>
+                                                  <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                                  <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_ForMonths</variablePath>
+                                                </variablePathList>
+                                              </variable>
+                                              <visible type="varPath">
+                                                <variablePathList>
+                                                  <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/permMethod_rule_SPForMonthsVisRule</variablePath>
+                                                </variablePathList>
+                                              </visible>
+                                            </element>
+                                            <element name="ForWeeks" type="elslct">
+                                              <showLabel>false</showLabel>
+                                              <variable type="varPath">
+                                                <variablePathList>
+                                                  <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                                  <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_ForWeeks</variablePath>
+                                                </variablePathList>
+                                              </variable>
+                                              <visible type="varPath">
+                                                <variablePathList>
+                                                  <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/permMethod_rule_SPForWeeksVisRule</variablePath>
+                                                </variablePathList>
+                                              </visible>
+                                            </element>
+                                          </elementList>
+                                        </element>
+                                      </elementList>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="LayoutSpacer7" type="ellsp">
+                          <height>30px</height>
+                        </element>
+                        <element name="VerticalLayout8" type="elvlt">
+                          <elementList>
+                            <element name="AwardSelectionType" type="elrgrp">
+                              <showLabel>false</showLabel>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.SegmentablePromotion/dstruct_AwardSelectionType</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <vertical>true</vertical>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="tableHeader" type="vform">
+          <label>tableHeader</label>
+          <root name="GridLayout" type="elgrd">
+            <cellBorderStyle>CgCellDark</cellBorderStyle>
+            <cellPadding>30</cellPadding>
+            <colWidths>80px</colWidths>
+            <numOfCols>8</numOfCols>
+            <elementList>
+              <element name="CellSpacer" type="elcsp">
+                <startRow>true</startRow>
+              </element>
+              <element name="Label1" type="ellab">
+                <cellAlignment>center,center</cellAlignment>
+                <columnSpan>2</columnSpan>
+                <fontProperties type="pfnt">
+                  <bold>true</bold>
+                </fontProperties>
+                <label>Operation</label>
+                <wrap>false</wrap>
+              </element>
+              <element name="Label2" type="ellab">
+                <cellAlignment>center,center</cellAlignment>
+                <columnSpan>1</columnSpan>
+                <fontProperties type="pfnt">
+                  <bold>true</bold>
+                </fontProperties>
+                <label>Sub-Operation</label>
+                <wrap>false</wrap>
+              </element>
+              <element name="Label3" type="ellab">
+                <cellAlignment>center,center</cellAlignment>
+                <columnSpan>1</columnSpan>
+                <fontProperties type="pfnt">
+                  <bold>true</bold>
+                </fontProperties>
+                <label>Minimum Amount</label>
+                <wrap>false</wrap>
+              </element>
+              <element name="Label4" type="ellab">
+                <cellAlignment>center,center</cellAlignment>
+                <columnSpan>1</columnSpan>
+                <fontProperties type="pfnt">
+                  <bold>true</bold>
+                </fontProperties>
+                <label>Maximum Amount</label>
+                <wrap>false</wrap>
+              </element>
+              <element name="Label5" type="ellab">
+                <cellAlignment>center,center</cellAlignment>
+                <columnSpan>1</columnSpan>
+                <fontProperties type="pfnt">
+                  <bold>true</bold>
+                </fontProperties>
+                <label>Destination TariffPlan</label>
+                <wrap>false</wrap>
+              </element>
+              <element name="Label6" type="ellab">
+                <cellAlignment>center,center</cellAlignment>
+                <columnSpan>1</columnSpan>
+                <fontProperties type="pfnt">
+                  <bold>true</bold>
+                </fontProperties>
+                <label>Prize</label>
+                <wrap>false</wrap>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$tableLine" type="laction">
+      <path>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_tableLine</path>
+      <type>initializer</type>
+      <script>cm_spoc.initSegmentablePromotionTable(this);</script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.SegmentablePromotionForm/leaf_model</path>
+      <type>initializer</type>
+      <script>return cm_spoc.initSegmentablePromotion(this);</script>
+    </method>
+    <method name="rule_AutomaticPromotionVisRule" type="permMethod">
+      <script><![CDATA[
+        if(this.model.AutomaticPromotion == false){
+
+            return false;
+
+        }
+        else if(this.model.AutomaticPromotion == true){
+        return true;
+        }else{
+        return false;
+        }
+      ]]></script>
+    </method>
+    <method name="rule_SPPromotionGivenMaxTimesVisRule" type="permMethod">
+      <script><![CDATA[
+        if(this.model.WhenItsConditionsAreMet == false){
+            this.model.PromotionGivenMaxTimes=false;
+            return false;
+        }
+        else if(this.model.WhenItsConditionsAreMet == true){
+        return true;
+        }else{
+        return false;
+        }
+      ]]></script>
+    </method>
+    <method name="rule_SPTypeOfTimingVisRule" type="permMethod">
+      <script><![CDATA[
+        if(this.model.PromotionGivenMaxTimes == false){
+            return false;
+        }
+        else if(this.model.PromotionGivenMaxTimes == true){
+        return true;
+        }else{
+        return false;
+        }
+      ]]></script>
+    </method>
+    <method name="rule_SPForDaysVisRule" type="permMethod">
+      <script><![CDATA[
+        if(this.model.PromotionGivenMaxTimes == true){
+            return false;
+        }
+        else if(this.model.PromotionGivenMaxTimes == false){
+
+            if(this.model.TypeOfTiming== "D") {
+            return true;
+            }else{
+            return false;
+            }
+
+        }else{
+        return false;
+        }
+      ]]></script>
+    </method>
+    <method name="rule_SPForWeeksVisRule" type="permMethod">
+      <script><![CDATA[
+        if(this.model.PromotionGivenMaxTimes == true){
+            return false;
+        }
+        else if(this.model.PromotionGivenMaxTimes == false){
+
+            if(this.model.TypeOfTiming== "W") {
+            return true;
+            }else{
+            return false;
+            }
+
+        }else{
+        return false;
+        }
+      ]]></script>
+    </method>
+    <method name="rule_SPForMonthsVisRule" type="permMethod">
+      <script><![CDATA[
+        if(this.model.PromotionGivenMaxTimes == true){
+            return false;
+        }
+        else if(this.model.PromotionGivenMaxTimes == false){
+
+            if(this.model.TypeOfTiming== "M") {
+            return true;
+            }else{
+            return false;
+            }
+
+        }else{
+        return false;
+        }
+      ]]></script>
+    </method>
+    <method name="rule_PSPromotionalSegmentCodeVisRule" type="permMethod">
+      <script><![CDATA[
+        if(this.model.PromotionalSegmentType=="C"){
+            return true;
+        }else{
+        return false;
+        }
+      ]]></script>
+    </method>
+    <method name="addAction" type="uimthd">
+      <script>cm_spoc.addActionScript(this);</script>
+    </method>
+    <method name="removeAction" type="uimthd">
+      <script>cm_spoc.removeAction(this);</script>
+    </method>
+    <method name="setPromotionalSegment" type="uimthd">
+      <script>cm_spoc.setPromotionalSegmentScript(this);</script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="selectOperation" type="uimthd"/>
+    <method name="buttonControl" type="permMethod">
+      <script><![CDATA[
+        if(this.model.OperationEnum == null){
+            return true;
+
+        }else{
+            return false;
+
+        }
+      ]]></script>
+    </method>
+    <method name="onChangeOpeartion" type="uimthd">
+      <script><![CDATA[
+        if(this.model.OperationEnum == null){
+            if(this.tableLine!= null){
+                cm_spoc.clearTable(this);}
+
+
+        }else{
+                 if(this.tableLine!= null){
+                cm_spoc.clearTable(this);}
+
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

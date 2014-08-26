@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_HBOSHappyBoltOnSpecificationCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_HBOSHappyBoltOnSpecificationCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The tab values (HappyBoltOnSpecification) must be saved only if the related attribute (BoltOnTypeModality) assumes the value shown in column H (PH).
+
+    if (data.BoltOnTypeModality!="PH"){
+    var HBOS=data.HappyBoltOnSpecificationDS;
+    var HBOP=data.HappyBoltOnSpecificationDS.HappyBoltOnPeriodArrDS.ListDS;
+    var HBORate=data.HappyBoltOnSpecificationDS.RateSpecificationArrDS.ListDS;
+    var HBORed=data.HappyBoltOnSpecificationDS.ReductionCoefficientDS;
+
+    if (HBOS.GeneralPeriod!=null || HBOS.RateOrReductionSwitch!=null){
+         errList.addErrorMessage(data,["For this Bolt On Type Modality all Happy Bolt On's attributes must be empties" ],"NGAA_003","E");
+    }
+
+    for (var i = 0; i<HBOP.length; i++ ) {
+        var Year=HBOP[i].Year;
+        var Month=HBOP[i].Month;
+        var Day=HBOP[i].Day;
+        var Hour=HBOP[i].Hour;
+        var WeekDay=HBOP[i].WeekDay;
+        var Duration=HBOP[i].Duration;
+
+        if ( Year || Month || Day || Hour || WeekDay || Duration ){
+            errList.addErrorMessage(data,["For this Bolt On Type Modality all Happy Bolt On's attributes must be empties" ],"NGAA_003","E");
+        }
+    }
+    for (var j = 0; j<HBORate.length; j++ ) {
+        var Rate=HBORate[j].Rate;
+        var TempAppConEn=HBORate[j].TemporalAppCondition;
+        if ( Rate || TempAppConEn /*|| TempAppConEn2*/){
+            errList.addErrorMessage(data,["For this Bolt On Type Modality all Happy Bolt On's attributes must be empties" ],"NGAA_003","E");
+        }
+    }
+
+        var RedVal=HBORed.ReductionValue;
+        var AppRedLD=HBORed.ApplyReductionInLongDistance;
+        var LDRedVal=HBORed.LongDistanceReductionValue;
+        if ( RedVal || (AppRedLD!=null && AppRedLD!=false) || LDRedVal){
+            errList.addErrorMessage(data,["For this Bolt On Type Modality all Happy Bolt On`s attributes must be empties" ],"NGAA_003","E");
+        }
+
+        return false;
+    }
+    return false;
+  ]]></script>
+</script>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.epcValidate">
+  <label>epcValidate</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!model) return true;
+
+    var base_ItemCode = cm_spoc.getBaseSpecificationCode(model);
+
+    if (!base_ItemCode) return true;
+
+    var baseCatItem =  theCatalog.getItem(base_ItemCode);
+
+    if (!baseCatItem) return true;
+
+    var err = [];
+
+    var attr = baseCatItem.getItemAttributes();
+
+    for (var i=0;i<attr.length;i++) {
+
+         var restr = attr[i].getRestrictions();
+
+         for (var k=0; k<restr.length; k++ ) {
+
+             if (restr[k].code=="isMandatory") {
+
+             if (!model[attr[i]]) { err.push( "Missing Attribute: "+attr[i]);}
+
+             } else if (restr[k].code=="minValue"){
+
+                 if (model[attr[i]]  <restr[k].getDefaultValue() ) { err.push ( "Lower bound error: "+attr[i]+" is lower than "+restr[k].getDefaultValue()); }
+
+             } else if (restr[k].code=="maxValue"){
+
+                 if (model[attr[i]]  > restr[k].getDefaultValue() ) { err.push ( "Upper bound error: "+attr[i]+" is bigger than "+restr[k].getDefaultValue()); }
+
+             }
+
+
+         }
+
+    }
+
+    if(err.length > 0 )
+    {
+        return true ;
+
+    } else {
+
+        return false;
+
+    }
+  ]]></script>
+</script>

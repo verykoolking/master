@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.PickListBoltOn">
+  <group>BoltOn</group>
+  <label>PickListBoltOn</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.BoltOnSubscription</valueType>
+    </variable>
+    <variable name="pickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="FormFrame" type="elovf">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PickListBoltOn/leaf_pickList</variablePath>
+                      <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <height>175px</height>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PickListBoltOn/leaf_pickList</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>500px</width>
+                </element>
+                <element name="Separator" type="elsep">
+                  <width>500px</width>
+                </element>
+                <element name="ButtonsHL" type="elhlt">
+                  <alignment>center,center</alignment>
+                  <fillSpace>false</fillSpace>
+                  <snapOnMouseOver>false</snapOnMouseOver>
+                  <width>500px</width>
+                  <elementList>
+                    <element name="LayoutSpacer2" type="ellsp">
+                      <width>55px</width>
+                    </element>
+                    <element name="OK" type="elbtn">
+                      <cellAlignment></cellAlignment>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.PickListBoltOn/uimthd_onClickOk</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Accept</label>
+                    </element>
+                    <element name="LayoutSpacer1" type="ellsp">
+                      <width>50px</width>
+                    </element>
+                    <element name="Cancel" type="elbtn">
+                      <canSort>false</canSort>
+                      <cellAlignment>center,center</cellAlignment>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.PickListBoltOn/uimthd_onClickCancel</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Cancel</label>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$pickList" type="laction">
+      <path>ui_cm_spoc.forms.PickListBoltOn/leaf_pickList</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var itemFinder = new Finder("cm_spoc.boltOnPickListFinder");
+        var result = itemFinder.search();
+
+        var selected = this.model.SubscriptionIncompatibleWith;
+        if(selected){
+            return cm_spoc.initPickList(this,result,[selected],"id","description");
+        }else{
+            return cm_spoc.initPickList(this,result,null,"id","description");
+        }
+      ]]></script>
+    </method>
+    <method name="onClickCancel" type="uimthd">
+      <script>this.parent.cwDialogClose();</script>
+    </method>
+    <method name="onClickOk" type="uimthd">
+      <script><![CDATA[
+        if(this.pickList.selectedItems.length>0){
+            this.model.SubscriptionIncompatibleWith = this.pickList.selectedItems[0].id;
+
+            // Create differents UI for each bolton selected
+            for(var i=1;i<this.pickList.selectedItems.length;i++){
+                var boltOnSubscriptionUI = this.pickList.getParentUI();
+                var boltOnUI = boltOnSubscriptionUI.getParentUI();
+
+                var listModel =  cm_spoc.addListElement(boltOnUI, this.model.parent, "cm_spoc.forms.BoltOnSubscriptionUI","base_BoltOnSubscription","SubsIncompatibilitiesIterator");
+
+                this.model.parent[this.model.parent.length-1].SubscriptionIncompatibleWith = this.pickList.selectedItems[i].id;
+                this.model.parent[this.model.parent.length-1].CustomerProfile = this.model.CustomerProfile;
+            }
+        }else{
+            // Any boltOn selected
+            this.model.SubscriptionIncompatibleWith = null;
+        }
+        this.parent.cwDialogClose();
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

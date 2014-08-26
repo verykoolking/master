@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cm_spoc.itemSubtypeFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <group>overridden.finders</group>
+  <input>doc_cwa_epc.itemSubTypeSearchDoc</input>
+  <label>itemSubtypeFinder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_cwa_epc.itemSubTypeResultDoc</output>
+  <overrides>findScript_cwa_epc.itemSubtypeFinder</overrides>
+  <type>script</type>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        var item;
+        var res = new DataObjectList;
+        var ctCodes = null;
+        var ctGroupCodes = null;
+        if(searchData.codeTable || searchData.groupCodeTable){
+            if(!searchData.codeTable.toString().equals("false") &&
+                !searchData.groupCodeTable.toString().equals("false")){
+                ctCodes = Global.getCTCodesAndDescriptions(searchData.codeTable);
+                ctGroupCodes = Global.getCTCodesAndDescriptions(searchData.groupCodeTable);
+                for(var i=0; i<ctCodes.length; i=i+2){
+                    item = new cwa_epc.itemSubTypeResultDoc;
+                    item.id = ctCodes[i];
+                    item.itemSubtype = ctCodes[i+1];
+                    for(var j=0; j<ctGroupCodes.length; j=j+2){
+                        if(ctCodes[i]==ctGroupCodes[j])
+                            res.addLast(item);
+                    }
+                }
+            }
+            else if(!searchData.codeTable.toString().equals("false")){
+                ctCodes = Global.getCTCodesAndDescriptions(searchData.codeTable);
+                for(var i=0; i<ctCodes.length; i=i+2){
+                    item = new cwa_epc.itemSubTypeResultDoc;
+                    item.id = ctCodes[i];
+                    item.itemSubtype = ctCodes[i+1];
+                    res.addLast(item);
+                }
+
+            }
+            else{
+                ctGroupCodes = Global.getCTCodesAndDescriptions(searchData.groupCodeTable);
+                for(var i=0; i<ctGroupCodes.length; i=i+2){
+                    item = new cwa_epc.itemSubTypeResultDoc;
+                    item.id = ctGroupCodes[i];
+                    item.itemSubtype = ctGroupCodes[i+1];
+                    res.addLast(item);
+                }
+            }
+        }else if(searchData.referenceData){
+            var dtCodes = Global.getCodes(searchData.referenceData);
+            if(dtCodes){
+                for(var i=0; i<dtCodes.length; i++){
+                    item = new cwa_epc.itemSubTypeResultDoc;
+                    item.id = dtCodes[i];
+                    item.itemSubtype = Global.getCodeDescription(searchData.referenceData,item.id);
+                    res.addLast(item);
+                }
+            }
+        }
+
+
+
+        return res;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_cwa_epc.baseFinder</extends>
+    <overrides>findScript_cwa_epc.itemSubtypeFinder/ui_UserInterface</overrides>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cwa_epc.itemSubTypeResultDoc</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cwa_epc.itemSubTypeResultDoc/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_cwa_epc.baseFinder/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_cwa_epc.baseFinder/frmui_Forms/vform_Result</base>
+            <extends>ui_cwa_epc.baseFinder/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="resultList" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="itemSubtypefinderResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.itemSubtypeFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="itemSubtype" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.itemSubtypeFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwa_epc.itemSubTypeResultDoc/leaf_itemSubtype</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_cwa_epc.baseFinder/frmui_Forms/exov_Default</base>
+            <extends>ui_cwa_epc.baseFinder/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="itemSubtypefinderView" type="findVView">
+      <outputOverlay>findScript_cm_spoc.itemSubtypeFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findScript>

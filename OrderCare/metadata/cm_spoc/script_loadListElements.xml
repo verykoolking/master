@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.loadListElements">
+  <group>ui_scripts.utils</group>
+  <label>loadListElements</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="parentUi" type="rifp"/>
+    <parameter name="model" type="rifp"/>
+    <parameter name="uiMDType" type="rifp"/>
+    <parameter name="iteratorName" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var it=parentUi[iteratorName];
+    if(!it)  throw "you must initialize the iterator as a new Array before calling this script";
+    var len=model.length;
+    var s = new epc.data.Specification();
+    s.project =  cwa_epc.getDefaultProj();
+    /*for(var i=0;i<len;i++){
+        s.specificationCode =model.List[i];
+        var r = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(r)){
+            model.ListDS[i]=r;
+        }
+    }
+    model=model.ListDS;*/
+    var listUi;
+    for(var i=0;i<len;i++){
+        listUi = new com.conceptwave.system.UserInterface(uiMDType);
+        if('parentUI' in listUi){
+            listUi.setParentUI(parentUi);
+        } else {
+            listUi.parent = parentUi;
+        }
+        listUi.parent=parentUi;
+        if (listUi["updateModel"]) {      //cozzuto
+            listUi.updateModel(model[i]); //cozzuto
+        } else {
+            listUi.model=model[i];
+        }
+        it.push(listUi);
+    }
+  ]]></script>
+</script>

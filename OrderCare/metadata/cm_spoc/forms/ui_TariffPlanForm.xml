@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TariffPlanForm">
+  <group>TariffPlan</group>
+  <label>TariffPlanForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="SelectAllACDefinition" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="SelectAllTypeOfService" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="AllowedChangeDefinitionIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="TypeOfServiceIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TariffPlan</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="generalParameters" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TariffPlanForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.TariffPlanForm/frmui_Forms/vform_generalParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                </element>
+                <element name="tariffPlanChanges" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TariffPlanForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.TariffPlanForm/frmui_Forms/vform_tariffPlanChanges</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Tariff Plan Changes</label>
+                </element>
+                <element name="typeOfService" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TariffPlanForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.TariffPlanForm/frmui_Forms/vform_typeOfService</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Type of Service</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="generalParameters" type="vform">
+          <label>generalParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>800px</width>
+            <elementList>
+              <element name="GridLayout" type="elgrd">
+                <colWidths>50px</colWidths>
+                <fixedColWidths>true</fixedColWidths>
+                <numOfCols>5</numOfCols>
+                <width>250px</width>
+                <elementList>
+                  <element name="RowSpacer" type="elrsp"/>
+                  <element name="TariffPlanDescription" type="elfld">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <columnSpan>5</columnSpan>
+                    <labeAlign>left</labeAlign>
+                    <label>Tariff Plan Description</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.TariffPlan/dstruct_TariffPlanDescription</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="TariffPlanIdentifier" type="elfld">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <columnSpan>5</columnSpan>
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/permMethod_TPTariffPlanIdentifierVisRule</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <labeAlign>left</labeAlign>
+                    <label>Tariff Plan Identifier</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.TariffPlan/dstruct_TariffPlanIdentifier</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="TariffPlanModalityEnum" type="elslct">
+                    <columnSpan>5</columnSpan>
+                    <labeAlign>left</labeAlign>
+                    <label>Tariff Plan Modality</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.TariffPlan/dstruct_TariffPlanModality</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="TechnologyEnum" type="elslct">
+                    <columnSpan>5</columnSpan>
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/permMethod_TPTechnologyReadORule</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <labeAlign>left</labeAlign>
+                    <label>Technology</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.TariffPlan/dstruct_Technology</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="TariffPlanSpecificationEnum" type="elslct">
+                    <columnSpan>5</columnSpan>
+                    <labeAlign>left</labeAlign>
+                    <label>Tariff Plan Specification</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/uimthd_setTariffPlanSpecification</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <optional type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </optional>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.TariffPlan/dstruct_TariffPlanSpecificationEnum</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="tariffPlanChanges" type="vform">
+          <label>tariffPlanChanges</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>1000px</width>
+            <elementList>
+              <element name="buttonLayout" type="elhlt">
+                <elementList>
+                  <element name="addButton" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/uimthd_addAllowedChangeDefinition</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwt/images/16/notebook_add.png</icon>
+                  </element>
+                  <element name="deleteButton" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/uimthd_deleteAllowedChangeDefinition</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwt/images/16/delete.png</icon>
+                  </element>
+                </elementList>
+              </element>
+              <element name="GridLayout" type="elgrd">
+                <colWidths>50px</colWidths>
+                <fixedColWidths>true</fixedColWidths>
+                <numOfCols>20</numOfCols>
+                <width>1000px</width>
+                <elementList>
+                  <element name="SelectAllACDefinition" type="elchk">
+                    <columnSpan>1</columnSpan>
+                    <label>Select All</label>
+                    <showLabel>false</showLabel>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/leaf_SelectAllACDefinition</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>30px</width>
+                  </element>
+                  <element name="IVR" type="ellab">
+                    <cellAlignment>center,center</cellAlignment>
+                    <columnSpan>3</columnSpan>
+                    <label>Allowed Through IVR</label>
+                  </element>
+                  <element name="MS" type="ellab">
+                    <cellAlignment>center,center</cellAlignment>
+                    <columnSpan>3</columnSpan>
+                    <label>Allowed Through MS</label>
+                  </element>
+                  <element name="ScriptHLR" type="ellab">
+                    <cellAlignment>center,center</cellAlignment>
+                    <columnSpan>3</columnSpan>
+                    <label>Script HLR</label>
+                  </element>
+                  <element name="IsSame" type="ellab">
+                    <cellAlignment>center,center</cellAlignment>
+                    <columnSpan>3</columnSpan>
+                    <label>Is Same Technology</label>
+                  </element>
+                  <element name="TariffPlan" type="ellab">
+                    <cellAlignment>center,center</cellAlignment>
+                    <columnSpan>3</columnSpan>
+                    <label>Tariff Plan Allowed</label>
+                  </element>
+                  <element name="CellSpacer" type="elcsp">
+                    <columnSpan>1</columnSpan>
+                  </element>
+                  <element name="CustomerProfile" type="ellab">
+                    <cellAlignment>center,center</cellAlignment>
+                    <columnSpan>3</columnSpan>
+                    <label>CustomerProfile</label>
+                  </element>
+                </elementList>
+              </element>
+              <element name="AChangeDefVL" type="elvlt">
+                <height>200px</height>
+                <width>1000px</width>
+                <elementList>
+                  <element name="AChangeDefIterator" type="eliter">
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/leaf_AllowedChangeDefinitionIterator</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="AChangeDefHL" type="elhlt">
+                        <elementList>
+                          <element name="AChangeDefFormFrame" type="elovf">
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TariffPlanForm/leaf_AllowedChangeDefinitionIterator</variablePath>
+                                <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                              </variablePathList>
+                            </formReference>
+                            <width>1000px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="typeOfService" type="vform">
+          <label>typeOfService</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>550px</width>
+            <elementList>
+              <element name="buttonLayout" type="elhlt">
+                <elementList>
+                  <element name="addButton" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/uimthd_addTypeOfService</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwt/images/16/notebook_add.png</icon>
+                  </element>
+                  <element name="deleteButton" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/uimthd_deleteTypeOfService</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwt/images/16/delete.png</icon>
+                  </element>
+                </elementList>
+              </element>
+              <element name="GridLayout" type="elgrd">
+                <colWidths>50px</colWidths>
+                <fixedColWidths>true</fixedColWidths>
+                <numOfCols>11</numOfCols>
+                <width>550px</width>
+                <elementList>
+                  <element name="SelectAllTypeOfService" type="elchk">
+                    <columnSpan>1</columnSpan>
+                    <showLabel>false</showLabel>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/leaf_SelectAllTypeOfService</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="ServiceID" type="ellab">
+                    <cellAlignment>center,center</cellAlignment>
+                    <columnSpan>3</columnSpan>
+                    <label>Service </label>
+                  </element>
+                  <element name="DefaultTariffPlan" type="ellab">
+                    <cellAlignment>center,center</cellAlignment>
+                    <columnSpan>3</columnSpan>
+                    <label>Default </label>
+                  </element>
+                  <element name="PlanPerService" type="ellab">
+                    <cellAlignment>center,center</cellAlignment>
+                    <columnSpan>4</columnSpan>
+                    <label>Plan Per Service Allowed</label>
+                  </element>
+                </elementList>
+              </element>
+              <element name="TypeOfServiceVL" type="elvlt">
+                <height>200px</height>
+                <width>550px</width>
+                <elementList>
+                  <element name="TypeOfServiceIterator" type="eliter">
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TariffPlanForm/leaf_TypeOfServiceIterator</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="TypeOfServiceHL" type="elhlt">
+                        <elementList>
+                          <element name="TypeofServiceFormFrame" type="elovf">
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.TariffPlanForm/leaf_TypeOfServiceIterator</variablePath>
+                                <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                              </variablePathList>
+                            </formReference>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.TariffPlanForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initTariffPlan(this.model);
+        cm_spoc.initAllowedChangeDefinitionUI(this);
+        cm_spoc.initTypeOfServiceUI(this);
+        return m;
+      ]]></script>
+    </method>
+    <method name="cwLeafTriggerAction$SelectAllACDefinition" type="laction">
+      <path>ui_cm_spoc.forms.TariffPlanForm/leaf_SelectAllACDefinition</path>
+      <type>trigger</type>
+      <script><![CDATA[
+        for (var i = 0;i<this.AllowedChangeDefinitionIterator.length; i++){
+                this.AllowedChangeDefinitionIterator[i].Selected = this.SelectAll;
+            }
+      ]]></script>
+    </method>
+    <method name="cwLeafTriggerAction$SelectAllTypeOfService" type="laction">
+      <path>ui_cm_spoc.forms.TariffPlanForm/leaf_SelectAllTypeOfService</path>
+      <type>trigger</type>
+      <script><![CDATA[
+        for (var i = 0;i<this.TypeOfServiceIterator.length; i++){
+                this.TypeOfServiceIterator[i].Selected = this.SelectAll;
+            }
+      ]]></script>
+    </method>
+    <method name="ReadOnly" type="permMethod">
+      <script>return this.model.readonly;</script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script><![CDATA[
+        for(var i=0;i<this.AllowedChangeDefinitionIterator.length;i++){
+            this.AllowedChangeDefinitionIterator[i].model.readonly = this.model.readonly;
+        }
+
+        for(var i=0;i<this.TypeOfServiceIterator.length;i++){
+            this.TypeOfServiceIterator[i].model.readonly = this.model.readonly;
+        }
+      ]]></script>
+    </method>
+    <method name="addAllowedChangeDefinition" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var model=this.model.TPAChangeDefinitionArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.AllowedChangeDefinitionUI","base_AllowedChangeDefinition","AllowedChangeDefinitionIterator");
+      ]]></script>
+    </method>
+    <method name="addTypeOfService" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var model=this.model.TPTypeOfServiceArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.TypeOfServiceUI","base_TypeOfService","TypeOfServiceIterator");
+      ]]></script>
+    </method>
+    <method name="deleteAllowedChangeDefinition" type="uimthd">
+      <script><![CDATA[
+        var model = this.model.TPAChangeDefinitionArrDS;
+        cm_spoc.removeListElements(this , model ,"List", "AllowedChangeDefinitionIterator");
+        this.SelectAll = false;
+      ]]></script>
+    </method>
+    <method name="deleteTypeOfService" type="uimthd">
+      <script><![CDATA[
+        var model = this.model.TPTypeOfServiceArrDS;
+        cm_spoc.removeListElements(this , model ,"List", "TypeOfServiceIterator");
+        this.SelectAll = false;
+      ]]></script>
+    </method>
+    <method name="setTariffPlanSpecification" type="uimthd">
+      <script>this.model.TariffPlanSpecification = this.model.TariffPlanSpecificationEnum;</script>
+    </method>
+    <method name="TPTechnologyReadORule" type="permMethod">
+      <script><![CDATA[
+        if ( this.model.specificationCode && cm_spoc.getExistingItem(this.model.specificationCode) )
+            return false;
+        return true;
+      ]]></script>
+    </method>
+    <method name="TPTariffPlanIdentifierVisRule" type="permMethod">
+      <script><![CDATA[
+        if ( this.model.specificationCode && cm_spoc.getExistingItem(this.model.specificationCode) )
+            return false;
+        return true;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

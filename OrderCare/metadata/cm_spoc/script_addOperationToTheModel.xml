@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.addOperationToTheModel">
+  <group>ui_scripts.Common.Price</group>
+  <label>addOperationToTheModel</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="priceEvent" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    for (var l = 0; l<model.length;l++) {
+
+        if (!model[l].Operation) {
+            model[l].Operation = getOperationByPriceEvent(priceEvent);
+             model[l].OperationEnum = model[l].Operation;
+        }
+
+        }
+
+        function  getOperationByPriceEvent(priceEvent) {
+
+                         var associationsFinder =  new cm_spoc.itemRelationFinder();
+                        associationsFinder.searchDocument.itemCode = priceEvent;
+                        var associations = associationsFinder.search();
+                        var itemFinder = new Finder("cwa_epc.catalogItemFinder");
+                         var result;
+                         for (var l = 0; l < associations.length; l++ ) {
+                            if ( associations[l].itemCode) {
+                                itemFinder.searchDocument.itemCode = associations[l].itemCode;
+                               result = itemFinder.search();
+                               if(result[0].baseItemCode == "base_Operation") return result[0].itemCode;
+                            }
+                        }
+        }
+  ]]></script>
+</script>

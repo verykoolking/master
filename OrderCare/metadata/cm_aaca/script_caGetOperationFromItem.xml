@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.caGetOperationFromItem">
+  <label>CM-AACA Get Operation From PLM Status</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var orderItemFinder = new Finder("cm_plm.plmOrderItemFinder");
+    orderItemFinder.searchDocument.itemCode = itemCode;
+    orderItemFinder.searchDocument.projectCode = projectCode;
+    var result = orderItemFinder.search();
+    var status = result[0].itemStatus;
+    switch(status) {
+        case "INITIAL": return "C";
+        case "DELETE": return "D";
+        default: return "U";
+    }
+  ]]></script>
+</script>

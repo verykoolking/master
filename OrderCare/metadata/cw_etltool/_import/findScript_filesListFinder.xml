@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cw_etltool._import.filesListFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <input>doc_cw_etltool._import.filesPathSearch</input>
+  <label>Files List Finder</label>
+  <maxRowsLimit>9999</maxRowsLimit>
+  <metaVersion>4</metaVersion>
+  <output>doc_cw_etltool._import.filesPath</output>
+  <type>script</type>
+  <vDetailForm>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</vDetailForm>
+  <volatility>0</volatility>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        var helper = this.getHelper();
+        return  helper["filesList"];
+        /*
+        if( searchData.isFileBrowser)
+        {
+            objectList = new DataObjectList();
+            if(searchData.fileDirectoryPath){
+                var filesList =  FileReader.listFiles(searchData.fileDirectoryPath);
+                for( var i=0; filesList && i < filesList.length; i++){
+                    var doc = new Document("cw_etltool._import.filesPath");
+                    doc.FileName = filesList[i];
+                    doc.FilePath = searchData.fileDirectoryPath +"\\"+ doc.FileName ;
+                    objectList.addLast(doc);
+                }
+            }else{
+
+                Global.showUserMessage("Please enter file directory path....");
+            }
+        }
+        */
+        return objectList;
+      ]]></script>
+    </method>
+    <method name="getHelper" type="uimthd">
+      <actionCategory>asa</actionCategory>
+      <script><![CDATA[
+        var helper = this.getScriptObject();
+        if(helper == null){
+           helper = this.initHelper(helper);
+        }
+        return helper;
+      ]]></script>
+    </method>
+    <method name="addToList" type="uimthd">
+      <parameterList>
+        <parameter name="resultDoc" type="rifp">
+          <mandatory>true</mandatory>
+          <type>doc_cw_etltool._import.filesPath</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var helper = this.getHelper();
+        resultDoc.RowIndex = helper["filesList"].length;
+        helper["filesList"].addLast(resultDoc);
+        this.setHelper(helper);
+      ]]></script>
+    </method>
+    <method name="setHelper" type="uimthd">
+      <actionCategory>asa</actionCategory>
+      <parameterList>
+        <parameter name="helper" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.setScriptObject(null);
+        this.setScriptObject(helper);
+        return helper;
+      ]]></script>
+    </method>
+    <method name="initHelper" type="uimthd">
+      <parameterList>
+        <parameter name=" helper" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        helper = new Array();
+        helper["filesList"] = new DataObjectList();
+        return helper;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cw_etltool._import.filesPath</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cw_etltool._import.filesPath/ui_UserInterface</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cw_etltool._import.filesPathSearch/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>600px</width>
+                <elementList>
+                  <element name="fileBrowserResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="RowIndex" type="elfld">
+                        <label>RowIndex</label>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.filesPath/leaf_RowIndex</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="FileName" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.filesPath/leaf_FileName</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>170px</width>
+                      </element>
+                      <element name="FilePath" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._import.filesPath/leaf_FilePath</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>400px</width>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="FilesList" type="vform">
+            <label>FilesList</label>
+            <root name="SectionStack" type="elsectnstck">
+              <height>395px</height>
+              <width>597px</width>
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="SectionHeader" type="elsecth">
+                      <label>Files List</label>
+                    </element>
+                    <element name="table" type="elhlt">
+                      <height>100%</height>
+                      <width>100%</width>
+                      <elementList>
+                        <element name="fileBrowserResultTable" type="eltabl">
+                          <onSelectChange type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                            </variablePathList>
+                          </onSelectChange>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/uivar_result</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <elementList>
+                            <element name="RowIndex" type="elfld">
+                              <label>Row Index</label>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/uivar_result</variablePath>
+                                  <variablePath>doc_cw_etltool._import.filesPath/leaf_RowIndex</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                </variablePathList>
+                              </visible>
+                            </element>
+                            <element name="FileName" type="elfld">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/uivar_result</variablePath>
+                                  <variablePath>doc_cw_etltool._import.filesPath/leaf_FileName</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>150px</width>
+                            </element>
+                            <element name="FilePath" type="elfld">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/uivar_result</variablePath>
+                                  <variablePath>doc_cw_etltool._import.filesPath/leaf_FilePath</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>390px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="HorizontalLayout" type="elvlt">
+                          <elementList>
+                            <element name="up" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/usrActionMethod_btnClicked_MoveUp</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwf/arrow_up_blue.gif</icon>
+                              <tooltip>Move Up</tooltip>
+                            </element>
+                            <element name="down" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/uimthd_btnClicked_MoveDown</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwf/arrow_down_blue.gif</icon>
+                              <tooltip>Move Down</tooltip>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="FormFrame" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/frmui_Forms</variablePath>
+                          <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/frmui_Forms/vform_FilesListMenu</variablePath>
+                        </variablePathList>
+                      </formReference>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="FilesListMenu" type="vform">
+            <label>FilesListMenu</label>
+            <root name="HorizontalLayout" type="elhlt">
+              <elementList>
+                <element name="add" type="elmnu">
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/usrActionMethod_addFile</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <icon>/cwt/images/24/data_add.png</icon>
+                  <label>Add</label>
+                </element>
+                <element name="delete" type="elmnu">
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/uimthd_deleteAction</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <icon>/cwt/images/24/data_delete.png</icon>
+                  <label>Delete</label>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="addFile" type="usrActionMethod">
+        <dialogHeight>400</dialogHeight>
+        <dialogWidth>615</dialogWidth>
+        <showInPopup>true</showInPopup>
+        <script><![CDATA[
+          if(this.parent.model.FileDirectoryPath == null ||
+             this.parent.model.FileDirectoryPath == ""){
+
+                  Global.showUserMessage("Please enter file directory path....");
+             }else{
+
+                  var fb = new cw_etltool._import.fileBrowserFinder.UserInterface();
+                  fb.model.searchDocument.isFileBrowser = true;
+                  fb.model.searchDocument.fileDirectoryPath = this.parent.model.FileDirectoryPath;
+                  fb.ownerUI = this;
+                  fb.model.search();
+                  return fb;
+
+             }
+        ]]></script>
+      </method>
+      <method name="btnClicked_MoveUp" type="usrActionMethod">
+        <script><![CDATA[
+          this.changeIndex(true);
+          /*
+          if(this.result.selected.length == 1 && this.model.list.length > 1){
+
+              var selectedIndex, ascendantDoc, selectedDoc, helper, list;
+              selectedIndex = this.result.selected[0].RowIndex;
+
+              if(selectedIndex > 0){
+
+                  selectedDoc = this.result.selected[0];
+                  ascendantDoc = this.model.list[selectedIndex - 1];
+
+                  selectedDoc.RowIndex = selectedIndex - 1;
+                  ascendantDoc.RowIndex = selectedIndex;
+
+                  this.model.sort("RowIndex");
+
+                  helper = this.model.getHelper();
+                  helper["filesList"] = this.model.list;
+                  this.model.setHelper(helper);
+                  this.result.updateList;
+                  //this.model.search();
+
+              }
+
+          }
+
+          */
+        ]]></script>
+      </method>
+      <method name="btnClicked_MoveDown" type="uimthd">
+        <script>this.changeIndex(false);</script>
+      </method>
+      <method name="changeIndex" type="uimthd">
+        <parameterList>
+          <parameter name="isMoveUp" type="rifp">
+            <mandatory>true</mandatory>
+            <type>dtype_com.conceptwave.system.Boolean</type>
+          </parameter>
+        </parameterList>
+        <script><![CDATA[
+          if(this.result.selected.length == 1 && this.model.list.length > 1){
+
+              var selectedIndex, ascendantDoc, selectedDoc, descendantDoc, helper, list;
+
+              selectedIndex = this.result.selected[0].RowIndex;
+              selectedDoc = this.result.selected[0];
+
+              if(isMoveUp){
+                  if(selectedIndex > 0){
+
+                      ascendantDoc = this.model.list[selectedIndex - 1];
+                      selectedDoc.RowIndex = selectedIndex - 1;
+                      ascendantDoc.RowIndex = selectedIndex;
+                  }
+              }else{
+                  if(selectedIndex < this.model.list.length-1 ){
+                      descendantDoc = this.model.list[selectedIndex + 1];
+                      selectedDoc.RowIndex = selectedIndex + 1;
+                      descendantDoc.RowIndex = selectedIndex;
+                  }
+              }
+
+              this.model.sort("RowIndex");
+
+              helper = this.model.getHelper();
+              helper["filesList"] = this.model.list;
+              this.model.setHelper(helper);
+
+              //this.model.search();
+              this.result.updateList;
+
+          }
+        ]]></script>
+      </method>
+      <method name="deleteAction" type="uimthd">
+        <script><![CDATA[
+          var selectedRows = this.result.selected;
+          if(selectedRows && selectedRows.length > 0){
+
+              for(var i=0; i<selectedRows.length; i++){
+
+                  this.result.remove(selectedRows[i]);
+              }
+
+              this.result.updateList;
+              this.model.sort("RowIndex");
+              var list = this.model.list;
+              for (var r =0; list && r < list.length; r++){
+                  list[r].RowIndex = r;
+              }
+              this.result.updateList;
+              var helper = this.model.getHelper();
+              helper["filesList"] = this.model.list;
+              this.model.setHelper(helper);
+          }
+        ]]></script>
+      </method>
+      <method name="deleteAll" type="uimthd">
+        <script><![CDATA[
+          while(this.result && this.result.length > 0){
+              this.result.remove(this.result[0]);
+          }
+          var helper = this.model.getHelper();
+          helper["filesList"] = this.model.list;
+          this.model.setHelper(helper);
+        ]]></script>
+      </method>
+    </methodList>
+  </UserInterface>
+  <viewList>
+    <view name="fileBrowserView" type="findVView">
+      <inputOverlay>doc_cw_etltool._import.filesPathSearch/ui_UserInterface/frmui_Forms/vform_fileBrowserSearch</inputOverlay>
+      <label>Browse Files</label>
+      <outputOverlay>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+      <searchImmediately>true</searchImmediately>
+    </view>
+  </viewList>
+</findScript>

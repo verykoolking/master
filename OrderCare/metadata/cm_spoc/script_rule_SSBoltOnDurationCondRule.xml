@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_SSBoltOnDurationCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_SSBoltOnDurationCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>dstruct_cm_spoc.data.BoltOnType</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*if (data.SessionSpecificationDS.BoltOnDuration)
+    {
+
+        if( !(cm_spoc.checkInclusion(data.BoltOnTypeModality,[ "CR" , "PH" , "XN", "MC" , "GB"])
+            || (cm_spoc.checkInclusion(data.BoltOnTypeModality,["ME","MG"]) && data.SessionSpecificationDS.BoltOnDuration=="NONE")
+            || (cm_spoc.checkInclusion( data.BoltOnTypeModality,[ "DT" , "BD", "MI" ]) && data.SessionSpecificationDS.MaximumOfUnitsPerSession!=null)) ){
+                    errList.addErrorMessage(data,["Bolt On Modality","Bolt On Modality is not correct"],"NGAA_EPC_002","E");
+        }
+
+    }
+    return;*/
+    if( cm_spoc.checkInclusion(data.BoltOnTypeModality,[ "ME" , "MG"]) && (data.SessionSpecificationDS.BoltOnDuration!=null)){
+         errList.addErrorMessage(data,["Bolt On Modality","Bolt On Duration is not correct"],"NGAA_EPC_002","E");
+        }
+
+    return;
+  ]]></script>
+</script>

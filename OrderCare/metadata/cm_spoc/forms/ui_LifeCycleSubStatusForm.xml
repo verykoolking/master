@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.LifeCycleSubStatusForm">
+  <group>LifeCycles</group>
+  <label>LifeCycleSubStatusForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.LifeCycleSubStatus</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="GeneralParameters" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.LifeCycleSubStatusForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.LifeCycleSubStatusForm/frmui_Forms/vform_GeneralParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="GeneralParameters" type="vform">
+          <label>GeneralParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>750px</width>
+            <elementList>
+              <element name="GridLayout1" type="elgrd">
+                <colWidths>50px</colWidths>
+                <numOfCols>4</numOfCols>
+                <width>200px</width>
+                <elementList>
+                  <element name="RowSpacer" type="elrsp"/>
+                  <element name="Status" type="elslct">
+                    <columnSpan>4</columnSpan>
+                    <labeAlign>left</labeAlign>
+                    <label>Status</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.LifeCycleSubStatusForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.LifeCycleSubStatus/dstruct_Status</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="Substatus" type="elfld">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <columnSpan>4</columnSpan>
+                    <labeAlign>left</labeAlign>
+                    <label>Substatus</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.LifeCycleSubStatusForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.LifeCycleSubStatus/dstruct_Substatus</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="DescriptionOfSubstatus" type="elfld">
+                    <autoFocusNextField>false</autoFocusNextField>
+                    <columnSpan>4</columnSpan>
+                    <labeAlign>left</labeAlign>
+                    <label>Description Of Substatus</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.LifeCycleSubStatusForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.LifeCycleSubStatus/dstruct_DescriptionOfSubstatus</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+    <method name="setPickListModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.LifeCycleArrDS.List = null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.LifeCycleArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="LifeCycleSubStatusTrigger" type="uimthd">
+      <script>this.model.LifeCycleSubStatus=this.model.LifeCycleSubStatusEnum;</script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+  </methodList>
+</userInterface>

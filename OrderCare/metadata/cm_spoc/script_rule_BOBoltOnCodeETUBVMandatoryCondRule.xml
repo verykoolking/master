@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BOBoltOnCodeETUBVMandatoryCondRule">
+  <group>rules_scripts.Promotions</group>
+  <label>rule_BOBoltOnCodeETUBVMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    // The attribute will be mandatory when the related attribute has the value shown in the column H.
+    // BoltOn
+    // BoltOnCode
+    // TopUpBoltOnPromotionEmbedded
+    // TopUpBoltonAssignation
+    // B
+
+    if (data.BoltOnEnum==null && data.TopUpBoltonAssignation=='B') {
+        errList.addErrorMessage(data,["Bolt on Code must be mandatory only if Top Up/Bolt On Assignation is Bolt On"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_TSACActivationStartDateCondRule">
+  <group>rules_scripts.BoltOn</group>
+  <label>rule_TSACActivationStartDateCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>dstruct_cm_spoc.data.BoltOn</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <array>true</array>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if ( data.SubscriptionOfferingDS.ActivationStartDate && !data.SubscriptionOfferingDS.TemporalSubscriberActCond) {
+
+       errList.addErrorMessage(data,["Temporal Subscriber Activation","Start Date must not be set"],"NGAA_EPC_002","E");
+
+    } else {
+
+        return false;
+    }
+  ]]></script>
+</script>

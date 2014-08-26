@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initWeekDayDefinition">
+  <group>ui_scripts.Calendars</group>
+  <label>initWeekDayDefinition</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!model.specificationCode){
+        var wddDayDefinitionArr = cm_spoc.initInnerDS("base_WDDDayDefinitionArr");
+        model.WDDDayDefinitionArrDS = wddDayDefinitionArr;
+
+        var wddServiceProviderArr = cm_spoc.initInnerDS("base_WDDServiceProviderArr");
+        model.WDDServiceProviderArrDS = wddServiceProviderArr;
+
+    }
+
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        s.specificationCode = model.WDDDayDefinitionArr;
+        var r = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(r)){
+            model.WDDDayDefinitionArrDS = r;
+        }
+
+        var wddDayDefinitionRel = model.WDDDayDefinitionArrDS.List;
+        var wddDayDefinitionDS = model.WDDDayDefinitionArrDS.ListDS;
+        for(var i = 0; i < wddDayDefinitionRel.length; i++){
+            s.specificationCode = wddDayDefinitionRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                wddDayDefinitionDS[i] = r;
+            }
+        }
+
+        s.specificationCode = model.WDDServiceProviderArr;
+        var r = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(r)){
+            model.WDDServiceProviderArrDS = r;
+        }
+
+        var wddServiceProviderRel = model.WDDServiceProviderArrDS.List;
+        var wddServiceProviderDS = model.WDDServiceProviderArrDS.ListDS;
+        for(var i = 0; i < wddServiceProviderRel.length; i++){
+            s.specificationCode = wddServiceProviderRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                wddServiceProviderDS[i] = r;
+            }
+        }
+    }
+
+    return model;
+  ]]></script>
+</script>

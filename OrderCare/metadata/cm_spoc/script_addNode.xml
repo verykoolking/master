@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.addNode">
+  <group>ui_scripts.RatingTree.BranchUI</group>
+  <label>addNode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //Local vars
+    var code = ui.availableNodes.selected[0].code;
+    var description = ui.availableNodes.selected[0].description;
+    var nodeType = ui.availableNodes.selected[0].nodeType;
+    var nodeTypeValue = ui.availableNodes.selected[0].nodeTypeValue;
+
+    // The model
+    var rtno =  cm_spoc.initInnerDS("base_RatingTreeNodeOutput");
+    rtno = cm_spoc.initModelForCreation(rtno);
+    rtno.NodeName = code;
+
+    var ass = new cm_spoc.IndexedAssociation();
+
+    var len = ui.model.RTBRTNodeOutputArrDS.List.length;
+    ui.model.RTBRTNodeOutputArrDS.ListDS[ui.model.RTBRTNodeOutputArrDS.ListDS.length] = rtno;
+
+    ass.CW_REFID = rtno.specificationCode;
+    ass.position = len;
+
+    ui.model.RTBRTNodeOutputArrDS.List[len] = ass;
+
+    //if the node type is an attribute we instantiate the node now, when the node is a ct we instantiate in the picklist callback
+    if (nodeType == 'att') {
+
+        var no =  cm_spoc.initInnerDS("base_RTNodeOutput");
+        no = cm_spoc.initModelForCreation(no);
+
+        rtno.RTNodeOutputArrDS.List[0]=no.specificationCode;
+        rtno.RTNodeOutputArrDS.ListDS[0]=no;
+
+
+    }
+
+    // The UI
+    var nui;
+    if (nodeType == 'att') {nui =  new cm_spoc.forms.attNodeUI(rtno,ui)}
+    else {nui = new cm_spoc.forms.ctNttNodeUI(rtno,ui)}
+
+    nui.code=code;
+    nui.description=description;
+    nui.nodeType=nodeType;
+    nui.nodeTypeValue=nodeTypeValue;
+    nui.position=len;
+
+    if (!ui.nodesIterator) {ui.nodesIterator=new Array();}
+    ui.nodesIterator[ui.nodesIterator.length]=nui;
+
+    // nodes vars update
+    for (var i = 0;i<ui.availableNodes.length;i++) {
+
+        if (ui.availableNodes[i].code==code) {
+            var tmp = ui.availableNodes[i];
+            tmp.position =  ui.selectedNodes.length;
+            ui.selectedNodes.addLast(tmp);
+            ui.availableNodes.delete(i);
+        }
+
+    }
+    ui.availableNodes.updateList;
+  ]]></script>
+</script>

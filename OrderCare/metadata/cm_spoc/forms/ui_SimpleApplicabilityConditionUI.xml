@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.SimpleApplicabilityConditionUI">
+  <group>Common.ApplicabilityCondition</group>
+  <label>SimpleApplicabilityConditionUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.SimpleApplicabilityConditio</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="GridLayout" type="elgrd">
+              <colWidths>50px</colWidths>
+              <numOfCols>13</numOfCols>
+              <width>750px</width>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SimpleApplicabilityConditionUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="TariffClassAppConditionEnum" type="elslct">
+                  <columnSpan>3</columnSpan>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SimpleApplicabilityConditionUI/uimthd_setTariffClass</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SimpleApplicabilityConditionUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SimpleApplicabilityConditio/dstruct_TariffClassAppConditionEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="DestinationTypeCondEnum" type="elslct">
+                  <columnSpan>3</columnSpan>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SimpleApplicabilityConditionUI/uimthd_setDestinationType</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SimpleApplicabilityConditionUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SimpleApplicabilityConditio/dstruct_DestinationTypeCondEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="TemporalConditionEnum" type="elslct">
+                  <columnSpan>3</columnSpan>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SimpleApplicabilityConditionUI/uimthd_setTemporalCondition</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SimpleApplicabilityConditionUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SimpleApplicabilityConditio/dstruct_TemporalConditionEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="Description" type="elfld">
+                  <columnSpan>3</columnSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SimpleApplicabilityConditionUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SimpleApplicabilityConditio/dstruct_Description</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="setTariffClass" type="uimthd">
+      <script>this.model.TariffClassAppCondition = this.model.TariffClassAppConditionEnum;</script>
+    </method>
+    <method name="setDestinationType" type="uimthd">
+      <script>this.model.DestinationTypeAppCondition = this.model.DestinationTypeCondEnum;</script>
+    </method>
+    <method name="setTemporalCondition" type="uimthd">
+      <script>this.model.TemporalAppCondition = this.model.TemporalConditionEnum;</script>
+    </method>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+  </methodList>
+</userInterface>

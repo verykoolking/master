@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initPromotionalSegmentUi">
+  <group>ui_scripts.Promotion</group>
+  <label>initPromotionalSegmentUi</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*ui.TariffPlanIterator = new Array();
+    var tariffIteratorDS=ui.model.TariffPlanCriterionDS.TPCriterionTPArrDS.ListDS;
+    if(ui.model.specificationCode){
+       cm_spoc.loadListElements(ui, tariffIteratorDS, "cm_spoc.forms.promoTariffPlanUI", "TariffPlanIterator");
+    }
+
+    ui.RinIterator = new Array();
+    var subsRinIteratorDS = ui.model.SubscriberRINCriterionDS.SRINCriterionRinArrDS.ListDS;
+    if(ui.model.specificationCode){
+       cm_spoc.loadListElements(ui, subsRinIteratorDS, "cm_spoc.forms.subscribersRinUI", "RinIterator");
+    }
+
+
+    ui.DiallingIterator = new Array();
+    var dialIteratorDS=ui.model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS.ListDS;
+    if(ui.model.specificationCode){
+       cm_spoc.loadListElements(ui, dialIteratorDS, "cm_spoc.forms.subscribersDiallUI", "DiallingIterator");
+    }*/
+
+    if (ui.model.specificationCode){
+        //ListSelected
+        ui.ListSelected = new DataObjectList();
+        //Check if the label was added
+        if(ui.model.TariffPlanCriterionDS.TPCriterionTPArrDS.List.length >0){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Tariff Plan";
+                ui.ListSelected.addLast(item);
+                ui.ListSelected.updateList;
+
+        }
+
+        if(ui.model.TariffPlanSubscriptionCriteDS.TPSubscCritTPArrDS.List.length >0){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Subscription Tariff Plan";
+                ui.ListSelected.addLast(item);
+                ui.ListSelected.updateList;
+        }
+
+        if (ui.model.GeographicalTaxAreaCriterioDS.GTACOpTaxArrDS.List.length >0){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Geographical tax area";
+                ui.ListSelected.addLast(item);
+                ui.ListSelected.updateList;
+        }
+
+          if(ui.model.SubscriberSubStatusCriterioDS.SSSCLCSubStatusArrDS.List.length > 0){
+                      var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Subscriber status/substatus";
+                ui.ListSelected.addLast(item);
+                ui.ListSelected.updateList;
+        }
+
+          if(ui.model.SubscriberRINCriterionDS.SRINCriterionRinArrDS.List.length > 0){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Subscriber's RIN";
+                ui.ListSelected.addLast(item);
+                ui.ListSelected.updateList;
+          }
+
+          if(ui.model.SellingModeCriterionDS.SModeCriterionArrDS.List.length >0){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Selling mode";
+                ui.ListSelected.addLast(item);
+                ui.ListSelected.updateList;
+          }
+
+          if(ui.model.ServiceProviderCriterionDS.SPCServiceProviderArrDS.List.length >0){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Service Providers";
+                ui.ListSelected.addLast(item);
+                ui.ListSelected.updateList;
+          }
+
+          if(ui.model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS.List.length > 0){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Subscriber's dialling code";
+                ui.ListSelected.addLast(item);
+                ui.ListSelected.updateList;
+          }
+
+          if(ui.model.PromotionalProfileCriterionDS.PPCPromotionalProfileArrDS.List.length>0){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Subscriber profile";
+                ui.ListSelected.addLast(item);
+                ui.ListSelected.updateList;
+          }
+
+          if(ui.model.SubscriptionProvinceCriteriDS.SPCProvinceArrDS.List.length > 0){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Subscription province";
+                ui.ListSelected.addLast(item);
+                ui.ListSelected.updateList;
+          }
+          //ListHistoric
+          if(ui.ListHistoric==null)
+                ui.ListHistoric = new DataObjectList();
+          var subsAct = ui.model.SubscriberActivationCriteriDS;
+          if(subsAct.TimeIntervalType != null || subsAct.LessThan != null || subsAct.Day != null || subsAct.InTheCurrent != null){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Subscriber activation";
+                ui.ListHistoric.addLast(item);
+                ui.ListHistoric.updateList;
+          }
+          var actElements = ui.model.ActiveSubscriptionCriterionDS;
+          if(actElements.ActiveSCBoltOnTypeArrDS.List.length>0 || actElements.ActiveSCTribeArrDS.List.length >0 || actElements.ActiveSCCyclicActionSpecArrDS.List.length > 0 || actElements.ActiveSCListArrDS.List.length >0){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Active subscriptions";
+                ui.ListHistoric.addLast(item);
+                ui.ListHistoric.updateList;
+          }
+
+          for (var i=0; i<ui.model.PSTopUpCriterionArrDS.List.length>0;i++){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Top Up";
+                item.itemCode = ui.model.PSTopUpCriterionArrDS.ListDS[i].specificationCode;
+                ui.ListHistoric.addLast(item);
+                ui.ListHistoric.updateList;
+          }
+
+          for (var i=0; i<ui.model.PSTPChangeCriterionArrDS.List.length>0;i++){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Tariff Plan Change";
+                item.itemCode = ui.model.PSTPChangeCriterionArrDS.ListDS[i].specificationCode;
+                ui.ListHistoric.addLast(item);
+                ui.ListHistoric.updateList;
+          }
+          for (var i=0; i<ui.model.PSAssignedPromCriterionArrDS.List.length>0;i++){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Nº Promotion";
+                item.itemCode = ui.model.PSAssignedPromCriterionArrDS.ListDS[i].specificationCode;
+                ui.ListHistoric.addLast(item);
+                ui.ListHistoric.updateList;
+          }
+          for (var i=0; i<ui.model.PSOtherOpCriterionArrDS.List.length>0;i++){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Operation "+ui.model.PSOtherOpCriterionArrDS.ListDS[i].specificationCode.replace("Operation","")
+                item.itemCode = ui.model.PSOtherOpCriterionArrDS.ListDS[i].specificationCode;
+                ui.ListHistoric.addLast(item);
+                ui.ListHistoric.updateList;
+          }
+          //ListConsumption
+          ui.ListConsumption = new DataObjectList();
+          for (var i=0; i<ui.model.PSCallConsumpCriterionArrDS.List.length>0;i++){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Calls consumption "+ui.model.PSCallConsumpCriterionArrDS.ListDS[i].CallConsumptionCriterionType;
+                item.itemCode = ui.model.PSCallConsumpCriterionArrDS.ListDS[i].specificationCode;
+                ui.ListConsumption.addLast(item);
+                ui.ListConsumption.updateList;
+          }
+          for (var i=0; i<ui.model.PSSMSConsumpCriterionArrDS.List.length>0;i++){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "SMS consumed "+ui.model.PSSMSConsumpCriterionArrDS.ListDS[i].SMSConsumptionCriterionType;
+                item.itemCode = ui.model.PSSMSConsumpCriterionArrDS.ListDS[i].specificationCode;
+                ui.ListConsumption.addLast(item);
+                ui.ListHiListConsumptionstoric.updateList;
+          }
+          for (var i=0; i<ui.model.PSContentConsumpCriterionArDS.List.length>0;i++){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Contents consumption "+ui.model.PSContentConsumpCriterionArDS.ListDS[i].ContentConsumptionCritType;
+                item.itemCode = ui.model.PSContentConsumpCriterionArDS.ListDS[i].specificationCode;
+                ui.ListConsumption.addLast(item);
+                ui.ListConsumption.updateList;
+          }
+    }
+  ]]></script>
+</script>

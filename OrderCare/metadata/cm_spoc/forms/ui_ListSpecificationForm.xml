@@ -1,0 +1,910 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ListSpecificationForm">
+  <group>Lists</group>
+  <label>ListSpecificationForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ListSpecification</valueType>
+    </variable>
+    <variable name="restrictionIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="generalParameters" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ListSpecificationForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.ListSpecificationForm/frmui_Forms/vform_generalParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                </element>
+                <element name="restrictions" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ListSpecificationForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.ListSpecificationForm/frmui_Forms/vform_restrictions</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Restrictions</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="restrictions" type="vform">
+          <label>restrictions</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>750px</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>750px</width>
+                <elementList>
+                  <element name="LockDaysSection" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader1" type="elsecth">
+                        <label>Lock Days</label>
+                      </element>
+                      <element name="GridLayout" type="elgrd">
+                        <alignment>right,center</alignment>
+                        <numOfCols>4</numOfCols>
+                        <width>600px</width>
+                        <elementList>
+                          <element name="NumberLockDaysListFull" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <labeAlign>left</labeAlign>
+                            <label>Number of lock Days when List is full</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_NumberLockDaysListFull</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="NumberLockDaysListNotFull" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <labeAlign>left</labeAlign>
+                            <label>Number of lock Days when List is not full</label>
+                            <labelOrientation>left</labelOrientation>
+                            <startRow>true</startRow>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_NumberLockDaysListNotFull</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="ItemsListSection" type="elsect">
+                    <removeLabelLine>true</removeLabelLine>
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Items List</label>
+                      </element>
+                      <element name="buttonsLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/uimthd_addItemsList</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                            <width>40px</width>
+                          </element>
+                          <element name="deleteButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/uimthd_deleteItemsList</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                            <width>40px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="ItemsListHeaders" type="elgrd">
+                        <colWidths>50px</colWidths>
+                        <fixedColWidths>true</fixedColWidths>
+                        <numOfCols>10</numOfCols>
+                        <width>750px</width>
+                        <elementList>
+                          <element name="Select" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <width>30px</width>
+                          </element>
+                          <element name="DestinationType" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Destination Type Group</label>
+                            <width>150px</width>
+                          </element>
+                          <element name="Numbering" type="ellab">
+                            <columnSpan>3</columnSpan>
+                            <label>Numbering</label>
+                            <width>150px</width>
+                          </element>
+                          <element name="MaximumMembers" type="ellab">
+                            <columnSpan>3</columnSpan>
+                            <label>Maximum members in the List with the Restrictions</label>
+                            <width>150px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="ItemsListVL" type="elvlt">
+                        <height>200px</height>
+                        <overflow>auto</overflow>
+                        <width>750px</width>
+                        <elementList>
+                          <element name="ItemsListIterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_restrictionIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="ItemsListHL" type="elhlt">
+                                <width>750px</width>
+                                <elementList>
+                                  <element name="ItemsListFormFrame" type="elovf">
+                                    <fillSpace>false</fillSpace>
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_restrictionIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="generalParameters" type="vform">
+          <label>generalParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>750px</width>
+                <elementList>
+                  <element name="SectionCharacteristics" type="elsect">
+                    <removeLabelLine>true</removeLabelLine>
+                    <elementList>
+                      <element name="Header" type="elsecth">
+                        <label>List parameters</label>
+                      </element>
+                      <element name="layoutCharacteristics" type="elvlt">
+                        <alignment>right,center</alignment>
+                        <edgeShowCenter>true</edgeShowCenter>
+                        <elementList>
+                          <element name="ListPriority" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <labeAlign>left</labeAlign>
+                            <label>List Priority</label>
+                            <labelOrientation>left</labelOrientation>
+                            <textAlign>left</textAlign>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_ListPriority</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="MaximumMembers" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <labeAlign>left</labeAlign>
+                            <label>Maximum members in the List</label>
+                            <labelOrientation>left</labelOrientation>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/uimthd_selectTrigger</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <textAlign>left</textAlign>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_MaximumMembers</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="layoutCharacteristics2" type="elhlt">
+                        <alignment>left,center</alignment>
+                        <edgeShowCenter>true</edgeShowCenter>
+                        <elementList>
+                          <element name="InfiniteDate" type="elchk">
+                            <label>Infinity Date</label>
+                            <labelOrientation>right</labelOrientation>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/uimthd_selectTrigger</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_InfiniteDate</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="InfinityDatesLayout" type="elhlt">
+                            <elementList>
+                              <element name="StartDate" type="eldatetime">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <endYear>2020</endYear>
+                                <label>Start Date</label>
+                                <labelOrientation>left</labelOrientation>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_StartDate</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_LSStartDateVisRule</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="EndDate" type="eldatetime">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <endYear>2020</endYear>
+                                <label>End Date</label>
+                                <labelOrientation>left</labelOrientation>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_EndDate</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_LSEndDateVisRule</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="Applicability" type="elsect">
+                    <elementList>
+                      <element name="Header2" type="elsecth">
+                        <label>Applicability</label>
+                      </element>
+                      <element name="layout" type="elvlt">
+                        <alignment>left,center</alignment>
+                        <elementList>
+                          <element name="TonEnum" type="elslct">
+                            <labeAlign>left</labeAlign>
+                            <label>TON of the List members</label>
+                            <labelOrientation>left</labelOrientation>
+                            <multiselect>false</multiselect>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/uimthd_TonEnumTrigger</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <showEmpty>false</showEmpty>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_TonEnum</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="Voice" type="elchk">
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_LSVoiceReadORule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <label>Voice</label>
+                            <labelOrientation>right</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_Voice</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="SMSOriginated" type="elchk">
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_LSSMSOriginatedReadORule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <label>SMS Originated</label>
+                            <labelOrientation>right</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_SMSOriginated</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="SMSTerminated" type="elchk">
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_LSSMSTerminatedReadORule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <label>SMS Terminated</label>
+                            <labelOrientation>right</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_SMSTerminated</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="MMS" type="elchk">
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_DApplyShortDialingVisRule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <label>MMS</label>
+                            <labelOrientation>right</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_MMS</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="DUO" type="elsect">
+                    <elementList>
+                      <element name="Header1" type="elsecth">
+                        <label>Duo</label>
+                      </element>
+                      <element name="layout2" type="elvlt">
+                        <alignment>left,center</alignment>
+                        <elementList>
+                          <element name="ApplyShortDialing" type="elchk">
+                            <label>Apply short dialog</label>
+                            <labelOrientation>right</labelOrientation>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_com.conceptwave.system.UserInterface/action_onClick</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_DuoDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.Duo/dstruct_ApplyShortDialing</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_LSMaximumMembersReadORule</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="DuoDialing" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_DDuoDialingVisRule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <labeAlign>left</labeAlign>
+                            <label>DUO Dialing</label>
+                            <labelOrientation>left</labelOrientation>
+                            <textAlign>left</textAlign>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_DuoDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.Duo/dstruct_DuoDialing</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_LSMaximumMembersReadORule</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="HorizontalLayout" type="elhlt">
+                            <elementList>
+                              <element name="CheckTon" type="elchk">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_DCheckTonVisRule</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Check Ton             </label>
+                                <labelOrientation>right</labelOrientation>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/uimthd_selectTrigger</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_DuoDS</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.Duo/dstruct_CheckTon</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_LSMaximumMembersReadORule</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="DuoNumberTonEnum" type="elslct">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_DCheckTonVisRule</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <labeAlign>left</labeAlign>
+                                <label>Duo Number TON</label>
+                                <labelOrientation>left</labelOrientation>
+                                <multiselect>false</multiselect>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/uimthd_DuoNumberTonTrigger</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <showEmpty>false</showEmpty>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_DuoDS</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.Duo/dstruct_DuoNumberTonEnum</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_TTonCodeVisRule</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="HorizontalLayout2" type="elhlt">
+                            <elementList>
+                              <element name="CheckLength" type="elchk">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_DCheckLengthVisRule</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Check Length          </label>
+                                <labelOrientation>right</labelOrientation>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_com.conceptwave.system.UserInterface/action_onClick</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_DuoDS</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.Duo/dstruct_CheckLength</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_LSMaximumMembersReadORule</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="DuoLength" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_DDuoDialingVisRule</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <labeAlign>left</labeAlign>
+                                <label>DUO Length</label>
+                                <labelOrientation>left</labelOrientation>
+                                <textAlign>left</textAlign>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.ListSpecification/dstruct_DuoDS</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.Duo/dstruct_DuoLength</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.ListSpecificationForm/permMethod_DDuoLengthVisRule</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.ListSpecificationForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initListSpecification(this.model);
+        cm_spoc.initListSpecificationUI(this,m);
+        //m.InfiniteDate=true;
+        //this.model.DuoDS.ApplyShortDialing=true;
+        return m;
+      ]]></script>
+    </method>
+    <method name="addItemsList" type="uimthd">
+      <script><![CDATA[
+        var model = this.model.LSDestGrAndNumSpecArrDS.ListDS;
+
+        cm_spoc.addListElement(this, model ,"cm_spoc.forms.RestrictionsItemsListUI","base_DestGrAndNumSpec","restrictionIterator");
+      ]]></script>
+    </method>
+    <method name="deleteItemsList" type="uimthd">
+      <script><![CDATA[
+        this.model.LSDestGrAndNumSpecArrDS = cm_spoc.removeListElements(this ,this.model.LSDestGrAndNumSpecArrDS,"List", "restrictionIterator");
+      ]]></script>
+    </method>
+    <method name="visibleDate" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.InfiniteDate;
+
+        if (vis)
+        {
+
+        //    this.model.EndDate=null;
+        //    this.model.StartDate=null;
+            return false;
+        }
+        else
+        {
+            return true;
+
+        }
+      ]]></script>
+    </method>
+    <method name="selectTrigger" type="uimthd">
+      <script><![CDATA[
+        if( this.model.DuoDS.CheckTon ){
+               var itemFinder = new Finder("cm_spoc.TonFinder");
+               var result = itemFinder.search();
+               if(result.length>0){
+                   this.model.DuoDS.DuoNumberTON=result[0].itemCode;
+               }
+        }
+        else
+             this.model.DuoDS.DuoNumberTON = null;
+        return;
+      ]]></script>
+    </method>
+    <method name="disableLabelCDRS" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.InfiniteDate;
+
+        if (vis && !this.model.readonly)
+        {
+
+            return true;
+        }
+        else
+        {
+           // this.model.ListCodeSDP = null;
+            return false;
+        }
+      ]]></script>
+    </method>
+    <method name="buttonsDisable" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.DuoDS.ApplyShortDialing;
+
+        if (vis)
+        {
+
+             return false;
+        }
+        else
+        {
+             return true;
+
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script><![CDATA[
+        for(var i=0;i<this.restrictionIterator.length;i++){
+            this.restrictionIterator[i].model.readonly = this.model.readonly;
+        }
+        return;
+      ]]></script>
+    </method>
+    <method name="LSStartDateVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.InfiniteDate;
+        if (value == false) return true;
+        else
+        {   this.model.StartDate = null;
+            return false;
+        }
+      ]]></script>
+    </method>
+    <method name="LSEndDateVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.InfiniteDate;
+        if (value == false) return true;
+        else
+        {   this.model.EndDate = null;
+            return false;
+        }
+      ]]></script>
+    </method>
+    <method name="TonEnumTrigger" type="uimthd">
+      <script>this.model.ListAreApplicableBy= this.model.TonEnum;</script>
+    </method>
+    <method name="TTonCodeVisRule" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.DuoDS.CheckTon;
+
+        if (vis)
+        {
+
+           // this.=null;
+            return true;
+
+        }
+        else
+        {
+            return false;
+
+        }
+      ]]></script>
+    </method>
+    <method name="DDuoLengthVisRule" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.DuoDS.CheckLength;
+
+        if (vis)
+        {
+
+            return true;
+        }
+        else
+        {
+
+            return false;
+
+        }
+      ]]></script>
+    </method>
+    <method name="LSMaximumMembersReadORule" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.MaximumMembers;
+
+        if (vis==null)
+        {
+           // this.model.DuoDS.ApplyShortDialing=false;
+            this.model.DuoDS.DuoLength=null;
+            this.model.DuoDS.DuoDialing=null;
+            this.model.DuoDS.DuoNumberTON=null;
+            this.model.DuoDS.CheckLength=null;
+            this.model.DuoDS.CheckTon=null;
+            return false;
+        }
+        else
+        {
+               if (vis==1)
+               {
+               // this.model.DuoDS.ApplyShortDialing=true;
+                return true;
+               }
+                else
+                {
+                   // this.model.DuoDS.ApplyShortDialing=false;
+                    this.model.DuoDS.DuoLength=null;
+                    this.model.DuoDS.DuoDialing=null;
+                    this.model.DuoDS.DuoNumberTON=null;
+                    this.model.DuoDS.CheckLength=null;
+                    this.model.DuoDS.CheckTon=null;
+                    return false;
+
+
+                }
+
+        }
+      ]]></script>
+    </method>
+    <method name="LSVoiceReadORule" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.DuoDS.ApplyShortDialing;
+
+        if (vis==true)
+        {
+            this.model.Voice=true;
+         //   this.model.Voice=null;
+            return false;
+        }
+        else
+        {
+            this.model.Voice=false;
+            return true;
+
+        }
+      ]]></script>
+    </method>
+    <method name="LSSMSOriginatedReadORule" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.DuoDS.ApplyShortDialing;
+
+        if (vis)
+        {
+
+            this.model.SMSOriginated=null;
+            return false;
+        }
+        else
+        {
+            return true;
+
+        }
+      ]]></script>
+    </method>
+    <method name="LSSMSTerminatedReadORule" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.DuoDS.ApplyShortDialing;
+
+        if (vis)
+        {
+
+            this.model.SMSTerminated=null;
+            return false;
+        }
+        else
+        {
+            return true;
+
+        }
+      ]]></script>
+    </method>
+    <method name="DApplyShortDialingVisRule" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.DuoDS.ApplyShortDialing;
+
+        if (vis)
+        {
+
+            this.model.MMS=null;
+            return false;
+        }
+        else
+        {
+            return true;
+
+        }
+
+
+        /*var vis = this.model.DuoDS.CheckLength;
+
+        if (vis && !this.model.readonly)
+        {
+
+            this.model.DuoDS.DuoLength=null;
+            return false;
+        }
+        else
+        {
+            return true;
+
+        }*/
+      ]]></script>
+    </method>
+    <method name="DDuoDialingVisRule" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.DuoDS.ApplyShortDialing;
+
+        if (vis && !this.model.readonly)
+        {
+            return true;
+        }
+        else
+        {
+          if (!vis)
+          {
+             this.model.DuoDS.DuoDialing=null;
+          }
+
+            return false;
+
+        }
+      ]]></script>
+    </method>
+    <method name="DCheckLengthVisRule" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.DuoDS.ApplyShortDialing;
+
+        if (vis && !this.model.readonly)
+        {
+            return true;
+        }
+        else
+        {
+          if (!vis)
+          {
+              this.model.DuoDS.CheckLength=false;
+              this.model.DuoDS.DuoLength=null;
+          }
+           return false;
+
+        }
+      ]]></script>
+    </method>
+    <method name="DCheckTonVisRule" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.DuoDS.ApplyShortDialing;
+
+        if (vis && !this.model.readonly)
+        {
+            return true;
+        }
+        else
+        {
+          if (!vis)
+          {
+             this.model.DuoDS.CheckTon=false;
+             this.model.DuoDS.DuoNumberTON=null;
+          }
+
+           return false;
+
+        }
+      ]]></script>
+    </method>
+    <method name="DuoNumberTonTrigger" type="uimthd">
+      <script>this.model.DuoDS.DuoNumberTON= this.model.DuoDS.DuoNumberTonEnum;</script>
+    </method>
+  </methodList>
+</userInterface>

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cm_spoc.cwl_project">
+  <extends>doc_cwl_plm.cwl_project</extends>
+  <group>overridden.documents</group>
+  <guid>{0f35e1b9-5656-4527-b405-708eb9f085bb}</guid>
+  <label>cwl_project</label>
+  <metaVersion>4</metaVersion>
+  <overrides>doc_cwl_plm.cwl_project</overrides>
+  <variableList>
+    <variable name="plmOrderStatus" type="leaf">
+      <dontMap>true</dontMap>
+      <valueType>dtype_cm_plm.plmOrderStatusType</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="getStatus" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        if(this.plmOrderStatus != null)
+            return Global.getCodeDescription('cm_plm.plmOrderStatusType', this.plmOrderStatus, null);
+        else if(this.status != null)
+            return Global.getCodeDescription('cwt_pclm.status', this.status, null);
+        return null;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_cwl_plm.cwl_project/ui_UserInterface</extends>
+    <overrides>doc_cwl_plm.cwl_project/ui_UserInterface</overrides>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cm_spoc.cwl_project</valueType>
+      </variable>
+      <variable name="processForm" type="leaf">
+        <valueType>findDoc_cwf_pm.ProcessFinder/ui_UserInterface</valueType>
+      </variable>
+      <variable name="hasPLM" type="leaf">
+        <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_cwl_plm.cwl_project/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="PLM" type="exov">
+            <base>doc_cwl_plm.cwl_project/ui_UserInterface/frmui_Forms/vform_PLM</base>
+            <extends>doc_cwl_plm.cwl_project/ui_UserInterface/frmui_Forms/vform_PLM</extends>
+            <label>PLM</label>
+            <overrideList>
+              <override name="VerticalLayout" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="LayoutSpacer1" type="ellsp">
+                    <height>10px</height>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_spoc.cwl_project/ui_UserInterface/permMethod_showError</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="ErrorLayout" type="elgrd">
+                    <alignment>left,center</alignment>
+                    <colWidths>1%,99%</colWidths>
+                    <fillSpace>false</fillSpace>
+                    <numOfCols>2</numOfCols>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_spoc.cwl_project/ui_UserInterface/permMethod_showError</variablePath>
+                      </variablePathList>
+                    </visible>
+                    <width>100%</width>
+                    <elementList>
+                      <element name="errorIcon" type="elimg">
+                        <columnSpan>1</columnSpan>
+                        <imageUrl>/cwt/images/24/error.png</imageUrl>
+                        <rowSpan>0</rowSpan>
+                        <showLabel>false</showLabel>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cm_spoc.cwl_project/ui_UserInterface/permMethod_showError</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="errorMessage" type="ellab">
+                        <columnSpan>1</columnSpan>
+                        <rowSpan>0</rowSpan>
+                        <style>cwErrorMessageText</style>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cwt_pc.cwt_project/ui_UserInterface/leaf_errorMessage</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cm_spoc.cwl_project/ui_UserInterface/permMethod_showError</variablePath>
+                          </variablePathList>
+                        </visible>
+                        <width>100%</width>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="LayoutSpacer2" type="ellsp">
+                    <height>10px</height>
+                  </element>
+                  <element name="PLMLayout" type="elvlt">
+                    <height>100%</height>
+                    <width>100%</width>
+                    <elementList>
+                      <element name="startPLM" type="elbtn">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cm_spoc.cwl_project/ui_UserInterface/usrActionMethod_startPLM</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <label>Start PLM</label>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cm_spoc.cwl_project/ui_UserInterface/permMethod_showPLMButton</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="Processes" type="elovf">
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cm_spoc.cwl_project/ui_UserInterface/leaf_processForm</variablePath>
+                            <variablePath>findDoc_cwf_pm.ProcessFinder/ui_UserInterface/frmui_Forms</variablePath>
+                            <variablePath>findDoc_cwf_pm.ProcessFinder/ui_UserInterface/frmui_Forms/vform_Result</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <height>220px</height>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cm_spoc.cwl_project/ui_UserInterface/leaf_processForm</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cm_spoc.cwl_project/ui_UserInterface/permMethod_showPLMFinder</variablePath>
+                          </variablePathList>
+                        </visible>
+                        <width>100%</width>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="LayoutSpacer3" type="ellsp">
+                    <height>100%</height>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>doc_cwl_plm.cwl_project/ui_UserInterface/frmui_Forms/exov_Default</base>
+            <extends>doc_cwl_plm.cwl_project/ui_UserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+          </overlay>
+          <overlay name="Detail" type="exov">
+            <base>doc_cwt_pc.cwt_project/ui_UserInterface/frmui_Forms/vform_Detail</base>
+            <extends>doc_cwt_pc.cwt_project/ui_UserInterface/frmui_Forms/vform_Detail</extends>
+            <label>Detail</label>
+            <overrideList>
+              <override name="GridLayout" type="elext">
+                <elementList>
+                  <element name="plmOrderStatusType" type="elslct">
+                    <label>Order Status</label>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_spoc.cwl_project/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cm_spoc.cwl_project/leaf_plmOrderStatus</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </override>
+              <override name="label" type="eldel"/>
+            </overrideList>
+          </overlay>
+          <overlay name="homePageView" type="vform">
+            <label>homePageView</label>
+          </overlay>
+          <overlay name="workflowForm" type="exov">
+            <base>doc_cwt_pc.cwt_project/ui_UserInterface/frmui_Forms/vform_workflowForm</base>
+            <extends>doc_cwt_pc.cwt_project/ui_UserInterface/frmui_Forms/vform_workflowForm</extends>
+            <label>workflowForm</label>
+            <overrideList>
+              <override name="label" type="eldel"/>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="onInit" type="action">
+        <script><![CDATA[
+          this.cw$super_onInit();
+          this.hasPLM = false;
+          if(this.model.projectId) {
+              var ord = cm_plm.getPLMOrderFromProjectCode(this.model.projectCode);
+              if(ord!=null) {
+                  var orderequest = ord.change;
+                  this.hasPLM = true;
+                  var procFinder = new cwf_pm.ProcessFinder();
+                  procFinder.searchDocument.ORDER_ID = orderequest.cwOrderId;
+                  procFinder.search();
+                  this.processForm = new cwf_pm.ProcessFinder.UserInterface(procFinder, this);
+                  this.errorMessage = orderequest.errorList;
+              }
+          }
+        ]]></script>
+      </method>
+      <method name="showPLMButton" type="permMethod">
+        <script><![CDATA[return (this.model.projectId!=null && !this.hasPLM);]]></script>
+      </method>
+      <method name="showPLMFinder" type="permMethod">
+        <script>return this.hasPLM;</script>
+      </method>
+      <method name="isStatusEditable" type="permMethod">
+        <script><![CDATA[return this.detailEditable() && !this.hasPLM;]]></script>
+      </method>
+      <method name="startPLM" type="usrActionMethod">
+        <script><![CDATA[
+          if(cwa_epc.getDefaultProj() == null)
+              Global.setSessionParameter("project", this.model);
+          cm_plm.startPLM(this.model.projectCode, "GUI", false, false, true, true);
+          this.onInit();
+        ]]></script>
+      </method>
+      <method name="showError" type="permMethod">
+        <script>return this.errorMessage != null;</script>
+      </method>
+      <method name="isWorkflowStatusEditable" type="permMethod">
+        <script>return false;</script>
+      </method>
+    </methodList>
+  </UserInterface>
+</document>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_OperationTax_TaxCodeCondRule">
+  <group>rules_scripts.Operation</group>
+  <label>rule_OperationTax_TaxCodeCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if( cm_spoc.getExistingItem(data.specificationCode) )
+       return false;
+
+    var itemFinder = new Finder("cm_spoc.GenericUniqueIDFinder");
+    itemFinder.searchDocument.defaultValue = data.TaxCode;
+    itemFinder.searchDocument.baseItemCode = 'base_OperationTax';
+    itemFinder.searchDocument.itemAttributeCode= 'TaxCode';
+    var result = itemFinder.search();
+    if(result.length > 0)
+    {
+        errList.addErrorMessage(data,["TaxCode already exists"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

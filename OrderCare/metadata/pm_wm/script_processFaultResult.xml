@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.processFaultResult">
+  <highlight>32</highlight>
+  <label>processFaultResult</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Generates the Fault Data Structure for the External System
+     *
+     * @author  Luis Amorim
+     * @date    201403
+     *
+     * @param {DataStructure}  Process DataStructure
+     */
+
+    var response = new DataStructure("pm_pws.clientAltamira.FaultBody");
+    var fnd      = new Finder('pm_wm.externalSystemErrorFinder');
+    var result   = null;
+
+    fnd.searchDocument.internalAAExceptionId = dtree.errorcode[0];
+    fnd.searchDocument.category              = dtree.errorCategory ? dtree.errorCategory : 'SVR';
+    result = fnd.search();
+
+    if(result.length > 0)
+    {  //Error information in the DB
+        var infType = result[0].informationType.toLowerCase();
+        if(infType == 'serverexception'){
+            infType                 = 'serverException';
+            response.faultcode      = 'soapenv:Server';
+            response.faultstring    = 'Server Exception';
+        }else{
+            infType                 = 'clientException';
+            response.faultcode      = 'soapenv:Client';
+            response.faultstring    = 'Client Exception';
+        }
+        response.detail[infType].exceptionId             = result[0].exceptionId;
+        response.detail[infType].text                    = result[0].description + ': ' +  dtree.errortext[0];
+        response.detail[infType].exceptionCategory       = result[0].category;
+        response.detail[infType].exceptionPersistence    = result[0].persistence;
+        response.detail[infType].variables[0]            = dtree.errorVariable;
+
+        Global.logInfo("Internal Error: " + dtree.errorcode[0] + " | External Error: " + result[0].exceptionId);
+        Global.logInfo("Error Description: " + result[0].description + ': ' +  dtree.errortext[0]);
+    }
+    else
+    {
+
+        if(dtree.altamiraResponse && dtree.altamiraResponse.isChild('faultcode'))
+        {  //No error information in the DB, and it's an AA error. Just copy the AA error...
+            response = dtree.altamiraResponse;
+        }
+        else
+        {  //No error information in the DB, but it's an internal error.
+            response.faultcode                                         = 'soapenv:Client';
+            response.faultstring                                       = 'Client Exception';
+            response.detail['clientException'].exceptionCategory       = 'SVC';
+            response.detail['clientException'].exceptionPersistence    = 'PERMANENT';
+            response.detail['clientException'].exceptionId             = dtree.errorcode[0];
+            response.detail['clientException'].text                    = dtree.errortext[0];
+            response.detail['clientException'].variables[0]            = dtree.errorVariable;
+        }
+    }
+
+    dtree.response = response;
+  ]]></script>
+</script>

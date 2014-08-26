@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.resource.res.log.tip.nrf.TerminationPointPool">
+  <container>true</container>
+  <description><![CDATA[
+    <p>This object class represents a set of Termination Points or Group Termination Points that are grouped. Properties that are common for all the TPs/GTPs in the TPPool are identified in the multiple associated commonTransmissionParameters.    See R_TMF518_NRF_I_0014 and R_TMF518_NRF_I_0015.</p>                <p>This entity  is  optional</p>                <p>This entity  is  extendable</p>                <p>This entity   generates Object Creation notifications</p>                <p>This entity   generates Object Deletion notifications</p>                <p>This entity   generates Object Discovery notifications</p>                <p>This entity generates Attribute Value Change notifications.</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{fd9dcc0c-d40d-4d7d-9f37-823f51d536ef}</guid>
+  <label>TerminationPointPool</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="numberOfMembers" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute identifies the total number of TPs or GTPs currently contained in the TPPool.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{7aaef7d6-4252-439d-86c8-80128510411d}</guid>
+      <label>numberOfMembers</label>
+    </child>
+    <child name="numberOfIdleMembers" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute identifies the number of currently contained idle TPs or GTPs in the TPPool.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{ac02b308-9221-4bac-b171-812ee25de508}</guid>
+      <label>numberOfIdleMembers</label>
+    </child>
+    <child name="commonTransmissionParameterList" type="dstruct">
+      <description><![CDATA[
+        <p>This attribute contains the common layers and Transmission Parameters associated with the TPs grouped by the associated TpPool (or contained by the GTPs that are grouped by the associated TPPool).        Refer to attached supporting document SD1-16_LayeredParameters for details of the currently defined Transmission Parameters.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dstruct_tip.resource.res.nrb.ArrayOfTransmissionParameterList</element>
+      <guid>{3e1922c2-c4ff-4715-a7b7-4c2c6151be67}</guid>
+      <label>commonTransmissionParameterList</label>
+    </child>
+    <child name="descriptionOfUse" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute contains a description of the specific use of the TPPool.        The description of use of an ATM VP TPPool would be "VirtualUNI", if all its VP CTPs are contained in the same real user network interface (UNI) (i.e., a tributary ATM NI CTP) that is partitioned into virtual UNIs (i.e., VP TPPools).</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>                                <p>This attribute  is  AVC enabled</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{55606000-7dca-4f52-9579-5da356dc9ad8}</guid>
+      <label>descriptionOfUse</label>
+    </child>
+    <child name="containedTpMemberList" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association TpPoolContainsTps</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.log.tip.nrf.ArrayOfTIPTerminationPoint</element>
+      <guid>{625774a6-0b02-41c1-8096-48fc8a027b23}</guid>
+      <label>containedTpMemberList</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.resource.res.log.tip.nrf.TerminationPointPool</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.resource.res.log.tip.nrf.TerminationPointPool</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

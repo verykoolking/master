@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.LifeCycleTopUpRuleForm">
+  <group>LifeCycles</group>
+  <label>LifeCycleTopUpRuleForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="isReadOnly" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="isChecked" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="EvaluationOrderList" type="leaf">
+      <valueType>findScript_cm_spoc.LifeCycleTopUpRuleFinder/ui_UserInterface</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.LifeCycleTopUpRule</valueType>
+    </variable>
+    <variable name="SubscriberStatusPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="TariffPlanPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="TopUpOriginCodesPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="LifeCyclesPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="isClicked" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="SectionStack" type="elsectnstck">
+              <width>750px</width>
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="SectionHeader" type="elsecth">
+                      <label>Top Up</label>
+                    </element>
+                    <element name="HorizontalLayout" type="elhlt">
+                      <elementList>
+                        <element name="GridLayout" type="elgrd">
+                          <cellPadding>5</cellPadding>
+                          <colWidths>150px</colWidths>
+                          <numOfCols>3</numOfCols>
+                          <width>450px</width>
+                          <elementList>
+                            <element name="RowSpacer1" type="elrsp"/>
+                            <element name="Label" type="ellab">
+                              <label>Evaluation Order</label>
+                            </element>
+                            <element name="EvaluationOrder" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <showLabel>false</showLabel>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.LifeCycleTopUpRule/dstruct_EvaluationOrder</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>200px</width>
+                            </element>
+                            <element name="searchButton" type="elbtn">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/uimthd_onSearchClick</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <height>22px</height>
+                              <icon>/cwt/images/16/find.png</icon>
+                              <iconHeight>20</iconHeight>
+                              <width>22px</width>
+                            </element>
+                            <element name="Label1" type="ellab">
+                              <label>Validity (Hours)</label>
+                            </element>
+                            <element name="Validity" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <showLabel>false</showLabel>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.LifeCycleTopUpRule/dstruct_Validity</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>200px</width>
+                            </element>
+                            <element name="CellSpacer1" type="elcsp">
+                              <width>90px</width>
+                            </element>
+                            <element name="Label2" type="ellab">
+                              <label>Hours</label>
+                            </element>
+                            <element name="Hours" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <editable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/permMethod_onMaximumValidityChecked</variablePath>
+                                </variablePathList>
+                              </editable>
+                              <showLabel>false</showLabel>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.LifeCycleTopUpRule/dstruct_MaximumValidity</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>200px</width>
+                            </element>
+                            <element name="isChecked" type="elchk">
+                              <cellAlignment>left,center</cellAlignment>
+                              <labelAsTitle>false</labelAsTitle>
+                              <onChangeMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_com.conceptwave.system.UserInterface/action_onClick</variablePath>
+                                </variablePathList>
+                              </onChangeMethod>
+                              <showLabel>false</showLabel>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_isChecked</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>90px</width>
+                            </element>
+                            <element name="Label3" type="ellab">
+                              <label>Calculation Type</label>
+                            </element>
+                            <element name="CalculationType" type="elslct">
+                              <showLabel>false</showLabel>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.LifeCycleTopUpRule/dstruct_CalculationType</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>200px</width>
+                            </element>
+                            <element name="CellSpacer2" type="elcsp">
+                              <width>90px</width>
+                            </element>
+                            <element name="RowSpacer" type="elrsp"/>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="Tabset" type="eltset">
+                      <elementList>
+                        <element name="LifeCyclesTabFrame" type="eltab">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/frmui_Forms/vform_LifeCyclesForm</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <label>Life cycles</label>
+                        </element>
+                        <element name="PlanTabFrame" type="eltab">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/frmui_Forms/vform_PlansForm</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <label>Plans</label>
+                        </element>
+                        <element name="OperationAmountTabFrame" type="eltab">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/frmui_Forms/vform_OperationAmountForm</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <label>Operation amount</label>
+                        </element>
+                        <element name="TopUpOrigCodesTabFrame" type="eltab">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/frmui_Forms/vform_TopUpOriginCodesForm</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <label>Top Up Origin Codes</label>
+                        </element>
+                        <element name="SubScriberTabFrame" type="eltab">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/frmui_Forms/vform_SubscriberStatusForm</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <label>Subscriber Status</label>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="LifeCyclesForm" type="vform">
+          <label>LifeCyclesForm</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="LCAppliyingToSelectedValues" type="elrgrp">
+                <showLabel>false</showLabel>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.LifeCycleTopUpRule/dstruct_LCAppliyingToSelectedValues</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="FormFrame" type="elovf">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_LifeCyclesPickList</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>350px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_LifeCyclesPickList</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>550px</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="OperationAmountForm" type="vform">
+          <label>OperationAmountForm</label>
+          <root name="VerticalLayout" type="elgrd">
+            <colWidths>150px</colWidths>
+            <numOfCols>2</numOfCols>
+            <width>350px</width>
+            <elementList>
+              <element name="Label" type="ellab">
+                <cellAlignment>center,center</cellAlignment>
+                <label>Minimum amount of the operation</label>
+              </element>
+              <element name="MinimumAmountOperation" type="elfld">
+                <autoFocusNextField>false</autoFocusNextField>
+                <cellAlignment>center,center</cellAlignment>
+                <showLabel>false</showLabel>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.LifeCycleTopUpRule/dstruct_MinimumAmountOperation</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="Label1" type="ellab">
+                <cellAlignment>center,center</cellAlignment>
+                <label>Maximum amount of the operation</label>
+              </element>
+              <element name="MaximumAmountOperation" type="elfld">
+                <autoFocusNextField>false</autoFocusNextField>
+                <cellAlignment>center,center</cellAlignment>
+                <label>Maximum amount of the operation</label>
+                <showLabel>false</showLabel>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.LifeCycleTopUpRule/dstruct_MaximumAmountOperation</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="PlansForm" type="vform">
+          <label>PlansForm</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="TPAppliyingToSelectedValues" type="elrgrp">
+                <showLabel>false</showLabel>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.LifeCycleTopUpRule/dstruct_TPAppliyingToSelectedValues</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="FormFrame" type="elovf">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_TariffPlanPickList</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>350px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_TariffPlanPickList</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>550px</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="SubscriberStatusForm" type="vform">
+          <label>SubscriberStatusForm</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="StAppliyingToSelectedValues" type="elrgrp">
+                <label>StAppliyingToSelectedValues</label>
+                <showLabel>false</showLabel>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.LifeCycleTopUpRule/dstruct_StAppliyingToSelectedValues</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="FormFrame" type="elovf">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_SubscriberStatusPickList</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>350px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_SubscriberStatusPickList</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>550px</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="TopUpOriginCodesForm" type="vform">
+          <label>TopUpOriginCodesForm</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="TUOAppliyingToSelectedValues" type="elrgrp">
+                <showLabel>false</showLabel>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.LifeCycleTopUpRule/dstruct_TUOAppliyingToSelectedValues</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="FormFrame" type="elovf">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_TopUpOriginCodesPickList</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>350px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_TopUpOriginCodesPickList</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>550px</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        //
+        this.isChecked=true;
+        var m = cm_spoc.initLifeCycleTopUpRule(this.model);
+        //this.EvaluationOrderList =  cm_spoc.initLifeCycleTopUpRuleFinder(this);
+        cm_spoc.initLifeCycleTopUpRuleUI(this);
+        return m;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$SubscriberStatusPickList" type="laction">
+      <path>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_SubscriberStatusPickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_SubscriberStatusPickList</valueType>
+      <script><![CDATA[
+        //
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_LCTURStatus";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.LCTURStatusArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setStPickListModel;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$LifeCyclesPickList" type="laction">
+      <path>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_LifeCyclesPickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_LifeCyclesPickList</valueType>
+      <script><![CDATA[
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_LifeCycle";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.LCTopUpRuleLifeCycleArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setLCPickListModel;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$TopUpOriginCodesPickList" type="laction">
+      <path>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_TopUpOriginCodesPickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_TopUpOriginCodesPickList</valueType>
+      <script><![CDATA[
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TopUpOrigin";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.LCTURTopUpOriginArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setTUOPickListModel;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$TariffPlanPickList" type="laction">
+      <path>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_TariffPlanPickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.LifeCycleTopUpRuleForm/leaf_TariffPlanPickList</valueType>
+      <script><![CDATA[
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TariffPlan";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.LCTURTariffPlanArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setTPPickListModel;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="setTPPickListModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.LCTURTariffPlanArrDS.List =null;
+        this.parent.model.LCTURTariffPlanArrDS.ListDS =null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.LCTURTariffPlanArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setTUOPickListModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.LCTURTopUpOriginArrDS.List =null;
+        this.parent.model.LCTURTopUpOriginArrDS.ListDS =null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.LCTURTopUpOriginArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setLCPickListModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.LCTopUpRuleLifeCycleArrDS.List =null;
+        this.parent.model.LCTopUpRuleLifeCycleArrDS.ListDS =null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.LCTopUpRuleLifeCycleArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script><![CDATA[
+        if (this.isReadOnly ==null)
+            this.isReadOnly = true;
+        else
+            this.isReadOnly = !(this.isReadOnly);
+      ]]></script>
+    </method>
+    <method name="setStPickListModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.LCTURStatusArrDS.List =null;
+        this.parent.model.LCTURStatusArrDS.ListDS =null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.LCTURStatusArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="onMaximumValidityChecked" type="permMethod">
+      <script><![CDATA[
+        if (this.isReadOnly)
+            return false;
+        if (this.isChecked){
+            return true;
+        }
+        this.model.MaximumValidity = "";
+        return false;
+      ]]></script>
+    </method>
+    <method name="onSearchClickVisRule" type="permMethod">
+      <script><![CDATA[
+        var value;
+        if(this.isClicked != null)
+        {
+            value = this.isClicked;
+        }
+        else
+            value = false;
+
+        return value;
+      ]]></script>
+    </method>
+    <method name="onSearchClick" type="uimthd">
+      <script>this.isClicked = true;</script>
+    </method>
+  </methodList>
+</userInterface>

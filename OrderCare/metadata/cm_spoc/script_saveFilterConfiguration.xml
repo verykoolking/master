@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.saveFilterConfiguration">
+  <group>ui_scripts.TopUp</group>
+  <label>saveFilterConfiguration</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(ui.parent.owner.model.TopUpOriginSOSPropertiesDS.SOSSourceRelativePeriod == "R"){
+       ui.parent.owner.model.TopUpOriginSOSPropertiesDS.SOSSourceFixedStartDate= null;
+       ui.parent.owner.model.TopUpOriginSOSPropertiesDS.SOSSourceFixedEndDate=null;
+
+        if(ui.parent.owner.model.TopUpOriginSOSPropertiesDS.SOSSourceRelativeTemp == "WE" || ui.parent.owner.model.TopUpOriginSOSPropertiesDS.SOSSourceRelativeTemp == "MC"){
+
+        ui.parent.owner.model.TopUpOriginSOSPropertiesDS.SOSSourceRelativeFromDay= null;
+
+        }
+    }
+
+    if(ui.parent.owner.model.TopUpOriginSOSPropertiesDS.SOSSourceRelativePeriod== "F"){
+    ui.parent.owner.model.TopUpOriginSOSPropertiesDS.SOSSourceRelativeTemp= null;
+    ui.parent.owner.model.TopUpOriginSOSPropertiesDS.SOSSourceRelativeFromDay=null;
+    }
+  ]]></script>
+</script>

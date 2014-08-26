@@ -1,0 +1,1372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.BoltOnForm">
+  <group>BoltOn</group>
+  <label>BoltOnForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.BoltOn</valueType>
+    </variable>
+    <variable name="TariffPlanPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="TafiffGroupPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="PriceGuidingContainerUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.PriceGuidingContainerUI</valueType>
+    </variable>
+    <variable name="ChargingModeGuidingContainerUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.ChargingModeGuidingContainerUI</valueType>
+    </variable>
+    <variable name="modelMixedBoltOn" type="leaf">
+      <valueType>dstruct_cm_spoc.data.MixedBoltOn</valueType>
+    </variable>
+    <variable name="SubLimitsIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="MixedBolton" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="SubsIncompatibilitiesIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="generalParameters" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms/vform_generalParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                </element>
+                <element name="sessions" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms/vform_sessions</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Sessions</label>
+                </element>
+                <element name="subscriptions" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms/vform_subscriptions</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Subscriptions</label>
+                </element>
+                <element name="price" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms/vform_price</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Price</label>
+                </element>
+                <element name="Incompatibilities" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms/vform_Incompatibilities</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Incompatibilities</label>
+                </element>
+                <element name="TariffPlan" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms/vform_TariffPlans</variablePath>
+                    </variablePathList>
+                  </formReference>
+                </element>
+                <element name="ChargingMode" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.BoltOnForm/frmui_Forms/vform_chargingMode</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Charging Mode</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="generalParameters" type="vform">
+          <label>generalParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>750px</width>
+                <elementList>
+                  <element name="SectionCharacteristics" type="elsect">
+                    <removeLabelLine>true</removeLabelLine>
+                    <elementList>
+                      <element name="boltOnCharacteristicsHeader" type="elsecth">
+                        <label>Bolt On Characteristics</label>
+                      </element>
+                      <element name="layoutCharacteristics" type="elvlt">
+                        <alignment>right,center</alignment>
+                        <elementList>
+                          <element name="BoltOnCode" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_setIsPrimaryKey</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <labeAlign>left</labeAlign>
+                            <label>Bolt On Code</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnCode</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="LargeCodeOfBoltOn" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <labeAlign>left</labeAlign>
+                            <label>Large Code of Bolt On</label>
+                            <labelOrientation>left</labelOrientation>
+                            <textAlign>left</textAlign>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_LargeCodeOfBoltOn</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="BoltOnDescription" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <label>Bolt On Description</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnDescription</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="BoltOnTypeEnum" type="elslct">
+                            <labeAlign>left</labeAlign>
+                            <label>Bolt On Type</label>
+                            <labelOrientation>left</labelOrientation>
+                            <multiselect>false</multiselect>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_boltOnTypeTrigger</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <optional type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                              </variablePathList>
+                            </optional>
+                            <showEmpty>false</showEmpty>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnTypeEnum</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="BoltOnTypeModalityDesc" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <labeAlign>left</labeAlign>
+                            <label>Bolt On Type Modality</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnTypeModalityDesc</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="AccumulativeBoltOn" type="elchk">
+                            <label>Accumulative Bolt On</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_AccumulativeBoltOn</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="SectionValue" type="elsect">
+                    <elementList>
+                      <element name="boltOnValueHeader" type="elsecth">
+                        <label>Bolt On Value</label>
+                      </element>
+                      <element name="layoutBoltOnValueOptions" type="elvlt">
+                        <alignment>left,center</alignment>
+                        <elementList>
+                          <element name="BoltOnAmount" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <disablePaste>true</disablePaste>
+                            <dynLabel type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_BoltOnValueLabelVisRule</variablePath>
+                              </variablePathList>
+                            </dynLabel>
+                            <groupBy>true</groupBy>
+                            <labeAlign>left</labeAlign>
+                            <labelOrientation>left</labelOrientation>
+                            <textAlign>left</textAlign>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnValueOfferingDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOnValueOffering/dstruct_BoltOnAmount</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="ApplyReductionInLongDistance" type="elchk">
+                            <label>Apply % reduction in long distance</label>
+                            <labelOrientation>left</labelOrientation>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_resetApply</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnValueOfferingDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOnValueOffering/dstruct_ApplyReductionInLongDistance</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_BOVOApplyReductionInLongDistanceVisRule</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="PercentageReductionInLongDist" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <labeAlign>left</labeAlign>
+                            <label>% Reduction in long distance</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnValueOfferingDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOnValueOffering/dstruct_BoltOnLD</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_BOVOPercentageReductionInLDVisRule</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="SectionValidity" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Bolt On Validity</label>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <elementList>
+                          <element name="BoltOnValidityModality" type="elslct">
+                            <labeAlign>left</labeAlign>
+                            <label>Validity Modality</label>
+                            <labelOrientation>left</labelOrientation>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_resetValueValidityTrigger</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <showEmpty>false</showEmpty>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnValidityOfferingDS</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.BoltOnValidityOffering/dstruct_BoltOnValidityModality</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="validityMeasuredLayout" type="elvlt">
+                            <alignment>right,center</alignment>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_BoltOnValidityOfferingTimeVisible</variablePath>
+                              </variablePathList>
+                            </visible>
+                            <elementList>
+                              <element name="Days" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <labeAlign>left</labeAlign>
+                                <label>Number of days:</label>
+                                <labelOrientation>left</labelOrientation>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_ResetTrigger</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnValidityOfferingDS</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOnValidityOffering/dstruct_Days</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="Hours" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_HoursEditable</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <labeAlign>left</labeAlign>
+                                <label>Number of hours:</label>
+                                <labelOrientation>left</labelOrientation>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_ResetMinutes</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnValidityOfferingDS</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOnValidityOffering/dstruct_Hours</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_BoltOnValidityOfferingHoursVisRule</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                              <element name="Minutes" type="elfld">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_MinutesEditable</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <labeAlign>left</labeAlign>
+                                <label>Number of minutes:</label>
+                                <labelOrientation>left</labelOrientation>
+                                <onChangeMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_selectTrigger</variablePath>
+                                  </variablePathList>
+                                </onChangeMethod>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnValidityOfferingDS</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOnValidityOffering/dstruct_Minutes</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_BoltOnValidityOfferingMinVisRule</variablePath>
+                                  </variablePathList>
+                                </visible>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="validityDatesLayout" type="elhlt">
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_BoltOnValidityOfferingDatesVisible</variablePath>
+                              </variablePathList>
+                            </visible>
+                            <elementList>
+                              <element name="StartTime" type="eldatetime">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <endYear>2034</endYear>
+                                <label>Start Date</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnValidityOfferingDS</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOnValidityOffering/dstruct_StartTime</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="EndTime" type="eldatetime">
+                                <autoFocusNextField>false</autoFocusNextField>
+                                <endYear>2034</endYear>
+                                <label>End Date</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnValidityOfferingDS</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOnValidityOffering/dstruct_EndTime</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="validyCalendarLayout" type="elvlt">
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_BOVOCCalendarDateVisRule</variablePath>
+                              </variablePathList>
+                            </visible>
+                            <elementList>
+                              <element name="CalendarDate" type="elslct">
+                                <labeAlign>left</labeAlign>
+                                <label>Calendar date:</label>
+                                <labelOrientation>left</labelOrientation>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnValidityOfferingDS</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOnValidityOffering/dstruct_CalendarDate</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="checkboxLayout" type="elvlt">
+                            <alignment>right,center</alignment>
+                            <elementList>
+                              <element name="BoltOnValidityConditional" type="elchk">
+                                <label>Bolt On Validity will be conditional</label>
+                                <labelOrientation>left</labelOrientation>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnValidityOfferingDS</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOnValidityOffering/dstruct_BoltOnValidityConditional</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="BoltOnValidityAffectLifecycle" type="elchk">
+                                <label>Bolt On Validity will affect subscriber&apos;s life cycle</label>
+                                <labelOrientation>left</labelOrientation>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BoltOnValidityOfferingDS</variablePath>
+                                    <variablePath>dstruct_cm_spoc.data.BoltOnValidityOffering/dstruct_BoltOnValidityAffectLifecycle</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="sessions" type="vform">
+          <label>sessions</label>
+          <root name="sessionsLayout" type="elvlt">
+            <alignment>right,center</alignment>
+            <visible type="varPath">
+              <variablePathList>
+                <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_SessionVisRule</variablePath>
+              </variablePathList>
+            </visible>
+            <elementList>
+              <element name="BoltOnMaxNumberOfSessions" type="elfld">
+                <autoFocusNextField>false</autoFocusNextField>
+                <labeAlign>left</labeAlign>
+                <label>Number of sessions</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_SessionOfferingDS</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.SessionOffering/dstruct_BoltOnMaxNumberOfSessions</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="AccumulativeBoltOnApplication" type="elchk">
+                <label>Accumulative Number of sessions</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_SessionOfferingDS</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.SessionOffering/dstruct_AccumulativeBoltOnApplication</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="ConfigureMaxUnitsPerSession" type="elchk">
+                <label>Configure maximum units per sessions</label>
+                <labelOrientation>left</labelOrientation>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_ResetMaxUnitPerSession</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_SessionOfferingDS</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.SessionOffering/dstruct_ConfigureMaxUnitsPerSession</variablePath>
+                  </variablePathList>
+                </variable>
+              </element>
+              <element name="MaxUnitsPerSession" type="elfld">
+                <autoFocusNextField>false</autoFocusNextField>
+                <labeAlign>left</labeAlign>
+                <label>Maximum units per sessions</label>
+                <labelOrientation>left</labelOrientation>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_SessionOfferingDS</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.SessionOffering/dstruct_MaxUnitsPerSession</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_SOMaxUnitsPerSessionVisRule</variablePath>
+                  </variablePathList>
+                </visible>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="subscriptions" type="vform">
+          <label>subscriptions</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>750px</width>
+            <elementList>
+              <element name="GridLayout" type="elgrd">
+                <alignment>right,center</alignment>
+                <numOfCols>4</numOfCols>
+                <width>600px</width>
+                <elementList>
+                  <element name="MessageEnum1" type="elslct">
+                    <labeAlign>left</labeAlign>
+                    <label>Associated Message to the Bolt On Activation</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_Message1Trigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_SubscriptionOfferingDS</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.SubscriptionOffering/dstruct_MessageEnum1</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="MessageEnum2" type="elslct">
+                    <labeAlign>left</labeAlign>
+                    <label>Message for the last but one subscription</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_Message2Trigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <startRow>true</startRow>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_SubscriptionOfferingDS</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.SubscriptionOffering/dstruct_MessageEnum2</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </element>
+              <element name="datesLayout" type="elvlt">
+                <alignment>left,center</alignment>
+                <width>600px</width>
+                <elementList>
+                  <element name="TemporalSubscriberActCond" type="elchk">
+                    <label>The Bolt On can only be awarded to subscribers activated between the dates</label>
+                    <labelOrientation>left</labelOrientation>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_ResetSubscriptionsDates</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_SubscriptionOfferingDS</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.SubscriptionOffering/dstruct_TemporalSubscriberActCond</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="VerticalLayout1" type="elvlt">
+                    <alignment>right,center</alignment>
+                    <elementList>
+                      <element name="ActivationStartDate" type="eldate">
+                        <autoFocusNextField>false</autoFocusNextField>
+                        <endYear>2034</endYear>
+                        <labeAlign>left</labeAlign>
+                        <label>Activation Start Date</label>
+                        <labelOrientation>left</labelOrientation>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_SubscriptionOfferingDS</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.SubscriptionOffering/dstruct_ActivationStartDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_SOActivationStartDateVisRule</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                      <element name="ActivationEndDate" type="eldate">
+                        <autoFocusNextField>false</autoFocusNextField>
+                        <endYear>2034</endYear>
+                        <labeAlign>left</labeAlign>
+                        <label>Activation End Date</label>
+                        <labelOrientation>left</labelOrientation>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_SubscriptionOfferingDS</variablePath>
+                            <variablePath>dstruct_cm_spoc.data.SubscriptionOffering/dstruct_ActivationEndDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <visible type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.BoltOnForm/permMethod_SOActivationEndDateVisRule</variablePath>
+                          </variablePathList>
+                        </visible>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>900px</width>
+                <elementList>
+                  <element name="subscriptionLimitsSection" type="elsect">
+                    <removeLabelLine>true</removeLabelLine>
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Subscription Limits</label>
+                      </element>
+                      <element name="buttonsLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_addSubscriptionLimit</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                            <width>40px</width>
+                          </element>
+                          <element name="deleteButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_deleteSubscriptionLimits</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                            <width>40px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="SubsLimitsHeaders" type="elgrd">
+                        <colWidths>50px</colWidths>
+                        <numOfCols>15</numOfCols>
+                        <width>850px</width>
+                        <elementList>
+                          <element name="Select" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <width>30px</width>
+                          </element>
+                          <element name="MaximumSubscriptions" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Max Subscriptions</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="Period" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Period</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="PeriodType" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Period Type</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="ActivityFlag" type="ellab">
+                            <columnSpan>3</columnSpan>
+                            <label>Activity Flag</label>
+                            <width>150px</width>
+                          </element>
+                          <element name="OperationalProfile" type="ellab">
+                            <columnSpan>3</columnSpan>
+                            <label>Operational Profile</label>
+                            <width>150px</width>
+                          </element>
+                          <element name="SubscriptionEach" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Subscription Each</label>
+                            <width>100px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="SubsLimitsVL" type="elvlt">
+                        <height>200px</height>
+                        <overflow>auto</overflow>
+                        <width>850px</width>
+                        <elementList>
+                          <element name="SubsLimitsIterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_SubLimitsIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="SubsLimitsHL" type="elhlt">
+                                <width>750px</width>
+                                <elementList>
+                                  <element name="SubsLimitsFormFrame" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_SubLimitsIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="price" type="vform">
+          <label>price</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>left,center</alignment>
+            <elementList>
+              <element name="PriceEventEnum" type="elslct">
+                <canSort>false</canSort>
+                <label>Price Event</label>
+                <multiselect>false</multiselect>
+                <onChangeMethod type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_onSelectPriceEventTrigger</variablePath>
+                  </variablePathList>
+                </onChangeMethod>
+                <showEmpty>false</showEmpty>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_model</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.BoltOn/dstruct_BOPriceGuidingArrDS</variablePath>
+                    <variablePath>dstruct_cm_spoc.data.BOPriceGuidingArr/dstruct_PriceEventEnum</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>400px</width>
+              </element>
+              <element name="Price" type="elovf">
+                <fillSpace>false</fillSpace>
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_PriceGuidingContainerUI</variablePath>
+                    <variablePath>ui_cm_spoc.forms.PriceGuidingContainerUI/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.forms.PriceGuidingContainerUI/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>400px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_PriceGuidingContainerUI</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>100%</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="Incompatibilities" type="vform">
+          <label>Incompatibilities</label>
+          <root name="SectionStack" type="elsectnstck">
+            <visibilityMode>multiple</visibilityMode>
+            <width>750px</width>
+            <elementList>
+              <element name="IncompatibilitiesSection" type="elsect">
+                <removeLabelLine>true</removeLabelLine>
+                <elementList>
+                  <element name="SectionHeader" type="elsecth">
+                    <label>Incompatibilities</label>
+                  </element>
+                  <element name="buttonsLayout" type="elhlt">
+                    <elementList>
+                      <element name="addButton" type="elmnu">
+                        <menuAccel type="mAccelP"/>
+                        <canFocus>false</canFocus>
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_addBoltOnSubscription</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <icon>/cwt/images/16/notebook_add.png</icon>
+                        <width>40px</width>
+                      </element>
+                      <element name="deleteButton" type="elmnu">
+                        <menuAccel type="mAccelP"/>
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.BoltOnForm/uimthd_deleteBoltOnSubscription</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <icon>/cwt/images/16/delete.png</icon>
+                        <width>40px</width>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="HorizontalLayout" type="elhlt">
+                    <width>700px</width>
+                    <elementList>
+                      <element name="Select2" type="ellab">
+                        <columnSpan>1</columnSpan>
+                        <width>20px</width>
+                      </element>
+                      <element name="IncomplatibleBoltOn2" type="ellab">
+                        <canSort>false</canSort>
+                        <columnSpan>4</columnSpan>
+                        <label>Incompatible Bolt On</label>
+                        <textAlign>center</textAlign>
+                        <width>340px</width>
+                      </element>
+                      <element name="Profiles2" type="ellab">
+                        <columnSpan>2</columnSpan>
+                        <label>Profiles</label>
+                        <textAlign>center</textAlign>
+                        <width>340px</width>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="SubsIncompatibilitiesVL" type="elvlt">
+                    <height>200px</height>
+                    <overflow>auto</overflow>
+                    <width>750px</width>
+                    <elementList>
+                      <element name="SubsIncompatibilitiesIterator" type="eliter">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_SubsIncompatibilitiesIterator</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <elementList>
+                          <element name="SubsIncompatibilitiesHL" type="elhlt">
+                            <width>750px</width>
+                            <elementList>
+                              <element name="SubsIncompatibilitiesFormFrame" type="elovf">
+                                <formReference type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_SubsIncompatibilitiesIterator</variablePath>
+                                    <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                    <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                  </variablePathList>
+                                </formReference>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="TariffPlans" type="vform">
+          <label>TariffPlans</label>
+          <root name="HL" type="elvlt">
+            <width>600px</width>
+            <elementList>
+              <element name="FormFrame" type="elovf">
+                <fillSpace>false</fillSpace>
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_TariffPlanPickList</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>300px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_TariffPlanPickList</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>600px</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="chargingMode" type="vform">
+          <label>chargingMode</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>right,center</alignment>
+            <elementList>
+              <element name="ChargingMode" type="elovf">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_ChargingModeGuidingContainerUI</variablePath>
+                    <variablePath>ui_cm_spoc.forms.ChargingModeGuidingContainerUI/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.forms.ChargingModeGuidingContainerUI/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>400px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.BoltOnForm/leaf_ChargingModeGuidingContainerUI</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>100%</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$PriceGuidingContainerUI" type="laction">
+      <path>ui_cm_spoc.forms.BoltOnForm/leaf_PriceGuidingContainerUI</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.BoltOnForm/leaf_PriceGuidingContainerUI</valueType>
+      <script>return cm_spoc.initPriceGuidingContainerUI(this);</script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.BoltOnForm/leaf_model</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.BoltOnForm/leaf_model</valueType>
+      <script><![CDATA[
+        var m = cm_spoc.initBoltOn(this.model);
+        cm_spoc.initBoltOnUi(this);
+        return m;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$TariffPlanPickList" type="laction">
+      <path>ui_cm_spoc.forms.BoltOnForm/leaf_TariffPlanPickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.BoltOnForm/leaf_TariffPlanPickList</valueType>
+      <script><![CDATA[
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TariffPlan";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.BOAllowedTariffPlanArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setModel;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$TafiffGroupPickList" type="laction">
+      <path>ui_cm_spoc.forms.BoltOnForm/leaf_TafiffGroupPickList</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_TariffPlanGroup");
+        newDetail.showButton=false;
+        newDetail.parentUI = this;
+        newDetail.modelCallback=this.referenceCallback;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$ChargingModeGuidingContainerUI" type="laction">
+      <path>ui_cm_spoc.forms.BoltOnForm/leaf_ChargingModeGuidingContainerUI</path>
+      <type>initializer</type>
+      <script>return cm_spoc.initChargingModeGuidingContainerUI(this);</script>
+    </method>
+    <method name="BOVOApplyReductionInLongDistanceVisRule" type="permMethod">
+      <script><![CDATA[
+        if(this.model.BoltOnTypeModalityCode=="CR") return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="BOVOCCalendarDateVisRule" type="permMethod">
+      <script><![CDATA[
+        var value = this.model.BoltOnValidityOfferingDS.BoltOnValidityModality;
+        if(value=="V_CALENDAR")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="BOVOPercentageReductionInLDVisRule" type="permMethod">
+      <script><![CDATA[
+        var value = this.model.BoltOnValueOfferingDS.ApplyReductionInLongDistance;
+        if(value==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="BoltOnValidityOfferingDatesVisible" type="permMethod">
+      <script><![CDATA[
+        var value = this.model.BoltOnValidityOfferingDS.BoltOnValidityModality;
+        if(value=="V_DATES")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="BoltOnValidityOfferingHoursVisRule" type="permMethod">
+      <script><![CDATA[
+        var value = this.model.BoltOnValidityOfferingDS.Days;
+        if (value > 0) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="BoltOnValidityOfferingMinVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.BoltOnValidityOfferingDS.Hours;
+        if (value > 0 ) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="BoltOnValidityOfferingTimeVisible" type="permMethod">
+      <script><![CDATA[
+        var value = this.model.BoltOnValidityOfferingDS.BoltOnValidityModality;
+        if(value=="V_TIME")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="BoltOnValueLabelVisRule" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        var modality=this.model.BoltOnTypeModalityCode;
+        return cm_spoc.BoltOnValueLabelVisRule(modality);
+      ]]></script>
+    </method>
+    <method name="CreatePriceVisible" type="permMethod">
+      <script><![CDATA[
+        if(!this.model.PriceDS.selectExistingPrice) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="HoursEditable" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.BoltOnValidityOfferingDS.Days;
+        if(!this.model.readonly && value>0)return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="Message1Trigger" type="uimthd">
+      <script><![CDATA[
+        this.model.SubscriptionOfferingDS.ActivationMessage = this.model.SubscriptionOfferingDS.MessageEnum1;
+        return;
+      ]]></script>
+    </method>
+    <method name="Message2Trigger" type="uimthd">
+      <script><![CDATA[
+        this.model.SubscriptionOfferingDS.NextToLastMessage = this.model.SubscriptionOfferingDS.MessageEnum2;
+        return;
+      ]]></script>
+    </method>
+    <method name="MinutesEditable" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.BoltOnValidityOfferingDS.Hours;
+        if(!this.model.readonly && value>0)return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="PriceEnumVisible" type="permMethod">
+      <script><![CDATA[
+        if(this.model.PriceDS.selectExistingPrice==true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="ReadOnly" type="permMethod">
+      <script>return this.model.readonly;</script>
+    </method>
+    <method name="ResetMaxUnitPerSession" type="uimthd">
+      <script><![CDATA[
+        this.model.SessionOfferingDS.MaxUnitsPerSession="";
+        return;
+      ]]></script>
+    </method>
+    <method name="ResetMinutes" type="uimthd">
+      <script><![CDATA[
+        var value = this.model.BoltOnValidityOfferingDS.Hours;
+        if (value == 0 || value == null || value == ""){
+        this.model.BoltOnValidityOfferingDS.Minutes=0;
+             }
+        return;
+      ]]></script>
+    </method>
+    <method name="ResetSubscriptionsDates" type="uimthd">
+      <script><![CDATA[
+        this.model.SubscriptionOfferingDS.ActivationStartDate=null;
+        this.model.SubscriptionOfferingDS.ActivationEndDate=null;
+        return;
+      ]]></script>
+    </method>
+    <method name="ResetTrigger" type="uimthd">
+      <script><![CDATA[
+        var value = this.model.BoltOnValidityOfferingDS.Days;
+        if (value == 0 || value == null || value == ""){
+        this.model.BoltOnValidityOfferingDS.Hours=0;
+        this.model.BoltOnValidityOfferingDS.Minutes=0;
+             }
+        return;
+      ]]></script>
+    </method>
+    <method name="SOActivationEndDateVisRule" type="permMethod">
+      <script><![CDATA[
+        var value= this.model.SubscriptionOfferingDS.TemporalSubscriberActCond;
+        if(value == true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="SOActivationStartDateVisRule" type="permMethod">
+      <script><![CDATA[
+        var value= this.model.SubscriptionOfferingDS.TemporalSubscriberActCond;
+        if(value == true) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="SOMaxUnitsPerSessionVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.SessionOfferingDS.ConfigureMaxUnitsPerSession;
+        if(value) return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="SessionVisRule" type="permMethod">
+      <script><![CDATA[
+        var value= this.model.BoltOnTypeModalityCode;
+        if (value=="ME" || value=="MG") return false;
+        else return true;
+      ]]></script>
+    </method>
+    <method name="addBoltOnSubscription" type="uimthd">
+      <script><![CDATA[
+        var model=this.model.BoltOnSubscriptionArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.BoltOnSubscriptionUI","base_BoltOnSubscription","SubsIncompatibilitiesIterator");
+      ]]></script>
+    </method>
+    <method name="addSubscriptionLimit" type="uimthd">
+      <script><![CDATA[
+        var model=this.model.SubscriptionOfferingDS.SubscriptionLimitArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.SubscriptionLimitsUI","base_SubscriptionLimit","SubLimitsIterator");
+
+        var pos = this.model.SubscriptionOfferingDS.SubscriptionLimitArrDS.ListDS.length-1;
+        this.model.SubscriptionOfferingDS.SubscriptionLimitArrDS.ListDS[pos].Period="D";
+        this.model.SubscriptionOfferingDS.SubscriptionLimitArrDS.ListDS[pos].CountingOnlyActivesEnum = this.model.SubscriptionOfferingDS.SubscriptionLimitArrDS.ListDS[pos].CountingOnlyActives;
+        this.model.SubscriptionOfferingDS.SubscriptionLimitArrDS.ListDS[pos].NaturalPeriodEnum = this.model.SubscriptionOfferingDS.SubscriptionLimitArrDS.ListDS[pos].NaturalPeriod;
+      ]]></script>
+    </method>
+    <method name="boltOnTypeTrigger" type="uimthd">
+      <script><![CDATA[
+        /*if(this.model.BoltOnTypeEnum){
+            this.model.BoltOnType[0]=this.model.BoltOnTypeEnum;
+            var itemFinder = new Finder("cwa_epc.itemAttributeFinder");
+            itemFinder.searchDocument.itemCode = this.model.BoltOnTypeEnum;
+            itemFinder.searchDocument.attributeCode = "BoltOnTypeModality";
+            var result = itemFinder.search();
+            for(var i=0;i<result.length;i++){
+                if(result[i].attributeCode == "BoltOnTypeModalityEnum"){
+                    this.model.BoltOnTypeModalityCode =  result[i].defaultValue;
+                    break;
+                }
+            }
+
+            var ct = Global.getCTCodesAndDescriptions("BoltOnTypeModalityCodeTable");
+
+            for(var i=0;i<ct.length;i++){
+                if(ct[i]==this.model.BoltOnTypeModalityCode) this.model.BoltOnTypeModalityDesc = ct[i+1];
+            }
+        }
+        else{
+            this.model.BoltOnTypeModalityDesc=null;
+        }*/
+        var btCode=this.model.BoltOnTypeEnum;
+        this.model.BoltOnType=this.model.BoltOnTypeEnum;
+        var btmJson = cm_spoc.getBoltOnTypeModality(btCode);
+        this.model.BoltOnTypeModalityCode=btmJson.BoltOnTypeModalityCode;
+        this.model.BoltOnTypeModalityDesc=btmJson.BoltOnTypeModalityDesc;
+        if(this.model.BoltOnTypeModalityCode=="ME" || this.model.BoltOnTypeModalityCode=="MG")
+        {
+            this.model.SessionOfferingDS.BoltOnMaxNumberOfSessions=null;
+            this.model.SessionOfferingDS.AccumulativeBoltOnApplication = false;
+            this.model.SessionOfferingDS.ConfigureMaxUnitsPerSession = false;
+            this.model.SessionOfferingDS.MaxUnitsPerSession=null;
+
+        }
+        this.model.BoltOnValueOfferingDS.ApplyReductionInLongDistance=false;
+        this.model.BoltOnValueOfferingDS.BoltOnLD=null;
+      ]]></script>
+    </method>
+    <method name="deleteBoltOnSubscription" type="uimthd">
+      <script><![CDATA[cm_spoc.removeListElements(this, this.model.BoltOnSubscriptionArrDS,"List", "SubsIncompatibilitiesIterator");]]></script>
+    </method>
+    <method name="deleteSubscriptionLimits" type="uimthd">
+      <script><![CDATA[
+        this.model.SubscriptionOfferingDS.SubscriptionLimitArrDS=cm_spoc.removeListElements(this ,this.model.SubscriptionOfferingDS.SubscriptionLimitArrDS,"List", "SubLimitsIterator");
+      ]]></script>
+    </method>
+    <method name="onSelectPriceEventTrigger" type="uimthd">
+      <script>return cm_spoc.onSelectPriceEvent(this);</script>
+    </method>
+    <method name="popUpTariffPlanGroup" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.forms.TariffPlanGroup(null,this);
+        newDetail.model=this.model;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="priceEnumTrigger" type="uimthd">
+      <script><![CDATA[
+        //this.model.Price[0].CW_REFID = this.model.PriceDS.PriceEnum;
+        this.model.Price[0] = this.model.PriceDS.PriceEnum;
+      ]]></script>
+    </method>
+    <method name="priceEventTrigger" type="uimthd">
+      <script><![CDATA[
+        //this.model.PriceDS.BoltOnPriceEvent[0].CW_REFID=this.model.PriceDS.BoltOnPriceEventEnum;
+        this.model.PriceDS.BoltOnPriceEvent[0]=this.model.PriceDS.BoltOnPriceEventEnum;
+      ]]></script>
+    </method>
+    <method name="resetApply" type="uimthd">
+      <script><![CDATA[
+        if (this.model.BoltOnValueOfferingDS.ApplyReductionInLongDistance == false){
+            this.model.BoltOnValueOfferingDS.BoltOnLD="";
+        }
+        return;
+      ]]></script>
+    </method>
+    <method name="resetValueValidityTrigger" type="uimthd">
+      <script><![CDATA[
+        var value=this.model.BoltOnValidityOfferingDS.BoltOnValidityModality;
+
+        switch (value){
+                    case "V_TIME":
+                            this.model.BoltOnValidityOfferingDS.StartTime="";
+                            this.model.BoltOnValidityOfferingDS.EndTime="";
+                            this.model.BoltOnValidityOfferingDS.CalendarDate="";
+                            break;
+                     case "V_DATES":
+                            this.model.BoltOnValidityOfferingDS.Hours=0;
+                            this.model.BoltOnValidityOfferingDS.Minutes=0;
+                            this.model.BoltOnValidityOfferingDS.Days=0;
+                            this.model.BoltOnValidityOfferingDS.CalendarDate="";
+                            break;
+                    case "V_CALENDAR":
+                            this.model.BoltOnValidityOfferingDS.Hours=0;
+                            this.model.BoltOnValidityOfferingDS.Minutes=0;
+                            this.model.BoltOnValidityOfferingDS.Days=0;
+                            this.model.BoltOnValidityOfferingDS.StartTime="";
+                            this.model.BoltOnValidityOfferingDS.EndTime="";
+                            this.model.BoltOnValidityOfferingDS.CalendarDate="V_DAY";
+                             break;
+                    case "V_BILLING_CYCLE":
+                            this.model.BoltOnValidityOfferingDS.Hours=0;
+                            this.model.BoltOnValidityOfferingDS.Minutes=0;
+                            this.model.BoltOnValidityOfferingDS.Days=0;
+                            this.model.BoltOnValidityOfferingDS.StartTime="";
+                            this.model.BoltOnValidityOfferingDS.EndTime="";
+                            this.model.BoltOnValidityOfferingDS.CalendarDate="";
+                            break;
+                     case "V_INFINITE" :
+                            this.model.BoltOnValidityOfferingDS.Hours=0;
+                            this.model.BoltOnValidityOfferingDS.Minutes=0;
+                            this.model.BoltOnValidityOfferingDS.Days=0;
+                            this.model.BoltOnValidityOfferingDS.StartTime="";
+                            this.model.BoltOnValidityOfferingDS.EndTime="";
+                            this.model.BoltOnValidityOfferingDS.CalendarDate="";
+                            break;
+
+        }
+        return;
+      ]]></script>
+    </method>
+    <method name="selectExistingPriceTrigger" type="uimthd">
+      <script><![CDATA[
+        if(this.model.PriceDS.selectExistingPrice==true) this.model.PriceDS.specificationCode=null;
+        else this.model.PriceDS = cm_spoc.initInnerDS("base_Price");
+      ]]></script>
+    </method>
+    <method name="selectTrigger" type="uimthd">
+      <script>return;</script>
+    </method>
+    <method name="setModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.BOAllowedTariffPlanArrDS.List =null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.BOAllowedTariffPlanArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script><![CDATA[
+        for(var i=0;i<this.SubLimitsIterator.length;i++){
+            this.SubLimitsIterator[i].model.readonly = this.model.readonly;
+        }
+
+        for(var i=0;i<this.PriceGuidingContainerUI.PriceGuidingUI.PriceGuidingIterator.length;i++){
+            this.PriceGuidingContainerUI.PriceGuidingUI.PriceGuidingIterator[i].model.readonly = this.model.readonly;
+        }
+
+        for(var i=0;i<this.ChargingModeGuidingContainerUI.ChargingModeGuidingUI.ChargingModeGuidingIterator.length;i++){
+            this.ChargingModeGuidingContainerUI.ChargingModeGuidingUI.ChargingModeGuidingIterator[i].model.readonly = this.model.readonly;
+        }
+      ]]></script>
+    </method>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+  </methodList>
+</userInterface>

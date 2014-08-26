@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initFreeAndBarredDestination">
+  <group>ui_scripts.Numbering</group>
+  <label>initFreeAndBarredDestination</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+        var SimpleDestinationRuleArr = cm_spoc.initInnerDS("base_SimpleDestinationRuleArr");
+        model.SimpleDestinationRuleArrDS = SimpleDestinationRuleArr;
+
+        return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        var SimpleDestinationRuleRel = model.SimpleDestinationRuleArr;
+        s.specificationCode = SimpleDestinationRuleRel;
+        var a = epc.getSpecificationByKey(s);
+        SimpleDestinationRuleRel = a.List;
+        var SimpleDestinationRuleDS= model.SimpleDestinationRuleArrDS.ListDS;
+        for(var i=0;i<SimpleDestinationRuleRel.length;i++){
+            s.specificationCode = SimpleDestinationRuleRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                SimpleDestinationRuleDS[i]=r;
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

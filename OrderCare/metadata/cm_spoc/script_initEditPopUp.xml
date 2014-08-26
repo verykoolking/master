@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initEditPopUp">
+  <group>ui_scripts.UsageControl.AccumulationConditions</group>
+  <label>initEditPopUp</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(ui.parent.parent.positive){
+    var listDS= ui.parent.parent.model.UCPositiveConUCACArrDS.ListDS;
+    }else{
+    var listDS= ui.parent.parent.model.UCNegativeConUCACArrDS.ListDS;
+    }
+
+
+
+
+
+    var sel = ui.parent.result.selected[0].id;
+
+    for( var i=0;i<listDS.length;i++){
+          if(listDS[i].id == sel){
+                ui.model = listDS[i];
+           ui.parentIndex = i;
+                break;
+          }
+    }
+
+    return  ui.model;
+  ]]></script>
+</script>

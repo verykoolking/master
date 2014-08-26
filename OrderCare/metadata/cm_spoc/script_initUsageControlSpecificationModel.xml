@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initUsageControlSpecificationModel">
+  <group>ui_scripts.UsageControl</group>
+  <label>initUsageControlSpecificationModel</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //
+    var model=ui.model;
+    if (!model.specificationCode){
+        model = cm_spoc.initModelForCreation(model);
+
+        for (var j=0;j<5;j++){
+            var itemList= cm_spoc.initInnerDS("base_UsageControlThreshold");
+            ui.model.UsageControlThresholdSetSpeDS.UCThSetSpecifArrDS.ListDS[j]=itemList;
+        }
+    }else{
+        model = cm_spoc.initModelForModification(model);
+        model.UCAccumulationConditionGroupEnum=model.UsageControlApplicabilityCo;
+        model.UCBoltOnTypeAssociationIdentifierEnum=model.UsageControlBoltOnAssociati;
+
+        var listArrayDS=model.UsageControlThresholdSetSpeDS.UCThSetSpecifArrDS.ListDS;
+
+        ui.Cyclic1 = getBoolean(listArrayDS[0].Cyclic);
+        ui.UsageThresholdAmount1 =  listArrayDS[0].UsageThresholdAmount;
+
+        ui.Cyclic2 = getBoolean(listArrayDS[1].Cyclic);
+        ui.UsageThresholdAmount2 =  listArrayDS[1].UsageThresholdAmount;
+
+        ui.Cyclic3 = getBoolean(listArrayDS[2].Cyclic);
+        ui.UsageThresholdAmount3 =  listArrayDS[2].UsageThresholdAmount;
+
+        ui.Cyclic4 = getBoolean(listArrayDS[3].Cyclic);
+        ui.UsageThresholdAmount4 =  listArrayDS[3].UsageThresholdAmount;
+
+        ui.Cyclic5 = listArrayDS[4].Cyclic;
+        ui.UsageThresholdAmount5 =  listArrayDS[4].UsageThresholdAmount;
+    }
+    return model;
+
+
+    function getBoolean(val)
+    {
+        return (val?val:false);
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_NOEARelativeNumberOfTimesCondRule">
+  <group>rules_scripts.Promotions</group>
+  <label>rule_NOEARelativeNumberOfTimesCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    // The attribute must be saved only if the related attribute is checked and has the value shown in the column H.
+    // NumberOfExecutionApplicability
+    // RelativeNumberOfTimes
+    // NumberOfExecutionApplicability
+    // NumberOfExecType
+    // R
+
+    if (data.RelativeNumberOfTimes && data.NumberOfExecType!='R') {
+        errList.addErrorMessage(data,["Relative Number of Times can be saved only if Number of Exec Type is Relative"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

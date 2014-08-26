@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_TZStartingDaylightMonthCondRule">
+  <group>rules_scripts.Numbering</group>
+  <label>rule_TZStartingDaylightMonthCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    // The attribute (StartingDaylightMonth) must be saved in the catalog only if the related attribute (AppliesDaylightSavingTime) assumes one of the values shown in the column H (true).
+    var dt=data;
+    if (dt.StartingDaylightMonth && dt.AppliesDaylightSavingTime != true){
+        errList.addErrorMessage(data,["StartingDaylightMonth: Applies Daylight Saving Time must be check"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

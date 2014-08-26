@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initBoltOn">
+  <group>ui_scripts.BoltOn</group>
+  <label>initBoltOn</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+        model.BoltOnCode = "";
+        var boltOnValueOffering = cm_spoc.initInnerDS("base_BoltOnValueOffering");
+        model.BoltOnValueOfferingDS = boltOnValueOffering;
+
+        var boltOnValidityOffering = cm_spoc.initInnerDS("base_BoltOnValidityOffering");
+        model.BoltOnValidityOfferingDS = boltOnValidityOffering;
+
+        var sessionOffering = cm_spoc.initInnerDS("base_SessionOffering");
+        model.SessionOfferingDS = sessionOffering;
+
+        var subscriptionOffering = cm_spoc.initInnerDS("base_SubscriptionOffering");
+        model.SubscriptionOfferingDS = subscriptionOffering;
+
+        var subscriptionLimitArr = cm_spoc.initInnerDS("base_SubscriptionLimitArr");
+        model.SubscriptionOfferingDS.SubscriptionLimitArrDS  = subscriptionLimitArr;
+
+        var boltOnSubscriptionArr = cm_spoc.initInnerDS("base_BoltOnSubscriptionArr");
+        model.BoltOnSubscriptionArrDS = boltOnSubscriptionArr;
+
+        var boAllowedTariffPlanArr = cm_spoc.initInnerDS("base_BOAllowedTariffPlanArr");
+        model.BOAllowedTariffPlanArrDS = boAllowedTariffPlanArr;
+
+
+       /* var price = cm_spoc.initInnerDS("base_Price");
+        model.PriceDS = price;
+
+       var itemFinder = new Finder("cm_spoc.priceEventFinder");
+        var result = itemFinder.search();
+        if(result.length>0){
+            model.PriceDS.BoltOnPriceEvent=result[0].itemCode;
+            }*/
+
+
+       var itemFinder = new Finder("cm_spoc.boltOnTypeFinder");
+       var result = itemFinder.search();
+       if(result.length>0){
+           var btCode=result[0].itemCode;
+           model.BoltOnTypeEnum=btCode;
+           model.BoltOnType=btCode;
+           var btmJson = cm_spoc.getBoltOnTypeModality(btCode);
+           model.BoltOnTypeModalityCode=btmJson.BoltOnTypeModalityCode;
+           model.BoltOnTypeModalityDesc=btmJson.BoltOnTypeModalityDesc;
+       }
+
+       model.BoltOnValidityOfferingDS.BoltOnValidityModality="V_TIME";
+
+
+    }
+    else{
+       model = cm_spoc.initModelForModification(model);
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+       /*s.specificationCode = model.BoltOnValueOffering;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.BoltOnValueOfferingDS=r;
+       }
+
+       s.specificationCode = model.BoltOnValidityOffering;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.BoltOnValidityOfferingDS=r;
+       }
+
+
+       s.specificationCode = model.SessionOffering;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.SessionOfferingDS=r;
+       }
+
+       s.specificationCode = model.SubscriptionOffering;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.SubscriptionOfferingDS=r;
+       }
+
+
+       s.specificationCode =  model.SubscriptionOfferingDS.SubscriptionLimitArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+             model.SubscriptionOfferingDS.SubscriptionLimitArrDS=r;
+       }*/
+
+
+       var subsLimitsRel = model.SubscriptionOfferingDS.SubscriptionLimitArrDS.List;
+       var subsLimitsDS= model.SubscriptionOfferingDS.SubscriptionLimitArrDS.ListDS;
+       for(var i=0;i<subsLimitsRel.length;i++){
+           s.specificationCode = subsLimitsRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               subsLimitsDS[i]=r;
+               if(subsLimitsDS[i].NaturalPeriod==true) subsLimitsDS[i].NaturalPeriodEnum="true";
+               else subsLimitsDS[i].NaturalPeriodEnum="false";
+               if(subsLimitsDS[i].CountingOnlyActives==true) subsLimitsDS[i].CountingOnlyActivesEnum="true";
+               else subsLimitsDS[i].CountingOnlyActivesEnum="false";
+           }
+       }
+
+
+       /*s.specificationCode = model.BoltOnSubscriptionArr ;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.BoltOnSubscriptionArrDS =r;
+             }
+
+       var boltOnSubsRel=model.BoltOnSubscriptionArrDS.List;
+       var boltOnSubsDS=model.BoltOnSubscriptionArrDS.ListDS;
+       for(var i=0;i<boltOnSubsRel.length;i++){
+           s.specificationCode = boltOnSubsRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               boltOnSubsDS[i]=r;
+           }
+       }
+
+
+       s.specificationCode = model.BOAllowedTariffPlanArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+           model.BOAllowedTariffPlanArrDS=r;
+       }*/
+
+    /*
+       s.specificationCode = model.Price;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.PriceDS=r;
+       }
+       */
+
+       var btCode=model.BoltOnType;
+       model.BoltOnTypeEnum=btCode;
+       var btmJson = cm_spoc.getBoltOnTypeModality(btCode);
+       model.BoltOnTypeModalityCode=btmJson.BoltOnTypeModalityCode;
+       model.BoltOnTypeModalityDesc=btmJson.BoltOnTypeModalityDesc;
+
+       model.SubscriptionOfferingDS.MessageEnum1= model.SubscriptionOfferingDS.ActivationMessage;
+       model.SubscriptionOfferingDS.MessageEnum2= model.SubscriptionOfferingDS.NextToLastMessage;
+
+        model.BOAllowedTariffPlanArrDS.ListDS = null;
+
+
+    }
+
+        /**
+         * Price Init
+         *
+         */
+
+       // cm_spoc.initPriceGuiding(model);
+        return model;
+  ]]></script>
+</script>

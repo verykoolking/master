@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.inOut_endConfiguration">
+  <highlight>32</highlight>
+  <label>inOut_endConfiguration</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="input" type="rifp">
+      <type>dstruct_OCSConfigurationOperation.v1.types.EndConfiguration</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_OCSConfigurationOperation.v1.types.EndConfigurationResponse</valueType>
+  <script><![CDATA[
+    try
+    {
+        var OP_REFERENCE = 'END_CONFIGURATION';
+
+        var inputError = cm_pws.services.validateRequest(OP_REFERENCE, input);
+        if(api_common.isFault(inputError)) {
+            throw inputError;
+        }
+
+        var configSession = new cm_pws.configSession();
+        configSession.operation = OP_REFERENCE;
+        input.sessionCommonInfo.mapTo(configSession);
+        configSession.request = input.toXML();
+
+        //validate the session
+        if(!cm_pws.services.validateSession(configSession.sessionId))
+        {
+            var fault = api_common.createFault("E101", "Invalid SessionId.");    //TODO: correct code
+            return fault;
+        }
+
+        configSession.isExecuted = true;
+        var response = cm_pws.createConfigSessionByValue(configSession);
+        if(api_common.isFault(response))
+            return response;
+
+        if(input.sessionCommonInfo.doCommitFlag) {
+            response = cm_pws.applyConfigSession(configSession.sessionId);
+            if(api_common.isFault(response))
+                return response;
+
+            //Sart PLM
+            var projectCode = input.sessionCommonInfo.sessionId;
+            var reviewRequiredFlag = Global.getConfigVariable("plmReviewRequired");
+            var testingRequiredFlag = Global.getConfigVariable("plmTestingRequired");
+            cm_plm.startPLM(projectCode, "EXTERNAL", false, false, reviewRequiredFlag, testingRequiredFlag);
+        }
+        else {
+            //removing the project
+            response = cm_common.plmRemoveProject(configSession.sessionId, true);
+            if(response instanceof cwt_pcmaintapi.Fault)
+            {
+                var fault = api_common.createFault(response.code, response.message);
+                return fault;
+            }else if(response.errorList && response.errorList.length>0)
+            {
+                var fault = api_common.createFault();
+                for (var i=0; i<response.errorList.length;i++)
+                {
+                    fault.addFault(response.errorList[i].code, response.errorList[i].message);
+                }
+                return fault;
+            }
+        }
+
+        var output = new OCSConfigurationOperation.v1.types.EndConfigurationResponse();
+        cm_pws.services.pwsMap_GenericResponse(output.sessionCommonInfoResult, configSession.operation, configSession.sessionId);
+        return output;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

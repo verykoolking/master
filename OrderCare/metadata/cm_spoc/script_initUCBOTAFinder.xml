@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initUCBOTAFinder">
+  <group>ui_scripts.UsageControl.UCBoltOnTypeAssociation.init</group>
+  <label>initUCBOTAFinder</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var finderUi =  new cm_spoc.BoltOnTypeModalityFinder.UserInterface(null,ui);
+
+    if(!ui.model.specificationCode && ui.BoltOnTypeModalityFinder == null){
+
+        //Forcing the result set into the Finder
+        var emptyRes = new DataObjectList();
+        finderUi.model.setList(emptyRes);
+        return finderUi;
+    }
+    else{
+
+        var code = ui.model["UCBOASUCBoltOnTypeAssArr"];
+
+        //Getting the Simple Conditions associated
+        var associationsFinder =  new cm_spoc.itemRelationFinder();
+        associationsFinder.searchDocument.itemCode =  code;
+        var result = associationsFinder.search();
+
+        //From items code to DS
+        cm_spoc.fromResultToDs(result);
+
+        //From DS to Doc
+        mapToOutputDoc(result);
+
+        //Forcing the result set into the BoltOnTypeModalityFinder
+        finderUi.model.setList(result);
+    }
+
+    return finderUi;
+
+    function mapToOutputDoc(result) {
+
+        for (var t=0;t<result.length;t++ ) {
+            var doc = new cm_spoc.UCBOTAssociationDoc();
+            result[t]=result[t].mapTo(doc,"cm_spoc.UCBOTAssociationCM")[0];
+        }
+    }
+  ]]></script>
+</script>

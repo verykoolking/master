@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.startPlmControlPhase">
+  <label>startPlmControlPhase</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="phase" type="rifp">
+      <type>dtype_cm_plm.plmControlPhase</type>
+    </parameter>
+    <parameter name="aditionalInfo" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <valueType>dtype_com.conceptwave.system.String</valueType>
+  <script><![CDATA[
+    Global.beginTransaction("ORDER");
+    var plmControlPhaseDoc = new cm_plm.plmControlPhaseDoc();
+    plmControlPhaseDoc.projectCode = projectCode;
+    plmControlPhaseDoc.phase      = phase;
+    plmControlPhaseDoc.aditionalInfo      = aditionalInfo;
+    plmControlPhaseDoc.startDate = new Date();
+    plmControlPhaseDoc.save();
+    Global.commitTransaction("ORDER");
+    return plmControlPhaseDoc.cwDocId;
+  ]]></script>
+</script>

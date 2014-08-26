@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.resource.res.log.network.SubNetwork">
+  <container>true</container>
+  <description><![CDATA[
+    <p>The SubNetwork class is derived from MTNM; please note that this definition is subtlely different than that of G.805. DEN-ng has mapped this definition into a form that can be represented using the SID and DEN-ng modeling philosophy. By including this mapping in the Network fragment and adding some additional semantics, objects defined in the TMF and ITU are able to interact with objects defined in the IETF.    MTNM defines a subnetwork as an abstraction provided by the EMS to the NMS that describes the potential for subnetwork connections. (An MTNM SubNetworkConnection relates end-point TerminationPoints. It provides a transparent end-to-end connection or a trail (closed or half-open) through a Subnetwork according to the roles associated to its end points.)    DEN-ng uses the above MTNM definition and expands on it. It defines a SubNetwork as existing within a single layer network. It is defined by the set of ResourcePorts that are available for the purpose of transferring characteristic information. The associations between the ResourcePorts at the edge of a SubNetwork may be made and broken by a LayerNetwork management process, thus changing its connectivity. When a SubNetwork connection is established, the reference points are also created by binding the ports to input and output of the SubNetwork connection. In general, SubNetworks may be partitioned into smaller SubNetworks interconnected by links.</p>                <p>This entity  is  optional</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{30fbe463-9cf5-4077-ae45-0fe092d1d3e7}</guid>
+  <label>SubNetwork</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="subNetworkType" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is an enumerated integer that defines the specific type of SubNetwork that this instance is.        The following values are defined by TMF608:        0: Singleton        1: CHAIN        2: PSR        3: SPRING        4: OPEN_PSR        5: OPEN_SPRING        6: MESH</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{4d429b04-0fe8-4c24-8ce8-c7f9154ccfd9}</guid>
+      <label>subNetworkType</label>
+    </child>
+    <child name="connectionRates" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is a comma-separated Sequence of string attributes. Each string identifies a connection rate that is supported by this Network. Connection rates can operate at a speed that is different from the overall rate of the network that contains this SubNetwork.        Values are defined by the LayerRates supporting document in the MTNM specification.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{42d3d25b-e2e4-498f-8f11-708e3a4c26d0}</guid>
+      <label>connectionRates</label>
+    </child>
+    <child name="subNetwork" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association HasSubNetworks</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.log.network.ArrayOfSubNetwork</element>
+      <guid>{e716b661-0eb9-4c97-9713-2ff396030e34}</guid>
+      <label>subNetwork</label>
+    </child>
+    <child name="subNetwork1" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..1</p>                                <p>This association end  has  aggregation shared</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association HasSubNetworks</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.log.network.SubNetwork</element>
+      <guid>{fe2adec8-7bcb-48f1-8d1a-147c4266e565}</guid>
+      <label>subNetwork1</label>
+    </child>
+    <child name="pipe" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..*</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association PipesInSubNetwork</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.log.trans.ArrayOfPipe</element>
+      <guid>{75b63287-ed3d-43fd-b8fe-778b494e01db}</guid>
+      <label>pipe</label>
+    </child>
+    <child name="layerNetwork" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..1</p>                                <p>This association end  has  aggregation shared</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association SubNetworksInLayeredNetwork</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.resource.res.log.network.LayerNetwork</element>
+      <guid>{b095d451-6185-461e-bb56-46d5babadefd}</guid>
+      <label>layerNetwork</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.resource.res.log.network.SubNetwork</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.resource.res.log.network.SubNetwork</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.addListElementWithoutNodes">
+  <group>ui_scripts.utils</group>
+  <label>addListElementWithoutNodes</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="parentUi" type="rifp"/>
+    <parameter name="model" type="rifp"/>
+    <parameter name="uiMDType" type="rifp"/>
+    <parameter name="modelCatalogItem" type="rifp"/>
+    <parameter name="iteratorName" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var it=parentUi[iteratorName];
+    if(!it) throw "you must initialize the iterator as a new Array before calling this script";
+    var len=model.length;
+    model[len] = cm_spoc.initInnerDS(modelCatalogItem);
+    //model[len] = cm_spoc.initModelForCreation(model[len]);
+    var listUi= new com.conceptwave.system.UserInterface(uiMDType);
+    if('parentUI' in listUi){
+        listUi.setParentUI(parentUi);
+    } else {
+
+        listUi.parent = parentUi;
+    }
+    listUi.model=model[len];
+    it.push(listUi);
+    return model;
+  ]]></script>
+</script>

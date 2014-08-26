@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cw_etltool._import.loadEntities">
+  <activity name="start" type="seqActivity">
+    <guid>{35fc3353-2b34-47c5-872b-c0bb199b176a}</guid>
+    <label>Start</label>
+    <x>143.0</x>
+    <y>19.0</y>
+    <childList>
+      <child name="loadEntitiesToEPC" type="scriptActivity">
+        <guid>{4246bd0c-6fb9-47ee-9a61-50159c89da0f}</guid>
+        <label>Load Entities To EPC</label>
+        <x>137.0</x>
+        <y>135.0</y>
+        <childList>
+          <child name="rollback" type="compensateActivity">
+            <guid>{c172136b-a15f-4870-9848-9d1a1feed0cd}</guid>
+            <label>Rollback</label>
+            <x>137.0</x>
+            <y>235.0</y>
+            <childList>
+              <child name="rollback" type="scriptActivity">
+                <guid>{b2adcd18-0f56-47a8-911f-b2945d7fc212}</guid>
+                <label>Rollback</label>
+                <x>413.0</x>
+                <y>141.0</y>
+                <methodList>
+                  <method name="cwOnProcActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$  Load Entity RollBack Script $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+                      var order =  process.processOrder;
+                      order.header.ErrorMessage = "";
+                      order.save();
+                      process.processDocument.IsError = false;
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$ Save to CW EPC Script Activity $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+              cw_etltool._import.saveToCWEPC(process, document);
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+      <child name="errorValidation" type="subflowActivity">
+        <element>proc_cw_etltool._import.errorValidation</element>
+        <guid>{3f3d29b5-ea76-4f0b-a4dd-80339a023b7b}</guid>
+        <label>Error Validation</label>
+        <x>139.0</x>
+        <y>292.0</y>
+      </child>
+      <child name="onLoad" type="onExceptionActivity">
+        <element>excp_cw_etltool._import.systemException</element>
+        <guid>{6fb9e549-664c-4aa0-8ced-5e5b39c7c40c}</guid>
+        <label>Load Entity Exception</label>
+        <x>143.0</x>
+        <y>119.0</y>
+        <childList>
+          <child name="systemExceptionHandling" type="subflowActivity">
+            <element>proc_cw_etltool._import.systemExceptionHandler</element>
+            <guid>{317fd71e-c235-4416-ba27-f36457b3bca1}</guid>
+            <label>System Exception Handling</label>
+            <x>408.0</x>
+            <y>9.0</y>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              Global.logInfo("\n\n $$$$$$$$$$$$$$$$$$$$$$$ On Load Entity Exception : Before Script $$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+            ]]></script>
+          </method>
+          <method name="cwOnProcActAfter" type="action">
+            <category>script</category>
+            <system>true</system>
+            <script><![CDATA[
+              Global.logInfo("\n\n $$$$$$$$$$$$$$$$$$$$$$$ On Load Entity Exception : After Script $$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{cd45980d-6d5b-4ac1-bb74-5e6ef2cb1f04}</guid>
+  <label>Load Entities</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <type>Sub-flow</type>
+</process>

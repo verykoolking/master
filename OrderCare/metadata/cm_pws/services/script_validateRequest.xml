@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.validateRequest">
+  <label>validateRequest</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="operation" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="request" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var response;
+
+    var mandatoryForQueryEntity        = new Array("token", "numRegs");
+    var mandatoryForQueryEntityStatus  = new Array("token", "numRegs");
+    var mandatoryForQueryConfigStatus  = new Array();
+    var mandatoryForStartConfig        = new Array("appId", "reference", "userCode");
+    var mandatoryForEndConfig          = new Array("appId", "reference", "userCode", "sessionId", "doCommitFlag");
+    var mandatoryForCreateEntity       = new Array("appId", "reference", "userCode", "sessionId");
+    var mandatoryForChangeEntity       = new Array("appId", "reference", "userCode", "sessionId");
+    var mandatoryForDeleteEntity       = new Array("appId", "reference", "userCode", "sessionId");
+
+    switch(operation) {
+        case 'QUERY_ENTITY':
+            if(!request.queryCommonInfo) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+
+            if(!matchParams(mandatoryForQueryEntity, request.queryCommonInfo)) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+        break;
+        case 'QUERY_ENTITY_STATUS':
+            if(!request.queryCommonInfo) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+
+            if(!matchParams(mandatoryForQueryEntityStatus, request.queryCommonInfo)) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+        break;
+        case 'CREATE_ENTITY':
+            if(!request.actionCommonInfo) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+
+            if(!matchParams(mandatoryForCreateEntity, request.actionCommonInfo)) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+        break;
+        case 'CHANGE_ENTITY':
+            if(!request.actionCommonInfo) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+
+            if(!matchParams(mandatoryForChangeEntity, request.actionCommonInfo)) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+        break;
+        case 'DELETE_ENTITY':
+            if(!request.actionCommonInfo) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+
+            if(!matchParams(mandatoryForDeleteEntity, request.actionCommonInfo)) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+        break;
+        case 'START_CONFIGURATION':
+            if(!request.sessionCommonInfo) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+
+            if(!matchParams(mandatoryForStartConfig, request.sessionCommonInfo)) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+        break;
+        case 'END_CONFIGURATION':
+            if(!request.sessionCommonInfo) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+
+            if(!matchParams(mandatoryForEndConfig, request.sessionCommonInfo)) {
+                response = new api_common.createFault("E95874", "Invalid request params");
+            }
+        break;
+        default:
+            response = api_common.createFault("E979732", "Invalid request params."); //Correct error code
+        break;
+    }
+
+    if(api_common.isFault(response))
+        return response;
+
+
+
+    function matchParams(mandatoryParams, info) {
+        var nodeNames = info.getNodeNames();
+
+        for(var i=0; i<nodeNames.length; i++) {
+            if((mandatoryParams.indexOf(nodeNames[i]) <= -1) && (info[nodeNames[i]])) {
+                return false;
+            }
+        }
+        return true;
+    }
+  ]]></script>
+</script>

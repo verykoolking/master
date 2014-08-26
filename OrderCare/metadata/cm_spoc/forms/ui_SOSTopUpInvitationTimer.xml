@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.SOSTopUpInvitationTimer">
+  <group>TopUp</group>
+  <label>SOSTopUpInvitationTimer</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="SubOperation" type="leaf">
+      <valueType>dstruct_cm_spoc.data.SubOperation</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.SOSTopUpInvitationTimer</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="GridLayout" type="elgrd">
+              <colWidths>100px</colWidths>
+              <numOfCols>5</numOfCols>
+              <width>650px</width>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SOSTopUpInvitationTimer/uimthd_isAllSelected</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SOSTopUpInvitationTimer/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="OperationEnumTopUp" type="elslct">
+                  <columnSpan>2</columnSpan>
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SOSTopUpInvitationTimer/permMethod_SOSInvitationTimerEditable</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <multiselect>false</multiselect>
+                  <rowSpan>0</rowSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SOSTopUpInvitationTimer/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SOSTopUpInvitationTimer/dstruct_OperationEnumTopUp</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="SOSTimerEnum" type="elslct">
+                  <columnSpan>2</columnSpan>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SOSTopUpInvitationTimer/uimthd_sosInvitationTimerSelected</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <rowSpan>0</rowSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.SOSTopUpInvitationTimer/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.SOSTopUpInvitationTimer/dstruct_SOSTimerEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="isAllSelected" type="uimthd">
+      <script><![CDATA[
+        if (this.Selected==false){
+            this.parent.SelectAll = false;
+            return;
+        }
+
+        if (this.parent.EventsIterator){
+            for (var i=0; i<this.parent.EventsIterator.length; i++)
+                if (!this.parent.EventsIterator[i].Selected){
+                    this.parent.SelectAll = false;
+                    return;
+                }
+        }
+      ]]></script>
+    </method>
+    <method name="sosInvitationTimerSelected" type="uimthd">
+      <script><![CDATA[
+        /*
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode="base_SubOperation";
+        var items = itemFinder.search();
+        for(var i=0;i<items.length;i++){
+            var relationFinder = new Finder("cwt_pc.cwt_itemRelationFinder");
+            relationFinder.searchDocument.itemCode = items[i].itemCode;
+            var result = relationFinder.search();
+            for (var j=0;j<result.length;j++){
+                if (result[j].itemRelationTarget==this.model.SOSTimerEnum){
+                    this.model.OperationEnumTopUp = items[i].itemCode;
+                    this.subOperationSelected();
+                    break;
+                }
+            }
+        }
+        */
+        var subOp = cm_spoc.findSubOperationByTimer(this.model.SOSTimerEnum);
+        if (subOp)
+            this.model.OperationEnumTopUp=subOp;
+      ]]></script>
+    </method>
+    <method name="subOperationSelected" type="uimthd">
+      <script><![CDATA[
+        if (!this.model.OperationEnumTopUp){
+            this.SubOperation = null;
+            return;
+        }
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+        s.specificationCode = this.model.OperationEnumTopUp;
+        this.SubOperation = epc.getSpecificationByKey(s);
+        if(api_common.isFault(this.SubOperation))
+            return;
+        //
+        this.SubOperation.SOSTopUpInvitationTimer = this.model.SOSTimerEnum;
+        cm_spoc.initModelForModification(this.SubOperation);
+        //
+      ]]></script>
+    </method>
+    <method name="SOSInvitationTimerEditable" type="permMethod">
+      <script><![CDATA[
+        /*
+        if (this.model.OperationEnumTopUp)
+            return true;
+        this.model.SOSTimerEnum = '';
+        return false;
+        */
+        if (this.model.SOSTimerEnum == null){
+            this.model.OperationEnumTopUp = '';
+            return false;
+        }
+        return true;
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

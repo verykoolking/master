@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_VAMNCheckRestrictionRulesCondRule">
+  <group>rules_scripts.Numbering</group>
+  <label>rule_VAMNCheckRestrictionRulesCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute (CheckRestriction) must be saved in the catalog only if the related attribute (AnalysisType) assumes one of the values shown in the column H (2).
+
+
+    var dt=data;
+    if (dt.CheckRestriction==true && !(dt.AnalysisType == "BNT" ||dt.AnalysisType == "C" || dt.AnalysisType == "VC" ))
+    {
+     errList.addErrorMessage(data,["Check Restriction must be uncheck if Analysis Type is different to BNT, CONTENT or VALUE CONTENT."],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

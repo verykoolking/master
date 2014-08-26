@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.readPublishReply">
+  <highlight>32</highlight>
+  <label>CM-PLM Fill Publish Data</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="process" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="doc" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Read the publish reply into into the process document
+     *
+     * @author  Luis Barreira
+     * @date    20-02-2014
+     *
+     * @param {Number} pDoc    The process document
+     * @param {Number} doc     The interface document\data structure
+     */
+    var pDoc = process.processDocument;
+    pDoc.caReturnType = doc.returnType;
+    pDoc.caReturnMessage = doc.errorMessage;
+
+    if(pDoc.caReturnType!=null && pDoc.caReturnType!='SUCCESS') {
+        var ord = process.processOrder;
+        ord[0].errorList = pDoc.caReturnMessage;
+        ord.save();
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.editBranch">
+  <group>ui_scripts.RatingTree.RTFinder</group>
+  <label>editBranch</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="finderUi" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!finderUi.parent.model.readonly) {
+
+        var sc = finderUi.result.selected[0].specificationCode;
+
+
+        //ui.parent.model : RatingTree
+
+        for (var i=0;i<finderUi.parent.model.RTRatingTreeBranchArrDS.ListDS.length;i++) {
+            if(finderUi.parent.model.RTRatingTreeBranchArrDS.ListDS[i].specificationCode == sc ){
+
+                var rtbui = new cm_spoc.forms.RatingTreeBranchForm(finderUi.parent.model.RTRatingTreeBranchArrDS.ListDS[i],finderUi.parent);
+
+                finderUi.parent.branchForm = rtbui;
+            }
+        }
+
+    } else {
+        return;
+    }
+  ]]></script>
+</script>

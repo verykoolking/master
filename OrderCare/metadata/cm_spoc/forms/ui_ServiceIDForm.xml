@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ServiceIDForm">
+  <group>Numbering</group>
+  <label>ServiceIDForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ServiceID</valueType>
+    </variable>
+    <variable name="SrvCodeIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>400px</width>
+              <elementList>
+                <element name="TabFrame" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ServiceIDForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.ServiceIDForm/frmui_Forms/vform_general</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                  <width>100px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="general" type="vform">
+          <label>general</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>left,center</alignment>
+            <elementList>
+              <element name="VerticalLayout1" type="elvlt">
+                <alignment>right,center</alignment>
+                <elementList>
+                  <element name="ServiceCode" type="elfld">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ServiceIDForm/permMethod_setIsPrimaryKey</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <labeAlign>left</labeAlign>
+                    <label>ID</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ServiceIDForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ServiceID/dstruct_ServiceCode</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="SrvDescription" type="elfld">
+                    <labeAlign>left</labeAlign>
+                    <label>Description</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.ServiceIDForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.ServiceID/dstruct_SrvDescription</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </element>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>700px</width>
+                <elementList>
+                  <element name="ConditionsSection" type="elsect">
+                    <removeLabelLine>true</removeLabelLine>
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Code</label>
+                      </element>
+                      <element name="LayoutSpacer1" type="ellsp">
+                        <height>4px</height>
+                      </element>
+                      <element name="buttonsLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ServiceIDForm/uimthd_addSrvCode</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                            <width>40px</width>
+                          </element>
+                          <element name="deleteButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ServiceIDForm/uimthd_deleteSrvCode</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                            <width>40px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="ConditionsHeaders" type="elgrd">
+                        <colWidths>50px</colWidths>
+                        <fixedColWidths>true</fixedColWidths>
+                        <numOfCols>13</numOfCols>
+                        <width>500px</width>
+                        <elementList>
+                          <element name="Select" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <width>30px</width>
+                          </element>
+                          <element name="code" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Code</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="desc" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Description</label>
+                            <removeLabelLine>true</removeLabelLine>
+                            <showLabel>false</showLabel>
+                            <width>100px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="ConditionsVL" type="elvlt">
+                        <height>200px</height>
+                        <overflow>auto</overflow>
+                        <width>500px</width>
+                        <elementList>
+                          <element name="ConditionsIterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.ServiceIDForm/leaf_SrvCodeIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="ConditionsHL" type="elhlt">
+                                <width>500px</width>
+                                <elementList>
+                                  <element name="ConditionsFormFrame" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.ServiceIDForm/leaf_SrvCodeIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.ServiceIDForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initSrvCode(this.model);
+        cm_spoc.initSrvCodeUi(this);
+
+        return m;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script><![CDATA[
+        for(var i=0;i<this.SrvCodeIterator.length;i++){
+            this.SrvCodeIterator[i].model.readonly = this.model.readonly;
+        }
+      ]]></script>
+    </method>
+    <method name="addSrvCode" type="uimthd">
+      <script><![CDATA[
+        if(this.model.SrvCodeArrDS.ListDS.length==0){
+            var SrvCodeArr = cm_spoc.initInnerDS("base_SrvCodeArr");
+            this.model.SrvCodeArrDS = SrvCodeArr;
+        }
+
+        var model=this.model.SrvCodeArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.SrvCodeUI","base_SrvCode","SrvCodeIterator");
+      ]]></script>
+    </method>
+    <method name="deleteSrvCode" type="uimthd">
+      <script><![CDATA[cm_spoc.removeListElements(this ,this.model.SrvCodeArrDS,"List", "SrvCodeIterator");]]></script>
+    </method>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+  </methodList>
+</userInterface>

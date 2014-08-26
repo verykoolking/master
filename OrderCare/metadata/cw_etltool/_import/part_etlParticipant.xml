@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<participant name="cw_etltool._import.etlParticipant">
+  <distributionType>Shared</distributionType>
+  <duration type="dur">
+    <length>P0Y0M1DT0H0M0S</length>
+  </duration>
+  <guid>{31053f1b-e9d5-4fac-a25d-de2d130e8c22}</guid>
+  <interface>iface_cw_etltool._import.importInterface</interface>
+  <label>ETL Participant</label>
+  <metaVersion>4</metaVersion>
+  <operationConditionsList>
+    <operationConditions type="opco">
+      <operation>iface_cw_etltool._import.importInterface/oper_startLoad</operation>
+      <validateOrder>true</validateOrder>
+    </operationConditions>
+    <operationConditions type="opco">
+      <operation>iface_cw_etltool._import.importInterface/oper_abortProcess</operation>
+      <tasksList>
+        <tasks>waitLoadEvent</tasks>
+      </tasksList>
+      <validateOrder>true</validateOrder>
+    </operationConditions>
+  </operationConditionsList>
+  <privilege>UPAdmin</privilege>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.WLTaskUserInterface</extends>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.WLTaskUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</participant>

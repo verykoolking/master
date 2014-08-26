@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productManagement/v1/types"
+    xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+    xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+    targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productManagement/v1/types"
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+    
+<!-- PA1 -->
+
+    <xsd:import
+        namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+        schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_1.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+        schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd" />
+
+    <!-- ************************************* subscribeProduct ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SubscribeProductType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:productId" />
+            <xsd:element ref="apt:timeInterval" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeProduct" type="tns:SubscribeProductType"/>
+
+    <!-- Response -->
+
+    <xsd:complexType name="SubscribeProductResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeProductResponse" type="tns:SubscribeProductResponseType"/>
+
+    <!-- ************************************* unsubscribeProduct ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="UnsubscribeProductType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:productId" />
+            <xsd:element ref="apt:cyclicServicesCascadeFlag" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeProduct" type="tns:UnsubscribeProductType"/>
+
+    <!-- Response -->
+
+    <xsd:complexType name="UnsubscribeProductResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeProductResponse" type="tns:UnsubscribeProductResponseType"/>
+
+    <!-- ************************************* queryProductsBasics ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryProductsBasicsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:timeIntervalFilter"
+                minOccurs="0" />
+            <xsd:element ref="apt:producStatusFilter"
+                minOccurs="0" />
+            <xsd:element ref="apt:customizedProductFlagFilter" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryProductsBasics" type="tns:QueryProductsBasicsType"/>
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryProductsBasicsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0" />
+            <xsd:element ref="apt:serviceAssociationBasicInfoList"
+                minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0"
+                name="extension" type="uct:ExtensionType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryProductsBasicsResponse" type="tns:QueryProductsBasicsResponseType"/>
+
+</xsd:schema>

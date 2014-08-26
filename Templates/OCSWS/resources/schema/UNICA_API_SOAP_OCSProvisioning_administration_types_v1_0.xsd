@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  PA2 -->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/administration/v1/types"
+            xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"             
+            xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+            targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/administration/v1/types" 
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" 
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_0.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" 
+    			schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+
+    <!-- ************************************* queryOperationResult ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryOperationResultType">
+        <xsd:sequence>
+            <xsd:element ref="apt:opReference" />
+            <xsd:element ref="apt:queryCommonInfo" />
+	    <xsd:element name="extension" type="uct:ExtensionType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryOperationResult" type="tns:QueryOperationResultType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryOperationResultResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:opCode" /> 
+            <xsd:element ref="apt:opStatus" /> 
+            <xsd:element ref="apt:opExecutionDate" />
+            <xsd:element ref="apt:error" minOccurs="0" />            
+            <xsd:element ref="apt:userCode" /> 
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:opCost" minOccurs="0" />
+            <xsd:element ref="apt:balance" minOccurs="0" />
+            <xsd:element ref="apt:promotionCode" minOccurs="0" />
+	    <xsd:element name="extension" type="uct:ExtensionType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryOperationResultResponse" type="tns:QueryOperationResultResponseType" />
+
+</xsd:schema>
+

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.applyBoltonTypePriorities">
+  <group>applicabilityCondition.scripts</group>
+  <label>applyBoltonTypePriorities</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="boltonType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_spoc.data.BoltOnType</type>
+    </parameter>
+    <parameter name="TCDT" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.DestTypeAssoTariffClassList</type>
+    </parameter>
+    <parameter name="conditions" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_spoc.data.SimpleTemporalAppCondition</type>
+    </parameter>
+    <parameter name="reusableIds" type="rifp">
+      <array>true</array>
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+    <parameter name="Nx24" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.Nx24AppBoltonTypeList</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cm_plm.Nx24AppBoltonTypeList</valueType>
+  <script><![CDATA[
+    var newGroupId;
+    for(var i=0; i<Nx24.Nx24AppBoltonTypeArr.length; i++){
+
+        var hours =  Nx24.Nx24AppBoltonTypeArr[i].HoursArr;
+        var from = getStartHour(conditions, Nx24.Nx24AppBoltonTypeArr[i].TypeOfDayID);
+        var to = getEndHour(conditions, Nx24.Nx24AppBoltonTypeArr[i].TypeOfDayID);
+        for(var j=from; j<=to ; j++){
+                newGroupId = getNewGroupId(Nx24.Nx24AppBoltonTypeArr[i],j, boltonType, reusableIds, TCDT, projectCode);
+                if(api_common.isFault(newGroupId))
+                    return newGroupId;
+
+                hours[j].AppBoltonTypeGroupId = newGroupId;
+        }
+    }
+
+    return Nx24;
+
+    /**********************************************************************************
+    * Functions
+    **********************************************************************************/
+    function isHourApplicable(conditions, typeOfDayId, hour){
+
+        for(var i=0; i<conditions.length; i++){
+            if(conditions[i].TypeOfDay == typeOfDayId){
+                if(hour <= conditions[i].EndHourEnum && hour >= conditions[i].StartHourEnum)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        return false;
+    }
+    function getStartHour(conditions, typeOfDayId){
+        for(var i=0; i<conditions.length; i++)
+            if(conditions[i].TypeOfDay == typeOfDayId)
+                return  conditions[i].StartHourEnum;
+        return -1;
+    }
+
+    function getEndHour(conditions, typeOfDayId){
+        for(var i=0; i<conditions.length; i++)
+            if(conditions[i].TypeOfDay == typeOfDayId)
+                return  conditions[i].EndHourEnum;
+        return -1;
+    }
+
+
+
+    function getNewGroupId(Nx24AppBoltonType, index, boltonType, reusableIds, TCDT){
+        var groupId = Nx24AppBoltonType.HoursArr[index].AppBoltonTypeGroupId;
+        var hour = Nx24AppBoltonType.HoursArr[index].Hour;
+        var result = 0;
+        var group = new cm_plm.AppBoltonTypeGroupList();
+        group.AppBoltonTypeGroupId = groupId;
+        var tmpGroup = cm_plm.queryAppBoltonTypeGroupList(group);
+        if(api_common.isFault(tmpGroup))
+            return tmpGroup;
+
+        if(tmpGroup.length != 1)
+            return api_common.createFault("ERR", "Error retrieving AppBoltonTypeGroupList:" +  groupId);
+
+        tmpGroup = tmpGroup[0];
+        if(cm_plm.indexOf(tmpGroup.BoltonTypeArr,boltonType.BoltOnTypeID) < 0 )
+            tmpGroup.BoltonTypeArr[tmpGroup.BoltonTypeArr.length] = boltonType.BoltOnTypeID;
+
+        var newBoltonTypeArr = cm_plm.getBoltonTypePriority(tmpGroup.BoltonTypeArr, Nx24AppBoltonType, hour, TCDT);
+
+        group = new cm_plm.AppBoltonTypeGroupList();
+        assignArray(group.BoltonTypeArr, newBoltonTypeArr);
+        group.AppBoltonTypeGroupModality = TCDT.AppBoltonTypeModality;
+        var groupList = cm_plm.queryAppBoltonTypeGroupList(group);
+        if(groupList.length == 0){
+            group.projectCode = projectCode;
+            if(reusableIds.length > 0){
+                group.AppBoltonTypeGroupId = reusableIds.pop();
+                result = cm_plm.setAppBoltonTypeGroupListByValue(group);
+            }else{
+                result = cm_plm.createAppBoltonTypeGroupListByValue(group);
+            }
+        }else
+        group = groupList[0];
+
+        if(api_common.isFault(result))
+            return result;
+
+
+        result = group.AppBoltonTypeGroupId;
+        return result;
+    }
+
+    function assignArray(object, array){
+
+        for(var i=0; i<array.length; i++)
+            object[i] = array[i];
+        return object;
+    }
+  ]]></script>
+</script>

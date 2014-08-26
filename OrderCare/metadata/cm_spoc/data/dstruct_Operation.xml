@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="cm_spoc.data.Operation">
+  <container>true</container>
+  <extends>dstruct_cm_spoc.data.OCSCustFacingServiceSpec</extends>
+  <group>Operation</group>
+  <guid>{af878413-848b-4565-ba48-dd7be8a09006}</guid>
+  <jsonMap type="jmap"/>
+  <label>Operation</label>
+  <metaVersion>4</metaVersion>
+  <childList>
+    <child name="OperationId" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSString2Attribute</element>
+      <guid>{b8a3c75a-84c1-4e90-bdd4-d2d21718b919}</guid>
+      <jsonMap type="jmap"/>
+      <label>OperationId</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="OperationInOpsDetRecord" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSBooleanAttribute</element>
+      <guid>{9a4a229a-7bf3-43bd-bd9b-86e3290b1a6a}</guid>
+      <jsonMap type="jmap"/>
+      <label>OperationInOpsDetRecord</label>
+    </child>
+    <child name="ActiveOperationsInOCSMS" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSBooleanAttribute</element>
+      <guid>{589d81b4-eadf-4ecc-9762-ae7c424c8086}</guid>
+      <jsonMap type="jmap"/>
+      <label>ActiveOperationsInOCSMS</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="OpOperationLiteralArr" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{7012a2f5-f56a-425d-9396-7b4284cfc984}</guid>
+      <jsonMap type="jmap"/>
+      <label>OpOperationLiteralArr</label>
+    </child>
+    <child name="OpOperationLiteralArrDS" type="dstruct">
+      <element>dstruct_cm_spoc.data.OpOperationLiteralArr</element>
+      <guid>{8e6d0d68-a01f-4e44-a074-06842b3ca399}</guid>
+      <jsonMap type="jmap"/>
+      <label>OpOperationLiteralArrDS</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="DebtCausesArr" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{db21bac5-2c5f-4655-b314-681afef9c2a3}</guid>
+      <jsonMap type="jmap"/>
+      <label>DebtCausesArr</label>
+    </child>
+    <child name="DebtCausesArrDS" type="dstruct">
+      <element>dstruct_cm_spoc.data.DebtCausesArr</element>
+      <guid>{6171fb0e-2f93-4f7b-84b9-cf7d58ea7e52}</guid>
+      <jsonMap type="jmap"/>
+      <label>DebtCausesArrDS</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="SOPEnum" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.SubOpEnum</element>
+      <guid>{03a077ed-59d9-42bd-941a-421388aa5d61}</guid>
+      <jsonMap type="jmap"/>
+      <label>SOPEnum</label>
+    </child>
+  </childList>
+  <methodList>
+    <method name="onInit" type="action">
+      <parameterList>
+        <parameter name="document" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <system>true</system>
+      <script><![CDATA[
+        this.cw$super_onInit(document);
+        this.OperationInOpsDetRecord = false;
+        this.ActiveOperationsInOCSMS=1;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_cm_spoc.data.Operation</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_cm_spoc.data.Operation</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

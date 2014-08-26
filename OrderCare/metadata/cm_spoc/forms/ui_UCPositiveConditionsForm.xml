@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.UCPositiveConditionsForm">
+  <group>UsageControl</group>
+  <label>UCPositiveConditionsForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.UCPositiveConditions</valueType>
+    </variable>
+    <variable name="SACFinder" type="leaf">
+      <valueType>findScript_cm_spoc.SACFinder/ui_UserInterface</valueType>
+    </variable>
+    <variable name="positive" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="negative" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="HorizontalLayout" type="elhlt"/>
+                <element name="HorizontalLayout1" type="elhlt">
+                  <height>600px</height>
+                  <width>750px</width>
+                  <elementList>
+                    <element name="FormFrame" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.UCPositiveConditionsForm/leaf_SACFinder</variablePath>
+                          <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/frmui_Forms</variablePath>
+                          <variablePath>findScript_cm_spoc.SACFinder/ui_UserInterface/frmui_Forms/exov_Default</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <height>600px</height>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.UCPositiveConditionsForm/leaf_SACFinder</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>1150px</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.UCPositiveConditionsForm/leaf_model</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.UCPositiveConditionsForm/leaf_model</valueType>
+      <script><![CDATA[
+        //init UCApplicabilityCondition (Positive|| Negative)
+        var m = cm_spoc.initUCPosApplicabilityCondition(this.model);
+
+        cm_spoc.initPolarVars(this);
+
+        //init finder
+        this.SACFinder = cm_spoc.initSACFinder(this);
+
+        return m;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="openDialogHappyPeriod" type="usrActionMethod">
+      <dialogHeight>10000</dialogHeight>
+      <dialogWidth>5000</dialogWidth>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var  model =  cm_spoc.initInnerDS("base_UCSimpleApplicabilityCondit");
+
+
+        return new cm_spoc.forms.HappyPeriodPopUp(model,this);
+      ]]></script>
+    </method>
+    <method name="openDialogSACAttributeDetail" type="usrActionMethod">
+      <dialogHeight>500</dialogHeight>
+      <dialogWidth>550</dialogWidth>
+      <showInPopup>true</showInPopup>
+      <script>return new cm_spoc.forms.UCSimAppConSingleAssignmentPopUp(null,this);</script>
+    </method>
+    <method name="PositiveSelection" type="permMethod">
+      <script>return this.positive;</script>
+    </method>
+    <method name="NegativeSelection" type="permMethod">
+      <script>return this.negative;</script>
+    </method>
+    <method name="cwChildDialogClose" type="uimthd">
+      <script>this.cw$super_cwChildDialogClose();</script>
+    </method>
+  </methodList>
+</userInterface>

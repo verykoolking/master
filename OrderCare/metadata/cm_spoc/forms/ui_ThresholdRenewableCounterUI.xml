@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ThresholdRenewableCounterUI">
+  <group>BoltOnType</group>
+  <label>ThresholdRenewableCounterUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="parentUI" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ThresholdSpecification</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="GridLayout" type="elgrd">
+              <colWidths>50px</colWidths>
+              <fixedColWidths>true</fixedColWidths>
+              <numOfCols>13</numOfCols>
+              <width>750px</width>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <columnSpan>1</columnSpan>
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ThresholdRenewableCounterUI/permMethod_readOnly</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ThresholdRenewableCounterUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>80px</width>
+                </element>
+                <element name="ThresholdValue" type="elfld">
+                  <autoFocusNextField>false</autoFocusNextField>
+                  <columnSpan>2</columnSpan>
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ThresholdRenewableCounterUI/permMethod_readOnly</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <showHint>false</showHint>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ThresholdRenewableCounterUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.ThresholdSpecification/dstruct_ThresholdValue</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>180px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="selectTrigger" type="uimthd">
+      <script>return;</script>
+    </method>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.parentUI.model.readonly;</script>
+    </method>
+    <method name="setParentUI" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <mandatory>true</mandatory>
+          <type>ui_com.conceptwave.system.UserInterface</type>
+        </parameter>
+      </parameterList>
+      <script>this.parentUI=ui;</script>
+    </method>
+    <method name="getParentUI" type="uimthd">
+      <script>return this.parentUI;</script>
+    </method>
+  </methodList>
+</userInterface>

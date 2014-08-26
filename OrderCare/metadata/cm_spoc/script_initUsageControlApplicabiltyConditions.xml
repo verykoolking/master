@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initUsageControlApplicabiltyConditions">
+  <group>ui_scripts.UsageControl</group>
+  <label>initUsageControlApplicabiltyConditions</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    if (!model.specificationCode){
+        model = cm_spoc.initModelForCreation(model);
+    }
+    else
+    {
+       //model = cm_spoc.initModelForModification(model);
+
+
+        model.UnitTypeEnum= model.UnitType;
+
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+
+       s.specificationCode = model.UCPositiveConditions;
+
+
+
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.UCPositiveConditionsDS=r;
+       }
+
+
+
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+
+       s.specificationCode = model.UCNegativeConditions;
+
+
+
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.UCNegativeConditionsDS=r;
+       }
+    }
+
+    return model;
+  ]]></script>
+</script>

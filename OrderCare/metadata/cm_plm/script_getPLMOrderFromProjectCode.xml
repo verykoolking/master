@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.getPLMOrderFromProjectCode">
+  <label>getPLMOrderFromProjectCode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <valueType>order_cm_plm.plmOrder</valueType>
+  <script><![CDATA[
+    /**
+     * Get the PLM Order for a specific project code
+     *
+     * @author  Luis Barreira
+     * @date    26-06-2014
+     *
+     * @param {String} projectCode   The projectCode
+     * @return {cm_plm.plmOrder}     The PLM Order Document
+     */
+
+    var orderFinder = new Finder("cm_plm.plmOrderFinder");
+    orderFinder.searchDocument.projectCode = projectCode;
+    var result = orderFinder.search();
+    if(result.length==1)
+        return Order.getOrderById(result[0].cwOrderId);
+
+    return null;
+  ]]></script>
+</script>

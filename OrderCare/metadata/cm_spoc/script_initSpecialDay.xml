@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initSpecialDay">
+  <group>ui_scripts.Calendars</group>
+  <label>initSpecialDay</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!model.specificationCode){
+        model = cm_spoc.initModelForCreation(model);
+    }else{
+       model = cm_spoc.initModelForModification(model);
+    }
+
+     initModelCustoms(model)
+
+    return model;
+
+    function  initModelCustoms(model) {
+
+        cm_spoc.setIsAnyPlans(model);
+        cm_spoc.setIsDefaultSP(model);
+
+        if (!model.specificationCode) {
+            model.SpDayServiceProviderArrDS.List[0] = cm_spoc.getServiceProviderDefault() ? cm_spoc.getServiceProviderDefault().itemCode : null;
+        }
+       if (model.SpDayServiceProviderArrDS.List[0] )model.ServiceProviderEnum = model.SpDayServiceProviderArrDS.List[0];
+
+
+    };
+  ]]></script>
+</script>

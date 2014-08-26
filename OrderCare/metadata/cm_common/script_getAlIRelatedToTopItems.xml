@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.getAlIRelatedToTopItems">
+  <group>scripts</group>
+  <label>Get All Related To Parent Itens</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="relationType" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Retrieves all parent item that are related to specified item
+     *
+     * @author  Luis Barreira
+     * @date    29-05-2014
+     *
+     * @param {String} itemCode        The Catalog Item Code
+     * @param {String} relationType    The relation type between parent item and item represented by itemCode
+     */
+
+    var iemParFinder = new Finder("cm_common.relatedToTopItemFinder");
+    iemParFinder.searchDocument.itemRelationTarget = itemCode;
+    iemParFinder.searchDocument.relationTypeCode = relationType;
+    var result = iemParFinder.search();
+    return result;
+  ]]></script>
+</script>

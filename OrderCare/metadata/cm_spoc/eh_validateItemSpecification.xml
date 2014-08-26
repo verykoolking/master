@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<event__handler name="cm_spoc.validateItemSpecification">
+  <flags enum-type="metadataFlag">FINAL</flags>
+  <event>evt_epc.event.validateItemSpecification</event>
+  <eventID>CW</eventID>
+  <eventType>EPC_SPECIFICATION_VALIDATE</eventType>
+  <group>overridden.eventHandlers</group>
+  <label>validateItemSpecification</label>
+  <metaVersion>4</metaVersion>
+  <script><![CDATA[
+    var fault = api_common.createFault();
+    /*Temporarily disable DS validation
+    var eList = cm_common.validateDs(specification);
+    for (var i = 0; eList != null && i < eList.length; i+=2) {
+        fault.addFault(eList[i], eList[i+1], null, 'V');
+    }*/
+
+    var count = ruleSet.validate(specification, fault, tag, true);
+
+    //Relationship validation
+    //a Type validation
+    //b Cardinality validation
+
+    //***Get base item instance from runtime APIs if exists [the 'base' is assumed to be 'active']
+    var baseItem = theCatalog.getItem(specification.baseSpecificationCode, new Date());
+    if (!baseItem) {
+        return cwl_epc.createCommonFault(null, "EPC_ERR_0003", null, specification.baseSpecificationCode);
+    }
+
+    //*** Initialize itemassociations for itemDS
+    var type_baseItemCode = baseItem.CW_SPECTYPE.getDefaultValue();
+    var type_baseItem = theCatalog.getItem(type_baseItemCode, new Date());
+
+    //handle specification leaves only. Extra abbributes in name/value pairs can not be catalog item relations.
+    //var itemItems = type_baseItem.getAssociations();
+
+    if (fault.message.length <= 0) {
+        return null;
+    }
+    return fault;
+  ]]></script>
+</event__handler>

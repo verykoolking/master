@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BOTBoltOnTypeCodeCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_BOTBoltOnTypeCodeCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var attrArr= [{"name":"BoltOnTypeCode","value":data.BoltOnTypeCode},{"name":"BoltOnTypeDescription","value":data.BoltOnTypeDescription},{"name":"BoltOnTypeID","value":data.BoltOnTypeID}];
+    var result = cm_spoc.isUniqueValue("base_BoltOnType",attrArr,data.specificationCode);
+
+    if(result != false)
+    {
+        errList.addErrorMessage(data,["Bolt On Type Code with Bolt On Type Description and Bolt On Type ID already exists"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

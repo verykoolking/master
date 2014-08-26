@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getBoltOnTypeModality">
+  <group>ui_scripts.BoltOn</group>
+  <label>getBoltOnTypeModality</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="boltOnTypeCode" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(boltOnTypeCode){
+        var btmJson={BoltOnTypeModalityCode:"",BoltOnTypeModalityDesc:""};
+        var itemFinder = new Finder("cwa_epc.itemAttributeFinder");
+        itemFinder.searchDocument.itemCode = boltOnTypeCode;
+        itemFinder.searchDocument.attributeCode = "BoltOnTypeModality";
+        var result = itemFinder.search();
+        for(var i=0;i<result.length;i++){
+            if(result[i].attributeCode == "BoltOnTypeModalityEnum"){
+                btmJson.BoltOnTypeModalityCode =  result[i].defaultValue;
+                break;
+            }
+        }
+
+        var ct = Global.getCTCodesAndDescriptions("BoltOnTypeModalityCodeTable");
+
+        for(var i=0;i<ct.length;i++){
+            if(ct[i]==btmJson.BoltOnTypeModalityCode) btmJson.BoltOnTypeModalityDesc = ct[i+1];
+        }
+    }
+    else{
+        btmJson.BoltOnTypeModalityDesc=null;
+    }
+
+    return btmJson;
+  ]]></script>
+</script>

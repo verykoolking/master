@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.getSpecificationByKey">
+  <group>api</group>
+  <label>getSpecificationByKey</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="specification" type="rifp">
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    specification = epc.getSpecificationByKey(specification);
+    if(api_common.isFault(specification))
+        return specification;
+
+    var nodeNames=specification.getNodeNames();
+    var ci,r,arrRels,arrDS, res;
+    var s = new epc.data.Specification();
+    s.project =  cwa_epc.getDefaultProj();
+
+    for(var i=0;i<nodeNames.length;i++){
+        ci = cm_spoc.getDsName(nodeNames[i]);
+        if(ci){
+            //ci = nodeNames[i].substring(0,nodeNames[i].indexOf("DS"));
+            if(nodeNames[i]!="ListDS"){
+                if(specification[ci]){
+                    s.specificationCode = specification[ci];
+                    r = cm_common.getSpecificationByKey(s);
+                    if(api_common.isFault(r))
+                        return r;
+                    specification[nodeNames[i]]=r;
+
+                }
+                if(specification[nodeNames[i]].has("List")){
+                    arrRels = specification[nodeNames[i]].List;
+                    arrDS = specification[nodeNames[i]].ListDS;
+                    for(var j=0;j<arrRels.length;j++){
+                        s.specificationCode = arrRels[j];
+                        r = cm_common.getSpecificationByKey(s);
+                        if(api_common.isFault(r))
+                            return r;
+                        arrDS[j]=r;
+                    }
+                }
+
+                //res = cm_common.getSpecificationByKey(specification[nodeNames[i]]);
+                //if(api_common.isFault(res))
+                    //return res;
+
+
+            }
+        }
+    }
+
+    return specification;
+  ]]></script>
+</script>

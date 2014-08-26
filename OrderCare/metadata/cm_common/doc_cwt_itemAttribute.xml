@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cm_common.cwt_itemAttribute">
+  <extends>doc_cwt_pc.cwt_itemAttribute</extends>
+  <group>overridden.itemAttributeChanges</group>
+  <guid>{39c6d790-3aea-459e-b0d2-0b77bc252d97}</guid>
+  <label>Item Attribute Catalog for EPC</label>
+  <metaVersion>4</metaVersion>
+  <overrides>doc_cwt_pc.cwt_itemAttribute</overrides>
+  <variableList>
+    <variable name="isOverride" type="leaf">
+      <column>ISOVERRIDE</column>
+      <table>cwpc_itemAttribute_v</table>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="isPrimaryKey" type="leaf">
+      <column>ISPRIMARYKEY</column>
+      <table>cwpc_itemAttribute_v</table>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="isMandatory" type="leaf">
+      <column>ISMANDATORY</column>
+      <table>cwpc_itemAttribute_v</table>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="isSent2Altamira" type="leaf">
+      <column>ISSENT2ALTAMIRA</column>
+      <table>cwpc_itemAttribute_v</table>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="minValue" type="leaf">
+      <column>MINVALUE</column>
+      <table>cwpc_itemAttribute_v</table>
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="maxValue" type="leaf">
+      <column>MAXVALUE</column>
+      <table>cwpc_itemAttribute_v</table>
+      <valueType>dtype_cm_plm.epcAttributeMaxValue</valueType>
+    </variable>
+    <variable name="RE_Release" type="leaf">
+      <column>RE_RELEASE</column>
+      <description><![CDATA[
+        <p style="margin-top: 0">
+          Start release for RE.
+        </p>
+      ]]></description>
+      <table>cwpc_itemAttribute_v</table>
+      <valueType>dtype_cm_plm.aaReleaseType</valueType>
+    </variable>
+    <variable name="MS_Release" type="leaf">
+      <column>MS_RELEASE</column>
+      <description><![CDATA[
+        <p style="margin-top: 0">
+          Start release for MS.
+        </p>
+      ]]></description>
+      <table>cwpc_itemAttribute_v</table>
+      <valueType>dtype_cm_plm.aaReleaseType</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="loadNGAAAttributes" type="uimthd">
+      <script>return cm_common.loadNGAAAttributes(this);</script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface</extends>
+    <overrides>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface</overrides>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cm_common.cwt_itemAttribute</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Detail" type="exov">
+            <base>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/frmui_Forms/vform_Detail</base>
+            <extends>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/frmui_Forms/vform_Detail</extends>
+            <label>Detail</label>
+            <overrideList>
+              <override name="GridLayout" type="elext"/>
+            </overrideList>
+          </overlay>
+          <overlay name="treeDetail" type="exov">
+            <base>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/frmui_Forms/vform_treeDetail</base>
+            <extends>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/frmui_Forms/vform_treeDetail</extends>
+            <label>treeDetail</label>
+            <overrideList>
+              <override name="GridLayout" type="elext">
+                <elementList>
+                  <element name="RowSpacer" type="elrsp">
+                    <height>1px</height>
+                    <rowSpan>1px</rowSpan>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_fieldVisible</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="isMandatory" type="elchk">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_detailEditable</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>Is Mandatory</label>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/usrActionMethod_triggerDefaultValue</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/leaf_isMandatory</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_fieldVisible</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="isPrimaryKey" type="elchk">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_detailEditable</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>Is Primary Key</label>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/usrActionMethod_triggerDefaultValue</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/leaf_isPrimaryKey</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_fieldVisible</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="isSent2Altamira" type="elchk">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_detailEditable</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>Is Sent to Alatamira</label>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/usrActionMethod_triggerDefaultValue</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/leaf_isSent2Altamira</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_fieldVisible</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="isOverride" type="elchk">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_detailEditable</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>Is Override</label>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/usrActionMethod_triggerDefaultValue</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/leaf_isOverride</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_fieldVisible</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="RowSpacer2" type="elrsp">
+                    <height>1px</height>
+                    <rowSpan>1px</rowSpan>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_fieldVisible</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="minValue" type="elfld">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_detailEditable</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>Min Value</label>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/usrActionMethod_triggerDefaultValue</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/leaf_minValue</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_fieldVisible</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="maxValue" type="elfld">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_detailEditable</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>Max Value</label>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/usrActionMethod_triggerDefaultValue</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/leaf_maxValue</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_fieldVisible</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="RE_Release" type="elslct">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_detailEditable</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>RE Release</label>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/usrActionMethod_triggerDefaultValue</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/leaf_RE_Release</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_fieldVisible</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="MS_Release" type="elslct">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_detailEditable</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>MS Release</label>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/usrActionMethod_triggerDefaultValue</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cm_common.cwt_itemAttribute/leaf_MS_Release</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cwt_pc.cwt_itemAttribute/ui_UserInterface/permMethod_fieldVisible</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+</document>

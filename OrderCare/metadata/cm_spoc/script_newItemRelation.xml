@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.newItemRelation">
+  <group>overridden.scripts</group>
+  <label>newItemRelation</label>
+  <metaVersion>4</metaVersion>
+  <overrides>script_cwl_epc.newItemRelation</overrides>
+  <parameterList>
+    <parameter name="itemDS" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cwt_pcmaintapi.item</type>
+    </parameter>
+    <parameter name="code" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="referenceObj" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="itemItem" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="spec" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+    <parameter name="singular" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="oper" type="rifp">
+      <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      create (0) or set (1)&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var simpleRelation = !(referenceObj instanceof DataStructure);
+    var isTreeNode = simpleRelation? false : referenceObj.isBasedOn("epc.data.treeElement");
+    var isAssociation = simpleRelation? false : (referenceObj.isBasedOn("epc.data.Association") || referenceObj.has("CW_REFID"));
+
+    var targetItem = "";
+    if (simpleRelation) {
+        targetItem = referenceObj;
+    } else if (isTreeNode) {
+        //spec.mapTo(referenceObj, "cwl_epc.mapTreeNodeToChildNode");
+        referenceObj.project = spec.project;
+        referenceObj.startDate = spec.effectiveDate;
+        if (oper == 0) {    //create
+            epc.createItemSpecificationByValue(referenceObj);
+        } else {    //set
+            epc.setItemSpecificationByValue(referenceObj);
+        }
+        targetItem = referenceObj.specificationCode;
+    } else if (isAssociation) {
+        targetItem = referenceObj.CW_REFID;
+        var itemChargeRelationCode = singular ? itemItem.code : targetItem;
+        for (var i = 0; i < referenceObj.ItemCharges.length; i++) {
+            cwl_epc.newItemCharge(itemDS, referenceObj.ItemCharges[i], spec.specificationCode, itemChargeRelationCode, spec.project, spec);
+        }
+    }
+
+    //if (itemItem.getTarget() != targetItemType) {    //to support versioning
+        var itemRelationDS = new DataStructure("cwt_pcmaintapi.itemRelation");
+        itemRelationDS.itemRelationCode = singular ? itemItem.code : targetItem;
+        itemRelationDS.itemCode = spec.specificationCode;
+        itemRelationDS.itemRelationTarget = targetItem;
+        itemRelationDS.type = itemItem.getAssociationType();
+
+        itemRelationDS.status = 'DEF';
+        itemRelationDS.name = targetItem;
+        itemRelationDS.label = itemItem.getLabel();
+        itemRelationDS.startDate = spec.effectiveDate;
+        itemRelationDS.endDate = spec.endDate;
+        itemRelationDS.minQuantity = itemItem.getMinCardinality();
+        itemRelationDS.maxQuantity = itemItem.getMaxCardinality();
+        itemRelationDS.projectCode = spec.project;
+        itemRelationDS.createDate = new Date();
+        itemRelationDS.createdBy = UserProfile.userId();
+        itemRelationDS.updateDate = new Date();
+        itemRelationDS.updatedBy = UserProfile.userId();
+        itemRelationDS.sequence = itemDS.itemRelations.length;
+        /*
+        itemRelationDS.cancel = ;
+        itemRelationDS.sequence = ;
+        itemRelationDS.defaultQuantity = ;
+        itemRelationDS.orgChartName =
+        itemRelationDS.relationAttributes =
+        itemRelationDS.relationTypeCode =
+        */
+        itemDS.itemRelations[itemDS.itemRelations.length] = itemRelationDS;
+
+
+        if (!simpleRelation) {        //complex relation with attributes
+            //get attributes of association type
+            var base_assoAttrs = getAssociationTypeAttributeNames(itemRelationDS.type);
+            if (!base_assoAttrs.isBasedOn("cwt_pcmaintapi:Fault")) {
+                //get attribute names in the specification node
+                var assoAttrs = referenceObj.getNodeNames();
+
+                //for each leave of specification leave, if it belongs to association type attribute,
+                //crete a new relationTypeAttribute
+                for (var i = 0; i < assoAttrs.length; i++ ) {
+                    var relationAttr = getRelationAttribute(base_assoAttrs, assoAttrs[i]);
+                    if (relationAttr != null) {
+                        var assoAttr = new DataStructure("cwt_pcmaintapi.itemAttribute");
+                        assoAttr.itemCode = spec.specificationCode;
+                        assoAttr.itemAttributeCode = assoAttrs[i];
+                        assoAttr.status = 'DEF';
+                        assoAttr.startDate = spec.effectiveDate;
+                        assoAttr.defaultValue = cwl_epc.toStr(referenceObj.getValueByName(assoAttrs[i]));
+                        assoAttr.endDate = spec.endDate;
+                        assoAttr.projectCode = spec.project;
+                        assoAttr.attributeCode = relationAttr.attributeCode;    //Attribute Type
+                        //assoAttr.label =  attrList[i].getLabel();
+                        //assoAttr.name = ???;
+                        assoAttr.name = assoAttr.itemAttributeCode;
+                        assoAttr.catalogObjectType = "association";
+                        //assoAttr.type = ;
+                        assoAttr.itemRelationCode = itemRelationDS.itemRelationCode;
+                        //assoAttr.sequence = ;
+                        //assoAttr.cancel = ;
+                        //assoAttr.orgChartName = ;
+                        //assoAttr.isDefaultValueFormula = ;
+                        //assoAttr.isProperty = attrList[i].isProperty();
+                        assoAttr.createDate = new Date();
+                        assoAttr.createdBy = UserProfile.userId();
+                        assoAttr.updateDate = new Date();
+                        assoAttr.updatedBy = UserProfile.userId();
+
+                        itemDS.itemAttributes[itemDS.itemAttributes.length] = assoAttr;
+                    }
+                }
+            }
+        }
+
+    //}    //to support versioning
+
+    //Get attributes of association type
+    //Return "cwt_pcmaintapi:relationTypeAttributeList" or Fault
+    function getAssociationTypeAttributeNames(associationType) {
+        var rtaSearchDS = new DataStructure("cwt_pcmaintapi.relationTypeAttributeSearchDS");
+        rtaSearchDS.relationTypeCode = associationType;
+        return cwt_pcmaintapi.relationTypeAttributeSearch(rtaSearchDS);
+    }
+
+    //Check if the relation attribute is pre-defined.
+    //If Yes, return the relationTypeAttribute object.
+    function getRelationAttribute(base_assoAttrs, attrName) {
+        for (var i = 0; i < base_assoAttrs.relationTypeAttributes.length; i++) {
+            if (base_assoAttrs.relationTypeAttributes[i].relationAttrName == attrName) {
+                return base_assoAttrs.relationTypeAttributes[i];
+            }
+        }
+        return null;
+    }
+  ]]></script>
+</script>

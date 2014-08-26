@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cw_etltool.presentation.etlToolDashbord">
+  <label>ETL Tool Dashbord</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="order" type="leaf">
+      <valueType>order_com.conceptwave.system.Order</valueType>
+    </variable>
+    <variable name="orderVisible" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="sharedTaskFinderUI" type="leaf">
+      <valueType>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface</valueType>
+    </variable>
+    <variable name="worklistFinderUI" type="leaf">
+      <valueType>findScript_cw_etltool.common.worklistFinder/ui_UserInterface</valueType>
+    </variable>
+    <variable name="orderDetails" type="leaf">
+      <valueType>tree_com.conceptwave.system.OrderUserInterface</valueType>
+    </variable>
+    <variable name="opList" type="leaf">
+      <valueType>ui_cw_etltool.common.actionsUI</valueType>
+    </variable>
+    <variable name="importOrderUI" type="leaf">
+      <valueType>ui_cw_etltool.presentation.importOrderUI</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <width>100%</width>
+              <elementList>
+                <element name="VerticalLayout1" type="elvlt">
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cw_etltool.presentation.etlToolDashbord/permMethod_worklistView</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="FormFrame" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cw_etltool.presentation.etlToolDashbord/frmui_Forms</variablePath>
+                          <variablePath>ui_cw_etltool.presentation.etlToolDashbord/frmui_Forms/vform_dashboard</variablePath>
+                        </variablePathList>
+                      </formReference>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="VerticalLayout2" type="elvlt">
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cw_etltool.presentation.etlToolDashbord/permMethod_details</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="FormFrame2" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cw_etltool.presentation.etlToolDashbord/frmui_Forms</variablePath>
+                          <variablePath>ui_cw_etltool.presentation.etlToolDashbord/frmui_Forms/vform_importOrderUI</variablePath>
+                        </variablePathList>
+                      </formReference>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="dashboard" type="vform">
+          <label>dashboard</label>
+          <root name="VerticalLayout" type="elvlt">
+            <height>100%</height>
+            <width>100%</width>
+            <elementList>
+              <element name="MyTasks" type="elsectnstck">
+                <height>250px</height>
+                <elementList>
+                  <element name="MyTask_Section" type="elsect">
+                    <elementList>
+                      <element name="MyTask_Header" type="elsecth">
+                        <label>My Tasks</label>
+                      </element>
+                      <element name="MyWorklist" type="elovf">
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cw_etltool.presentation.etlToolDashbord/leaf_worklistFinderUI</variablePath>
+                            <variablePath>findScript_cw_etltool.common.worklistFinder/ui_UserInterface/frmui_Forms</variablePath>
+                            <variablePath>findScript_cw_etltool.common.worklistFinder/ui_UserInterface/frmui_Forms/vform_MyTasks</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cw_etltool.presentation.etlToolDashbord/leaf_worklistFinderUI</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+              <element name="LayoutSpacer" type="ellsp">
+                <height>2%</height>
+              </element>
+              <element name="GroupTasks" type="elsectnstck">
+                <height>250px</height>
+                <elementList>
+                  <element name="GroupTasks_Section" type="elsect">
+                    <elementList>
+                      <element name="GroupTask" type="elsecth">
+                        <label>Group Tasks</label>
+                      </element>
+                      <element name="sharedTasks" type="elovf">
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cw_etltool.presentation.etlToolDashbord/leaf_sharedTaskFinderUI</variablePath>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/frmui_Forms</variablePath>
+                            <variablePath>findScript_cw_etltool.common.sharedTaskFinder/ui_UserInterface/frmui_Forms/vform_Worklist</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cw_etltool.presentation.etlToolDashbord/leaf_sharedTaskFinderUI</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="orderDetails" type="vform">
+          <label>orderDetails</label>
+          <root name="VerticalLayout2" type="elvlt">
+            <height>100%</height>
+            <width>100%</width>
+            <elementList>
+              <element name="HorizontalLayout" type="elvlt">
+                <height>100%</height>
+                <useDefaultHeight>true</useDefaultHeight>
+                <width>100%</width>
+                <elementList>
+                  <element name="OrderDetails" type="elsectnstck">
+                    <height>550px</height>
+                    <visibilityMode>multiple</visibilityMode>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cw_etltool.presentation.etlToolDashbord/permMethod_details</variablePath>
+                      </variablePathList>
+                    </visible>
+                    <elementList>
+                      <element name="MyTask_Section1" type="elsect">
+                        <elementList>
+                          <element name="OrderDetails_Header" type="elsecth">
+                            <label>Order Details</label>
+                          </element>
+                          <element name="orderDetails" type="elovf">
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cw_etltool.presentation.etlToolDashbord/leaf_orderDetails</variablePath>
+                                <variablePath>tree_com.conceptwave.system.OrderUserInterface/frmui_Forms</variablePath>
+                                <variablePath>tree_com.conceptwave.system.OrderUserInterface/frmui_Forms/exov_Default</variablePath>
+                              </variablePathList>
+                            </formReference>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cw_etltool.presentation.etlToolDashbord/leaf_orderDetails</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="VerticalLayout1" type="elvlt">
+                    <elementList>
+                      <element name="detailMenu" type="elovf">
+                        <fillSpace>false</fillSpace>
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cw_etltool.presentation.etlToolDashbord/leaf_orderDetails</variablePath>
+                            <variablePath>tree_com.conceptwave.system.OrderUserInterface/frmui_Forms</variablePath>
+                            <variablePath>tree_com.conceptwave.system.OrderUserInterface/frmui_Forms/exov_Menu</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cw_etltool.presentation.etlToolDashbord/leaf_orderDetails</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Table" type="eltabl"/>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="Actions" type="vform">
+          <label>Actions</label>
+          <root name="HorizontalLayout" type="elhlt">
+            <alignment>left,center</alignment>
+            <elementList>
+              <element name="Actions" type="elmnu">
+                <menuAccel type="mAccelP"/>
+                <label>Actions</label>
+                <showDown>true</showDown>
+                <showMenuDropDown>true</showMenuDropDown>
+                <showRollOver>true</showRollOver>
+                <elementList>
+                  <element name="Iterator" type="eliter">
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cw_etltool.presentation.etlToolDashbord/leaf_opList</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="task" type="elmnu">
+                        <menuAccel type="mAccelP"/>
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool.common.worklistFinder/ui_UserInterface/leaf_opList</variablePath>
+                            <variablePath>ui_cw_etltool.common.actionsUI/usrActionMethod_cwAction</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_com.conceptwave.system.WLTaskOperationsUserInterface/leaf_label</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="importOrderUI" type="vform">
+          <label>importOrderUI</label>
+          <root name="VerticalLayout2" type="elvlt">
+            <height>100%</height>
+            <width>100%</width>
+            <elementList>
+              <element name="HorizontalLayout" type="elvlt">
+                <height>100%</height>
+                <useDefaultHeight>true</useDefaultHeight>
+                <width>100%</width>
+                <elementList>
+                  <element name="OrderDetails" type="elsectnstck">
+                    <height>550px</height>
+                    <visibilityMode>multiple</visibilityMode>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cw_etltool.presentation.etlToolDashbord/permMethod_details</variablePath>
+                      </variablePathList>
+                    </visible>
+                    <elementList>
+                      <element name="MyTask_Section1" type="elsect">
+                        <elementList>
+                          <element name="OrderDetails_Header" type="elsecth">
+                            <label>Order Details</label>
+                          </element>
+                          <element name="orderDetails" type="elovf">
+                            <fillSpace>false</fillSpace>
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cw_etltool.presentation.etlToolDashbord/leaf_importOrderUI</variablePath>
+                                <variablePath>ui_cw_etltool.presentation.importOrderUI/frmui_Forms</variablePath>
+                                <variablePath>ui_cw_etltool.presentation.importOrderUI/frmui_Forms/vform_report</variablePath>
+                              </variablePathList>
+                            </formReference>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cw_etltool.presentation.etlToolDashbord/leaf_importOrderUI</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="VerticalLayout1" type="elvlt">
+                    <elementList>
+                      <element name="detailMenu" type="elovf">
+                        <fillSpace>false</fillSpace>
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cw_etltool.presentation.etlToolDashbord/leaf_importOrderUI</variablePath>
+                            <variablePath>ui_cw_etltool.presentation.importOrderUI/frmui_Forms</variablePath>
+                            <variablePath>ui_cw_etltool.presentation.importOrderUI/frmui_Forms/exov_Menu</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_cw_etltool.presentation.etlToolDashbord/leaf_importOrderUI</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Table" type="eltabl"/>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$orderVisible" type="laction">
+      <path>ui_cw_etltool.presentation.etlToolDashbord/leaf_orderVisible</path>
+      <type>initializer</type>
+      <script>false;</script>
+    </method>
+    <method name="details" type="permMethod">
+      <script>return this.orderVisible;</script>
+    </method>
+    <method name="goToHome" type="uimthd">
+      <script><![CDATA[
+        this.orderVisible = false;
+        this.refresh();
+      ]]></script>
+    </method>
+    <method name="loadDetails" type="uimthd">
+      <parameterList>
+        <parameter name="wiOrder" type="rifp">
+          <mandatory>true</mandatory>
+          <type>order_com.conceptwave.system.Order</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.orderVisible = true ;
+        this.order = wiOrder;
+        this.refresh();
+      ]]></script>
+    </method>
+    <method name="onInit" type="action">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+      <script><![CDATA[
+        this.cw$super_onInit();
+
+        this.sharedTaskFinderUI = new cw_etltool.common.sharedTaskFinder.UserInterface(null, this);
+        this.sharedTaskFinderUI.model.search();
+
+        this.worklistFinderUI = new cw_etltool.common.worklistFinder.UserInterface(null, this);
+        this.worklistFinderUI.model.search();
+      ]]></script>
+    </method>
+    <method name="refresh" type="uimthd">
+      <script><![CDATA[
+        this.sharedTaskFinderUI = new cw_etltool.common.sharedTaskFinder.UserInterface(null, this);
+        this.sharedTaskFinderUI.model.search();
+
+        this.worklistFinderUI = new cw_etltool.common.worklistFinder.UserInterface(null, this);
+        this.worklistFinderUI.model.search();
+
+        if(this.orderVisible){
+            //this.orderDetails = new cw_etltool._import.importOrder.UserInterface(this.order,this);
+            this.importOrderUI = new cw_etltool.presentation.importOrderUI(null,this);
+            this.importOrderUI.load(this.order);
+        }else{
+            this.importOrderUI = null;
+        }
+      ]]></script>
+    </method>
+    <method name="worklistView" type="permMethod">
+      <script>return !this.orderVisible;</script>
+    </method>
+  </methodList>
+</userInterface>

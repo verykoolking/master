@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getWeekDayDDefault">
+  <group>ui_scripts.Calendars.FinderScript</group>
+  <label>getWeekDayDDefault</label>
+  <metaVersion>4</metaVersion>
+  <script><![CDATA[
+    var spDefault = cm_spoc.getServiceProviderDefault();
+    var allWdd = cm_spoc.getAllWeekDayDefinition();
+
+    var wddRelationFinder = new Finder("cwt_pc.cwt_itemRelationFinder");
+    var spRelationFinder = new Finder("cwt_pc.cwt_itemRelationFinder");
+    var wddSpRelation = "WDDServiceProviderArr";
+    var currentRelationCode = "";
+    var wddRelationResult;
+    var spRelationResult;
+    //var wddDefault = new DataObjectList();
+
+    var wddDefault;
+
+
+    for (var i = 0; i < allWdd.length; i++)
+    {
+        wddRelationFinder.searchDocument.itemCode = allWdd[i].itemCode;
+        wddRelationResult = wddRelationFinder.search();
+
+        for (var j = 0; j < wddRelationResult.length; j++)
+        {
+            if (wddRelationResult[j].itemRelationCode == wddSpRelation)
+            {
+                currentRelationCode = wddRelationResult[j].itemRelationTarget;
+                spRelationFinder.searchDocument.itemCode = currentRelationCode;
+                spRelationResult = spRelationFinder.search();
+
+                for (var l = 0; l < spRelationResult.length; l++)
+                {
+                    if (spRelationResult[l].itemRelationTarget == spDefault.itemCode)
+                    {
+                        wddDefault = allWdd[i];
+                    }
+                }
+            }
+        }
+    }
+
+    return wddDefault;
+  ]]></script>
+</script>

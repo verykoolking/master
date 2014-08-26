@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/soft" xmlns:os="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/os" xmlns:party="http://www.tmforum.org/xml/sid/org/tmforum/tip/cbe/party" xmlns:device="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/device" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" xmlns:ent="http://www.tmforum.org/xml/sid/org/tmforum/tip/enterprise/risk/sec/ent" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/soft" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.resource.res.log.soft
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 5
+ Association Classes: 2
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/os" schemaLocation="sid_org_tmforum_tip_resource_res_log_os.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/cbe/party" schemaLocation="sid_org_tmforum_tip_cbe_party.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/log/device" schemaLocation="sid_org_tmforum_tip_resource_res_log_device.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/enterprise/risk/sec/ent" schemaLocation="sid_org_tmforum_tip_enterprise_risk_sec_ent.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="software" type="tns:Software"/>
+   <xsd:complexType name="Software" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract base class for representing software. Software represents the set of user visible functions and processes that are contained in a device. The HasSoftwareFeatures association is used to define software that is associated in some way with a LogicalDevice, such as programs and operating systems. Since this software can be associated with devices and/or device components, this association is defined between the roots of the two classes.
+
+Software may be nested within other software, thereby creating a containment relationship (which is part of the system view).
+
+Currently, the subclasses of this class reflect user-facing features (e.g., features that are manageable, configurable, and executable by users and applications).
+
+Internationalization and Language functionality are supported by creating a SoftwareUsesLanguage association to the Language classes.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="buildNumber" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute that defines the internal identifier for the compilation of this unit of software.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isExperimental" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute. If the value of this attribute is TRUE, then this represents a special build (perhaps as a trial to suit specific customer needs).</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="maintenanceVersion" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This a string attribute that defines the maintenance number component of the version of software being used. For example, if the version of software was 3.1.10, the maintenance version is 10.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="minorVersion" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This a string attribute that defines the minor number component of the version of software being used. For example, if the version of software was 3.1.10, the minor version is 1.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="otherDesignator" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute, and enables the manufacturer to label this software as having some set of special restrictions (e.g., early or limited deployment, end of life, or targeted at a specific type of market.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="targetPlatform" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the target platform that this Software will be deployed on. Values include:
+
+0: Independent of Platform
+1: Other
+2: Network Device (specified in subclasses)
+3: Server
+4: Desktop Computer
+5: Laptop Computer
+6: PDA
+7: Phone
+8: Other Mobile Device</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="category" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that is used to simplify searching for related types of SoftwareElements. For example, a QoSSoftwareElement may have many different subclasses (e.g., classification, queuing, dropping, etc.). Each of these would have a similar Category that would facilitate their identification and distinction from other types (i.e., Categories) of SoftwareElements.
+
+The specific enumerated values will be defined in the next version of the DEN-ng specification.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="majorVersion" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This a string attribute that defines the major number component of the version of software being used. For example, if the version of software was 3.1.10, the major version is 3.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="logicalDevice" type="device:LogicalDevice" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association HasSoftwareCommands</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="softwareComposite" type="tns:SoftwareComposite" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association HasSoftwareComponents</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="language" type="party:ArrayOfLanguage" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association SoftwareBuiltForLanguage</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="commonPlatformEnumeration" type="ent:CommonPlatformEnumeration" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  unique</p>
+                        <p>This association end  is  an end of association SoftwareIdentifiedByCPEName</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="operatingSystem" type="os:ArrayOfOperatingSystem" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association SoftwareOSInteractionDetails</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfSoftware">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:Software" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="softwareAtomic" type="tns:SoftwareAtomic"/>
+   <xsd:complexType name="SoftwareAtomic" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract class for representing atomic units of software that are individually manageable and do NOT form composite, or nested, software units.
+
+From a finite state machine view, each SoftwareAtomic element is not just individually manageable, but is also installable, executable, and runnable. In addition, each SoftwareAtomic element can be a FRU.
+
+This is the super-class for creating concrete subclasses that define particular functionality (e.g., a device driver, or software that implements MPLS as part of a larger routing software package).</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfSoftwareAtomic">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:SoftwareAtomic" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="softwareCommand" type="tns:SoftwareCommand"/>
+   <xsd:complexType name="SoftwareCommand">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>SoftwareCommands describe the sets of features that are programmable by a particular PartyRole (e.g., a Developer, or NetworkOperator, and in rare cases, an EndUser).
+
+This should not be confused with Capabilities. Capabilities define what features and functions are available at a given moment for the Resource. Thus, SoftwareCommands represent the specific commands that are available in a device, whereas Capabilities represent higher-level generic functions available in a Resource. For exampe, the ability to perform BGP routing is a Capability, whereas the actual commands used to implement BGP routing are SoftwareCommands.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfSoftwareCommand">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:SoftwareCommand" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="softwareComposite" type="tns:SoftwareComposite"/>
+   <xsd:complexType name="SoftwareComposite" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract class for representing software units that are made up of other software units (i.e., instances of this class as well as the SoftwareAtomic base class). This provides the semantics of collecting a set of components, each of which is individually manageable, and being able to manage the set of objects as a whole. An example is an operating system - this is manageable as a unit, but consists of individually manageable components. This containment is modeled using the ContainsSoftwareComponents composition.
+
+From a finite state machine view, each SoftwareComposite element is manageable, installable, executable, and runnable. In addition, each SoftwareComposite element can be a FRU.
+
+This is the super-class for creating concrete subclasses that define groups of functionality (e.g., set of features that work together to provide application-level functionality to the end-user).</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="software" type="tns:ArrayOfSoftware" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association HasSoftwareComponents</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfSoftwareComposite">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:SoftwareComposite" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="softwareFeatureSets" type="tns:SoftwareFeatureSets"/>
+   <xsd:complexType name="SoftwareFeatureSets">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>SoftwareFeatureSets describe the groups of SoftwareCommands that distinguish a particular release of Software. The SoftwareCommands contained in the SoftwareFeatureSets are programmable by a particular PartyRole (e.g., a Developer, or NetworkOperator, and in rare cases and EndUser).
+
+Often, SoftwareFeatureSets are used by the manufacturer to define a custom or semi-custom build of software, or are provided as a set of options that are orderable by the Customer.
+
+This should not be confused with Capabilities. Capabilities define what features and functions are available at a given moment for the Resource. Thus, SoftwareFeatureSets represent groups of commands that are available in a device, whereas Capabilities represent higher-level generic functions available in a Resource. For exampe, the ability to perform BGP routing is a Capability, whereas the actual commands used to implement BGP routing are SoftwareCommands that reside in one or more SoftwareFeatureSets. Hence, SoftwareFeatureSets may or may not offer BGP as a programmable feature.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfSoftwareFeatureSets">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:SoftwareFeatureSets" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* -->
+   <xsd:element name="logicalDeviceOSInteractionDetails" type="tns:LogicalDeviceOSInteractionDetails"/>
+   <xsd:complexType name="LogicalDeviceOSInteractionDetails">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an association class, and defines the semantics of the LogicalDeviceUsesOS association. This is a complex class, and consequently only a few simple attributes are shown in this viewpoint in order for the reader to get a flavor of the types of parameters defined in this class.This association defines the semantics of how a particular LogicalDevice entity interacts with its OperatingSystem. The semantics of this association are defined in the LogicalDeviceOSInteractionDetails association class.</p>
+            <p>This association class  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="logDeviceOSVersionMinReq" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute defines the minimum version of the OperatingSystem that is required for this LogicalDevice to act properly.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="numberInstalledOSs" type="xsd:int" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute defines the number of currently installed OSs on this particular LogicalDevice.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="currentlyUsedOS" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute contains the name of the OS that is currently being used by this LogicalDevice.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfLogicalDeviceOSInteractionDetails">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:LogicalDeviceOSInteractionDetails" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="softwareOSInteractionDetails" type="tns:SoftwareOSInteractionDetails"/>
+   <xsd:complexType name="SoftwareOSInteractionDetails">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an association class, and defines the semantics of the SoftwareInteractsWithOS association. This is a complex class, and consequently only a few simple attributes are shown in this viewpoint in order for the reader to get a flavor of the types of parameters defined in this class.This association defines the semantics of how a particular Software entity interacts with the OperatingSystem of a LogicalDevice. The semantics of this association are defined in the SoftwareInteractionDetails association class.</p>
+            <p>This association class  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="osVersionMinReq" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This attribute defines the minimum version of the OperatingSystem that is required for this Software to act properly.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfSoftwareOSInteractionDetails">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:SoftwareOSInteractionDetails" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.mapToAltamira">
+  <highlight>32</highlight>
+  <label>mapToAltamira</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Maps to Altamira
+     *
+     * @author  Luis Amorim
+     * @date    201403
+     *
+     * @param {DataStructure}  dtree
+     */
+    var ah  = dtree.requestAttributesHierarchy;
+    var ac  = dtree.catalogData.attributesHierarchy;
+
+    try {
+            //dtree.altamiraRequest =  new DataStructure ( "OCSProvision.boltonManagement.v1.types.subscribeBolton" );
+            dtree.altamiraRequest =  new DataStructure ( dtree.pmOperation[0].altamiraRequestDS );
+
+            var msg = dtree.altamiraRequest;
+
+            // map the subscriberId
+            msg.subscriberId.e164Number               = dtree.request.subscriberId ? dtree.request.subscriberId.replace(/[^\d]/g, '') : null;
+
+            // common
+            if ( dtree.isQueryRequest ) {
+                 mapQueryCommonInfo ( dtree.request.queryCommonInfo, dtree.altamiraRequest.queryCommonInfo )
+            }
+            else {
+                mapActionCommonInfo( dtree.request.oCSActionCommonInfo, dtree.altamiraRequest.actionCommonInfo );
+            }
+
+            // attributes
+            for ( var kk = 0; (kk < dtree.pmOperationFieldToAA.length) ; kk++ ) {
+                var field =  dtree.pmOperationFieldToAA[kk];
+                var fieldfullpath = field.sourceField;
+                var destfieldfullpath = field.destinationField;
+                if ( (field.ignoreToAA != "1") && (destfieldfullpath)) {
+                    mapField( fieldfullpath, destfieldfullpath, ( field.fromCatalog == "1" ), msg );
+                }
+            }
+
+            //Mapping default values
+            for(var x = 0; x < dtree.pmOperationFieldToAA.length; x++){
+                if(dtree.pmOperationFieldToAA[x].mandatory == '1' && dtree.pmOperationFieldToAA[x].ignoreToAA == '0' && dtree.pmOperationFieldToAA[x].fromCatalog == '0'
+                    ){
+                    /* COMMENT 20140814 LA INC 131975
+                    if(!dtree.pmOperationFieldToAA[x].defaultValue && dtree.pmOperationFieldToAA[x].overridden == '0'){
+                        dtree.errorcode.push("ER_WF_500");
+                        dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_500", [dtree.pmOperationFieldToAA[x].destinationField])); //Missing default value in a mandatory attribute
+                        return false;
+                    }
+                    */
+                    var destinationField    = dtree.pmOperationFieldToAA[x].destinationField;
+                    var defaultVal          = dtree.pmOperationFieldToAA[x].defaultValue;
+                    var override            = dtree.pmOperationFieldToAA[x].overridden == '1';
+                    var catalogField        = dtree.pmOperationFieldToAA[x].overriddenCatalogField;
+                    if ( (catalogField) || (defaultVal) )  // 20140814 LA
+                      mapDefaults(destinationField, catalogField, defaultVal, msg, override);
+                }
+            }
+
+            return true;
+    }
+    catch (err)
+    {
+        dtree.errorcode.push("ER_WF_599");
+        dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_599", [err]));
+        return false;
+    }
+
+    //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    //||||||||||||||||||||||||------- Auxiliar Functions -------||||||||||||||||||||||||||||
+    //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    function mapDefaults(path, catalogField, defaultVal, dataStruct, override){
+        var nodes = path.split('.');
+        var substring = '';
+        for(var y = 0; y < nodes.length - 1; y++){
+            if(dataStruct.isCollection()){
+                for(var z = 0; z < dataStruct.length; z++){
+                    mapDefaults(path.slice(substring.length), catalogField, defaultVal, dataStruct[z], override);
+                }
+                return;
+            }else{
+                dataStruct = dataStruct[nodes[y]];
+            }
+            substring = substring + nodes[y] + '.';
+        }
+        // INI 20140814 LA INC 131975
+        if(dataStruct.isCollection()){
+            for(var z = 0; z < dataStruct.length; z++){
+                 if(dataStruct[z][nodes[nodes.length - 1]] == null)
+                    dataStruct[z][nodes[nodes.length - 1]] = override ? getattC(catalogField).defaultvalue : defaultVal;
+            }
+            if ( dataStruct.length == 0 ) {
+                 if(dataStruct[0][nodes[nodes.length - 1]] == null)
+                    dataStruct[0][nodes[nodes.length - 1]] = override ? getattC(catalogField).defaultvalue : defaultVal;
+            }
+        }
+        else
+        // END 20140814 LA INC 131975
+          if(dataStruct[nodes[nodes.length - 1]] == null)
+              dataStruct[nodes[nodes.length - 1]] = override ? getattC(catalogField).defaultvalue : defaultVal;
+    }
+
+    function getArrayPosition(path, elementName){
+        path = path.split('.');
+        for(var t = 0; t < path.length; t++){
+            if(path[t].startsWith(elementName + '[')){
+                var num = path[t].split('[')[1];
+                num = num.replace(']','');
+                return num;
+            }
+        }
+    }
+
+    function mapField ( fromFieldPath, toFieldPath, flagCatalog, toDS ) {
+        var bypassElements = 0;
+        do{
+            if(fromFieldPath.endsWith(".productSerialNumber")){
+                //IS productSerialNumber - special mapping
+                if(bypassElements == 1) break;
+                var att = new Document ("pm_wm.hierarchicalAttribute");
+                //var path = fromFieldPath.split('.');
+                //var productSerialNumber = dtree.request;
+                //for(var x = 0; x < path.length; x++){
+                //    productSerialNumber = productSerialNumber[path[x]];
+                //}
+                //productSerialNumber   = productSerialNumber != '0' ? productSerialNumber : null;
+                //var offerType         = dtree.offerType;
+                //var subscriberId      = dtree.request.subscriberId;
+                //var productNumber     = dtree.catalogData.oCSProductSpecificationItemcode;
+                //var infoSR            = pm_sr.getEntities( subscriberId, offerType, productSerialNumber, null, productNumber, null);
+                var infoSR            = dtree.entitiesSR;
+                att.defaultvalue      = (infoSR && infoSR.length > 0) ? infoSR[0].productSerialNumber : null;
+                att.attributepath     = toFieldPath;
+            }else{
+                 var att = flagCatalog ? getattC(fromFieldPath, bypassElements) : getattR(fromFieldPath, bypassElements);
+            }
+            bypassElements++;
+            if ((att) && (att.attributepath)) {
+              var list = toFieldPath.split(".");
+              var aux  = toDS;
+              for ( var zz = 0; zz < (list.length - 1); zz++) {
+                  aux = aux[ list[zz] ];
+                  if(aux && aux.isCollection()){
+                      var position = getArrayPosition(att.other3, list[zz]);
+                      aux = aux[position];
+                  }
+              }
+              if(aux[ list[list.length-1] ] && aux[ list[list.length-1] ].isCollection()){
+                  var position                             = getArrayPosition(att.other3, list[zz]);
+                  aux[ list[list.length-1] ][position]     = att.defaultvalue; //Maps to an array
+              }else{
+                  aux[ list[list.length-1] ]               = att.defaultvalue; //Maps to a single attribute
+              }
+
+              if (aux.isChild("exponent") && att.exponent)
+                  aux.exponent = att.exponent;
+            }
+            else
+            {
+                break;
+            }
+        }while(true);
+    }
+
+    function mapActionCommonInfo ( fromDS, toDS ) {
+        // map the mandatory parameters for the actionCommonInfo
+        toDS.appInfo.appId        = fromDS.appInfo.appId;
+        toDS.appInfo.reference    = fromDS.appInfo.reference;
+        toDS.userCode             = fromDS.userCode;
+
+        // map the opCost if it comes in the request
+        if( fromDS.has("price") ) {
+            toDS.opCost.long = fromDS.price.long;
+            if ( (fromDS.price.has("exponent")) && (fromDS.price.exponent) )
+                toDS.opCost.exponent = fromDS.price.exponent;
+        }
+
+        // map the currencyCode if it comes in the request (it is an optional parameter).
+        if( fromDS.has("currencyCode") ) {
+            toDS.currencyCode = fromDS.currencyCode;
+        }
+    }
+
+    function mapQueryCommonInfo ( fromDS, toDS ) {
+        // Mandatory fields for subscriberId should be passed to Altamira queryBoltons operation
+        //msg.subscriberId.e164Number = dtree.request.subscriberId.e164Number;
+
+        // map the currencyCode if it comes in the request (it is an optional parameter).
+        if( fromDS.has("currencyCode") ) {
+            toDS.currencyCode = fromDS.currencyCode;
+        }
+
+        if (fromDS.has("pagingInfo")) {
+            if ((fromDS.pagingInfo.has("token")) && (fromDS.pagingInfo.token))
+                toDS.pagingInfo.token = fromDS.pagingInfo.token;
+            if ((fromDS.pagingInfo.has("numRegs")) && (fromDS.pagingInfo.numRegs))
+                toDS.pagingInfo.numRegs = fromDS.pagingInfo.numRegs;
+        }
+    }
+
+    // get hierarquic attribute from catalog array
+    function getattC( attributepath, ignore ) {
+        return pm_wm.getAttributeFromAttributesHierarchy( ac, "attributepath", attributepath, ignore );
+    }
+
+    // get hierarquic attribute from request array
+    function getattR( attributepath, ignore ) {
+        return pm_wm.getAttributeFromAttributesHierarchy( ah, "attributepath", attributepath, ignore );
+    }
+  ]]></script>
+</script>

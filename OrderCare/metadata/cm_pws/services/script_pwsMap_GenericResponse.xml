@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.pwsMap_GenericResponse">
+  <label>pwsMap_GenericResponse</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="outResult" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="opCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    outResult.opReference.opId = opCode;
+    outResult.sessionId = projectCode;
+    outResult.opExecutionDate = cm_common.aaFormatDate(new Date(), '-', true, 'T');
+
+    return outResult;
+  ]]></script>
+</script>

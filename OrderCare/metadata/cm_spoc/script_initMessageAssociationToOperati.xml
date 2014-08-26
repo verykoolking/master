@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initMessageAssociationToOperati">
+  <group>ui_scripts.Messages</group>
+  <label>initMessageAssociationToOperati</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+        var subOperation = cm_spoc.initInnerDS("base_SubOperation");
+        model.SubOperationDS = subOperation;
+
+        var MATOMessArr = cm_spoc.initInnerDS("base_MATOMessArr");
+        model.MATOMessArrDS = MATOMessArr;
+
+        var MATOAfterPromMessArr = cm_spoc.initInnerDS("base_MATOAfterPromMessArr");
+        model.MATOAfterPromMessArrDS = MATOAfterPromMessArr;
+
+        return model;
+    }
+    else{
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+
+       s.specificationCode = model.SubOperation;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.SubOperationDS=r;
+       }
+
+
+       s.specificationCode = model.MATOMessArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.MATOMessArrDS=r;
+             }
+
+       var matoMessRel=model.MATOMessArrDS.List;
+       var matoMessDS=model.MATOMessArrDS.ListDS;
+       for(var i=0;i<matoMessRel.length;i++){
+           s.specificationCode = matoMessRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               matoMessDS[i]=r;
+           }
+       }
+
+       s.specificationCode = model.MATOMessAssByPlanArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.MATOMessAssByPlanArrDS=r;
+       }
+
+       var matoMessAssByPlanRel=model.MATOMessAssByPlanArrDS.List;
+       var matoMessAssByPlanDS=model.MATOMessAssByPlanArrDS.ListDS;
+       for(var i=0;i<matoMessAssByPlanRel.length;i++){
+           s.specificationCode = matoMessAssByPlanRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+                r.TariffPlanEnum = r.TariffPlan;
+                r.MessageEnum = r.Message;
+               matoMessAssByPlanDS[i]=r;
+           }
+       }
+       s.specificationCode = model.MATOAfterPromMessArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.MATOAfterPromMessArrDS=r;
+             }
+
+       var matoAfterPromMessRel=model.MATOAfterPromMessArrDS.List;
+       var matoAfterPromMessDS=model.MATOAfterPromMessArrDS.ListDS;
+       for(var i=0;i<matoAfterPromMessRel.length;i++){
+           s.specificationCode = matoAfterPromMessRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               matoAfterPromMessDS[i]=r;
+           }
+       }
+
+       s.specificationCode = model.MATOAfterPromMessByPlanArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.MATOAfterPromMessByPlanArrDS=r;
+       }
+
+       var matoAfterPromMessByPlanRel=model.MATOAfterPromMessByPlanArrDS.List;
+       var matoAfterPromMessByPlanDS=model.MATOAfterPromMessByPlanArrDS.ListDS;
+       for(var i=0;i<matoAfterPromMessByPlanRel.length;i++){
+           s.specificationCode = matoAfterPromMessByPlanRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               matoAfterPromMessByPlanDS[i]=r;
+           }
+       }
+
+      //model.MessageExecutionCancellationEnum=model.MessageExecutionCancellation;
+      model.ServiceProviderEnum=model.ServiceProvider;
+      //model.SendAdditionalEnum=model.SendAdditional;
+      //model.MessageIfErrorEnum=model.MessageIfError;
+      //model.TariffPlanEnum=model.TariffPlan;
+      //model.MessageEnum=model.Message;
+      return model;
+    }
+  ]]></script>
+</script>

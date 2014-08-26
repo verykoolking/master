@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.createNx24AppBoltonTypeByValue">
+  <group>applicabilityCondition.api</group>
+  <label>createNx24AppBoltonTypeByValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="Nx24AppBoltonType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.Nx24AppBoltonType</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+
+        if(cm_plm.isProjectActive(Nx24AppBoltonType.projectCode))
+            return api_common.createFault("ERR", "Item cannot be created for projects in ACT status.");
+
+        Nx24AppBoltonType.startDate = Nx24AppBoltonType.startDate ? Nx24AppBoltonType.startDate : new Date();
+        var doc = new cm_plm.Nx24AppBoltonTypeDoc();
+        Nx24AppBoltonType.mapTo(doc);
+        doc.save();
+        doc.mapTo(Nx24AppBoltonType);
+
+        var result = cm_plm.createProjectAssignmentForObject(Nx24AppBoltonType);
+        if(api_common.isFault(result))
+            return result;
+
+        return Nx24AppBoltonType;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

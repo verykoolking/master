@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.getNx24AppBoltonTypeListByKey">
+  <group>applicabilityCondition.api</group>
+  <label>getNx24AppBoltonTypeListByKey</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="Nx24AppBoltonTypeList" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.Nx24AppBoltonTypeList</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        var result;
+        var doc = Document.readDoc("cm_plm:Nx24AppBoltonTypeListDoc", Nx24AppBoltonTypeList.id);
+        if(!doc)
+            return api_common.createFault("ERR", "The Nx24AppBoltonTypeListId was not found: " + Nx24AppBoltonTypeList.id);
+
+        doc.mapTo(Nx24AppBoltonTypeList);
+
+        //load the rows
+        var tmpNx24 = new cm_plm.Nx24AppBoltonType();
+        tmpNx24.Nx24AppBoltonTypeListId = Nx24AppBoltonTypeList.Nx24AppBoltonTypeListId;
+        var list = cm_plm.queryNx24AppBoltonType(tmpNx24);
+        if(api_common.isFault(list))
+            return list;
+
+        assignArray(Nx24AppBoltonTypeList.Nx24AppBoltonTypeArr, list);
+        return Nx24AppBoltonTypeList;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+
+    /************************************************************************
+     * FUNCTIONS
+     ***********************************************************************/
+
+
+    function assignArray(object, array){
+
+        for(var i=0; i<array.length; i++)
+            object[i] = array[i];
+        return object;
+    }
+  ]]></script>
+</script>

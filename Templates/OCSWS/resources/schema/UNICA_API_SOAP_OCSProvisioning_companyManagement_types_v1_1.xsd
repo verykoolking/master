@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- PA2 -->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/companyManagement/v1/types" 
+            xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"             
+            xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+            targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/companyManagement/v1/types" 
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" 
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_1.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" 
+    			schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+    
+    <!-- ************************************* createCompany ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="CreateCompanyType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:companyId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="createCompany" type="tns:CreateCompanyType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="CreateCompanyResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="createCompanyResponse" type="tns:CreateCompanyResponseType" />
+
+    <!-- ************************************* changeSubscriberClient ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeSubscriberClientType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:companyClientId" minOccurs="0"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeSubscriberClient" type="tns:ChangeSubscriberClientType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeSubscriberClientResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeSubscriberClientResponse" type="tns:ChangeSubscriberClientResponseType" />
+
+    <!-- ************************************* deleteCompany ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="DeleteCompanyType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:companyId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deleteCompany" type="tns:DeleteCompanyType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="DeleteCompanyResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deleteCompanyResponse" type="tns:DeleteCompanyResponseType" />
+
+    <!-- ************************************* queryClients ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryClientsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryClients" type="tns:QueryClientsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryClientsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:companyClientInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryClientsResponse" type="tns:QueryClientsResponseType" />
+
+    <!-- ************************************* queryClientSubscribers ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryClientSubscribersType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:companyClientId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryClientSubscribers" type="tns:QueryClientSubscribersType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryClientSubscribersResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:subscriberIdList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryClientSubscribersResponse" type="tns:QueryClientSubscribersResponseType" />
+
+    <!-- ************************************* queryCompanySubscribers ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryCompanySubscribersType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:companyId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCompanySubscribers" type="tns:QueryCompanySubscribersType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryCompanySubscribersResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:subscriberIdList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCompanySubscribersResponse" type="tns:QueryCompanySubscribersResponseType" />
+
+    <!-- ************************************* querySubscriberClient ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QuerySubscriberClientType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySubscriberClient" type="tns:QuerySubscriberClientType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QuerySubscriberClientResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:companyClientId"/>
+            <xsd:element ref="apt:companyId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySubscriberClientResponse" type="tns:QuerySubscriberClientResponseType" />
+
+    <!-- ************************************* subscribeCompanyClient ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SubscribeCompanyClientType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:companyId"/>
+            <xsd:element ref="apt:companyClientId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeCompanyClient" type="tns:SubscribeCompanyClientType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SubscribeCompanyClientResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeCompanyClientResponse" type="tns:SubscribeCompanyClientResponseType" />
+
+    <!-- ************************************* unsubscribeCompanyClient ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="UnsubscribeCompanyClientType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:companyClientId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeCompanyClient" type="tns:UnsubscribeCompanyClientType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="UnsubscribeCompanyClientResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeCompanyClientResponse" type="tns:UnsubscribeCompanyClientResponseType" />
+
+</xsd:schema>
+

@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- PA3 -->
+
+<wsdl:definitions 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/groupManagement/v1/services"
+    xmlns:osns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/groupManagement/v1/types"
+    xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+    xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/04/secext"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    targetNamespace="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/groupManagement/v1/services">
+
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+            <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/groupManagement/v1/types"
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_groupManagement_types_v1_0.xsd"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                schemaLocation="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2002/04/secext"
+                schemaLocation="http://schemas.xmlsoap.org/ws/2002/04/secext/secext.xsd" />
+	        <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+  			    schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>	
+        </xsd:schema>
+    </wsdl:types>
+    
+    <!--
+        Header
+    -->
+    <wsdl:message name="OCSHeaderInfo">
+        <wsdl:part name="messageID" element="wsa:MessageID" />
+        <wsdl:part name="replyTo" element="wsa:ReplyTo" />
+        <wsdl:part name="security" element="wsse:Security" />
+    </wsdl:message>
+  
+    <!--
+        Messages
+    -->
+    <wsdl:message name="CreateGroupRequest">
+        <wsdl:part name="parameters" element="osns:createGroup" />
+    </wsdl:message>
+    <wsdl:message name="CreateGroupResponse">
+        <wsdl:part name="parameters" element="osns:createGroupResponse" />
+    </wsdl:message>
+    <wsdl:message name="CreateGroupMemberRequest">
+        <wsdl:part name="parameters" element="osns:createGroupMember" />
+    </wsdl:message>
+    <wsdl:message name="CreateGroupMemberResponse">
+        <wsdl:part name="parameters" element="osns:createGroupMemberResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeGroupSpendLimitsRequest">
+        <wsdl:part name="parameters" element="osns:changeGroupSpendLimits" />
+    </wsdl:message>
+    <wsdl:message name="ChangeGroupSpendLimitsResponse">
+        <wsdl:part name="parameters" element="osns:changeGroupSpendLimitsResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeGroupBillingCycleRequest">
+        <wsdl:part name="parameters" element="osns:changeGroupBillingCycle" />
+    </wsdl:message>
+    <wsdl:message name="ChangeGroupBillingCycleResponse">
+        <wsdl:part name="parameters" element="osns:changeGroupBillingCycleResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeGroupMemberAttributesRequest">
+        <wsdl:part name="parameters" element="osns:changeGroupMemberAttributes" />
+    </wsdl:message>
+    <wsdl:message name="ChangeGroupMemberAttributesResponse">
+        <wsdl:part name="parameters" element="osns:changeGroupMemberAttributesResponse" />
+    </wsdl:message>
+    <wsdl:message name="DeleteGroupRequest">
+        <wsdl:part name="parameters" element="osns:deleteGroup" />
+    </wsdl:message>
+    <wsdl:message name="DeleteGroupResponse">
+        <wsdl:part name="parameters" element="osns:deleteGroupResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryGroupSpendLimitsRequest">
+        <wsdl:part name="parameters" element="osns:queryGroupSpendLimits" />
+    </wsdl:message>
+    <wsdl:message name="QueryGroupSpendLimitsResponse">
+        <wsdl:part name="parameters" element="osns:queryGroupSpendLimitsResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryGroupMemberAttributesRequest">
+        <wsdl:part name="parameters" element="osns:queryGroupMemberAttributes" />
+    </wsdl:message>
+    <wsdl:message name="QueryGroupMemberAttributesResponse">
+        <wsdl:part name="parameters" element="osns:queryGroupMemberAttributesResponse" />
+    </wsdl:message>
+
+    <wsdl:message name="ServerException">
+      <wsdl:part name="ServerException" element="uct:serverException"/>
+    </wsdl:message>
+    <wsdl:message name="ClientException">
+      <wsdl:part name="ClientException" element="uct:clientException"/>
+    </wsdl:message>
+
+    <!--
+        Port
+    -->
+    <wsdl:portType name="GroupManagementPort_v1_0">
+        <wsdl:operation name="createGroup">
+            <wsdl:input message="tns:CreateGroupRequest" />
+            <wsdl:output message="tns:CreateGroupResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="createGroupMember">
+            <wsdl:input message="tns:CreateGroupMemberRequest" />
+            <wsdl:output message="tns:CreateGroupMemberResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="changeGroupSpendLimits">
+            <wsdl:input message="tns:ChangeGroupSpendLimitsRequest" />
+            <wsdl:output message="tns:ChangeGroupSpendLimitsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="changeGroupBillingCycle">
+            <wsdl:input message="tns:ChangeGroupBillingCycleRequest" />
+            <wsdl:output message="tns:ChangeGroupBillingCycleResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="changeGroupMemberAttributes">
+            <wsdl:input message="tns:ChangeGroupMemberAttributesRequest" />
+            <wsdl:output message="tns:ChangeGroupMemberAttributesResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="deleteGroup">
+            <wsdl:input message="tns:DeleteGroupRequest" />
+            <wsdl:output message="tns:DeleteGroupResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryGroupSpendLimits">
+            <wsdl:input message="tns:QueryGroupSpendLimitsRequest" />
+            <wsdl:output message="tns:QueryGroupSpendLimitsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryGroupMemberAttributes">
+            <wsdl:input message="tns:QueryGroupMemberAttributesRequest" />
+            <wsdl:output message="tns:QueryGroupMemberAttributesResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <!-- Binding -->
+
+    <wsdl:binding name="GroupManagementServiceSOAPBinding_v1_0" type="tns:GroupManagementPort_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+
+        <wsdl:operation name="createGroup">
+            <soap:operation soapAction="createGroup" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="createGroupMember">
+            <soap:operation soapAction="createGroupMember" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeGroupSpendLimits">
+            <soap:operation soapAction="changeGroupSpendLimits" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeGroupBillingCycle">
+            <soap:operation soapAction="changeGroupBillingCycle" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeGroupMemberAttributes">
+            <soap:operation soapAction="changeGroupMemberAttributes" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="deleteGroup">
+            <soap:operation soapAction="deleteGroup" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryGroupSpendLimits">
+            <soap:operation soapAction="queryGroupSpendLimits" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryGroupMemberAttributes">
+            <soap:operation soapAction="queryGroupMemberAttributes" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+    </wsdl:binding>
+
+    <!--
+        Service
+    -->
+
+    <wsdl:service name="GroupManagementService_v1">
+        <wsdl:port name="GroupManagement_v1_0" binding="tns:GroupManagementServiceSOAPBinding_v1_0">
+            <soap:address location="http://localhost/UNICA/OCSProvisioning/GroupManagement_v1"/>
+        </wsdl:port>
+    </wsdl:service>
+    
+</wsdl:definitions>
+    

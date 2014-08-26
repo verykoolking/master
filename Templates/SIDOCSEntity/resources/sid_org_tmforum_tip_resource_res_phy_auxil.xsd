@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/auxil" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" xmlns:hw="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/hw" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/auxil" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.resource.res.phy.auxil
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 4
+ Association Classes: 0
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/resource/res/phy/hw" schemaLocation="sid_org_tmforum_tip_resource_res_phy_hw.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="auxiliaryComponent" type="tns:AuxiliaryComponent"/>
+   <xsd:complexType name="AuxiliaryComponent" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is an abstract base class that represents managed entities, such as power supplies, fans and cables, wihch are required for the proper operation of the Device but have a primary function that is different than the primary end-user function(s) of the Device.
+
+The difference between AuxiliaryComponents and other subclasses of Equipment are whether or not the physical object performs a function intrinsic to the main function of the Device. This is best understood by way of example. Consider a Router. Its main function is to route and forward packets. A PowerSupply is an AuxiliaryComponent, because even though it is needed for the proper operation of the Router, it does not directly help in routing and forwarding packets. A LineCard (that provides routing functionality) is a subclass of Equipment because its purpose is to route and forward packets. Similar examples exist for different types of equipment, where their criteria may be different. For example, instead of whether it routes or forwards packets, the criterion "does it carry signal" may be useful to appropriately classify components.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="hw:PhysicalContainer">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfAuxiliaryComponent">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:AuxiliaryComponent" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="coolingDevice" type="tns:CoolingDevice"/>
+   <xsd:complexType name="CoolingDevice">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents the capabilities of a generic cooling device. It will be filled out later.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:AuxiliaryComponent">
+            <xsd:sequence>
+               <xsd:element name="hasActiveCooling" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean that, if TRUE, means that this CoolingDevice provides active cooling. If it is false, then cooling is provided by a passive means.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfCoolingDevice">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:CoolingDevice" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="fan" type="tns:Fan"/>
+   <xsd:complexType name="Fan">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This defines the capabilities of fans that are used for cooling.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:CoolingDevice">
+            <xsd:sequence>
+               <xsd:element name="currentSpeed" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is the current speed of the Fan in revolutions per minute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isVariableSpeed" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, means that this fan supports variable cooling speeds. If it is FALSE, then this fan only provides a single cooling speed.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="desiredSpeed" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an integer attribute that defines the currently requested fan speed, defined in revolutions per minute.
+
+For non-variable speed Fans, this attribute has the same semantics as turning the Fan on or off. For variable-speed Fans, this attribute represents the desired speed of the Fan.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfFan">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:Fan" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="powerSupply" type="tns:PowerSupply"/>
+   <xsd:complexType name="PowerSupply">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class represents the capabilities of a generic power supply.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:AuxiliaryComponent">
+            <xsd:sequence>
+               <xsd:element name="dcOutputPower" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is the maximum value of the output power of the DC PowerSupply. If this is an AC PowerSupply, then this attribute must be set to NULL.
+
+This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="inputVoltageLow" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string that defines the low value for the Input Voltage Range for this PowerSupply.
+
+This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isRedundant" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, signifies this PowerSupply as a redundant PowerSupply.
+
+This is a required attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="acFrequencyLow" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This defines the low value of the AC Frequency range in Hertz. If this is a DC PowerSupply, this value is not applicable and should be set to NULL.
+
+This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isSwitching" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, indicates that this PowerSupply is a switching (vs linear) PowerSupply.
+
+This is a required attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isAC" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, signifies this to be an AC PowerSupply. If FALSE, then it is a DC PowerSupply.
+
+This is a required attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="acFrequencyHigh" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This defines the high value of the AC Frequency range in Hertz. If this is a DC PowerSupply, this value is not applicable and should be set to NULL.
+
+This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="inputVoltageHigh" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string that defines the high value for the Input Voltage Range for this PowerSupply.
+
+This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="inputCurrentMax" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string that defines the input current rating in amperes for a fully populated chassis. For a DC PowerSupply, this is the maximum current drawn when operating at the lowest permissible value of its input voltage range. For an AC PowerSupply, the value of this attribute is the same as the value of the InputCurrentMin attribute.
+
+This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="inputCurrentMin" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string that defines the input current rating in amperes for a fully populated chassis. For a DC PowerSupply, this is the minimum current drawn when operating at the lowest permissible value of its input voltage range. For an AC PowerSupply, the value of this attribute is the same as the value of the InputCurrentMax attribute.
+
+This is an optional attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPowerSupply">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PowerSupply" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

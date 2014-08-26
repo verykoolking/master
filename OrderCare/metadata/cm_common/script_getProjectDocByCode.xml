@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.getProjectDocByCode">
+  <group>overridden</group>
+  <label>getProjectDocByCode</label>
+  <metaVersion>4</metaVersion>
+  <overrides>script_epc.getProjectByCode</overrides>
+  <parameterList>
+    <parameter name="projectCode" type="rifp"/>
+  </parameterList>
+  <valueType>dstruct_cwt_pcmaintapi.project</valueType>
+  <script><![CDATA[
+    if(projectCode == null)
+      return null;
+
+    var finder = new Finder("cm_common:cwt_projectFinder");
+    finder.searchDocument.projectCode = projectCode;
+    var result = finder.search();
+    if (result && result.size > 0) {
+        var doc = result.start;
+        return doc;
+    }
+    return null;
+  ]]></script>
+</script>

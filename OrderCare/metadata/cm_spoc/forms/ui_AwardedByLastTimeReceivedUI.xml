@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.AwardedByLastTimeReceivedUI">
+  <group>Promotion</group>
+  <label>AwardedByLastTimeReceivedUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="ATUConnectionPhaseIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.AwardedByLastTimeReceived</valueType>
+    </variable>
+    <variable name="ATUPhasePerSegmentIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="AwardedByLastTimeReceivedUIVL" type="elvlt">
+              <width>1000px</width>
+              <elementList>
+                <element name="CouplePhaseSectionStack" type="elsectnstck">
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.AwardedByLastTimeReceivedUI/permMethod_AwardedByLastTimeReceivedSectionVisRule</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <width>1000px</width>
+                  <elementList>
+                    <element name="CouplePhaseSection" type="elsect">
+                      <elementList>
+                        <element name="CouplePhaseHeader" type="elsecth">
+                          <label>Configure Couple Phase of the promotion</label>
+                        </element>
+                        <element name="CouplePhaseVL1" type="elvlt">
+                          <alignment>right,center</alignment>
+                          <width>1000px</width>
+                          <elementList>
+                            <element name="LayoutSpacer" type="ellsp">
+                              <height>15px</height>
+                              <width>1000px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="CouplePhaseButtonLayout" type="elhlt">
+                          <width>1000px</width>
+                          <elementList>
+                            <element name="addButton" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.AwardedByLastTimeReceivedUI/uimthd_addATUConnectionPhaseIteratorRule</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/notebook_add.png</icon>
+                            </element>
+                            <element name="deleteButton" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.AwardedByLastTimeReceivedUI/uimthd_deleteATUConnectionPhaseIteratorRule</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/notebook_delete.png</icon>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="LayoutSpacer2" type="ellsp">
+                          <height>15px</height>
+                          <width>1000px</width>
+                        </element>
+                        <element name="CouplePhaseGridLayout" type="elgrd">
+                          <colWidths>50px</colWidths>
+                          <fixedColWidths>true</fixedColWidths>
+                          <numOfCols>12</numOfCols>
+                          <width>1000px</width>
+                          <elementList>
+                            <element name="CellSpacer" type="elcsp">
+                              <width>30px</width>
+                            </element>
+                            <element name="MinTopUpThreshold" type="ellab">
+                              <cellAlignment>center,center</cellAlignment>
+                              <columnSpan>2</columnSpan>
+                              <label>Min Top Up Threshold</label>
+                              <width>140px</width>
+                            </element>
+                            <element name="MaxTopUpThreshold" type="ellab">
+                              <cellAlignment>center,center</cellAlignment>
+                              <columnSpan>2</columnSpan>
+                              <label>Max Top Up Threshold</label>
+                              <width>140px</width>
+                            </element>
+                            <element name="TopUpAmountInEachExecution" type="ellab">
+                              <cellAlignment>center,center</cellAlignment>
+                              <columnSpan>2</columnSpan>
+                              <label>Top Up Amount In Each Execution</label>
+                              <width>190px</width>
+                            </element>
+                            <element name="PercentageOverTopUpAmount" type="ellab">
+                              <cellAlignment>center,center</cellAlignment>
+                              <columnSpan>2</columnSpan>
+                              <label>Percentage Over Top Up Amount</label>
+                              <width>190px</width>
+                            </element>
+                            <element name="BoltOn" type="ellab">
+                              <cellAlignment>center,center</cellAlignment>
+                              <columnSpan>1</columnSpan>
+                              <label>Bolt On</label>
+                              <width>80px</width>
+                            </element>
+                            <element name="OriginDestination" type="ellab">
+                              <cellAlignment>center,center</cellAlignment>
+                              <columnSpan>2</columnSpan>
+                              <label>Top Up Origin - Top Up Destination</label>
+                              <width>190px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="ATUConnectionPhaseIteratorVL" type="elvlt">
+                          <alignment>center,center</alignment>
+                          <height>200px</height>
+                          <width>1000px</width>
+                          <elementList>
+                            <element name="ATUConnectionPhaseIterator" type="eliter">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.AwardedByLastTimeReceivedUI/leaf_ATUConnectionPhaseIterator</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <elementList>
+                                <element name="ATUConnectionPhaseIteratorHL" type="elhlt">
+                                  <alignment>center,center</alignment>
+                                  <width>1000px</width>
+                                  <elementList>
+                                    <element name="ATUConnectionPhaseIteratorFormFrame" type="elovf">
+                                      <cellAlignment>center,center</cellAlignment>
+                                      <formReference type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.AwardedByLastTimeReceivedUI/leaf_ATUConnectionPhaseIterator</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                        </variablePathList>
+                                      </formReference>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="RestOfPhasesSectionStack" type="elsectnstck">
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.AwardedByLastTimeReceivedUI/permMethod_AwardedByLastTimeReceivedSectionVisRule</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <width>1000px</width>
+                  <elementList>
+                    <element name="RestOfPhasesSection" type="elsect">
+                      <elementList>
+                        <element name="RestOfPhasesHeader" type="elsecth">
+                          <label>Configure the rest of phases of the promotion</label>
+                        </element>
+                        <element name="RestOfPhasesVL1" type="elvlt">
+                          <alignment>right,center</alignment>
+                          <width>1000px</width>
+                          <elementList>
+                            <element name="LayoutSpacer1" type="ellsp">
+                              <height>15px</height>
+                              <width>1000px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="RestOfPhasesButtonLayout" type="elhlt">
+                          <width>1000px</width>
+                          <elementList>
+                            <element name="addButton1" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.AwardedByLastTimeReceivedUI/uimthd_addATUPhasePerSegmentIteratorRule</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/notebook_add.png</icon>
+                            </element>
+                            <element name="deleteButton1" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.AwardedByLastTimeReceivedUI/uimthd_deleteATUPhasePerSegmentIteratorRule</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/notebook_delete.png</icon>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="LayoutSpacer21" type="ellsp">
+                          <height>15px</height>
+                          <width>1000px</width>
+                        </element>
+                        <element name="RestOfPhasesGridLayout" type="elgrd">
+                          <colWidths>50px</colWidths>
+                          <fixedColWidths>true</fixedColWidths>
+                          <numOfCols>14</numOfCols>
+                          <width>1000px</width>
+                          <elementList>
+                            <element name="CellSpacer1" type="elcsp">
+                              <width>30px</width>
+                            </element>
+                            <element name="Segment" type="ellab">
+                              <cellAlignment>center,center</cellAlignment>
+                              <columnSpan>2</columnSpan>
+                              <label>Segment</label>
+                              <width>100px</width>
+                            </element>
+                            <element name="MinTopUpThreshold1" type="ellab">
+                              <cellAlignment>center,center</cellAlignment>
+                              <columnSpan>2</columnSpan>
+                              <label>Min Top Up Threshold</label>
+                              <width>100px</width>
+                            </element>
+                            <element name="MaxTopUpThreshold1" type="ellab">
+                              <cellAlignment>center,center</cellAlignment>
+                              <columnSpan>2</columnSpan>
+                              <label>Max Top Up Threshold</label>
+                              <width>100px</width>
+                            </element>
+                            <element name="TopUpAmountInEachExecution1" type="ellab">
+                              <cellAlignment>center,center</cellAlignment>
+                              <columnSpan>2</columnSpan>
+                              <label>Top Up Amount &lt;br&gt;In Each Execution</label>
+                              <width>100px</width>
+                            </element>
+                            <element name="PercentageOverTopUpAmount1" type="ellab">
+                              <cellAlignment>center,center</cellAlignment>
+                              <columnSpan>2</columnSpan>
+                              <label>Percentage Over &lt;br&gt;Top Up Amount</label>
+                              <width>100px</width>
+                            </element>
+                            <element name="BoltOn1" type="ellab">
+                              <cellAlignment>center,center</cellAlignment>
+                              <columnSpan>1</columnSpan>
+                              <label>Bolt On</label>
+                              <width>100px</width>
+                            </element>
+                            <element name="OriginDestination1" type="ellab">
+                              <cellAlignment>center,center</cellAlignment>
+                              <columnSpan>2</columnSpan>
+                              <label>Top Up Origin -&lt;br&gt; Top Up Destination</label>
+                              <width>100px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="ATUPhasePerSegmentIteratorVL" type="elvlt">
+                          <alignment>center,center</alignment>
+                          <height>200px</height>
+                          <width>1000px</width>
+                          <elementList>
+                            <element name="ATUPhasePerSegmentIterator" type="eliter">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.AwardedByLastTimeReceivedUI/leaf_ATUPhasePerSegmentIterator</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <elementList>
+                                <element name="ATUPhasePerSegmentIteratorHL" type="elhlt">
+                                  <alignment>center,center</alignment>
+                                  <width>1000px</width>
+                                  <elementList>
+                                    <element name="ATUPhasePerSegmentIteratorFormFrame" type="elovf">
+                                      <cellAlignment>center,center</cellAlignment>
+                                      <formReference type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.AwardedByLastTimeReceivedUI/leaf_ATUPhasePerSegmentIterator</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                        </variablePathList>
+                                      </formReference>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.AwardedByLastTimeReceivedUI/leaf_model</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.AwardedByLastTimeReceivedUI/leaf_model</valueType>
+      <script><![CDATA[
+        var m = cm_spoc.initAwardedByLastTimeReceived(this.model);
+        cm_spoc.initAwardedByLastTimeReceivedUI(this);
+        return m;
+      ]]></script>
+    </method>
+    <method name="addATUConnectionPhaseIteratorRule" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <type>ui_com.conceptwave.system.UserInterface</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var model = this.model.ABLTRATUConnectionPhaseArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.ATUConnectionPhaseIteratorUI","base_ATUConnectionPhase","ATUConnectionPhaseIterator");
+      ]]></script>
+    </method>
+    <method name="deleteATUConnectionPhaseIteratorRule" type="uimthd">
+      <script><![CDATA[
+        var model = this.model.ABLTRATUConnectionPhaseArrDS;
+        cm_spoc.removeListElements(this,model,"List","ATUConnectionPhaseIterator");
+      ]]></script>
+    </method>
+    <method name="ReadOnly" type="permMethod">
+      <script>return this.model.readonly;</script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script><![CDATA[
+        for(var i=0; i<this.ATUConnectionPhaseIterator.length; i++)
+        {
+            this.ATUConnectionPhaseIterator[i].model.readonly = this.model.readonly;
+        }
+
+        for(var j=0; j<this.ATUPhasePerSegmentIterator.length; j++)
+        {
+            this.ATUPhasePerSegmentIterator[j].model.readonly = this.model.readonly;
+        }
+      ]]></script>
+    </method>
+    <method name="enabledPrimaryKeyFields" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+    <method name="addATUPhasePerSegmentIteratorRule" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <type>ui_com.conceptwave.system.UserInterface</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var model = this.model.ABLTRATUPhasePerSegmArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.ATUPhasePerSegmentIteratorUI","base_ATUPhasePerSegment","ATUPhasePerSegmentIterator");
+      ]]></script>
+    </method>
+    <method name="deleteATUPhasePerSegmentIteratorRule" type="uimthd">
+      <script><![CDATA[
+        var model = this.model.ABLTRATUPhasePerSegmArrDS;
+        cm_spoc.removeListElements(this,model,"List","ATUPhasePerSegmentIterator");
+      ]]></script>
+    </method>
+    <method name="AwardedByLastTimeReceivedSectionVisRule" type="permMethod">
+      <script><![CDATA[
+        if(!this.parent.model.AwardedTopUpPromotionType)
+        {
+            return false;
+        }
+        else if(this.parent.model.AwardedTopUpPromotionType == "LT")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

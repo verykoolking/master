@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.pwsMap_GenericRelations">
+  <label>pwsMap_GenericRelations</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="fromDs" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="toDs" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var req  = fromDs.relations;
+    if(req != null && req.relation != null) {
+        var relations = req.relation;
+        for(var i=0; i<relations.length; i++) {
+            if(!relations[i] || !relations[i].name) {
+                var fault = api_common.createFault("E100", "Missing tag name in the relation.");    //TODO: correct code
+                return fault;
+            }
+
+            var name = relations[i].name;
+            //converting external to internal
+            name = cm_pws.services.getInternalName(name, toDs.metadataType);
+            if( relations[i].item &&  relations[i].item.length >0)
+            {
+                if(relations[i].item.length == 1)
+                {
+                    //var oCSTargetEntityType = relations[i].oCSTargetEntityType;    //MRA CHANGED ISSUE #129703
+                    toDs[name] = relations[i].item[0].target.dn.scheme;              //MRA CHANGED ISSUE #129703
+                }
+                else
+                {   //MRA CHANGED ISSUE #130048
+                    if(name.substr(name.length - 3) == 'Arr')
+                    {
+                        var auxInnerDS =  cm_spoc.initInnerDS("base_"+name);
+                        name =  name+'DS';
+                        toDs[name] = auxInnerDS;
+                    }
+
+                    for(var j = 0; j<relations[i].item.length;j++)
+                    {
+                        toDs[name].List[j] = relations[i].item[j].target.dn.scheme;
+                    }
+                }
+            }
+        }
+    }
+  ]]></script>
+</script>

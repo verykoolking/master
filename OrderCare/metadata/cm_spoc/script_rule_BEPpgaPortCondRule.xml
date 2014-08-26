@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BEPpgaPortCondRule">
+  <group>rules_scripts.TopUp</group>
+  <label>rule_BEPpgaPortCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**Conditional
+    BEPpgaPortCondRule
+
+    The attribute must be saved in the catalog only if the related BankEntity attribute assumes the value shown in the column H.
+
+    BankEntity
+    PpgaPort
+
+    BankEntity
+    ClientServerMode
+
+    CLSR
+
+     */
+
+    var entity=data.BankEntity;
+
+    if(entity.PpgaIpAddress && entity.ClientServerMode!='CLSR')
+    {
+    errList.addErrorMessage(data,["PpgaPort can be saved only if ClientServerMode is CLSR"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

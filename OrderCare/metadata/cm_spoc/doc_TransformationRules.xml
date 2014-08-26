@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cm_spoc.TransformationRules">
+  <dbSchema>ORDER</dbSchema>
+  <extends>doc_com.conceptwave.system.Document</extends>
+  <generatedKey>true</generatedKey>
+  <guid>{31ead884-0724-4d1f-809b-043c14c10a8b}</guid>
+  <label>Transformation Rules</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="cwDocId" type="leaf">
+      <column>CWDOCID</column>
+      <key>1</key>
+      <table>TransformationRules</table>
+      <valueType>dtype_cwf.cwDocId</valueType>
+    </variable>
+    <variable name="service" type="leaf">
+      <column>SERVICE</column>
+      <table>TransformationRules</table>
+      <valueType>dtype_cm_spoc.service</valueType>
+    </variable>
+    <variable name="type" type="leaf">
+      <column>TYPE</column>
+      <table>TransformationRules</table>
+      <valueType>dtype_cm_spoc.type</valueType>
+    </variable>
+    <variable name="rule" type="leaf">
+      <column>RULE</column>
+      <table>TransformationRules</table>
+      <valueType>dtype_cm_spoc.rule</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="cwOnDocVisualKey" type="action">
+      <system>true</system>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        var visualKey;
+
+        if(this.parent.metadataType == 'cm_spoc:transformationRulesTypeFinder')
+            visualKey = this.type;
+        else
+            visualKey = this.rule;
+
+        return visualKey;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_com.conceptwave.system.Document/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cm_spoc.TransformationRules</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</document>

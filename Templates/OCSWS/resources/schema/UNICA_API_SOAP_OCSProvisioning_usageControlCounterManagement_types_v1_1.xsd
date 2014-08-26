@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- PA2 -->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/usageControlCounterManagement/v1/types" 
+            xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"             
+            xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+            targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/usageControlCounterManagement/v1/types" 
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" 
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_1.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" 
+    			schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+
+
+	<!-- ************************************* subscribeUsageControlCounter ************************************* -->
+
+	<!-- Request -->
+
+	<xsd:complexType name="SubscribeUsageControlCounterType">
+		<xsd:sequence>
+			<xsd:element ref="apt:actionCommonInfo" />
+			<xsd:element ref="apt:subscriberId" />
+			<xsd:element ref="apt:uccInfo" />
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="subscribeUsageControlCounter" type="tns:SubscribeUsageControlCounterType" />
+
+	<!-- Response -->
+
+	<xsd:complexType name="SubscribeUsageControlCounterResponseType">
+		<xsd:sequence>
+			<xsd:element ref="apt:result" />
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="subscribeUsageControlCounterResponse" type="tns:SubscribeUsageControlCounterResponseType" />
+
+	<!-- ************************************* unsubscribeUsageControlCounter ************************************* -->
+
+	<!-- Request -->
+
+	<xsd:complexType name="UnsubscribeUsageControlCounterType">
+		<xsd:sequence>
+			<xsd:element ref="apt:actionCommonInfo" />
+			<xsd:element ref="apt:subscriberId" />
+			<xsd:element ref="apt:uccId" />
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="unsubscribeUsageControlCounter" type="tns:UnsubscribeUsageControlCounterType" />
+
+	<!-- Response -->
+
+	<xsd:complexType name="UnsubscribeUsageControlCounterResponseType">
+		<xsd:sequence>
+			<xsd:element ref="apt:result" />
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="unsubscribeUsageControlCounterResponse" type="tns:UnsubscribeUsageControlCounterResponseType" />
+
+	<!-- ************************************* changeUsageControlCounter ************************************* -->
+
+	<!-- Request -->
+
+	<xsd:complexType name="ChangeUsageControlCounterType">
+		<xsd:sequence>
+			<xsd:element ref="apt:actionCommonInfo" />
+			<xsd:element ref="apt:subscriberId" />
+			<xsd:element ref="apt:uccId" />
+			<xsd:element ref="apt:uccDeltaValue" />
+            <xsd:element name="extension" minOccurs="0">  <!--  Added due to NGAA 14B PA2 -->
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="apt:uccValue" minOccurs="0"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="changeUsageControlCounter" type="tns:ChangeUsageControlCounterType" />
+
+	<!-- Response -->
+
+	<xsd:complexType name="ChangeUsageControlCounterResponseType">
+		<xsd:sequence>
+			<xsd:element ref="apt:result" />
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="changeUsageControlCounterResponse" type="tns:ChangeUsageControlCounterResponseType" />
+
+	<!-- ************************************* queryUsageControlCounters ************************************* -->
+
+	<!-- Request -->
+
+	<xsd:complexType name="QueryUsageControlCountersType">
+		<xsd:sequence>
+			<xsd:element ref="apt:queryCommonInfo" />
+			<xsd:element ref="apt:subscriberId" />
+			<xsd:element ref="apt:uccId" minOccurs="0" />
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="queryUsageControlCounters" type="tns:QueryUsageControlCountersType" />
+
+	<!-- Response -->
+
+	<xsd:complexType name="QueryUsageControlCountersResponseType">
+		<xsd:sequence>
+			<xsd:element ref="apt:uccBasicInfoList" minOccurs="0" />
+			<xsd:element ref="apt:token" minOccurs="0" />
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="queryUsageControlCountersResponse" type="tns:QueryUsageControlCountersResponseType" />
+
+    <!-- ************************************* queryUsageControlCountersPreviousPeriods ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryUsageControlCountersPreviousPeriodsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:uccId" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryUsageControlCountersPreviousPeriods" type="tns:QueryUsageControlCountersPreviousPeriodsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryUsageControlCountersPreviousPeriodsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:uccPreviousPerInfoList" minOccurs="0" />
+            <xsd:element ref="apt:token" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryUsageControlCountersPreviousPeriodsResponse" type="tns:QueryUsageControlCountersPreviousPeriodsResponseType" />
+
+    <!-- ************************************* subscribeUsageControlConditionGroups ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SubscribeUsageControlConditionGroupsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:uccCondGroupInfoList" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeUsageControlConditionGroups" type="tns:SubscribeUsageControlConditionGroupsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SubscribeUsageControlConditionGroupsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeUsageControlConditionGroupsResponse" type="tns:SubscribeUsageControlConditionGroupsResponseType" />
+
+    <!-- ************************************* unsubscribeUsageControlConditionGroups ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="UnsubscribeUsageControlConditionGroupsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:uccCondGroupIdList" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeUsageControlConditionGroups" type="tns:UnsubscribeUsageControlConditionGroupsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="UnsubscribeUsageControlConditionGroupsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeUsageControlConditionGroupsResponse" type="tns:UnsubscribeUsageControlConditionGroupsResponseType" />
+
+    <!-- ************************************* queryUsageControlConditionGroups ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryUsageControlConditionGroupsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryUsageControlConditionGroups" type="tns:QueryUsageControlConditionGroupsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryUsageControlConditionGroupsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:uccCondGroupInfoList" minOccurs="0" />
+            <xsd:element ref="apt:token" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryUsageControlConditionGroupsResponse" type="tns:QueryUsageControlConditionGroupsResponseType" />
+
+</xsd:schema>

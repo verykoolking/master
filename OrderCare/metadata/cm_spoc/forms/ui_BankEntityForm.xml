@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.BankEntityForm">
+  <group>TopUp</group>
+  <label>BankEntityForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="AccumLimitExtensionIterator" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="AccumulationLimitIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="FixedLimitIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="TemporaryLimitIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="FixedLimitsPPGA" type="vform">
+          <label>FixedLimitsPPGA</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>850px</width>
+                <elementList>
+                  <element name="FixedLimits" type="elsect">
+                    <elementList>
+                      <element name="ValueLayout" type="elhlt">
+                        <elementList>
+                          <element name="addFixedLimit" type="elmnu">
+                            <menuAccel type="mAccelP"/>
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BankEntityForm/uimthd_addFixedLimit</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                            <width>40px</width>
+                          </element>
+                          <element name="deleteFixedLimit" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BankEntityForm/uimthd_deleteFixedLimit</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                            <width>40px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="LimitsPPGAHeaders" type="elgrd">
+                        <colWidths>50px</colWidths>
+                        <fixedColWidths>true</fixedColWidths>
+                        <numOfCols>13</numOfCols>
+                        <width>750px</width>
+                        <elementList>
+                          <element name="Select" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <width>30px</width>
+                          </element>
+                          <element name="TariffPlan" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Tariff Plan</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="Zone" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Zone</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="SubDistributor" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Sub-distributor</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="MinimumLimit" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Minimum Limit</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="MaximumLimit" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Maximum Limit</label>
+                            <width>100px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="LimitsPPGAVL" type="elvlt">
+                        <height>200px</height>
+                        <width>750px</width>
+                        <elementList>
+                          <element name="LimitsPPGAIterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BankEntityForm/leaf_FixedLimitIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="LimitsPPGAHL" type="elhlt">
+                                <width>750px</width>
+                                <elementList>
+                                  <element name="LimitsPPGAFrame" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.BankEntityForm/leaf_FixedLimitIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Fixed Limits</label>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="TemporaryAccumulationLimits" type="elsect">
+                    <elementList>
+                      <element name="HorizontalLayout" type="elhlt">
+                        <elementList>
+                          <element name="addTemporaryLimit" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BankEntityForm/uimthd_addTemporaryLimit</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                          </element>
+                          <element name="deleteTemporaryLimit" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.BankEntityForm/uimthd_deleteTemporaryLimit</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="HeaderLayout" type="elgrd">
+                        <colWidths>50px</colWidths>
+                        <fixedColWidths>true</fixedColWidths>
+                        <numOfCols>13</numOfCols>
+                        <width>750px</width>
+                        <elementList>
+                          <element name="Select1" type="ellab">
+                            <columnSpan>1</columnSpan>
+                          </element>
+                          <element name="TariffPlan1" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Tariff Plan</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="Zone1" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Zone</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="DailyLimit" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Daily Limit</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="MonthlyLimit" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Monthly Limit</label>
+                            <width>100px</width>
+                          </element>
+                          <element name="ResetDay" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <label>Reset Day</label>
+                            <width>100px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="BodyLayout" type="elvlt">
+                        <height>200px</height>
+                        <overflow>auto</overflow>
+                        <width>750px</width>
+                        <elementList>
+                          <element name="Iterator" type="eliter">
+                            <elementList>
+                              <element name="TemporaryAccumulationFrame" type="elovf"/>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="SectionHeader1" type="elsecth">
+                        <label>TemporaryAccumulationLimits</label>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="AccumulationLimitsForWorkingDays" type="elsect">
+                    <elementList>
+                      <element name="Limits" type="elsecth">
+                        <label>AccumulationLimitsForWorkingDays</label>
+                      </element>
+                      <element name="VerticalLayout2" type="elhlt">
+                        <elementList>
+                          <element name="LayoutSpacer" type="ellsp">
+                            <width>125px</width>
+                          </element>
+                          <element name="SectionStack1" type="elsectnstck">
+                            <visibilityMode>multiple</visibilityMode>
+                            <width>550px</width>
+                            <elementList>
+                              <element name="Section" type="elsect">
+                                <elementList>
+                                  <element name="SectionHeader2" type="elsecth">
+                                    <label>Limits</label>
+                                  </element>
+                                  <element name="HorizontalLayout1" type="elhlt">
+                                    <elementList>
+                                      <element name="addAccumulationLimits" type="elmnu">
+                                        <clickMethod type="varPath">
+                                          <variablePathList>
+                                            <variablePath>ui_cm_spoc.forms.BankEntityForm/uimthd_addAccumulationLimits</variablePath>
+                                          </variablePathList>
+                                        </clickMethod>
+                                        <icon>/cwt/images/16/notebook_add.png</icon>
+                                      </element>
+                                      <element name="DeleteAccumulationLimits" type="elmnu">
+                                        <clickMethod type="varPath">
+                                          <variablePathList>
+                                            <variablePath>ui_cm_spoc.forms.BankEntityForm/uimthd_deleteAccumulationLimits</variablePath>
+                                          </variablePathList>
+                                        </clickMethod>
+                                        <icon>/cwt/images/16/delete.png</icon>
+                                      </element>
+                                    </elementList>
+                                  </element>
+                                  <element name="HeaderLayout1" type="elgrd">
+                                    <colWidths>50px</colWidths>
+                                    <fixedColWidths>true</fixedColWidths>
+                                    <numOfCols>6</numOfCols>
+                                    <width>375px</width>
+                                    <elementList>
+                                      <element name="Select2" type="ellab">
+                                        <columnSpan>1</columnSpan>
+                                        <width>30px</width>
+                                      </element>
+                                      <element name="WorkingDays" type="ellab">
+                                        <columnSpan>2</columnSpan>
+                                        <label>Working Days</label>
+                                        <width>100px</width>
+                                      </element>
+                                      <element name="LimitValue" type="ellab">
+                                        <columnSpan>2</columnSpan>
+                                        <label>Limit Value</label>
+                                        <width>100px</width>
+                                      </element>
+                                    </elementList>
+                                  </element>
+                                  <element name="VerticalLayout1" type="elvlt">
+                                    <overflow>auto</overflow>
+                                    <width>370px</width>
+                                    <elementList>
+                                      <element name="AccumulationLimitsIterator" type="eliter">
+                                        <variable type="varPath">
+                                          <variablePathList>
+                                            <variablePath>ui_cm_spoc.forms.BankEntityForm/leaf_AccumulationLimitIterator</variablePath>
+                                          </variablePathList>
+                                        </variable>
+                                        <elementList>
+                                          <element name="AccumulationLimitsFrame" type="elovf">
+                                            <formReference type="varPath">
+                                              <variablePathList>
+                                                <variablePath>ui_cm_spoc.forms.BankEntityForm/leaf_AccumulationLimitIterator</variablePath>
+                                                <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                                <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                              </variablePathList>
+                                            </formReference>
+                                          </element>
+                                        </elementList>
+                                      </element>
+                                    </elementList>
+                                  </element>
+                                </elementList>
+                              </element>
+                              <element name="LimitsExtension" type="elsect">
+                                <elementList>
+                                  <element name="SectionHeader3" type="elsecth">
+                                    <label>Limits Extension</label>
+                                  </element>
+                                  <element name="HorizontalLayout2" type="elhlt">
+                                    <elementList>
+                                      <element name="addAccumLimExtension" type="elmnu">
+                                        <clickMethod type="varPath">
+                                          <variablePathList>
+                                            <variablePath>ui_cm_spoc.forms.BankEntityForm/uimthd_addAccumLimExtension</variablePath>
+                                          </variablePathList>
+                                        </clickMethod>
+                                        <icon>/cwt/images/16/notebook_add.png</icon>
+                                      </element>
+                                      <element name="deleteAccumLimitExtension" type="elmnu">
+                                        <clickMethod type="varPath">
+                                          <variablePathList>
+                                            <variablePath>ui_cm_spoc.forms.BankEntityForm/uimthd_deleteAccumLimitExtension</variablePath>
+                                          </variablePathList>
+                                        </clickMethod>
+                                        <icon>/cwt/images/16/delete.png</icon>
+                                      </element>
+                                    </elementList>
+                                  </element>
+                                  <element name="HeaderLayout2" type="elgrd">
+                                    <colWidths>50px</colWidths>
+                                    <fixedColWidths>true</fixedColWidths>
+                                    <numOfCols>7</numOfCols>
+                                    <width>370px</width>
+                                    <elementList>
+                                      <element name="Select3" type="ellab">
+                                        <columnSpan>1</columnSpan>
+                                        <width>30px</width>
+                                      </element>
+                                      <element name="LimitExtension" type="ellab">
+                                        <columnSpan>2</columnSpan>
+                                        <label>Limit Extension</label>
+                                        <width>100px</width>
+                                      </element>
+                                      <element name="StartDate" type="ellab">
+                                        <columnSpan>2</columnSpan>
+                                        <label>Start Date</label>
+                                        <width>100px</width>
+                                      </element>
+                                      <element name="EndDate" type="ellab">
+                                        <columnSpan>2</columnSpan>
+                                        <label>End Date</label>
+                                        <width>100px</width>
+                                      </element>
+                                    </elementList>
+                                  </element>
+                                  <element name="VerticalLayout11" type="elvlt">
+                                    <elementList>
+                                      <element name="AccumLimitExtensionIterator" type="eliter">
+                                        <elementList>
+                                          <element name="FormFrame" type="elovf"/>
+                                        </elementList>
+                                      </element>
+                                    </elementList>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="FixedLimits" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.BankEntityForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.BankEntityForm/frmui_Forms/vform_FixedLimitsPPGA</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Fixed Limits</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="FixedLimitsOPGE" type="vform">
+          <label>FixedLimitsOPGE</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>850px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="ValueLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <menuAccel type="mAccelP"/>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                            <width>40px</width>
+                          </element>
+                          <element name="deleteButton" type="elmnu">
+                            <icon>/cwt/images/16/delete.png</icon>
+                            <width>40px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="LimitsOPGEHeaders" type="elgrd">
+                        <colWidths>50px</colWidths>
+                        <fixedColWidths>true</fixedColWidths>
+                        <numOfCols>13</numOfCols>
+                        <width>750px</width>
+                        <elementList>
+                          <element name="Select" type="ellab"/>
+                          <element name="MinimumLimit" type="ellab">
+                            <label>Minimum Limit</label>
+                            <width>150px</width>
+                          </element>
+                          <element name="MaximumLimit" type="ellab">
+                            <label>Maximum Limit</label>
+                            <width>150px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="LimitsOPGEVL" type="elvlt">
+                        <width>750px</width>
+                        <elementList>
+                          <element name="LimitsOPGEIterator" type="eliter">
+                            <elementList>
+                              <element name="LimitsOPGEHL" type="elhlt">
+                                <width>750px</width>
+                                <elementList>
+                                  <element name="LimitsOPGEFrame" type="elovf"/>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Fixed Limits</label>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="TemporaryAccumulationLimits" type="vform">
+          <label>TemporaryAccumulationLimits</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>750px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="HorizontalLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                          </element>
+                          <element name="deleteButton" type="elmnu">
+                            <icon>/cwt/images/16/delete.png</icon>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="HeaderLayout" type="elgrd">
+                        <numOfCols>6</numOfCols>
+                        <elementList>
+                          <element name="Select" type="ellab"/>
+                          <element name="TariffPlan" type="ellab">
+                            <label>Tariff Plan</label>
+                          </element>
+                          <element name="Zone" type="ellab">
+                            <label>Zone</label>
+                          </element>
+                          <element name="DailyLimit" type="ellab">
+                            <label>Daily Limit</label>
+                          </element>
+                          <element name="MonthlyLimit" type="ellab">
+                            <label>Monthly Limit</label>
+                          </element>
+                          <element name="ResetDay" type="ellab">
+                            <label>Reset Day</label>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="BodyLayout" type="elvlt">
+                        <elementList>
+                          <element name="Iterator" type="eliter">
+                            <elementList>
+                              <element name="TemporaryAccumulationFrame" type="elovf"/>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="AccumulationLimitsForWorkingDays" type="vform">
+          <label>AccumulationLimitsForWorkingDays</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>750px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="Limits" type="elsecth">
+                        <label>Limits</label>
+                      </element>
+                      <element name="HorizontalLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                          </element>
+                          <element name="DeleteButton" type="elmnu">
+                            <icon>/cwt/images/16/delete.png</icon>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="HeaderLayout" type="elgrd">
+                        <numOfCols>3</numOfCols>
+                        <elementList>
+                          <element name="Select" type="ellab"/>
+                          <element name="WorkingDays" type="ellab">
+                            <label>Working Days</label>
+                          </element>
+                          <element name="LimitValue" type="ellab">
+                            <label>Limit Value</label>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <elementList>
+                          <element name="AccumulationLimitsIterator" type="eliter">
+                            <elementList>
+                              <element name="AccumulationLimitsFrame" type="elovf"/>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="addFixedLimit" type="uimthd">
+      <script><![CDATA[
+        var fixLims=this.model.BankEntityFixedLimitArrayDS.ListDS;
+        cm_spoc.addListElement(this, fixLims,"cm_spoc.forms.FixedLimitsUI","base_BankEntityFixedLimit","FixedLimitIterator");
+      ]]></script>
+    </method>
+    <method name="deleteFixedLimit" type="uimthd">
+      <script><![CDATA[
+        this.model.BankEntityFixedLimitArrayDS = cm_spoc.removeListElements(this,this.model.BankEntityFixedLimitArrayDS,"List", "FixedLimitIterator");
+      ]]></script>
+    </method>
+    <method name="addTemporaryLimit" type="uimthd">
+      <script><![CDATA[
+        var tempLims=this.model.BankEntityFixedLimitArrayDS.ListDS;
+        cm_spoc.addListElement(this, tempLims,"cm_spoc.forms.TemporaryAccumulationLimitsUI","base_BankEntityFixedLimit","TemporaryLimitIterator");
+      ]]></script>
+    </method>
+    <method name="deleteTemporaryLimit" type="uimthd">
+      <script><![CDATA[
+        this.model.BankEntityFixedLimitArrayDS = cm_spoc.removeListElements(this,this.model.BankEntityFixedLimitArrayDS,"List", "TemporaryLimitIterator");
+      ]]></script>
+    </method>
+    <method name="deleteAccumulationLimits" type="uimthd">
+      <script><![CDATA[
+        this.model.BankEntityFixedLimitArrayDS = cm_spoc.removeListElements(this,this.model.BankEntityFixedLimitArrayDS,"List", "AccumulationLimitIterator");
+      ]]></script>
+    </method>
+    <method name="addAccumulationLimits" type="uimthd">
+      <script><![CDATA[
+        var accumLims=this.model.BankEntityFixedLimitArrayDS.ListDS;
+        cm_spoc.addListElement(this, accumLims,"cm_spoc.forms.AccumulationLimitsUI","base_BankEntityFixedLimit","AccumulationLimitIterator");
+      ]]></script>
+    </method>
+    <method name="addAccumLimExtension" type="uimthd">
+      <script><![CDATA[
+        var accumExtLims=this.model.BankEntityFixedLimitArrayDS.ListDS;
+        cm_spoc.addListElement(this, accumExtLims,"cm_spoc.forms.AccumulationLimitsExtensionUI","base_BankEntityFixedLimit","AccumLimitExtensionIterator");
+      ]]></script>
+    </method>
+    <method name="deleteAccumLimitExtension" type="uimthd">
+      <script><![CDATA[
+        this.model.BankEntityFixedLimitArrayDS = cm_spoc.removeListElements(this,this.model.BankEntityFixedLimitArrayDS,"List", "AccumLimitExtensionIterator");
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

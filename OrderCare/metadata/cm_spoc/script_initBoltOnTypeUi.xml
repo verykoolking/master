@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initBoltOnTypeUi">
+  <group>ui_scripts.BoltOnType</group>
+  <label>initBoltOnTypeUi</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.PeriodIterator = new Array();
+    var periodIteratorDS=ui.model.HappyBoltOnSpecificationDS.HappyBoltOnPeriodArrDS.ListDS;
+    if(!ui.model.specificationCode){
+        //cm_spoc.addListElement(ui, periodIteratorDS,"cm_spoc.forms.PeriodUI","base_HappyBoltOnPeriod","PeriodIterator");
+    }
+    else{
+       cm_spoc.loadListElements(ui, periodIteratorDS, "cm_spoc.forms.PeriodUI", "PeriodIterator");
+    }
+
+
+
+    ui.RateIterator = new Array();
+    var rateIteratorDS=ui.model.HappyBoltOnSpecificationDS.RateSpecificationArrDS.ListDS;
+    if(!ui.model.specificationCode){
+       // cm_spoc.addListElement(ui, rateIteratorDS,"cm_spoc.forms.RateUI","base_RateSpecification","RateIterator");
+    }
+    else{
+       cm_spoc.loadListElements(ui, rateIteratorDS, "cm_spoc.forms.RateUI", "RateIterator");
+    }
+
+    ui.GeneralRateIterator = new Array();
+    var generalRateIteratorDS=ui.model.RateSpecificationArrDS.ListDS;
+    if(!ui.model.specificationCode){
+        //cm_spoc.addListElement(ui, generalRateIteratorDS,"cm_spoc.forms.RateUI","base_RateSpecification","GeneralRateIterator");
+    }
+    else{
+       cm_spoc.loadListElements(ui, generalRateIteratorDS, "cm_spoc.forms.RateUI", "GeneralRateIterator");
+    }
+
+    ui.ThresholdIteratorValue = new Array();
+    var thresholdIteratorDS = ui.model.ThresholdSpecificationArrDS.ListDS;
+    if(!ui.model.specificationCode){
+        /*cm_spoc.addListElement(ui, thresholdIteratorDS,"cm_spoc.forms.ThresholdValueUI","base_ThresholdSpecification","ThresholdIteratorValue");
+        ui.model.ThresholdSpecificationArrDS.ListDS[0].ThresholdType="VALUE_COUNTER";*/
+    }
+    else{
+        var valueElems =  new Array();
+        var contador = 0;
+        for(var k =0; k< thresholdIteratorDS.length; k++){
+            if (thresholdIteratorDS.array[k].ThresholdType =="VALUE_COUNTER"){
+                valueElems[contador] = thresholdIteratorDS.array[k];
+                contador++;
+            }
+        }
+        cm_spoc.loadListElements(ui, valueElems, "cm_spoc.forms.ThresholdValueUI", "ThresholdIteratorValue");
+    }
+
+
+    ui.ThresholdIteratorRenewableCounter = new Array();
+    var thresholdIteratorCountDS=ui.model.ThresholdSpecificationArrDS.ListDS;
+    if(!ui.model.specificationCode){
+       /* cm_spoc.addListElement(ui, thresholdIteratorCountDS, "cm_spoc.forms.ThresholdRenewableCounterUI","base_ThresholdSpecification","ThresholdIteratorRenewableCounter");
+        ui.model.ThresholdSpecificationArrDS.ListDS[1].ThresholdType="RENEWAL_COUNTER";*/
+    }
+    else{
+        var renewableCounterElems = ui.model.ThresholdSpecificationArrDS.ListDS;
+        renewableCounterElems = new Array();
+        var contador = 0;
+        for(var k =0; k< thresholdIteratorCountDS.length; k++){
+            if (thresholdIteratorCountDS.array[k].ThresholdType =="RENEWAL_COUNTER"){
+                renewableCounterElems[contador] = thresholdIteratorCountDS.array[k];
+                contador++;
+            }
+        }
+        cm_spoc.loadListElements(ui, renewableCounterElems, "cm_spoc.forms.ThresholdRenewableCounterUI", "ThresholdIteratorRenewableCounter");
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.getArrayType">
+  <group>scripts</group>
+  <label>Retrieves the array type of a entity array</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <valueType>dtype_com.conceptwave.system.String</valueType>
+  <script><![CDATA[
+    theCatalog.catalogTestModeOnOff(true);
+    var itemCat = theCatalog.getItem(itemCode);
+    theCatalog.catalogTestModeOnOff(false);
+
+    if(itemCat==null)
+        throw ("No Catalog Item found with code " + itemCode);
+
+    if(itemCat.attributeExists('ArrayType'))
+        return itemCat.ArrayType.getDefaultValue();
+
+    return null;
+  ]]></script>
+</script>

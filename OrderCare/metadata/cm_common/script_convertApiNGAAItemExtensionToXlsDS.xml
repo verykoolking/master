@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.convertApiNGAAItemExtensionToXlsDS">
+  <group>overridden.itemAttributeChanges</group>
+  <highlight>18</highlight>
+  <label>convertApiNGAAItemExtensionToXlsDS</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="catalogApiDS" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="xlsDS" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="currentSheet" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var sheetRow = 0;
+    for (var i=0; i<catalogApiDS.ngaaItemExtension.length; i++)
+    {
+          if(null == catalogApiDS.ngaaItemExtension[i]) {
+                continue;
+          }
+          sheetRow++;
+          var fieldIndex = 0;
+
+          //NGAA
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtension[i].itemCode;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtension[i].canCreate;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtension[i].canUpdate;
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex].Data.Type = "String";
+          xlsDS.Worksheet[currentSheet].Table.Row[sheetRow].Cell[fieldIndex++].Data.Data = catalogApiDS.ngaaItemExtension[i].canDelete;
+          //NGAA End
+
+    }
+
+    xlsDS.Worksheet[currentSheet].Table.ExpandedRowCount = sheetRow+1;
+
+    return xlsDS;
+  ]]></script>
+</script>

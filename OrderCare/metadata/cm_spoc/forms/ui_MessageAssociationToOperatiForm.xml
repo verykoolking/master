@@ -1,0 +1,1151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.MessageAssociationToOperatiForm">
+  <group>Messages</group>
+  <label>MessageAssociationToOperatiForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="FinderSelectReference" type="leaf">
+      <valueType>ui_cm_spoc.FinderSelectReference</valueType>
+    </variable>
+    <variable name="MATOMessAssByPlanIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="MATOAfterPromMessByPlanArrIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.MessageAssociationToOperati</valueType>
+    </variable>
+    <variable name="subOpRelations" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="subOpComplex" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="subOpCPtype" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="subOpValues" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="SubOpType" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="subOperation" type="leaf">
+      <valueType>dtype_cwt_pcdd.catalogCode</valueType>
+    </variable>
+    <variable name="subOpEntity" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="subOpEntityLabel" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="subOpCodeTable" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="subOpCodeTableLabel" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="SubOperationCode" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="subOpComplexLabel" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="SubOperationCodeValue" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="MATOAfterPromMessPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="MATOMessPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <visibilityMode>multiple</visibilityMode>
+                  <width>750px</width>
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <elementList>
+                        <element name="SectionHeader" type="elsecth">
+                          <label>Assignment To Operations</label>
+                        </element>
+                        <element name="VerticalLayout1" type="elvlt">
+                          <alignment>right,center</alignment>
+                          <elementList>
+                            <element name="HorizontalLayout" type="elhlt">
+                              <alignment>right,center</alignment>
+                              <elementList>
+                                <element name="Operation" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <canSort>false</canSort>
+                                  <columnSpan>1</columnSpan>
+                                  <label>Operation</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/uimthd_defineSubOperationsByOperation</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_model</variablePath>
+                                      <variablePath>dstruct_cm_spoc.data.MessageAssociationToOperati/dstruct_Operation</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>278px</width>
+                                </element>
+                                <element name="OperationButton" type="elbtn">
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/usrActionMethod_FinderOperationReferenceDialog</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwf/finder.gif</icon>
+                                  <width>22px</width>
+                                </element>
+                              </elementList>
+                            </element>
+                            <element name="HorizontalLayout1" type="elhlt">
+                              <alignment>right,center</alignment>
+                              <elementList>
+                                <element name="subOperation" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <canSort>false</canSort>
+                                  <columnSpan>1</columnSpan>
+                                  <dynLabel type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_subOpEntityLabel</variablePath>
+                                    </variablePathList>
+                                  </dynLabel>
+                                  <editable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/permMethod_subOperationEditable</variablePath>
+                                    </variablePathList>
+                                  </editable>
+                                  <label>Sub Operation</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/uimthd_defineSubOperationsByOperation</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_subOperation</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>278px</width>
+                                </element>
+                                <element name="SubOperationButton" type="elbtn">
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/usrActionMethod_FinderSubOperationReferenceDialog</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <disabled type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/permMethod_subOperationButtonDisabled</variablePath>
+                                    </variablePathList>
+                                  </disabled>
+                                  <icon>/cwf/finder.gif</icon>
+                                  <width>22px</width>
+                                </element>
+                              </elementList>
+                            </element>
+                            <element name="HorizontalLayout2" type="elhlt">
+                              <alignment>right,center</alignment>
+                              <elementList>
+                                <element name="SubOperationCodeValue" type="elfld">
+                                  <autoFocusNextField>false</autoFocusNextField>
+                                  <canSort>false</canSort>
+                                  <columnSpan>1</columnSpan>
+                                  <dynLabel type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_subOpComplexLabel</variablePath>
+                                    </variablePathList>
+                                  </dynLabel>
+                                  <editable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/permMethod_CodeValueEditable</variablePath>
+                                    </variablePathList>
+                                  </editable>
+                                  <label>Code Value</label>
+                                  <labelOrientation>left</labelOrientation>
+                                  <onChangeMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/uimthd_defineSubOperationsByOperation</variablePath>
+                                    </variablePathList>
+                                  </onChangeMethod>
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_SubOperationCodeValue</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <width>278px</width>
+                                </element>
+                                <element name="CodeValueButton2" type="elbtn">
+                                  <cellAlignment>right,center</cellAlignment>
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/usrActionMethod_AttributeSelectReferenceDialog</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <disabled type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/permMethod_CodeValueButtonDisabled</variablePath>
+                                    </variablePathList>
+                                  </disabled>
+                                  <icon>/cwf/finder.gif</icon>
+                                  <width>22px</width>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="GridLayout1" type="elgrd">
+                          <alignment>right,center</alignment>
+                          <labeAlign>left</labeAlign>
+                          <labelOrientation>left</labelOrientation>
+                          <width>50%</width>
+                          <elementList>
+                            <element name="LayoutSpacer" type="ellsp">
+                              <height>10px</height>
+                              <width>50px</width>
+                            </element>
+                            <element name="ThresholdTopUp" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <labeAlign>left</labeAlign>
+                              <label>Threshold TopUp</label>
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.MessageAssociationToOperati/dstruct_ThresholdTopUp</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/permMethod_MATOThresholdTopUpVisRule</variablePath>
+                                </variablePathList>
+                              </visible>
+                              <width>300px</width>
+                            </element>
+                            <element name="SendAdditional" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <editable type="varPath">
+                                <variablePathList>
+                                  <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                </variablePathList>
+                              </editable>
+                              <labeAlign>left</labeAlign>
+                              <label>Send Additional</label>
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.MessageAssociationToOperati/dstruct_SendAdditional</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/permMethod_SendAdditionalVisRule</variablePath>
+                                </variablePathList>
+                              </visible>
+                              <width>300px</width>
+                            </element>
+                            <element name="SendAdditionalEnum" type="elslct">
+                              <label>Select a new Send Additional</label>
+                              <multiselect>false</multiselect>
+                              <onChangeMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/usrActionMethod_updateSendAddicional</variablePath>
+                                </variablePathList>
+                              </onChangeMethod>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.MessageAssociationToOperati/dstruct_SendAdditionalEnum</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>300px</width>
+                            </element>
+                            <element name="MessageExecutionCancellationEnum" type="elslct">
+                              <label>Execution/Cancelation</label>
+                              <labelOrientation>left</labelOrientation>
+                              <multiselect>false</multiselect>
+                              <onChangeMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/usrActionMethod_updateExecCancel</variablePath>
+                                </variablePathList>
+                              </onChangeMethod>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.MessageAssociationToOperati/dstruct_MessageExecutionCancellationEnum</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>300px</width>
+                            </element>
+                            <element name="MessageIfError" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <editable type="varPath">
+                                <variablePathList>
+                                  <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                </variablePathList>
+                              </editable>
+                              <labeAlign>left</labeAlign>
+                              <label>If the error occurs *</label>
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.MessageAssociationToOperati/dstruct_MessageIfError</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <visible type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/permMethod_MessageIfErrorVisRule</variablePath>
+                                </variablePathList>
+                              </visible>
+                              <width>300px</width>
+                            </element>
+                            <element name="MessageIfErrorEnum" type="elslct">
+                              <label>Select a new Error</label>
+                              <labelOrientation>left</labelOrientation>
+                              <multiselect>false</multiselect>
+                              <onChangeMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/usrActionMethod_updateIfError</variablePath>
+                                </variablePathList>
+                              </onChangeMethod>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.MessageAssociationToOperati/dstruct_MessageIfErrorEnum</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>300px</width>
+                            </element>
+                            <element name="ServiceProviderEnum" type="elslct">
+                              <label>Service Provider</label>
+                              <labelOrientation>left</labelOrientation>
+                              <multiselect>false</multiselect>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.MessageAssociationToOperati/dstruct_ServiceProviderEnum</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>300px</width>
+                            </element>
+                            <element name="RowSpacer1" type="elrsp">
+                              <height>5px</height>
+                              <rowSpan>5px</rowSpan>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="Section1" type="elsect">
+                      <elementList>
+                        <element name="SectionHeader1" type="elsecth">
+                          <label>Messages To Be Sent</label>
+                        </element>
+                        <element name="MATOMessPickListFormFrame" type="elovf">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_MATOMessPickList</variablePath>
+                              <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <height>350px</height>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_MATOMessPickList</variablePath>
+                            </variablePathList>
+                          </variable>
+                        </element>
+                        <element name="LayoutSpacer2" type="ellsp">
+                          <height>10px</height>
+                        </element>
+                        <element name="buttonsLayout2" type="elhlt">
+                          <elementList>
+                            <element name="addButton" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/uimthd_addMATOMessAssByPlanArrIterator</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/notebook_add.png</icon>
+                              <width>40px</width>
+                            </element>
+                            <element name="deleteButton" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/uimthd_deleteMATOMessAssByPlanArrIterator</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/delete.png</icon>
+                              <width>40px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="Headers" type="elgrd">
+                          <colWidths>50px</colWidths>
+                          <fixedColWidths>true</fixedColWidths>
+                          <numOfCols>11</numOfCols>
+                          <width>1000px</width>
+                          <elementList>
+                            <element name="Select" type="ellab">
+                              <columnSpan>1</columnSpan>
+                              <width>30px</width>
+                            </element>
+                            <element name="MessAssByPlan" type="ellab">
+                              <canSort>false</canSort>
+                              <columnSpan>1</columnSpan>
+                              <label>Message</label>
+                              <width>100px</width>
+                            </element>
+                            <element name="price" type="ellab">
+                              <columnSpan>1</columnSpan>
+                              <label>Tariff Plans</label>
+                              <width>70px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="ConditionsVL2" type="elvlt">
+                          <height>200px</height>
+                          <overflow>auto</overflow>
+                          <width>1050px</width>
+                          <elementList>
+                            <element name="ConditionsIterator" type="eliter">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_MATOMessAssByPlanIterator</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <elementList>
+                                <element name="ConditionsHL" type="elhlt">
+                                  <width>1050px</width>
+                                  <elementList>
+                                    <element name="ConditionsFormFrame" type="elovf">
+                                      <formReference type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_MATOMessAssByPlanIterator</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                        </variablePathList>
+                                      </formReference>
+                                      <showResizeBar>true</showResizeBar>
+                                      <width>750px</width>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="Section2" type="elsect">
+                      <elementList>
+                        <element name="SectionHeader11" type="elsecth">
+                          <label>Message To Be Sent,After Associated Promotion</label>
+                        </element>
+                        <element name="MATOAfterPromMessPickListFormFrame" type="elovf">
+                          <fillSpace>false</fillSpace>
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_MATOAfterPromMessPickList</variablePath>
+                              <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <height>350px</height>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_MATOAfterPromMessPickList</variablePath>
+                            </variablePathList>
+                          </variable>
+                        </element>
+                        <element name="LayoutSpacer1" type="ellsp">
+                          <height>10px</height>
+                        </element>
+                        <element name="buttonsLayout" type="elhlt">
+                          <elementList>
+                            <element name="addButton1" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/uimthd_addMATOAfterPromMessByPlanArrIterator</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/notebook_add.png</icon>
+                              <width>40px</width>
+                            </element>
+                            <element name="deleteButton1" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/uimthd_deleteMATOAfterPromMessByPlanArrIterator</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/delete.png</icon>
+                              <width>40px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="Headers1" type="elgrd">
+                          <colWidths>50px</colWidths>
+                          <fixedColWidths>true</fixedColWidths>
+                          <numOfCols>11</numOfCols>
+                          <width>1000px</width>
+                          <elementList>
+                            <element name="Select1" type="ellab">
+                              <columnSpan>1</columnSpan>
+                              <width>30px</width>
+                            </element>
+                            <element name="message" type="ellab">
+                              <canSort>false</canSort>
+                              <columnSpan>1</columnSpan>
+                              <label>Message</label>
+                              <width>100px</width>
+                            </element>
+                            <element name="price1" type="ellab">
+                              <columnSpan>1</columnSpan>
+                              <label>Tariff Plans</label>
+                              <width>70px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="ConditionsVL" type="elvlt">
+                          <height>200px</height>
+                          <overflow>auto</overflow>
+                          <width>1050px</width>
+                          <elementList>
+                            <element name="ConditionsIterator1" type="eliter">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_MATOAfterPromMessByPlanArrIterator</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <elementList>
+                                <element name="ConditionsHL1" type="elhlt">
+                                  <width>1050px</width>
+                                  <elementList>
+                                    <element name="ConditionsFormFrame1" type="elovf">
+                                      <formReference type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_MATOAfterPromMessByPlanArrIterator</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                        </variablePathList>
+                                      </formReference>
+                                      <showResizeBar>true</showResizeBar>
+                                      <width>750px</width>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initMessageAssociationToOperati(this.model);
+        cm_spoc.initMATOAfterPromMessByPlanUI(this);
+        cm_spoc.initMATOMessAssByPlanUI(this);
+        cm_spoc.loadSubOperations(m,this);
+        this.model.MessageIfError = 0;
+        return m;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$MATOAfterPromMessPickList" type="laction">
+      <path>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_MATOAfterPromMessPickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_MATOAfterPromMessPickList</valueType>
+      <script><![CDATA[
+        var pl = new cm_spoc.PickList(null,this);
+        pl.modelCallback = this.setMATOAfterPromMess;
+        pl.availableItems = new DataObjectList();
+
+        var itemFinder = new Finder("cm_spoc.MessageFinder");
+        var result = itemFinder.search();
+
+        var MessagesSelected = this.model.MATOAfterPromMessArrDS.List;
+
+        pl.loadItemsSelectedPreviously(pl,result,MessagesSelected);
+        /*
+        var itemSelected = false;
+        for(var i=0;i<result.length;i++){
+            var item = new cm_spoc.PickListDS();
+            item.id = result[i].itemCode;
+            item.description = result[i].itemCode;
+            itemSelected = false;
+            if(MessagesSelected.length!=0){
+                for(var j=0;j<MessagesSelected.length;j++)
+                {
+                    if(MessagesSelected[j] == item.id){
+                        pl.selectedItems.addLast(item);
+                        itemSelected = true;
+                        break;
+                    }
+                }
+            }
+            if(itemSelected == false){
+                pl.availableItems.addLast(item);
+            }
+        }*/
+
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$MATOMessPickList" type="laction">
+      <path>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_MATOMessPickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.MessageAssociationToOperatiForm/leaf_MATOMessPickList</valueType>
+      <script><![CDATA[
+        var pl = new cm_spoc.PickList(null,this);
+        pl.modelCallback = this.setMATOMess;
+        pl.availableItems = new DataObjectList();
+
+        var itemFinder = new Finder("cm_spoc.MessageFinder");
+        var result = itemFinder.search();
+
+        var MessagesSelected = this.model.MATOMessArrDS.List;
+        pl.loadItemsSelectedPreviously(pl,result,MessagesSelected);
+        /*
+        var itemSelected = false;
+        for(var i=0;i<result.length;i++){
+            var item = new cm_spoc.PickListDS();
+            item.id = result[i].itemCode;
+            item.description = result[i].itemCode;
+            itemSelected = false;
+            if(MessagesSelected.length!=0){
+                for(var j=0;j<MessagesSelected.length;j++)
+                {
+                    if(MessagesSelected[i] == item.id){
+                        pl.selectedItems.addLast(item);
+                        itemSelected = true;
+                        break;
+                    }
+                }
+            }
+            if(itemSelected == false){
+                pl.availableItems.addLast(item);
+            }
+        }
+        */
+        return pl;
+      ]]></script>
+    </method>
+    <method name="MATOThresholdTopUpVisRule" type="permMethod">
+      <script><![CDATA[
+        var value=this.model.Operation;
+        //if (value == "RC" || value == "RA") return true;
+        if (value=="OperationTopUp" || value=="OperationMultipleTopUp")return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="addMATOAfterPromMessByPlanArrIterator" type="uimthd">
+      <script><![CDATA[
+        if(this.model.MATOAfterPromMessByPlanArrDS.ListDS.length==0){
+        var matoAfterPromMessByPlanArr = cm_spoc.initInnerDS("base_MATOAfterPromMessByPlanArr");
+        this.model.MATOAfterPromMessByPlanArrDS = matoAfterPromMessByPlanArr;}
+
+        var model=this.model.MATOAfterPromMessByPlanArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.MATOAfterPromMessByPlanUI","base_AfterPromotionMessageByPlan","MATOAfterPromMessByPlanArrIterator");
+      ]]></script>
+    </method>
+    <method name="deleteMATOAfterPromMessByPlanArrIterator" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.removeListElements(this, this.model.MATOAfterPromMessByPlanArrDS,"List", "MATOAfterPromMessByPlanArrIterator");
+        if(this.model.MATOAfterPromMessByPlanArrDS.ListDS.length==0)
+        {
+        this.model.MATOAfterPromMessByPlanArrDS=null;
+        }
+      ]]></script>
+    </method>
+    <method name="addMATOMessAssByPlanArrIterator" type="uimthd">
+      <script><![CDATA[
+        if(this.model.MATOMessAssByPlanArrDS.ListDS.length==0){
+        var matoMessAssByPlanArr = cm_spoc.initInnerDS("base_MATOMessAssByPlanArr");
+        this.model.MATOMessAssByPlanArrDS = matoMessAssByPlanArr;}
+
+        var model=this.model.MATOMessAssByPlanArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.MATOMessAssByPlanUI","base_MessageAssociationByPlan","MATOMessAssByPlanIterator");
+      ]]></script>
+    </method>
+    <method name="deleteMATOMessAssByPlanArrIterator" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.removeListElements(this, this.model.MATOMessAssByPlanArrDS,"List", "MATOMessAssByPlanIterator");
+        if(this.model.MATOMessAssByPlanArrDS.ListDS.length==0)
+        {
+        this.model.MATOMessAssByPlanArrDS=null;
+        }
+      ]]></script>
+    </method>
+    <method name="updateExecCancel" type="usrActionMethod">
+      <script><![CDATA[
+        this.model.MessageExecutionCancellation = this.model.MessageExecutionCancellationEnum == 'Execution' ? true : false;
+      ]]></script>
+    </method>
+    <method name="updateSendAddicional" type="usrActionMethod">
+      <script><![CDATA[
+        var itemFinder = new Finder("cm_spoc.env_aditionalDocFinder");
+        itemFinder.searchDocument.cwDocId = this.model.SendAdditionalEnum;
+        var result = itemFinder.search();
+
+        if(result && result.length == 1)
+            this.model.SendAdditional = result[0].cod_envadicional;
+      ]]></script>
+    </method>
+    <method name="updateIfError" type="usrActionMethod">
+      <script><![CDATA[
+        var itemFinder = new Finder("cm_spoc.errores_actDocFinder");
+        itemFinder.searchDocument.cwDocId = this.model.MessageIfErrorEnum;
+        var result = itemFinder.search();
+
+        if(result && result.length == 1)
+            this.model.MessageIfError = result[0].cod_error;
+        else if(!this.model.MessageIfErrorEnum)
+            this.model.MessageIfError = 0;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script>//return true;</script>
+    </method>
+    <method name="FinderSelectReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_Message");
+        newDetail.modelCallback = this.messageSelected;
+        newDetail.showButton=true;
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="buttonsDisable" type="permMethod">
+      <script>return this.model.readonly;</script>
+    </method>
+    <method name="subOperationButtonDisabled" type="permMethod">
+      <script><![CDATA[
+        if((this.subOpEntity == false || this.subOpEntity == null) && (this.subOpCodeTable == false
+            || this.subOpCodeTable == null) && (this.subOpComplex == false || this.subOpComplex == null))
+            return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="subOperationEditable" type="permMethod">
+      <script><![CDATA[
+        if(this.subOpEntity == true || this.subOpCodeTable == true || this.subOpComplex == true)
+            return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="CodeValueButtonDisabled" type="permMethod">
+      <script><![CDATA[
+        if(this.subOpComplex == true && this.subOperation != null && this.subOpCPtype == 1)
+            return false;
+        else return true;
+      ]]></script>
+    </method>
+    <method name="CodeValueEditable" type="permMethod">
+      <script><![CDATA[
+        if(this.subOpComplex == true && this.subOperation != null && this.subOpCPtype == 1)
+            return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="setAttributeCP" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parentUI.model.SubOperationDS.getValueByName(this.parentUI.SubOpType+"DS").putValueByName(this.parentUI.SubOperationCode,selected.itemCode);
+        this.parentUI.SubOperationCodeValue = selected.itemCode;
+      ]]></script>
+    </method>
+    <method name="AttributeSelectReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.AttributeSelectReference(null,this);
+        newDetail.setBaseItemCode(this.subOpValues);
+        newDetail.modelCallback = this.setAttributeCP;
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="setSubOperationCP2" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var SubOperationTypeEnum = Global.getCTCodesAndDescriptions("SubOperationTypeCodeTable");
+
+        var SubOperationType = null;
+        var entity = this.parentUI.subOpRelations.split(":");
+        var subAtt = this.parentUI.SubOperationCode.split(':');
+
+        for(var i=0;i<SubOperationTypeEnum.length;i=i+2)
+        {
+            if(SubOperationTypeEnum[i+1] == this.parentUI.SubOpType){
+                var SubOperationType = SubOperationTypeEnum[i];
+                break;
+            }
+        }
+
+        if(SubOperationType!=null)
+        {
+            this.parentUI.model.SubOperationDS.SubOperationType = SubOperationType;
+
+            cm_spoc.initSubOpFromCT(this.parentUI.model.SubOperationDS,this.parentUI.SubOpType);
+            for(var i = 0; i<subAtt.length; i++){
+            this.parentUI.model.SubOperationDS.getValueByName(this.parentUI.SubOpType+"DS").putValueByName(subAtt[i],selected.getValueByName(subAtt[i]));
+            }
+            this.parentUI.subOperation = selected.CyclicActionSpecification;
+        }
+      ]]></script>
+    </method>
+    <method name="setSubOperationCP1" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var SubOperationTypeEnum = Global.getCTCodesAndDescriptions("SubOperationTypeCodeTable");
+
+        var SubOperationType = null;
+
+        var entity = this.parentUI.subOpRelations.split(":");
+
+        for(var i=0;i<SubOperationTypeEnum.length;i=i+2)
+        {
+            if(SubOperationTypeEnum[i+1] == this.parentUI.SubOpType){
+                var SubOperationType = SubOperationTypeEnum[i];
+                break;
+            }
+        }
+
+        if(SubOperationType!=null)
+        {
+            this.parentUI.model.SubOperationDS.SubOperationType = SubOperationType;
+
+            cm_spoc.initSubOpFromCT(this.parentUI.model.SubOperationDS,this.parentUI.SubOpType);
+
+            this.parentUI.model.SubOperationDS.getValueByName(this.parentUI.SubOpType+"DS").putValueByName(entity[0],selected.itemCode);
+            this.parentUI.subOperation = selected.itemCode;
+
+            var entity0 = selected.itemCode;
+
+            var s = new epc.data.Specification();
+            s.project =  cwa_epc.getDefaultProj();
+
+            var codeTemp = entity0;
+            for(var i=0;i<entity.length-2;i++)
+            {
+                s.specificationCode = codeTemp;
+                var c =  epc.getSpecificationByKey(s);
+                if(!api_common.isFault(c)){
+                    codeTemp = c.getValueByName(entity[i+1]);
+                }
+            }
+            var values = new Array();
+            if(codeTemp)
+            {
+                for(var i=0; i<codeTemp.length;i++)
+                {
+                    s.specificationCode = codeTemp[i];
+                    var c =  epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(c)){
+                        values[i] = c.getValueByName(entity[entity.length-1]);
+                    }
+                }
+            }else{
+                Global.showUserMessage("Error on the configuration of the entity selected");
+            }
+            this.parentUI.subOpComplexLabel = this.parentUI.SubOperationCode
+            this.parentUI.subOpValues = values;
+        }
+      ]]></script>
+    </method>
+    <method name="setSubOperationCT" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var SubOperationTypeEnum = Global.getCTCodesAndDescriptions("SubOperationTypeCodeTable");
+
+        var SubOperationType = null;
+
+        for(var i=0;i<SubOperationTypeEnum.length;i=i+2)
+        {
+            if(SubOperationTypeEnum[i+1] == this.parentUI.SubOpType){
+                var SubOperationType = SubOperationTypeEnum[i];
+                break;
+            }
+        }
+        if(SubOperationType!=null)
+        {
+            this.parentUI.model.SubOperationDS.SubOperationType = SubOperationType;
+
+            cm_spoc.initSubOpFromCT(this.parentUI.model.SubOperationDS,this.parentUI.SubOpType);
+
+            this.parentUI.model.SubOperationDS.getValueByName(this.parentUI.SubOpType+"DS").putValueByName(this.parentUI.SubOperationCode,selected.itemCode);
+            this.parentUI.subOperation = selected.itemCode;
+        }
+      ]]></script>
+    </method>
+    <method name="setSubOperation" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var SubOperationTypeEnum = Global.getCTCodesAndDescriptions("SubOperationTypeCodeTable");
+
+        var SubOperationType = null;
+
+        for(var i=0;i<SubOperationTypeEnum.length;i=i+2)
+        {
+            if(SubOperationTypeEnum[i+1] == this.parentUI.SubOpType){
+                var SubOperationType = SubOperationTypeEnum[i];
+                break;
+            }
+        }
+        if(SubOperationType!=null)
+        {
+            this.parentUI.model.SubOperationDS.SubOperationType = SubOperationType;
+            this.parentUI.model.SubOperationDS.putValueByName(this.parentUI.SubOpType,selected.itemCode);
+            this.parentUI.subOperation = selected.itemCode;
+        }
+      ]]></script>
+    </method>
+    <method name="FinderSubOperationReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        if(this.subOpEntity == true)
+        {
+            var newDetail = new cm_spoc.FinderSelectReference(null,this);
+            newDetail.setBaseItemCode('base_'+this.SubOpType);
+            newDetail.modelCallback = this.setSubOperation;
+            newDetail.parentUI = this;
+            return newDetail;
+        }
+        else{
+            switch(this.subOpCPtype){
+            case 1:
+                var entity = this.subOpRelations.split(":");
+                var newDetail = new cm_spoc.FinderSelectReference(null,this);
+                newDetail.setBaseItemCode('base_'+entity[0]);
+                newDetail.modelCallback = this.setSubOperationCP1;
+                newDetail.parentUI = this;
+                return newDetail;
+                break;
+            case 2:
+                var entity = this.subOpRelations.split(":");
+                var newDetail = new cm_spoc.AttributeFinderSelectReference(null,this);
+                newDetail.setBaseItemCode('base_'+entity[0]);
+                newDetail.modelCallback = this.setSubOperationCP2;
+                newDetail.parentUI = this;
+                return newDetail;
+                break;
+            default:
+                var newDetail = new cm_spoc.CodeTableFinderSelectReference(null,this);
+                var BIC = this.SubOperationCode+"CodeTable";
+                BIC = BIC.substring(0,32);
+                newDetail.setBaseItemCode(BIC);
+                newDetail.modelCallback = this.setSubOperationCT;
+                newDetail.parentUI = this;
+                return newDetail;
+            }
+        }
+      ]]></script>
+    </method>
+    <method name="referenceCallback" type="uimthd">
+      <parameterList>
+        <parameter name="itemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+        <parameter name="baseItemCode" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        s.specificationCode = itemCode;
+        var operation = epc.getSpecificationByKey(s);
+        if(operation)
+        {
+            var subOperationByOperationFinder = new Finder("cm_spoc.SubOperationsByOperationScriptFinder");
+            subOperationByOperationFinder.searchDocument.Operation = operation.OperationId;
+            var result = subOperationByOperationFinder.search();
+        }
+        if(result.length>0)
+        {
+            this.subOperation = null;
+            this.SubOperationCodeValue = null;
+            cm_spoc.initSubOperation([this.model]);
+
+            this.model.Operation = itemCode;
+
+            if(result[0].Entity == true){
+                this.subOpEntityLabel = result[0].Label;
+                this.SubOpType = result[0].SubOperation;
+                this.subOpEntity = true;
+                this.subOpCodeTable = false;
+                this.subOpComplex = false;
+            }
+            else{
+                if(result[0].Entity == false){
+                    switch(result[0].Complex){
+                    case 1:
+                        this.subOpEntityLabel = result[0].Label;
+                        this.SubOpType = result[0].SubOperation;
+                        this.SubOperationCode = result[0].SubOperationCode;
+                        this.subOpRelations =  result[0].Relations;
+                        this.subOpCPtype = result[0].Complex;
+                        this.subOpComplex = true;
+                        this.subOpCodeTable = true;
+                        this.subOpEntity = false;
+                        break;
+                    case 2:
+                        this.subOpEntityLabel = result[0].Label;
+                        this.SubOpType = result[0].SubOperation;
+                        this.SubOperationCode = result[0].SubOperationCode;
+                        this.subOpRelations =  result[0].Relations;
+                        this.subOpCPtype = result[0].Complex;
+                        this.subOpComplex = true;
+                        this.subOpCodeTable = true;
+                        this.subOpEntity = false;
+                        break;
+                     default:
+                        this.subOpEntityLabel = result[0].Label;
+                        this.SubOpType = result[0].SubOperation;
+                        this.SubOperationCode = result[0].SubOperationCode;
+                        this.subOpComplex = false;
+                        this.subOpCodeTable = true;
+                        this.subOpEntity = false;
+                    }
+                }
+            }
+        }
+        else{
+            this.model.Operation = itemCode;
+            this.subOperation = null;
+            this.SubOperationCodeValue = null;
+            this.model.SubOperation = null;
+            this.model.SubOperationDS = null;
+            this.subOpComplex = null;
+            this.subOpCodeTable = null;
+            this.subOpEntity = null;
+        }
+      ]]></script>
+    </method>
+    <method name="FinderOperationReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_Operation");
+        newDetail.parentUI = this;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="defineSubOperationsByOperation" type="uimthd">
+      <script>return true;</script>
+    </method>
+    <method name="SendAdditionalVisRule" type="permMethod">
+      <script><![CDATA[
+        if(this.model.SendAdditional!=null)
+            return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="MessageIfErrorVisRule" type="permMethod">
+      <script><![CDATA[
+        if(this.model.MessageIfError!=null)
+            return true;
+        else return false;
+      ]]></script>
+    </method>
+    <method name="setMATOMess" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.MATOMessArrDS.List = null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.MATOMessArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setMATOAfterPromMess" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <array>true</array>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.MATOAfterPromMessArrDS.List = null;
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.MATOAfterPromMessArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

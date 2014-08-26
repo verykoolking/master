@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.processTCDTPair">
+  <group>applicabilityCondition.scripts</group>
+  <label>processTCDTPair</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="boltonType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_spoc.data.BoltOnType</type>
+    </parameter>
+    <parameter name="TCDT" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.DestTypeAssoTariffClassList</type>
+    </parameter>
+    <parameter name="conditions" type="rifp">
+      <array>true</array>
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_spoc.data.SimpleTemporalAppCondition</type>
+    </parameter>
+    <parameter name="reusableNx24Ids" type="rifp">
+      <array>true</array>
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+    <parameter name="reusableGroupIds" type="rifp">
+      <array>true</array>
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var TCDTList = cm_plm.queryDestTypeAssoTariffClassList(TCDT);
+    if(api_common.isFault(TCDTList))
+        return TCDTList;
+    if(TCDTList.length != 1)
+        Global.throwException("Error retrieving TarifClass-DestinationType!");
+
+    TCDT = TCDTList[0];
+
+    var Nx24 = cm_plm.generateNx24AppBoltonTypeList(boltonType, TCDT, conditions, reusableNx24Ids, reusableGroupIds, projectCode);
+    if(api_common.isFault(Nx24))
+        return Nx24;
+
+    Nx24.projectCode = projectCode;
+    TCDT.projectCode = projectCode;
+
+    var newId; var oldId = TCDT.Nx24AppBoltonTypeListId;
+
+    var Nx24Query = new cm_plm.Nx24AppBoltonTypeList();
+    Nx24Query.Nx24AppBoltonTypeListModality = Nx24.Nx24AppBoltonTypeListModality;
+    assignArray(Nx24Query.Nx24AppBoltonTypeArr, Nx24.Nx24AppBoltonTypeArr);
+
+    var Nx24TableList = cm_plm.queryNx24AppBoltonTypeList(Nx24Query);
+    if(api_common.isFault(Nx24TableList))
+        return Nx24TableList;
+
+    var result;
+    if(Nx24TableList.length > 0){
+        newId = Nx24TableList[0].Nx24AppBoltonTypeListId;
+    }else if(Nx24.Nx24AppBoltonTypeListId){
+        result = cm_plm.setNx24AppBoltonTypeListByValue(Nx24);
+        newId = Nx24.Nx24AppBoltonTypeListId;
+    }else{
+        result = cm_plm.createNx24AppBoltonTypeListByValue(Nx24);
+        newId = Nx24.Nx24AppBoltonTypeListId;
+    }
+
+    if(api_common.isFault(result))
+        return result;
+
+    if(TCDT.Nx24AppBoltonTypeListId){
+        if(newId != TCDT.Nx24AppBoltonTypeListId){
+            TCDT.Nx24AppBoltonTypeListId = newId;
+            result = cm_plm.setDestTypeAssoTariffClassListByValue(TCDT);
+        }
+    }else{
+        TCDT.Nx24AppBoltonTypeListId = newId;
+        result = cm_plm.setDestTypeAssoTariffClassListByValue(TCDT);
+    }
+    if(api_common.isFault(result))
+        return result;
+
+    //now we check if the old Nx24 table is used anymore, otherwise we delete it
+    TCDT = new cm_plm.DestTypeAssoTariffClassList();
+    TCDT.Nx24AppBoltonTypeListId = oldId;
+    var TCDTList = cm_plm.queryDestTypeAssoTariffClassList(TCDT);
+    if(TCDTList.length == 0){
+        Nx24.Nx24AppBoltonTypeListId = oldId;
+        //mark as reusable
+        reusableNx24Ids.push(Nx24);
+    }
+
+    /************************************************************************************
+     * FUNCTIONS
+     ***********************************************************************************/
+
+
+    function assignArray(object, array){
+
+        for(var i=0; i<array.length; i++)
+            object[i] = array[i];
+        return object;
+    }
+  ]]></script>
+</script>

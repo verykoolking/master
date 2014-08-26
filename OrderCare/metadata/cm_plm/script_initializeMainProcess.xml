@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.initializeMainProcess">
+  <highlight>32</highlight>
+  <label>CM-PLM Initialize Main Process</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="process" type="rifp">
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var ord = process.processOrder;
+    var pDoc = process.processDocument;
+
+    if(pDoc.cwOrderId == null) {
+        pDoc.cwOrderId = ord.id;
+        pDoc.projectCode = ord[0].projectCode;
+        pDoc.rejectToParent = false;
+    }
+  ]]></script>
+</script>

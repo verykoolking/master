@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initAwardSelected">
+  <group>ui_scripts.Promotion</group>
+  <label>initAwardSelected</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="node1" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="node2" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="node3" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(node1){
+        var code = cm_spoc.initInnerDS("base_"+node1.substring(0,28));
+        model.putValueByName(node1+"DS",code);
+        if(node2){
+            var code = cm_spoc.initInnerDS("base_"+node2.substring(0,28));
+            model.getValueByName(node1+"DS").putValueByName(node2+"DS",code);
+        }
+        if(node3){
+            var code = cm_spoc.initInnerDS("base_"+node3.substring(0,28));
+            model.getValueByName(node1+"DS").putValueByName(node3+"DS",code);
+        }
+    }
+    return model;
+  ]]></script>
+</script>

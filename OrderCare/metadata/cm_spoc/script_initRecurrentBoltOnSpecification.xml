@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initRecurrentBoltOnSpecification">
+  <group>ui_scripts.CyclicActions</group>
+  <label>initRecurrentBoltOnSpecification</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+       var CABOCycleChngeSpecification =  cm_spoc.initInnerDS("base_CABOCycleChngeSpecification");
+       model.CABOCycleChngeSpecificationDS = CABOCycleChngeSpecification;
+
+     }else{
+
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+
+       s.specificationCode = model.CABOCycleChngeSpecification;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.CABOCycleChngeSpecificationDS=r;
+       }
+    }
+    return model;
+  ]]></script>
+</script>

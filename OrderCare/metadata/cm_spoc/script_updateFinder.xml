@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.updateFinder">
+  <group>ui_scripts.UsageControl.UCBoltOnTypeAssociation.FinderHelpers</group>
+  <label>updateFinder</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var finderUi = ui.BoltOnTypeModalityFinder;
+    var result = finderUi.result;
+
+    if ( ui.model.UCBOASUCBoltOnTypeAssArrDS && ui.model.UCBOASUCBoltOnTypeAssArrDS.ListDS && ui.model.UCBOASUCBoltOnTypeAssArrDS.ListDS.length>0 ) {
+
+        var ucbota = ui.model.UCBOASUCBoltOnTypeAssArrDS.List;
+        var ucbotaDS = ui.model.UCBOASUCBoltOnTypeAssArrDS.ListDS;
+        var lenDS = ucbotaDS.length;
+        var len = ucbota.length;
+        var resLen = result.length;
+        if(model!=null){
+            for ( var i = 0; i<resLen; i++){
+                if ( result[i].id == model.id ){
+                    var s = new epc.data.Specification();
+                    s.project =  cwa_epc.getDefaultProj();
+                    s.specificationCode = model.BoltOnType;
+
+                    var r = epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(r)){
+                        result[i].msgToDisp = "[" + r.BoltOnTypeID + "] (" + r.BoltOnTypeModality + ") "+r.BoltOnTypeDescription;
+
+                    }else{
+                        result[i].msgToDisp ="";
+                    }
+                    result[i].itemCode = model.specificationCode;
+                    result[i].secondMsgToDisp = model.Threshold;
+                    finderUi.model.setList(result);
+                    return finderUi;
+                }
+            }
+        }
+    }
+    var s = new epc.data.Specification();
+    s.project =  cwa_epc.getDefaultProj();
+    s.specificationCode = ucbotaDS[len-1].BoltOnType;
+    var r = epc.getSpecificationByKey(s);
+     var doc = new cm_spoc.UCBOTAssociationDoc();
+    if(!api_common.isFault(r)){
+        doc.msgToDisp = "[" + r.BoltOnTypeID + "] (" + r.BoltOnTypeModality + ") "+r.BoltOnTypeDescription;
+    }
+    else{
+        doc.msgToDisp = "";
+    }
+    doc.itemCode = ucbotaDS[len-1].specificationCode;
+    doc.secondMsgToDisp = ucbotaDS[len-1].Threshold;
+    result.addLast(doc);
+    finderUi.model.setList(result);
+    return finderUi;
+  ]]></script>
+</script>

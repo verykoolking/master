@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getBaseItemCode">
+  <group>ui_scripts.utils</group>
+  <label>getBaseItemCode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var baseItemCode = model.baseSpecificationCode ? model.baseSpecificationCode : model.catalogEntity;
+    if (!baseItemCode &&  model.specificationCode) baseItemCode = cm_spoc.getAndUpdateBaseItemCode(model);
+
+    return baseItemCode;
+  ]]></script>
+</script>

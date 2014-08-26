@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cm_plm.plmControlPhaseDoc">
+  <dbSchema>ORDER</dbSchema>
+  <extends>doc_com.conceptwave.system.Document</extends>
+  <generatedKey>true</generatedKey>
+  <guid>{6b222bc6-fa4e-47b8-9f5d-fd6c50cc89a7}</guid>
+  <label>CM-PLM Control Phase Document</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="cwDocId" type="leaf">
+      <column>CWDOCID</column>
+      <key>1</key>
+      <table>EPC_PLMCONTROLPHASE</table>
+      <valueType>dtype_cwf.cwDocId</valueType>
+    </variable>
+    <variable name="projectCode" type="leaf">
+      <column>CATALOGCODE</column>
+      <table>EPC_PLMCONTROLPHASE</table>
+      <valueType>dtype_cwt_pcdd.catalogCode</valueType>
+    </variable>
+    <variable name="phase" type="leaf">
+      <column>PHASE</column>
+      <table>EPC_PLMCONTROLPHASE</table>
+      <valueType>dtype_cm_plm.plmControlPhase</valueType>
+    </variable>
+    <variable name="aditionalInfo" type="leaf">
+      <column>ADITIONALINFO</column>
+      <table>EPC_PLMCONTROLPHASE</table>
+      <valueType>dtype_cwf_oe.string128</valueType>
+    </variable>
+    <variable name="startDate" type="leaf">
+      <column>STARTDATE</column>
+      <table>EPC_PLMCONTROLPHASE</table>
+      <valueType>dtype_cwt_pcdd.startDate</valueType>
+    </variable>
+    <variable name="endDate" type="leaf">
+      <column>ENDDATE</column>
+      <table>EPC_PLMCONTROLPHASE</table>
+      <valueType>dtype_cwt_pcdd.endDate</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="getStartDate" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[return cm_common.aaFormatDate(this.startDate, '/', true, ' ');]]></script>
+    </method>
+    <method name="getEndDate" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[return cm_common.aaFormatDate(this.endDate, '/', true, ' ');]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_com.conceptwave.system.Document/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cm_plm.plmControlPhaseDoc</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</document>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.loadEntity">
+  <label>Load Entity To Stage Area</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="process" type="rifp">
+      <mandatory>true</mandatory>
+      <type>doc_cwf_pm.CWPROCESS</type>
+    </parameter>
+    <parameter name="document" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$ Map Entity Script Activity $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+
+    var  fileGroup, fileDoc, entityDoc, order, actionCommonInfo, oCSEntity, response, errorMsg, exception;
+    fileGroup, fileDoc = entityDoc = oCSEntity =  response = errorMsg = exception = actionCommonInfo = null;
+    order = process.processOrder;
+
+    try{
+
+        fileGroup = cw_etltool._import.getCurrentFile(process, document, process.processDocument.CurrentFileID);
+        fileDoc = fileGroup.fileDoc;
+        entityDoc = cw_etltool._import.getCurrentEntity(process, fileGroup, process.processDocument.CurrentEntityID);
+
+        if(entityDoc.StartProcessDate == null)
+            entityDoc.StartProcessDate = new Date();
+
+        if(entityDoc.Operation == "ADD")
+            oCSEntity = (Global.getItemsFromXML(entityDoc.XMLString, "OCSConfigurationOperation.v1.types.CreateEntity"))[0];
+        else if(entityDoc.Operation == "UPD")
+            oCSEntity = (Global.getItemsFromXML(entityDoc.XMLString, "OCSConfigurationOperation.v1.types.ChangeEntity"))[0];
+        else if(entityDoc.Operation == "DEL")
+            oCSEntity = (Global.getItemsFromXML(entityDoc.XMLString, "OCSConfigurationOperation.v1.types.DeleteEntity"))[0];
+        else
+        oCSEntity = null;
+
+        if(oCSEntity != null){
+
+           // TODO : Remove sessionId from entityDoc --- entityDoc.sessionId = response.sessionId;
+            oCSEntity.actionCommonInfo.sessionId = process.processDocument.getSessionId();
+
+            if(entityDoc.Operation == "ADD")
+                response = cw_etltool._import.inOut_createEntity(oCSEntity)
+            else if(entityDoc.Operation == "UPD")
+                response = cw_etltool._import.inOut_changeEntity(oCSEntity)
+            else if(entityDoc.Operation == "DEL")
+                response = cw_etltool._import.inOut_deleteEntity(oCSEntity)
+            if(api_common.isFault(response)){
+                process.processDocument.IsError=true;
+                exception = response.toXML();
+            }
+
+
+        }else{
+            process.processDocument.IsError=true;
+            errorMsg = "Unable to read entityDoc.XMLString";
+        }
+
+        if(process.processDocument.IsError){
+            setOrderToError();
+        }else{
+            entityDoc.EntityStatus = cw_etltool._import.$CONSTANT().entityStatus.SAVED;
+            entityDoc.EndProcessDate = new Date();
+        }
+
+    }catch(ex){
+
+        exception = ex.message;
+        setOrderToError();
+    }finally{
+        if(order != null)
+            order.save();
+
+    }
+
+    /*=============================================================================================*/
+    function setOrderToError(){
+
+        process.processDocument.IsError = true;
+        order.header.ErrorMessage = exception;
+        order.header.OrderStatus = cw_etltool._import.$CONSTANT().orderStatus.ERROR;
+
+        setFileToError();
+        setEntityToError();
+        generateErrorMsg();
+
+        order.header.ErrorMessage = errorMsg;
+    }
+
+    function setEntityToError(){
+
+        if( entityDoc != null){
+            entityDoc.ErrorCode = "ETL_IMPORT_ENTITY_MAPPING_ERROR" ;
+            entityDoc.EntityStatus = cw_etltool._import.$CONSTANT().entityStatus.ERROR;
+        }
+    }
+
+    function setFileToError(){
+
+        if( fileDoc != null){
+            fileDoc.ErrorCode = "ETPORT_ENTITY_MAPPING_ERROR" ;
+            fileDoc.FileStatus = cw_etltool._import.$CONSTANT().fileStatus.ERROR;
+        }
+    }
+
+
+    function generateErrorMsg(){
+
+        errorMsg = "Entity Management Error :- ErrorCode : ETL_IMPENTITY_MAPPING_ERROR ";
+        if(fileDoc != null)
+            errorMsg += " File Name : " + fileDoc.FileName;
+        if(entityDoc != null)
+            errorMsg += ", Entity Name : "+entityDoc.EntityName;
+
+        errorMsg += "\n" + exception;
+    }
+  ]]></script>
+</script>

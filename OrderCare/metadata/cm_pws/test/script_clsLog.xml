@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.clsLog">
+  <group>scripts</group>
+  <label>clsLog</label>
+  <metaVersion>4</metaVersion>
+  <script><![CDATA[
+    return new log();
+
+    /****************************************************************************/
+    function log(){
+        //public properties
+        this.SUCCESS = "Successful.";
+        this.FAIL = "Failed!";
+
+        //private fields
+        var autoFlush = true;
+        var failed = false;
+        var checkPoint = "";
+        var logWriter = new logFileWriter();
+        var newLineStr = "-----------------------------------------------------------------------------\n";
+        var cache = new Array();
+
+        //public methods
+        this.write = function(message){
+            Global.logDebug(message);
+            cache.push(message);
+            if(autoFlush)
+                this.flush();
+        }
+        this.writeLn = function(message){
+            Global.logDebug(message + "\n");
+            cache.push(message + "\n");
+            if(autoFlush)
+                this.flush();
+        }
+        this.newLine = function(){
+            cache.push(newLineStr);
+            if(autoFlush)
+                this.flush();
+        }
+        this.flush = function(){
+            for(var i=0; i< cache.length; i++)
+                logWriter.logToFile(cache[i])
+
+            //clear the array
+            cache = [];
+        }
+        this.setFailed = function(value){
+            failed = value;
+        }
+        this.isFailed = function(){
+            return failed;
+        }
+        this.setCheckPoint = function(value){
+            checkPoint = value;
+        }
+        this.getCheckPoint = function(){
+            return checkPoint;
+        }
+        this.setAutoFlush = function(value){
+            autoFlush = value;
+        }
+        this.isAutoFlush = function(){
+            return autoFlush;
+        }
+
+    }
+
+    function logFileWriter(){
+
+        //private fields
+        try{
+            var today = Calendar.formatDate(new Date(),"ddMMMyyyy");
+            var fileName =  cm_pws.test.generateLogFileName();
+        }
+        catch(exp){
+            Global.logError("Error creating logger instance: " + exp);
+        }
+        //public methods
+        this.logToFile = function(message){
+            try{
+                var logTime = Calendar.formatDate(new Date(),"hh:mm:ss");
+                message = today+ " "+ logTime + "|" + message;
+                var file = new FileWriter(fileName, true);
+                file.write(message);
+                file.close();
+
+            }catch(exp){
+                Global.logError("Error writing the errors on the file: " + exp);
+            }
+        }
+
+
+    }
+  ]]></script>
+</script>

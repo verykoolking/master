@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.deleteSAC">
+  <group>ui_scripts.UsageControl.AccumulationConditions</group>
+  <label>deleteSAC</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    //Removing the element from the result set
+
+    var UCArr;
+
+    if(ui.parent.positive){
+
+        UCArr= ui.parent.model.UCPositiveConUCACArrDS;
+    }else{
+        UCArr= ui.parent.model.UCNegativeConUCACArrDS;
+    }
+
+    for (var i = 0;i<ui.result.length;i++) {
+
+        if(ui.result[i].selected== true){
+
+            for(var t=0;  t< UCArr.List.length; t++){
+
+                if( UCArr.List[t].CW_REFID==(ui.result[i].id)){
+                    UCArr.List.removeAt(t);
+                    break;
+                }
+            }
+
+            for(var j=0;  j< UCArr.ListDS.length; j++){
+
+                if( UCArr.ListDS[j].specificationCode ==(ui.result[i].id)){
+
+                    UCArr.ListDS[j].UCSApConHappyPeriodArrDS.ListDS=null;
+
+                    UCArr.ListDS[j].UCSApConHappyPeriodArrDS.List=null;
+
+                    UCArr.ListDS.removeAt(j);
+                    break;
+
+
+
+                }
+
+            }
+
+        }
+    }
+
+
+
+
+
+    for(var m= ui.result.length-1; m>=0; m--){
+
+        if (ui.result[m].selected) {
+            ui.result.delete(m);
+
+        }
+
+    }
+    cm_spoc.positionUpdate(UCArr);
+    ui.model.updateUI()
+  ]]></script>
+</script>

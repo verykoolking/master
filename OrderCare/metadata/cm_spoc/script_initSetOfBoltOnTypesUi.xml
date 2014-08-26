@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initSetOfBoltOnTypesUi">
+  <group>ui_scripts.TariffPlan.init</group>
+  <label>initSetOfBoltOnTypesUi</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.NotifBoltOnRuleIterator = new Array();
+    var model = ui.model.SOBTNotifBORuleArrDS.ListDS;
+
+    if(!ui.model.specificationCode){
+       //cm_spoc.addListElement(ui, model,"cm_spoc.forms.NotifWalletRuleUI","base_NotifWalletRule","NotifWalletRuleIterator");
+    }else{
+       // model = model.ListDS;
+        for ( var i = 0; i < model.length; i++ ){
+         cm_spoc.initModelForModification(model[i]);
+        }
+        cm_spoc.loadListElements(ui, model, "cm_spoc.forms.NotifBoltOnRuleForm", "NotifBoltOnRuleIterator");
+        for ( var i = 0; i < model.length; i++ ) {
+             model[i].BalanceMsgEnum = model[i].BalanceMsg;
+             model[i].ExpirationMsgEnum = model[i].ExpirationMsg;
+             model[i].ConsumptionMsgEnum = model[i].ConsumptionMsg;
+             model[i].ExhaustedMsgEnum = model[i].ExhaustedMsg;
+        }
+        for ( var j = 0; j < ui.NotifBoltOnRuleIterator.length; j++ ) {
+            var str = "";
+            var arrList =  ui.NotifBoltOnRuleIterator[j].model.NBORBOTypeArrDS.List;
+            for ( var k = 0; k<arrList.length;k++ ) {
+                 if ( k>0 )
+                str = str + ",";
+            str = str + arrList[k];
+            }
+
+            ui.NotifBoltOnRuleIterator[j].AllowedBOTLabel = str;
+        }
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initModalityDestinationListForm">
+  <group>ui_scripts.TariffPlan</group>
+  <label>initModalityDestinationListForm</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var model = ui.model;
+    if (!model) {
+        model = new DataStructure("cm_spoc.data.ModalityDestinationList");
+    }
+    if (!model.specificationCode) {
+        model = cm_spoc.initModelForCreation(model);
+    }
+    else {
+        model = cm_spoc.initModelForModification(model);
+        this.DesModalityIDEnum=this.model.DesModalityIDEnum;
+        this.CustomerProfileEnum=this.model.CustomerProfileEnum;
+        this.CauseEnum=this.model.CauseEnum;
+    }
+    return model;
+  ]]></script>
+</script>

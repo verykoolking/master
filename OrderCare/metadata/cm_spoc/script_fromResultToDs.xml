@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.fromResultToDs">
+  <group>ui_scripts.utils</group>
+  <label>fromResultToDs</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="result" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    for (var i = 0; i<result.length;i++)
+    {
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+        s.specificationCode = result[i].itemCode;
+
+        var ds = epc.getSpecificationByKey( s );
+        if(!api_common.isFault(ds))
+        {
+            ds = cm_spoc.initModelForModification(ds);
+            result[i]=ds;
+        }
+    }
+  ]]></script>
+</script>

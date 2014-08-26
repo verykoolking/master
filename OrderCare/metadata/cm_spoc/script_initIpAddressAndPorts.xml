@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initIpAddressAndPorts">
+  <group>ui_scripts.Operation</group>
+  <label>initIpAddressAndPorts</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+    var IpAddressAndPortsArr = cm_spoc.initInnerDS("base_IpAddressAndPortsArr");
+    model.IpAddressAndPortsArrDS = IpAddressAndPortsArr;
+
+    return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        var IpAddressAndPortsArrRel = model.IpAddressAndPortsArr;
+        s.specificationCode = IpAddressAndPortsArrRel;
+        var a = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(a)){
+            model.IpAddressAndPortsArrDS = a;
+            IpAddressAndPortsArrRel = a.List;
+        }
+        var IpAddressAndPortsDS = model.IpAddressAndPortsArrDS.ListDS;
+        for(var i=0;i<IpAddressAndPortsArrRel.length;i++){
+            s.specificationCode = IpAddressAndPortsArrRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                IpAddressAndPortsDS[i]=r;
+
+            }
+
+        }
+        return model;
+    }
+  ]]></script>
+</script>

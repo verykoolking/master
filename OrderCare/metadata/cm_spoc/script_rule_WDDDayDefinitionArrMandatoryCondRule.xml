@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_WDDDayDefinitionArrMandatoryCondRule">
+  <group>rules_scripts.Calendars.WeekDayDefinition</group>
+  <label>rule_WDDDayDefinitionArrMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var ds = data.WDDDayDefinitionArrDS.ListDS;
+
+    var len = data.WDDDayDefinitionArrDS.List.length;
+
+    for (var i = 0; i <len; i++)
+    {
+        if( ds[i] && ds[i].TypeOfDay == null )
+        {
+            errList.addErrorMessage(data,["Week Day is a mandatory field."],"NGAA_003","E");
+        }
+    }
+    return false;
+  ]]></script>
+</script>

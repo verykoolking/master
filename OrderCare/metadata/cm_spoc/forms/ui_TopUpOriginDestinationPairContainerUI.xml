@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TopUpOriginDestinationPairContainerUI">
+  <group>Promotion</group>
+  <label>TopUpOriginDestinationPairContainerUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>mdl_com.conceptwave.system.Model</valueType>
+    </variable>
+    <variable name="TopUpOriginDestinationIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="TopUpOriginDestinationPairVL" type="elvlt">
+              <fillSpace>false</fillSpace>
+              <width>500px</width>
+              <elementList>
+                <element name="TopUpOriginDestinationPairSectionStack" type="elsectnstck">
+                  <visibilityMode>multiple</visibilityMode>
+                  <width>500px</width>
+                  <elementList>
+                    <element name="TopUpOriginDestinationPairSection" type="elsect">
+                      <removeLabelLine>true</removeLabelLine>
+                      <elementList>
+                        <element name="TopUpOriginDestinationPairHeader" type="elsecth">
+                          <label>Top Up Origin - Top Up Destination Pair</label>
+                        </element>
+                        <element name="TopUpOriginDestinationPairLayout" type="elhlt">
+                          <width>500px</width>
+                          <elementList>
+                            <element name="addButton1" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TopUpOriginDestinationPairContainerUI/uimthd_addTopUpOriginDestinationIteratorRule</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/notebook_add.png</icon>
+                              <width>40px</width>
+                            </element>
+                            <element name="deleteButton1" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TopUpOriginDestinationPairContainerUI/uimthd_deleteTopUpOriginDestinationIteratorRule</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/delete.png</icon>
+                              <width>40px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="TopUpOriginDestinationPairGridLayout" type="elgrd">
+                          <alignment>center,center</alignment>
+                          <colWidths>50px</colWidths>
+                          <fixedColWidths>true</fixedColWidths>
+                          <numOfCols>3</numOfCols>
+                          <width>500px</width>
+                          <elementList>
+                            <element name="Select" type="ellab">
+                              <label>Select</label>
+                              <width>80px</width>
+                            </element>
+                            <element name="TopUpOrigin" type="ellab">
+                              <label>Top Up Origin</label>
+                              <tooltipWidth>10</tooltipWidth>
+                              <width>100px</width>
+                            </element>
+                            <element name="TopUpDestination" type="ellab">
+                              <columnSpan>0</columnSpan>
+                              <label>Top Up Destination</label>
+                              <width>100px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="TopUpOriginDestinationIteratorVL" type="elvlt">
+                          <width>500px</width>
+                          <elementList>
+                            <element name="TopUpOriginDestinationIterator" type="eliter">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TopUpOriginDestinationPairContainerUI/leaf_TopUpOriginDestinationIterator</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <elementList>
+                                <element name="TopUpOriginDestinationIteratorHL" type="elhlt">
+                                  <width>500px</width>
+                                  <elementList>
+                                    <element name="TopUpOriginDestinationIteratorFormFrame" type="elovf">
+                                      <fillSpace>false</fillSpace>
+                                      <formReference type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.TopUpOriginDestinationPairContainerUI/leaf_TopUpOriginDestinationIterator</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                        </variablePathList>
+                                      </formReference>
+                                      <width>500px</width>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="deleteTopUpOriginDestinationIteratorRule" type="uimthd">
+      <script><![CDATA[
+        var model = this.model;
+        cm_spoc.removeListElements(this,model,"List","TopUpOriginDestinationIterator");
+      ]]></script>
+    </method>
+    <method name="addTopUpOriginDestinationIteratorRule" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <type>ui_com.conceptwave.system.UserInterface</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var model = this.model.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.TopUpOriginDestinationIteratorUI","base_ATUConnectionPhase","TopUpOriginDestinationIterator");
+      ]]></script>
+    </method>
+    <method name="ReadOnly" type="permMethod">
+      <script>return this.model.readonly;</script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script><![CDATA[
+        for(var i=0; i<this.TopUpOriginDestinationIterator.length; i++)
+        {
+            this.TopUpOriginDestinationIterator[i].model.readonly = this.model.readonly;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cw_etltool._import.systemExceptionHandler">
+  <activity name="Start" type="seqActivity">
+    <guid>{e2e649e9-7b5a-4710-a8ab-962bdfa11a7d}</guid>
+    <label>Start</label>
+    <x>239.0</x>
+    <y>42.0</y>
+    <childList>
+      <child name="escalate" type="opActivity">
+        <element>iface_cw_etltool._import.verficationSystemInterface/oper_escalate</element>
+        <guid>{b1e37993-ad1d-4e61-9c8c-bce4361979e4}</guid>
+        <label>Escalate</label>
+        <participant>part_cw_etltool._import.verificationSystem</participant>
+        <x>247.0</x>
+        <y>163.0</y>
+        <childList>
+          <child name="choice" type="choiceActivity">
+            <guid>{a3f03314-de86-434e-aeee-2bc5399622c3}</guid>
+            <label>Choice</label>
+            <x>252.0</x>
+            <y>282.0</y>
+            <childList>
+              <child name="fixed" type="opActivity">
+                <element>iface_cw_etltool._import.verficationSystemInterface/oper_fixed</element>
+                <guid>{a6c72116-6c6a-4cb9-b138-378179a0c4f5}</guid>
+                <label>Fixed</label>
+                <participant>part_cw_etltool._import.verificationSystem</participant>
+                <x>354.0</x>
+                <y>384.0</y>
+                <childList>
+                  <child name="start" type="seqActivity">
+                    <guid>{74f83251-329e-4034-904c-86ec8e2dc0b9}</guid>
+                    <label>Start</label>
+                    <x>485.0</x>
+                    <y>387.0</y>
+                    <childList>
+                      <child name="rollback" type="rollbackActivity">
+                        <guid>{f15c2829-1dd3-4f7c-b39d-4cb0787094bc}</guid>
+                        <label>Rollback</label>
+                        <x>589.0</x>
+                        <y>385.0</y>
+                      </child>
+                      <child name="resume" type="resumeActivity">
+                        <guid>{81c33a98-1243-4c3d-9b1c-222ff57499e4}</guid>
+                        <label>Resume</label>
+                        <x>710.0</x>
+                        <y>385.0</y>
+                      </child>
+                    </childList>
+                  </child>
+                </childList>
+                <methodList>
+                  <method name="cwOnProcActAfter" type="action">
+                    <category>script</category>
+                    <system>true</system>
+                    <script><![CDATA[Global.logInfo("\n\n\nException Sub-Flow Fixed Activity : After Script ");]]></script>
+                  </method>
+                </methodList>
+              </child>
+              <child name="cancelOrder" type="opActivity">
+                <element>iface_cw_etltool._import.verficationSystemInterface/oper_cancelOrder</element>
+                <guid>{5127967f-0419-4b9a-b4ca-e7562e28a733}</guid>
+                <label>Cancel Order</label>
+                <participant>part_cw_etltool._import.verificationSystem</participant>
+                <x>162.0</x>
+                <y>381.0</y>
+                <childList>
+                  <child name="endProcess" type="completeActivity">
+                    <guid>{e3ce75a0-a99d-44b9-8c31-92a3fb3e39a4}</guid>
+                    <label>End Process</label>
+                    <x>30.0</x>
+                    <y>381.0</y>
+                  </child>
+                </childList>
+              </child>
+              <child name="skipToNextFile" type="opActivity">
+                <element>iface_cw_etltool._import.verficationSystemInterface/oper_skipCurrentFile</element>
+                <guid>{1c185a48-3d1b-4551-a288-84baf3aafc6c}</guid>
+                <label>Skip</label>
+                <participant>part_cw_etltool._import.verificationSystem</participant>
+                <x>261.0</x>
+                <y>388.0</y>
+                <childList>
+                  <child name="start" type="seqActivity">
+                    <guid>{beaee251-1dd2-4d2f-b3c4-26c361d77fdf}</guid>
+                    <label>Start</label>
+                    <x>255.0</x>
+                    <y>488.0</y>
+                    <childList>
+                      <child name="exception" type="exceptActivity">
+                        <element>excp_cw_etltool._import.importFailException</element>
+                        <guid>{9818bec9-e073-436e-9234-8733a9ee3c82}</guid>
+                        <label>Exception</label>
+                        <x>251.0</x>
+                        <y>588.0</y>
+                      </child>
+                    </childList>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[debugPrintln("Exception Sub-Flow Escalate Activity : Before Script ");]]></script>
+          </method>
+          <method name="cwOnProcActAfter" type="action">
+            <category>script</category>
+            <system>true</system>
+            <script><![CDATA[debugPrintln("Exception Sub-Flow Escalate Activity : After Script ");]]></script>
+          </method>
+        </methodList>
+      </child>
+      <child name="verificationSystem" type="participantActivity">
+        <guid>{00ce16e0-0e00-431c-b83c-08ce2ca8ff70}</guid>
+        <label>Verification System</label>
+        <participant>part_cw_etltool._import.verificationSystem</participant>
+        <x>387.0</x>
+        <y>30.0</y>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{0e47830d-daad-456d-bec7-ed81014b14fc}</guid>
+  <label>System Exception Handler</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <type>Sub-flow</type>
+</process>

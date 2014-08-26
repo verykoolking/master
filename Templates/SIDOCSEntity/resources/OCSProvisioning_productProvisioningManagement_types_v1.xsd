@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productProvisioningManagement/v1/types"
+	xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+	targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productProvisioningManagement/v1/types"
+	elementFormDefault="qualified">
+<xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+	schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+
+
+	<!-- provisioning operations type definition  -->
+
+	<xsd:complexType name="SubscribeProductOfferingType">
+		<xsd:sequence>
+			<xsd:element ref="tns:oCSActionCommonInfo"/>
+			<xsd:element ref="tns:subscriberId"/>
+			<xsd:element ref="tns:productOfferingId"/>
+			<xsd:element ref="tns:additionalCharacteristics" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="SubscribeProductOffering" type="tns:SubscribeProductOfferingType"/>
+
+
+	<xsd:complexType name="SubscribeProductOfferingResponseType">
+		<xsd:sequence>
+			<xsd:element ref="tns:oCSAccOpResultInfo"/>
+			<xsd:element ref="tns:oCSProductInstance" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="SubscribeProductOfferingResponse" type="tns:SubscribeProductOfferingResponseType"/>
+
+
+	<xsd:complexType name="UnsubscribeProductType">
+		<xsd:sequence>
+			<xsd:element ref="tns:oCSActionCommonInfo"/>
+			<xsd:element ref="tns:subscriberId"/>
+			<xsd:element ref="tns:productId"/>
+			<xsd:element ref="tns:additionalCharacteristics" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="UnsubscribeProduct" type="tns:UnsubscribeProductType"/>
+
+	<xsd:complexType name="UnsubscribeProductResponseType">
+		<xsd:sequence>
+			<xsd:element ref="tns:oCSAccOpResultInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="UnsubscribeProductResponse" type="tns:UnsubscribeProductResponseType"/>
+
+	<xsd:complexType name="QueryProductSubscriptionType">
+		<xsd:sequence>
+			<xsd:element ref="tns:queryCommonInfo"/>
+			<xsd:element ref="tns:subscriberId"/>
+			<xsd:element ref="tns:productId"/>
+			<xsd:element ref="tns:filterCharacteristics" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="QueryProductSubscription" type="tns:QueryProductSubscriptionType"/>
+
+	<xsd:complexType name="QueryProductSubscriptionResponseType">
+		<xsd:sequence>
+			<xsd:element ref="tns:token" minOccurs="0"/>
+			<xsd:element ref="tns:subscribedProductList" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="QueryProductSubscriptionResponse" type="tns:QueryProductSubscriptionResponseType"/>
+
+	<xsd:complexType name="QueryProductType">
+		<xsd:sequence>
+			<xsd:element ref="tns:queryCommonInfo"/>
+			<xsd:element ref="tns:subscriberId"/>
+			<xsd:element ref="tns:productId"/>
+			<xsd:element ref="tns:queryOperationId" minOccurs="0"/>
+			<xsd:element ref="tns:filterCharacteristics" minOccurs="0"/>			
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="QueryProduct" type="tns:QueryProductType"/>
+
+	<xsd:complexType name="QueryProductResponseType">
+		<xsd:sequence>
+			<xsd:element ref="tns:token" minOccurs="0"/>
+			<xsd:element ref="tns:oCSProductInstanceList" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="QueryProductResponse" type="tns:QueryProductResponseType"/>
+
+	<xsd:complexType name="UpdateProductType">
+		<xsd:sequence>
+			<xsd:element ref="tns:oCSActionCommonInfo"/>
+			<xsd:element ref="tns:subscriberId"/>
+			<xsd:element ref="tns:productId"/>
+			<xsd:element ref="tns:updateOperationId"/>
+			<xsd:element ref="tns:additionalCharacteristics" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="UpdateProduct" type="tns:UpdateProductType"/>
+
+	<xsd:complexType name="UpdateProductResponseType">
+		<xsd:sequence>
+			<xsd:element ref="tns:oCSAccOpResultInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="UpdateProductResponse" type="tns:UpdateProductResponseType"/>
+
+
+
+	<!-- simple elements -->
+
+	<xsd:element name="appId" type="xsd:string"/>
+    <xsd:element name="expirationDate" type="xsd:dateTime"/>
+	<xsd:element name="negativeBalanceId" type="xsd:string"/>
+	<xsd:element name="numRegs" type="xsd:int"/>
+	<xsd:element name="opExecutionDate" type="xsd:dateTime"/>
+	<xsd:element name="opId" type="xsd:string"/>
+	<xsd:element name="queryOperationId" type="xsd:string"/>
+	<xsd:element name="reference" type="xsd:string"/>
+	<xsd:element name="sharedFlag" type="uct:FlagType"/>
+	<xsd:element name="status" type="xsd:string"/>
+	<xsd:element name="subscriberId" type="xsd:anyURI"/>
+	<xsd:element name="token" type="xsd:string"/>
+	<xsd:element name="updateOperationId" type="xsd:string"/>
+	<xsd:element name="userCode" type="xsd:string"/>
+	<xsd:element name="walletId" type="xsd:string"/>
+
+
+	<!-- common provisioning parameters -->
+
+    <xsd:complexType name="OCSActionCommonInfoType">
+        <xsd:sequence>
+            <xsd:element ref="tns:appInfo"/>
+            <xsd:element ref="tns:userCode"/>
+            <xsd:element minOccurs="0" ref="tns:price"/>
+            <xsd:element minOccurs="0" ref="tns:currencyCode"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+	<xsd:element name="oCSActionCommonInfo" type="tns:OCSActionCommonInfoType"/>
+	<xsd:element name="oCSSubscriptionCommonInfo" type="tns:OCSActionCommonInfoType"/>
+
+    <xsd:complexType name="OCSOpResultInfoType">
+        <xsd:sequence>
+            <xsd:element ref="tns:opReference"/>
+            <xsd:element ref="tns:opExecutionDate"/>
+            <xsd:element ref="tns:price"/>
+            <xsd:element minOccurs="0" ref="tns:balanceActivityInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OCSAccOpResultInfoType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:OCSOpResultInfoType">
+                <xsd:sequence>
+					<!-- Future compatibility -->
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="oCSAccOpResultInfo" type="tns:OCSAccOpResultInfoType"/>
+
+    <xsd:complexType name="PagingInfoType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" ref="tns:token"/>
+            <xsd:element ref="tns:numRegs"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="pagingInfo" type="tns:PagingInfoType"/>
+
+    <xsd:complexType name="QueryCommonInfoType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" ref="tns:currencyCode"/>
+            <xsd:element minOccurs="0" ref="tns:pagingInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCommonInfo" type="tns:QueryCommonInfoType"/>
+
+
+
+	<!-- Identifiers for entities -->
+
+	<xsd:complexType name="ProductIdType">
+		<xsd:choice>
+			<xsd:element ref="tns:productOfferingId"/>
+			<xsd:element ref="tns:productSpecificationId"/>
+			<xsd:element ref="tns:productInstanceId"/>
+			<xsd:element name="type" type="xsd:string"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:element name="productId" type="tns:ProductIdType"/>	
+
+	<xsd:complexType name="ProductOfferingIdType">
+		<xsd:sequence>
+			<xsd:element name="id" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="productOfferingId" type="tns:ProductOfferingIdType"/>
+
+	<xsd:complexType name="ProductSpecificationIdType">
+		<xsd:sequence>
+			<xsd:element name="productNumber" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="productSpecificationId" type="tns:ProductSpecificationIdType"/>
+
+	<xsd:complexType name="ProductInstanceIdType">
+		<xsd:sequence>
+			<xsd:element ref="tns:productSpecificationId" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="productSerialNumber" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="productInstanceId" type="tns:ProductInstanceIdType"/>
+
+
+	<!-- query subscription response -->
+
+	<xsd:complexType name="SubscribedProductType">
+		<xsd:sequence>
+			<xsd:element ref="tns:productInstanceId" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="tns:oCSSubscriptionCommonInfo" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="tns:additionalCharacteristics" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="subscribedProduct" type="tns:SubscribedProductType"/>	
+
+	<xsd:complexType name="SubscribedProductListType">
+		<xsd:sequence>
+			<xsd:element ref="tns:subscribedProduct" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="subscribedProductList" type="tns:SubscribedProductListType"/>	
+
+
+
+	<!-- query product response -->
+
+	<xsd:complexType name="OCSProductType" mixed="true">
+		<xsd:sequence>
+			<xsd:element name="oCSProductCharacteristicValue" type="tns:ArrayOfCharacteristicValueType" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string" use="optional">
+		</xsd:attribute>		
+	</xsd:complexType>
+	<xsd:element name="oCSProduct" type="tns:OCSProductType"/>
+
+
+	<xsd:complexType name="OCSProductInstanceType">
+		<xsd:sequence>
+			<xsd:element ref="tns:productInstanceId" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="tns:oCSProduct" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="oCSProductInstance" type="tns:OCSProductInstanceType"/>	
+
+
+	<xsd:complexType name="OCSProductInstanceListType">
+		<xsd:sequence>
+			<xsd:element ref="tns:oCSProductInstance" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="oCSProductInstanceList" type="tns:OCSProductInstanceListType"/>	
+
+
+	<!-- optional characteristics and filters -->
+
+	<xsd:complexType name="OCSOperationCharacteristicsType" mixed="true">
+		<xsd:sequence>
+			<xsd:element name="selectionByProductOffering" type="tns:OCSPropertyType" minOccurs="0"/>
+			<xsd:element name="selectionByProductSpecification" type="tns:OCSPropertyType" minOccurs="0"/>
+			<xsd:element name="selectionByProductInstance" type="tns:OCSPropertyType" minOccurs="0"/>
+			<xsd:element name="globalSelection" type="tns:OCSPropertyType" minOccurs="0"/>
+			<xsd:element name="provisioningOperationType" type="tns:OCSPropertyType" minOccurs="0"/>
+			<xsd:element name="operationId" type="tns:OCSPropertyType" minOccurs="0"/>
+			<xsd:element name="oCSProductSpecCharacteristic" type="tns:ArrayOfCharacteristicValueType" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string" use="optional">
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="additionalCharacteristics" type="tns:OCSOperationCharacteristicsType"/>
+	<xsd:element name="filterCharacteristics" type="tns:OCSOperationCharacteristicsType"/>
+	<xsd:element name="oCSOperationCharacteristics" type="tns:OCSOperationCharacteristicsType"/>
+
+
+	<xsd:complexType name="OCSPropertyType">
+		<xsd:attribute name="isProperty" type="xsd:boolean" use="required">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>It indicates if the element is a property or not. If it is a property, value can't be modified or overridden.</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="value" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Value of the property.</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+
+	<!-- characteristic type definitions -->
+
+	<xsd:complexType name="ArrayOfCharacteristicValueType">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>List of complex and simple attributes</p>
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:element name="characteristic" type="tns:CharacteristicValueType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="complexCharacteristic" type="tns:ArrayOfComplexCharacteristicValueType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="tns:choiceCharacteristic" minOccurs="0" maxOccurs="1"/>
+		</xsd:choice>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfComplexCharacteristicValueType" mixed="true">
+		<xsd:sequence>
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>List of items of the same complex attribute (allows recursion for including complex or simple attributes)</p>
+				</xsd:documentation>
+			</xsd:annotation>
+            <xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="item" type="tns:ArrayOfCharacteristicValueType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="minOccurs" type="xsd:string" use="optional" default="0">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Minimum number of occurrences of this attribute</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="maxOccurs" type="xsd:string" use="optional" default="unbounded">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Maximum number of occurrences of this attribute</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ChoiceCharacteristicType">
+		<xsd:choice>
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Choice one of complex and simple attributes</p>
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:element name="characteristic" type="tns:CharacteristicValueType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="complexCharacteristic" type="tns:ArrayOfComplexCharacteristicValueType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:element name="choiceCharacteristic" type="tns:ChoiceCharacteristicType"/>
+
+    <xsd:complexType name="ValueType">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="exponent" type="xsd:int"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:element name="value" type="tns:ValueType"/>
+
+	<xsd:complexType name="CharacteristicValueType" mixed="true">
+		<xsd:annotation>
+			<xsd:documentation>
+				<p>Simple attribute definition</p>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+            <xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element ref="tns:value" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Type of the attribute</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="isOverride" type="xsd:boolean" use="optional" default="false">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Flag indicating that the attribute can be overwritten during provisioning</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="defaultValue" type="xsd:string" use="optional" default="">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Default value of the attribute</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="maxLength" type="xsd:long" use="optional" default="10">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Maximum length for string attributes</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="exponent" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Exponent for decimal values</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="minOccurs" type="xsd:string" use="optional" default="0">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Minimum number of occurrences of this attribute</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="maxOccurs" type="xsd:string" use="optional" default="unbounded">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>Maximum number of occurrences of this attribute</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="enumValues" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>
+					<p>List of valid values for enumerations separated by semicolon (e.g. "1;3;5")</p>
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+
+	<!-- elements for XML provisioning model -->
+
+  	<xsd:complexType name="OCSProvisioningCharacteristicsType">
+		<xsd:choice minOccurs="1" maxOccurs="unbounded">
+			<xsd:element ref="tns:oCSOperationCharacteristics"/>
+			<xsd:element ref="tns:oCSProduct"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:element name="oCSProvisioningCharacteristics" type="tns:OCSProvisioningCharacteristicsType"/>
+
+
+
+	<!-- common types from internal interfaces -->
+
+    <xsd:complexType name="UnitValueType">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:long">
+                <xsd:attribute name="exponent" type="xsd:int"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="MonetaryType">
+        <xsd:simpleContent>
+            <xsd:extension base="tns:UnitValueType">
+				<!-- Future compatibility -->
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:element name="balance" type="tns:MonetaryType"/>
+    <xsd:element name="balanceNotAccumulated" type="tns:MonetaryType"/>
+    <xsd:element name="changedBalance" type="tns:MonetaryType"/>
+    <xsd:element name="negativeBalance" type="tns:MonetaryType"/>
+    <xsd:element name="price" type="tns:MonetaryType"/>
+
+    <xsd:simpleType name="CurrencyCodeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[a-zA-Z]{3}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:element name="currencyCode" type="tns:CurrencyCodeType"/>
+
+    <xsd:complexType name="AppInfoType">
+        <xsd:sequence>
+            <xsd:element ref="tns:appId"/>
+            <xsd:element ref="tns:reference"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="appInfo" type="tns:AppInfoType"/>
+
+    <xsd:complexType name="OpSubIdListType">
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="1" ref="tns:opId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="opSubIdList" type="tns:OpSubIdListType"/>
+
+    <xsd:complexType name="OpReferenceType">
+        <xsd:sequence>
+            <xsd:element ref="tns:opId"/>
+            <xsd:element minOccurs="0" ref="tns:opSubIdList"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="opReference" type="tns:OpReferenceType"/>
+
+    <!-- wallet info -->
+
+    <xsd:complexType name="WalletDetailedInfoType">
+        <xsd:sequence>
+            <xsd:element ref="tns:balanceNotAccumulated"/>
+            <xsd:element ref="tns:changedBalance"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="detailedInfo" type="tns:WalletDetailedInfoType"/>
+
+    <xsd:complexType name="WalletInfoType">
+        <xsd:sequence>
+            <xsd:element ref="tns:walletId"/>
+            <xsd:element ref="tns:balance"/>
+            <xsd:element ref="tns:expirationDate"/>
+            <xsd:element ref="tns:status" minOccurs="0" />
+            <xsd:element minOccurs="0" ref="tns:sharedFlag"/>
+            <xsd:element minOccurs="0" ref="tns:detailedInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="walletInfo" type="tns:WalletInfoType"/>
+
+    <xsd:complexType name="WalletInfoListType">
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="1" ref="tns:walletInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="walletInfoList" type="tns:WalletInfoListType"/>
+
+	<!-- Balances / Debts -->
+
+    <xsd:complexType name="NegativeBalanceInfoType">
+        <xsd:sequence>
+            <xsd:element ref="tns:negativeBalanceId"/>
+            <xsd:element ref="tns:balance"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="negativeBalanceInfo" type="tns:NegativeBalanceInfoType"/>
+
+    <xsd:complexType name="NegativeBalanceInfoListType">
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="1" ref="tns:negativeBalanceInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="negativeBalanceInfoList" type="tns:NegativeBalanceInfoListType"/>
+
+    <xsd:complexType name="BalanceActivityInfoType">
+        <xsd:sequence>
+            <xsd:element ref="tns:balance"/>
+            <xsd:element minOccurs="0" ref="tns:walletInfoList"/>
+            <xsd:element minOccurs="0" ref="tns:negativeBalance"/>
+            <xsd:element minOccurs="0" ref="tns:negativeBalanceInfoList"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="balanceActivityInfo" type="tns:BalanceActivityInfoType"/>
+
+
+</xsd:schema>
+

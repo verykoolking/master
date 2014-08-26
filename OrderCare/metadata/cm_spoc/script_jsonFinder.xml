@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.jsonFinder">
+  <group>ui_scripts.UsageControl.AccumulationConditions.SACAttributeDetail</group>
+  <label>jsonFinder</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var baseItemCode = ui.searchDocument.baseItemCode;
+
+    //1° : Given the baseItemCode retrieve the attribute list from the JSON
+
+    var attributeJson = cm_spoc.getJsonAttributeList(baseItemCode);
+
+    //2° : Call the catalogIntemFinder
+
+    var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+    itemFinder.searchDocument.baseItemCode = baseItemCode;
+    var result = itemFinder.search();
+    var currentResult = new DataObjectList();
+
+    //3° : Instantiate the Attribute finder
+
+    var resultJson = getJsonResult(result,attributeJson);
+
+    //4° : given the jsonResult buil the result list
+    var currentResult = resultDocFromJsonBuilder(resultJson,"cm_spoc.SACAttributeDetailDoc");
+    return currentResult;
+
+
+    function getJsonResult(result,attributeList){
+
+        //instantiate the finder
+        var attributeFinder = new Finder("cwt_pc:cwt_itemAttributeFinder");
+        var attributeResult;
+
+        //initailization of the json result
+        var jsonResult = [];
+
+        //For loop on the catalog items
+        for ( var i = 0; i < result.length; i++){
+            var str = "";
+            var strResult = "";
+            var objArr = new Array();
+            jsonResult[i]= { "itemCode" : result[i].itemCode , "attributes" : [] };
+            //for every catalog item we got all the attributes
+            attributeFinder.searchDocument.itemCode = result[i].itemCode;
+            attributeResult = attributeFinder.search();
+
+            //For loop on the attributes we want to recover
+            for ( var k = 0; k < attributeList.length; k++ ) {
+                jsonResult[i].attributes.push( { "key" : "itemCode", "value" :result[i].itemCode } );
+               jsonResult[i].attributes.push( { "key" :"baseItemCode", "value" :baseItemCode } );
+                //for every attributes we want to recover we look for it in the attribute result
+                for ( var j = 0; j < attributeResult.length; j++ ) {
+                    if( attributeResult[j].name == attributeList[k].value  ) {
+                        jsonResult[i].attributes.push( { "key" : attributeList[k].key, "value" :attributeResult[j].defaultValue } );
+
+                    }
+                 }
+            }
+        }
+
+         return jsonResult;
+    }
+
+    function resultDocFromJsonBuilder(jsonResult, docMetaDataType ) {
+
+        var result = new DataObjectList();
+
+        for (var k =0; k<jsonResult.length;k++) {
+            var doc = new Document(docMetaDataType);
+
+            for (var j=0;j<jsonResult[k].attributes.length;j++) {
+                doc[jsonResult[k].attributes[j].key] = jsonResult[k].attributes[j].value
+            };
+
+            result.addLast(doc);
+        }
+        return result;
+
+    }
+  ]]></script>
+</script>

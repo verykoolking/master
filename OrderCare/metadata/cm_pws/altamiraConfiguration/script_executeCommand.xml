@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.altamiraConfiguration.executeCommand">
+  <label>CM-PWS - Execute command</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="operationCommand" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="user" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="endpoint" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="serviceId" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="listOfTables" type="rifp">
+      <array>true</array>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="delayForQuery" type="rifp">
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+    <parameter name="relatedCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <valueType>nmeta_com.conceptwave.system.Object</valueType>
+  <script><![CDATA[
+    /*
+     *
+     * Returns true if callings to the interface succeeds, false otherwise
+     *
+     */
+
+    var inter = 'cm_pws.altamiraConfiguration.RereadingInterface';
+    var command = 'executeCommandU';
+    var operationQuery = 'queryCommand';
+
+    var commandInput = new altamiraConfiguration.Rereading.v1.types.rereadingRequestU();
+    commandInput.command = operationCommand;
+    commandInput.sdp = 'SDP1';
+    commandInput.serviceId = 1;
+    //commandInput.externalUser = user;
+    commandInput.externalUser = "";
+    var curDate = new Date();
+    //commandInput.diferDate = curDate.getDate() + '/' + (curDate.getMonth()+1) + '/' + curDate.getFullYear() + '-' + curDate.getHours() + ':' + curDate.getMinutes() + ':' + curDate.getSeconds();
+    commandInput.diferDate = "";
+
+    for(var i=0; i<listOfTables.length; i++)
+        commandInput.listOfTables.table_service_object[i].tableName = listOfTables[i];
+
+    try {
+        UserProfile.setInterfaceLocation(endpoint);
+        var ret = Global.invokeInterface(inter, command, commandInput)[0];
+        cm_common.setLastInterfaceMessageCode(relatedCode);
+
+        if (ret && ret.has("code")) { // Error accessing the interface
+            Global.logDebug("Error accesing the interface (" + endpoint + " - " + operationCommand + "): " + ret.message);
+            return false;
+        }
+        if (ret.has("resultCode") && ret.resultCode < 0) {   // interface returns an error
+            Global.logDebug("Interface (" + endpoint + " - " + operationCommand + ") has returned an error: " + ret.resultDescription);
+            return false;
+        }
+    } catch(E) {
+        Global.logDebug("Interface (" + endpoint + " - " + operationCommand + ") has launched an exception. Command " + command + " - " + operationCommand + "\n" + E.toString());
+        cm_common.setLastInterfaceMessageCode(relatedCode);
+        return false;
+    }
+
+    Global.logDebug("Calling to interface (" + endpoint + ") succeded");
+
+    var stateQuery = 0;
+
+    var start = new Date().getTime();
+    var milliseconds = 10000;
+    do {
+        var queryInput = new altamiraConfiguration.Rereading.v1.types.queryCommandRequest();
+
+        if ( ret && ret.has("resultCode"))
+            Global.logDebug("ret.resultCode=" + ret.resultCode );
+        else
+            Global.logDebug("ret doens't have resultCode" );
+
+        queryInput.commandId = ret.resultCode;
+
+        try {
+            UserProfile.setInterfaceLocation(endpoint);
+            var ret = Global.invokeInterface(inter, operationQuery, queryInput)[0];
+            cm_common.setLastInterfaceMessageCode(relatedCode);
+
+            if (ret && ret.has("code")) { // Error accessing the interface
+                Global.logDebug("Error accesing the interface (" + endpoint + " - " + operationQuery + "): " + ret.code + " - " + ret.message);
+                return false;
+            }
+            if (ret && ret.has("resultCode") && ret.resultCode < 0) {   // interface returns an error
+                Global.logDebug("Interface (" + endpoint + " - " + operationQuery + ") has returned an error: " + ret.resultCode + " - " + ret.resultDescription);
+                return false;
+            }
+            if (ret && ret.has("resultCode") && ret.resultCode >= 0)   // Interface returns a valid result
+                return true;
+        } catch(E) {
+            Global.logDebug("Interface (" + endpoint + " - " + operationQuery + ") has launched an exception: " + E.toString());
+            cm_common.setLastInterfaceMessageCode(relatedCode);
+            return false;
+        }
+
+        //TODO: Sleep delayForQuery
+    } while((new Date().getTime() - start) < milliseconds);
+
+    Global.logDebug("Timeout using the interface: " + endpoint + " - " + operationQuery + "): " + ret.message);
+    return false;
+
+    //Read WebService Data
+  ]]></script>
+</script>

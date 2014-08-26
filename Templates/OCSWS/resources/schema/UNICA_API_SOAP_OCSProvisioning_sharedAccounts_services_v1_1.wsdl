@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/sharedAccounts/v1/services"
+    xmlns:sans="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/sharedAccounts/v1/types"
+    xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+    xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/04/secext" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/sharedAccounts/v1/services">
+    
+<!-- PA2 -->
+
+    <wsdl:import
+        namespace="http://www.telefonica.com/wsdl/UNICA/SOAP/common/v2/faults"
+        location="UNICA_API_SOAP_common_faults_v2_1.wsdl" />
+
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+            <xsd:import
+                namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/sharedAccounts/v1/types"
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_sharedAccounts_types_v1_1.xsd" />
+            <xsd:import
+                namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                schemaLocation="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2002/04/secext"
+                schemaLocation="http://schemas.xmlsoap.org/ws/2002/04/secext/secext.xsd" />
+        </xsd:schema>
+    </wsdl:types>
+
+    <!-- Header -->
+    <wsdl:message name="OCSHeaderInfo">
+        <wsdl:part name="messageID" element="wsa:MessageID" />
+        <wsdl:part name="replyTo" element="wsa:ReplyTo" />
+        <wsdl:part name="security" element="wsse:Security" />
+    </wsdl:message>
+
+    <!-- Messages -->
+
+    <wsdl:message name="AddAccountDependencyRequest">
+        <wsdl:part name="parameters" element="sans:addAccountDependency" />
+    </wsdl:message>
+    <wsdl:message name="AddAccountDependencyResponse">
+        <wsdl:part name="parameters" element="sans:addAccountDependencyResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeAccountDependencyRequest">
+        <wsdl:part name="parameters" element="sans:changeAccountDependency" />
+    </wsdl:message>
+    <wsdl:message name="ChangeAccountDependencyResponse">
+        <wsdl:part name="parameters" element="sans:changeAccountDependencyResponse" />
+    </wsdl:message>
+    <wsdl:message name="DeleteAccountDependencyRequest">
+        <wsdl:part name="parameters" element="sans:deleteAccountDependency" />
+    </wsdl:message>
+    <wsdl:message name="DeleteAccountDependencyResponse">
+        <wsdl:part name="parameters" element="sans:deleteAccountDependencyResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryAccountDependenciesRequest">
+        <wsdl:part name="parameters" element="sans:queryAccountDependencies" />
+    </wsdl:message>
+    <wsdl:message name="QueryAccountDependenciesResponse">
+        <wsdl:part name="parameters"
+            element="sans:queryAccountDependenciesResponse" />
+    </wsdl:message>
+
+    <wsdl:message name="ServerException">
+      <wsdl:part name="ServerException" element="uct:serverException"/>
+    </wsdl:message>
+    <wsdl:message name="ClientException">
+      <wsdl:part name="ClientException" element="uct:clientException"/>
+    </wsdl:message>
+
+    <!-- Port -->
+
+    <wsdl:portType name="SharedAccountsPort_v1_1">
+        <wsdl:operation name="addAccountDependency">
+            <wsdl:input message="tns:AddAccountDependencyRequest" />
+            <wsdl:output message="tns:AddAccountDependencyResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException" />
+            <wsdl:fault name="ServerException" message="tns:ServerException" />
+        </wsdl:operation>
+        <wsdl:operation name="changeAccountDependency">
+            <wsdl:input message="tns:ChangeAccountDependencyRequest" />
+            <wsdl:output message="tns:ChangeAccountDependencyResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException" />
+            <wsdl:fault name="ServerException" message="tns:ServerException" />
+        </wsdl:operation>
+        <wsdl:operation name="deleteAccountDependency">
+            <wsdl:input message="tns:DeleteAccountDependencyRequest" />
+            <wsdl:output message="tns:DeleteAccountDependencyResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException" />
+            <wsdl:fault name="ServerException" message="tns:ServerException" />
+        </wsdl:operation>
+        <wsdl:operation name="queryAccountDependencies">
+            <wsdl:input message="tns:QueryAccountDependenciesRequest" />
+            <wsdl:output message="tns:QueryAccountDependenciesResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException" />
+            <wsdl:fault name="ServerException" message="tns:ServerException" />
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!-- Binding -->
+
+    <wsdl:binding name="SharedAccountsServiceSOAPBinding_v1_1"
+        type="tns:SharedAccountsPort_v1_1">
+        <soap:binding style="document"
+            transport="http://schemas.xmlsoap.org/soap/http" />
+
+        <wsdl:operation name="addAccountDependency">
+            <soap:operation soapAction="addAccountDependency"
+                style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo"
+                    part="messageID" use="literal" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo"
+                    part="messageID" use="literal" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeAccountDependency">
+            <soap:operation soapAction="changeAccountDependency"
+                style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo"
+                    part="messageID" use="literal" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo"
+                    part="messageID" use="literal" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="deleteAccountDependency">
+            <soap:operation soapAction="deleteAccountDependency"
+                style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo"
+                    part="messageID" use="literal" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo"
+                    part="messageID" use="literal" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryAccountDependencies">
+            <soap:operation soapAction="queryAccountDependencies"
+                style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo"
+                    part="messageID" use="literal" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo"
+                    part="messageID" use="literal" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal" />
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+
+    </wsdl:binding>
+
+    <!-- Service -->
+
+    <wsdl:service name="SharedAccountsService_v1">
+        <wsdl:port name="SharedAccounts_v1_1"
+            binding="tns:SharedAccountsServiceSOAPBinding_v1_1">
+            <soap:address
+                location="http://localhost/UNICA/OCSProvisioning/SharedAccounts_v1" />
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>
+	

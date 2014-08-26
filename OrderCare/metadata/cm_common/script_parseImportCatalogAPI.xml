@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.parseImportCatalogAPI">
+  <group>overridden.itemAttributeChanges</group>
+  <label>parseImportCatalogAPI</label>
+  <metaVersion>4</metaVersion>
+  <overrides>script_cwt_pcmaintapi.parseImportCatalogAPI</overrides>
+  <parameterList>
+    <parameter name="ds" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="option" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //////// The following sequences are important for parsing objects correctly
+    //cwt_pc.showUserMessage("CWTPC0201");
+    //projects
+
+    //discarded Objects
+    for (var i=0; i<ds.project.length; i++) {
+        cwt_pcmaintapi.parseDiscardedObjects(ds.project[i],option);
+    }
+
+    //codeTables (tables)
+    for (var i=0; i<ds.codeTable.length; i++) {
+        if(ds.codeTable[i].isTable)
+          cwt_pcmaintapi.parseCodeTable( ds.codeTable[i], option );
+    }
+    //codeTables (codes)
+    for (var i=0; i<ds.codeTable.length; i++) {
+        if(!ds.codeTable[i].isTable)
+          cwt_pcmaintapi.parseCodeTable( ds.codeTable[i], option );
+    }
+
+    //attributes
+    for (var i=0; i<ds.attribute.length; i++) {
+          cwt_pcmaintapi.parseAttribute( ds.attribute[i], option );
+    }
+
+    //context
+    for (var i=0; i<ds.context.length; i++) {
+      cwt_pcmaintapi.parseContext(ds.context[i], option );
+    }
+
+    //catalog rule
+    for (var i=0; i<ds.catalogRule.length; i++) {
+          cwt_pcmaintapi.parseCatalogRule( ds.catalogRule[i], option );
+    }
+
+    //////
+    if(ds.catalogHierarchy.length>0)
+    {
+      checkIntegrity(ds.catalogHierarchy);
+    }
+    /////
+    //catalog hierarchy
+    for (var i=0; i<ds.catalogHierarchy.length; i++) {
+          cwt_pcmaintapi.parseCatalogHierarchy( ds.catalogHierarchy[i], option );
+    }
+
+    //relation type
+    for (var i=0; i<ds.relationType.length; i++) {
+          cwt_pcmaintapi.parseRelationType( ds.relationType[i], option );
+    }
+
+    //tax model
+    for (var i=0; i<ds.taxModel.length; i++) {
+      cwt_pcmaintapi.parseTaxModel(ds.taxModel[i], option );
+    }
+
+    //tax
+    for (var i=0; i<ds.tax.length; i++) {
+      cwt_pcmaintapi.parseTax(ds.tax[i], option );
+    }
+
+    //info model
+    for (var i=0; i<ds.infoModel.length; i++) {
+      cwt_pcmaintapi.parseInfoModel( ds.infoModel[i], option );
+    }
+
+    //infoTable
+    for (var i=0; i<ds.infoTable.length; i++) {
+      cwt_pcmaintapi.parseInfoTable( ds.infoTable[i], option );
+    }
+
+    //charge type
+    for (var i=0; i<ds.chargeType.length; i++) {
+      cwt_pcmaintapi.parseChargeType( ds.chargeType[i], option );
+    }
+
+    //Charge Attributes
+    for (var i=0; i<ds.chargeTypeAttribute.length; i++) {
+          cwt_pcmaintapi.parseChargeTypeAttribute( ds.chargeTypeAttribute[i], option );
+    }
+
+    //item
+    for (var i=0; i<ds.item.length; i++) {
+          cwt_pcmaintapi.parseItem( ds.item[i], option );
+    }
+
+    //item Attachment, whose itemCode is not in the spreadSheet
+    for (var i=0; i<ds.itemAttachment.length; i++) {
+          cwt_pcmaintapi.parseItemAttachment( ds.itemAttachment[i], option );
+    }
+
+    //item Image, whose itemCode is not in the spreadSheet
+    for (var i=0; i<ds.itemImage.length; i++) {
+          cwt_pcmaintapi.parseItemImage( ds.itemImage[i], option );
+    }
+
+    //item Description, whose itemCode is not in the spreadSheet
+    for (var i=0; i<ds.itemDescription.length; i++) {
+          cwt_pcmaintapi.parseItemDescription( ds.itemDescription[i], option );
+    }
+
+    //item Charge, whose itemCode is not in the spreadSheet
+    for (var i=0; i<ds.itemCharge.length; i++) {
+          cwt_pcmaintapi.parseItemCharge( ds.itemCharge[i], option );
+    }
+
+    //item Charge Attributes
+    for (var i=0; i<ds.itemChargeTypeAttribute.length; i++) {
+          cwt_pcmaintapi.parseItemChargeTypeAttribute( ds.itemChargeTypeAttribute[i], option );
+    }
+
+    //SystemIdentifier, whose itemCode/chargeTypeCode is not in the spreadSheet
+    for (var i=0; i<ds.systemIdentifier.length; i++) {
+          cwt_pcmaintapi.parseSystemIdentifier( ds.systemIdentifier[i], option );
+    }
+
+
+
+    //item Hierarchy, whose itemCode is not in the spreadSheet
+    for (var i=0; i<ds.itemHierarchy.length; i++) {
+          cwt_pcmaintapi.parseItemHierarchy( ds.itemHierarchy[i], option );
+    }
+
+    //item Relation, whose itemCode is not in the spreadSheet
+    for (var i=0; i<ds.itemRelation.length; i++) {
+          cwt_pcmaintapi.parseItemRelation( ds.itemRelation[i], option );
+    }
+
+    //item Attribute, whose itemCode is not in the spreadSheet
+    for (var i=0; i<ds.itemAttribute.length; i++) {
+          cwt_pcmaintapi.parseItemAttribute( ds.itemAttribute[i], option );
+    }
+
+    //item Group, whose itemCode is not in the spreadSheet
+    for (var i=0; i<ds.itemGroup.length; i++) {
+          cwt_pcmaintapi.parseItemGroup( ds.itemGroup[i], option );
+    }
+
+    //item GroupTarget, whose itemCode is not in the spreadSheet
+    for (var i=0; i<ds.itemGroupTarget.length; i++) {
+          cwt_pcmaintapi.parseItemGroupTarget( ds.itemGroupTarget[i], option );
+    }
+
+    //item Rule (Note: itemRule is not only for items, we can have itemRules for chageType, etc.)
+    for (var i=0; i<ds.itemRule.length; i++) {
+          cwt_pcmaintapi.parseItemRule( ds.itemRule[i], option );
+    }
+
+    //restriction
+    for (var i=0; i<ds.restriction.length; i++) {
+          cwt_pcmaintapi.parseRestriction( ds.restriction[i], option );
+    }
+
+    //associationTypeAttrValue
+    for (var i=0; i<ds.associationTypeAttrValue.length; i++) {
+          cwt_pcmaintapi.parseAssociationTypeAttrValue( ds.associationTypeAttrValue[i], option );
+    }
+
+    //projects
+    for (var i=0; i<ds.project.length; i++) {
+          cwt_pcmaintapi.parseProject( ds.project[i], option );
+    }
+
+    //catalog Domains
+    for (var i=0; i<ds.catalogDomain.length; i++) {
+          cwt_pcmaintapi.parseCatalogDomain( ds.catalogDomain[i], option );
+    }
+
+    //NGAA CATALOG EXTENSION
+    for (var i=0; i<ds.ngaaItemAttributeExtension.length; i++) {
+          cm_common.upsertNGAAItemAttributeExtension( ds.ngaaItemAttributeExtension[i], option );
+    }
+
+    //NGAA CATALOG EXTENSION
+    for (var i=0; i<ds.ngaaItemExtension.length; i++) {
+          cm_common.upsertNGAAItemExtension( ds.ngaaItemExtension[i], option );
+    }
+
+    //////////////////////
+    function checkIntegrity(old_ds){
+        var new_ds = old_ds;
+        var parents = new Array();
+
+        for (var i=0; i<new_ds.length; i++) {
+                var current = new_ds[i];
+                if(current.parentHierarchyCode != null)
+                {
+                   if(!parentExist(current.parentHierarchyCode,parents))
+                   {
+                       var location = indexOfParent(current.parentHierarchyCode,new_ds);
+                       if(location == -1){
+                           parents.push(new_ds[i].hierarchyCode);
+                           continue;
+                       }
+                       var dummy = new_ds[i];
+                       new_ds[i]= new_ds[location];
+                       new_ds[location] = dummy;
+                       i--;
+                   }
+                   else{
+                    parents.push(new_ds[i].hierarchyCode);
+                   }
+                }else {
+                    parents.push(new_ds[i].hierarchyCode);
+                }
+
+        }
+
+
+    }
+
+    function indexOfParent(parent,new_ds)
+    {
+        for (var i=0; i<new_ds.length; i++) {
+            if(new_ds[i].hierarchyCode == parent){
+                return i;
+            }
+        }
+        return -1;
+
+    }
+    function parentExist(node,parents){
+
+        for(var i=0;i<parents.length;i++){
+            if(parents[i] == node)
+                return true;
+        }
+
+        return false;
+    }
+
+
+    //////////////////////
+  ]]></script>
+</script>

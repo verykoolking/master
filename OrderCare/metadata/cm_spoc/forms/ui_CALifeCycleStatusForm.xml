@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.CALifeCycleStatusForm">
+  <group>CyclicActions</group>
+  <label>CALifeCycleStatusForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.CALifeCycleStatus</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="TabFrame" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/frmui_Forms/vform_LifeCycleGeneralParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>CALifeCycleStatus</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="LifeCycleGeneralParameters" type="vform">
+          <label>LifeCycleGeneralParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>1000px</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>1080px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Status properties</label>
+                      </element>
+                      <element name="GridLayout" type="elgrd">
+                        <colWidths>300px</colWidths>
+                        <edgeShowCenter>true</edgeShowCenter>
+                        <edgeSize>2</edgeSize>
+                        <labeAlign>center</labeAlign>
+                        <numOfCols>2</numOfCols>
+                        <width>540px</width>
+                        <elementList>
+                          <element name="StatusId" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/permMethod_setIsPrimaryKey</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <labeAlign>left</labeAlign>
+                            <label>Status ID</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CALifeCycleStatus/dstruct_StatusId</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>150px</width>
+                          </element>
+                          <element name="StatusDescription" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Status description</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CALifeCycleStatus/dstruct_StatusDescription</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>150px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="GridLayout2" type="elgrd">
+                        <colWidths>300px</colWidths>
+                        <edgeShowCenter>true</edgeShowCenter>
+                        <edgeSize>2</edgeSize>
+                        <labeAlign>center</labeAlign>
+                        <numOfCols>4</numOfCols>
+                        <width>600px</width>
+                        <elementList>
+                          <element name="Label3" type="ellab">
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#000066</color>
+                            </fontProperties>
+                            <label>Inactivity status</label>
+                            <width>225px</width>
+                          </element>
+                          <element name="InactivityStatus" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/permMethod_CALCSInactivityStatusVisRule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <labelAsTitle>false</labelAsTitle>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/uimthd_InactivityStatusTrigger</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CALifeCycleStatus/dstruct_InactivityStatus</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="Label4" type="ellab">
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#000066</color>
+                            </fontProperties>
+                            <label>The activation is retried periodically,  for a maximum period of time</label>
+                            <width>225px</width>
+                          </element>
+                          <element name="PeriodicRetries" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/permMethod_PeriodicRetriesEditableRule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <labelAsTitle>false</labelAsTitle>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/uimthd_PeriodicRetriesTrigger</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CALifeCycleStatus/dstruct_PeriodicRetries</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="Label5" type="ellab">
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#000066</color>
+                            </fontProperties>
+                            <label>Time of permanence in the status (hours):</label>
+                            <width>250px</width>
+                          </element>
+                          <element name="TimeOfPermanenceInTheStatus" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/permMethod_TimeOfPermanenceInTheStatusEditableRule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CALifeCycleStatus/dstruct_TimeOfPermanenceInTheStatus</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>100px</width>
+                          </element>
+                          <element name="Label6" type="ellab">
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#000066</color>
+                            </fontProperties>
+                            <label>Number of hours between attempts</label>
+                            <width>225px</width>
+                          </element>
+                          <element name="NumberOfHoursBetweenAttempts" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/permMethod_NumberOfHoursBetweenAttemptsEditableRule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CALifeCycleStatus/dstruct_NumberOfHoursBetweenAttempts</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>100px</width>
+                          </element>
+                          <element name="Label7" type="ellab">
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#000066</color>
+                            </fontProperties>
+                            <label>The reactivation date is modified after a successful attempt</label>
+                            <width>225px</width>
+                          </element>
+                          <element name="ModifyRenewalDateAfterRetryOK" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/permMethod_ModifyRenewalDateAfterRetryOKEditableRule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <labelAsTitle>false</labelAsTitle>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CALifeCycleStatus/dstruct_ModifyRenewalDateAfterRetryOK</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="NumOfRecurrentActivationPhases" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <cellAlignment>left,center</cellAlignment>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/permMethod_NumOfRecurrentActivationPhasesEditableRule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <labeAlign>left</labeAlign>
+                            <label>Number of recurrent activation phases &lt;br&gt; during which it is retried </label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CALifeCycleStatus/dstruct_NumOfRecurrentActivationPhases</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>100px</width>
+                          </element>
+                          <element name="Label8" type="ellab">
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#000066</color>
+                            </fontProperties>
+                            <label>When this status is set, it will be notified via ASN1</label>
+                            <width>225px</width>
+                          </element>
+                          <element name="ChangeOfStatusNotifiedViaASN1" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labelAsTitle>false</labelAsTitle>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CALifeCycleStatus/dstruct_ChangeOfStatusNotifiedViaASN1</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="Label34" type="ellab">
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#000066</color>
+                            </fontProperties>
+                            <label>The recurrent activation is retried  after a Charges Manager operation</label>
+                            <width>225px</width>
+                          </element>
+                          <element name="AfterOperationRetries" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/permMethod_AfterOperationRetriesEditableRule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <labelAsTitle>false</labelAsTitle>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/uimthd_AfterOperationRetriesTrigger</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CALifeCycleStatus/dstruct_AfterOperationRetries</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="RowSpacer" type="elrsp"/>
+                          <element name="Label35" type="ellab">
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#000066</color>
+                            </fontProperties>
+                            <label>When a change of reactivation date takes  place, it will be notified via ASN1</label>
+                            <width>225px</width>
+                          </element>
+                          <element name="ChangeOfReactDateNotifiedViaASN1" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labelAsTitle>false</labelAsTitle>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CALifeCycleStatus/dstruct_ChangeOfReactDateNotifiedViaASN1</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="Label39" type="ellab">
+                            <cellAlignment>left,center</cellAlignment>
+                            <fontProperties type="pfnt">
+                              <color>#000066</color>
+                            </fontProperties>
+                            <label>Outstanding executions are recovered  and  they  will be charged when  subscriber   has balance again</label>
+                            <width>225px</width>
+                          </element>
+                          <element name="OutstandingExecutionsAreRecovere" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/permMethod_CALCSOutstandingExecutionsAreRecovereVisRule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <labelAsTitle>false</labelAsTitle>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/uimthd_resettrigger</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CALifeCycleStatus/dstruct_OutstandingExecutionsAreRecovere</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                          <element name="RowSpacer2" type="elrsp"/>
+                          <element name="MaximumNumberOfDelays" type="elfld">
+                            <autoFocusNextField>false</autoFocusNextField>
+                            <cellAlignment>left,center</cellAlignment>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/permMethod_CALCSMaximumNumberOfDelaysVisRule</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <labeAlign>left</labeAlign>
+                            <label>Maximum number of delays:</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CALifeCycleStatus/dstruct_MaximumNumberOfDelays</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>100px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.CALifeCycleStatusForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initCALifeCycleStatus(this.model);
+        return m;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+    <method name="TimeOfPermanenceInTheStatusEditableRule" type="permMethod">
+      <script><![CDATA[
+        if(!this.model.readonly)
+        {
+            if(this.model.InactivityStatus)
+            {
+                return true;
+            }
+            else
+            {
+                this.model.TimeOfPermanenceInTheStatus = null;
+                return false;
+            }
+        }
+        else
+        return false;
+      ]]></script>
+    </method>
+    <method name="InactivityStatusTrigger" type="uimthd">
+      <script>return;</script>
+    </method>
+    <method name="PeriodicRetriesEditableRule" type="permMethod">
+      <script><![CDATA[
+        if(!this.model.readonly)
+        {
+            if(this.model.InactivityStatus)
+            {
+                return true;
+            }
+            else
+            {
+                this.model.PeriodicRetries = false;
+                return false;
+            }
+        }
+        else
+        return false;
+      ]]></script>
+    </method>
+    <method name="PeriodicRetriesTrigger" type="uimthd">
+      <script>return;</script>
+    </method>
+    <method name="NumberOfHoursBetweenAttemptsEditableRule" type="permMethod">
+      <script><![CDATA[
+        if(!this.model.readonly)
+        {
+            if(this.model.PeriodicRetries)
+            {
+                return true;
+            }
+            else
+            {
+                this.model.NumberOfHoursBetweenAttempts = null;
+                return false;
+            }
+        }
+        else
+        return false;
+      ]]></script>
+    </method>
+    <method name="ModifyRenewalDateAfterRetryOKEditableRule" type="permMethod">
+      <script><![CDATA[
+        if(!this.model.readonly)
+        {
+            if(this.model.InactivityStatus)
+            {
+                return true;
+            }
+            else
+            {
+                this.model.ModifyRenewalDateAfterRetryOK = false;
+                return false;
+            }
+        }
+        else
+        return false;
+      ]]></script>
+    </method>
+    <method name="NumOfRecurrentActivationPhasesEditableRule" type="permMethod">
+      <script><![CDATA[
+        if(!this.model.readonly)
+        {
+            if(this.model.PeriodicRetries)
+            {
+                return true;
+            }
+            else
+            {
+                this.model.NumOfRecurrentActivationPhases = null;
+                return false;
+            }
+        }
+        else
+        return false;
+      ]]></script>
+    </method>
+    <method name="AfterOperationRetriesEditableRule" type="permMethod">
+      <script><![CDATA[
+        if(!this.model.readonly)
+        {
+            if(this.model.InactivityStatus)
+            {
+                return true;
+            }
+            else
+            {
+                this.model.AfterOperationRetries = false;
+                return false;
+            }
+        }
+        else
+        return false;
+      ]]></script>
+    </method>
+    <method name="CALCSMaximumNumberOfDelaysVisRule" type="permMethod">
+      <script><![CDATA[
+        if(!this.model.readonly)
+        {
+            if(this.model.OutstandingExecutionsAreRecovere)
+            {
+                return true;
+            }
+            else
+            {
+                this.model.MaximumNumberOfDelays = null;
+                return false;
+            }
+        }
+        else
+        return false;
+      ]]></script>
+    </method>
+    <method name="resettrigger" type="uimthd">
+      <script><![CDATA[
+        var value =this.model.OutstandingExecutionsAreRecovere;
+        if(value== true )
+        {
+            this.model.MaximumNumberOfDelays=null;
+        }
+        return;
+      ]]></script>
+    </method>
+    <method name="CALCSOutstandingExecutionsAreRecovereVisRule" type="permMethod">
+      <script><![CDATA[
+        if(!this.model.readonly)
+        {
+            if( this.model.InactivityStatus && (this.model.PeriodicRetries || this.model.AfterOperationRetries ))
+            {
+                return true;
+
+            }
+            else
+            {
+                this.model.OutstandingExecutionsAreRecovere= false;
+                return false;
+            }
+        }
+        else
+        return false;
+      ]]></script>
+    </method>
+    <method name="CALCSInactivityStatusVisRule" type="permMethod">
+      <script><![CDATA[
+        if(!this.model.readonly)
+        {
+            var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+            itemFinder.searchDocument.baseItemCode = "base_CALifeCycleTransition";
+            var result = itemFinder.search();
+
+            var s = new epc.data.Specification();
+            s.project =  cwa_epc.getDefaultProj();
+            var isInitial = false;
+            for(var i=0; i< result.length && !isInitial; i++){
+                s.specificationCode = result[i].itemCode;
+                var r = epc.getSpecificationByKey(s);
+                if(!api_common.isFault(r)){
+                    if(r.SourceStatusID == this.model.specificationCode && r.InitialStatus){
+                        isInitial = true;
+                    }
+                }
+            }
+            if(!isInitial){
+              return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        return false;
+      ]]></script>
+    </method>
+    <method name="AfterOperationRetriesTrigger" type="uimthd">
+      <script>return;</script>
+    </method>
+  </methodList>
+</userInterface>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.queryConfigSession">
+  <group>api</group>
+  <label>queryConfigSession</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="configSessionQuery" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_pws.configSessionQuery</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cm_pws.configSessionList</valueType>
+  <script><![CDATA[
+    try
+    {
+        var configSessionFinder = new cm_pws.configSessionFinder();
+        configSessionQuery.configSession.mapTo(configSessionFinder.searchDocument);
+        configSessionFinder.searchDocument.maxRows = configSessionQuery.maxRows;
+        var searchResults = configSessionFinder.search();
+
+        var results = new cm_pws.configSessionList();
+        for(var i=0; i< searchResults.length; i++)
+        {
+            var configSession = new cm_pws.configSession();
+            searchResults[i].mapTo(configSession);
+            results.configSession[i] = configSession;
+        }
+
+        return results
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

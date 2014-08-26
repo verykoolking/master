@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_SubEntitytCardRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_SubEntitytCardRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (data.GeneralBoltOnValuesSpecDS.GeneralForBoltOn && data.GeneralBoltOnValuesSpecDS.BoltOnValue==null ) {
+
+    errList.addErrorMessage(data,["No Value in Mandatory Field : Bolt On Value"],"NGAA_003","E");
+
+    }
+    if (data.GeneralStartEndDateSpecDS.GeneralForBoltOn && ( !data.GeneralStartEndDateSpecDS.StartDateTime || !data.GeneralStartEndDateSpecDS.EndDateTime ) ) {
+
+    errList.addErrorMessage(data,["No Value in Mandatory Field : Bolt On Value"],"NGAA_003","E");
+
+    }
+    return false;
+  ]]></script>
+</script>

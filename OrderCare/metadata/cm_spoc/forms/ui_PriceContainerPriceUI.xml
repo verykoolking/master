@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.PriceContainerPriceUI">
+  <group>Common.Price</group>
+  <label>PriceContainerPriceUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="priceArray" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+    </variable>
+    <variable name="priceEvent" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="PriceIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <fillSpace>false</fillSpace>
+              <width>600px</width>
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <visibilityMode>multiple</visibilityMode>
+                  <width>600px</width>
+                  <elementList>
+                    <element name="PriceGuidingSection" type="elsect">
+                      <removeLabelLine>true</removeLabelLine>
+                      <elementList>
+                        <element name="priceEvent" type="ellab">
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.PriceContainerPriceUI/leaf_priceEvent</variablePath>
+                            </variablePathList>
+                          </variable>
+                        </element>
+                        <element name="PriceGuidingHeader" type="elsecth">
+                          <label>Price</label>
+                        </element>
+                        <element name="PriceGuidingLayout" type="elhlt">
+                          <width>550px</width>
+                          <elementList>
+                            <element name="addButton1" type="elmnu">
+                              <menuAccel type="mAccelP"/>
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.PriceContainerPriceUI/uimthd_addPrice</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/notebook_add.png</icon>
+                              <width>40px</width>
+                            </element>
+                            <element name="deleteButton1" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.PriceContainerPriceUI/uimthd_deletePrice</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwt/images/16/delete.png</icon>
+                              <width>40px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="Attributes" type="elgrd">
+                          <alignment>center,center</alignment>
+                          <colWidths>50px</colWidths>
+                          <fixedColWidths>true</fixedColWidths>
+                          <numOfCols>5</numOfCols>
+                          <width>550px</width>
+                          <elementList>
+                            <element name="Select" type="ellab">
+                              <label>Select</label>
+                              <width>80px</width>
+                            </element>
+                            <element name="Code" type="ellab">
+                              <label>Code</label>
+                              <tooltipWidth>10</tooltipWidth>
+                              <width>100px</width>
+                            </element>
+                            <element name="Amount" type="ellab">
+                              <columnSpan>0</columnSpan>
+                              <label>Amount</label>
+                              <width>100px</width>
+                            </element>
+                            <element name="Description" type="ellab">
+                              <columnSpan>0</columnSpan>
+                              <label>Description</label>
+                              <width>100px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="PriceGuidingVL" type="elvlt">
+                          <width>550px</width>
+                          <elementList>
+                            <element name="PriceGuidingsIterator1" type="eliter">
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.PriceContainerPriceUI/leaf_PriceIterator</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <elementList>
+                                <element name="PriceGuidingsHL" type="elhlt">
+                                  <width>550px</width>
+                                  <elementList>
+                                    <element name="PriceGuidingsFormFrame" type="elovf">
+                                      <fillSpace>false</fillSpace>
+                                      <formReference type="varPath">
+                                        <variablePathList>
+                                          <variablePath>ui_cm_spoc.forms.PriceContainerPriceUI/leaf_PriceIterator</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                        </variablePathList>
+                                      </formReference>
+                                      <width>550px</width>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="addPrice" type="uimthd">
+      <script><![CDATA[cm_spoc.addListElement(this,this.priceArray.ListDS,"cm_spoc.forms.PriceEpcUI","base_Price","PriceIterator");]]></script>
+    </method>
+    <method name="deletePrice" type="uimthd">
+      <script><![CDATA[cm_spoc.removeListElements(this,this.priceArray,"List","PriceIterator");]]></script>
+    </method>
+  </methodList>
+</userInterface>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getPriceEventFieldName">
+  <group>ui_scripts.Common.Price</group>
+  <label>getPriceEventFieldName</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="priceEvent" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var priceEventField="";
+
+    switch (priceEvent){
+        case "BoltOnSubscription":
+        case "BoltOnUnsubscription":
+        priceEventField =  "BoltOnPriceEvent";
+        break;
+
+        case "SubscriptionList":
+        case "AddMemberList":
+        case "ModifyMemberList" :
+        case "ActDeactList" :
+        case "UnsubscriptionList" :
+        case "RemoveMemberList" :
+        case "MassiveUpdateList" :
+        priceEventField =  "ListPriceEvent";
+        break;
+
+
+        case "SubscriptionTribe" :
+        case "UnsubscriptionTribe" :
+        priceEventField =  "TribePriceEvent";
+        break;
+
+        case "UnsubscriptionUC" :
+        case "SubscriptionUC" :
+        case "ModifyUC" :
+        priceEventField =  "UsageControlPriceEvent";
+        break;
+
+        case "UnsubscriptionRecurrent" :
+        case "SubscriptionRecurrent" :
+        priceEventField =  "RecurrentSubscriptionPriceE";
+        break;
+
+        case "SubscriptionServiceTP" :
+        case "UnsubscriptionServiceTP" :
+        priceEventField =  "ServiceTariffPlanPriceEvent";
+        break;
+
+        case "SubscriptionTPChange" :
+        priceEventField =  "TariffPlanChangePriceEvent";
+        break;
+
+        case "SubscriptionPromoProf" :
+        case "UnsubscriptionPromoProf" :
+        priceEventField =  "PromotionalProfilePriceEven";
+        break;
+
+        case "RecurrentPhase" :
+        priceEventField =  "RecurrentPhasePriceEvent";
+        break;
+
+
+    }
+
+    return priceEventField;
+  ]]></script>
+</script>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.cbe.policy.struct._var.IPv4Variable">
+  <container>true</container>
+  <description><![CDATA[
+    <p>This class represents using the value of IPv4 source and/or destination addresses as part of a condition expression. Thus, only IPv4AddressValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>                <p>This entity  is  optional</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{25582fe2-e195-4386-9bf6-cb09afb86afa}</guid>
+  <label>IPv4Variable</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="v4Direction" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is an enumerated integer that defines if this variable is used to represent source addresses, destination addresses, or both. Values are:        0: source addresses        1: destination addresses        2: both</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{fa10d29a-48f7-4772-bb14-0563c3f9ca4c}</guid>
+      <label>v4Direction</label>
+    </child>
+    <child name="v4HeaderNumber" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute is an enumerated integer that defines the particular packet header that contains the IPv4 address information. Specifying the packet header is necessary in case the address is tunneled. In this case, it is mandatory that the correct address be chosen for comparison. Values are:        0: outermost header        1: next innermost header        2: second innermost header        etc.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{aadf8575-be68-4fb7-9bc3-ab1c68ccb7bb}</guid>
+      <label>v4HeaderNumber</label>
+    </child>
+    <child name="v4AddressList" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute is an unordered list of strings, each specifying a        single IPv4 address, a hostname, or a range of IPv4 addresses, according to the ABNF definition of an IPv4 address as specified below:        IPv4address = 1*3DIGIT "." 1*3DIGIT "." 1*3DIGIT "." 1*3DIGIT        IPv4prefix = IPv4address "/" 1*2DIGIT        IPv4range = IPv4address"-"IPv4address        IPv4maskedaddress = IPv4address","IPv4address        Hostnames are defined in RFC1035.        In the above definition, each string entry is either:        1. A single Ipv4address in dot notation as defined above.        Example: 121.1.1.2        2. A single Hostname. Hostname format follows the guidelines        and restrictions specified in RFC1035.        Example: www.bigcompany.com        3. An IPv4range address range defined above, specified by a        start address in dot notation and an end address in dot        notation, separated by "-". The range includes all addresses        between the range's start and end addresses, including the        start and end addresses.        Example: 1.1.22.1-1.1.22.5        4. An IPv4maskedaddress address range defined above,        specified by an address and mask. The address and mask        are represented in dot notation separated by a comma ",".        Example: 2.3.128.0,255.255.248.0.        5. An IPv4prefix address range defined above specified by an        address and a prefix length separated by "/".        Example: 2.3.128.0/15</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{e8f3d266-5292-459c-8d61-78173e819438}</guid>
+      <label>v4AddressList</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.cbe.policy.struct._var.IPv4Variable</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.cbe.policy.struct._var.IPv4Variable</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

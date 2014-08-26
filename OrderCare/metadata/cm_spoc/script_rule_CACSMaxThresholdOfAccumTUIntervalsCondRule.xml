@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_CACSMaxThresholdOfAccumTUIntervalsCondRule">
+  <group>rules_scripts.CyclicActions</group>
+  <label>rule_CACSMaxThresholdOfAccumTUIntervalsCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(data.MaxThresholdOfAccumulatedTopUp && data.MinThresholdOfAccumulatedTopUp==null){
+        errList.addErrorMessage(data,["Maximum Threshold of Accumulated Top Ups only can save if Minimum Threshold of Accumulated Top Ups is not empty"],"NGAA_003","E");
+    }
+    if(data.MaxThresholdOfAccumulatedTopUp < data.MinThresholdOfAccumulatedTopUp){
+        errList.addErrorMessage(data,["Maximum Threshold of Accumulated Top Ups must be greater than Minimum Threshold of Accumulated Top Ups"],"NGAA_003","E");
+    }
+
+    return false;
+  ]]></script>
+</script>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.testEndConfiguration">
+  <group>testScripts</group>
+  <label>testEndConfiguration</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="owner" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="noPLMVerification" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="noCommit" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var log = cm_pws.test.clsLog();var testCaseInfo =  eval("arguments.callee.name") + " - ";log.newLine();log.setCheckPoint("STARTED");log.writeLn(testCaseInfo+ log.getCheckPoint());
+    /////////////////////////////////////////////////////////////
+    try{
+        var sessionId = owner.getProperty("sessionId");
+        sessionId = sessionId != null ? sessionId : Global.getSessionParameter("SESSION_ID");;
+
+        var input = cm_pws.test.createRequest(null, "OCSConfigurationOperation.v1.types.EndConfiguration", sessionId);
+        input.sessionCommonInfo.doCommitFlag = noCommit? false : true;
+        //input.sessionCommonInfo.testingRequiredFlag = true;
+        //input.sessionCommonInfo.reviewRequiredFlag = false;
+
+        var result = Global.invokeInterface("cm_pws.services.OCSConfigurationPort", "endConfiguration", input);
+        //var result = cm_pws.services.inOut_endConfiguration(input);
+
+        if(!(result[0] instanceof OCSConfigurationOperation.v1.types.EndConfigurationResponse))
+            log.writeLn("Error: " + result[0].toXML());
+
+        assertFalse(!(result[0] instanceof OCSConfigurationOperation.v1.types.EndConfigurationResponse), "ERROR!")
+
+        if(!noPLMVerification){
+            result = cm_pws.test.testVerifyPLM(owner);
+
+            if(api_common.isFault(result)){
+                log.writeLn("Error: " + result.toXML());
+            }
+
+            assertFalse(api_common.isFault(result), "ERROR!");
+        }
+    }
+    catch(exp){
+        var ex = exp;var chkpntmsg = "[LastCheckPosition:"+log.getCheckPoint()+"]";log.writeLn(log.FAIL +"\t"+exp);log.setFailed(true);log.flush();
+        // to have a valid server log for test cases since it is supposed to fail
+        assertTrue(false, testCaseInfo+":"+chkpntmsg);
+    }
+    finally{
+        if(!log.isFailed())log.writeLn(log.SUCCESS);
+    }
+  ]]></script>
+</script>

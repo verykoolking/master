@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.queryNx24AppBoltonTypeList">
+  <group>applicabilityCondition.api</group>
+  <label>queryNx24AppBoltonTypeList</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="Nx24AppBoltonTypeList" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.Nx24AppBoltonTypeList</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_api_common.data.object</valueType>
+  <script><![CDATA[
+    try{
+        var finder = new cm_plm.Nx24AppBoltonTypeListFinder();
+        Nx24AppBoltonTypeList.mapTo(finder.searchDocument);
+        var result = finder.search();
+        var Nx24AppBoltonType = new cm_plm.Nx24AppBoltonType();
+        var list = new DataObjectList();
+        var now = new Date();
+        for(var i=0; i<result.length; i++){
+            if((!result[i].endDate || result[i].endDate >= now) || (result[i].endDate <= Nx24AppBoltonTypeList.endDate))
+                if((!result[i].startDate || result[i].startDate <= now) || (result[i].startDate >= Nx24AppBoltonTypeList.startDate))
+            if(cm_plm.isObjectDateValid(result[i], Nx24AppBoltonTypeList.endDate)){
+                    var ds = new cm_plm.Nx24AppBoltonTypeList();
+                    result[i].mapTo(ds);
+                    Nx24AppBoltonType.Nx24AppBoltonTypeListId = ds.Nx24AppBoltonTypeListId;
+
+                    var arr = cm_plm.queryNx24AppBoltonType(Nx24AppBoltonType);
+                    if(api_common.isFault(arr))
+                        return arr;
+                    assignArray(ds.Nx24AppBoltonTypeArr,arr);
+
+                    //if the inner DS has value, we have to filter the result basedon that
+                    if(Nx24AppBoltonTypeList.Nx24AppBoltonTypeArr.length == 0 || equal(ds.Nx24AppBoltonTypeArr, Nx24AppBoltonTypeList.Nx24AppBoltonTypeArr))
+                        list[list.length] = ds;
+                }
+        }
+
+        return list;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+
+    /************************************************************************
+    * FUNCTIONS
+    ************************************************************************/
+
+    function equal(source, target)
+    {
+        var result = false;
+
+        if(source.length != target.length)
+            return false;
+
+        //TODO: this is O(n^2) and very inefficient, it can be reduced to O(n) using a hash table (array)
+        for(var i=0; i<source.length; i++){
+            var TOD = source[i].TypeOfDayID;
+            var found = false;
+            for(var j=0; j<target.length;j++){
+                if(target[j].TypeOfDayID == TOD){
+                    for(var k=0; k<24; k++)
+                        if(source[i].HoursArr[k].AppBoltonTypeGroupId != target[j].HoursArr[k].AppBoltonTypeGroupId)
+                        return false;
+                        found = true;
+                        break;
+                }
+            }
+            if(!found)
+                return false;
+        }
+
+        return true;
+    }
+
+    function assignArray(object, array){
+
+        for(var i=0; i<array.length; i++)
+            object[i] = array[i];
+        return object;
+    }
+  ]]></script>
+</script>

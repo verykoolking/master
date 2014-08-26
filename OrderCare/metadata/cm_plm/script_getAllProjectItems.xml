@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.getAllProjectItems">
+  <label>EPC - Get All Project Itens</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="projectCode" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Retrieves all itens from a given Catalog Project
+     *
+     * @author  Luis Barreira
+     * @date    03-03-2014
+     *
+     * @param {String} projectCode    The Catalog Project Code
+     * @return {cwt_pc.cwt_itemNew}     The Array of Itens associated with the given project
+     */
+    var itensFinder = new Finder("cm_plm.plmProjectItemFinder");
+    itensFinder.searchDocument.projectName = projectCode;
+    var result = itensFinder.search();
+    return result;
+  ]]></script>
+</script>

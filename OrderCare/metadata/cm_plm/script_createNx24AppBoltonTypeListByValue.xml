@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.createNx24AppBoltonTypeListByValue">
+  <group>applicabilityCondition.api</group>
+  <label>createNx24AppBoltonTypeListByValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="Nx24AppBoltonTypeList" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.Nx24AppBoltonTypeList</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        if(!cm_plm.isModificationAllowed(Nx24AppBoltonTypeList))
+            return api_common.createFault("ERR", "This modality is being maintained in another project.");
+
+        if(cm_plm.isProjectActive(Nx24AppBoltonTypeList.projectCode))
+            return api_common.createFault("ERR", "Item cannot be created for projects in ACT status.");
+
+        Nx24AppBoltonTypeList.startDate = Nx24AppBoltonTypeList.startDate ? Nx24AppBoltonTypeList.startDate : new Date();
+        var doc = new cm_plm.Nx24AppBoltonTypeListDoc();
+        Nx24AppBoltonTypeList.mapTo(doc);
+        doc.save();
+        doc.mapTo(Nx24AppBoltonTypeList);
+
+        var result = cm_plm.createProjectAssignmentForObject(Nx24AppBoltonTypeList);
+        if(api_common.isFault(result))
+            return result;
+
+        for(var i=0; i<Nx24AppBoltonTypeList.Nx24AppBoltonTypeArr.length; i++){
+            Nx24AppBoltonTypeList.Nx24AppBoltonTypeArr[i].Nx24AppBoltonTypeListId = Nx24AppBoltonTypeList.Nx24AppBoltonTypeListId;
+            Nx24AppBoltonTypeList.Nx24AppBoltonTypeArr[i].projectCode = Nx24AppBoltonTypeList.projectCode;
+            result = cm_plm.createNx24AppBoltonTypeByValue(Nx24AppBoltonTypeList.Nx24AppBoltonTypeArr[i]);
+            if(api_common.isFault(result))
+                return result;
+        }
+
+        return Nx24AppBoltonTypeList;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

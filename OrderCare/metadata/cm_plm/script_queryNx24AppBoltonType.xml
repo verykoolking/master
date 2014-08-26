@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.queryNx24AppBoltonType">
+  <group>applicabilityCondition.api</group>
+  <label>queryNx24AppBoltonType</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="Nx24AppBoltonType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.Nx24AppBoltonType</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_api_common.data.object</valueType>
+  <script><![CDATA[
+    try{
+        var finder = new cm_plm.Nx24AppBoltonTypeFinder();
+        Nx24AppBoltonType.mapTo(finder.searchDocument);
+        var result = finder.search();
+        var list = new DataObjectList();
+        var now = new Date();
+        for(var i=0; i<result.length; i++){
+            if((!result[i].endDate || result[i].endDate >= now) || (result[i].endDate <= Nx24AppBoltonType.endDate))
+                if((!result[i].startDate || result[i].startDate <= now) || (result[i].startDate >= Nx24AppBoltonType.startDate))
+            if(cm_plm.isObjectDateValid(result[i], Nx24AppBoltonType.endDate)){
+                    var ds = new cm_plm.Nx24AppBoltonType();
+                    result[i].mapTo(ds);
+                    list[list.length] = ds;
+                }
+        }
+
+        return list;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

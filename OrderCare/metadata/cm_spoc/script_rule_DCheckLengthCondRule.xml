@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_DCheckLengthCondRule">
+  <group>rules_scripts.Lists</group>
+  <label>rule_DCheckLengthCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+
+    Conditional
+
+    DCheckLengthCondRule
+
+    The attribute must be saved in the catalog only if the related attribute assumes the value shown in the column H.
+
+    Duo
+    CheckLength
+
+    Duo
+    ApplyShortDialing
+
+    TRUE
+
+
+    */
+    var varCheck = data.Duo;
+
+    if( varCheck.CheckLength && !varCheck.ApplyShortDialing)
+    {
+         errList.addErrorMessage(data,["Check Length can be saved only if Apply Short Dialing is set"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

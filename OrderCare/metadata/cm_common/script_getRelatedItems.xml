@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.getRelatedItems">
+  <group>scripts</group>
+  <label>getRelatedItems</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="item" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cwt_pcmaintapi.item</type>
+    </parameter>
+    <parameter name="relationType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        var result = new cwt_pcmaintapi.itemList();
+        var arrRelFinder = new Finder("cm_plm.catalogItemFinder");
+        arrRelFinder.searchDocument.topItemCode = item.itemCode;
+        var resultRel = arrRelFinder.search();
+
+        for(var j=0; j<resultRel.length; j++){
+            if(resultRel[j].itemCode != item.itemCode)
+                var itemTarget = getItemByCode(resultRel[j].itemCode);
+                result.items[result.items.length] = itemTarget;
+        }
+
+
+    /*
+
+        var result = new cwt_pcmaintapi.itemList();
+
+        var response;
+        var itemRelationSearchDS = new cwt_pcmaintapi.itemRelationSearchDS();
+        itemRelationSearchDS.itemCode = item.itemCode;
+        itemRelationSearchDS.type = relationType;
+
+        response = cwt_pcmaintapi.itemRelationSearch(itemRelationSearchDS, null, true);
+        if(cwt_pcmaintapi.isFault(response)){
+            var fault = api_common.createFault(response.code, response.message);
+            return fault;
+        }
+
+        var resp;
+
+        for(var i=0; i<response.itemRelations.length; i++)
+        {
+            var itemTarget = getItemByCode(response.itemRelations[i].itemRelationTarget);
+            if(api_common.isFault(itemTarget))
+                return itemTarget;
+
+            //we first put the related items, then the item itself
+            result.items[result.items.length] = itemTarget;
+
+            resp = cm_common.getRelatedItems(itemTarget, relationType);
+            if(api_common.isFault(resp))
+                return fault;
+
+            //appending to the result
+            for(var j=0; j<resp.items.length;j++)
+                result.items[result.items.length] = resp.items[j];
+
+
+        }
+    */
+        return result;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+
+
+    function getItemByCode(itemCode){
+
+        var itemSearchDS = new cwt_pcmaintapi.itemSearchDS();
+        itemSearchDS.itemCode = itemCode;
+        var item = cwt_pcmaintapi.itemRead(itemSearchDS);
+        if(cwt_pcmaintapi.isFault(item))
+        {
+            var fault = api_common.createFault(item.code, item.message);
+            return fault;
+        }
+
+        return item;
+    }
+  ]]></script>
+</script>

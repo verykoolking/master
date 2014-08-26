@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.epcOnSaveModelRec">
+  <group>ui_scripts.utils</group>
+  <label>epcOnSaveModelRec</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var fault = api_common.createFault();
+    var project = cwa_epc.getDefaultProj();
+
+    /* Cardinality rules*/
+    var eList = cm_common.validateDs(model);
+    /*Error Filter */
+    eList = cm_spoc.filterError(model,eList);
+
+    for (var i = 0; eList != null && i < eList.length; i+=2) {
+          //fault.addFault(eList[i], eList[i+1], null, 'E');
+          fault.addErrorMessage(model,[ eList[i+1],null],eList[i],"E");
+    }
+    /*
+    if(!fault || fault.message.length==0){
+        var errListFromCondRules = cm_spoc.validateItemSpecification(model);
+        if(errListFromCondRules && errListFromCondRules.message.length != 0)
+            fault = errListFromCondRules;
+    }
+    */
+    /*
+    var res =  null;
+    if (!eList || eList.length==0) {
+        res= cm_spoc.saveModelRec(model,project); //recursively Saves or Modify the catalog entities
+    }
+    */
+    var createMainItem= !( ui.parentFinderUI &&  ui.parentFinderUI.isStored);
+    if(!fault || fault.message.length==0) {
+        var res= cm_spoc.saveModelRec(model,project,createMainItem); //recursively Saves or Modify the catalog entities
+    }
+
+    if(res!=null && !api_common.isFault(res) ){
+         ui.itemCode = model.specificationCode;
+
+       // var count = ruleSet.validate(model, fault, null, true);
+        if (fault.message.length == 0)
+            fault = null;
+
+        if(!fault)
+             ui.setModelStatus(null,"CWA_EPC_SAVE_002",true, model.metadataTypeLabel);
+        else //saved with warning messages
+             ui.setModelStatus(fault,"CWA_EPC_SAVE_004",true, model.metadataTypeLabel);
+
+        //attach the model to the UI;
+        //model = res; - sets it to a response
+
+        if ( ui.parentFinderUI && ! ui.parentFinderUI.isStored) {
+             ui.parentFinderUI.isStored = true;
+             ui.refreshFrames();
+             ui.setFormLabel();
+        }
+        if( ui.parentFinderUI)
+             ui.parentFinderUI.isNew = false;
+
+        if( ui.parent instanceof cwa_epc.treeDetailTabComponent ||  ui.parent instanceof cwa_epc.consumptionDetailTabComponent){
+             ui.parent.leftTreeUI.refreshNode(true, true);
+             ui.updateRootNode();
+
+        }
+         ui.setFormLabel();
+         ui.isSaveClicked = true;
+        return true;
+    }else if (res!=null && api_common.isFault(res) ){
+
+         ui.postSaveFault(res);
+         ui.setModelStatus(res,"CWA_EPC_SAVE_001",false, model.metadataTypeLabel);
+       return false;
+    } else {
+         fault=cwl_epc.getErrorFault(fault);
+          ui.postSaveFault(fault);
+         ui.setModelStatus(fault,"CWA_EPC_SAVE_001",false, model.metadataTypeLabel);
+         return false;
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getRefType">
+  <description><![CDATA[
+    <p style="margin-top: 0">
+      Get reference type from specification according to relation type
+    </p>
+  ]]></description>
+  <group>overridden.scripts</group>
+  <label>getRefType</label>
+  <metaVersion>4</metaVersion>
+  <overrides>script_cwl_epc.getRefType</overrides>
+  <parameterList>
+    <parameter name="spec" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+    <parameter name="relationType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //0: singular, simple relation
+    //1: plural, simple relation
+    //2: plural, complex relation
+    //3: singular, complex relation
+    //4: plural, recursive tree
+    var cspec = spec.copy();    //test node[0] may increase array length if node[0] does not exist
+    var node = cspec[relationType];
+    if (node == null || !(node instanceof DataStructure)) {
+        return 0;
+    } else {
+        if (node.isCollection()) {
+            if (!(node[0] instanceof DataStructure)) {
+                return 1;
+            } else if (node[0].isBasedOn("epc.data.treeElement")) {
+                return 4;
+            } else if (node[0].isBasedOn("epc.data.Association") || "CW_REFID" in node[0]) {
+                return 2;
+            } else {
+                return -1;    //invalid spec
+            }
+        } else {
+            return 3;
+        }
+    }
+  ]]></script>
+</script>

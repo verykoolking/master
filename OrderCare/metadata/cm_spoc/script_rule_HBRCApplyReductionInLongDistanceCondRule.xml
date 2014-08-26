@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_HBRCApplyReductionInLongDistanceCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_HBRCApplyReductionInLongDistanceCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+    ApplyReductionInLongDistance can be saved only if:
+        - BoltOnType Modality  = HappyPeriod (PH)
+        - Reduction Coefficient (CR) is selected
+        - ApplyReduction
+    */
+    var attr0 = data.HappyBoltOnSpecificationDS.ReductionCoefficient;
+    var attr1 = data.HappyBoltOnSpecificationDS.ReductionCoefficientDS.ApplyReductionInLongDistance;
+    var attr2 = data.HappyBoltOnSpecificationDS.RateOrReductionSwitch; //Enum Type [RATE or CR]
+
+    if(attr0!= null && attr1 != null && data.BoltOnTypeModality != "PH"){
+         errList.addErrorMessage(data,["ApplyReductionInLongDistance cannot be set for this modality"],"NGAA_003","E");
+
+    }else if(data.BoltOnTypeModality == "PH"){
+
+        if(attr2=="CR" && attr1==null ){
+           errList.addErrorMessage(data,["ApplyReductionInLongDistance must be set"],"NGAA_003","E");
+        }else if(attr2!="CR" && attr1!=null){
+           errList.addErrorMessage(data,["ApplyReductionInLongDistance can be set only for Reduction Coefficient"],"NGAA_003","E");
+        }
+    }
+    return false;
+  ]]></script>
+</script>

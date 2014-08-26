@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.SubOperationAttributesCompare">
+  <group>rules_scripts.Operation</group>
+  <label>SubOperationAttributesCompare</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="entityArray1" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="entityArray2" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var result = new Array();
+
+    if(entityArray1.SubOperationType == entityArray2.SubOperationType
+    && entityArray1.TariffPlan == entityArray2.TariffPlan
+    && entityArray1.BoltOn == entityArray2.BoltOn
+    && entityArray1.Wallet == entityArray2.Wallet
+    && entityArray1.TopUpOrigin == entityArray2.TopUpOrigin
+    && entityArray1.SOSTopUpInvitation == entityArray2.SOSTopUpInvitation
+    && entityArray1.ChargingMode == entityArray2.ChargingMode
+    && entityArray1.CyclicActionSpecification == entityArray2.CyclicActionSpecification
+    && entityArray1.Tribe == entityArray2.Tribe
+    && entityArray1.LifeCycleSubStatus == entityArray2.LifeCycleSubStatus
+    && entityArray1.List == entityArray2.List
+    && entityArray1.BoltOnType == entityArray2.BoltOnType
+    && entityArray1.AutomaticTopUpMode == entityArray2.AutomaticTopUpMode
+    && entityArray1.CALifeCycleStatus == entityArray2.CALifeCycleStatus
+    && entityArray1.Operation == entityArray2.Operation
+    && entityArray1.PromotionalProfile == entityArray2.PromotionalProfile
+    ){
+        result[0] = true;
+    }
+    else result[0] = false;
+
+    var subOp1 = entityArray1.AdjustmentCauseSubOpDS;
+    var subOp2 = entityArray2.AdjustmentCauseSubOpDS;
+    if(subOp1.AdjustmentCode == subOp2.AdjustmentCode)
+        result[1] = true;
+    else result[1] = false;
+
+    subOp1 = entityArray1.SubscriberCreationSubOpDS;
+    subOp2 = entityArray2.SubscriberCreationSubOpDS;
+    if(subOp1.SubscriberCreationCode == subOp2.SubscriberCreationCode)
+        result[2] = true;
+    else result[2] = false;
+
+    subOp1 = entityArray1.SubscriberDeletionSubOpDS;
+    subOp2 = entityArray2.SubscriberDeletionSubOpDS;
+    if(subOp1.SubscriberDeletionCode == subOp2.SubscriberDeletionCode)
+        result[3] = true;
+    else result[3] = false;
+
+    subOp1 = entityArray1.ChargingSubOpDS;
+    subOp2 = entityArray2.ChargingSubOpDS;
+    if(subOp1.ChargingOrigin == subOp2.ChargingOrigin)
+        result[4] = true;
+    else result[4] = false;
+
+    subOp1 = entityArray1.UCThresholdSubOpDS;
+    subOp2 = entityArray2.UCThresholdSubOpDS;
+    if(subOp1.UsageControl == subOp2.UsageControl
+    &&subOp1.ThresholdValue == subOp2.ThresholdValue
+    )
+        result[5] = true;
+    else result[5] = false;
+
+    subOp1 = entityArray1.WalletThresholdSubOpDS;
+    subOp2 = entityArray2.WalletThresholdSubOpDS;
+    if(subOp1.Wallet == subOp2.Wallet
+    &&subOp1.WalletThresholdIndicator == subOp2.WalletThresholdIndicator
+    )
+        result[6] = true;
+    else result[6] = false;
+
+    subOp1 = entityArray1.CycleSubOpDS;
+    subOp2 = entityArray2.CycleSubOpDS;
+    if(subOp1.CyclicActionSpecification == subOp2.CyclicActionSpecification
+    &&subOp1.TemporCodTime == subOp2.TemporCodTime
+    &&subOp1.TemporIntTime == subOp2.TemporIntTime
+    )
+        result[7] = true;
+    else result[7] = false;
+
+    subOp1 = entityArray1.BalanceThresholdSubOpDS;
+    subOp2 = entityArray2.BalanceThresholdSubOpDS;
+    if(subOp1.BalanceThresholdIndicator == subOp2.BalanceThresholdIndicator)
+        result[8] = true;
+    else result[8] = false;
+
+    subOp1 = entityArray1.BankTopUpLimitsSubOpDS;
+    subOp2 = entityArray2.BankTopUpLimitsSubOpDS;
+    if(subOp1.TopUpOrigin == subOp2.TopUpOrigin)
+        result[9] = true;
+    else result[9] = false;
+
+    subOp1 = entityArray1.BankTopUpLimitsNotifSubOpDS;
+    subOp2 = entityArray2.BankTopUpLimitsNotifSubOpDS;
+    if(subOp1.AccumulationType == subOp2.AccumulationType
+    &&subOp1.TopUpOrigin == subOp2.TopUpOrigin
+    )
+        result[10] = true;
+    else result[10] = false;
+
+    subOp1 = entityArray1.WalletExpiryWarningSubOpDS;
+    subOp2 = entityArray2.WalletExpiryWarningSubOpDS;
+    if(subOp1.ThresholdId == subOp2.ThresholdId
+    &&subOp1.Wallet == subOp2.Wallet
+    )
+        result[11] = true;
+    else result[11] = false;
+
+    var total_result = true;
+    for(var i=0;i<result.length;i++)
+    {
+        total_result = total_result&result[i];
+    }
+
+    return total_result;
+  ]]></script>
+</script>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.PriceEpcUI">
+  <extends>ui_cwa_epc.baseEpcItem</extends>
+  <group>Common.Price</group>
+  <label>PriceEpcUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.Price</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="mo" type="leaf">
+      <valueType>dstruct_cm_spoc.data.Price</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_cwa_epc.baseEpcItem/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_cwa_epc.baseItem/frmui_Forms/exov_Default</base>
+          <extends>ui_cwa_epc.baseItem/frmui_Forms/exov_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="topStack" type="elgrd">
+              <alignment>center,center</alignment>
+              <colWidths>50px</colWidths>
+              <numOfCols>5</numOfCols>
+              <width>550px</width>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <columnSpan>1</columnSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PriceEpcUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>80px</width>
+                </element>
+                <element name="specificationCode" type="elfld">
+                  <columnSpan>1</columnSpan>
+                  <label>Code</label>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PriceEpcUI/leaf_model</variablePath>
+                      <variablePath>dstruct_epc.data.Specification/dstruct_specificationCode</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100px</width>
+                </element>
+                <element name="Amount" type="elfld">
+                  <columnSpan>1</columnSpan>
+                  <label>Price</label>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PriceEpcUI/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.Price/dstruct_Amount</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100px</width>
+                </element>
+                <element name="description" type="elfld">
+                  <columnSpan>1</columnSpan>
+                  <label>Description</label>
+                  <padding>0</padding>
+                  <showHint>false</showHint>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PriceEpcUI/leaf_model</variablePath>
+                      <variablePath>dstruct_epc.data.Specification/dstruct_description</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100px</width>
+                </element>
+                <element name="saveImg" type="elimg">
+                  <cellAlignment>center,center</cellAlignment>
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PriceEpcUI/uimthd_Save</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <columnSpan>0</columnSpan>
+                  <imageUrl>/cwt/images/16/floppy_disk.png</imageUrl>
+                  <padding>20</padding>
+                  <showLabel>false</showLabel>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="readOnly" type="permMethod">
+      <script>return !this.model.readonly;</script>
+    </method>
+    <method name="Save" type="uimthd">
+      <script>cm_spoc.savePrice(this);</script>
+    </method>
+  </methodList>
+</userInterface>

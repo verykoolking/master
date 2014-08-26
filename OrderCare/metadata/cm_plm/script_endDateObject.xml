@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.endDateObject">
+  <group>applicabilityCondition.scripts</group>
+  <label>endDateObject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="object" type="rifp">
+      <type>dstruct_cm_plm.baseObject</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        if(!object.endDate)
+            return api_common.createFault("ERR", "Object must have an end date!");
+        else if(!cm_plm.isObjectActive(object))
+            return api_common.createFault("ERR", "Only objects in ACT status can be end dated!");
+
+        //now we need to check if this item already have a record with end date for this project
+        var PA = new cm_plm.projectAssignment();
+        PA.objectType = object.metadataType;
+        PA.objectId = object.objectId;
+        PA.projectCode = object.projectCode;
+        var list = cm_plm.queryProjectAssignment(PA);
+        if(api_common.isFault(list))
+            return list;
+
+        for(var i=0; i< list.length; i++){
+            if(list[i].endDate){
+                if(list[i].endDate != object.endDate){
+                    list[i].endDate = object.endDate;
+                    return cm_plm.setProjectAssignmentByValue(list[i]);
+                }
+            }
+        }
+
+        return cm_plm.createProjectAssignmentForObject(object);
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

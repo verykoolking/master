@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cm_plm.reviewProcess">
+  <activity name="start" type="seqActivity">
+    <guid>{b9f4263c-dbf7-4768-829b-26675ab94f37}</guid>
+    <label>Start</label>
+    <x>29.0</x>
+    <y>172.30469</y>
+    <childList>
+      <child name="reviewRequired" type="switchActivity">
+        <guid>{df3e569a-2dd4-464d-9030-e969bf897c8d}</guid>
+        <label>Review Required?</label>
+        <x>130.0</x>
+        <y>143.60352</y>
+        <childList>
+          <child name="yes" type="caseActivity">
+            <guid>{aa6f5f6a-6dfe-42ef-9749-d3e2d0abf406}</guid>
+            <label>Yes</label>
+            <x>122.0</x>
+            <y>130.0</y>
+            <childList>
+              <child name="yes" type="seqActivity">
+                <guid>{0025f30e-8583-429d-a50a-fa9c181966f5}</guid>
+                <label>Yes</label>
+                <x>323.3711</x>
+                <y>129.1294</y>
+                <childList>
+                  <child name="reviewConf" type="opActivity">
+                    <element>iface_cm_plm.confReviewerInt/oper_reviewConf</element>
+                    <guid>{9b8ebe31-4192-4d31-a9cc-8c72fea8c434}</guid>
+                    <label>Review Configuration</label>
+                    <participant>part_cm_plm.confReviewerPart</participant>
+                    <x>483.3711</x>
+                    <y>112.42822</y>
+                    <methodList>
+                      <method name="cwOnProcActBefore" type="action">
+                        <category>before</category>
+                        <system>true</system>
+                        <script><![CDATA[cm_plm.setProcessOrderState(process, 'REV');]]></script>
+                      </method>
+                    </methodList>
+                  </child>
+                  <child name="confReviewerAction" type="choiceActivity">
+                    <guid>{720f27f2-5eec-44f4-82cc-a04ecc30662c}</guid>
+                    <label>Configuration Reviewer Action</label>
+                    <x>482.05273</x>
+                    <y>215.80469</y>
+                    <childList>
+                      <child name="confReviewerContinue" type="opActivity">
+                        <element>iface_cm_plm.confReviewerInt/oper_Complete</element>
+                        <guid>{780da321-6488-475c-ad7b-42cd7b7c2849}</guid>
+                        <label>Continue</label>
+                        <participant>part_cm_plm.confReviewerPart</participant>
+                        <x>502.4297</x>
+                        <y>416.40234</y>
+                        <methodList>
+                          <method name="cwOnProcActAfter" type="action">
+                            <category>script</category>
+                            <system>true</system>
+                            <script>process.processDocument.isAmendmentRequest = false;</script>
+                          </method>
+                        </methodList>
+                      </child>
+                      <child name="confReviewerAmend" type="opActivity">
+                        <element>iface_cm_plm.confReviewerInt/oper_Restart</element>
+                        <guid>{f7ba5f53-bbda-4edf-b717-d3a1613bcf83}</guid>
+                        <label>Amend Configuration</label>
+                        <participant>part_cm_plm.confReviewerPart</participant>
+                        <x>373.75</x>
+                        <y>394.4541</y>
+                        <methodList>
+                          <method name="cwOnProcActAfter" type="action">
+                            <category>script</category>
+                            <system>true</system>
+                            <script>process.processDocument.isAmendmentRequest = true;</script>
+                          </method>
+                        </methodList>
+                      </child>
+                      <child name="confReviewerReject" type="opActivity">
+                        <element>iface_cm_plm.confReviewerInt/oper_Reject</element>
+                        <guid>{0ed568ec-62c8-4b0b-ae26-a8a9304fc0ed}</guid>
+                        <label>Reject</label>
+                        <participant>part_cm_plm.confReviewerPart</participant>
+                        <x>641.05273</x>
+                        <y>410.8047</y>
+                        <childList>
+                          <child name="sendReject" type="exceptActivity">
+                            <element>excp_cm_plm.rejectedException</element>
+                            <guid>{53638a49-ae50-472a-9f6f-627edd3af376}</guid>
+                            <label>Rejected</label>
+                            <x>501.05273</x>
+                            <y>519.8047</y>
+                          </child>
+                        </childList>
+                        <methodList>
+                          <method name="cwOnProcActAfter" type="action">
+                            <category>script</category>
+                            <system>true</system>
+                            <script><![CDATA[cm_plm.setProcessOrderState(process, 'REJ');]]></script>
+                          </method>
+                        </methodList>
+                      </child>
+                    </childList>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnProcActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[
+                  var rev_req = Global.getConfigVariable("plmReviewRequired");
+                  return rev_req == "true";
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+          <child name="no" type="caseActivity">
+            <guid>{f707dc78-66af-477f-9eb3-a5a3ef5b31fc}</guid>
+            <label>No</label>
+            <x>135.3711</x>
+            <y>282.1294</y>
+          </child>
+        </childList>
+      </child>
+      <child name="end" type="completeActivity">
+        <guid>{004da74f-67d0-4146-955b-4473b1908166}</guid>
+        <label>End</label>
+        <x>347.0</x>
+        <y>519.3047</y>
+      </child>
+      <child name="onReject" type="onExceptionActivity">
+        <element>excp_cwt_pclm.Rejected</element>
+        <guid>{c40b1cf8-1d0a-4088-af48-a33cf9cd98b0}</guid>
+        <label>On Reject</label>
+        <x>17.496094</x>
+        <y>304.67938</y>
+        <childList>
+          <child name="sendRejectionToParent" type="subflowActivity">
+            <element>proc_cm_plm.sendRejectionToParentSubFlow</element>
+            <guid>{9a61391b-ae05-4f31-836f-400bf9257126}</guid>
+            <label>Send Rejection To Parent</label>
+            <x>27.496094</x>
+            <y>297.67938</y>
+          </child>
+        </childList>
+      </child>
+      <child name="plmConfReviewerPart" type="participantActivity">
+        <guid>{215765cf-038f-4e24-bb41-bbf3fdc1c62d}</guid>
+        <label>CM-PLM Configuration Reviewer Participant</label>
+        <participant>part_cm_plm.confReviewerPart</participant>
+        <x>777.0</x>
+        <y>95.0</y>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <document>doc_cm_plm.mainProcessDoc</document>
+  <guid>{630d11a9-737e-4964-9888-db6f1449feb0}</guid>
+  <label>CM-PLM Review</label>
+  <metaVersion>4</metaVersion>
+  <parentProcessDoc>true</parentProcessDoc>
+  <priority>8</priority>
+  <type>User</type>
+</process>

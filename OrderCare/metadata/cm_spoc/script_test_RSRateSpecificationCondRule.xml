@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.test_RSRateSpecificationCondRule">
+  <label>test_RSRateSpecificationCondRule</label>
+  <metaVersion>4</metaVersion>
+  <script><![CDATA[
+    var tod0 = new cm_spoc.data.TypeOfDay();
+      var tod1 = new cm_spoc.data.TypeOfDay();
+      var tod2 = new cm_spoc.data.TypeOfDay();
+
+      var tod3 = new cm_spoc.data.TypeOfDay();
+      var tod4 = new cm_spoc.data.TypeOfDay();
+
+      tod0.TypeOfDayID = 1;
+      tod1.TypeOfDayID = 1;
+      tod2.TypeOfDayID = 1;
+      tod3.TypeOfDayID = 2;
+      tod4.TypeOfDayID = 2;
+
+
+      var stacds0 = new cm_spoc.data.SimpleTemporalAppCondition();
+      var stacds1 = new cm_spoc.data.SimpleTemporalAppCondition();
+      var stacds2 = new cm_spoc.data.SimpleTemporalAppCondition();
+      var stacds3 = new cm_spoc.data.SimpleTemporalAppCondition();
+      var stacds4 = new cm_spoc.data.SimpleTemporalAppCondition();
+
+      stacds0.TypeOfDayDS = tod0;
+      stacds1.TypeOfDayDS = tod1;
+      stacds2.TypeOfDayDS = tod2;
+      stacds3.TypeOfDayDS = tod3;
+      stacds4.TypeOfDayDS = tod4;
+
+      stacds0.Hours = "111110000000000000000000";
+      stacds1.Hours = "000001111111110000000000";
+      stacds2.Hours = "000000000000001111111111";
+
+      stacds3.Hours = "111111111000000000000000";
+      stacds4.Hours = "000000000001111111111111";
+
+      var staca = new DataStructure ("cm_spoc.data.SimpleTemporalAppCondArr");
+      staca.ListDS[0] = stacds0;
+      staca.ListDS[1] = stacds1;
+      staca.ListDS[2] = stacds2;
+      staca.ListDS[3] = stacds3;
+      staca.ListDS[4] = stacds4;
+
+      var tac0 = new cm_spoc.data.TemporalAppCondition();
+
+
+      tac0.SimpleTemporalAppCondArr = staca;
+
+      var rs0 = new cm_spoc.data.RateSpecification();
+
+      rs0.TemporalAppCondition = tac0;
+
+      var rsa = new DataStructure ("cm_spoc.data.RateSpecificationArr");
+      rsa.ListDS[0] = rs0;
+
+      var data = new DataStructure ("cm_spoc.data.BoltOnType");
+      data.RateSpecificationArr = rsa;
+
+      var errList = new DataStructure ( "epc.data.fault" );
+
+      var result = cm_spoc.rule_RSRateSpecificationCondRule (data,errList);
+  ]]></script>
+</script>

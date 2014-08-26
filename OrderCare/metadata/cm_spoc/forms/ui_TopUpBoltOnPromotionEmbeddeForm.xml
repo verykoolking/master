@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TopUpBoltOnPromotionEmbeddeForm">
+  <group>Promotion</group>
+  <label>TopUpBoltOnPromotionEmbeddeForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TopUpBoltOnPromotionEmbedde</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="SectionStack" type="elsectnstck">
+              <width>750px</width>
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="SectionHeader" type="elsecth">
+                      <label>Top Up/Bolt On Embedded in RASCA Promotion</label>
+                    </element>
+                    <element name="VerticalLayout" type="elvlt">
+                      <elementList>
+                        <element name="HorizontalLayout" type="elhlt">
+                          <elementList>
+                            <element name="TopUpBoltonAssignation" type="elslct">
+                              <labeAlign>left</labeAlign>
+                              <label>Top Up Assigment</label>
+                              <labelOrientation>left</labelOrientation>
+                              <onChangeMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TopUpBoltOnPromotionEmbeddeForm/uimthd_selectTrigger</variablePath>
+                                </variablePathList>
+                              </onChangeMethod>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.TopUpBoltOnPromotionEmbeddeForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.TopUpBoltOnPromotionEmbedde/dstruct_TopUpBoltonAssignation</variablePath>
+                                </variablePathList>
+                              </variable>
+                            </element>
+                          </elementList>
+                        </element>
+                        <element name="Amount" type="elfld">
+                          <labeAlign>left</labeAlign>
+                          <label>Amount</label>
+                          <labelOrientation>left</labelOrientation>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.TopUpBoltOnPromotionEmbeddeForm/leaf_model</variablePath>
+                              <variablePath>dstruct_cm_spoc.data.TopUpBoltOnPromotionEmbedde/dstruct_Amount</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.TopUpBoltOnPromotionEmbeddeForm/permMethod_TUBOPEAmountVisRule</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="ValidityPeriodInDays" type="elfld">
+                          <labeAlign>left</labeAlign>
+                          <label>Validity Period (in days)</label>
+                          <labelOrientation>left</labelOrientation>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.TopUpBoltOnPromotionEmbeddeForm/leaf_model</variablePath>
+                              <variablePath>dstruct_cm_spoc.data.TopUpBoltOnPromotionEmbedde/dstruct_ValidityPeriodInDays</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.TopUpBoltOnPromotionEmbeddeForm/permMethod_TUBOPEValidityPeriodInDaysVisRule</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="BoltOnEnum" type="elslct">
+                          <labeAlign>left</labeAlign>
+                          <label>Bolt On Code</label>
+                          <labelOrientation>left</labelOrientation>
+                          <multiselect>false</multiselect>
+                          <onChangeMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.TopUpBoltOnPromotionEmbeddeForm/uimthd_BoltOnCodeTrigger</variablePath>
+                            </variablePathList>
+                          </onChangeMethod>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.TopUpBoltOnPromotionEmbeddeForm/leaf_model</variablePath>
+                              <variablePath>dstruct_cm_spoc.data.TopUpBoltOnPromotionEmbedde/dstruct_BoltOnEnum</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.TopUpBoltOnPromotionEmbeddeForm/permMethod_BOBoltOnCodeVisRule</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.TopUpBoltOnPromotionEmbeddeForm/leaf_model</path>
+      <type>initializer</type>
+      <script>return cm_spoc.initTopUpBoltOnPromotionEmbeddedUI(this.model);</script>
+    </method>
+    <method name="TUBOPEAmountVisRule" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.TopUpBoltonAssignation;
+        if (vis=='T') {
+            // this.model.Amount = null;
+            return true;
+        }
+        else {
+            return false;
+        }
+      ]]></script>
+    </method>
+    <method name="TUBOPEValidityPeriodInDaysVisRule" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.TopUpBoltonAssignation;
+        if (vis=='T') {
+            // this.model.ValidityPeriodInDays=null;
+            return true;
+        }
+        else {
+            return false;
+        }
+      ]]></script>
+    </method>
+    <method name="selectTrigger" type="uimthd">
+      <script>return;</script>
+    </method>
+    <method name="BOBoltOnCodeVisRule" type="permMethod">
+      <script><![CDATA[
+        var vis = this.model.TopUpBoltonAssignation;
+        if (vis=='B')
+            return true;
+        return false;
+      ]]></script>
+    </method>
+    <method name="BoltOnCodeTrigger" type="uimthd">
+      <script>this.model.BoltOn=this.model.BoltOnEnum;</script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+  </methodList>
+</userInterface>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.validateRequestID">
+  <label>validateRequestID</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Validates the request fields according the configuration on the TB_RESTRICTIONS table.
+     *
+     * @author  Ramon Barrasa
+     * @date    201404
+     */
+
+    Global.logDebug("validateRequestID");
+
+    var fieldForProdOffID  = null;
+    var fieldForProdSpecID = null;
+    var fieldForProdInstID = null;
+    var fieldForGlobalSel  = null;
+    var cont               = 0;
+
+    if (dtree.pmOperation[0].fieldForProdOfferingID) {
+        fieldForProdOffID =  "dtree.request." + dtree.pmOperation[0].fieldForProdOfferingID;
+    }
+
+    if (dtree.pmOperation[0].fieldForProdSpecificationID) {
+        fieldForProdSpecID = "dtree.request." + dtree.pmOperation[0].fieldForProdSpecificationID;
+    }
+
+    if (dtree.pmOperation[0].fieldForProdInstanceID) {
+        fieldForProdInstID = "dtree.request." + dtree.pmOperation[0].fieldForProdInstanceID;
+    }
+
+    if (dtree.pmOperation[0].fieldForGlobalSelection) {
+        fieldForGlobalSel =  "dtree.request." + dtree.pmOperation[0].fieldForGlobalSelection;
+    }
+
+    if (fieldForProdOffID) {
+        try {
+           if (eval(fieldForProdOffID)) cont ++;
+        }
+        catch(err) {}
+    }
+
+    if (fieldForProdSpecID) {
+        try {
+            if (eval(fieldForProdSpecID)) cont ++;
+        }
+        catch(err) {}
+    }
+
+    if (fieldForProdInstID) {
+        try {
+            if (eval(fieldForProdInstID)) cont ++;
+        }
+        catch(err) {}
+    }
+
+    if (fieldForGlobalSel) {
+        try {
+            if (eval(fieldForGlobalSel)) cont ++;
+        }
+        catch(err) {}
+    }
+
+    if (cont != 0) {
+        if (cont > 1) {
+            dtree.errorcode.push("ER_WF_450");
+            dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_450"));
+            return false;
+        }
+    } else {
+        dtree.errorcode.push("ER_WF_451");
+        dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_451"));
+        return false;
+    }
+
+    return true;
+  ]]></script>
+</script>

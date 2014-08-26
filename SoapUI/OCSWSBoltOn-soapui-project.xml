@@ -1,0 +1,3841 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="OCSWSBoltOn" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="BoltonManagementServiceSOAPBinding_v1_0" type="wsdl" bindingName="{http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/services}BoltonManagementServiceSOAPBinding_v1_0" soapVersion="1_1" anonymous="optional" definition="file:/C:/@work/NGAAOrderCare/Templates/OCSWS/resources/schema/UNICA_API_SOAP_OCSProvisioning_boltonManagement_services_v1_0.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:\C:\@work\NGAAOrderCare\Templates\OCSWS\resources\schema\UNICA_API_SOAP_OCSProvisioning_boltonManagement_services_v1_0.wsdl"><con:part><con:url>file:\C:\@work\NGAAOrderCare\Templates\OCSWS\resources\schema\UNICA_API_SOAP_OCSProvisioning_boltonManagement_services_v1_0.wsdl</con:url><con:content><![CDATA[<!--PA3-->
+<wsdl:definitions targetNamespace="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/services" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/services" xmlns:bns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/04/secext" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+  <wsdl:types>
+    <xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" schemaLocation="UNICA_API_SOAP_OCSProvisioning_boltonManagement_types_v1_0.xsd"/>
+      <xsd:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" schemaLocation="addressing"/>
+      <xsd:import namespace="http://schemas.xmlsoap.org/ws/2002/04/secext" schemaLocation="secext.xsd"/>
+      <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <!--Header-->
+  <wsdl:message name="OCSHeaderInfo">
+    <wsdl:part name="messageID" element="wsa:MessageID"/>
+    <wsdl:part name="replyTo" element="wsa:ReplyTo"/>
+    <wsdl:part name="security" element="wsse:Security"/>
+  </wsdl:message>
+  <!--Messages-->
+  <wsdl:message name="SubscribeBoltonRequest">
+    <wsdl:part name="parameters" element="bns:subscribeBolton"/>
+  </wsdl:message>
+  <wsdl:message name="SubscribeBoltonResponse">
+    <wsdl:part name="parameters" element="bns:subscribeBoltonResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UnsubscribeBoltonRequest">
+    <wsdl:part name="parameters" element="bns:unsubscribeBolton"/>
+  </wsdl:message>
+  <wsdl:message name="UnsubscribeBoltonResponse">
+    <wsdl:part name="parameters" element="bns:unsubscribeBoltonResponse"/>
+  </wsdl:message>
+  <wsdl:message name="QueryBoltonsDetailsRequest">
+    <wsdl:part name="parameters" element="bns:queryBoltonsDetails"/>
+  </wsdl:message>
+  <wsdl:message name="QueryBoltonsDetailsResponse">
+    <wsdl:part name="parameters" element="bns:queryBoltonsDetailsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="QueryBoltonsRequest">
+    <wsdl:part name="parameters" element="bns:queryBoltons"/>
+  </wsdl:message>
+  <wsdl:message name="QueryBoltonsResponse">
+    <wsdl:part name="parameters" element="bns:queryBoltonsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ServerException">
+    <wsdl:part name="ServerException" element="uct:serverException"/>
+  </wsdl:message>
+  <wsdl:message name="ClientException">
+    <wsdl:part name="ClientException" element="uct:clientException"/>
+  </wsdl:message>
+  <!--Port-->
+  <wsdl:portType name="BoltonManagementPort_v1_0">
+    <wsdl:operation name="subscribeBolton">
+      <wsdl:input message="tns:SubscribeBoltonRequest"/>
+      <wsdl:output message="tns:SubscribeBoltonResponse"/>
+      <wsdl:fault name="ClientException" message="tns:ClientException"/>
+      <wsdl:fault name="ServerException" message="tns:ServerException"/>
+    </wsdl:operation>
+    <wsdl:operation name="unsubscribeBolton">
+      <wsdl:input message="tns:UnsubscribeBoltonRequest"/>
+      <wsdl:output message="tns:UnsubscribeBoltonResponse"/>
+      <wsdl:fault name="ClientException" message="tns:ClientException"/>
+      <wsdl:fault name="ServerException" message="tns:ServerException"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryBoltonsDetails">
+      <wsdl:input message="tns:QueryBoltonsDetailsRequest"/>
+      <wsdl:output message="tns:QueryBoltonsDetailsResponse"/>
+      <wsdl:fault name="ClientException" message="tns:ClientException"/>
+      <wsdl:fault name="ServerException" message="tns:ServerException"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryBoltons">
+      <wsdl:input message="tns:QueryBoltonsRequest"/>
+      <wsdl:output message="tns:QueryBoltonsResponse"/>
+      <wsdl:fault name="ClientException" message="tns:ClientException"/>
+      <wsdl:fault name="ServerException" message="tns:ServerException"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <!--Binding-->
+  <wsdl:binding name="BoltonManagementServiceSOAPBinding_v1_0" type="tns:BoltonManagementPort_v1_0">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="subscribeBolton">
+      <soap:operation soapAction="subscribeBolton"/>
+      <wsdl:input>
+        <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal" wsdl:required="true"/>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal" wsdl:required="true"/>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ClientException">
+        <soap:fault name="ClientException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ServerException">
+        <soap:fault name="ServerException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="unsubscribeBolton">
+      <soap:operation soapAction="unsubscribeBolton"/>
+      <wsdl:input>
+        <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal" wsdl:required="true"/>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal" wsdl:required="true"/>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ClientException">
+        <soap:fault name="ClientException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ServerException">
+        <soap:fault name="ServerException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="queryBoltonsDetails">
+      <soap:operation soapAction="queryBoltonsDetails"/>
+      <wsdl:input>
+        <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal" wsdl:required="true"/>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal" wsdl:required="true"/>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ClientException">
+        <soap:fault name="ClientException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ServerException">
+        <soap:fault name="ServerException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="queryBoltons">
+      <soap:operation soapAction="queryBoltons"/>
+      <wsdl:input>
+        <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal" wsdl:required="true"/>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal" wsdl:required="true"/>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ClientException">
+        <soap:fault name="ClientException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ServerException">
+        <soap:fault name="ServerException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <!--Service-->
+  <wsdl:service name="BoltonManagementService_v1">
+    <wsdl:port name="BoltonManagement_v1_0" binding="tns:BoltonManagementServiceSOAPBinding_v1_0">
+      <soap:address location="http://localhost/UNICA/OCSProvisioning/BoltonManagement_v1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:\C:\@work\NGAAOrderCare\Templates\OCSWS\resources\schema\UNICA_API_SOAP_OCSProvisioning_boltonManagement_types_v1_0.xsd</con:url><con:content><![CDATA[<!--PA5-->
+<xsd:schema targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types">
+  <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_0.xsd"/>
+  <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+  <!--************************************* subscribeBolton *************************************-->
+  <!--Request-->
+  <xsd:complexType name="SubscribeBoltonType">
+    <xsd:sequence>
+      <xsd:element ref="apt:actionCommonInfo"/>
+      <xsd:element ref="apt:subscriberId"/>
+      <xsd:element ref="apt:boltonInfo"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="subscribeBolton" type="tns:SubscribeBoltonType"/>
+  <!--Response-->
+  <xsd:complexType name="SubscribeBoltonResponseType">
+    <xsd:sequence>
+      <xsd:element ref="apt:result"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="subscribeBoltonResponse" type="tns:SubscribeBoltonResponseType"/>
+  <!--************************************* unsubscribeBolton *************************************-->
+  <!--Request-->
+  <xsd:complexType name="UnsubscribeBoltonType">
+    <xsd:sequence>
+      <xsd:element ref="apt:actionCommonInfo"/>
+      <xsd:element ref="apt:subscriberId"/>
+      <xsd:element ref="apt:boltonIdentifier"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="unsubscribeBolton" type="tns:UnsubscribeBoltonType"/>
+  <!--Response-->
+  <xsd:complexType name="UnsubscribeBoltonResponseType">
+    <xsd:sequence>
+      <xsd:element ref="apt:result"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="unsubscribeBoltonResponse" type="tns:UnsubscribeBoltonResponseType"/>
+  <!--************************************* queryBoltonsDetails *************************************-->
+  <!--Request-->
+  <xsd:complexType name="QueryBoltonsDetailsType">
+    <xsd:sequence>
+      <xsd:element ref="apt:queryCommonInfo"/>
+      <xsd:element ref="apt:subscriberId" minOccurs="0"/>
+      <xsd:element ref="apt:timeIntervalFilter" minOccurs="0"/>
+      <xsd:element ref="apt:opReference" minOccurs="0"/>
+      <xsd:element ref="apt:boltonIdentifierFilter" minOccurs="0"/>
+      <xsd:element ref="apt:boltonStatusFilterList" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="queryBoltonsDetails" type="tns:QueryBoltonsDetailsType"/>
+  <!--Response-->
+  <xsd:complexType name="QueryBoltonsDetailsResponseType">
+    <xsd:sequence>
+      <xsd:element ref="apt:token" minOccurs="0"/>
+      <xsd:element ref="apt:boltonDetailedInfoList" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="queryBoltonsDetailsResponse" type="tns:QueryBoltonsDetailsResponseType"/>
+  <!--************************************* queryBoltons *************************************-->
+  <!--Request-->
+  <xsd:complexType name="QueryBoltonsType">
+    <xsd:sequence>
+      <xsd:element ref="apt:queryCommonInfo"/>
+      <xsd:element ref="apt:subscriberId"/>
+      <xsd:element ref="apt:boltonIdentifierFilter" minOccurs="0"/>
+      <xsd:element ref="apt:boltonStatusFilterList" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="queryBoltons" type="tns:QueryBoltonsType"/>
+  <!--Response-->
+  <xsd:complexType name="QueryBoltonsResponseType">
+    <xsd:sequence>
+      <xsd:element ref="apt:token" minOccurs="0"/>
+      <xsd:element ref="apt:boltonBasicInfoList" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="queryBoltonsResponse" type="tns:QueryBoltonsResponseType"/>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:\C:\@work\NGAAOrderCare\Templates\OCSWS\resources\schema\UNICA_API_SOAP_OCSProvisioning_types_v1_0.xsd</con:url><con:content><![CDATA[<!--PA6-->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" xmlns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+  <!--************************************* Auxiliar *************************************-->
+  <xsd:element name="userCode" type="xsd:string"/>
+  <xsd:complexType name="UnitValueType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:long">
+        <xsd:attribute name="exponent" type="xsd:int"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--************************************* Coin *************************************-->
+  <xsd:complexType name="MonetaryType">
+    <xsd:simpleContent>
+      <xsd:extension base="UnitValueType">
+        <!--Future compatibility-->
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CurrencyCodeType">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[a-zA-Z]{3}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="currencyCode" type="CurrencyCodeType"/>
+  <!--************************************* Operation *************************************-->
+  <xsd:element name="appId" type="xsd:string"/>
+  <xsd:element name="numRegs" type="xsd:int"/>
+  <xsd:element name="opCost" type="MonetaryType"/>
+  <xsd:element name="opExecutionDate" type="xsd:dateTime"/>
+  <xsd:element name="opId" type="xsd:string"/>
+  <xsd:element name="reference" type="xsd:string"/>
+  <xsd:element name="token" type="xsd:string"/>
+  <xsd:complexType name="OpSubIdListType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="1" ref="opId"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="opSubIdList" type="OpSubIdListType"/>
+  <xsd:complexType name="OpReferenceType">
+    <xsd:sequence>
+      <xsd:element ref="opId"/>
+      <xsd:element minOccurs="0" ref="opSubIdList"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="opReference" type="OpReferenceType"/>
+  <xsd:complexType name="AppInfoType">
+    <xsd:sequence>
+      <xsd:element ref="appId"/>
+      <xsd:element ref="reference"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="appInfo" type="AppInfoType"/>
+  <xsd:complexType name="ActionCommonInfoType">
+    <xsd:sequence>
+      <xsd:element ref="appInfo"/>
+      <xsd:element ref="userCode"/>
+      <xsd:element minOccurs="0" ref="opCost"/>
+      <xsd:element minOccurs="0" ref="currencyCode"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="actionCommonInfo" type="ActionCommonInfoType"/>
+  <xsd:complexType name="OpResultInfoType">
+    <xsd:sequence>
+      <xsd:element ref="opReference"/>
+      <xsd:element ref="opExecutionDate"/>
+      <xsd:element ref="opCost"/>
+      <xsd:element minOccurs="0" ref="balanceActivityInfo"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="AccOpResultInfoType">
+    <xsd:complexContent>
+      <xsd:extension base="OpResultInfoType">
+        <xsd:sequence>
+          <!--Future compatibility-->
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="result" type="AccOpResultInfoType"/>
+  <xsd:complexType name="PagingInfoType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" ref="token"/>
+      <xsd:element ref="numRegs"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="pagingInfo" type="PagingInfoType"/>
+  <xsd:complexType name="QueryCommonInfoType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" ref="currencyCode"/>
+      <xsd:element minOccurs="0" ref="pagingInfo"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="queryCommonInfo" type="QueryCommonInfoType"/>
+  <!--************************************* Time *************************************-->
+  <xsd:element name="date" type="xsd:dateTime"/>
+  <xsd:element name="specialTime" type="xsd:string"/>
+  <xsd:complexType name="TimeOffsetType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:duration">
+        <xsd:attribute name="timeRoundUnit" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="timeOffset" type="TimeOffsetType"/>
+  <xsd:complexType name="TimeType">
+    <xsd:choice>
+      <xsd:element ref="date"/>
+      <xsd:element ref="timeOffset"/>
+      <xsd:element ref="specialTime"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:element name="startTime" type="TimeType"/>
+  <xsd:element name="endTime" type="TimeType"/>
+  <xsd:complexType name="TimeIntervalType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" ref="startTime"/>
+      <xsd:element minOccurs="0" ref="endTime"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="timeInterval" type="TimeIntervalType"/>
+  <!--************************************* Subscriber Account *************************************-->
+  <!--Subscriber Identification-->
+  <xsd:element name="anyUri" type="xsd:anyURI"/>
+  <xsd:element name="e164Number" type="uct:E164Type"/>
+  <xsd:element name="IMSI" type="uct:ImsiType"/>
+  <xsd:element name="ipAddress" type="uct:IpAddressType"/>
+  <xsd:element name="otherId" type="uct:OtherIdType"/>
+  <xsd:element name="sipUri" type="uct:SipUriType"/>
+  <xsd:element name="userName" type="xsd:string"/>
+  <xsd:complexType name="SubscriberIdType">
+    <xsd:choice>
+      <xsd:element ref="e164Number"/>
+      <xsd:element ref="IMSI"/>
+      <xsd:element ref="sipUri"/>
+      <xsd:element ref="anyUri"/>
+      <xsd:element ref="otherId"/>
+      <xsd:element ref="userName"/>
+      <xsd:element ref="ipAddress"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:element name="subscriberId" type="SubscriberIdType"/>
+  <xsd:simpleType name="ServiceClassType">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[1-5]"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="serviceClass" type="ServiceClassType"/>
+  <!--************************************* Account Activity ****************************************-->
+  <xsd:element name="areaCode" type="xsd:string"/>
+  <xsd:element name="callDate" type="xsd:dateTime"/>
+  <xsd:element name="callDescription" type="xsd:string"/>
+  <xsd:element name="callDiscount" type="xsd:int"/>
+  <xsd:element name="callDuration" type="xsd:duration"/>
+  <xsd:element name="callingCardSubscriberId" type="SubscriberIdType"/>
+  <xsd:element name="callTypeCode" type="xsd:string"/>
+  <xsd:element name="cellCode" type="xsd:string"/>
+  <xsd:element name="contentDate" type="xsd:dateTime"/>
+  <xsd:element name="contentDescription" type="xsd:string"/>
+  <xsd:element name="contentDuration" type="xsd:duration"/>
+  <xsd:element name="contentTypeCode" type="xsd:string"/>
+  <xsd:element name="destinationPrefixMaskFilter" type="xsd:string"/>
+  <xsd:element name="destinationTypeCode" type="xsd:string"/>
+  <xsd:element name="downloadData" type="xsd:string"/>
+  <xsd:element name="homeZoneOriginatingFlag" type="uct:FlagType"/>
+  <xsd:element name="longDistanceCallCost" type="MonetaryType"/>
+  <xsd:element name="longDistanceCallTax" type="xsd:int"/>
+  <xsd:element name="longDistanceNonDiscountedCallCost" type="MonetaryType"/>
+  <xsd:element name="messageCost" type="MonetaryType"/>
+  <xsd:element name="messageDate" type="xsd:dateTime"/>
+  <xsd:element name="messageDescription" type="xsd:string"/>
+  <xsd:element name="messageTax" type="xsd:int"/>
+  <xsd:element name="messageTypeCode" type="xsd:string"/>
+  <xsd:element name="minAmountFilter" type="MonetaryType"/>
+  <xsd:element name="nonDiscountedMessageCost" type="MonetaryType"/>
+  <xsd:element name="nonDiscountedSessionCost" type="MonetaryType"/>
+  <xsd:element name="onCallChangedTariffFlag" type="uct:FlagType"/>
+  <xsd:element name="onAirCallCost" type="MonetaryType"/>
+  <xsd:element name="onAirCallTax" type="xsd:int"/>
+  <xsd:element name="onAirNonDiscountedCallCost" type="MonetaryType"/>
+  <xsd:element name="operatorLD" type="xsd:string"/>
+  <xsd:element name="provinceCode" type="xsd:string"/>
+  <xsd:element name="regionCode" type="xsd:string"/>
+  <xsd:element name="roamingOperator" type="xsd:string"/>
+  <xsd:element name="sessionCost" type="MonetaryType"/>
+  <xsd:element name="sessionDate" type="xsd:dateTime"/>
+  <xsd:element name="sessionDescription" type="xsd:string"/>
+  <xsd:element name="sessionDuration" type="xsd:duration"/>
+  <xsd:element name="sessionTax" type="xsd:int"/>
+  <xsd:element name="sessionTypeCode" type="xsd:string"/>
+  <xsd:element name="subscriberTaxValue" type="xsd:int"/>
+  <xsd:element name="totalCallCost" type="MonetaryType"/>
+  <xsd:element name="totalCallDuration" type="xsd:duration"/>
+  <xsd:element name="totalNonDiscountedCallCost" type="MonetaryType"/>
+  <xsd:element name="totalSessionDuration" type="xsd:duration"/>
+  <xsd:element name="uploadData" type="xsd:string"/>
+  <xsd:element name="destinationSubscriberInfo" type="DestinationMsgSubscriberInfoType"/>
+  <xsd:simpleType name="CallCategoryType">
+    <xsd:restriction base="xsd:string"></xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="callCategory" type="CallCategoryType"/>
+  <xsd:complexType name="CallChargingInfoType">
+    <xsd:sequence>
+      <xsd:element ref="subscriberTaxValue" minOccurs="0"/>
+      <xsd:element ref="onAirCallTax" minOccurs="0"/>
+      <xsd:element ref="longDistanceCallTax" minOccurs="0"/>
+      <xsd:element ref="callDiscount" minOccurs="0"/>
+      <xsd:element ref="totalCallCost" minOccurs="0"/>
+      <xsd:element ref="onAirCallCost" minOccurs="0"/>
+      <xsd:element ref="longDistanceCallCost" minOccurs="0"/>
+      <xsd:element ref="totalNonDiscountedCallCost" minOccurs="0"/>
+      <xsd:element ref="onAirNonDiscountedCallCost" minOccurs="0"/>
+      <xsd:element ref="longDistanceNonDiscountedCallCost" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="callChargingInfo" type="CallChargingInfoType"/>
+  <xsd:complexType name="MessageChargingInfoType">
+    <xsd:sequence>
+      <xsd:element ref="subscriberTaxValue" minOccurs="0"/>
+      <xsd:element ref="messageTax" minOccurs="0"/>
+      <xsd:element ref="messageCost" minOccurs="0"/>
+      <xsd:element ref="nonDiscountedMessageCost" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="messageChargingInfo" type="MessageChargingInfoType"/>
+  <xsd:complexType name="SessionChargingInfoType">
+    <xsd:sequence>
+      <xsd:element ref="subscriberTaxValue" minOccurs="0"/>
+      <xsd:element ref="sessionTax" minOccurs="0"/>
+      <xsd:element ref="sessionCost" minOccurs="0"/>
+      <xsd:element ref="nonDiscountedSessionCost" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="sessionChargingInfo" type="SessionChargingInfoType"/>
+  <xsd:complexType name="CalledSubscriberInfoType">
+    <xsd:sequence>
+      <xsd:element ref="subscriberId"/>
+      <xsd:element ref="subscriberLocationInfo" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="calledSubscriberInfo" type="CalledSubscriberInfoType"/>
+  <xsd:complexType name="CallExtraInfoType">
+    <xsd:sequence>
+      <xsd:element ref="callingCardSubscriberId" minOccurs="0"/>
+      <xsd:element ref="homeZoneOriginatingFlag"/>
+      <xsd:element ref="onCallChangedTariffFlag"/>
+      <xsd:element ref="roamingOperator" minOccurs="0"/>
+      <xsd:element ref="operatorLD" minOccurs="0"/>
+      <xsd:element ref="cellCode" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="callExtraInfo" type="CallExtraInfoType"/>
+  <xsd:complexType name="MessageExtraInfoType">
+    <xsd:sequence>
+      <xsd:element ref="roamingOperator" minOccurs="0"/>
+      <xsd:element ref="operatorLD" minOccurs="0"/>
+      <xsd:element ref="cellCode" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="messageExtraInfo" type="MessageExtraInfoType"/>
+  <xsd:complexType name="SessionExtraInfoType">
+    <xsd:sequence>
+      <xsd:element ref="roamingOperator" minOccurs="0"/>
+      <xsd:element ref="uploadData" minOccurs="0"/>
+      <xsd:element ref="downloadData" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="sessionExtraInfo" type="SessionExtraInfoType"/>
+  <xsd:simpleType name="ContentCategoryType">
+    <xsd:restriction base="xsd:string"></xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="contentCategory" type="ContentCategoryType"/>
+  <xsd:simpleType name="DataSessionCategoryType">
+    <xsd:restriction base="xsd:string"></xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="dataSessionCategory" type="DataSessionCategoryType"/>
+  <xsd:complexType name="LocationInfoType">
+    <xsd:sequence>
+      <xsd:element ref="areaCode" minOccurs="0"/>
+      <xsd:element ref="regionCode" minOccurs="0"/>
+      <xsd:element ref="provinceCode" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="subscriberLocationInfo" type="LocationInfoType"/>
+  <xsd:complexType name="DestinationMsgSubscriberInfoType">
+    <xsd:sequence>
+      <xsd:element ref="subscriberId"/>
+      <xsd:element ref="subscriberLocationInfo" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="destinationMsgSubscriberInfo" type="DestinationMsgSubscriberInfoType"/>
+  <xsd:simpleType name="MessageCategoryType">
+    <xsd:restriction base="xsd:string"></xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="messageCategory" type="MessageCategoryType"/>
+  <xsd:complexType name="CallInfoType">
+    <xsd:sequence>
+      <xsd:element ref="callCategory" minOccurs="0"/>
+      <xsd:element ref="callTypeCode" minOccurs="0"/>
+      <xsd:element ref="callDescription" minOccurs="0"/>
+      <xsd:element ref="callDate" minOccurs="0"/>
+      <xsd:element ref="callDuration" minOccurs="0"/>
+      <xsd:element ref="totalCallDuration" minOccurs="0"/>
+      <xsd:element ref="destinationTypeCode" minOccurs="0"/>
+      <xsd:element ref="timeOffset" minOccurs="0"/>
+      <xsd:element ref="subscriberLocationInfo"/>
+      <xsd:element ref="callChargingInfo"/>
+      <xsd:element ref="callExtraInfo"/>
+      <xsd:element ref="calledSubscriberInfo"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="callInfo" type="CallInfoType"/>
+  <xsd:complexType name="CallInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="callInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="callInfoList" type="CallInfoListType"/>
+  <xsd:complexType name="ContentChargingInfoType">
+    <xsd:sequence>
+      <xsd:element ref="subscriberTaxValue" minOccurs="0"/>
+      <xsd:element ref="sessionTax" minOccurs="0"/>
+      <xsd:element ref="sessionCost" minOccurs="0"/>
+      <xsd:element ref="nonDiscountedSessionCost" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="contentChargingInfo" type="ContentChargingInfoType"/>
+  <xsd:complexType name="ContentTrafficInfoType">
+    <xsd:sequence>
+      <xsd:element ref="contentCategory" minOccurs="0"/>
+      <xsd:element ref="contentTypeCode" minOccurs="0"/>
+      <xsd:element ref="contentDescription" minOccurs="0"/>
+      <xsd:element ref="contentDate" minOccurs="0"/>
+      <xsd:element ref="contentDuration" minOccurs="0"/>
+      <xsd:element ref="destinationTypeCode" minOccurs="0"/>
+      <xsd:element ref="contentChargingInfo"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="contentTrafficInfo" type="ContentTrafficInfoType"/>
+  <xsd:complexType name="ContentTrafficInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="contentTrafficInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="contentTrafficInfoList" type="ContentTrafficInfoListType"/>
+  <xsd:complexType name="DataTrafficInfoType">
+    <xsd:sequence>
+      <xsd:element ref="dataSessionCategory" minOccurs="0"/>
+      <xsd:element ref="sessionTypeCode" minOccurs="0"/>
+      <xsd:element ref="sessionDescription" minOccurs="0"/>
+      <xsd:element ref="sessionDate" minOccurs="0"/>
+      <xsd:element ref="sessionDuration" minOccurs="0"/>
+      <xsd:element ref="totalSessionDuration" minOccurs="0"/>
+      <xsd:element ref="destinationTypeCode" minOccurs="0"/>
+      <xsd:element ref="sessionChargingInfo"/>
+      <xsd:element ref="sessionExtraInfo"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="dataTrafficInfo" type="DataTrafficInfoType"/>
+  <xsd:complexType name="DataTrafficInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="dataTrafficInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="dataTrafficInfoList" type="DataTrafficInfoListType"/>
+  <xsd:complexType name="MessageInfoType">
+    <xsd:sequence>
+      <xsd:element ref="messageCategory" minOccurs="0"/>
+      <xsd:element ref="messageTypeCode" minOccurs="0"/>
+      <xsd:element ref="messageDescription" minOccurs="0"/>
+      <xsd:element ref="messageDate" minOccurs="0"/>
+      <xsd:element ref="destinationTypeCode" minOccurs="0"/>
+      <xsd:element ref="subscriberLocationInfo" minOccurs="0"/>
+      <xsd:element ref="messageChargingInfo"/>
+      <xsd:element ref="messageExtraInfo"/>
+      <xsd:element ref="destinationSubscriberInfo"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="messageInfo" type="MessageInfoType"/>
+  <xsd:complexType name="MessageInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="messageInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="messageInfoList" type="MessageInfoListType"/>
+  <xsd:complexType name="OperationInfoType">
+    <xsd:sequence>
+      <xsd:element ref="opCode"/>
+      <xsd:element ref="opExecutionDate"/>
+      <xsd:element ref="userCode"/>
+      <xsd:element ref="opCost"/>
+      <xsd:element ref="balance"/>
+      <xsd:element ref="promotionCode" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="operationInfo" type="OperationInfoType"/>
+  <xsd:complexType name="OperationInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="operationInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="operationInfoList" type="OperationInfoListType"/>
+  <!--************************************* Account Management ****************************************-->
+  <xsd:simpleType name="ICCNumberType">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9]{1,19}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="accountProfileId" type="xsd:string"/>
+  <xsd:element name="actionCauseCode" type="xsd:string"/>
+  <xsd:element name="activationDate" type="xsd:dateTime"/>
+  <xsd:element name="availableBalanceFlag" type="uct:FlagType"/>
+  <xsd:element name="billingCycleCode" type="xsd:string"/>
+  <xsd:element name="cancellableFlag" type="uct:FlagType"/>
+  <xsd:element name="cancellationFlag" type="uct:FlagType"/>
+  <xsd:element name="cardClassId" type="xsd:string"/>
+  <xsd:element name="cardSubClassId" type="xsd:string"/>
+  <xsd:element name="cardProfileId" type="xsd:string"/>
+  <xsd:element name="cardTypeId" type="xsd:string"/>
+  <xsd:element name="categoryCode" type="xsd:string"/>
+  <xsd:element name="causeCode" type="xsd:string"/>
+  <xsd:element name="chargingModality" type="xsd:int"/>
+  <xsd:element name="cycleSpendControlFlag" type="uct:FlagType"/>
+  <xsd:element name="deactivateEndDate" type="xsd:dateTime"/>
+  <xsd:element name="deactivateStartDate" type="xsd:dateTime"/>
+  <xsd:element name="destinationNetworkCode" type="xsd:string"/>
+  <xsd:element name="dischargeDate" type="xsd:dateTime"/>
+  <xsd:element name="dischargeReason" type="xsd:string"/>
+  <xsd:element name="expirationNumDays" type="UnitValueType"/>
+  <xsd:element name="expirationThreshold" type="xsd:int"/>
+  <xsd:element name="genericRatingParameter" type="xsd:string"/>
+  <xsd:element name="geographicArea" type="xsd:string"/>
+  <xsd:element name="hlrId" type="xsd:string"/>
+  <xsd:element name="iccNumber" type="ICCNumberType"/>
+  <xsd:element name="IMEI" type="uct:ImeiType"/>
+  <xsd:element name="immediateFlag" type="uct:FlagType"/>
+  <xsd:element name="incompatibleOperationsFlag" type="uct:FlagType"/>
+  <xsd:element name="initialBalance" type="MonetaryType"/>
+  <xsd:element name="invoiceAccount" type="xsd:string"/>
+  <xsd:element name="keyCode" type="xsd:string"/>
+  <xsd:element name="langCode" type="xsd:string"/>
+  <xsd:element name="limitEventFlag" type="uct:FlagType"/>
+  <xsd:element name="lifeCycleStatusDate" type="xsd:dateTime"/>
+  <xsd:element name="locationNumberId" type="xsd:string"/>
+  <xsd:element name="maximum" type="MonetaryType"/>
+  <xsd:element name="messageNotificationEventFlag" type="uct:FlagType"/>
+  <xsd:element name="modifiableFlag" type="uct:FlagType"/>
+  <xsd:element name="negativeBalanceUsageFlag" type="uct:FlagType"/>
+  <xsd:element name="newSubscriberId" type="SubscriberIdType"/>
+  <xsd:element name="numNotices" type="xsd:int"/>
+  <xsd:element name="ocsreNodeId" type="xsd:string"/>
+  <xsd:element name="opCode" type="xsd:string"/>
+  <xsd:element name="operationZoneId" type="xsd:string"/>
+  <xsd:element name="opPortabilityId" type="xsd:string"/>
+  <xsd:element name="orderNumber" type="xsd:int"/>
+  <xsd:element name="originNetworkCode" type="xsd:string"/>
+  <xsd:element name="pendingFlag" type="uct:FlagType"/>
+  <xsd:element name="pendingOperations" type="xsd:int"/>
+  <xsd:element name="preActivationDate" type="xsd:dateTime"/>
+  <xsd:element name="portabilityRoutingPrefix" type="xsd:string"/>
+  <xsd:element name="pukNumber" type="xsd:string"/>
+  <xsd:element name="puk2Number" type="xsd:string"/>
+  <xsd:element name="saleModality1" type="xsd:string"/>
+  <xsd:element name="saleModality2" type="xsd:string"/>
+  <xsd:element name="saleModality3" type="xsd:string"/>
+  <xsd:element name="saleModality4" type="xsd:string"/>
+  <xsd:element name="segmentId" type="xsd:string"/>
+  <xsd:element name="segmentReference" type="xsd:string"/>
+  <xsd:element name="serviceEndDate" type="xsd:dateTime"/>
+  <xsd:element name="serviceProviderId" type="xsd:string"/>
+  <xsd:element name="serviceStartDate" type="xsd:dateTime"/>
+  <xsd:element name="serviceStateInactive" type="uct:FlagType"/>
+  <xsd:element name="shortMessage" type="uct:FlagType"/>
+  <xsd:element name="smsSubscriptionDes" type="xsd:string"/>
+  <xsd:element name="smsSubscriptionId" type="xsd:string"/>
+  <xsd:element name="smsSubscriptionFlag" type="uct:FlagType"/>
+  <xsd:element name="spendId" type="xsd:string"/>
+  <xsd:element name="spendLimitAmount" type="MonetaryType"/>
+  <xsd:element name="spendThresholdValue" type="UnitValueType"/>
+  <xsd:element name="spendValue" type="UnitValueType"/>
+  <xsd:element name="statusFlagFilter" type="uct:FlagType"/>
+  <xsd:element name="subOpCode" type="xsd:string"/>
+  <xsd:element name="subscribedAfterDate" type="xsd:dateTime"/>
+  <xsd:element name="subscribedBeforeDate" type="xsd:dateTime"/>
+  <xsd:element name="subscriberState" type="xsd:string"/>
+  <xsd:element name="subscriberSubState" type="xsd:string"/>
+  <xsd:element name="subscriptionArea" type="xsd:string"/>
+  <xsd:element name="suspensionIdCode" type="xsd:string"/>
+  <xsd:element name="suspensionTime" type="xsd:duration"/>
+  <xsd:element name="tariffPlanId" type="xsd:string"/>
+  <xsd:element name="taxCode" type="xsd:string"/>
+  <xsd:element name="technologyId" type="xsd:string"/>
+  <xsd:element name="threshold" type="UnitValueType"/>
+  <xsd:element name="thresholdAmount" type="UnitValueType"/>
+  <xsd:element name="thresholdEventFlag" type="uct:FlagType"/>
+  <xsd:element name="thresholdId" type="xsd:int"/>
+  <xsd:element name="ZIPCode" type="xsd:string"/>
+  <xsd:complexType name="CardIdType">
+    <xsd:sequence>
+      <xsd:element ref="cardClassId" minOccurs="0"/>
+      <xsd:element ref="cardSubClassId" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="cardId" type="CardIdType"/>
+  <xsd:complexType name="HomeZoneLocationNumberInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="locationNumberId" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="homeZoneLocationNumberInfoList" type="HomeZoneLocationNumberInfoListType"/>
+  <xsd:complexType name="LifeCycleStatusType">
+    <xsd:sequence>
+      <xsd:element ref="subscriberState"/>
+      <xsd:element ref="subscriberSubState"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="lifeCycleStatus" type="LifeCycleStatusType"/>
+  <xsd:element name="nextState" type="LifeCycleStatusType"/>
+  <xsd:complexType name="NetworkCardInfoType">
+    <xsd:sequence>
+      <xsd:element ref="IMSI" minOccurs="0"/>
+      <xsd:element ref="iccNumber" minOccurs="0"/>
+      <xsd:element ref="IMEI" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="networkCardInfo" type="NetworkCardInfoType"/>
+  <xsd:complexType name="SegmentInfoType">
+    <xsd:sequence>
+      <xsd:element ref="segmentId"/>
+      <xsd:element ref="segmentReference" minOccurs="0"/>
+      <xsd:element ref="timeInterval" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="segmentInfo" type="SegmentInfoType"/>
+  <xsd:complexType name="SegmentInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="segmentInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="segmentInfoList" type="SegmentInfoListType"/>
+  <xsd:complexType name="ServicePlansBasicInfoType">
+    <xsd:sequence>
+      <xsd:element ref="serviceClass" minOccurs="0"/>
+      <xsd:element ref="tariffPlanId" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="servicePlansBasicInfo" type="ServicePlansBasicInfoType"/>
+  <xsd:complexType name="ServicePlansBasicInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="servicePlansBasicInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="servicePlansBasicInfoList" type="ServicePlansBasicInfoListType"/>
+  <xsd:complexType name="ServicePlansInfoType">
+    <xsd:sequence>
+      <xsd:element ref="tariffPlanId"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="servicePlansInfo" type="ServicePlansInfoType"/>
+  <xsd:complexType name="ServicePlansInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="servicePlansInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="servicePlansInfoList" type="ServicePlansInfoListType"/>
+  <xsd:element name="allowedPlansInfoList" type="ServicePlansInfoListType"/>
+  <xsd:complexType name="SMSSubscriptionsInfoType">
+    <xsd:sequence>
+      <xsd:element ref="smsSubscriptionId" minOccurs="0"/>
+      <xsd:element ref="smsSubscriptionDes" minOccurs="0"/>
+      <xsd:element ref="smsSubscriptionFlag" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="smsSubscriptionsInfo" type="SMSSubscriptionsInfoType"/>
+  <xsd:complexType name="SMSSubscriptionsInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="smsSubscriptionsInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="smsSubscriptionsInfoList" type="SMSSubscriptionsInfoListType"/>
+  <xsd:complexType name="SpendAttributesInfoType">
+    <xsd:sequence>
+      <xsd:element ref="spendId"/>
+      <xsd:element ref="spendLimitAmount" minOccurs="0"/>
+      <xsd:element ref="spendThresholdValue" minOccurs="0"/>
+      <xsd:element ref="spendValue" minOccurs="0"/>
+      <xsd:element ref="limitEventFlag" minOccurs="0"/>
+      <xsd:element ref="thresholdEventFlag" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="spendAttributesInfo" type="SpendAttributesInfoType"/>
+  <xsd:complexType name="SpendAttributesInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="spendAttributesInfo" minOccurs="1" maxOccurs="unbounded"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="spendAttributesInfoList" type="SpendAttributesInfoListType"/>
+  <xsd:complexType name="SpendLimitsInfoType">
+    <xsd:sequence>
+      <xsd:element ref="maximum"/>
+      <xsd:element ref="spendAttributesInfoList" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="spendLimitsInfo" type="SpendLimitsInfoType"/>
+  <xsd:complexType name="SubscriberBasicInfoType">
+    <xsd:sequence>
+      <xsd:element ref="serviceProviderId"/>
+      <xsd:element ref="tariffPlanId"/>
+      <xsd:element ref="networkCardInfo"/>
+      <xsd:element ref="lifeCycleStatus" minOccurs="0"/>
+      <xsd:element ref="lifeCycleStatusDate" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="subscriberBasicInfo" type="SubscriberBasicInfoType"/>
+  <xsd:complexType name="SubscriberDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="serviceProviderId"/>
+      <xsd:element ref="tariffPlanId"/>
+      <xsd:element ref="networkCardInfo" minOccurs="0"/>
+      <xsd:element ref="technologyId" minOccurs="0"/>
+      <xsd:element ref="subscriptionArea" minOccurs="0"/>
+      <xsd:element ref="lifeCycleStatus" minOccurs="0"/>
+      <xsd:element ref="lifeCycleStatusDate" minOccurs="0"/>
+      <xsd:element ref="preActivationDate" minOccurs="0"/>
+      <xsd:element ref="activationDate" minOccurs="0"/>
+      <xsd:element ref="taxCode" minOccurs="0"/>
+      <xsd:element ref="categoryCode" minOccurs="0"/>
+      <xsd:element ref="genericRatingParameter" minOccurs="0"/>
+      <xsd:element ref="messageNotificationEventFlag"/>
+      <xsd:element ref="geographicArea" minOccurs="0"/>
+      <xsd:element ref="ocsreNodeId" minOccurs="0"/>
+      <xsd:element ref="billingCycleCode" minOccurs="0"/>
+      <xsd:element ref="pukNumber" minOccurs="0"/>
+      <xsd:element ref="puk2Number" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="subscriberDetailedInfo" type="SubscriberDetailedInfoType"/>
+  <xsd:complexType name="SubscriberExtendedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="taxCode" minOccurs="0"/>
+      <xsd:element ref="categoryCode" minOccurs="0"/>
+      <xsd:element ref="genericRatingParameter" minOccurs="0"/>
+      <xsd:element ref="subscriptionArea" minOccurs="0"/>
+      <xsd:element ref="ocsreNodeId" minOccurs="0"/>
+      <xsd:element ref="geographicArea" minOccurs="0"/>
+      <xsd:element ref="billingCycleCode" minOccurs="0"/>
+      <xsd:element ref="pukNumber" minOccurs="0"/>
+      <xsd:element ref="puk2Number" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="subscriberExtendedInfo" type="SubscriberExtendedInfoType"/>
+  <xsd:complexType name="SubscriptionInfoType">
+    <xsd:sequence>
+      <xsd:element ref="serviceClass" minOccurs="0"/>
+      <xsd:element ref="invoiceAccount" minOccurs="0"/>
+      <xsd:element ref="serviceStateInactive" minOccurs="0"/>
+      <xsd:element ref="suspensionIdCode" minOccurs="0"/>
+      <xsd:element ref="deactivateStartDate" minOccurs="0"/>
+      <xsd:element ref="deactivateEndDate" minOccurs="0"/>
+      <xsd:element ref="serviceStartDate" minOccurs="0"/>
+      <xsd:element ref="serviceEndDate" minOccurs="0"/>
+      <xsd:element ref="dischargeReason" minOccurs="0"/>
+      <xsd:element ref="subscriberId" minOccurs="0"/>
+      <xsd:element ref="shortMessage" minOccurs="0"/>
+      <xsd:element ref="saleModality1" minOccurs="0"/>
+      <xsd:element ref="saleModality2" minOccurs="0"/>
+      <xsd:element ref="saleModality3" minOccurs="0"/>
+      <xsd:element ref="saleModality4" minOccurs="0"/>
+      <xsd:element ref="dischargeDate" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="subscriptionInfo" type="SubscriptionInfoType"/>
+  <xsd:complexType name="SubscriptionInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="subscriptionInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="subscriptionInfoList" type="SubscriptionInfoListType"/>
+  <!--************************************* Administration Management ****************************************-->
+  <xsd:element name="error" type="uct:ErrorInformationType"/>
+  <xsd:element name="opStatus" type="xsd:string"/>
+  <xsd:element name="promotionCode" type="xsd:string"/>
+  <!--************************************* Balance Management *************************************-->
+  <xsd:element name="actionCauseTypeCode" type="xsd:string"/>
+  <xsd:element name="adjustedAmount" type="MonetaryType"/>
+  <xsd:element name="adjustmentsTypeCode" type="xsd:string"/>
+  <xsd:element name="adjustmentAmount" type="MonetaryType"/>
+  <xsd:element name="automaticRechargeMaxExecutions" type="xsd:boolean"/>
+  <xsd:element name="balance" type="MonetaryType"/>
+  <xsd:element name="balanceFixingTypeCode" type="xsd:string"/>
+  <xsd:element name="balanceNotAccumulated" type="MonetaryType"/>
+  <xsd:element name="balancePenaltyAmount" type="MonetaryType"/>
+  <xsd:element name="changedBalance" type="MonetaryType"/>
+  <xsd:element name="completeTransact" type="xsd:string"/>
+  <xsd:element name="donorSubscriberId" type="SubscriberIdType"/>
+  <xsd:element name="expirationDate" type="xsd:dateTime"/>
+  <xsd:element name="fixingReferenceCode" type="xsd:string"/>
+  <xsd:element name="installationDate" type="xsd:dateTime"/>
+  <xsd:element name="maxAttempts" type="xsd:int"/>
+  <xsd:element name="negativeBalance" type="MonetaryType"/>
+  <xsd:element name="negativeBalanceId" type="xsd:string"/>
+  <xsd:element name="noPenaltyPeriod" type="xsd:duration"/>
+  <xsd:element name="partialTopUpFlag" type="uct:FlagType"/>
+  <xsd:element name="payer" type="xsd:string"/>
+  <xsd:element name="receiverSubscriberId" type="SubscriberIdType"/>
+  <xsd:element name="rechargeAmount" type="MonetaryType"/>
+  <xsd:element name="rechargeCode" type="xsd:short"/>
+  <xsd:element name="referenceCode" type="xsd:string"/>
+  <xsd:element name="sharedFlag" type="uct:FlagType"/>
+  <xsd:element name="SOSReferenceCode" type="xsd:string"/>
+  <xsd:element name="SOSTopUpFlag" type="uct:FlagType"/>
+  <xsd:element name="status" type="xsd:string"/>
+  <xsd:element name="statusFlag" type="uct:FlagType"/>
+  <xsd:element name="subscriberStatusFlag" type="uct:FlagType"/>
+  <xsd:element name="taxValue" type="MonetaryType"/>
+  <xsd:element name="topUpAmount" type="MonetaryType"/>
+  <xsd:element name="topUpCancellationSequence" type="xsd:string"/>
+  <xsd:element name="topUpOrigin" type="xsd:string"/>
+  <xsd:element name="topUpReferenceCode" type="xsd:string"/>
+  <xsd:element name="topUpRemainingAmount" type="MonetaryType"/>
+  <xsd:element name="totalFlag" type="uct:FlagType"/>
+  <xsd:element name="transferAmount" type="MonetaryType"/>
+  <xsd:element name="transferCost" type="MonetaryType"/>
+  <xsd:element name="transferDate" type="xsd:dateTime"/>
+  <xsd:element name="transferWalletId" type="xsd:string"/>
+  <xsd:element name="validityPeriod" type="xsd:duration"/>
+  <xsd:element name="walletId" type="xsd:string"/>
+  <xsd:element name="walletRecoveryTriggeredFlag" type="uct:FlagType"/>
+  <xsd:complexType name="InfoFixingDataType">
+    <xsd:sequence>
+      <xsd:element ref="subscriberId"/>
+      <xsd:element ref="opReference"/>
+      <xsd:element ref="adjustmentsTypeCode" minOccurs="0"/>
+      <xsd:element ref="walletId" minOccurs="0"/>
+      <xsd:element ref="actionCauseTypeCode" minOccurs="0"/>
+      <xsd:element ref="actionCauseCode" minOccurs="0"/>
+      <xsd:element ref="adjustmentAmount" minOccurs="0"/>
+      <xsd:element ref="adjustedAmount" minOccurs="0"/>
+      <xsd:element ref="balancePenaltyAmount" minOccurs="0"/>
+      <xsd:element ref="referenceCode" minOccurs="0"/>
+      <xsd:element ref="SOSReferenceCode" minOccurs="0"/>
+      <xsd:element ref="installationDate" minOccurs="0"/>
+      <xsd:element ref="balanceFixingTypeCode" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="infoFixingData" type="InfoFixingDataType"/>
+  <xsd:complexType name="InfoFixingDataListType">
+    <xsd:sequence>
+      <xsd:element ref="infoFixingData" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="infoFixingDataList" type="InfoFixingDataListType"/>
+  <xsd:complexType name="SOSTopUpInfoType">
+    <xsd:sequence>
+      <xsd:element ref="noPenaltyPeriod" minOccurs="0"/>
+      <xsd:element ref="balancePenaltyAmount" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="SOSTopUpInfo" type="SOSTopUpInfoType"/>
+  <xsd:complexType name="TaxInfoType">
+    <xsd:sequence>
+      <xsd:element ref="taxCode" minOccurs="0"/>
+      <xsd:element ref="taxValue" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="taxInfo" type="TaxInfoType"/>
+  <xsd:complexType name="TopUpDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="topUpOrigin"/>
+      <xsd:element ref="topUpReferenceCode" minOccurs="0"/>
+      <xsd:element ref="topUpAmount" minOccurs="0"/>
+      <xsd:element ref="taxInfo" minOccurs="0"/>
+      <xsd:element ref="promotionCode" minOccurs="0"/>
+      <xsd:element ref="walletRecoveryTriggeredFlag" minOccurs="0"/>
+      <xsd:element ref="SOSTopUpFlag" minOccurs="0"/>
+      <xsd:element ref="opReference"/>
+      <xsd:element ref="timeInterval"/>
+      <xsd:element ref="topUpCancellationSequence" minOccurs="0"/>
+      <xsd:element ref="partialTopUpFlag" minOccurs="0"/>
+      <xsd:element ref="topUpRemainingAmount" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="topUpDetailedInfo" type="TopUpDetailedInfoType"/>
+  <xsd:complexType name="TopUpDetailedInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="topUpDetailedInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="topUpDetailedInfoList" type="TopUpDetailedInfoListType"/>
+  <xsd:complexType name="WalletDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="balanceNotAccumulated"/>
+      <xsd:element ref="changedBalance"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="detailedInfo" type="WalletDetailedInfoType"/>
+  <xsd:complexType name="WalletInfoType">
+    <xsd:sequence>
+      <xsd:element ref="walletId"/>
+      <xsd:element ref="balance"/>
+      <xsd:element ref="expirationDate"/>
+      <xsd:element ref="status" minOccurs="0"/>
+      <xsd:element minOccurs="0" ref="sharedFlag"/>
+      <xsd:element minOccurs="0" ref="detailedInfo"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="walletInfo" type="WalletInfoType"/>
+  <xsd:complexType name="WalletInfoListType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="1" ref="walletInfo"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="walletInfoList" type="WalletInfoListType"/>
+  <!--Balances / Debts-->
+  <xsd:complexType name="NegativeBalanceInfoType">
+    <xsd:sequence>
+      <xsd:element ref="negativeBalanceId"/>
+      <xsd:element ref="balance"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="negativeBalanceInfo" type="NegativeBalanceInfoType"/>
+  <xsd:complexType name="NegativeBalanceInfoListType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="1" ref="negativeBalanceInfo"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="negativeBalanceInfoList" type="NegativeBalanceInfoListType"/>
+  <xsd:complexType name="BalanceActivityInfoType">
+    <xsd:sequence>
+      <xsd:element ref="balance"/>
+      <xsd:element minOccurs="0" ref="walletInfoList"/>
+      <xsd:element minOccurs="0" ref="negativeBalance"/>
+      <xsd:element minOccurs="0" ref="negativeBalanceInfoList"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="balanceActivityInfo" type="BalanceActivityInfoType"/>
+  <xsd:complexType name="BalanceTransferBasicInfoType">
+    <xsd:sequence>
+      <xsd:element ref="opReference"/>
+      <xsd:element ref="donorSubscriberId"/>
+      <xsd:element ref="receiverSubscriberId"/>
+      <xsd:choice>
+        <xsd:element ref="topUpOrigin"/>
+        <xsd:element ref="boltonIdentifier"/>
+      </xsd:choice>
+      <xsd:element ref="payer"/>
+      <xsd:element ref="transferDate"/>
+      <xsd:element ref="transferCost" minOccurs="0"/>
+      <xsd:element ref="transferAmount"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="balanceTransferBasicInfo" type="BalanceTransferBasicInfoType"/>
+  <xsd:complexType name="BalanceTransferBasicInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="balanceTransferBasicInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="balanceTransferBasicInfoList" type="BalanceTransferBasicInfoListType"/>
+  <xsd:complexType name="BalanceTransferInfoType">
+    <xsd:sequence>
+      <xsd:element ref="transferAmount"/>
+      <xsd:element ref="transferCost" minOccurs="0"/>
+      <xsd:element ref="transferWalletId" minOccurs="0"/>
+      <xsd:choice>
+        <xsd:element ref="topUpOrigin"/>
+        <xsd:element ref="boltonIdentifier"/>
+      </xsd:choice>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="balanceTransferInfo" type="BalanceTransferInfoType"/>
+  <!--************************************* Bolton Management ****************************************-->
+  <xsd:element name="accumulatedUnits" type="UnitValueType"/>
+  <xsd:element name="balanceTransferFlag" type="uct:FlagType"/>
+  <xsd:element name="boltonAmount" type="UnitValueType"/>
+  <xsd:element name="boltonCode" type="xsd:string"/>
+  <xsd:element name="boltonCost" type="MonetaryType"/>
+  <xsd:element name="boltonInstance" type="xsd:string"/>
+  <xsd:element name="boltonLD" type="UnitValueType"/>
+  <xsd:element name="boltonMaxNumberOfSessions" type="UnitValueType"/>
+  <xsd:element name="boltonRemainingAmount" type="UnitValueType"/>
+  <xsd:element name="boltonRemainingCost" type="MonetaryType"/>
+  <xsd:element name="boltonRemainingNumberOfSessions" type="xsd:int"/>
+  <xsd:element name="boltonTypeCode" type="xsd:string"/>
+  <xsd:element name="freeUnitsUsed" type="UnitValueType"/>
+  <xsd:element name="lastStatusChangeDate" type="xsd:dateTime"/>
+  <xsd:element name="maxUnitsPerSession" type="UnitValueType"/>
+  <xsd:element name="remainingUnitsForFreeUnits" type="UnitValueType"/>
+  <xsd:element name="timeIntervalFilter" type="TimeIntervalType"/>
+  <xsd:element name="sharedBoltonFlag" type="uct:FlagType"/>
+  <xsd:complexType name="BoltonBasicInfoType">
+    <xsd:sequence>
+      <xsd:element ref="boltonIdentifier"/>
+      <xsd:element ref="boltonRemainingAmount" minOccurs="0"/>
+      <xsd:element ref="boltonRemainingNumberOfSessions" minOccurs="0"/>
+      <xsd:element ref="boltonStatus"/>
+      <xsd:element ref="boltonModality"/>
+      <xsd:element ref="timeInterval"/>
+      <xsd:element ref="lastStatusChangeDate" minOccurs="0"/>
+      <xsd:element ref="freeUnitsUsed" minOccurs="0"/>
+      <xsd:element ref="accumulatedUnits" minOccurs="0"/>
+      <xsd:element ref="remainingUnitsForFreeUnits" minOccurs="0"/>
+      <xsd:element ref="maxUnitsPerSession" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="boltonBasicInfo" type="BoltonBasicInfoType"/>
+  <xsd:complexType name="BoltonBasicInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="boltonBasicInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="boltonBasicInfoList" type="BoltonBasicInfoListType"/>
+  <xsd:complexType name="BoltonIdentifierType">
+    <xsd:sequence>
+      <xsd:element ref="boltonCode" minOccurs="0"/>
+      <xsd:element ref="boltonTypeCode" minOccurs="0"/>
+      <xsd:element ref="boltonInstance" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="boltonIdentifier" type="BoltonIdentifierType"/>
+  <xsd:element name="boltonIdentifierFilter" type="BoltonIdentifierType"/>
+  <xsd:complexType name="BoltonInfoType">
+    <xsd:sequence>
+      <xsd:element ref="boltonIdentifier"/>
+      <xsd:element ref="boltonAmount" minOccurs="0"/>
+      <xsd:element ref="boltonLD" minOccurs="0"/>
+      <xsd:element ref="boltonMaxNumberOfSessions" minOccurs="0"/>
+      <xsd:element ref="boltonCost" minOccurs="0"/>
+      <xsd:element ref="chargingModality" minOccurs="0"/>
+      <xsd:element ref="timeInterval" minOccurs="0"/>
+      <xsd:element ref="sharedBoltonFlag" minOccurs="0"/>
+      <xsd:element ref="maxUnitsPerSession" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="boltonInfo" type="BoltonInfoType"/>
+  <xsd:complexType name="BoltonInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="boltonInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="boltonInfoList" type="BoltonInfoListType"/>
+  <xsd:simpleType name="BoltonStatusType">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:element name="boltonStatus" type="BoltonStatusType"/>
+  <xsd:element name="boltonStatusFilter" type="BoltonStatusType"/>
+  <xsd:complexType name="BoltonStatusListType">
+    <xsd:sequence>
+      <xsd:element ref="boltonStatus" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="boltonStatusList" type="BoltonStatusListType"/>
+  <xsd:element name="boltonStatusFilterList" type="BoltonStatusListType"/>
+  <xsd:simpleType name="BoltonModalityType">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:element name="boltonModality" type="BoltonModalityType"/>
+  <xsd:complexType name="BoltonDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="boltonIdentifier"/>
+      <xsd:element ref="boltonAmount" minOccurs="0"/>
+      <xsd:element ref="boltonLD" minOccurs="0"/>
+      <xsd:element ref="boltonRemainingAmount" minOccurs="0"/>
+      <xsd:element ref="boltonMaxNumberOfSessions" minOccurs="0"/>
+      <xsd:element ref="boltonRemainingNumberOfSessions" minOccurs="0"/>
+      <xsd:element ref="boltonStatus"/>
+      <xsd:element ref="boltonModality"/>
+      <xsd:element ref="boltonCost" minOccurs="0"/>
+      <xsd:element ref="chargingModality" minOccurs="0"/>
+      <xsd:element ref="balanceTransferFlag"/>
+      <xsd:element ref="opReference"/>
+      <xsd:element ref="timeInterval"/>
+      <xsd:element ref="sharedBoltonFlag" minOccurs="0"/>
+      <xsd:element ref="maxUnitsPerSession" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="boltonDetailedInfo" type="BoltonDetailedInfoType"/>
+  <xsd:complexType name="BoltonDetailedInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="boltonDetailedInfo" minOccurs="1" maxOccurs="unbounded"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="boltonDetailedInfoList" type="BoltonDetailedInfoListType"/>
+  <!--************************************* Company Management ****************************************-->
+  <xsd:element name="companyClientId" type="xsd:string"/>
+  <xsd:element name="companyId" type="xsd:string"/>
+  <xsd:complexType name="CompanyClientInfoType">
+    <xsd:sequence>
+      <xsd:element ref="companyClientId"/>
+      <xsd:element ref="companyId"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="companyClientInfo" type="CompanyClientInfoType"/>
+  <xsd:complexType name="CompanyClientInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="companyClientInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="companyClientInfoList" type="CompanyClientInfoListType"/>
+  <xsd:complexType name="SubscriberIdListType">
+    <xsd:sequence>
+      <xsd:element ref="subscriberId" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="subscriberIdList" type="SubscriberIdListType"/>
+  <!--************************************* Cyclic Actions ****************************************-->
+  <xsd:element name="billingCycleFlag" type="uct:FlagType"/>
+  <xsd:element name="billingCycleFlagFilter" type="uct:FlagType"/>
+  <xsd:element name="calcBoltonAmountCode" type="xsd:int"/>
+  <xsd:element name="calcBoltonLDCode" type="xsd:int"/>
+  <xsd:element name="calcBoltonCostCode" type="xsd:int"/>
+  <xsd:element name="calcChargingAmountCode" type="xsd:int"/>
+  <xsd:element name="calcMaxNumberOfSessionsCode" type="xsd:int"/>
+  <xsd:element name="calcTopUpAmountCode" type="xsd:int"/>
+  <xsd:element name="changeExecutionDateFlag" type="uct:FlagType"/>
+  <xsd:element name="chargingAmount" type="MonetaryType"/>
+  <xsd:element name="cyclicActionActivationDate" type="xsd:dateTime"/>
+  <xsd:element name="cyclicActionReferenceDate" type="xsd:dateTime"/>
+  <xsd:element name="cyclicActionState" type="StatusCyclicType"/>
+  <xsd:element name="cyclicCode" type="xsd:string"/>
+  <xsd:element name="cyclicServicesCascadeFlag" type="uct:FlagType"/>
+  <xsd:element name="firstExecutionDate" type="xsd:dateTime"/>
+  <xsd:element name="inactiveFlag" type="uct:FlagType"/>
+  <xsd:element name="latencyPeriods" type="xsd:int"/>
+  <xsd:element name="draggableSurplusAmount" type="xsd:int"/>
+  <xsd:element name="nextExecutionDate" type="xsd:dateTime"/>
+  <xsd:element name="numberOfExecutions" type="xsd:int"/>
+  <xsd:element name="numberOfTimeCyclicBolton" type="xsd:int"/>
+  <xsd:element name="numberOfUsageCyclicBolton" type="xsd:int"/>
+  <xsd:element name="prorateCost" type="MonetaryType"/>
+  <xsd:element name="prorateFlag" type="uct:FlagType"/>
+  <xsd:element name="proratePercentage" type="xsd:string"/>
+  <xsd:element name="prorateTypeCode" type="xsd:string"/>
+  <xsd:element name="renewalDay" type="xsd:string"/>
+  <xsd:element name="retryAfterFailureFlag" type="uct:FlagType"/>
+  <xsd:element name="retryAfterActionFlag" type="uct:FlagType"/>
+  <xsd:element name="topUpCode" type="xsd:string"/>
+  <xsd:complexType name="BoltonInfoCalculationType">
+    <xsd:sequence>
+      <xsd:element ref="calcBoltonAmountCode" minOccurs="0"/>
+      <xsd:element ref="calcBoltonLDCode" minOccurs="0"/>
+      <xsd:element ref="calcBoltonCostCode" minOccurs="0"/>
+      <xsd:element ref="calcMaxNumberOfSessionsCode" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="boltonInfoCalculation" type="BoltonInfoCalculationType"/>
+  <xsd:complexType name="BoltonInfoCycleChangeType">
+    <xsd:sequence>
+      <xsd:element ref="boltonAmount" minOccurs="0"/>
+      <xsd:element ref="boltonLD" minOccurs="0"/>
+      <xsd:element ref="boltonCost" minOccurs="0"/>
+      <xsd:element ref="boltonMaxNumberOfSessions" minOccurs="0"/>
+      <xsd:element ref="chargingModality" minOccurs="0"/>
+      <xsd:element ref="calcBoltonAmountCode" minOccurs="0"/>
+      <xsd:element ref="calcBoltonLDCode" minOccurs="0"/>
+      <xsd:element ref="calcBoltonCostCode" minOccurs="0"/>
+      <xsd:element ref="calcMaxNumberOfSessionsCode" minOccurs="0"/>
+      <xsd:element ref="prorateFlag"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="boltonInfoCycleChange" type="BoltonInfoCycleChangeType"/>
+  <xsd:complexType name="ChargingCycleChangeType">
+    <xsd:sequence>
+      <xsd:element ref="chargingAmount" minOccurs="0"/>
+      <xsd:element ref="calcChargingAmountCode" minOccurs="0"/>
+      <xsd:element ref="prorateFlag"/>
+      <xsd:element ref="totalFlag"/>
+      <xsd:element ref="chargingModality" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="chargingCycleChange" type="ChargingCycleChangeType"/>
+  <xsd:complexType name="ChargingInfoType">
+    <xsd:sequence>
+      <xsd:element ref="chargingAmount" minOccurs="0"/>
+      <xsd:element ref="chargingModality" minOccurs="0"/>
+      <xsd:element ref="totalFlag"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="chargingInfo" type="ChargingInfoType"/>
+  <xsd:complexType name="ChargingInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="chargingInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="chargingInfoList" type="ChargingInfoListType"/>
+  <xsd:complexType name="TimeCyclicChargingDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="cyclicDetailedInfo"/>
+      <xsd:element ref="chargingInfoList" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="timeCyclicDetailedInfo" type="TimeCyclicChargingDetailedInfoType"/>
+  <xsd:complexType name="CyclicChargingDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="timeCyclicDetailedInfo"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="cyclicChargingDetailedInfo" type="CyclicChargingDetailedInfoType"/>
+  <xsd:complexType name="CyclicChargingDetailedInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="cyclicChargingDetailedInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="cyclicChargingDetailedInfoList" type="CyclicChargingDetailedInfoListType"/>
+  <xsd:complexType name="TimeCyclicInfoType">
+    <xsd:sequence>
+      <xsd:element ref="firstExecutionDate" minOccurs="0"/>
+      <xsd:element ref="immediateFlag"/>
+      <xsd:element ref="prorateFlag"/>
+      <xsd:element ref="chargingModality" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="timeCyclicInfo" type="TimeCyclicInfoType"/>
+  <xsd:complexType name="UsageCyclicInfoType">
+    <xsd:sequence>
+      <xsd:element ref="validityPeriod" minOccurs="0"/>
+      <xsd:element ref="numberOfExecutions" minOccurs="0"/>
+      <xsd:element ref="firstPeriodProrate" minOccurs="0"/>
+      <xsd:element ref="transitionalPeriodProrate" minOccurs="0"/>
+      <xsd:element ref="rollOverInfo" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="usageCyclicInfo" type="UsageCyclicInfoType"/>
+  <xsd:complexType name="CyclicInfoType">
+    <xsd:choice>
+      <xsd:element ref="timeCyclicInfo" minOccurs="0"/>
+      <xsd:element ref="usageCyclicInfo" minOccurs="0"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:element name="cyclicInfo" type="CyclicInfoType"/>
+  <xsd:complexType name="TimeCyclicDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="cyclicCode"/>
+      <xsd:element ref="lifeCycleInfoDetailedInfo" minOccurs="0"/>
+      <xsd:element ref="numberOfExecutions"/>
+      <xsd:element ref="opCost"/>
+      <xsd:element ref="billingCycleFlag"/>
+      <xsd:element ref="cyclicActionReferenceDate"/>
+      <xsd:element ref="nextExecutionDate" minOccurs="0"/>
+      <xsd:element ref="cyclicActionActivationDate"/>
+      <xsd:element ref="opReference"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="cyclicDetailedInfo" type="TimeCyclicDetailedInfoType"/>
+  <xsd:complexType name="TimeCyclicTopUpDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="cyclicDetailedInfo"/>
+      <xsd:element ref="topUpInfoList" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="timeCyclicTopUpDetailedInfo" type="TimeCyclicTopUpDetailedInfoType"/>
+  <xsd:complexType name="CyclicTopUpDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="timeCyclicTopUpDetailedInfo" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="cyclicTopUpDetailedInfo" type="CyclicTopUpDetailedInfoType"/>
+  <xsd:complexType name="CyclicTopUpDetailedInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="cyclicTopUpDetailedInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="cyclicTopUpDetailedInfoList" type="CyclicTopUpDetailedInfoListType"/>
+  <xsd:complexType name="LifeCycleDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="cyclicActionState"/>
+      <xsd:element ref="inactiveFlag"/>
+      <xsd:element ref="retryAfterFailureFlag"/>
+      <xsd:element ref="retryAfterActionFlag"/>
+      <xsd:element ref="changeExecutionDateFlag"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="lifeCycleInfoDetailedInfo" type="LifeCycleDetailedInfoType"/>
+  <xsd:complexType name="PeriodProrateInfoType">
+    <xsd:sequence>
+      <xsd:element ref="prorateTypeCode" minOccurs="0"/>
+      <xsd:element ref="proratePercentage" minOccurs="0"/>
+      <xsd:element ref="prorateCost" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="firstPeriodProrate" type="PeriodProrateInfoType"/>
+  <xsd:element name="transitionalPeriodProrate" type="PeriodProrateInfoType"/>
+  <xsd:complexType name="TimeCyclicBoltonDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="cyclicDetailedInfo"/>
+      <xsd:element ref="boltonInfoList" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="timeCyclicBoltonDetailedInfo" type="TimeCyclicBoltonDetailedInfoType"/>
+  <xsd:complexType name="TopUpInfoCycleChangeType">
+    <xsd:sequence>
+      <xsd:element ref="topUpOrigin" minOccurs="0"/>
+      <xsd:element ref="topUpAmount" minOccurs="0"/>
+      <xsd:element ref="calcTopUpAmountCode" minOccurs="0"/>
+      <xsd:element ref="prorateFlag"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="topUpInfoCycleChange" type="TopUpInfoCycleChangeType"/>
+  <xsd:complexType name="TopUpInfoType">
+    <xsd:sequence>
+      <xsd:element ref="topUpAmount" minOccurs="0"/>
+      <xsd:element ref="topUpCode" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="topUpInfo" type="TopUpInfoType"/>
+  <xsd:complexType name="TopUpInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="topUpInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="topUpInfoList" type="TopUpInfoListType"/>
+  <xsd:complexType name="RollOverInfoType">
+    <xsd:sequence>
+      <xsd:element ref="latencyPeriods" minOccurs="0"/>
+      <xsd:element ref="draggableSurplusAmount" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="rollOverInfo" type="RollOverInfoType"/>
+  <xsd:complexType name="UsageCyclicDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="renewalDay" minOccurs="0"/>
+      <xsd:element ref="firstPeriodProrate" minOccurs="0"/>
+      <xsd:element ref="transitionalPeriodProrate" minOccurs="0"/>
+      <xsd:element ref="rollOverInfo" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="usageCyclicDetailedInfo" type="UsageCyclicDetailedInfoType"/>
+  <xsd:complexType name="UsageCyclicBoltonDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="usageCyclicDetailedInfo"/>
+      <xsd:element ref="boltonInfoList" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="usageCyclicBoltonDetailedInfo" type="UsageCyclicBoltonDetailedInfoType"/>
+  <xsd:complexType name="CyclicBoltonDetailedInfoType">
+    <xsd:sequence>
+      <xsd:element ref="timeCyclicBoltonDetailedInfo" minOccurs="0"/>
+      <xsd:element ref="usageCyclicBoltonDetailedInfo" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="cyclicBoltonDetailedInfo" type="CyclicBoltonDetailedInfoType"/>
+  <xsd:complexType name="CyclicBoltonDetailedInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="cyclicBoltonDetailedInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="cyclicBoltonDetailedInfoList" type="CyclicBoltonDetailedInfoListType"/>
+  <xsd:simpleType name="StatusCyclicType">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:element name="statusCyclicFilter" type="StatusCyclicType"/>
+  <!--************************************* List And Tribe Management ****************************************-->
+  <xsd:element name="blockedFlag" type="uct:FlagType"/>
+  <xsd:element name="blockingTime" type="TimeIntervalType"/>
+  <xsd:element name="enabledFlag" type="uct:FlagType"/>
+  <xsd:element name="listCode" type="xsd:string"/>
+  <xsd:element name="listMember" type="SubscriberIdType"/>
+  <xsd:element name="listMemberInsertDate" type="xsd:dateTime"/>
+  <xsd:element name="listTypeCode" type="xsd:string"/>
+  <xsd:element name="maxListExternalMembers" type="xsd:int"/>
+  <xsd:element name="maxListMembers" type="xsd:int"/>
+  <xsd:element name="member" type="SubscriberIdType"/>
+  <xsd:element name="subTribeId" type="xsd:string"/>
+  <xsd:element name="tribeId" type="xsd:string"/>
+  <xsd:element name="unblockDate" type="xsd:dateTime"/>
+  <xsd:complexType name="ListBasicInfoType">
+    <xsd:sequence>
+      <xsd:element ref="listCode"/>
+      <xsd:element ref="enabledFlag"/>
+      <xsd:element ref="blockedFlag"/>
+      <xsd:element ref="unblockDate" minOccurs="0"/>
+      <xsd:element ref="listTypeCode"/>
+      <xsd:element ref="maxListMembers"/>
+      <xsd:element ref="maxListExternalMembers" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="listBasicInfo" type="ListBasicInfoType"/>
+  <xsd:complexType name="ListBasicInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="listBasicInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="listBasicInfoList" type="ListBasicInfoListType"/>
+  <xsd:complexType name="ListInfoType">
+    <xsd:sequence>
+      <xsd:element ref="listCode"/>
+      <xsd:element ref="listTypeCode"/>
+      <xsd:element ref="maxListMembers"/>
+      <xsd:element ref="maxListExternalMembers" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="listInfo" type="ListInfoType"/>
+  <xsd:complexType name="ListInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="listInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="allowedListInfoList" type="ListInfoListType"/>
+  <xsd:complexType name="ListMemberBasicInfoType">
+    <xsd:sequence>
+      <xsd:element ref="listMember"/>
+      <xsd:element ref="listMemberInsertDate"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="listMemberBasicInfo" type="ListMemberBasicInfoType"/>
+  <xsd:complexType name="ListMemberBasicInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="listMemberBasicInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="listMemberInfoList" type="ListMemberBasicInfoListType"/>
+  <xsd:complexType name="ListMemberListType">
+    <xsd:sequence>
+      <xsd:element ref="member" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="memberList" type="ListMemberListType"/>
+  <xsd:complexType name="TribeIdentifierType">
+    <xsd:sequence>
+      <xsd:element ref="tribeId"/>
+      <xsd:element ref="subTribeId" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="tribeIdentifier" type="TribeIdentifierType"/>
+  <xsd:complexType name="TribeBasicInfoType">
+    <xsd:sequence>
+      <xsd:element ref="tribeIdentifier"/>
+      <xsd:element ref="expirationDate" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="tribeBasicInfo" type="TribeBasicInfoType"/>
+  <xsd:complexType name="TribeBasicInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="tribeBasicInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="tribeInfoList" type="TribeBasicInfoListType"/>
+  <!--************************************* Other Services ****************************************-->
+  <xsd:element name="additionalSpendFlag" type="uct:FlagType"/>
+  <xsd:element name="cancellablePeriod" type="xsd:duration"/>
+  <xsd:element name="groupBoltonUsageFlag" type="uct:FlagType"/>
+  <xsd:element name="groupExtendedInfo" type="SubscriberExtendedInfoType"/>
+  <xsd:element name="groupId" type="SubscriberIdType"/>
+  <xsd:element name="groupVPNFlag" type="uct:FlagType"/>
+  <!--************************************* Product Configuration Management ****************************************-->
+  <xsd:element name="code" type="xsd:string"/>
+  <xsd:element name="codeDescription" type="xsd:string"/>
+  <xsd:element name="codeType" type="xsd:string"/>
+  <xsd:element name="currencyToInternalMonetaryUnitConversionFactor" type="UnitValueType"/>
+  <xsd:element name="descriptionFlag" type="uct:FlagType"/>
+  <xsd:element name="requiredPrecision" type="UnitValueType"/>
+  <xsd:element name="supplementaryServiceValue" type="xsd:int"/>
+  <xsd:complexType name="CodeInfoType">
+    <xsd:sequence>
+      <xsd:element ref="code"/>
+      <xsd:element ref="codeDescription" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="codeInfo" type="CodeInfoType"/>
+  <xsd:complexType name="CodeInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="codeInfo" maxOccurs="unbounded" minOccurs="1"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="codeInfoList" type="CodeInfoListType"/>
+  <!--************************************* Usage Control Counter Management ****************************************-->
+  <xsd:element name="uccDeltaValue" type="UnitValueType"/>
+  <xsd:element name="uccId" type="xsd:string"/>
+  <xsd:element name="usageThresholdSetId" type="xsd:int"/>
+  <xsd:element name="usageThresholdActionSetId" type="xsd:string"/>
+  <xsd:element name="usageThresholdAmount" type="UnitValueType"/>
+  <xsd:element name="usageRuleCode" type="xsd:int"/>
+  <xsd:element name="usageRuleSetId" type="xsd:string"/>
+  <xsd:element name="value" type="UnitValueType"/>
+  <xsd:complexType name="UsageControlCounterBasicInfoType">
+    <xsd:sequence>
+      <xsd:element ref="uccId"/>
+      <xsd:element ref="usageThresholdSetId"/>
+      <xsd:element ref="usageThresholdActionSetId" minOccurs="0"/>
+      <xsd:element ref="value"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="uccBasicInfo" type="UsageControlCounterBasicInfoType"/>
+  <xsd:complexType name="UsageControlCounterBasicInfoListType">
+    <xsd:sequence>
+      <xsd:element ref="uccBasicInfo" minOccurs="1" maxOccurs="unbounded"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="uccBasicInfoList" type="UsageControlCounterBasicInfoListType"/>
+  <xsd:complexType name="UsageControlCounterInfoType">
+    <xsd:sequence>
+      <xsd:element ref="uccId"/>
+      <xsd:element ref="usageThresholdAmount" minOccurs="0"/>
+      <xsd:element ref="timeInterval" minOccurs="0"/>
+      <xsd:element ref="usageRuleCode" minOccurs="0"/>
+      <xsd:element ref="usageRuleSetId" minOccurs="0"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="usageControlCounterInfo" type="UsageControlCounterInfoType"/>
+  <xsd:element name="uccInfo" type="UsageControlCounterInfoType"/>
+  <!--************************************* Voucher Management ****************************************-->
+  <xsd:element name="topUpKey" type="xsd:string"/>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:\C:\@work\NGAAOrderCare\Templates\OCSWS\resources\schema\UNICA_API_SOAP_common_types_v2_1.xsd</con:url><con:content><![CDATA[<!--April 25, 2013-->
+<xsd:schema targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2">
+  <xsd:complexType name="AddressType">
+    <xsd:annotation>
+      <xsd:documentation>Base information for an Address, abstract type</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="street" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="streetNumber" type="xsd:unsignedInt" minOccurs="0"/>
+      <xsd:element name="locality" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="region" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="postalCode" type="xsd:unsignedInt" minOccurs="0"/>
+      <xsd:element name="country" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="E164Type">
+    <xsd:annotation>
+      <xsd:documentation>A phone number following the E164 format. An optional "+" sign followed by a set of digits</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="\+?[0-9]+"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="EmailAddressType">
+    <xsd:annotation>
+      <xsd:documentation>User’s e-mail address</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value=".+@.+\..+"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="ExtensionType">
+    <xsd:sequence>
+      <xsd:any namespace="##any" processContents="lax" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:anyAttribute/>
+  </xsd:complexType>
+  <xsd:simpleType name="FlagType">
+    <xsd:annotation>
+      <xsd:documentation>Generic yes/no flag</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="yes"/>
+      <xsd:enumeration value="no"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="GenderType">
+    <xsd:annotation>
+      <xsd:documentation>List of possible gender values</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="male"/>
+      <xsd:enumeration value="female"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ImeiType">
+    <xsd:annotation>
+      <xsd:documentation>IMEI and IMEI/SV format</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9]{2}-[0-9]{6}-[0-9]{6}-[0-9]{1,2}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ImsiType">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9]{6,15}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="IpAddressType">
+    <xsd:annotation>
+      <xsd:documentation>A generic IP address, including both v4 and v6
+				address formats</xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="ipv4" type="tns:Ipv4AddressType"/>
+      <xsd:element name="ipv6" type="tns:Ipv6AddressType"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:simpleType name="Ipv4AddressType">
+    <xsd:annotation>
+      <xsd:documentation>An IPv4 address</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="((0|(1[0-9]{0,2})|(2(([0-4][0-9]?)|(5[0-5]?)|([6-9]?)))|([3-9][0-9]?))\.){3}(0|(1[0-9]{0,2})|(2(([0-4][0-9]?)|(5[0-5]?)|([6-9]?)))|([3-9][0-9]?))"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="Ipv6AddressType">
+    <xsd:annotation>
+      <xsd:documentation>An IPv6 address</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="NameValuePairType">
+    <xsd:annotation>
+      <xsd:documentation>Generic name-value pair</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="value" type="xsd:string" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="OtherIdType">
+    <xsd:annotation>
+      <xsd:documentation>Extended type for additional user identifiers</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="type" type="xsd:string"/>
+      <xsd:element name="value" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="SipUriType">
+    <xsd:annotation>
+      <xsd:documentation>SIP URI format according to RFC 3261</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="sip:.+@.+"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="TimeZoneType">
+    <xsd:annotation>
+      <xsd:documentation>Timezones shall be referred to timezone schemas or timezone databases using the tzDatabase attribute.
+		The default timezone database is Olson</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="tzDatabase" type="xsd:string" default="Olson"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TelUriType">
+    <xsd:annotation>
+      <xsd:documentation>Tel URI for Telephone Numbers according to RFC
+				3966, based on a simplified regular expression. A complete regular
+				expression matching Tel URI format is too complicated and probably
+				is difficult to be matched during automatic schema checking</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="tel:.+"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="SimpleReferenceType">
+    <xsd:annotation>
+      <xsd:documentation>For those services that require a reference to a	Web Service, the information required to create the endpoint information is contained in this type
+            When possible always use just anyURI as url.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="endpoint" type="xsd:anyURI"/>
+      <xsd:element name="interfaceName" type="xsd:string"/>
+      <xsd:element name="correlator" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SearchParamsType">
+    <xsd:annotation>
+      <xsd:documentation>Generic sequence of name-value pairs, to be used	in searches</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="param" type="tns:NameValuePairType" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ClientExceptionType">
+    <xsd:annotation>
+      <xsd:documentation>Returned by server in case of Client related faults</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="exceptionCategory">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="SVC"/>
+            <xsd:enumeration value="POL"/>
+            <xsd:enumeration value="SEC"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="exceptionId" type="xsd:unsignedInt"/>
+      <xsd:element name="text" type="xsd:string"/>
+      <xsd:element name="variables" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="exceptionPersistence" type="tns:ExceptionPersistenceType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ServerExceptionType">
+    <xsd:annotation>
+      <xsd:documentation>Object returned by server in case of Server related faults</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="exceptionCategory">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="SVR"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="exceptionId" type="xsd:unsignedInt"/>
+      <xsd:element name="text" type="xsd:string"/>
+      <xsd:element name="variables" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="exceptionPersistence" type="tns:ExceptionPersistenceType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ErrorInformationType">
+    <xsd:choice>
+      <xsd:element name="clientException" type="tns:ClientExceptionType"/>
+      <xsd:element name="serverException" type="tns:ServerExceptionType"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:complexType name="SessionTokenType">
+    <xsd:annotation>
+      <xsd:documentation>For UNICA APIs access with Login</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="session_token" type="xsd:string"/>
+      <xsd:element name="consumer_key" type="xsd:string"/>
+      <xsd:element name="requestor_id" type="xsd:anyURI" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="ExceptionPersistenceType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="PERMANENT"/>
+      <xsd:enumeration value="TEMPORARY"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!--The following are elements defining faults and SOAP headers-->
+  <xsd:element name="clientException" type="tns:ClientExceptionType">
+    <xsd:annotation>
+      <xsd:documentation>For returned client related faults</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="serverException" type="tns:ServerExceptionType">
+    <xsd:annotation>
+      <xsd:documentation>For returned server related faults</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="sessionToken" type="tns:SessionTokenType"/>
+  <xsd:annotation>
+    <xsd:documentation>To be included in a SOAP header</xsd:documentation>
+  </xsd:annotation>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:\C:\@work\NGAAOrderCare\Templates\OCSWS\resources\schema\addressing</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" elementFormDefault="qualified" blockDefault="#all" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+  <!--//////////////////// WS-Addressing ////////////////////-->
+  <!--Endpoint reference-->
+  <xs:element name="EndpointReference" type="wsa:EndpointReferenceType"/>
+  <xs:complexType name="EndpointReferenceType">
+    <xs:sequence>
+      <xs:element name="Address" type="wsa:AttributedURI"/>
+      <xs:element name="ReferenceProperties" type="wsa:ReferencePropertiesType" minOccurs="0"/>
+      <xs:element name="ReferenceParameters" type="wsa:ReferenceParametersType" minOccurs="0"/>
+      <xs:element name="PortType" type="wsa:AttributedQName" minOccurs="0"/>
+      <xs:element name="ServiceName" type="wsa:ServiceNameType" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>If "Policy" elements from namespace "http://schemas.xmlsoap.org/ws/2002/12/policy#policy" are used, they must appear first (before any extensibility elements).</xs:documentation>
+        </xs:annotation>
+      </xs:any>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="lax"/>
+  </xs:complexType>
+  <xs:complexType name="ReferencePropertiesType">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReferenceParametersType">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceNameType">
+    <xs:simpleContent>
+      <xs:extension base="xs:QName">
+        <xs:attribute name="PortName" type="xs:NCName"/>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <!--Message information header blocks-->
+  <xs:element name="MessageID" type="wsa:AttributedURI"/>
+  <xs:element name="RelatesTo" type="wsa:Relationship"/>
+  <xs:element name="To" type="wsa:AttributedURI"/>
+  <xs:element name="Action" type="wsa:AttributedURI"/>
+  <xs:element name="From" type="wsa:EndpointReferenceType"/>
+  <xs:element name="ReplyTo" type="wsa:EndpointReferenceType"/>
+  <xs:element name="FaultTo" type="wsa:EndpointReferenceType"/>
+  <xs:complexType name="Relationship">
+    <xs:simpleContent>
+      <xs:extension base="xs:anyURI">
+        <xs:attribute name="RelationshipType" type="xs:QName" use="optional"/>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:simpleType name="RelationshipTypeValues">
+    <xs:restriction base="xs:QName">
+      <xs:enumeration value="wsa:Reply"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--June 19, 2007: The ReplyAfter element is deprecated. The name of this element does not match the
+    name (RetryAfter) used in the specification (http://www.w3.org/Submission/2004/SUBM-ws-addressing-20040810/).-->
+  <xs:element name="ReplyAfter" type="wsa:ReplyAfterType"/>
+  <xs:complexType name="ReplyAfterType">
+    <xs:simpleContent>
+      <xs:extension base="xs:nonNegativeInteger">
+        <xs:anyAttribute namespace="##other"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <!--June 19, 2007: The RetryAfter element has been added to be consistent with the specification
+    (http://www.w3.org/Submission/2004/SUBM-ws-addressing-20040810/).-->
+  <xs:element name="RetryAfter" type="wsa:RetryAfterType"/>
+  <xs:complexType name="RetryAfterType">
+    <xs:simpleContent>
+      <xs:extension base="xs:nonNegativeInteger">
+        <xs:anyAttribute namespace="##other"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:simpleType name="FaultSubcodeValues">
+    <xs:restriction base="xs:QName">
+      <xs:enumeration value="wsa:InvalidMessageInformationHeader"/>
+      <xs:enumeration value="wsa:MessageInformationHeaderRequired"/>
+      <xs:enumeration value="wsa:DestinationUnreachable"/>
+      <xs:enumeration value="wsa:ActionNotSupported"/>
+      <xs:enumeration value="wsa:EndpointUnavailable"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attribute name="Action" type="xs:anyURI"/>
+  <!--Common declarations and definitions-->
+  <xs:complexType name="AttributedQName">
+    <xs:simpleContent>
+      <xs:extension base="xs:QName">
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="AttributedURI">
+    <xs:simpleContent>
+      <xs:extension base="xs:anyURI">
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:\C:\@work\NGAAOrderCare\Templates\OCSWS\resources\schema\secext.xsd</con:url><con:content><![CDATA[<!--Legal Disclaimer
+
+The presentation, distribution or other dissemination of the information 
+contained in this specification is not a license, either expressly or impliedly, 
+to any intellectual property owned or controlled by IBM or Microsoft and\or any other 
+third party.  IBM and Microsoft and\or any other third party may have patents, patent 
+applications, trademarks, copyrights, or other intellectual property rights 
+covering subject matter in this document.  The furnishing of this document 
+does not give you any license to IBM's and Microsoft's or any other third party's patents, 
+trademarks, copyrights, or other intellectual property.
+
+This specification and the information contained herein is provided on an "AS IS"
+ basis and to the maximum extent permitted by applicable law, IBM and Microsoft provides 
+the document AS IS AND WITH ALL FAULTS, and hereby disclaims all other warranties 
+and conditions, either express, implied or statutory, including, but not limited 
+to, any (if any) implied warranties, duties or conditions of merchantability, of 
+fitness for a particular purpose, of accuracy or completeness of responses, of 
+results, of workmanlike effort, of lack of viruses, and of lack of negligence, 
+all with regard to the document. ALSO, THERE IS NO WARRANTY OR CONDITION OF 
+TITLE, QUIET ENJOYMENT, QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR 
+NON-INFRINGEMENT OF ANY INTELLECTUAL PROPERTY RIGHTS WITH REGARD TO THE DOCUMENT.
+
+IN NO EVENT WILL IBM or MICROSOFT BE LIABLE TO ANY OTHER PARTY FOR THE COST OF PROCURING 
+SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS OF USE, LOSS OF DATA, OR ANY 
+INCIDENTAL, CONSEQUENTIAL, DIRECT, INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER 
+CONTRACT, TORT, WARRANTY, OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY 
+OTHER AGREEMENT RELATING TO THIS DOCUMENT, WHETHER OR NOT SUCH PARTY HAD ADVANCE 
+NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Copyright Notice
+
+Copyright 2001, 2002 IBM Corporation and Microsoft Corporation. All rights reserved.-->
+<xsd:schema targetNamespace="http://schemas.xmlsoap.org/ws/2002/04/secext" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/04/secext" xmlns="http://schemas.xmlsoap.org/ws/2002/04/secext" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+  <xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+  <xsd:element name="Security">
+    <xsd:annotation>
+      <xsd:documentation>This element defines header block to use for security-relevant data directed at a specific SOAP actor.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:any processContents="lax" minOccurs="0" maxOccurs="unbounded">
+          <xsd:annotation>
+            <xsd:documentation>The use of "any" is to allow extensibility and different forms of security data.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:any>
+      </xsd:sequence>
+      <xsd:anyAttribute processContents="lax"/>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="UsernameToken">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="Username"/>
+        <xsd:element ref="Password" minOccurs="0"/>
+      </xsd:sequence>
+      <xsd:attribute name="Id" type="xsd:ID"/>
+      <xsd:anyAttribute namespace="##other"/>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="Username">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string">
+          <xsd:anyAttribute namespace="##other"/>
+        </xsd:extension>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="Password">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string">
+          <xsd:attribute name="Type" type="xsd:QName"/>
+          <xsd:anyAttribute namespace="##other"/>
+        </xsd:extension>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="BinarySecurityToken">
+    <xsd:annotation>
+      <xsd:documentation>A security token that is encoded in binary</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string">
+          <xsd:attribute name="Id" type="xsd:ID"/>
+          <xsd:attribute name="ValueType" type="xsd:QName"/>
+          <xsd:attribute name="EncodingType" type="xsd:QName"/>
+          <xsd:anyAttribute namespace="##other" processContents="strict"/>
+        </xsd:extension>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="SecurityTokenReference">
+    <xsd:annotation>
+      <xsd:documentation>This element is used reference a security token.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="Reference"/>
+        <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:choice>
+      <xsd:attribute name="Id" type="xsd:ID"/>
+      <xsd:anyAttribute namespace="##other" processContents="lax"/>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="Reference">
+    <xsd:complexType>
+      <xsd:attribute name="URI" type="xsd:anyURI"/>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:simpleType name="PasswordTypeEnum">
+    <xsd:restriction base="xsd:QName">
+      <xsd:enumeration value="wsse:PasswordText"/>
+      <xsd:enumeration value="wsse:PasswordDigest"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ValueTypeEnum">
+    <xsd:restriction base="xsd:QName">
+      <xsd:enumeration value="wsse:X509v3"/>
+      <xsd:enumeration value="wsse:Kerberosv5TGT"/>
+      <xsd:enumeration value="wsse:Kerberosv5ST"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="EncodingTypeEnum">
+    <xsd:restriction base="xsd:QName">
+      <xsd:enumeration value="wsse:Base64Binary"/>
+      <xsd:enumeration value="wsse:HexBinary"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="FaultcodeEnum">
+    <xsd:restriction base="xsd:QName">
+      <xsd:enumeration value="wsse:UnsupportedSecurityToken"/>
+      <xsd:enumeration value="wsse:UnsupportedAlgorithm"/>
+      <xsd:enumeration value="wsse:InvalidSecurity"/>
+      <xsd:enumeration value="wsse:InvalidSecurityToken"/>
+      <xsd:enumeration value="wsse:FailedAuthentication"/>
+      <xsd:enumeration value="wsse:FailedCheck"/>
+      <xsd:enumeration value="wsse:SecurityTokenUnavailable"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:\C:\@work\NGAAOrderCare\Templates\OCSWS\resources\schema\xml.xsd</con:url><con:content><![CDATA[<?xml-stylesheet href="../2008/09/xsd.xsl" type="text/xsl"?>
+<xs:schema targetNamespace="http://www.w3.org/XML/1998/namespace" xml:lang="en" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/1999/xhtml">
+  <xs:annotation>
+    <xs:documentation>
+      <div>
+        <h1>About the XML namespace</h1>
+        <div class="bodytext">
+          <p>This schema document describes the XML namespace, in a form
+      suitable for import by other schema documents.</p>
+          <p>
+            See
+            <a href="http://www.w3.org/XML/1998/namespace.html">http://www.w3.org/XML/1998/namespace.html</a>
+            and
+            <a href="http://www.w3.org/TR/REC-xml">http://www.w3.org/TR/REC-xml</a>
+            for information 
+      about this namespace.
+          </p>
+          <p>Note that local names in this namespace are intended to be
+      defined only by the World Wide Web Consortium or its subgroups.
+      The names currently defined in this namespace are listed below.
+      They should not be used with conflicting semantics by any Working
+      Group, specification, or document instance.</p>
+          <p>
+            See further below in this document for more information about
+            <a href="#usage">how to refer to this schema document from your own
+      XSD schema documents</a>
+            and about
+            <a href="#nsversioning">the
+      namespace-versioning policy governing this schema document</a>
+            .
+          </p>
+        </div>
+      </div>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:attribute name="lang">
+    <xs:annotation>
+      <xs:documentation>
+        <div>
+          <h3>lang (as an attribute name)</h3>
+          <p>denotes an attribute whose value
+       is a language code for the natural language of the content of
+       any element; its value is inherited.  This name is reserved
+       by virtue of its definition in the XML specification.</p>
+        </div>
+        <div>
+          <h4>Notes</h4>
+          <p>Attempting to install the relevant ISO 2- and 3-letter
+      codes as the enumerated possible values is probably never
+      going to be a realistic possibility.</p>
+          <p>
+            See BCP 47 at
+            <a href="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">http://www.rfc-editor.org/rfc/bcp/bcp47.txt</a>
+            and the IANA language subtag registry at
+            <a href="http://www.iana.org/assignments/language-subtag-registry">http://www.iana.org/assignments/language-subtag-registry</a>
+            for further information.
+          </p>
+          <p>The union allows for the 'un-declaration' of xml:lang with
+      the empty string.</p>
+        </div>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:union memberTypes="xs:language">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value=""/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:union>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="space">
+    <xs:annotation>
+      <xs:documentation>
+        <div>
+          <h3>space (as an attribute name)</h3>
+          <p>denotes an attribute whose
+       value is a keyword indicating what whitespace processing
+       discipline is intended for the content of the element; its
+       value is inherited.  This name is reserved by virtue of its
+       definition in the XML specification.</p>
+        </div>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:NCName">
+        <xs:enumeration value="default"/>
+        <xs:enumeration value="preserve"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="base" type="xs:anyURI">
+    <xs:annotation>
+      <xs:documentation>
+        <div>
+          <h3>base (as an attribute name)</h3>
+          <p>denotes an attribute whose value
+       provides a URI to be used as the base for interpreting any
+       relative URIs in the scope of the element on which it
+       appears; its value is inherited.  This name is reserved
+       by virtue of its definition in the XML Base specification.</p>
+          <p>
+            See
+            <a href="http://www.w3.org/TR/xmlbase/">http://www.w3.org/TR/xmlbase/</a>
+            for information about this attribute.
+          </p>
+        </div>
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  <xs:attribute name="id" type="xs:ID">
+    <xs:annotation>
+      <xs:documentation>
+        <div>
+          <h3>id (as an attribute name)</h3>
+          <p>denotes an attribute whose value
+       should be interpreted as if declared to be of type ID.
+       This name is reserved by virtue of its definition in the
+       xml:id specification.</p>
+          <p>
+            See
+            <a href="http://www.w3.org/TR/xml-id/">http://www.w3.org/TR/xml-id/</a>
+            for information about this attribute.
+          </p>
+        </div>
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  <xs:attributeGroup name="specialAttrs">
+    <xs:attribute ref="xml:base"/>
+    <xs:attribute ref="xml:lang"/>
+    <xs:attribute ref="xml:space"/>
+    <xs:attribute ref="xml:id"/>
+  </xs:attributeGroup>
+  <xs:annotation>
+    <xs:documentation>
+      <div>
+        <h3>Father (in any context at all)</h3>
+        <div class="bodytext">
+          <p>denotes Jon Bosak, the chair of 
+      the original XML Working Group.  This name is reserved by 
+      the following decision of the W3C XML Plenary and 
+      XML Coordination groups:</p>
+          <blockquote>
+            <p>In appreciation for his vision, leadership and
+	dedication the W3C XML Plenary on this 10th day of
+	February, 2000, reserves for Jon Bosak in perpetuity
+	the XML name "xml:Father".</p>
+          </blockquote>
+        </div>
+      </div>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:annotation>
+    <xs:documentation>
+      <div xml:id="usage" id="usage">
+        <h2>
+          <a name="usage">About this schema document</a>
+        </h2>
+        <div class="bodytext">
+          <p>
+            This schema defines attributes and an attribute group suitable
+      for use by schemas wishing to allow
+            <code>xml:base</code>
+            ,
+            <code>xml:lang</code>
+            ,
+            <code>xml:space</code>
+            or
+            <code>xml:id</code>
+            attributes on elements they define.
+          </p>
+          <p>To enable this, such a schema must import this schema for
+      the XML namespace, e.g. as follows:</p>
+          <pre>&lt;schema . . .>
+           . . .
+           &lt;import namespace="http://www.w3.org/XML/1998/namespace"
+                      schemaLocation="http://www.w3.org/2001/xml.xsd"/></pre>
+          <p>or</p>
+          <pre>&lt;import namespace="http://www.w3.org/XML/1998/namespace"
+                      schemaLocation="http://www.w3.org/2009/01/xml.xsd"/></pre>
+          <p>Subsequently, qualified reference to any of the attributes or the
+      group defined below will have the desired effect, e.g.</p>
+          <pre>&lt;type . . .>
+           . . .
+           &lt;attributeGroup ref="xml:specialAttrs"/></pre>
+          <p>will define a type which will schema-validate an instance element
+      with any of those attributes.</p>
+        </div>
+      </div>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:annotation>
+    <xs:documentation>
+      <div id="nsversioning" xml:id="nsversioning">
+        <h2>
+          <a name="nsversioning">Versioning policy for this schema document</a>
+        </h2>
+        <div class="bodytext">
+          <p>
+            In keeping with the XML Schema WG's standard versioning
+      policy, this schema document will persist at
+            <a href="http://www.w3.org/2009/01/xml.xsd">http://www.w3.org/2009/01/xml.xsd</a>
+            .
+          </p>
+          <p>
+            At the date of issue it can also be found at
+            <a href="http://www.w3.org/2001/xml.xsd">http://www.w3.org/2001/xml.xsd</a>
+            .
+          </p>
+          <p>
+            The schema document at that URI may however change in the future,
+      in order to remain compatible with the latest version of XML
+      Schema itself, or with the XML namespace itself.  In other words,
+      if the XML Schema or XML namespaces change, the version of this
+      document at
+            <a href="http://www.w3.org/2001/xml.xsd">http://www.w3.org/2001/xml.xsd</a>
+            will change accordingly; the version at
+            <a href="http://www.w3.org/2009/01/xml.xsd">http://www.w3.org/2009/01/xml.xsd</a>
+            will not change.
+          </p>
+          <p>Previous dated (and unchanging) versions of this schema 
+      document are at:</p>
+          <ul>
+            <li>
+              <a href="http://www.w3.org/2009/01/xml.xsd">http://www.w3.org/2009/01/xml.xsd</a>
+            </li>
+            <li>
+              <a href="http://www.w3.org/2007/08/xml.xsd">http://www.w3.org/2007/08/xml.xsd</a>
+            </li>
+            <li>
+              <a href="http://www.w3.org/2004/10/xml.xsd">http://www.w3.org/2004/10/xml.xsd</a>
+            </li>
+            <li>
+              <a href="http://www.w3.org/2001/03/xml.xsd">http://www.w3.org/2001/03/xml.xsd</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </xs:documentation>
+  </xs:annotation>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:\C:\@work\NGAAOrderCare\Templates\OCSWS\resources\schema\xmldsig-core-schema.xsd</con:url><con:content><![CDATA[<!--Schema for XML Signatures
+    http://www.w3.org/2000/09/xmldsig#
+    $Revision: 1.1 $ on $Date: 2002/02/08 20:32:26 $ by $Author: reagle $
+
+    Copyright 2001 The Internet Society and W3C (Massachusetts Institute
+    of Technology, Institut National de Recherche en Informatique et en
+    Automatique, Keio University). All Rights Reserved.
+    http://www.w3.org/Consortium/Legal/
+
+    This document is governed by the W3C Software License [1] as described
+    in the FAQ [2].
+
+    [1] http://www.w3.org/Consortium/Legal/copyright-software-19980720
+    [2] http://www.w3.org/Consortium/Legal/IPR-FAQ-20000620.html#DTD-->
+<schema targetNamespace="http://www.w3.org/2000/09/xmldsig#" version="0.1" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <!--Basic Types Defined for Signatures-->
+  <simpleType name="CryptoBinary">
+    <restriction base="base64Binary"></restriction>
+  </simpleType>
+  <!--Start Signature-->
+  <element name="Signature" type="ds:SignatureType"/>
+  <complexType name="SignatureType">
+    <sequence>
+      <element ref="ds:SignedInfo"/>
+      <element ref="ds:SignatureValue"/>
+      <element ref="ds:KeyInfo" minOccurs="0"/>
+      <element ref="ds:Object" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+    <attribute name="Id" type="ID" use="optional"/>
+  </complexType>
+  <element name="SignatureValue" type="ds:SignatureValueType"/>
+  <complexType name="SignatureValueType">
+    <simpleContent>
+      <extension base="base64Binary">
+        <attribute name="Id" type="ID" use="optional"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <!--Start SignedInfo-->
+  <element name="SignedInfo" type="ds:SignedInfoType"/>
+  <complexType name="SignedInfoType">
+    <sequence>
+      <element ref="ds:CanonicalizationMethod"/>
+      <element ref="ds:SignatureMethod"/>
+      <element ref="ds:Reference" maxOccurs="unbounded"/>
+    </sequence>
+    <attribute name="Id" type="ID" use="optional"/>
+  </complexType>
+  <element name="CanonicalizationMethod" type="ds:CanonicalizationMethodType"/>
+  <complexType name="CanonicalizationMethodType" mixed="true">
+    <sequence>
+      <any namespace="##any" minOccurs="0" maxOccurs="unbounded"/>
+      <!--(0,unbounded) elements from (1,1) namespace-->
+    </sequence>
+    <attribute name="Algorithm" type="anyURI" use="required"/>
+  </complexType>
+  <element name="SignatureMethod" type="ds:SignatureMethodType"/>
+  <complexType name="SignatureMethodType" mixed="true">
+    <sequence>
+      <element name="HMACOutputLength" minOccurs="0" type="ds:HMACOutputLengthType"/>
+      <any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+      <!--(0,unbounded) elements from (1,1) external namespace-->
+    </sequence>
+    <attribute name="Algorithm" type="anyURI" use="required"/>
+  </complexType>
+  <!--Start Reference-->
+  <element name="Reference" type="ds:ReferenceType"/>
+  <complexType name="ReferenceType">
+    <sequence>
+      <element ref="ds:Transforms" minOccurs="0"/>
+      <element ref="ds:DigestMethod"/>
+      <element ref="ds:DigestValue"/>
+    </sequence>
+    <attribute name="Id" type="ID" use="optional"/>
+    <attribute name="URI" type="anyURI" use="optional"/>
+    <attribute name="Type" type="anyURI" use="optional"/>
+  </complexType>
+  <element name="Transforms" type="ds:TransformsType"/>
+  <complexType name="TransformsType">
+    <sequence>
+      <element ref="ds:Transform" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  <element name="Transform" type="ds:TransformType"/>
+  <complexType name="TransformType" mixed="true">
+    <choice minOccurs="0" maxOccurs="unbounded">
+      <any namespace="##other" processContents="lax"/>
+      <!--(1,1) elements from (0,unbounded) namespaces-->
+      <element name="XPath" type="string"/>
+    </choice>
+    <attribute name="Algorithm" type="anyURI" use="required"/>
+  </complexType>
+  <!--End Reference-->
+  <element name="DigestMethod" type="ds:DigestMethodType"/>
+  <complexType name="DigestMethodType" mixed="true">
+    <sequence>
+      <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+    <attribute name="Algorithm" type="anyURI" use="required"/>
+  </complexType>
+  <element name="DigestValue" type="ds:DigestValueType"/>
+  <simpleType name="DigestValueType">
+    <restriction base="base64Binary"/>
+  </simpleType>
+  <!--End SignedInfo-->
+  <!--Start KeyInfo-->
+  <element name="KeyInfo" type="ds:KeyInfoType"/>
+  <complexType name="KeyInfoType" mixed="true">
+    <choice maxOccurs="unbounded">
+      <element ref="ds:KeyName"/>
+      <element ref="ds:KeyValue"/>
+      <element ref="ds:RetrievalMethod"/>
+      <element ref="ds:X509Data"/>
+      <element ref="ds:PGPData"/>
+      <element ref="ds:SPKIData"/>
+      <element ref="ds:MgmtData"/>
+      <any processContents="lax" namespace="##other"/>
+      <!--(1,1) elements from (0,unbounded) namespaces-->
+    </choice>
+    <attribute name="Id" type="ID" use="optional"/>
+  </complexType>
+  <element name="KeyName" type="string"/>
+  <element name="MgmtData" type="string"/>
+  <element name="KeyValue" type="ds:KeyValueType"/>
+  <complexType name="KeyValueType" mixed="true">
+    <choice>
+      <element ref="ds:DSAKeyValue"/>
+      <element ref="ds:RSAKeyValue"/>
+      <any namespace="##other" processContents="lax"/>
+    </choice>
+  </complexType>
+  <element name="RetrievalMethod" type="ds:RetrievalMethodType"/>
+  <complexType name="RetrievalMethodType">
+    <sequence>
+      <element ref="ds:Transforms" minOccurs="0"/>
+    </sequence>
+    <attribute name="URI" type="anyURI"/>
+    <attribute name="Type" type="anyURI" use="optional"/>
+  </complexType>
+  <!--Start X509Data-->
+  <element name="X509Data" type="ds:X509DataType"/>
+  <complexType name="X509DataType">
+    <sequence maxOccurs="unbounded">
+      <choice>
+        <element name="X509IssuerSerial" type="ds:X509IssuerSerialType"/>
+        <element name="X509SKI" type="base64Binary"/>
+        <element name="X509SubjectName" type="string"/>
+        <element name="X509Certificate" type="base64Binary"/>
+        <element name="X509CRL" type="base64Binary"/>
+        <any namespace="##other" processContents="lax"/>
+      </choice>
+    </sequence>
+  </complexType>
+  <complexType name="X509IssuerSerialType">
+    <sequence>
+      <element name="X509IssuerName" type="string"/>
+      <element name="X509SerialNumber" type="integer"/>
+    </sequence>
+  </complexType>
+  <!--End X509Data-->
+  <!--Begin PGPData-->
+  <element name="PGPData" type="ds:PGPDataType"/>
+  <complexType name="PGPDataType">
+    <choice>
+      <sequence>
+        <element name="PGPKeyID" type="base64Binary"/>
+        <element name="PGPKeyPacket" type="base64Binary" minOccurs="0"/>
+        <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
+      <sequence>
+        <element name="PGPKeyPacket" type="base64Binary"/>
+        <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
+    </choice>
+  </complexType>
+  <!--End PGPData-->
+  <!--Begin SPKIData-->
+  <element name="SPKIData" type="ds:SPKIDataType"/>
+  <complexType name="SPKIDataType">
+    <sequence maxOccurs="unbounded">
+      <element name="SPKISexp" type="base64Binary"/>
+      <any namespace="##other" processContents="lax" minOccurs="0"/>
+    </sequence>
+  </complexType>
+  <!--End SPKIData-->
+  <!--End KeyInfo-->
+  <!--Start Object (Manifest, SignatureProperty)-->
+  <element name="Object" type="ds:ObjectType"/>
+  <complexType name="ObjectType" mixed="true">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <any namespace="##any" processContents="lax"/>
+    </sequence>
+    <attribute name="Id" type="ID" use="optional"/>
+    <attribute name="MimeType" type="string" use="optional"/>
+    <!--add a grep facet-->
+    <attribute name="Encoding" type="anyURI" use="optional"/>
+  </complexType>
+  <element name="Manifest" type="ds:ManifestType"/>
+  <complexType name="ManifestType">
+    <sequence>
+      <element ref="ds:Reference" maxOccurs="unbounded"/>
+    </sequence>
+    <attribute name="Id" type="ID" use="optional"/>
+  </complexType>
+  <element name="SignatureProperties" type="ds:SignaturePropertiesType"/>
+  <complexType name="SignaturePropertiesType">
+    <sequence>
+      <element ref="ds:SignatureProperty" maxOccurs="unbounded"/>
+    </sequence>
+    <attribute name="Id" type="ID" use="optional"/>
+  </complexType>
+  <element name="SignatureProperty" type="ds:SignaturePropertyType"/>
+  <complexType name="SignaturePropertyType" mixed="true">
+    <choice maxOccurs="unbounded">
+      <any namespace="##other" processContents="lax"/>
+      <!--(1,1) elements from (1,unbounded) namespaces-->
+    </choice>
+    <attribute name="Target" type="anyURI" use="required"/>
+    <attribute name="Id" type="ID" use="optional"/>
+  </complexType>
+  <!--End Object (Manifest, SignatureProperty)-->
+  <!--Start Algorithm Parameters-->
+  <simpleType name="HMACOutputLengthType">
+    <restriction base="integer"/>
+  </simpleType>
+  <!--Start KeyValue Element-types-->
+  <element name="DSAKeyValue" type="ds:DSAKeyValueType"/>
+  <complexType name="DSAKeyValueType">
+    <sequence>
+      <sequence minOccurs="0">
+        <element name="P" type="ds:CryptoBinary"/>
+        <element name="Q" type="ds:CryptoBinary"/>
+      </sequence>
+      <element name="G" type="ds:CryptoBinary" minOccurs="0"/>
+      <element name="Y" type="ds:CryptoBinary"/>
+      <element name="J" type="ds:CryptoBinary" minOccurs="0"/>
+      <sequence minOccurs="0">
+        <element name="Seed" type="ds:CryptoBinary"/>
+        <element name="PgenCounter" type="ds:CryptoBinary"/>
+      </sequence>
+    </sequence>
+  </complexType>
+  <element name="RSAKeyValue" type="ds:RSAKeyValueType"/>
+  <complexType name="RSAKeyValueType">
+    <sequence>
+      <element name="Modulus" type="ds:CryptoBinary"/>
+      <element name="Exponent" type="ds:CryptoBinary"/>
+    </sequence>
+  </complexType>
+  <!--End KeyValue Element-types-->
+  <!--End Signature-->
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://LAMORIM2W7:8088/mockBoltonManagementServiceSOAPBinding_v1_0</con:endpoint><con:endpoint>http://localhost/UNICA/OCSProvisioning/BoltonManagement_v1</con:endpoint></con:endpoints><con:operation isOneWay="false" action="queryBoltons" name="queryBoltons" bindingOperationName="queryBoltons" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost/UNICA/OCSProvisioning/BoltonManagement_v1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:typ="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:typ1="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" xmlns:v2="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2">
+   <soapenv:Header>
+      <add:MessageID>?</add:MessageID>
+   </soapenv:Header>
+   <soapenv:Body>
+      <typ:queryBoltons>
+         <typ1:queryCommonInfo>
+            <!--Optional:-->
+            <typ1:currencyCode>?</typ1:currencyCode>
+            <!--Optional:-->
+            <typ1:pagingInfo>
+               <!--Optional:-->
+               <typ1:token>?</typ1:token>
+               <typ1:numRegs>?</typ1:numRegs>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:pagingInfo>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:queryCommonInfo>
+         <typ1:subscriberId>
+            <!--You have a CHOICE of the next 7 items at this level-->
+            <typ1:e164Number>?</typ1:e164Number>
+            <typ1:IMSI>?</typ1:IMSI>
+            <typ1:sipUri>?</typ1:sipUri>
+            <typ1:anyUri>?</typ1:anyUri>
+            <typ1:otherId>
+               <v2:type>?</v2:type>
+               <v2:value>?</v2:value>
+            </typ1:otherId>
+            <typ1:userName>?</typ1:userName>
+            <typ1:ipAddress>
+               <!--You have a CHOICE of the next 2 items at this level-->
+               <v2:ipv4>?</v2:ipv4>
+               <v2:ipv6>?</v2:ipv6>
+            </typ1:ipAddress>
+         </typ1:subscriberId>
+         <!--Optional:-->
+         <typ1:boltonIdentifierFilter>
+            <!--Optional:-->
+            <typ1:boltonCode>?</typ1:boltonCode>
+            <!--Optional:-->
+            <typ1:boltonTypeCode>?</typ1:boltonTypeCode>
+            <!--Optional:-->
+            <typ1:boltonInstance>?</typ1:boltonInstance>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:boltonIdentifierFilter>
+         <!--Optional:-->
+         <typ1:boltonStatusFilterList>
+            <!--1 or more repetitions:-->
+            <typ1:boltonStatus>?</typ1:boltonStatus>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:boltonStatusFilterList>
+         <!--Zero or more repetitions:-->
+         <typ:extension>
+            <!--You may enter ANY elements at this point-->
+         </typ:extension>
+      </typ:queryBoltons>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="queryBoltons"/></con:call></con:operation><con:operation isOneWay="false" action="queryBoltonsDetails" name="queryBoltonsDetails" bindingOperationName="queryBoltonsDetails" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost/UNICA/OCSProvisioning/BoltonManagement_v1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:typ="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:typ1="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" xmlns:v2="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2">
+   <soapenv:Header>
+      <add:MessageID>?</add:MessageID>
+   </soapenv:Header>
+   <soapenv:Body>
+      <typ:queryBoltonsDetails>
+         <typ1:queryCommonInfo>
+            <!--Optional:-->
+            <typ1:currencyCode>?</typ1:currencyCode>
+            <!--Optional:-->
+            <typ1:pagingInfo>
+               <!--Optional:-->
+               <typ1:token>?</typ1:token>
+               <typ1:numRegs>?</typ1:numRegs>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:pagingInfo>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:queryCommonInfo>
+         <!--Optional:-->
+         <typ1:subscriberId>
+            <!--You have a CHOICE of the next 7 items at this level-->
+            <typ1:e164Number>?</typ1:e164Number>
+            <typ1:IMSI>?</typ1:IMSI>
+            <typ1:sipUri>?</typ1:sipUri>
+            <typ1:anyUri>?</typ1:anyUri>
+            <typ1:otherId>
+               <v2:type>?</v2:type>
+               <v2:value>?</v2:value>
+            </typ1:otherId>
+            <typ1:userName>?</typ1:userName>
+            <typ1:ipAddress>
+               <!--You have a CHOICE of the next 2 items at this level-->
+               <v2:ipv4>?</v2:ipv4>
+               <v2:ipv6>?</v2:ipv6>
+            </typ1:ipAddress>
+         </typ1:subscriberId>
+         <!--Optional:-->
+         <typ1:timeIntervalFilter>
+            <!--Optional:-->
+            <typ1:startTime>
+               <!--You have a CHOICE of the next 3 items at this level-->
+               <typ1:date>?</typ1:date>
+               <typ1:timeOffset timeRoundUnit="?">?</typ1:timeOffset>
+               <typ1:specialTime>?</typ1:specialTime>
+            </typ1:startTime>
+            <!--Optional:-->
+            <typ1:endTime>
+               <!--You have a CHOICE of the next 3 items at this level-->
+               <typ1:date>?</typ1:date>
+               <typ1:timeOffset timeRoundUnit="?">?</typ1:timeOffset>
+               <typ1:specialTime>?</typ1:specialTime>
+            </typ1:endTime>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:timeIntervalFilter>
+         <!--Optional:-->
+         <typ1:opReference>
+            <typ1:opId>?</typ1:opId>
+            <!--Optional:-->
+            <typ1:opSubIdList>
+               <!--1 or more repetitions:-->
+               <typ1:opId>?</typ1:opId>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:opSubIdList>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:opReference>
+         <!--Optional:-->
+         <typ1:boltonIdentifierFilter>
+            <!--Optional:-->
+            <typ1:boltonCode>?</typ1:boltonCode>
+            <!--Optional:-->
+            <typ1:boltonTypeCode>?</typ1:boltonTypeCode>
+            <!--Optional:-->
+            <typ1:boltonInstance>?</typ1:boltonInstance>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:boltonIdentifierFilter>
+         <!--Optional:-->
+         <typ1:boltonStatusFilterList>
+            <!--1 or more repetitions:-->
+            <typ1:boltonStatus>?</typ1:boltonStatus>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:boltonStatusFilterList>
+         <!--Zero or more repetitions:-->
+         <typ:extension>
+            <!--You may enter ANY elements at this point-->
+         </typ:extension>
+      </typ:queryBoltonsDetails>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="queryBoltonsDetails"/></con:call></con:operation><con:operation isOneWay="false" action="subscribeBolton" name="subscribeBolton" bindingOperationName="subscribeBolton" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost/UNICA/OCSProvisioning/BoltonManagement_v1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:typ="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:typ1="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" xmlns:v2="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2">
+   <soapenv:Header>
+      <add:MessageID>?</add:MessageID>
+   </soapenv:Header>
+   <soapenv:Body>
+      <typ:subscribeBolton>
+         <typ1:actionCommonInfo>
+            <typ1:appInfo>
+               <typ1:appId>?</typ1:appId>
+               <typ1:reference>?</typ1:reference>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:appInfo>
+            <typ1:userCode>?</typ1:userCode>
+            <!--Optional:-->
+            <typ1:opCost exponent="?">?</typ1:opCost>
+            <!--Optional:-->
+            <typ1:currencyCode>?</typ1:currencyCode>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:actionCommonInfo>
+         <typ1:subscriberId>
+            <!--You have a CHOICE of the next 7 items at this level-->
+            <typ1:e164Number>?</typ1:e164Number>
+            <typ1:IMSI>?</typ1:IMSI>
+            <typ1:sipUri>?</typ1:sipUri>
+            <typ1:anyUri>?</typ1:anyUri>
+            <typ1:otherId>
+               <v2:type>?</v2:type>
+               <v2:value>?</v2:value>
+            </typ1:otherId>
+            <typ1:userName>?</typ1:userName>
+            <typ1:ipAddress>
+               <!--You have a CHOICE of the next 2 items at this level-->
+               <v2:ipv4>?</v2:ipv4>
+               <v2:ipv6>?</v2:ipv6>
+            </typ1:ipAddress>
+         </typ1:subscriberId>
+         <typ1:boltonInfo>
+            <typ1:boltonIdentifier>
+               <!--Optional:-->
+               <typ1:boltonCode>?</typ1:boltonCode>
+               <!--Optional:-->
+               <typ1:boltonTypeCode>?</typ1:boltonTypeCode>
+               <!--Optional:-->
+               <typ1:boltonInstance>?</typ1:boltonInstance>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:boltonIdentifier>
+            <!--Optional:-->
+            <typ1:boltonAmount exponent="?">?</typ1:boltonAmount>
+            <!--Optional:-->
+            <typ1:boltonLD exponent="?">?</typ1:boltonLD>
+            <!--Optional:-->
+            <typ1:boltonMaxNumberOfSessions exponent="?">?</typ1:boltonMaxNumberOfSessions>
+            <!--Optional:-->
+            <typ1:boltonCost exponent="?">?</typ1:boltonCost>
+            <!--Optional:-->
+            <typ1:chargingModality>?</typ1:chargingModality>
+            <!--Optional:-->
+            <typ1:timeInterval>
+               <!--Optional:-->
+               <typ1:startTime>
+                  <!--You have a CHOICE of the next 3 items at this level-->
+                  <typ1:date>?</typ1:date>
+                  <typ1:timeOffset timeRoundUnit="?">?</typ1:timeOffset>
+                  <typ1:specialTime>?</typ1:specialTime>
+               </typ1:startTime>
+               <!--Optional:-->
+               <typ1:endTime>
+                  <!--You have a CHOICE of the next 3 items at this level-->
+                  <typ1:date>?</typ1:date>
+                  <typ1:timeOffset timeRoundUnit="?">?</typ1:timeOffset>
+                  <typ1:specialTime>?</typ1:specialTime>
+               </typ1:endTime>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:timeInterval>
+            <!--Optional:-->
+            <typ1:sharedBoltonFlag>?</typ1:sharedBoltonFlag>
+            <!--Optional:-->
+            <typ1:maxUnitsPerSession exponent="?">?</typ1:maxUnitsPerSession>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:boltonInfo>
+         <!--Zero or more repetitions:-->
+         <typ:extension>
+            <!--You may enter ANY elements at this point-->
+         </typ:extension>
+      </typ:subscribeBolton>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>NTLM</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="subscribeBolton"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="unsubscribeBolton" name="unsubscribeBolton" bindingOperationName="unsubscribeBolton" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost/UNICA/OCSProvisioning/BoltonManagement_v1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:typ="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:typ1="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" xmlns:v2="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2">
+   <soapenv:Header>
+      <add:MessageID>?</add:MessageID>
+   </soapenv:Header>
+   <soapenv:Body>
+      <typ:unsubscribeBolton>
+         <typ1:actionCommonInfo>
+            <typ1:appInfo>
+               <typ1:appId>?</typ1:appId>
+               <typ1:reference>?</typ1:reference>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:appInfo>
+            <typ1:userCode>?</typ1:userCode>
+            <!--Optional:-->
+            <typ1:opCost exponent="?">?</typ1:opCost>
+            <!--Optional:-->
+            <typ1:currencyCode>?</typ1:currencyCode>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:actionCommonInfo>
+         <typ1:subscriberId>
+            <!--You have a CHOICE of the next 7 items at this level-->
+            <typ1:e164Number>?</typ1:e164Number>
+            <typ1:IMSI>?</typ1:IMSI>
+            <typ1:sipUri>?</typ1:sipUri>
+            <typ1:anyUri>?</typ1:anyUri>
+            <typ1:otherId>
+               <v2:type>?</v2:type>
+               <v2:value>?</v2:value>
+            </typ1:otherId>
+            <typ1:userName>?</typ1:userName>
+            <typ1:ipAddress>
+               <!--You have a CHOICE of the next 2 items at this level-->
+               <v2:ipv4>?</v2:ipv4>
+               <v2:ipv6>?</v2:ipv6>
+            </typ1:ipAddress>
+         </typ1:subscriberId>
+         <typ1:boltonIdentifier>
+            <!--Optional:-->
+            <typ1:boltonCode>?</typ1:boltonCode>
+            <!--Optional:-->
+            <typ1:boltonTypeCode>?</typ1:boltonTypeCode>
+            <!--Optional:-->
+            <typ1:boltonInstance>?</typ1:boltonInstance>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:boltonIdentifier>
+         <!--Zero or more repetitions:-->
+         <typ:extension>
+            <!--You may enter ANY elements at this point-->
+         </typ:extension>
+      </typ:unsubscribeBolton>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="unsubscribeBolton"/></con:call></con:operation></con:interface><con:mockService port="8088" path="/mockBoltonManagementServiceSOAPBinding_v1_0" host="localhost" name="BoltonManagementServiceSOAPBinding_v1_0 MockService" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="queryBoltons" interface="BoltonManagementServiceSOAPBinding_v1_0" operation="queryBoltons"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:typ="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:typ1="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types">
+   <soapenv:Header>
+      <add:MessageID>?</add:MessageID>
+   </soapenv:Header>
+   <soapenv:Body>
+      <typ:queryBoltonsResponse>
+         <!--Optional:-->
+         <typ1:token>HOLA1</typ1:token>
+         <!--Optional:-->
+         <typ1:boltonBasicInfoList>
+            <!--1 or more repetitions:-->
+            <typ1:boltonBasicInfo>
+               <typ1:boltonIdentifier>
+                  <!--Optional:-->
+                  <typ1:boltonCode>01</typ1:boltonCode>
+                  <!--Optional:-->
+                  <typ1:boltonTypeCode>01</typ1:boltonTypeCode>
+                  <!--Optional:-->
+                  <typ1:boltonInstance>1111</typ1:boltonInstance>
+                  <!--Zero or more repetitions:-->
+               </typ1:boltonIdentifier>
+               <!--Optional:-->
+               <typ1:boltonRemainingAmount exponent="?">?</typ1:boltonRemainingAmount>
+               <!--Optional:-->
+               <typ1:boltonRemainingNumberOfSessions>?</typ1:boltonRemainingNumberOfSessions>
+               <typ1:boltonStatus>?</typ1:boltonStatus>
+               <typ1:boltonModality>?</typ1:boltonModality>
+               <typ1:timeInterval>
+                  <!--Optional:-->
+                  <typ1:startTime>
+                     <!--You have a CHOICE of the next 3 items at this level-->
+                     <typ1:date>?</typ1:date>
+                     <typ1:timeOffset timeRoundUnit="?">?</typ1:timeOffset>
+                     <typ1:specialTime>?</typ1:specialTime>
+                  </typ1:startTime>
+                  <!--Optional:-->
+                  <typ1:endTime>
+                     <!--You have a CHOICE of the next 3 items at this level-->
+                     <typ1:date>?</typ1:date>
+                     <typ1:timeOffset timeRoundUnit="?">?</typ1:timeOffset>
+                     <typ1:specialTime>?</typ1:specialTime>
+                  </typ1:endTime>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:timeInterval>
+               <!--Optional:-->
+               <typ1:lastStatusChangeDate>?</typ1:lastStatusChangeDate>
+               <!--Optional:-->
+               <typ1:freeUnitsUsed exponent="?">?</typ1:freeUnitsUsed>
+               <!--Optional:-->
+               <typ1:accumulatedUnits exponent="?">?</typ1:accumulatedUnits>
+               <!--Optional:-->
+               <typ1:remainingUnitsForFreeUnits exponent="?">?</typ1:remainingUnitsForFreeUnits>
+               <!--Optional:-->
+               <typ1:maxUnitsPerSession exponent="?">?</typ1:maxUnitsPerSession>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:boltonBasicInfo>
+            <typ1:boltonBasicInfo>
+               <typ1:boltonIdentifier>
+                  <!--Optional:-->
+                  <typ1:boltonCode>01</typ1:boltonCode>
+                  <!--Optional:-->
+                  <typ1:boltonTypeCode>01</typ1:boltonTypeCode>
+                  <!--Optional:-->
+                  <typ1:boltonInstance>2222</typ1:boltonInstance>
+                  <!--Zero or more repetitions:-->
+               </typ1:boltonIdentifier>
+               <!--Optional:-->
+               <typ1:boltonRemainingAmount exponent="2">2</typ1:boltonRemainingAmount>
+               <!--Optional:-->
+               <typ1:boltonRemainingNumberOfSessions>1</typ1:boltonRemainingNumberOfSessions>
+               <typ1:boltonStatus>?</typ1:boltonStatus>
+               <typ1:boltonModality>?</typ1:boltonModality>
+               <typ1:timeInterval>
+                  <!--Optional:-->
+                  <typ1:startTime>
+                     <!--You have a CHOICE of the next 3 items at this level-->
+                     <typ1:date>?</typ1:date>
+                     <typ1:timeOffset timeRoundUnit="?">?</typ1:timeOffset>
+                     <typ1:specialTime>?</typ1:specialTime>
+                  </typ1:startTime>
+                  <!--Optional:-->
+                  <typ1:endTime>
+                     <!--You have a CHOICE of the next 3 items at this level-->
+                     <typ1:date>?</typ1:date>
+                     <typ1:timeOffset timeRoundUnit="?">?</typ1:timeOffset>
+                     <typ1:specialTime>?</typ1:specialTime>
+                  </typ1:endTime>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:timeInterval>
+               <!--Optional:-->
+               <typ1:lastStatusChangeDate>?</typ1:lastStatusChangeDate>
+               <!--Optional:-->
+               <typ1:freeUnitsUsed exponent="?">?</typ1:freeUnitsUsed>
+               <!--Optional:-->
+               <typ1:accumulatedUnits exponent="?">?</typ1:accumulatedUnits>
+               <!--Optional:-->
+               <typ1:remainingUnitsForFreeUnits exponent="?">?</typ1:remainingUnitsForFreeUnits>
+               <!--Optional:-->
+               <typ1:maxUnitsPerSession exponent="?">?</typ1:maxUnitsPerSession>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:boltonBasicInfo>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:boltonBasicInfoList>
+         <!--Zero or more repetitions:-->
+         <typ:extension>
+            <!--You may enter ANY elements at this point-->
+         </typ:extension>
+      </typ:queryBoltonsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="queryBoltons"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="queryBoltonsDetails" interface="BoltonManagementServiceSOAPBinding_v1_0" operation="queryBoltonsDetails"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:typ="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:typ1="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types">
+   <soapenv:Header>
+      <add:MessageID>?</add:MessageID>
+   </soapenv:Header>
+   <soapenv:Body>
+      <typ:queryBoltonsDetailsResponse>
+         <!--Optional:-->
+         <typ1:token>?</typ1:token>
+         <!--Optional:-->
+         <typ1:boltonDetailedInfoList>
+            <!--1 or more repetitions:-->
+            <typ1:boltonDetailedInfo>
+               <typ1:boltonIdentifier>
+                  <!--Optional:-->
+                  <typ1:boltonCode>?</typ1:boltonCode>
+                  <!--Optional:-->
+                  <typ1:boltonTypeCode>?</typ1:boltonTypeCode>
+                  <!--Optional:-->
+                  <typ1:boltonInstance>?</typ1:boltonInstance>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:boltonIdentifier>
+               <!--Optional:-->
+               <typ1:boltonAmount exponent="?">?</typ1:boltonAmount>
+               <!--Optional:-->
+               <typ1:boltonLD exponent="?">?</typ1:boltonLD>
+               <!--Optional:-->
+               <typ1:boltonRemainingAmount exponent="?">?</typ1:boltonRemainingAmount>
+               <!--Optional:-->
+               <typ1:boltonMaxNumberOfSessions exponent="?">?</typ1:boltonMaxNumberOfSessions>
+               <!--Optional:-->
+               <typ1:boltonRemainingNumberOfSessions>?</typ1:boltonRemainingNumberOfSessions>
+               <typ1:boltonStatus>?</typ1:boltonStatus>
+               <typ1:boltonModality>?</typ1:boltonModality>
+               <!--Optional:-->
+               <typ1:boltonCost exponent="?">?</typ1:boltonCost>
+               <!--Optional:-->
+               <typ1:chargingModality>?</typ1:chargingModality>
+               <typ1:balanceTransferFlag>?</typ1:balanceTransferFlag>
+               <typ1:opReference>
+                  <typ1:opId>?</typ1:opId>
+                  <!--Optional:-->
+                  <typ1:opSubIdList>
+                     <!--1 or more repetitions:-->
+                     <typ1:opId>?</typ1:opId>
+                     <!--Zero or more repetitions:-->
+                     <typ1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </typ1:extension>
+                  </typ1:opSubIdList>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:opReference>
+               <typ1:timeInterval>
+                  <!--Optional:-->
+                  <typ1:startTime>
+                     <!--You have a CHOICE of the next 3 items at this level-->
+                     <typ1:date>?</typ1:date>
+                     <typ1:timeOffset timeRoundUnit="?">?</typ1:timeOffset>
+                     <typ1:specialTime>?</typ1:specialTime>
+                  </typ1:startTime>
+                  <!--Optional:-->
+                  <typ1:endTime>
+                     <!--You have a CHOICE of the next 3 items at this level-->
+                     <typ1:date>?</typ1:date>
+                     <typ1:timeOffset timeRoundUnit="?">?</typ1:timeOffset>
+                     <typ1:specialTime>?</typ1:specialTime>
+                  </typ1:endTime>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:timeInterval>
+               <!--Optional:-->
+               <typ1:sharedBoltonFlag>?</typ1:sharedBoltonFlag>
+               <!--Optional:-->
+               <typ1:maxUnitsPerSession exponent="?">?</typ1:maxUnitsPerSession>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:boltonDetailedInfo>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:boltonDetailedInfoList>
+         <!--Zero or more repetitions:-->
+         <typ:extension>
+            <!--You may enter ANY elements at this point-->
+         </typ:extension>
+      </typ:queryBoltonsDetailsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="queryBoltonsDetails"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="subscribeBolton" interface="BoltonManagementServiceSOAPBinding_v1_0" operation="subscribeBolton"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:typ="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:typ1="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types">
+   <soapenv:Header>
+      <add:MessageID>1234134</add:MessageID>
+   </soapenv:Header>
+   <soapenv:Body>
+      <typ:subscribeBoltonResponse>
+         <typ1:result>
+            <typ1:opReference>
+               <typ1:opId>1111</typ1:opId>
+               <!--Optional:-->
+               <typ1:opSubIdList>
+                  <!--1 or more repetitions:-->
+                  <typ1:opId>?</typ1:opId>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:opSubIdList>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:opReference>
+            <typ1:opExecutionDate>2014-06-13T13:13:13+01:00</typ1:opExecutionDate>
+            <typ1:opCost exponent="-2">1000</typ1:opCost>
+            <!--Optional:-->
+            <typ1:balanceActivityInfo>
+               <typ1:balance exponent="-1">123</typ1:balance>
+               <!--Optional:-->
+               <typ1:walletInfoList>
+                  <!--1 or more repetitions:-->
+                  <typ1:walletInfo>
+                     <typ1:walletId>?</typ1:walletId>
+                     <typ1:balance exponent="?">?</typ1:balance>
+                     <typ1:expirationDate>?</typ1:expirationDate>
+                     <!--Optional:-->
+                     <typ1:status>?</typ1:status>
+                     <!--Optional:-->
+                     <typ1:sharedFlag>?</typ1:sharedFlag>
+                     <!--Optional:-->
+                     <typ1:detailedInfo>
+                        <typ1:balanceNotAccumulated exponent="?">?</typ1:balanceNotAccumulated>
+                        <typ1:changedBalance exponent="?">?</typ1:changedBalance>
+                        <!--Zero or more repetitions:-->
+                        <typ1:extension>
+                           <!--You may enter ANY elements at this point-->
+                        </typ1:extension>
+                     </typ1:detailedInfo>
+                     <!--Zero or more repetitions:-->
+                     <typ1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </typ1:extension>
+                  </typ1:walletInfo>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:walletInfoList>
+               <!--Optional:-->
+               <typ1:negativeBalance exponent="-2">1</typ1:negativeBalance>
+               <!--Optional:-->
+               <typ1:negativeBalanceInfoList>
+                  <!--1 or more repetitions:-->
+                  <typ1:negativeBalanceInfo>
+                     <typ1:negativeBalanceId>?</typ1:negativeBalanceId>
+                     <typ1:balance exponent="?">?</typ1:balance>
+                     <!--Zero or more repetitions:-->
+                     <typ1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </typ1:extension>
+                  </typ1:negativeBalanceInfo>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:negativeBalanceInfoList>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:balanceActivityInfo>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:result>
+         <!--Zero or more repetitions:-->
+         <typ:extension>
+            <!--You may enter ANY elements at this point-->
+         </typ:extension>
+      </typ:subscribeBoltonResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="subscribeBolton"/></con:response><con:response name="Response 2" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:typ="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:typ1="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types">
+   <soapenv:Header>
+      <add:MessageID>1234135</add:MessageID>
+   </soapenv:Header>
+   <soapenv:Body>
+      <typ:subscribeBoltonResponse>
+         <typ1:result>
+            <typ1:opReference>
+               <typ1:opId>2222</typ1:opId>
+               <!--Optional:-->
+               <typ1:opSubIdList>
+                  <!--1 or more repetitions:-->
+                  <typ1:opId>?</typ1:opId>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:opSubIdList>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:opReference>
+            <typ1:opExecutionDate>2014-06-13T13:13:13+01:00</typ1:opExecutionDate>
+            <typ1:opCost exponent="-2">1000</typ1:opCost>
+            <!--Optional:-->
+            <typ1:balanceActivityInfo>
+               <typ1:balance exponent="-1">123</typ1:balance>
+               <!--Optional:-->
+               <typ1:walletInfoList>
+                  <!--1 or more repetitions:-->
+                  <typ1:walletInfo>
+                     <typ1:walletId>?</typ1:walletId>
+                     <typ1:balance exponent="?">?</typ1:balance>
+                     <typ1:expirationDate>?</typ1:expirationDate>
+                     <!--Optional:-->
+                     <typ1:status>?</typ1:status>
+                     <!--Optional:-->
+                     <typ1:sharedFlag>?</typ1:sharedFlag>
+                     <!--Optional:-->
+                     <typ1:detailedInfo>
+                        <typ1:balanceNotAccumulated exponent="?">?</typ1:balanceNotAccumulated>
+                        <typ1:changedBalance exponent="?">?</typ1:changedBalance>
+                        <!--Zero or more repetitions:-->
+                        <typ1:extension>
+                           <!--You may enter ANY elements at this point-->
+                        </typ1:extension>
+                     </typ1:detailedInfo>
+                     <!--Zero or more repetitions:-->
+                     <typ1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </typ1:extension>
+                  </typ1:walletInfo>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:walletInfoList>
+               <!--Optional:-->
+               <typ1:negativeBalance exponent="-2">1</typ1:negativeBalance>
+               <!--Optional:-->
+               <typ1:negativeBalanceInfoList>
+                  <!--1 or more repetitions:-->
+                  <typ1:negativeBalanceInfo>
+                     <typ1:negativeBalanceId>?</typ1:negativeBalanceId>
+                     <typ1:balance exponent="?">?</typ1:balance>
+                     <!--Zero or more repetitions:-->
+                     <typ1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </typ1:extension>
+                  </typ1:negativeBalanceInfo>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:negativeBalanceInfoList>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:balanceActivityInfo>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:result>
+         <!--Zero or more repetitions:-->
+         <typ:extension>
+            <!--You may enter ANY elements at this point-->
+         </typ:extension>
+      </typ:subscribeBoltonResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="subscribeBolton"/></con:response><con:response name="Response 3" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:typ="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:typ1="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types">
+   <soapenv:Header>
+      <add:MessageID>1234136</add:MessageID>
+   </soapenv:Header>
+   <soapenv:Body>
+      <typ:subscribeBoltonResponse>
+         <typ1:result>
+            <typ1:opReference>
+               <typ1:opId>3333</typ1:opId>
+               <!--Optional:-->
+               <typ1:opSubIdList>
+                  <!--1 or more repetitions:-->
+                  <typ1:opId>?</typ1:opId>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:opSubIdList>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:opReference>
+            <typ1:opExecutionDate>2014-06-13T13:13:13+01:00</typ1:opExecutionDate>
+            <typ1:opCost exponent="-2">1000</typ1:opCost>
+            <!--Optional:-->
+            <typ1:balanceActivityInfo>
+               <typ1:balance exponent="-1">123</typ1:balance>
+               <!--Optional:-->
+               <typ1:walletInfoList>
+                  <!--1 or more repetitions:-->
+                  <typ1:walletInfo>
+                     <typ1:walletId>?</typ1:walletId>
+                     <typ1:balance exponent="?">?</typ1:balance>
+                     <typ1:expirationDate>?</typ1:expirationDate>
+                     <!--Optional:-->
+                     <typ1:status>?</typ1:status>
+                     <!--Optional:-->
+                     <typ1:sharedFlag>?</typ1:sharedFlag>
+                     <!--Optional:-->
+                     <typ1:detailedInfo>
+                        <typ1:balanceNotAccumulated exponent="?">?</typ1:balanceNotAccumulated>
+                        <typ1:changedBalance exponent="?">?</typ1:changedBalance>
+                        <!--Zero or more repetitions:-->
+                        <typ1:extension>
+                           <!--You may enter ANY elements at this point-->
+                        </typ1:extension>
+                     </typ1:detailedInfo>
+                     <!--Zero or more repetitions:-->
+                     <typ1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </typ1:extension>
+                  </typ1:walletInfo>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:walletInfoList>
+               <!--Optional:-->
+               <typ1:negativeBalance exponent="-2">1</typ1:negativeBalance>
+               <!--Optional:-->
+               <typ1:negativeBalanceInfoList>
+                  <!--1 or more repetitions:-->
+                  <typ1:negativeBalanceInfo>
+                     <typ1:negativeBalanceId>?</typ1:negativeBalanceId>
+                     <typ1:balance exponent="?">?</typ1:balance>
+                     <!--Zero or more repetitions:-->
+                     <typ1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </typ1:extension>
+                  </typ1:negativeBalanceInfo>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:negativeBalanceInfoList>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:balanceActivityInfo>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:result>
+         <!--Zero or more repetitions:-->
+         <typ:extension>
+            <!--You may enter ANY elements at this point-->
+         </typ:extension>
+      </typ:subscribeBoltonResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="subscribeBolton"/></con:response><con:response name="Response 4" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:typ="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:typ1="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types">
+   <soapenv:Header>
+      <add:MessageID>1234137</add:MessageID>
+   </soapenv:Header>
+   <soapenv:Body>
+      <typ:subscribeBoltonResponse>
+         <typ1:result>
+            <typ1:opReference>
+               <typ1:opId>4444</typ1:opId>
+               <!--Optional:-->
+               <typ1:opSubIdList>
+                  <!--1 or more repetitions:-->
+                  <typ1:opId>?</typ1:opId>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:opSubIdList>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:opReference>
+            <typ1:opExecutionDate>2014-06-13T13:13:13+01:00</typ1:opExecutionDate>
+            <typ1:opCost exponent="-2">1000</typ1:opCost>
+            <!--Optional:-->
+            <typ1:balanceActivityInfo>
+               <typ1:balance exponent="-1">123</typ1:balance>
+               <!--Optional:-->
+               <typ1:walletInfoList>
+                  <!--1 or more repetitions:-->
+                  <typ1:walletInfo>
+                     <typ1:walletId>?</typ1:walletId>
+                     <typ1:balance exponent="?">?</typ1:balance>
+                     <typ1:expirationDate>?</typ1:expirationDate>
+                     <!--Optional:-->
+                     <typ1:status>?</typ1:status>
+                     <!--Optional:-->
+                     <typ1:sharedFlag>?</typ1:sharedFlag>
+                     <!--Optional:-->
+                     <typ1:detailedInfo>
+                        <typ1:balanceNotAccumulated exponent="?">?</typ1:balanceNotAccumulated>
+                        <typ1:changedBalance exponent="?">?</typ1:changedBalance>
+                        <!--Zero or more repetitions:-->
+                        <typ1:extension>
+                           <!--You may enter ANY elements at this point-->
+                        </typ1:extension>
+                     </typ1:detailedInfo>
+                     <!--Zero or more repetitions:-->
+                     <typ1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </typ1:extension>
+                  </typ1:walletInfo>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:walletInfoList>
+               <!--Optional:-->
+               <typ1:negativeBalance exponent="-2">1</typ1:negativeBalance>
+               <!--Optional:-->
+               <typ1:negativeBalanceInfoList>
+                  <!--1 or more repetitions:-->
+                  <typ1:negativeBalanceInfo>
+                     <typ1:negativeBalanceId>?</typ1:negativeBalanceId>
+                     <typ1:balance exponent="?">?</typ1:balance>
+                     <!--Zero or more repetitions:-->
+                     <typ1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </typ1:extension>
+                  </typ1:negativeBalanceInfo>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:negativeBalanceInfoList>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:balanceActivityInfo>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:result>
+         <!--Zero or more repetitions:-->
+         <typ:extension>
+            <!--You may enter ANY elements at this point-->
+         </typ:extension>
+      </typ:subscribeBoltonResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="subscribeBolton"/></con:response><con:response name="Response 5" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:typ="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:typ1="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types">
+   <soapenv:Header>
+      <add:MessageID>1234137</add:MessageID>
+   </soapenv:Header>
+   <soapenv:Body>
+      <typ:subscribeBoltonResponse>
+         <typ1:result>
+            <typ1:opReference>
+               <typ1:opId>5555</typ1:opId>
+               <!--Optional:-->
+               <typ1:opSubIdList>
+                  <!--1 or more repetitions:-->
+                  <typ1:opId>?</typ1:opId>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:opSubIdList>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:opReference>
+            <typ1:opExecutionDate>2014-06-13T13:13:13+01:00</typ1:opExecutionDate>
+            <typ1:opCost exponent="-2">1000</typ1:opCost>
+            <!--Optional:-->
+            <typ1:balanceActivityInfo>
+               <typ1:balance exponent="-1">123</typ1:balance>
+               <!--Optional:-->
+               <typ1:walletInfoList>
+                  <!--1 or more repetitions:-->
+                  <typ1:walletInfo>
+                     <typ1:walletId>?</typ1:walletId>
+                     <typ1:balance exponent="?">?</typ1:balance>
+                     <typ1:expirationDate>?</typ1:expirationDate>
+                     <!--Optional:-->
+                     <typ1:status>?</typ1:status>
+                     <!--Optional:-->
+                     <typ1:sharedFlag>?</typ1:sharedFlag>
+                     <!--Optional:-->
+                     <typ1:detailedInfo>
+                        <typ1:balanceNotAccumulated exponent="?">?</typ1:balanceNotAccumulated>
+                        <typ1:changedBalance exponent="?">?</typ1:changedBalance>
+                        <!--Zero or more repetitions:-->
+                        <typ1:extension>
+                           <!--You may enter ANY elements at this point-->
+                        </typ1:extension>
+                     </typ1:detailedInfo>
+                     <!--Zero or more repetitions:-->
+                     <typ1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </typ1:extension>
+                  </typ1:walletInfo>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:walletInfoList>
+               <!--Optional:-->
+               <typ1:negativeBalance exponent="-2">1</typ1:negativeBalance>
+               <!--Optional:-->
+               <typ1:negativeBalanceInfoList>
+                  <!--1 or more repetitions:-->
+                  <typ1:negativeBalanceInfo>
+                     <typ1:negativeBalanceId>?</typ1:negativeBalanceId>
+                     <typ1:balance exponent="?">?</typ1:balance>
+                     <!--Zero or more repetitions:-->
+                     <typ1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </typ1:extension>
+                  </typ1:negativeBalanceInfo>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:negativeBalanceInfoList>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:balanceActivityInfo>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:result>
+         <!--Zero or more repetitions:-->
+         <typ:extension>
+            <!--You may enter ANY elements at this point-->
+         </typ:extension>
+      </typ:subscribeBoltonResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="subscribeBolton"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="unsubscribeBolton" interface="BoltonManagementServiceSOAPBinding_v1_0" operation="unsubscribeBolton"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:typ="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/boltonManagement/v1/types" xmlns:typ1="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types">
+   <soapenv:Header>
+      <add:MessageID>?</add:MessageID>
+   </soapenv:Header>
+   <soapenv:Body>
+      <typ:unsubscribeBoltonResponse>
+         <typ1:result>
+            <typ1:opReference>
+               <typ1:opId>?</typ1:opId>
+               <!--Optional:-->
+               <typ1:opSubIdList>
+                  <!--1 or more repetitions:-->
+                  <typ1:opId>?</typ1:opId>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:opSubIdList>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:opReference>
+            <typ1:opExecutionDate>?</typ1:opExecutionDate>
+            <typ1:opCost exponent="-1">5</typ1:opCost>
+            <!--Optional:-->
+            <typ1:balanceActivityInfo>
+               <typ1:balance exponent="?">?</typ1:balance>
+               <!--Optional:-->
+               <typ1:walletInfoList>
+                  <!--1 or more repetitions:-->
+                  <typ1:walletInfo>
+                     <typ1:walletId>?</typ1:walletId>
+                     <typ1:balance exponent="?">?</typ1:balance>
+                     <typ1:expirationDate>?</typ1:expirationDate>
+                     <!--Optional:-->
+                     <typ1:status>?</typ1:status>
+                     <!--Optional:-->
+                     <typ1:sharedFlag>?</typ1:sharedFlag>
+                     <!--Optional:-->
+                     <typ1:detailedInfo>
+                        <typ1:balanceNotAccumulated exponent="?">?</typ1:balanceNotAccumulated>
+                        <typ1:changedBalance exponent="?">?</typ1:changedBalance>
+                        <!--Zero or more repetitions:-->
+                        <typ1:extension>
+                           <!--You may enter ANY elements at this point-->
+                        </typ1:extension>
+                     </typ1:detailedInfo>
+                     <!--Zero or more repetitions:-->
+                     <typ1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </typ1:extension>
+                  </typ1:walletInfo>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:walletInfoList>
+               <!--Optional:-->
+               <typ1:negativeBalance exponent="?">?</typ1:negativeBalance>
+               <!--Optional:-->
+               <typ1:negativeBalanceInfoList>
+                  <!--1 or more repetitions:-->
+                  <typ1:negativeBalanceInfo>
+                     <typ1:negativeBalanceId>?</typ1:negativeBalanceId>
+                     <typ1:balance exponent="?">?</typ1:balance>
+                     <!--Zero or more repetitions:-->
+                     <typ1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </typ1:extension>
+                  </typ1:negativeBalanceInfo>
+                  <!--Zero or more repetitions:-->
+                  <typ1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </typ1:extension>
+               </typ1:negativeBalanceInfoList>
+               <!--Zero or more repetitions:-->
+               <typ1:extension>
+                  <!--You may enter ANY elements at this point-->
+               </typ1:extension>
+            </typ1:balanceActivityInfo>
+            <!--Zero or more repetitions:-->
+            <typ1:extension>
+               <!--You may enter ANY elements at this point-->
+            </typ1:extension>
+         </typ1:result>
+         <!--Zero or more repetitions:-->
+         <typ:extension>
+            <!--You may enter ANY elements at this point-->
+         </typ:extension>
+      </typ:unsubscribeBoltonResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="unsubscribeBolton"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.getMandatoryFields">
+  <group>utilities</group>
+  <label>getMandatoryFields</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="structureType" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var dataStructure = null;
+    if(structureType instanceof DataStructure)
+        dataStructure = structureType;
+    else
+        dataStructure = new DataStructure(structureType);
+    var err = dataStructure.validate(100, true, true);
+    if(err==null)
+        return new Array();
+    return cm_common.filterErrorMessages(err, 'DE0030', '"([^"]+)"');
+  ]]></script>
+</script>

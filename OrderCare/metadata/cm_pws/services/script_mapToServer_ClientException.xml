@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.mapToServer_ClientException">
+  <highlight>64</highlight>
+  <label>mapToServer_ClientException</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="res" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="isServerException" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var code;
+    var ml = res.message.length;
+
+    var ds = null;
+    if(isServerException)
+        ds = new common.v2.serverException();
+    else
+        ds = new common.v2.clientException();
+
+    if(res.message.length >0)
+    {
+        //Due to the exception structure, we can return only one error code, the rest will be added to the variable field
+        code=res.message[0].code;
+        var type_id = code.split("_");
+        ds.exceptionCategory = type_id[0];
+        ds.exceptionId = type_id[1];
+        ds.text = res.message[0].text;
+        ds.variables[0] =res.message[0].text;
+
+    }
+
+    for (var i=1; i<ml;i++) {
+
+        //We keep adding the messages of the fault structure to the variable field
+        ds.variables[i] = "; " + res.message[i].text;
+    }
+
+    return ds;
+    /*
+    ret.clientException[i]=ds;
+    return ret;
+    */
+  ]]></script>
+</script>

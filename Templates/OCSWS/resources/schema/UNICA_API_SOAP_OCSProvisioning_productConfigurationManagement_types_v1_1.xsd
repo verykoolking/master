@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productConfigurationManagement/v1/types" 
+            xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"             
+            xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+            targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/productConfigurationManagement/v1/types" 
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+            
+<!-- PA2 -->
+
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" 
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_1.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" 
+    			schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+
+    <!-- ************************************* queryCodes ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryCodesType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:codeType"/>
+            <xsd:element ref="apt:langCode" minOccurs="0"/>
+            <xsd:element ref="apt:descriptionFlag" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCodes" type="tns:QueryCodesType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryCodesResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:codeInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCodesResponse" type="tns:QueryCodesResponseType" />
+
+    <!-- ************************************* queryCurrencyCatalog ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryCurrencyCatalogType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCurrencyCatalog" type="tns:QueryCurrencyCatalogType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryCurrencyCatalogResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:currencyToInternalMonetaryUnitConversionFactor" minOccurs="0"/>
+            <xsd:element ref="apt:requiredPrecision" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCurrencyCatalogResponse" type="tns:QueryCurrencyCatalogResponseType" />
+
+    <!-- ************************************* queryCodeDescription ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryCodeDescriptionType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:codeType"/>
+            <xsd:element ref="apt:code"/>
+            <xsd:element ref="apt:langCode" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCodeDescription" type="tns:QueryCodeDescriptionType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryCodeDescriptionResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:codeDescription" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCodeDescriptionResponse" type="tns:QueryCodeDescriptionResponseType" />
+
+    <!-- ************************************* queryActionCost ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryActionCostType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:opCode"/>
+            <xsd:element ref="apt:cancellationFlag"/>
+            <xsd:element ref="apt:userCode" minOccurs="0"/>
+            <xsd:element ref="apt:opId" minOccurs="0"/>
+            <xsd:element ref="apt:supplementaryServiceValue" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryActionCost" type="tns:QueryActionCostType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryActionCostResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:opCost" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryActionCostResponse" type="tns:QueryActionCostResponseType" />
+
+    <!-- ************************************* queryProductsCatalog ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryProductsCatalogType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:tariffPlanId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryProductsCatalog" type="tns:QueryProductsCatalogType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryProductsCatalogResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:serviceAssociationInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryProductsCatalogResponse" type="tns:QueryProductsCatalogResponseType" />
+
+
+</xsd:schema>

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.LifeCycleGraceTimerRuleForm">
+  <group>LifeCycles</group>
+  <label>LifeCycleGraceTimerRuleForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.LifeCycleGraceTimerRule</valueType>
+    </variable>
+    <variable name="TariffPlanPL" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="TopUpOriginPL" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+    <variable name="LifeCyclePL" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="SectionStack" type="elsectnstck">
+              <width>750px</width>
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="SectionHeader" type="elsecth">
+                      <label>Life Cycle Timer</label>
+                    </element>
+                    <element name="HorizontalLayout" type="elhlt">
+                      <width>750px</width>
+                      <elementList>
+                        <element name="GridLayout" type="elgrd">
+                          <colWidths>100px</colWidths>
+                          <numOfCols>2</numOfCols>
+                          <width>400px</width>
+                          <elementList>
+                            <element name="Label2" type="ellab">
+                              <label>Validity (hours)</label>
+                              <width>200px</width>
+                            </element>
+                            <element name="Validity" type="elfld">
+                              <optional type="varPath">
+                                <variablePathList>
+                                  <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                </variablePathList>
+                              </optional>
+                              <showLabel>false</showLabel>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.LifeCycleGraceTimerRule/dstruct_Validity</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>130px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="LayoutSpacer1" type="ellsp">
+                      <height>10px</height>
+                    </element>
+                    <element name="Tabset" type="eltset">
+                      <elementList>
+                        <element name="LifeCycleTab" type="eltab">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/frmui_Forms/vform_LifeCycleForm</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <label>Life Cycles</label>
+                        </element>
+                        <element name="TopUpTab" type="eltab">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/frmui_Forms/vform_TopUpForm</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <label>Top Up Origin</label>
+                        </element>
+                        <element name="TariffPlanFrame" type="eltab">
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/frmui_Forms/vform_TariffPlanForm</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <label>Tariff Plan</label>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="TariffPlanForm" type="vform">
+          <label>TariffPlanForm</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="FormFrame" type="elovf">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_TariffPlanPL</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>350px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_TariffPlanPL</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>550px</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="TopUpForm" type="vform">
+          <label>TopUpForm</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="FormFrame" type="elovf">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_TopUpOriginPL</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>350px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_TopUpOriginPL</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>550px</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="LifeCycleForm" type="vform">
+          <label>LifeCycleForm</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="FormFrame" type="elovf">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_LifeCyclePL</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                    <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>350px</height>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_LifeCyclePL</variablePath>
+                  </variablePathList>
+                </variable>
+                <width>550px</width>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initLifeCycleGraceTimer(this.model);
+        cm_spoc.initLifeCycleGraceTimerUI(this);
+        //this.EvaluationOrderList =  cm_spoc.initLifeCycleGraceTimerList(this);
+        return m;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$LifeCyclePL" type="laction">
+      <path>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_LifeCyclePL</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_LifeCyclePL</valueType>
+      <script><![CDATA[
+        var itemFinder = new Finder("cwa_epc.catalogItemFinder");
+        itemFinder.searchDocument.baseItemCode = "base_LifeCycle";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.LCGTRLifeCycleArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setLifeCyclePLModel;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$TariffPlanPL" type="laction">
+      <path>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_TariffPlanPL</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_TariffPlanPL</valueType>
+      <script><![CDATA[
+        var itemFinder = new Finder("cwa_epc.catalogItemFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TariffPlan";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.LCGTRTariffPlanArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setTariffPlanPLModel;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$TopUpOriginPL" type="laction">
+      <path>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_TopUpOriginPL</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.LifeCycleGraceTimerRuleForm/leaf_TopUpOriginPL</valueType>
+      <script><![CDATA[
+        var itemFinder = new Finder("cwa_epc.catalogItemFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TopUpOrigin";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.model.LCGTRTopUpOriginArrDS.List,"itemCode","itemCode");
+        pl.modelCallback = this.setTopUpOriginPLModel;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="setLifeCyclePLModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.LCGTRLifeCycleArrDS.List =null;
+        this.parent.model.LCGTRLifeCycleArrDS.ListDS =null;
+
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.LCGTRLifeCycleArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setTopUpOriginPLModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.LCGTRTopUpOriginArrDS.List =null;
+        this.parent.model.LCGTRTopUpOriginArrDS.ListDS =null;
+
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.LCGTRTopUpOriginArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setTariffPlanPLModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.model.LCGTRTariffPlanArrDS.List =null;
+        this.parent.model.LCGTRTariffPlanArrDS.ListDS =null;
+
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.model.LCGTRTariffPlanArrDS.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+  </methodList>
+</userInterface>

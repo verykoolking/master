@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  PA2 -->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/groupManagement/v1/types" 
+            xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"             
+            xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+            targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/groupManagement/v1/types" 
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" 
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_0.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" 
+                schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+    
+    <!-- ************************************* createGroup ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="CreateGroupType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:groupId"/>
+            <xsd:element ref="apt:accountProfileId"/>
+            <xsd:element ref="apt:serviceProviderId"/>
+            <xsd:element ref="apt:groupExtendedInfo" minOccurs="0"/>
+            <xsd:element ref="apt:cycleSpendControlFlag"/>
+            <xsd:element ref="apt:spendLimitsInfo" minOccurs="0"/>
+            <xsd:element ref="apt:groupVPNFlag"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="createGroup" type="tns:CreateGroupType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="CreateGroupResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="createGroupResponse" type="tns:CreateGroupResponseType" />
+
+    <!-- ************************************* createGroupMember ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="CreateGroupMemberType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:accountProfileId"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:serviceProviderId"/>
+            <xsd:element ref="apt:networkCardInfo"/>
+            <xsd:element ref="apt:initialBalance" minOccurs="0"/>
+            <xsd:element ref="apt:negativeBalanceUsageFlag"/>
+            <xsd:element ref="apt:subscriberExtendedInfo" minOccurs="0"/>
+            <xsd:element ref="apt:groupId"/>
+            <xsd:element ref="apt:cycleSpendControlFlag"/>
+            <xsd:element ref="apt:spendLimitsInfo" minOccurs="0"/>
+            <xsd:element ref="apt:groupBoltonUsageFlag"/>
+            <xsd:element ref="apt:additionalSpendFlag"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="createGroupMember" type="tns:CreateGroupMemberType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="CreateGroupMemberResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="createGroupMemberResponse" type="tns:CreateGroupMemberResponseType" />
+
+    <!-- ************************************* changeGroupSpendLimits ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeGroupSpendLimitsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:groupId"/>
+            <xsd:element ref="apt:cycleSpendControlFlag"/>
+            <xsd:element ref="apt:spendLimitsInfo" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeGroupSpendLimits" type="tns:ChangeGroupSpendLimitsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeGroupSpendLimitsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeGroupSpendLimitsResponse" type="tns:ChangeGroupSpendLimitsResponseType" />
+
+    <!-- ************************************* changeGroupBillingCycle ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeGroupBillingCycleType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:groupId"/>
+            <xsd:element ref="apt:billingCycleCode" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeGroupBillingCycle" type="tns:ChangeGroupBillingCycleType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeGroupBillingCycleResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeGroupBillingCycleResponse" type="tns:ChangeGroupBillingCycleResponseType" />
+
+    <!-- ************************************* changeGroupMemberAttributes ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeGroupMemberAttributesType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:cycleSpendControlFlag"/>
+            <xsd:element ref="apt:spendLimitsInfo" minOccurs="0"/>
+            <xsd:element ref="apt:groupBoltonUsageFlag"/>
+            <xsd:element ref="apt:additionalSpendFlag"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeGroupMemberAttributes" type="tns:ChangeGroupMemberAttributesType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeGroupMemberAttributesResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeGroupMemberAttributesResponse" type="tns:ChangeGroupMemberAttributesResponseType" />
+
+    <!-- ************************************* deleteGroup ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="DeleteGroupType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:groupId"/>
+            <xsd:element ref="apt:actionCauseCode" minOccurs="0"/>
+            <xsd:element ref="apt:cancellableFlag"/>
+            <xsd:element ref="apt:cancellablePeriod" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deleteGroup" type="tns:DeleteGroupType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="DeleteGroupResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deleteGroupResponse" type="tns:DeleteGroupResponseType" />
+
+    <!-- ************************************* queryGroupSpendLimits ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryGroupSpendLimitsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:groupId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryGroupSpendLimits" type="tns:QueryGroupSpendLimitsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryGroupSpendLimitsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:cycleSpendControlFlag"/>
+            <xsd:element ref="apt:spendLimitsInfo" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryGroupSpendLimitsResponse" type="tns:QueryGroupSpendLimitsResponseType" />
+
+    <!-- ************************************* queryGroupMemberAttributes ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryGroupMemberAttributesType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryGroupMemberAttributes" type="tns:QueryGroupMemberAttributesType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryGroupMemberAttributesResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:cycleSpendControlFlag"/>
+            <xsd:element ref="apt:spendLimitsInfo" minOccurs="0"/>
+            <xsd:element ref="apt:groupBoltonUsageFlag"/>
+            <xsd:element ref="apt:additionalSpendFlag"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryGroupMemberAttributesResponse" type="tns:QueryGroupMemberAttributesResponseType" />
+
+</xsd:schema>
+

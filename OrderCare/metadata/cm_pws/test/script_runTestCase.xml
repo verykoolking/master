@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.runTestCase">
+  <group>scripts</group>
+  <label>runTestCase</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="testCaseName" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="owner" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="params" type="rifp">
+      <array>true</array>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var tCase = new TestCase(testCaseName);
+
+    if(params){
+        for(var i=0; i<params.length; i+2)
+        {
+            tCase.setProperty(params[i], params[i+1]);
+        }
+    }
+
+    tCase.run();
+  ]]></script>
+</script>

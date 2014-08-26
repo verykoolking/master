@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cw_etltool.presentation.cw_etltool_ui">
+  <description><![CDATA[
+    <p style="margin-top: 0">
+      ETL Tool
+    </p>
+  ]]></description>
+  <extends>ui_com.conceptwave.system.Application</extends>
+  <label>CW ETL Tool</label>
+  <metaVersion>4</metaVersion>
+  <overrides>ui_com.conceptwave.system.Application</overrides>
+  <worklist>findDoc_cwf_pm.BaseWorklistFinder</worklist>
+  <variableList>
+    <variable name="userName" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="etlToolDashbord" type="leaf">
+      <valueType>ui_cw_etltool.presentation.etlToolDashbord</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.Application/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Page" type="expg">
+          <base>ui_com.conceptwave.system.Application/frmui_Forms/pg_Page</base>
+          <extends>ui_com.conceptwave.system.Application/frmui_Forms/pg_Page</extends>
+          <label>Page</label>
+          <overrideList>
+            <override name="vLayout" type="elvlt">
+              <height>100%</height>
+              <width>100%</width>
+              <elementList>
+                <element name="LayoutSpacer" type="ellsp"/>
+                <element name="dialog" type="elovf">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Window/uivar_dialog</variablePath>
+                      <variablePath>ui_com.conceptwave.system.Dialog/frmui_Forms</variablePath>
+                      <variablePath>ui_com.conceptwave.system.Dialog/frmui_Forms/exov_Default</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <height>100%</height>
+                  <unmanaged>true</unmanaged>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Window/uivar_dialog</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="bannerLayout" type="elhlt">
+                  <style>CwBanner</style>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="banner" type="elimg"/>
+                    <element name="VerticalLayout" type="elvlt">
+                      <alignment>right,center</alignment>
+                      <width>100%</width>
+                      <elementList>
+                        <element name="LayoutSpacer1" type="ellsp">
+                          <height>10px</height>
+                        </element>
+                        <element name="HorizontalLayout" type="elhlt">
+                          <alignment>right,center</alignment>
+                          <elementList>
+                            <element name="LayoutSpacer2" type="ellsp"/>
+                            <element name="userName" type="ellab">
+                              <icon>/cwfv/user.png</icon>
+                              <label>User Name</label>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/leaf_userName</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <wrap>false</wrap>
+                            </element>
+                            <element name="LayoutSpacer3" type="ellsp"/>
+                            <element name="logout" type="elmnu">
+                              <clickMethod type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/usrActionMethod_logout</variablePath>
+                                </variablePathList>
+                              </clickMethod>
+                              <icon>/cwfv/exit.png</icon>
+                              <label>Logout</label>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="mLayout" type="elhlt">
+                  <style>menuBar</style>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="menu" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/frmui_Forms</variablePath>
+                          <variablePath>ui_com.conceptwave.system.Application/frmui_Forms/exov_Menu</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <width>100%</width>
+                    </element>
+                    <element name="HelpImage" type="elimg">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/usrActionMethod_generateHelp</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <imageUrl>/cwf/help.gif</imageUrl>
+                      <tooltip>Show Help</tooltip>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/leaf_HelpVariable</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/permMethod_showHelp</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="context" type="elovf">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Window/leaf_contextForm</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <overflow>visible</overflow>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Window/leaf_context</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="content" type="elovf">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Window/uivar_contentForm</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <height>100%</height>
+                  <overflow>auto</overflow>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Window/uivar_content</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="contentMenu" type="elovf">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Window/uivar_content</variablePath>
+                      <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                      <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Menu</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <style>menuBar</style>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Window/uivar_content</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100%</width>
+                </element>
+                <element name="statusMessage" type="ellab">
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Application/leaf_statusMessage</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Application/permMethod_statusMessagePerm</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <wrap>false</wrap>
+                </element>
+                <element name="download" type="eldload">
+                  <fileName type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                      <variablePath>ui_com.conceptwave.system.Download/leaf_fileName</variablePath>
+                    </variablePathList>
+                  </fileName>
+                  <heightVar type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                      <variablePath>ui_com.conceptwave.system.Download/leaf_height</variablePath>
+                    </variablePathList>
+                  </heightVar>
+                  <isSimpleText type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                      <variablePath>ui_com.conceptwave.system.Download/leaf_isSimpleText</variablePath>
+                    </variablePathList>
+                  </isSimpleText>
+                  <mimeType type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                      <variablePath>ui_com.conceptwave.system.Download/leaf_mimeType</variablePath>
+                    </variablePathList>
+                  </mimeType>
+                  <simpleContent type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                      <variablePath>ui_com.conceptwave.system.Download/leaf_simpleText</variablePath>
+                    </variablePathList>
+                  </simpleContent>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <widthVar type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_com.conceptwave.system.Application/leaf_cwDownload</variablePath>
+                      <variablePath>ui_com.conceptwave.system.Download/leaf_width</variablePath>
+                    </variablePathList>
+                  </widthVar>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+          <stylesheet>/css/user.css</stylesheet>
+          <title>ETL Tool</title>
+          <visible type="varPath">
+            <variablePathList>
+              <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/permMethod_menuVisible</variablePath>
+            </variablePathList>
+          </visible>
+        </overlay>
+        <overlay name="Menu" type="exov">
+          <base>ui_com.conceptwave.system.Application/frmui_Forms/exov_Menu</base>
+          <extends>ui_com.conceptwave.system.Application/frmui_Forms/exov_Menu</extends>
+          <label>Menu</label>
+          <overrideList>
+            <override name="HorizontalLayout" type="elhlt">
+              <width>100%</width>
+              <elementList>
+                <element name="HorizontalLayoutForMenuItems" type="elhlt">
+                  <alignment>left,center</alignment>
+                  <membersMargin>2</membersMargin>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="home" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/usrActionMethod_etlHome</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <icon>/cwt/images/24/home.png</icon>
+                      <label>Home</label>
+                    </element>
+                    <element name="import" type="elmnu">
+                      <icon>/cwt/images/24/import1.png</icon>
+                      <label>Import</label>
+                      <showDown>true</showDown>
+                      <showMenuDropDown>true</showMenuDropDown>
+                      <elementList>
+                        <element name="uploadFiles" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/usrActionMethod_uploadFiles</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwt/images/24/server_mail_upload.png</icon>
+                          <label>Upload Files</label>
+                        </element>
+                        <element name="loadEPC" type="elmnu">
+                          <label>Load EPC</label>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="impReport" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/usrActionMethod_report</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwf/report.gif</icon>
+                          <label>Report</label>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="export" type="elmnu">
+                      <icon>/cwt/images/24/export2.png</icon>
+                      <label>Export</label>
+                      <showDown>true</showDown>
+                      <showMenuDropDown>true</showMenuDropDown>
+                      <elementList>
+                        <element name="configurationInstances" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/usrActionMethod_exportConfigurationIstances</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <label>Configuration Instances</label>
+                        </element>
+                        <element name="expReport" type="elmnu">
+                          <label>Report</label>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="tools" type="elmnu">
+                      <icon>/cwt/images/24/toolbox.png</icon>
+                      <label>Tools</label>
+                      <showDown>true</showDown>
+                      <showMenuDropDown>true</showMenuDropDown>
+                      <elementList>
+                        <element name="processManager" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/usrActionMethod_processManager</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwfv/gear_view.png</icon>
+                          <label>Process Manager</label>
+                        </element>
+                        <element name="eventLog" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/usrActionMethod_eventLog</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwfv/data_scroll.png</icon>
+                          <label>Event Log</label>
+                        </element>
+                        <element name="Separator" type="elsep"/>
+                        <element name="selectApplication" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/usrActionMethod_selectApp</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwfv/window_next.png</icon>
+                          <label>Select Application</label>
+                        </element>
+                        <element name="logout" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/usrActionMethod_logout</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwfv/exit.png</icon>
+                          <label>Logout</label>
+                        </element>
+                        <element name="Separator1" type="elsep">
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="createOders" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/usrActionMethod_createOrder</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <label>Creat Order</label>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="configurations" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/usrActionMethod_etlConfig</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <label>Configuration</label>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="configuration" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cw_etltool.presentation.cw_etltool_ui/usrActionMethod_etlConfig</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Configuration</label>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="HorizontalLayoutForUserWorklist" type="elhlt">
+                  <alignment>right,center</alignment>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </visible>
+                  <elementList>
+                    <element name="WrkList" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/uimthd_openWorklist</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <iconHeight>18px</iconHeight>
+                      <iconVariable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/uimthd_workListImage</variablePath>
+                        </variablePathList>
+                      </iconVariable>
+                      <iconWidth>18px</iconWidth>
+                      <imageOnRight>true</imageOnRight>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/uivar_workListFinder</variablePath>
+                          <variablePath>findDoc_cwf_pm.BaseWorklistFinder/ui_UserInterface/leaf_taskCount</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.Application/permMethod_permWorklist</variablePath>
+                        </variablePathList>
+                      </visible>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="uploadFiles" type="usrActionMethod">
+      <form>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</form>
+      <userInterface>doc_cw_etltool._import.uploadDoc</userInterface>
+      <valueType>doc_cw_etltool._import.uploadDoc</valueType>
+    </method>
+    <method name="createOrder" type="usrActionMethod">
+      <form>order_cw_etltool._export.exportOrder/tree_UserInterface/frmui_Forms/exov_Default</form>
+      <userInterface>order_cw_etltool._export.exportOrder</userInterface>
+      <valueType>order_cw_etltool._export.exportOrder</valueType>
+    </method>
+    <method name="etlConfig" type="usrActionMethod">
+      <allowInvalidObject>true</allowInvalidObject>
+      <autosave>true</autosave>
+      <dialogHeight>300</dialogHeight>
+      <dialogWidth>600</dialogWidth>
+      <showInPopup>true</showInPopup>
+      <validate>true</validate>
+      <script>return cw_etltool.common.getConfig().copyDocument(true);</script>
+    </method>
+    <method name="startProcess" type="usrActionMethod">
+      <script><![CDATA[
+        var ord = new Order("cw_etltool._import.importOrder");
+        ord.save();
+        Process.startProcess("cw_etltool._import.importProcess",ord.id);
+        Global.showUserMessage("Process Created!");
+      ]]></script>
+    </method>
+    <method name="report" type="usrActionMethod">
+      <userInterface>findScript_cw_etltool._import.reportDocFinder</userInterface>
+      <valueType>findScript_cw_etltool._import.reportDocFinder</valueType>
+    </method>
+    <method name="onInit" type="action">
+      <description><![CDATA[
+        <p style="margin-top: 0">
+          This notification method is called by the framework when this application is initialized
+        </p>
+      ]]></description>
+      <script><![CDATA[
+        this.cw$super_onInit();
+        this.userName =  UserProfile.userProfile().userName;
+        this.etlToolDashbord = new cw_etltool.presentation.etlToolDashbord(null, this);
+        return this.etlToolDashbord;
+      ]]></script>
+    </method>
+    <method name="etlHome" type="usrActionMethod">
+      <form>ui_cw_etltool.presentation.etlToolDashbord/frmui_Forms/exov_Default</form>
+      <userInterface>ui_cw_etltool.presentation.etlToolDashbord</userInterface>
+      <valueType>ui_cw_etltool.presentation.etlToolDashbord</valueType>
+      <script>return this.etlToolDashbord.refresh();</script>
+    </method>
+    <method name="processManager" type="usrActionMethod">
+      <form>findDoc_cwf_pm.ProcessFinder/ui_UserInterface/frmui_Forms/exov_Default</form>
+      <userInterface>findDoc_cwf_pm.ProcessFinder</userInterface>
+      <valueType>findDoc_cwf_pm.ProcessFinder</valueType>
+    </method>
+    <method name="eventLog" type="usrActionMethod">
+      <script><![CDATA[return new Finder("cwf_oe:EventLogFinder");]]></script>
+    </method>
+    <method name="selectApp" type="usrActionMethod">
+      <userInterface>doc_cwf_oe.SelectApp</userInterface>
+      <valueType>doc_cwf_oe.SelectApp</valueType>
+    </method>
+    <method name="logout" type="usrActionMethod">
+      <form>doc_cwf_oe.login/ui_UserInterface/frmui_Forms/exov_Default</form>
+      <userInterface>doc_cwf_oe.login</userInterface>
+      <valueType>doc_cwf_oe.login</valueType>
+      <script>UserProfile.logout();</script>
+    </method>
+    <method name="menuVisible" type="permMethod">
+      <privilegesList>
+        <privileges type="ppriv">
+          <privilege>ETLAppPriv</privilege>
+        </privileges>
+      </privilegesList>
+      <privilegesType>SOME</privilegesType>
+    </method>
+    <method name="exportConfigurationIstances" type="usrActionMethod">
+      <form>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/frmui_Forms/exov_Default</form>
+      <userInterface>doc_cw_etltool._export.ConfigurationInstancesExport</userInterface>
+      <valueType>doc_cw_etltool._export.ConfigurationInstancesExport</valueType>
+    </method>
+  </methodList>
+</userInterface>

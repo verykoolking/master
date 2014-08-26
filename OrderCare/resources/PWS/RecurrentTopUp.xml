@@ -1,0 +1,231 @@
+<OCSEntityType>
+		<oCSProductOffering>
+			<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+			<!-- Attributes inherited from SID EntityBase: identifier -->
+			<!-- Attributes inherited from SID ProductOffering: id; name; description; validFor; status -->
+			<!-- Compulsory SID attributes -->
+			<identifier>
+				<context>
+					<valuePairs/>
+					<scheme>Testing</scheme>
+				</context>
+				<dn>
+					<valuePairs/>
+					<scheme>RecurrentTopUp_T</scheme>
+				</dn>
+				<entityType>RecurrentTopUp</entityType>
+			</identifier>
+			<!-- NGAA attributes -->
+			<type>RecurrentTopUp</type>
+			<oCSProductSpecCharValueUse>
+				<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+				<characteristic  type="xsd:any">
+					<name>RecurrentTopUp</name>
+				</characteristic>
+				<complexCharacteristic minOccurs="0" individualItemUpdate="true">
+					<name>RechargedAmount</name>
+					<item operation="A">
+						<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+						<characteristic  type="xsd:any">
+							<name>RechargedAmount</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Phase Number</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="9999999">
+							<name>PhaseNumber</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Top up amount in each execution</annotation> -->
+						<characteristic  type="xsd:long" minValue="0">
+							<name>TopUpAmountInEachExecution</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>It is a percentage over the top up amount</annotation> -->
+						<characteristic  type="xsd:long" minValue="0" maxValue="1000">
+							<name>PercentageOverTheTopUpAmount</name>
+						</characteristic>
+
+					</item>
+				</complexCharacteristic>
+				<complexCharacteristic minOccurs="1" maxOccurs="unbounded" individualItemUpdate="true">
+					<name>PriceGuiding</name>
+					<item operation="A">
+						<!-- <xsd:annotation> <xsd:documentation><p>Mode</annotation> -->
+						<characteristic  type="xsd:string" enumValues="E;C">
+							<name>Mode</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>User Profile</annotation> -->
+						<characteristic  type="xsd:string" enumValues="*;PROM ;SIM ;boweb;sips;web">
+							<name>CustomerProfile</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Tax applies</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>TaxApplies</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Promotions applied on the cost</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="1">
+							<name>PromotionsAppliedOnThePrice</name>
+						</characteristic>
+
+						<relations>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="Price" oCSTargetEntityType="Price" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>Price</scheme>
+										</dn>
+										<entityType>Price</entityType>
+									</target>
+								</item>
+							</relation>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="TariffPlan" oCSTargetEntityType="TariffPlan" minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>TariffPlan</scheme>
+										</dn>
+										<entityType>TariffPlan</entityType>
+									</target>
+								</item>
+							</relation>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="Province" oCSTargetEntityType="Province" minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>Province</scheme>
+										</dn>
+										<entityType>Province</entityType>
+									</target>
+								</item>
+							</relation>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="Operation" oCSTargetEntityType="Operation" minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>Operation</scheme>
+										</dn>
+										<entityType>Operation</entityType>
+									</target>
+								</item>
+							</relation>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="ServiceProvider" oCSTargetEntityType="ServiceProvider" minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>ServiceProvider</scheme>
+										</dn>
+										<entityType>ServiceProvider</entityType>
+									</target>
+								</item>
+							</relation>
+						</relations>
+					</item>
+				</complexCharacteristic>
+				<complexCharacteristic minOccurs="0" individualItemUpdate="true">
+					<name>ChargingModeGuiding</name>
+					<item operation="A">
+						<!-- <xsd:annotation> <xsd:documentation><p>Mode</annotation> -->
+						<characteristic  type="xsd:string" enumValues="E;C">
+							<name>Mode</name>
+						</characteristic>
+
+						<relations>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="ChargingMode" oCSTargetEntityType="ChargingMode" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>ChargingMode</scheme>
+										</dn>
+										<entityType>ChargingMode</entityType>
+									</target>
+								</item>
+							</relation>
+							<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+							<relation name="Operation" oCSTargetEntityType="Operation" minOccurs="0" maxOccurs="1" individualItemUpdate="false">
+								<item>
+									<target>
+										<context>
+											<valuePairs/>
+											<scheme>String</scheme>
+										</context>
+										<dn>
+											<valuePairs/>
+											<scheme>Operation</scheme>
+										</dn>
+										<entityType>Operation</entityType>
+									</target>
+								</item>
+							</relation>
+						</relations>
+					</item>
+				</complexCharacteristic>
+			</oCSProductSpecCharValueUse>
+			<relations>
+				<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+				<relation name="RecurrentTopUpSpecification" oCSTargetEntityType="RecurrentTopUpSpecification" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+					<item>
+						<target>
+							<context>
+								<valuePairs/>
+								<scheme>String</scheme>
+							</context>
+							<dn>
+								<valuePairs/>
+								<scheme>RecurrentTopUpSpecification</scheme>
+							</dn>
+							<entityType>RecurrentTopUpSpecification</entityType>
+						</target>
+					</item>
+				</relation>
+				<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+				<relation name="TopUpOrigin" oCSTargetEntityType="TopUpOrigin" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+					<item>
+						<target>
+							<context>
+								<valuePairs/>
+								<scheme>String</scheme>
+							</context>
+							<dn>
+								<valuePairs/>
+								<scheme>TopUpOrigin</scheme>
+							</dn>
+							<entityType>TopUpOrigin</entityType>
+						</target>
+					</item>
+				</relation>
+			</relations>
+		</oCSProductOffering>
+</OCSEntityType>

@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cm_plm.plmControlDoc">
+  <extends>doc_cwl_plm.plmControlDoc</extends>
+  <generatedKey>true</generatedKey>
+  <guid>{50694236-08d0-492a-9700-7a45f94b75f8}</guid>
+  <label>CM-PLM Control Document</label>
+  <metaVersion>4</metaVersion>
+  <overrides>doc_cwl_plm.plmControlDoc</overrides>
+  <variableList>
+    <variable name="projectCode" type="leaf">
+      <column>PROJECTCODE</column>
+      <table>EPC_PLMCONTROL</table>
+      <valueType>dtype_cwt_pcdd.catalogCode</valueType>
+    </variable>
+    <variable name="caller" type="leaf">
+      <column>CALLER</column>
+      <table>EPC_PLMCONTROL</table>
+      <valueType>dtype_cm_plm.plmCallerType</valueType>
+    </variable>
+    <variable name="isComercialConfRequired" type="leaf">
+      <column>ISCOMERCIALCONFREQUIRED</column>
+      <table>EPC_PLMCONTROL</table>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="isTechnicalConfRequired" type="leaf">
+      <column>ISTECHNICALCONFREQUIRED</column>
+      <table>EPC_PLMCONTROL</table>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="isReviewRequired" type="leaf">
+      <column>ISREVIEWREQUIRED</column>
+      <table>EPC_PLMCONTROL</table>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="isTestingRequired" type="leaf">
+      <column>ISTESTINGREQUIRED</column>
+      <table>EPC_PLMCONTROL</table>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="formNameParant" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="errorMsg" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="cwLeafInitAction$caller" type="laction">
+      <path>doc_cm_plm.plmControlDoc/leaf_caller</path>
+      <type>initializer</type>
+      <valueType>doc_cm_plm.plmControlDoc/leaf_caller</valueType>
+      <script><![CDATA[return "GUI";]]></script>
+    </method>
+    <method name="cwOnDocVisualKey" type="action">
+      <system>true</system>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[return "PLM Control";]]></script>
+    </method>
+    <method name="cwOnDocInit" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        this.cw$super_cwOnDocInit();
+
+        //se hay sido gravado antes no se borra los valores
+        if(!this.isStored){
+            //variables globales config
+            var tst_req = Global.getConfigVariable("plmTestingRequired");
+            var rev_req = Global.getConfigVariable("plmReviewRequired");
+            this.isReviewRequired        = (rev_req == null) ? true : rev_req;
+            this.isTestingRequired       = (tst_req == null) ? true : tst_req;
+
+            var user = UserProfile.userProfile();
+            var isUserInMarketing = UserProfile.hasPrivilege("marketingPriv");
+            var isUserInTechnical = UserProfile.hasPrivilege("technicalPriv");
+            var isUserInRevision = UserProfile.hasPrivilege("revisionPriv");
+
+            if(isUserInMarketing){
+                this.isComercialConfRequired = true;
+                this.isTechnicalConfRequired = false;
+            }else if(isUserInTechnical){
+                this.isComercialConfRequired = false;
+                this.isTechnicalConfRequired = true;
+            }
+        }
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_cwl_plm.plmControlDoc/ui_UserInterface</extends>
+    <overrides>doc_cwl_plm.plmControlDoc/ui_UserInterface</overrides>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cm_plm.plmControlDoc</valueType>
+      </variable>
+      <variable name="controlPhases" type="leaf">
+        <valueType>findDoc_cm_plm.plmControlPhaseFinder/ui_UserInterface</valueType>
+      </variable>
+      <variable name="messageLog" type="leaf">
+        <valueType>findSql_cwl_plm.msgLogFinder/ui_UserInterface</valueType>
+      </variable>
+      <variable name="editIsComercialConfRequired" type="leaf">
+        <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+      </variable>
+      <variable name="editIsTechnicalConfRequired" type="leaf">
+        <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+      </variable>
+      <variable name="formName" type="leaf">
+        <valueType>dtype_com.conceptwave.system.String</valueType>
+      </variable>
+      <variable name="amendReason" type="leaf">
+        <valueType>dtype_com.conceptwave.system.String</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_cwl_plm.plmControlDoc/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="detail" type="vform">
+            <label>detail</label>
+            <root name="GridLayout" type="elgrd">
+              <numOfCols>2</numOfCols>
+              <elementList>
+                <element name="isComercialConfRequired" type="elchk">
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/permMethod_permIsComercialConfRequired</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <label>Comercial Configuration needed</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/uivar_model</variablePath>
+                      <variablePath>doc_cm_plm.plmControlDoc/leaf_isComercialConfRequired</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>200px</width>
+                </element>
+                <element name="isTechnicalConfRequired" type="elchk">
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/permMethod_permIsTechnicalConfRequired</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <label>Technical Configuration needed</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/uivar_model</variablePath>
+                      <variablePath>doc_cm_plm.plmControlDoc/leaf_isTechnicalConfRequired</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>200px</width>
+                </element>
+                <element name="isReviewRequired" type="elchk">
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/permMethod_permIsAdmin</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <label>Review Required?</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/uivar_model</variablePath>
+                      <variablePath>doc_cm_plm.plmControlDoc/leaf_isReviewRequired</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>200px</width>
+                </element>
+                <element name="isTestingRequired" type="elchk">
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/permMethod_permIsAdmin</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <label>Testing Required?</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/uivar_model</variablePath>
+                      <variablePath>doc_cm_plm.plmControlDoc/leaf_isTestingRequired</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>200px</width>
+                </element>
+                <element name="caller" type="elslct">
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/uivar_model</variablePath>
+                      <variablePath>doc_cm_plm.plmControlDoc/leaf_caller</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>200px</width>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="phases" type="vform">
+            <label>phases</label>
+            <root name="VerticalLayout" type="elvlt">
+              <height>100%</height>
+              <width>100%</width>
+              <elementList>
+                <element name="FormFrame" type="elovf">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/leaf_controlPhases</variablePath>
+                      <variablePath>findDoc_cm_plm.plmControlPhaseFinder/ui_UserInterface/frmui_Forms</variablePath>
+                      <variablePath>findDoc_cm_plm.plmControlPhaseFinder/ui_UserInterface/frmui_Forms/exov_Result</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <height>100%</height>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/leaf_controlPhases</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100%</width>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="messageLog" type="vform">
+            <label>messageLog</label>
+            <root name="VerticalLayout" type="elvlt">
+              <height>100%</height>
+              <width>100%</width>
+              <elementList>
+                <element name="FormFrameMenu" type="elovf">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/leaf_messageLog</variablePath>
+                      <variablePath>findSql_cwl_plm.msgLogFinder/ui_UserInterface/frmui_Forms</variablePath>
+                      <variablePath>findSql_cwl_plm.msgLogFinder/ui_UserInterface/frmui_Forms/exov_Menu</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/leaf_messageLog</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100%</width>
+                </element>
+                <element name="FormFrame" type="elovf">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/leaf_messageLog</variablePath>
+                      <variablePath>findSql_cwl_plm.msgLogFinder/ui_UserInterface/frmui_Forms</variablePath>
+                      <variablePath>findSql_cwl_plm.msgLogFinder/ui_UserInterface/frmui_Forms/vform_result</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <height>100%</height>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/leaf_messageLog</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100%</width>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="Menu" type="exov">
+            <base>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms/exov_Menu</base>
+            <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms/exov_Menu</extends>
+            <label>Menu</label>
+            <overrideList>
+              <override name="cwfSave" type="eldel"/>
+            </overrideList>
+          </overlay>
+          <overlay name="popUpRev" type="vform">
+            <label>popUpRev</label>
+            <root name="trGrid_vCentering" type="elvltstck">
+              <height>100%</height>
+              <membersMargin>5</membersMargin>
+              <width>100%</width>
+              <elementList>
+                <element name="plmControlDocGrid" type="elgrd">
+                  <colWidths>160</colWidths>
+                  <numOfCols>2</numOfCols>
+                  <useDefaultHeight>true</useDefaultHeight>
+                  <width>160px</width>
+                  <elementList>
+                    <element name="plmControlDocHeader" type="elhdr">
+                      <label>Choose Steps</label>
+                    </element>
+                    <element name="isComercialConfRequired" type="elchk">
+                      <dynStyle type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/uimthd_dynLabelisComercialConfTecnicalConf</variablePath>
+                        </variablePathList>
+                      </dynStyle>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <label>Comercial Configuration needed</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/uivar_model</variablePath>
+                          <variablePath>doc_cm_plm.plmControlDoc/leaf_isComercialConfRequired</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="isTechnicalConfRequired" type="elchk">
+                      <canSort>false</canSort>
+                      <dynStyle type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/uimthd_dynLabelisComercialConfTecnicalConf</variablePath>
+                        </variablePathList>
+                      </dynStyle>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <label>Technical Configuration needed</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/uivar_model</variablePath>
+                          <variablePath>doc_cm_plm.plmControlDoc/leaf_isTechnicalConfRequired</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>200px</width>
+                    </element>
+                    <element name="amendReason" type="eltxtArea">
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <label>Amendment reason:</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/leaf_amendReason</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>400px</width>
+                    </element>
+                    <element name="ok" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/usrActionMethod_popUpContinue</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Submit</label>
+                    </element>
+                    <element name="cancel" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/usrActionMethod_popUpCancel</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Cancel</label>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="main" type="vform">
+            <label>main</label>
+            <root name="GridLayout" type="eltset">
+              <width>100%</width>
+              <elementList>
+                <element name="errorInfo" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/frmui_Forms</variablePath>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/frmui_Forms/vform_errorInfo</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Error Info</label>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/permMethod_showErrorTab</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="detail" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/frmui_Forms</variablePath>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/frmui_Forms/vform_detail</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>PLM</label>
+                </element>
+                <element name="phases" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/frmui_Forms</variablePath>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/frmui_Forms/vform_phases</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Control Phases</label>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/permMethod_showLogs</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="messages" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/frmui_Forms</variablePath>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/frmui_Forms/vform_messageLog</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Message Log</label>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/permMethod_showLogs</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>doc_cwl_plm.plmControlDoc/ui_UserInterface/frmui_Forms/exov_Default</base>
+            <extends>doc_cwl_plm.plmControlDoc/ui_UserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="GridLayout" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="FormFrame" type="elovf">
+                    <formReference type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/leaf_formName</variablePath>
+                      </variablePathList>
+                    </formReference>
+                    <width>100%</width>
+                  </element>
+                </elementList>
+              </override>
+              <override name="VerticalLayout" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="FormFrame" type="elovf">
+                    <formReference type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/leaf_formName</variablePath>
+                      </variablePathList>
+                    </formReference>
+                    <height>100%</height>
+                    <width>100%</width>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="errorInfo" type="vform">
+            <label>errorInfo</label>
+            <root name="GridLayout" type="elgrd">
+              <elementList>
+                <element name="errorMsg" type="eltxtArea">
+                  <label>Error Info</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>doc_cm_plm.plmControlDoc/ui_UserInterface/uivar_model</variablePath>
+                      <variablePath>doc_cm_plm.plmControlDoc/leaf_errorMsg</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>400px</width>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="onInit" type="action">
+        <valueType>nmeta_com.conceptwave.system.Object</valueType>
+        <script><![CDATA[
+          if(this.model.isStored) {
+              var contrlPhaseFinder = new cm_plm.plmControlPhaseFinder();
+              contrlPhaseFinder.searchDocument.projectCode = this.model.projectCode;
+              contrlPhaseFinder.search();
+              this.controlPhases = new cm_plm.plmControlPhaseFinder.UserInterface(contrlPhaseFinder);
+
+              var messageLogFinder = new cwl_plm.msgLogFinder();
+              messageLogFinder.searchDocument.userData = this.model.projectCode;
+              messageLogFinder.searchDocument.fromTime = Order.getOrderInstance(this.model.cwOrderId).creationDate;
+              messageLogFinder.search();
+              this.messageLog = new cwl_plm.msgLogFinder.UserInterface(messageLogFinder);
+          }
+
+          var user = UserProfile.userProfile();
+          var isUserInMarketing = UserProfile.hasPrivilege("marketingPriv");
+          var isUserInRevision = UserProfile.hasPrivilege("revisionPriv");
+
+          //reglas delos campos isComercialConfRequired y isTechnicalConfRequired
+          this.editIsComercialConfRequired = !this.model.isStored;
+          this.editIsTechnicalConfRequired = !this.model.isStored;
+
+          if(this.model.formNameParant == null){
+              this.formName = 'main';
+          }else{
+              this.formName = this.model.formNameParant;
+          }
+
+          var workListItem = null;
+          var workItemDoc = null;
+          var procDoc = null;
+
+          if(this.model.parent != null && this.model.parent.parent != null){
+              workListItem = this.model.parent.parent;
+              workItemDoc = workListItem.workItemDocument;
+              if(workItemDoc != null){
+                  procDoc = Process.getProcessDocument(workItemDoc.SenderId);
+              }
+          }
+
+          if(procDoc != null){
+              this.model.errorMsg = procDoc.caReturnMessage;
+          }
+        ]]></script>
+      </method>
+      <method name="showLogs" type="permMethod">
+        <script>return this.model.isStored;</script>
+      </method>
+      <method name="permIsComercialConfRequired" type="permMethod">
+        <script>return this.editIsComercialConfRequired;</script>
+      </method>
+      <method name="permIsTechnicalConfRequired" type="permMethod">
+        <script>return this.editIsTechnicalConfRequired;</script>
+      </method>
+      <method name="popUpContinue" type="usrActionMethod">
+        <script><![CDATA[
+          var ord = Order.getOrderById(this.model.cwOrderId);
+          this.addToOrderNote(ord);
+          this.updatePopUpFields(ord);
+          ord.save();
+
+          if (this.validateForm()){
+          Global.runContentDisplayScript(this, "displayScript");
+          Global.confirmOK();
+          }
+        ]]></script>
+      </method>
+      <method name="popUpCancel" type="usrActionMethod">
+        <script><![CDATA[
+          Global.runContentDisplayScript(this, "displayScript");
+          return Global.STOP_UI;
+        ]]></script>
+      </method>
+      <method name="addToOrderNote" type="uimthd">
+        <parameterList>
+          <parameter name="ord" type="rifp">
+            <type>nmeta_com.conceptwave.system.Object</type>
+          </parameter>
+        </parameterList>
+        <script><![CDATA[
+          if(!this.amendReason || this.amendReason.trim() == "")
+              return;
+
+          var ordNotes = ord.notes;
+
+          if(ordNotes.notes)
+              ordNotes.notes += new Date() + " - " + UserProfile.userId() + ":\n";
+          else
+              ordNotes.notes = new Date() + " - " + UserProfile.userId() + ":\n";
+
+          ordNotes.notes += this.amendReason + "\n";
+          ordNotes.notes += "------------------------------------------" + "\n";
+
+          //reset the new Amend Reason
+          this.amendReason = "";
+        ]]></script>
+      </method>
+      <method name="updatePopUpFields" type="uimthd">
+        <parameterList>
+          <parameter name="ord" type="rifp">
+            <type>nmeta_com.conceptwave.system.Object</type>
+          </parameter>
+        </parameterList>
+        <script><![CDATA[
+          var ordPlmControl = ord.plmControl;
+
+          ordPlmControl.isComercialConfRequired = this.model.isComercialConfRequired;
+          ordPlmControl.isTechnicalConfRequired = this.model.isTechnicalConfRequired;
+        ]]></script>
+      </method>
+      <method name="validateForm" type="uimthd">
+        <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+        <script>return this.model.isComercialConfRequired || this.model.isTechnicalConfRequired;</script>
+      </method>
+      <method name="dynLabelisComercialConfTecnicalConf" type="uimthd">
+        <valueType>dtype_com.conceptwave.system.String</valueType>
+        <script><![CDATA[
+          if (!this.validateForm())
+              return "cwErrorMessage";
+          else
+              return "";
+        ]]></script>
+      </method>
+      <method name="showErrorTab" type="permMethod">
+        <script>return this.model.errorMsg != null;</script>
+      </method>
+      <method name="permIsAdmin" type="permMethod">
+        <privilegesList>
+          <privileges type="ppriv">
+            <privilege>CWAdminApp</privilege>
+          </privileges>
+        </privilegesList>
+        <privilegesType>SOME</privilegesType>
+      </method>
+    </methodList>
+  </UserInterface>
+</document>

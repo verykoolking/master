@@ -1,0 +1,1495 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<conversionMap name="cm_spoc.RatingTreeCM">
+  <group>ui_scripts.RatingTree.RTFinder</group>
+  <itemMapList>
+    <itemMap name="0" type="mapItem">
+      <sourcePath name="source" type="mapPath">
+        <pathList>
+          <path>dstruct_cm_spoc.data.RatingTreeBranch</path>
+          <path>dstruct_epc.data.Specification/dstruct_specificationCode</path>
+        </pathList>
+      </sourcePath>
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_specificationCode</path>
+        </pathList>
+      </targetPath>
+    </itemMap>
+    <itemMap name="1" type="mapItem">
+      <sourcePath name="source" type="mapPath">
+        <pathList>
+          <path>dstruct_cm_spoc.data.RatingTreeBranch</path>
+          <path>dstruct_cm_spoc.data.RatingTreeBranch/dstruct_RTBRTNodeOutputArrDS</path>
+          <path>dstruct_cm_spoc.data.RTBRTNodeOutputArr/dstruct_ListDS</path>
+          <path>dstruct_cm_spoc.data.RatingTreeNodeOutput/dstruct_NodeName</path>
+        </pathList>
+      </sourcePath>
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_nodeType</path>
+        </pathList>
+      </targetPath>
+    </itemMap>
+    <itemMap name="3" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_tonCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var str = "";
+
+            for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                var listDS = rtbrtArrDS[i].RTNOTonArrDS.List;
+                var lengthDS = listDS.length;
+                for ( var j = 0; j < lengthDS; j++){
+                    if ( j > 0 )
+                        str = str + ";";
+                     var s = new epc.data.Specification();
+                    s.project =  cwa_epc.getDefaultProj();
+                    s.specificationCode = listDS[j];
+
+                    var r = epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(r)){
+                            str = str + r.TonCode;
+                    }
+
+
+                }
+            }
+            return str;
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="7" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_tonDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var str = "";
+
+            for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                var listDS = rtbrtArrDS[i].RTNOTonArrDS.List;
+                var lengthDS = listDS.length;
+                for ( var j = 0; j < lengthDS; j++){
+                    if ( j > 0 )
+                        str = str + ";";
+                     var s = new epc.data.Specification();
+                    s.project =  cwa_epc.getDefaultProj();
+                    s.specificationCode = listDS[j];
+
+                    var r = epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(r)){
+                            str = str + r.TonDescription;
+                    }
+
+
+                }
+            }
+            return str;
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="14" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_tribeCategoryDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var str = "";
+
+            for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                var listDS = rtbrtArrDS[i].RTNOTribeCategoryArrDS.List;
+                var lengthDS = listDS.length;
+                for ( var j = 0; j < lengthDS; j++){
+                    if ( j > 0 )
+                        str = str + ";";
+                     var s = new epc.data.Specification();
+                    s.project =  cwa_epc.getDefaultProj();
+                    s.specificationCode = listDS[j];
+
+                    var r = epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(r)){
+                            str = str + r.CategoryDescription;
+                    }
+
+
+                }
+            }
+            return str;
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="44" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_tribeDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var str = "";
+
+            for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                var listDS = rtbrtArrDS[i].RTNOTribeArrDS.List;
+                var lengthDS = listDS.length;
+                for ( var j = 0; j < lengthDS; j++){
+                    if ( j > 0 )
+                        str = str + ";";
+                     var s = new epc.data.Specification();
+                    s.project =  cwa_epc.getDefaultProj();
+                    s.specificationCode = listDS[j];
+
+                    var r = epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(r)){
+                            str = str + r.TribeDescription;
+                    }
+
+
+                }
+            }
+            return str;
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="4" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_tribeCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var str = "";
+
+            for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                var listDS = rtbrtArrDS[i].RTNOTribeArrDS.List;
+                var lengthDS = listDS.length;
+                for ( var j = 0; j < lengthDS; j++){
+                    if ( j > 0 )
+                        str = str + ";";
+                     var s = new epc.data.Specification();
+                    s.project =  cwa_epc.getDefaultProj();
+                    s.specificationCode = listDS[j];
+
+                    var r = epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(r)){
+                            str = str + r.TribeId;
+                    }
+
+
+                }
+            }
+            return str;
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="45" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_ECSCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "ECSNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="17" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_FABCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "FABDestFreeDestTrafficTypeCodeTa";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="69" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_LCCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "LCNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="62" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_LDCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "LDNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="16" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_MLDCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "MLDNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="2" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_OOSCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "OOSNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="64" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_ORZCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "ORZNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="46" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_OZTCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "OZTNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="21" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_PTCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "PTNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="49" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_QMCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "QMNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="50" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_RPCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "RPNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="53" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_RZCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "RZNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="51" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_SCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "SNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="52" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_SZCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "SZNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="54" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_TNSCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "TNSNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="55" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_TPCCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "TPCNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="56" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_TSDCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "TSDNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="57" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_TSVCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "TSVNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="58" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_UTCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "UTNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="18" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_ECSDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "ECSNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="43" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_ECTDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "ECTNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="10" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_FABDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "FABDestFreeDestTrafficTypeCodeTa";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="41" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_HZCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "HZNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="67" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_HZDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "HZNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="37" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_LCDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "LCNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="39" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_LDDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "LDNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="66" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_MLDDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "MLDNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="47" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_OODesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "OONodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="22" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_OOSDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "OOSNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="24" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_ORZDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "ORZNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="23" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_OZTDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "OZTNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="25" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_PTDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "PTNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="30" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_PTTDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "PTTNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="26" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_QMDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "QMNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="27" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_RPDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "RPNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="28" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_RZDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "RZNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="29" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_SDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "SNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="31" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_SZDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "SZNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="32" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_TNSDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "TNSNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="33" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_TPCDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "TPCNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="34" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_TSDDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "TSDNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="36" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_TSVDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "TSVNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="35" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_UTDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "UTNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="42" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_ATCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "ATNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="60" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_ATDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "ATNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="38" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_CATCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "CATNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="68" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_CATDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "CATNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="6" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_COTCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "COTNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="65" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_COTDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "COTNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="13" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_DCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "DNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="19" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_DDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "DNodeType";
+            return cm_spoc.calculateDesc(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="5" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_ECTCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "ECTNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="63" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_listDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var str = "";
+
+            for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                var listDS = rtbrtArrDS[i].RTNOListArrDS.List;
+                var lengthDS = listDS.length;
+                for ( var j = 0; j < lengthDS; j++){
+                    if ( j > 0 )
+                        str = str + ";";
+                     var s = new epc.data.Specification();
+                    s.project =  cwa_epc.getDefaultProj();
+                    s.specificationCode = listDS[j];
+
+                    var r = epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(r)){
+                            str = str + r.ListDescription;
+                    }
+
+
+                }
+            }
+            return str;
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="8" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_OOCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "OONodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="15" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_PTTCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var codeTable = "PTTNodeType";
+            return cm_spoc.calculateCode(rtbrtArrDS, codeTable);
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="48" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_spCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var str = "";
+
+            for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                var listDS = rtbrtArrDS[i].RTNOServiceProviderArrDS.List;
+                var lengthDS = listDS.length;
+                for ( var j = 0; j < lengthDS; j++){
+                    if ( j > 0 )
+                        str = str + ";";
+                     var s = new epc.data.Specification();
+                    s.project =  cwa_epc.getDefaultProj();
+                    s.specificationCode = listDS[j];
+
+                    var r = epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(r)){
+                            str = str + r.ServiceProviderId;
+                    }
+
+
+                }
+            }
+            return str;
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="40" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_spDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var str = "";
+
+            for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                var listDS = rtbrtArrDS[i].RTNOServiceProviderArrDS.List;
+                var lengthDS = listDS.length;
+                for ( var j = 0; j < lengthDS; j++){
+                    if ( j > 0 )
+                        str = str + ";";
+                     var s = new epc.data.Specification();
+                    s.project =  cwa_epc.getDefaultProj();
+                    s.specificationCode = listDS[j];
+
+                    var r = epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(r)){
+                            str = str + r.ServiceProviderDescription;
+                    }
+
+
+                }
+            }
+            return str;
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="61" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_tariffCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var str = "";
+
+            for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                var listDS = rtbrtArrDS[i].RTNOTariffPlanArrDS.List;
+                var lengthDS = listDS.length;
+                for ( var j = 0; j < lengthDS; j++){
+                    if ( j > 0 )
+                        str = str + ";";
+                     var s = new epc.data.Specification();
+                    s.project =  cwa_epc.getDefaultProj();
+                    s.specificationCode = listDS[j];
+
+                    var r = epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(r)){
+                            str = str + r.TariffPlanIdentifier;
+                    }
+
+
+                }
+            }
+            return str;
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="9" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_tariffDesc</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var str = "";
+
+            for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                var listDS = rtbrtArrDS[i].RTNOTariffPlanArrDS.List;
+                var lengthDS = listDS.length;
+                for ( var j = 0; j < lengthDS; j++){
+                    if ( j > 0 )
+                        str = str + ";";
+                     var s = new epc.data.Specification();
+                    s.project =  cwa_epc.getDefaultProj();
+                    s.specificationCode = listDS[j];
+
+                    var r = epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(r)){
+                            str = str + r.TariffPlanDescription;
+                    }
+
+
+                }
+            }
+            return str;
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="11" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_tribeCategoryCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var str = "";
+
+            for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                var listDS = rtbrtArrDS[i].RTNOTribeCategoryArrDS.List;
+                var lengthDS = listDS.length;
+                for ( var j = 0; j < lengthDS; j++){
+                    if ( j > 0 )
+                        str = str + ";";
+                     var s = new epc.data.Specification();
+                    s.project =  cwa_epc.getDefaultProj();
+                    s.specificationCode = listDS[j];
+
+                    var r = epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(r)){
+                            str = str + r.CategoryId;
+                    }
+
+
+                }
+            }
+            return str;
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="59" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_listCode</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var str = "";
+
+            for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                var listDS = rtbrtArrDS[i].RTNOListArrDS.List;
+                var lengthDS = listDS.length;
+                for ( var j = 0; j < lengthDS; j++){
+                    if ( j > 0 )
+                        str = str + ";";
+                     var s = new epc.data.Specification();
+                    s.project =  cwa_epc.getDefaultProj();
+                    s.specificationCode = listDS[j];
+
+                    var r = epc.getSpecificationByKey(s);
+                    if(!api_common.isFault(r)){
+                            str = str + r.ListCode;
+                    }
+
+
+                }
+            }
+            return str;
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+    <itemMap name="20" type="mapItem">
+      <targetPath name="target" type="mapPath">
+        <pathList>
+          <path>doc_cm_spoc.RatingTreeDoc</path>
+          <path>doc_cm_spoc.RatingTreeDoc/leaf_att</path>
+        </pathList>
+      </targetPath>
+      <methodList>
+        <method name="cwOnItemConversion" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var rtbrtArrDS = this.RTBRTNodeOutputArrDS.ListDS;
+            var str = "";
+
+            for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                var nodeName = rtbrtArrDS[i].NodeName;
+                var doc = Document.readDoc("cm_spoc.RatingTreeNodeTypes",nodeName);
+                var att = null;
+                if (doc.nodeType == 'att'){
+
+                    for ( var i = 0; i < rtbrtArrDS.length; i++ ){
+                        if(rtbrtArrDS[i].NodeName == 'G'){
+                            var listDS = rtbrtArrDS[i].RTNodeOutputArrDS.ListDS;
+                            var lengthDS = listDS.length;
+                            for ( var j = 0; j < lengthDS; j++){
+                                if ( j > 0 )
+                                    str = str + ";";
+                                str = str + listDS[j].NodeValue;
+                            }
+                        }
+                    }
+
+                }
+            }
+            return str;
+          ]]></script>
+        </method>
+      </methodList>
+    </itemMap>
+  </itemMapList>
+  <label>RatingTreeCM</label>
+  <metaVersion>4</metaVersion>
+  <source>dstruct_cm_spoc.data.RatingTreeBranch</source>
+  <target>doc_cm_spoc.RatingTreeDoc</target>
+</conversionMap>

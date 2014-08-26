@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initSACFinder">
+  <group>ui_scripts.UsageControl.AccumulationConditions</group>
+  <label>initSACFinder</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var finderUi =  new cm_spoc.SACFinder.UserInterface(null,ui);
+
+    if ( !ui.model.specificationCode ) {
+        //Forcing the result set into the SAC Finder
+        var emptyRes = new DataObjectList();
+        finderUi.model.setList(emptyRes);
+
+    } else {
+        var parentModel = "UCPositiveConditions";
+        var nameArrayDS = "UCPositiveConUCACArrDS";
+        var nameArray = "UCPositiveConUCACArr";
+
+        if (ui.negative) {
+            parentModel = "UCNegativeConditions"
+            nameArrayDS = "UCNegativeConUCACArrDS";
+            nameArray = "UCNegativeConUCACArr";
+
+        }
+
+        var code = ui.model[nameArray];
+
+
+        //Getting the Simple Conditions associated
+        /* var associationsFinder =  new cm_spoc.itemRelationFinder();
+        associationsFinder.searchDocument.itemCode =  code;
+        var result = associationsFinder.search();
+
+       //From items code to DS
+        cm_spoc.fromResultToDs(result);*/
+       // cm_spoc.fromResultToUCSApConditDs(result);
+
+        //From DS to Doc
+
+        var result= cm_spoc.fromArrayToDOL(ui.model[nameArrayDS].ListDS);
+
+        mapToOutputDoc(result);
+        finderUi.model.updateUI();
+        //Forcing the result set into the SAC Findet
+        finderUi.model.setList(result);
+    }
+
+
+    return finderUi;
+
+
+
+    function mapToOutputDoc(result) {
+
+        for (var t=0;t<result.length;t++ ) {
+            var doc = new cm_spoc.UCSimpleAccumulationConditionsDoc();
+            result[t]=result[t].mapTo(doc,"cm_spoc.SimpleApplicabilityConditionsCM")[0];
+
+        }
+    }
+  ]]></script>
+</script>

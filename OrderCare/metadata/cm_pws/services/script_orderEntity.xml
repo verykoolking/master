@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.orderEntity">
+  <label>orderEntity</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="entity" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var response;
+    var innerDS;
+    switch(entity.metadataType){
+        case "OCSEntity.v1.types:OCSComponentProdOfferPriceType":
+        innerDS = entity.oCSProdOfferPriceCharacteristic;
+        break;
+        case "OCSEntity.v1.types:OCSProductOfferingType":
+        innerDS = entity.oCSProductSpecCharValueUse;
+        break;
+        case "OCSEntity.v1.types:OCSProductSpecificationType":
+        innerDS = entity.oCSProductSpecCharacteristic;
+        break;
+        default:
+        return [api_common.createFault("E302", "The entity type is not ssupported!"),false];    //TODO: provide the correct code
+    }
+
+
+    for(var i=0; i<innerDS.complexCharacteristic.length; i++)
+    {
+      innerDS.complexCharacteristic[i] = sortDS(innerDS.complexCharacteristic[i]);
+    }
+
+
+    //Ordered Entity
+    return entity;
+
+    //******************************************//
+    //////////////////////////////////////////////
+    function sortDS(DS)
+    {
+        var position;
+        var biArray = new Array();
+        if(DS.item.length>1)
+        {
+            for(var i=0; i<DS.item.length; i++)
+            {
+                position =  DS.item[i].position;
+                if(position &&  position.trim() !="")
+                {
+                    var currArray  = new Array();
+                    currArray[0] =  parseInt(position);
+                    currArray[1] =  DS.item[i];
+                    biArray[biArray.length] =  currArray;
+                }
+            }
+            biArray.sort(function(a,b) { return a[0] - b[0]; });
+            DS = cleanItemsInDS(DS);
+            DS = fillItemsInDS(DS,biArray);
+        }
+       return DS;
+    }
+
+    function cleanItemsInDS(ds) {
+        var counter = ds.item.length;
+        for(var i=0; i<counter; i++)
+        {
+         ds.item.removeAt(0);
+        }
+        return ds;
+    }
+
+    function fillItemsInDS(ds,biArray){
+
+        for(var i =  0; i<biArray.length; i++)
+        {
+            ds.item[i] = biArray[i][1];
+        }
+        return ds;
+    }
+  ]]></script>
+</script>

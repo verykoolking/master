@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.mapFromAltamira">
+  <highlight>32</highlight>
+  <label>mapFromAltamira</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Maps to Altamira
+     *
+     * @author  Luis Amorim / Daniel Gomes
+     * @date    2014/05/29
+     *
+     * @param {DataStructure}  dtree
+     */
+    Global.logDebug("mapFromAltamira");
+
+    try {
+            if ( dtree.isQueryRequest ){
+                if( dtree.altamiraResponse.has("token") && dtree.altamiraResponse.token )
+                    dtree.response.token = dtree.altamiraResponse.token;
+                else if( dtree.altamiraResponse.has("extension") && dtree.altamiraResponse.extension.has("token") && dtree.altamiraResponse.extension.token)
+                    dtree.response.token = dtree.altamiraResponse.extension.token;
+            }else{
+                map_oCSAccOpResultInfo( dtree.altamiraResponse.result, dtree.response.oCSAccOpResultInfo );
+            }
+
+            if(dtree.pmOperation[0].provisioningOperationType == 'queryProduct')
+                mapQueryProd(dtree.altamiraResponse, dtree.response.oCSProductInstanceList, dtree.altamiraRequest);
+            else if(dtree.pmOperation[0].activeServiceRegistry && dtree.pmOperation[0].updateServiceRegistry)
+                mapSubscribe(dtree.altamiraResponse, dtree.response.oCSProductInstance.oCSProduct.oCSProductCharacteristicValue, dtree.altamiraRequest);
+    }
+    catch (err)
+    {
+        dtree.errorcode.push("ER_WF_799");
+        dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_799", [err]));
+        return false;
+    }
+
+    return true;
+
+    //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    //||||||||||||||||||||||||------- Auxiliar Functions -------||||||||||||||||||||||||||||
+    //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+    //Function to map the "queryProduct"
+    function mapQueryProd(fromAADS, toESDS, toAADS){
+
+        var path = dtree.pmOperation[0].prodInstancePathAA ? dtree.pmOperation[0].prodInstancePathAA.split('.') : null;
+        for (var x=0; path && x < path.length; x++){
+            fromAADS = fromAADS[path[x]];
+        }
+
+        for(var i = 0; i < fromAADS.length; i++){
+            //Maps each product
+            var productToMap  = fromAADS[i];
+            var nodesInfo     = productToMap.getNodeNames();
+            var idx           = toESDS.oCSProductInstance.length;
+            for(var j = 0; j < nodesInfo.length && nodesInfo[j] != "extension"; j++)
+                mapProducts(productToMap[nodesInfo[j]], toESDS.oCSProductInstance[idx].oCSProduct.oCSProductCharacteristicValue, nodesInfo[j]);
+
+            //Map Product IDs
+            var productIdAA       = new Array();
+            var productIdAAempty  = true;
+
+            var list = dtree.pmOperation[0].prodIdFieldpathAA ? dtree.pmOperation[0].prodIdFieldpathAA.split(",") : null;
+            for (var x=0; list && x < list.length; x++ ) {
+                if(list[x]){
+                    productIdAA.push( eval('productToMap.' + list[x]) );
+                }else{
+                    productIdAA.push(null);
+                }
+                productIdAAempty = productIdAAempty && productIdAA[productIdAA.length - 1] == null;
+            }
+
+            var offerType     = dtree.offerType;
+            var subscriberId  = dtree.request.subscriberId;
+            var productNumber = dtree.catalogData.oCSProductSpecificationItemcode;
+            var infoSR        = null;
+            for(var v = 0; dtree.entitiesSR && v < dtree.entitiesSR.length; v++){
+                var line         = dtree.entitiesSR[v];
+                var condition    = line.offerType == offerType && line.subscriberId == subscriberId && line.productNumber == productNumber
+                    && line.opId == productIdAA[0] && line.productIdAA1 == productIdAA[1] && line.productIdAA2 == productIdAA[2] && line.productIdAA3 == productIdAA[3];
+
+                if(condition){
+                    infoSR   =  dtree.entitiesSR[v]; break;
+                }
+            }
+
+            var productSerialNumber = infoSR ? infoSR.productSerialNumber : "";
+            if(productIdAAempty && dtree.entitiesSR && dtree.entitiesSR.length > 1)
+                productSerialNumber = "";
+
+            dtree.catalogData.oCSProductInstanceProductSerialNumber = productSerialNumber;
+
+            var productInstanceId           = toESDS.oCSProductInstance[idx].productInstanceId;
+
+            productInstanceId.productSpecificationId.productNumber     = infoSR ? infoSR.productNumber : productNumber;
+            productInstanceId.productSerialNumber                      = productSerialNumber;
+        }
+    }
+
+    //Function to map the "subscribeProductOffering"
+    function mapSubscribe(fromAADS, toESDS, toAADS){
+        //Mapping default values. The "invisible" ones...
+        for(var x = 0; x < dtree.pmOperationFieldToAA.length; x++){
+            if(dtree.pmOperationFieldToAA[x].mandatory == '0' && dtree.pmOperationFieldToAA[x].ignoreToAA == '0' && dtree.pmOperationFieldToAA[x].overridden == '1' && dtree.pmOperationFieldToAA[x].fromCatalog == '0'){
+                var destinationField    = dtree.pmOperationFieldToAA[x].destinationField;
+                var defaultVal          = dtree.pmOperationFieldToAA[x].defaultValue;
+                var override            = dtree.pmOperationFieldToAA[x].overridden == '1';
+                var catalogField        = dtree.pmOperationFieldToAA[x].overriddenCatalogField;
+                mapDefaults(destinationField, catalogField, defaultVal, dtree.altamiraRequest, override);
+            }
+        }
+
+        var nodes = toAADS.getNodeNames();
+        for(var i = 0; i<nodes.length; i++){
+            if(nodes[i] != "actionCommonInfo" && nodes[i] != "subscriberId"/* && nodes[i] != "extension"*/){
+                //var nodes = nodes[i];
+                //break;
+                mapProducts(toAADS[nodes[i]], toESDS, nodes[i]);
+                /*var from = toAADS[nodes[i]];
+                var nodesInfo = from.getNodeNames();
+                for(var j = 0; j < nodesInfo.length && nodesInfo[j] != "extension"; j++)
+                    mapProducts(from[nodesInfo[j]], toESDS, nodesInfo[j]);*/
+            }
+        }
+        /*var from = toAADS[nodes];
+        var nodesInfo = from.getNodeNames();
+        for(var j = 0; j < nodesInfo.length && nodesInfo[j] != "extension"; j++)
+            mapProducts(from[nodesInfo[j]], toESDS, nodesInfo[j]);*/
+
+        //Map Product IDs
+        dtree.catalogData.oCSProductInstanceProductSerialNumber = /*dtree.catalogData.oCSProductOfferingType + '_' + */fromAADS.result.opReference.opId;
+        var productInstanceId_value     = dtree.catalogData.oCSProductSpecificationItemcode;
+        var productSerialNumber_value   = dtree.catalogData.oCSProductInstanceProductSerialNumber;
+
+        var productInstanceId           = dtree.response.oCSProductInstance.productInstanceId;
+
+        productInstanceId.productSpecificationId.productNumber = productInstanceId_value;
+        productInstanceId.productSerialNumber = productSerialNumber_value;
+    }
+
+    //Function to recursively map the complexCharacteristic and characteristic of a Product
+    function mapProducts(from, to, nodeName){
+        if(to.visualKey == 'item')
+            to = to[0];
+
+        if(from != null && from.parent && (typeof from == 'object') && !from.isBasedOn("OCSProvision.v1.types.UnitValueType")
+            /* INI 20140813 LA punto 30 */
+            && !from.isBasedOn("OCSProvision.v1.types.listCodeType")
+            && !from.isBasedOn("OCSProvision.v1.types.cyclicCodeType")
+            && !from.isBasedOn("OCSProvision.v1.types.boltonInstanceDetailedInfoFlagType")
+            /* FIM 20140813 LA punto 30 */
+          ) {
+            //Isn't the last node.
+            if(from.isCollection()){
+                //Its an array of values
+                for(var y = 0; y < from.length; y++){
+                    mapProducts(from[y], to, nodeName)
+                }
+            }else{
+                var nos = from.getNodeNames();
+                if(hasNodeContent(from, nos)){
+                    var idxx = to.complexCharacteristic.length;
+                    for(var i = 0; i < nos.length; i++){
+                        var cpxCar = to.complexCharacteristic[idxx];
+                        //cpxCar.name = from.visualKey;
+                        cpxCar.name = pm_wm.getAttributeName(from.visualKey);
+                        //if(nos[i] != "extension")
+                            mapProducts(from[nos[i]], cpxCar.item, nos[i])
+                    }
+                }
+            }
+        }else{
+            if(from){
+                var exp = null;
+                if(from.parent && (typeof from == 'object') && from.isChild('exponent')){//Is number
+                    exp = from.exponent;
+                    from = from.long;
+                }
+                /* INI 20140813 LA punto 30 */
+                else {
+                    exp = null;
+                    if(from.parent && (typeof from == 'object')) {
+                        if (from.isChild('string')) { //Is string
+                          from = from.string;
+                        }
+                        else {
+                            if (from.isChild('FlagType')) {//Is FlagType
+                              from = from.FlagType;
+                            }
+                        }
+                      }
+                }
+                /* FIM 20140813 LA punto 30 */
+
+                if(from){
+                    var idx = to.characteristic.length;
+                    //to.characteristic[idx].name             = nodeName;
+                    to.characteristic[idx].name             = pm_wm.getAttributeName(nodeName);
+                    to.characteristic[idx].value.string     = from;
+                    to.characteristic[idx].value.exponent   = exp;
+                }
+            }
+        }
+    }
+
+    function mapDefaults(path, catalogField, defaultVal, dataStruct, override){
+        var nodes = path.split('.');
+        var substring = '';
+        for(var y = 0; y < nodes.length - 1; y++){
+            if(dataStruct.isCollection()){
+                for(var z = 0; z < dataStruct.length; z++){
+                    mapDefaults(path.slice(substring.length), catalogField, defaultVal, dataStruct[z], override);
+                }
+                return;
+            }else{
+                dataStruct = dataStruct[nodes[y]];
+            }
+            substring = substring + nodes[y] + '.';
+        }
+        if(dataStruct[nodes[nodes.length - 1]] == null){
+            if(catalogField != 'opReference.opId')
+                dataStruct[nodes[nodes.length - 1]] = override ? pm_wm.getAttributeFromAttributesHierarchy( dtree.catalogData.attributesHierarchy, "attributepath", catalogField ).defaultvalue : defaultVal;
+            else
+                dataStruct[nodes[nodes.length - 1]] = eval('dtree.altamiraResponse.result.' + catalogField);
+        }
+    }
+
+    function hasNodeContent(node, leafNames){
+        for(var x=0; x<leafNames.length; x++){
+            if(node.has(leafNames[x])) return true;
+        }
+        return false;
+    }
+
+    function map_oCSAccOpResultInfo ( fromDS, toDS ) {
+        // map opId
+        var list = dtree.pmOperation[0].prodIdFieldpathAA ? dtree.pmOperation[0].prodIdFieldpathAA.split(",") : null;
+        if(list && list[0].toLowerCase() != 'opid'){
+            toDS.opReference.opId = eval('dtree.altamiraRequest.' + list[0]);
+        }
+        toDS.opReference.opId = toDS.opReference.opId ? toDS.opReference.opId : fromDS.opReference.opId;
+
+        if ( fromDS.has("opExecutionDate")) toDS.opExecutionDate      = fromDS.opExecutionDate;
+
+        // map the opCost if it comes in the request
+        if( fromDS.has("opCost") ) {
+            toDS.price.long = fromDS.opCost.long;
+            if ( (fromDS.opCost.has("exponent")) && (fromDS.opCost.exponent) )
+                toDS.price.exponent = fromDS.opCost.exponent;
+        }
+
+        // map balanceActivityInfo
+        if( fromDS.has("balanceActivityInfo") ) {
+            if ( (fromDS.balanceActivityInfo.has("balance")) && (fromDS.balanceActivityInfo.balance) ) {
+                toDS.balanceActivityInfo.balance.long = fromDS.balanceActivityInfo.balance.long;
+                if ( (fromDS.balanceActivityInfo.balance.has("exponent")) && (fromDS.balanceActivityInfo.balance.exponent) )
+                    toDS.balanceActivityInfo.balance.exponent = fromDS.balanceActivityInfo.balance.exponent;
+            }
+            if ( (fromDS.balanceActivityInfo.has("negativeBalance")) && (fromDS.balanceActivityInfo.negativeBalance) ) {
+                toDS.balanceActivityInfo.negativeBalance.long = fromDS.balanceActivityInfo.negativeBalance.long;
+                if ( (fromDS.balanceActivityInfo.negativeBalance.has("exponent")) && (fromDS.balanceActivityInfo.negativeBalance.exponent) )
+                    toDS.balanceActivityInfo.negativeBalance.exponent = fromDS.balanceActivityInfo.negativeBalance.exponent;
+            }
+        }
+
+    }
+  ]]></script>
+</script>

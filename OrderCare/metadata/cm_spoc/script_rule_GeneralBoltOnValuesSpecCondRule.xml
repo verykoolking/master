@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_GeneralBoltOnValuesSpecCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_GeneralBoltOnValuesSpecCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * SessionSpecification.BoltOnDuration = [      TOTAL,PARTIAL ] => GeneralBoltOnValuesSpecification.BoltOnValue == false
+     * SessionSpecification.MaximumOfUnitsPerSession = not empty => GeneralBoltOnValuesSpecification.UnitsOfACompleteCycle == false
+     * BoltOnType.BoltOnTypeModality      = [MC, MI, GB, DT, BD ] => GeneralBoltOnValuesSpecification.UnitsOfACompleteCycle == false
+     *
+     */
+
+
+    if ( data.BoltOnTypeModality == "MC" ||data.BoltOnTypeModality == "MI" || data.BoltOnTypeModality == "GB" || data.BoltOnTypeModality == "DT" || data.BoltOnTypeModality == "BD" ) {
+            if (( data.SessionSpecificationDS.BoltOnDuration == "TOTAL" || data.SessionSpecificationDS.BoltOnDuration=="PARTIAL" ) && data.GeneralBoltOnValuesSpecDS.BoltOnValue && data.SessionSpecificationDS.MaximumOfUnitsPerSession ) {
+
+        errList.addErrorMessage(data,["Bolt On Value","Value Not Allowed if Bolt On Duration TOTAL or PARTIAL and Maximum Of Units Per Session is not null"],"NGAA_EPC_002","E");
+        return false;}
+    }
+
+    /*if (( data.SessionSpecificationDS.BoltOnDuration == "TOTAL" || data.SessionSpecificationDS.BoltOnDuration=="PARTIAL" ) && data.GeneralBoltOnValuesSpecDS.BoltOnValue  ) {
+
+        errList.addErrorMessage(data,["Bolt On Value","Value Not Allowed if Bolt On Duration TOTAL or PARTIAL"],"NGAA_EPC_002","E");
+        return false;
+
+    }*/ else if ( data.SessionSpecificationDS.MaximumOfUnitsPerSession && data.GeneralBoltOnValuesSpecDS.UnitsOfACompleteCycle  ){
+
+        errList.addErrorMessage(data,["Units of a Complete Cycle","Value Not Allowed if Maximum Units Per Sessions is set"],"NGAA_EPC_002","E");
+        return false;
+
+    } else if ( ( data.BoltOnTypeModality == "MC" ||data.BoltOnTypeModality == "MI" || data.BoltOnTypeModality == "GB" || data.BoltOnTypeModality == "DT" || data.BoltOnTypeModality == "BD" ) && data.GeneralBoltOnValuesSpecDS.UnitsOfACompleteCycle  ){
+
+         errList.addErrorMessage(data,["Units of a Complete Cycle","Value Not Allowed for this modality"],"NGAA_EPC_002","E");
+        return false;
+
+    } else {
+
+        return false;
+    }
+  ]]></script>
+</script>

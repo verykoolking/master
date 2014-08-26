@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ApplicabilityConditionForm">
+  <group>Common.ApplicabilityCondition</group>
+  <label>ApplicabilityConditionForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="SimpleApplicabilityConditionIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="ApplicabilityConditionsUI" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ApplicabilityCondition</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="SectionStack" type="elsectnstck">
+              <visibilityMode>multiple</visibilityMode>
+              <width>750px</width>
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="SectionHeader" type="elsecth">
+                      <label>Applicability Conditions</label>
+                    </element>
+                    <element name="HorizontalLayout" type="elhlt">
+                      <elementList>
+                        <element name="AddButton" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ApplicabilityConditionForm/uimthd_addSimpleApplicabilityCondition</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwt/images/16/notebook_add.png</icon>
+                        </element>
+                        <element name="RemoveButton" type="elmnu">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ApplicabilityConditionForm/uimthd_deleteSimpleApplicabilityCondition</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwt/images/16/delete.png</icon>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="GridLayout" type="elgrd">
+                      <colWidths>50px</colWidths>
+                      <numOfCols>13</numOfCols>
+                      <width>750px</width>
+                      <elementList>
+                        <element name="CellSpacer" type="elcsp"/>
+                        <element name="TariffClassLabel" type="ellab">
+                          <columnSpan>3</columnSpan>
+                          <label>Tariff Class Condition</label>
+                        </element>
+                        <element name="DestinationClassLabel" type="ellab">
+                          <columnSpan>3</columnSpan>
+                          <label>Destination Type Condition</label>
+                        </element>
+                        <element name="TemporalConditionLabel" type="ellab">
+                          <columnSpan>3</columnSpan>
+                          <label>Temporal Condition</label>
+                        </element>
+                        <element name="DescriptionLabel" type="ellab">
+                          <columnSpan>3</columnSpan>
+                          <label>Description</label>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="VerticalLayout" type="elvlt">
+                      <elementList>
+                        <element name="SimpleApplicabilityConditionIterator" type="eliter">
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ApplicabilityConditionForm/leaf_SimpleApplicabilityConditionIterator</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <elementList>
+                            <element name="FormFrame" type="elovf">
+                              <formReference type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ApplicabilityConditionForm/leaf_SimpleApplicabilityConditionIterator</variablePath>
+                                  <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                  <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                </variablePathList>
+                              </formReference>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.ApplicabilityConditionForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initApplicabilityCondition(this.model);
+        cm_spoc.initApplicabilityConditionUi(this);
+        return m;
+      ]]></script>
+    </method>
+    <method name="addSimpleApplicabilityCondition" type="uimthd">
+      <script><![CDATA[
+        var model=this.model.SimpleApplicabilityCondArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.SimpleApplicabilityConditionUI","base_SimpleApplicabilityConditio","SimpleApplicabilityConditionIterator");
+      ]]></script>
+    </method>
+    <method name="deleteSimpleApplicabilityCondition" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.removeListElements(this ,this.model.SimpleApplicabilityCondArrDS,"List", "SimpleApplicabilityConditionIterator");
+      ]]></script>
+    </method>
+    <method name="ReadOnly" type="permMethod">
+      <script>return this.model.readonly;</script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script><![CDATA[
+        for(var i=0;i<this.SimpleApplicabilityConditionIterator.length;i++){
+            this.SimpleApplicabilityConditionIterator[i].model.readonly = this.model.readonly;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

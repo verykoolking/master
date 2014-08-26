@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cm_aaca.configurationAdapterSubFlow">
+  <activity name="start" type="seqActivity">
+    <guid>{13424477-28fe-45a9-87e0-f745de6d41a7}</guid>
+    <label>Start</label>
+    <x>30.0</x>
+    <y>61.75293</y>
+    <childList>
+      <child name="startTMTree" type="scriptActivity">
+        <guid>{e2ff29d0-8de2-4dbc-9aeb-23e83be93ab4}</guid>
+        <label>Start Transaction Manager Decision Tree</label>
+        <x>131.0</x>
+        <y>33.0</y>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              var env = cm_aaca.caGetEnvironment(process.processDocument);
+              var justTesting = Global.getConfigVariable("AACA_TEST_MODE_ONLY");
+              if(env=='PRD' && justTesting == "true") // Be careful, justTesting is a string, not a Boolean
+              return;
+
+              var pDoc = process.processDocument;
+
+              try {
+                  var acaaTree = new cm_aaca.transactionManagerDecTree();
+                  acaaTree.processDocument = pDoc;
+                  acaaTree.processData = cm_aaca.caGetProcessData(pDoc);
+
+                  var skipDeployment = Global.getConfigVariable("SKIP_DEPLOYMENT", "false").toLowerCase();
+                  if(skipDeployment != "true")    // Be careful, skipDeployment is a string, not a Boolean
+                      if(acaaTree.processData.reData.configurationRequired || acaaTree.processData.msData.configurationRequired)
+                          acaaTree.run();
+              }
+              catch(exp) {
+                 pDoc.errorCode = '-1';
+                 pDoc.errorOccurred = true;
+                 pDoc.errorDescription = exp.toString();
+                 Global.logError(exp);
+              }
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+      <child name="publishCAResult" type="scriptActivity">
+        <guid>{64543040-8b8f-407c-afd1-f6b5f92380e1}</guid>
+        <label>Publish CA Result</label>
+        <x>235.08594</x>
+        <y>56.397217</y>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              var docReply = new cm_aaca.publishReplyData();
+
+              var pDoc = process.processDocument;
+
+              if (pDoc.errorOccurred == true) {
+                  if (pDoc.errorPhase == 'ERROR_MS') {
+                      docReply.returnType = "ERROR_MS";
+                  } else{
+                      docReply.returnType = "ERROR";
+                  }
+                  docReply.errorMessage = pDoc.errorDescription;
+              } else {
+                  docReply.returnType = "SUCCESS";
+                  docReply.errorMessage = "";
+              }
+
+              Process.sendMessageToProcess(pDoc.processId, null, "cm_aaca.publishAltamiraInt/publishReply", docReply);
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{d8918387-951b-4d5f-b816-e796029b6db6}</guid>
+  <label>CM-AACA Configuration Adapter</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <type>Sub-flow</type>
+</process>

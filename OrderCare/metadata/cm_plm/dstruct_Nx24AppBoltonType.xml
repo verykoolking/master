@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="cm_plm.Nx24AppBoltonType">
+  <container>true</container>
+  <extends>dstruct_cm_plm.baseObject</extends>
+  <group>applicabilityCondition.data</group>
+  <guid>{1bc8bd46-a7c1-4cee-b20c-7b2b2b591b66}</guid>
+  <jsonMap type="jmap"/>
+  <label>Nx24AppBoltonType</label>
+  <metaVersion>4</metaVersion>
+  <childList>
+    <child name="Nx24AppBoltonTypeListId" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_plm.Nx24AppBoltonTypeListIdType</element>
+      <guid>{61a57259-8762-4bbf-b569-7b0c41db2085}</guid>
+      <jsonMap type="jmap"/>
+      <label>Nx24AppBoltonTypeListId</label>
+      <mandatory>true</mandatory>
+      <xmlMap type="xmap">
+        <length>4</length>
+      </xmlMap>
+    </child>
+    <child name="TypeOfDayID" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSNumber2Attribute</element>
+      <guid>{8ec0e07f-b76d-4f04-a52d-04a839236a31}</guid>
+      <jsonMap type="jmap"/>
+      <label>TypeOfDayID</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="HoursArr" type="dstruct">
+      <array>true</array>
+      <element>dstruct_cm_plm.AppBoltonTypeHours</element>
+      <guid>{a0412c64-bf35-4904-addc-02f0724e6369}</guid>
+      <jsonMap type="jmap"/>
+      <label>HoursArr</label>
+      <mandatory>true</mandatory>
+      <maxInstance>-1</maxInstance>
+      <minInstance>1</minInstance>
+    </child>
+  </childList>
+  <methodList>
+    <method name="populateDefaultValues" type="action">
+      <script><![CDATA[
+        var hours;
+        var defaultValue = 0;
+
+        for(var i=0; i<=23; i++){
+            hours = new cm_plm.AppBoltonTypeHours();
+            hours.Hour = i;
+            hours.AppBoltonTypeGroupId = defaultValue;
+            this.HoursArr[this.HoursArr.length] = hours;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_cm_plm.Nx24AppBoltonType</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_cm_plm.Nx24AppBoltonType</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

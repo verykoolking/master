@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.service.serv.cfs.CustomerFacingService">
+  <abstract>true</abstract>
+  <container>true</container>
+  <description><![CDATA[
+    <p>A CustomerFacingService defines the properties of a particular related Service that represents a realization of a Product within an organization's infrastructure; This is in direct contrast to ResourceFacingServices, which support the network/infrastructure facing part of the service. For example, a VPN is an example of a CustomerFacingService, while the sub-services that perform different types of routing between network devices making up the VPN are examples of ResourceFacingServices.    CustomerFacingServices are directly related to Products as well as to ResourceFacingServices. ResourceFacingServices are indirectly related to Products through the relationship between Product and CustomerFacingServices. This enforces the relationship to Products while keeping Services that are not directly realized by Products (i.e., ResourceFacingServices) separated from Products.</p>                <p>This entity  is  abstract</p>                <p>This entity  is  optional</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{104942be-67f6-4acd-a6fc-b1286bc3cc41}</guid>
+  <label>CustomerFacingService</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="cfsStatus" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is an enumerated integer that defines the status of this particular CustomerFacingService. Values include:        0: Operational and billable        1: Degraded but billable        2: In Violation and billable        3: Operational but not billable        4: In Test and not billable        5: Being Deployed and not billable        6: Failed        Value 0 means that this CustomerFacingService is acting per specification, and is fully billable.        Value 1 means that this CustomerFacingService is operational, but is currently in a degraded state. However, it has not violated any contractual specification and is fully billable.        Value 2 means that this CustomerFacingService is operational, but is currently in violation of its associated contractual specification(s). Whether it is billable or not is determined by its associated Policy for handling service violations.        Value 3 means that this CustomerFacingService is currently operational, but has not been enabled for this particular customer yet and is therefore not billable for this customer.        Value 4 means that this CustomerFacingService is currently being tested, and is not yet ready to be enabled for this particular customer. Consequently, it is therefore not billable for this customer.        Value 5 means that this CustomerFacingService is currently being deployed, and therefore has not been enabled for this particular customer yet. Consequently, it is therefore not billable for this customer.        Value 6 means that this CustomerFacingService has currently failed. The set of actions that should be taken, as well as whether this service can still be billed or not, are determined by its associated Policy for handling service violations.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{26748693-652e-45ad-91e1-6a32a7b9c377}</guid>
+      <label>cfsStatus</label>
+    </child>
+    <child name="product" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation shared</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association ProductRealizedAsCFService</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.product.prod.ArrayOfProduct</element>
+      <guid>{b59aaf4b-94ea-429f-b754-29c029dad246}</guid>
+      <label>product</label>
+    </child>
+    <child name="customerFacingServiceComposite" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..1</p>                                <p>This association end  has  aggregation shared</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association CFSCompositeHasCFServices</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.service.serv.cfs.CustomerFacingServiceComposite</element>
+      <guid>{d15c6877-a1fd-472a-bbb2-e1db9b220a4e}</guid>
+      <label>customerFacingServiceComposite</label>
+    </child>
+    <child name="customerFacingServiceRole" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association CFServiceHasCFSRoles</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.service.serv.cfs.role.ArrayOfCustomerFacingServiceRole</element>
+      <guid>{46734010-9173-435b-8e08-c81e445d396f}</guid>
+      <label>customerFacingServiceRole</label>
+    </child>
+    <child name="resourceFacingService" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..*</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association CFServiceRequiresRFServices</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.service.serv.rfs.ArrayOfResourceFacingService</element>
+      <guid>{9a419413-d092-4008-b1ce-b7d9a079a339}</guid>
+      <label>resourceFacingService</label>
+    </child>
+    <child name="serviceCandidate" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity *</p>                                <p>This association end  has  aggregation none</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  unique</p>                                <p>This association end  is  an end of association CustomerFacingServiceToServiceCandidate</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.service.spec.catalog.ArrayOfServiceCandidate</element>
+      <guid>{b79bf8d2-40e3-4619-95d9-9e1be4c96337}</guid>
+      <label>serviceCandidate</label>
+    </child>
+    <child name="customerFacingServiceSpec" type="dstruct">
+      <description><![CDATA[
+        <p></p>                                <p>This element is generated from an association end.</p>                                <p>This association end  has  multiplicity 0..1</p>                                <p>This association end  has  aggregation shared</p>                                <p>This association end  is  navigable</p>                                <p>This association end  is  an end of association SpecifiesCustomerFacingService</p>                                <p>This association end  is  optional</p>
+      ]]></description>
+      <element>dstruct_sid.org.tmforum.tip.service.spec.cfs.CustomerFacingServiceSpec</element>
+      <guid>{cc0e3b5d-c3f8-400d-b493-30b9db13bc36}</guid>
+      <label>customerFacingServiceSpec</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.service.serv.cfs.CustomerFacingService</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.service.serv.cfs.CustomerFacingService</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

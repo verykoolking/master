@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initSrvCode">
+  <group>ui_scripts.Numbering</group>
+  <label>initSrvCode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+        var SrvCodeArr = cm_spoc.initInnerDS("base_SrvCodeArr");
+        model.SrvCodeArrDS = SrvCodeArr;
+
+        return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        s.specificationCode = model.SrvCodeArr;
+        var r = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(r)){
+           model.SrvCodeArrDS=r;
+        }
+
+        var SrvCodeRel =  model.SrvCodeArrDS.List;
+        var SrvCodeDS =  model.SrvCodeArrDS.ListDS;
+        for(var i=0;i<SrvCodeRel.length;i++){
+            s.specificationCode = SrvCodeRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                SrvCodeDS[i]=r;
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

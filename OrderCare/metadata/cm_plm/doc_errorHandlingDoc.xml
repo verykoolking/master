@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cm_plm.errorHandlingDoc">
+  <extends>doc_cm_plm.plmDisplayDoc</extends>
+  <guid>{541c95cd-a5cd-43de-ad5d-7fc7f074bd43}</guid>
+  <label>errorHandlingDoc</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="errorMsg" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="cwOnDocLoad" type="action">
+      <system>true</system>
+      <script>this.cw$super_cwOnDocLoad();</script>
+    </method>
+    <method name="cwOnDocInit" type="action">
+      <system>true</system>
+      <script>this.cw$super_cwOnDocInit();</script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_cm_plm.plmDisplayDoc/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cm_plm.errorHandlingDoc</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_cm_plm.plmDisplayDoc/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="errorMsg" type="ellab">
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>doc_cm_plm.errorHandlingDoc/ui_UserInterface/uivar_model</variablePath>
+                    <variablePath>doc_cm_plm.errorHandlingDoc/leaf_errorMsg</variablePath>
+                  </variablePathList>
+                </variable>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+</document>

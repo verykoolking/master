@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.changeEntity">
+  <group>scripts</group>
+  <highlight>32</highlight>
+  <label>changeEntity</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="input" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_OCSConfigurationOperation.v1.types.ChangeEntity</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_OCSConfigurationOperation.v1.types.CreateEntityResponse</valueType>
+  <script><![CDATA[
+    try{
+        var OP_REFERENCE = 'CHANGE_ENTITY';
+        var entity = input.oCSEntity;
+        var actionCommonInfo = input.actionCommonInfo;
+
+        var projectCode = actionCommonInfo.sessionId;
+        var user = actionCommonInfo.userCode; //TODO: login user
+
+        var project = epc.getProjectByCode(projectCode);
+        if(!project)
+            return  api_common.createFault("E101", "Invalid SessionId.");    //TODO: correct code
+
+        var entityDs = cm_pws.getInnerDataStructure(entity);
+
+        var entityData = cm_pws.pwsCreateEntity(entityDs, project.projectCode);
+
+        var res = cm_pws.services.pwsMap(entityDs, entityData);
+        if(api_common.isFault(res)) {
+            return res;
+        }
+
+        //TODO: check response
+        var response = cm_common.plmUpdateItem(entityData,project.projectCode);
+        if(api_common.isFault(response))
+            return response;
+
+        var output = new OCSConfigurationOperation.v1.types.ChangeEntityResponse();
+        cm_pws.services.pwsMap_GenericResponse(output.actionCommonInfoResult, OP_REFERENCE, projectCode);
+        return output;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

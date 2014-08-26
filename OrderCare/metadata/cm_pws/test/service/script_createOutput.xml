@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.service.createOutput">
+  <label>createOutput</label>
+  <metaVersion>4</metaVersion>
+  <script><![CDATA[
+    var output = new cm_pws.test.service.output();
+
+    var fileName =  cm_pws.test.generateLogFileName();
+    var fileReader = new FileReader(fileName);
+
+    while(!fileReader.isEOF())
+    {
+        output.result += fileReader.readLine() + "\n";
+    }
+    if(!output.result)
+        Global.throwException("The test result could not be read!");
+
+    return output;
+  ]]></script>
+</script>

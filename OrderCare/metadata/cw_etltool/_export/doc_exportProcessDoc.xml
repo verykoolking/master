@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cw_etltool._export.exportProcessDoc">
+  <extends>doc_com.conceptwave.system.Document</extends>
+  <guid>{6cdbd85c-c566-4e8a-9e36-c88d61a54703}</guid>
+  <label>Process Document</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="ProcessID" type="leaf">
+      <key>1</key>
+      <valueType>dtype_cwf_pm.PROCESS_ID</valueType>
+    </variable>
+    <variable name="FilesCount" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="EntitiesCount" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="ProcessedFilesCount" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="ProcessedEntitiesCount" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+    <variable name="CurrentFileID" type="leaf">
+      <valueType>dtype_cwt_pcdd.string16</valueType>
+    </variable>
+    <variable name="CurrentEntityID" type="leaf">
+      <valueType>dtype_cwt_pcdd.string16</valueType>
+    </variable>
+    <variable name="actionCommonInfoXML" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="IsError" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="cwLeafInitAction$actionCommonInfoXML" type="laction">
+      <path>doc_cw_etltool._export.exportProcessDoc/leaf_actionCommonInfoXML</path>
+      <type>initializer</type>
+      <script>return null;</script>
+    </method>
+    <method name="cwLeafInitAction$CurrentEntityID" type="laction">
+      <path>doc_cw_etltool._export.exportProcessDoc/leaf_CurrentEntityID</path>
+      <type>initializer</type>
+      <script>return null;</script>
+    </method>
+    <method name="cwLeafInitAction$CurrentFileID" type="laction">
+      <path>doc_cw_etltool._export.exportProcessDoc/leaf_CurrentFileID</path>
+      <type>initializer</type>
+      <valueType>doc_cw_etltool._export.exportProcessDoc/leaf_CurrentFileID</valueType>
+      <script>return null;</script>
+    </method>
+    <method name="cwLeafInitAction$EntitiesCount" type="laction">
+      <path>doc_cw_etltool._export.exportProcessDoc/leaf_EntitiesCount</path>
+      <type>initializer</type>
+      <valueType>doc_cw_etltool._export.exportProcessDoc/leaf_EntitiesCount</valueType>
+      <script>return 0;</script>
+    </method>
+    <method name="cwLeafInitAction$ProcessedEntitiesCount" type="laction">
+      <path>doc_cw_etltool._export.exportProcessDoc/leaf_ProcessedEntitiesCount</path>
+      <type>initializer</type>
+      <valueType>doc_cw_etltool._export.exportProcessDoc/leaf_ProcessedEntitiesCount</valueType>
+      <script>return 0;</script>
+    </method>
+    <method name="cwLeafInitAction$ProcessedFilesCount" type="laction">
+      <path>doc_cw_etltool._export.exportProcessDoc/leaf_ProcessedFilesCount</path>
+      <type>initializer</type>
+      <valueType>doc_cw_etltool._export.exportProcessDoc/leaf_ProcessedFilesCount</valueType>
+      <script>return 0;</script>
+    </method>
+    <method name="cwLeafInitAction$IsError" type="laction">
+      <path>doc_cw_etltool._export.exportProcessDoc/leaf_IsError</path>
+      <type>initializer</type>
+      <valueType>doc_cw_etltool._export.exportProcessDoc/leaf_IsError</valueType>
+      <script>return false;</script>
+    </method>
+    <method name="incrementProcessedFilesCount" type="uimthd">
+      <script>this.ProcessedFilesCount = this.ProcessedFilesCount + 1;</script>
+    </method>
+    <method name="incrementProcessedEntitiesCount" type="uimthd">
+      <script>this.ProcessedEntitiesCount = this.ProcessedEntitiesCount + 1;</script>
+    </method>
+    <method name="setFilesCount" type="uimthd">
+      <parameterList>
+        <parameter name="value" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.Integer</type>
+        </parameter>
+      </parameterList>
+      <script>this.FilesCount = value ;</script>
+    </method>
+    <method name="setEntitiesCount" type="uimthd">
+      <parameterList>
+        <parameter name="value" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.Integer</type>
+        </parameter>
+      </parameterList>
+      <script>this.EntitiesCount = value;</script>
+    </method>
+    <method name="isThereFileToProcess" type="uimthd">
+      <script><![CDATA[return ( this.FilesCount > this.ProcessedFilesCount );]]></script>
+    </method>
+    <method name="isThereEntityToProcess" type="uimthd">
+      <script><![CDATA[return ( this.EntitiesCount > this.ProcessedEntitiesCount );]]></script>
+    </method>
+    <method name="resetProcessedFilesCount" type="uimthd">
+      <script>this.ProcessedFilesCount = 0;</script>
+    </method>
+    <method name="resetProcessedEntitiesCount" type="uimthd">
+      <script>this.ProcessedEntitiesCount = 0;</script>
+    </method>
+    <method name="resetCurrentFileID" type="uimthd">
+      <script>this.CurrentFileID = null;</script>
+    </method>
+    <method name="resetCurrentEntityID" type="uimthd">
+      <script>this.CurrentEntityID = null;</script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_com.conceptwave.system.Document/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cw_etltool._export.exportProcessDoc</valueType>
+      </variable>
+      <variable name="fileDocFinderUI" type="leaf">
+        <valueType>findDoc_cw_etltool._import.fileDocFinder/ui_UserInterface</valueType>
+      </variable>
+      <variable name="entityDocFinderUI" type="leaf">
+        <valueType>findDoc_cw_etltool._import.entityDocFinder/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</document>

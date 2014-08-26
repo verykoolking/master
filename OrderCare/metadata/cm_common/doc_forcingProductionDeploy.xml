@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cm_common.forcingProductionDeploy">
+  <extends>doc_com.conceptwave.system.Document</extends>
+  <group>UI</group>
+  <guid>{febe75e4-08fe-48a5-a606-dbd5add5cfc0}</guid>
+  <label>ForCing Production Deploy</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="processId" type="leaf">
+      <propertyElement type="elfld">
+        <label>Process Id</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="projectCode" type="leaf">
+      <propertyElement type="elfld">
+        <label>Project Code</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_com.conceptwave.system.Document/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cm_common.forcingProductionDeploy</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="VerticalLayout" type="elvlt">
+                <width>100%</width>
+                <elementList>
+                  <element name="Separator2" type="elsep">
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="Header" type="elhdr">
+                    <label>Use the fields below to force the production deploy.</label>
+                  </element>
+                  <element name="Header1" type="elhdr">
+                    <label>This must be used only if the project is waiting for the effective date.</label>
+                  </element>
+                  <element name="Separator1" type="elsep">
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="projectCode" type="elfld">
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_common.forcingProductionDeploy/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cm_common.forcingProductionDeploy/leaf_projectCode</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="processId" type="elfld">
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_common.forcingProductionDeploy/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cm_common.forcingProductionDeploy/leaf_processId</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="Separator" type="elsep">
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="Button" type="elbtn">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cm_common.forcingProductionDeploy/ui_UserInterface/uimthd_forceDeploy</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <label>Force Deploy</label>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="forceDeploy" type="uimthd">
+        <script><![CDATA[
+          var procId   = this.model.processId;
+          var projCode = this.model.projectCode;
+
+          if(!procId && !projCode)
+          {
+              Global.showUserMessage( Global.translateText('NGAA_005',null,null)); // PLEASE SET A FIELD
+          }
+          else
+          {
+              if(procId)
+              {
+                  Process.sendMessageToProcess(procId,null,'cm_plm:confProductionInt/bypassWaitForEffectiveDate');
+                  Global.showUserMessage( Global.translateText('NGAA_006',null,[procId])); //Message Sent to process
+              }
+              else
+              {
+                  var fnd = new Finder('cm_plm.changeRequestFinder');
+                  fnd.searchDocument.projectCode = projCode;
+                  var res = fnd.search();
+                  if(res && res.length>0)
+                  {
+                       var orderId = res.cwOrderId;
+                       if(!orderId)
+                       {
+                           Global.showUserMessage( Global.translateText('NGAA_007',null,null)); // PROJECT WITHOUT ORDER
+                       }
+                       else
+                       {
+                          var fndProc = new Finder('cwf_pm.ProcessFinder');
+                          fndProc.searchDocument.ORDER_ID = orderId;
+                          var resProc = fndProc.search();
+                          if(resProc && resProc.length>0)
+                          {
+                              Process.sendMessageToProcess(procId,null,'cm_plm:confProductionInt/bypassWaitForEffectiveDate');
+                              Global.showUserMessage( Global.translateText('NGAA_006',null,[procId])); //Message Sent to process
+                          }
+                          else
+                          {
+                              Global.showUserMessage( Global.translateText('NGAA_008',null,null)); // PROJECT WITHOUT PROCESSES
+                          }
+                       }
+                  }
+                  else
+                  {
+                      Global.showUserMessage( Global.translateText('NGAA_007',null,null)); // PROJECT WITHOUT ORDER
+                  }
+              }
+          }
+        ]]></script>
+      </method>
+    </methodList>
+  </UserInterface>
+</document>

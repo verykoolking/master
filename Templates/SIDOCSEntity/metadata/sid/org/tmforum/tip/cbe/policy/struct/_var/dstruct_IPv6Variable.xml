@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="sid.org.tmforum.tip.cbe.policy.struct._var.IPv6Variable">
+  <container>true</container>
+  <description><![CDATA[
+    <p>This class represents using the value of IPv6 source and/or destination addresses as part of a condition expression. Thus, only IPv6AddressValue classes can be used in the value portion of the condition expression with this PolicyVariable.</p>                <p>This entity  is  optional</p>
+  ]]></description>
+  <extends>dstruct_tip.internal.entity.EntityBase</extends>
+  <guid>{57fda68e-9168-4dcc-87a4-1694065320b3}</guid>
+  <label>IPv6Variable</label>
+  <metaVersion>4</metaVersion>
+  <xmlMap type="xmap">
+    <includeXsiType>true</includeXsiType>
+  </xmlMap>
+  <childList>
+    <child name="v6Direction" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This is an enumerated integer that defines if this variable is used to represent source addresses, destination addresses, or both.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{12e6193f-b620-4395-89da-1d808865977a}</guid>
+      <label>v6Direction</label>
+    </child>
+    <child name="v6HeaderNumber" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute is an enumerated integer that defines the particular packet header that contains the IPv6 address information. Specifying the packet header is necessary in case the address is tunneled. In this case, it is mandatory that the correct address be chosen for comparison. Values are:        0: outermost header        1: next innermost header        2: second innermost header        etc.</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.Integer</element>
+      <guid>{9dea0b50-73c8-439c-9f53-925102075f83}</guid>
+      <label>v6HeaderNumber</label>
+    </child>
+    <child name="v6AddressList" type="dstruct">
+      <datatype>true</datatype>
+      <description><![CDATA[
+        <p>This attribute is an unordered list of strings, each specifying a        single IPv6 address, a hostname, or a range of IPv6 addresses, according to the ABNF definition of an IPv6 address as specified below:        IPv6address = hexpart [ ":" IPv4address ]        IPv4address = 1*3DIGIT "." 1*3DIGIT "." 1*3DIGIT "." 1*3DIGIT        IPv6prefix = hexpart "/" 1*2DIGIT        hexpart = hexseq | hexseq "::" [ hexseq ] | "::" [ hexseq ]        hexseq = hex4 *( ":" hex4)        hex4 = 1*4HEXDIG        IPv6range = IPv6address"-"IPv6address        IPv6maskedaddress = IPv6address","IPv6address        Hostnames are defined in RFC1035.        In the above definition, each string entry is either:        1. A single IPv6address in dot notation as defined above.        2. A single Hostname. Hostname format follows the guidelines        and restrictions specified in RFC1035.        3. An IPv6range address range defined above, specified by a        start address in dot notation and an end address in dot        notation, separated by "-". The range includes all addresses        between the range's start and end addresses, including the        start and end addresses.        4. An IPv6maskedaddress address range defined above,        specified by an address and mask. The address and mask        are represented in dot notation separated by a comma ",".        5. An IPv6prefix address range defined above specified by an        address and a prefix length separated by "/".</p>                                <p>This element is generated from an attribute.</p>                                <p>This attribute  is  optional</p>
+      ]]></description>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{7f08319a-6802-45bb-8267-8007e07867c0}</guid>
+      <label>v6AddressList</label>
+    </child>
+  </childList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_sid.org.tmforum.tip.cbe.policy.struct._var.IPv6Variable</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_sid.org.tmforum.tip.cbe.policy.struct._var.IPv6Variable</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

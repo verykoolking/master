@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findSql name="pm_wm.readOfferNameFromCatalogFinder">
+  <dbSchema>ORDER</dbSchema>
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <input>doc_pm_wm.readOfferNameFromCatalogFinderData</input>
+  <label>readOfferNameFromCatalogFinder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_pm_wm.readOfferNameFromCatalogFinderData</output>
+  <type>SQL</type>
+  <methodList>
+    <method name="cwOnFinderSQLSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        SELECT
+            DECODE
+            ( b.defaultvalue
+            , 'ProductSpecification', REPLACE( REPLACE( a.defaultvalue, 'Type'), 'Specification')
+            , a.defaultvalue
+            ) offerName
+        FROM
+            cwpc_itemattribute_v b
+          , cwpc_itemattribute_v a
+        WHERE
+            b.itemattributecode = 'specificationType'
+        AND b.defaultvalue     IN ( 'ProductOffering', 'ProductSpecification')
+        AND b.itemcode          = a.itemcode
+        AND a.defaultvalue     IS NOT NULL
+        AND a.itemattributecode = 'specificationSubType'
+        and a.startdate         <= sysdate
+        and (a.enddate is null or a.enddate > sysdate)
+        AND EXISTS (
+          select 1
+            from
+                cwpc_projectcommand         cia
+            where
+                a.itemcode  = cia.catalogobjectcode
+            and (cia.enddate is null or cia.enddate > sysdate)
+            AND  cia.catalogobjectid IS NULL )
+        and b.startdate         <= sysdate
+        and (b.enddate is null or b.enddate > sysdate)
+        AND EXISTS (
+          select 1
+            from
+                cwpc_projectcommand         cib
+            where
+                b.itemcode  = cib.catalogobjectcode
+            and (cib.enddate is null or cib.enddate > sysdate)
+            AND  cib.catalogobjectid IS NULL )
+        {[1] AND a.itemcode     = ?}
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_pm_wm.readOfferNameFromCatalogFinderData</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_pm_wm.readOfferNameFromCatalogFinderData/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_pm_wm.readOfferNameFromCatalogFinderData/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="readOfferNameFromCatalogFinderResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_pm_wm.readOfferNameFromCatalogFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="offerType" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_wm.readOfferNameFromCatalogFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_wm.readOfferNameFromCatalogFinderData/leaf_offerName</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="itemcode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_wm.readOfferNameFromCatalogFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_wm.readOfferNameFromCatalogFinderData/leaf_itemcode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_pm_wm.readOfferNameFromCatalogFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_pm_wm.readOfferNameFromCatalogFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="readOfferNameFromCatalogFinderView" type="findVView">
+      <outputOverlay>findSql_pm_wm.readOfferNameFromCatalogFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findSql>

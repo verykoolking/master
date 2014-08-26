@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- PA4 -->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/balanceManagement/v1/types" 
+            xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"             
+            xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+            targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/balanceManagement/v1/types" 
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" 
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_1.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" 
+    			schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+
+    <!-- ************************************* decrementBalance ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="DecrementBalanceType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:adjustmentAmount"/>
+            <xsd:element ref="apt:walletId"/>
+            <xsd:element ref="apt:totalFlag"/>
+            <xsd:element ref="apt:negativeBalanceUsageFlag"/>
+            <xsd:element ref="apt:actionCauseCode" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="decrementBalance" type="tns:DecrementBalanceType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="DecrementBalanceResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="decrementBalanceResponse" type="tns:DecrementBalanceResponseType" />
+
+    <!-- ************************************* incrementBalance ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="IncrementBalanceType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:adjustmentAmount"/>
+            <xsd:element ref="apt:walletId"/>
+            <xsd:element name="extension">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="apt:actionCauseCode" minOccurs="0"/>  <!--  Added due to NGAA 14B PA3 -->
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="incrementBalance" type="tns:IncrementBalanceType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="IncrementBalanceResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="incrementBalanceResponse" type="tns:IncrementBalanceResponseType" />
+
+    <!-- ************************************* queryTotalBalance ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryTotalBalanceType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryTotalBalance" type="tns:QueryTotalBalanceType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryTotalBalanceResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:balance"/>
+            <xsd:element ref="apt:negativeBalance" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryTotalBalanceResponse" type="tns:QueryTotalBalanceResponseType" />
+
+    <!-- ************************************* topUpAccount ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="TopUpAccountType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:topUpAmount" minOccurs="0"/>
+            <xsd:element ref="apt:topUpOrigin"/>
+            <xsd:element ref="apt:validityPeriod" minOccurs="0"/>
+            <xsd:element ref="apt:SOSTopUpInfo" minOccurs="0"/>
+            <xsd:element ref="apt:completeTransact"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="topUpAccount" type="tns:TopUpAccountType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="TopUpAccountResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="topUpAccountResponse" type="tns:TopUpAccountResponseType" />
+
+    <!-- ************************************* queryBalances ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryBalancesType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryBalances" type="tns:QueryBalancesType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryBalancesResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:balanceActivityInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryBalancesResponse" type="tns:QueryBalancesResponseType" />
+
+    <!-- ************************************* queryTopUpsDetails ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryTopUpsDetailsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:timeInterval" minOccurs="0"/>
+            <xsd:element ref="apt:topUpReferenceCode" minOccurs="0"/>
+            <xsd:element ref="apt:opStatus" minOccurs="0"/>
+            <xsd:element ref="apt:topUpOrigin" minOccurs="0"/>
+            <xsd:element name="expansion">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="apt:onlySOSTopUpFlag" />   <!--  Added due to NGAA 14B PA3 -->
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryTopUpsDetails" type="tns:QueryTopUpsDetailsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryTopUpsDetailsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:topUpDetailedInfoList" minOccurs="0"/>
+            <xsd:element name="expansion">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="apt:SOSTopUpDetailedInfoList" minOccurs="0" />   <!--  Added due to NGAA 14B PA3 -->
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryTopUpsDetailsResponse" type="tns:QueryTopUpsDetailsResponseType" />
+
+    <!-- ************************************* queryBalanceAdjustment ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryBalanceAdjustmentType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:opReference" minOccurs="0"/>
+            <xsd:element ref="apt:fixingReferenceCode" minOccurs="0"/>
+            <xsd:element ref="apt:timeInterval" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryBalanceAdjustment" type="tns:QueryBalanceAdjustmentType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryBalanceAdjustmentResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:infoFixingDataList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryBalanceAdjustmentResponse" type="tns:QueryBalanceAdjustmentResponseType" />
+
+    <!-- ************************************* balanceTransfer ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="BalanceTransferType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:donorSubscriberId"/>
+            <xsd:element ref="apt:receiverSubscriberId"/>
+            <xsd:element ref="apt:payer"/>
+            <xsd:element ref="apt:balanceTransferInfo"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="balanceTransfer" type="tns:BalanceTransferType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="BalanceTransferResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element name="Extension">   <!--  Added due to NGAA 14B PA2 -->
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="apt:donorBalanceActivityInfo" minOccurs="0"/>
+                        <xsd:element ref="apt:receiverBalanceActivityInfo" minOccurs="0"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="balanceTransferResponse" type="tns:BalanceTransferResponseType" />
+
+    <!-- ************************************* queryBalanceTransferBasics ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryBalanceTransferBasicsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:opReference"/>
+            <xsd:element name="extension">   <!--  Added due to NGAA 14B PA2 -->
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="apt:donorSubscriberId" minOccurs="0" />
+                        <xsd:element ref="apt:receiverSubscriberId" minOccurs="0" />
+                        <xsd:element ref="apt:timeInterval" minOccurs="0" />
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryBalanceTransferBasics" type="tns:QueryBalanceTransferBasicsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryBalanceTransferBasicsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:balanceTransferBasicInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryBalanceTransferBasicsResponse" type="tns:QueryBalanceTransferBasicsResponseType" />
+
+    <!-- ************************************* chargeAccount ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChargeAccountType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:totalFlag"/>
+            <xsd:element ref="apt:chargingModality" minOccurs="0"/>
+            <xsd:element ref="apt:actionCauseCode" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="chargeAccount" type="tns:ChargeAccountType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChargeAccountResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="chargeAccountResponse" type="tns:ChargeAccountResponseType" />
+
+    <!-- ************************************* cancelTopup ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="CancelTopupType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:opReference" minOccurs="0"/>
+            <xsd:element ref="apt:totalCancelFlag" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cancelTopup" type="tns:CancelTopupType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="CancelTopupResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cancelTopupResponse" type="tns:CancelTopupResponseType" />
+
+    <!-- ************************************* cancelBalanceTransfer ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="CancelBalanceTransferType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:opReference" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cancelBalanceTransfer" type="tns:CancelBalanceTransferType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="CancelBalanceTransferResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cancelBalanceTransferResponse" type="tns:CancelBalanceTransferResponseType" />
+
+</xsd:schema>

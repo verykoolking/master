@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.deleteConfirmation">
+  <label>deleteConfirmation</label>
+  <metaVersion>4</metaVersion>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="SectionStack" type="elsectnstck">
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="GridLayout" type="elgrd">
+                      <numOfCols>2</numOfCols>
+                      <elementList>
+                        <element name="Header" type="elhdr">
+                          <label>Do you want to delete the element?</label>
+                        </element>
+                        <element name="Button" type="elbtn">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.deleteConfirmation/usrActionMethod_deleteModelAction</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <label>Yes</label>
+                        </element>
+                        <element name="Button1" type="elbtn">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.deleteConfirmation/usrActionMethod_close</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <label>No</label>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="deleteModelAction" type="usrActionMethod">
+      <script><![CDATA[
+        this.parent.owner.deleteModelAction();
+        this.parent.cwDialogClose();
+      ]]></script>
+    </method>
+    <method name="close" type="usrActionMethod">
+      <script>this.parent.cwDialogClose();</script>
+    </method>
+  </methodList>
+</userInterface>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.createProjectAssignmentForObject">
+  <group>applicabilityCondition.scripts</group>
+  <label>createProjectAssignmentForObject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="object" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.baseObject</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        var PA = new cm_plm.projectAssignment();
+        object.mapTo(PA);
+
+        var result = cm_plm.createProjectAssignmentByValue(PA);
+        if(api_common.isFault(result))
+            return result;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

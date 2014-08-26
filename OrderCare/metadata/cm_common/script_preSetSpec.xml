@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.preSetSpec">
+  <group>scripts</group>
+  <label>preSetSpec</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="specification" type="rifp">
+      <type>dstruct_epc.data.Specification</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //Validate the sepcification
+    if (!specification || !specification.specificationCode) {
+        return cwl_epc.createCommonFault(null, "EPC_ERR_0001");
+    }
+    if (!specification.project) {
+        return cwl_epc.createCommonFault(null, "EPC_ERR_0008");
+    }
+
+    cwl_epc.initializeStartDate(specification);
+    cwl_epc.initializeEffectiveDate(specification);
+
+    var fault = publishEvent("EPC_SPECIFICATION_VALIDATE", FIRST_ONE, null, [specification]);
+    fault = cwl_epc.getErrorFault(fault);
+    if (fault != null) {
+        return fault;
+    }
+
+    var itemDS = cwl_epc.convertSpecificationToItemDS(specification, 1);
+    if (api_common.isFault(itemDS)) {
+        return itemDS;
+    } else {
+        //*** Dont't update itemDS by calling maintenance API
+        var resp = cm_common.setSpec(itemDS);
+        if (resp.isBasedOn("cwt_pcmaintapi:Fault")) {
+            return cwl_epc.createCommonFault(resp);
+        } else {
+            return resp;
+        }
+    }
+  ]]></script>
+</script>

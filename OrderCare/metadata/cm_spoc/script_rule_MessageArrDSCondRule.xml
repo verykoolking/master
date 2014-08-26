@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_MessageArrDSCondRule">
+  <group>rules_scripts.Messages</group>
+  <label>rule_MessageArrDSCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var ds = data.MessageTextLanguageArrDS;
+
+    if (ds.List && ds.List.length == 0)
+    {
+        errList.addErrorMessage(data,["Message text must be set"],"NGAA_003","E");
+    }
+
+    return false;
+  ]]></script>
+</script>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.onSelectPriceEvent">
+  <group>ui_scripts.Common.Price.Triggers</group>
+  <label>onSelectPriceEvent</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var baseItemCode = ui.model.baseSpecificationCode ? ui.model.baseSpecificationCode : ui.model.catalogEntity;
+
+    if (!baseItemCode &&  ui.model.specificationCode) baseItemCode = cm_spoc.getAndUpdateBaseItemCode(ui.model);
+    var nameArray = cm_spoc.getBasePriceGuidingArrayName(baseItemCode);
+
+    var code=ui.model[nameArray+"DS"].PriceEventEnum;
+
+    ui.PriceGuidingContainerUI.PriceEvent=code;
+
+    cm_spoc.initPriceGuidingUI(ui,nameArray+"DS");
+  ]]></script>
+</script>

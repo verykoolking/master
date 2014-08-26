@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.createRequest">
+  <group>scripts</group>
+  <label>createRequest</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="entityFileName" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="requestType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="sessionId" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var request = new DataStructure(requestType);
+    if(entityFileName){
+        var entity = cm_pws.test.createDSFromResource("/PWS/" + entityFileName, "OCSEntity.v1.types.OCSEntityType");
+        request.oCSEntity = entity;
+        cm_pws.getInnerDataStructure(request.oCSEntity).lastUpdatedTime = new Date();
+
+    }
+
+    switch(requestType){
+        case "OCSConfigurationOperation.v1.types.CreateEntity":
+        case "OCSConfigurationOperation.v1.types.ChangeEntity":
+        case "OCSConfigurationOperation.v1.types.DeleteEntity":
+            request.actionCommonInfo.sessionId = sessionId;
+            break;
+        case "OCSConfigurationOperation.v1.types.QueryEntity":
+            request.queryCommonInfo.token = "";
+            request.queryCommonInfo.numRegs = "";
+            break;
+        case "OCSConfigurationOperation.v1.types.StartConfiguration":
+        case "OCSConfigurationOperation.v1.types.EndConfiguration":
+            request.sessionCommonInfo.sessionId = sessionId;
+            break;
+
+    }
+
+    return request;
+  ]]></script>
+</script>

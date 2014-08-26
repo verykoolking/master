@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.catalogGetItemRelationsDoc">
+  <group>api</group>
+  <label>Get Item Relations Document From Catalog</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="relationsType" type="rifp">
+      <array>true</array>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="readDefinitions" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="sorted" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(readDefinitions)
+        theCatalog.catalogTestModeOnOff(true);
+
+    var itemCat = theCatalog.getItem(itemCode);
+
+    if(itemCat==null)
+        throw ("No Catalog Item found with code " + itemCode);
+
+    if(relationsType!=null && typeof relationsType == 'string')
+        relationsType = [relationsType];
+
+    var relDocArr = new Array();
+    var attCatArr = itemCat.getAssociations(relationsType);
+
+    if(sorted) {
+        var attCatArrAux = new Array();
+        for(var i=0; i<attCatArr.length; i++)
+            attCatArrAux[attCatArrAux.length] = attCatArr[i];
+        attCatArr = attCatArrAux;
+        attCatArr = attCatArr.sort(compareRelations);
+    }
+
+    for(var i=0; i<attCatArr.length; i++) {
+
+        var relDoc = new Document("cwa_epc.cwt_itemRelation");
+        relDoc.itemRelationCode = attCatArr[i].code;
+        relDoc.itemRelationTarget = attCatArr[i].getTarget();
+        relDoc.type = attCatArr[i].getAssociationType();
+        relDoc.itemCode = itemCode;
+        relDoc.label = attCatArr[i].getLabel();
+        relDoc.minQuantity = attCatArr[i].getMinCardinality();
+        relDoc.maxQuantity = attCatArr[i].getMaxCardinality();
+
+        //to check status
+        theCatalog.catalogTestModeOnOff(false);
+        if(itemCat.findAssociation(attCatArr[i].code)!=null)
+            relDoc.status = 'ACT';
+        else
+            relDoc.status = 'DEF';
+        if(readDefinitions)
+            theCatalog.catalogTestModeOnOff(true);
+
+        relDocArr[relDocArr.length] = relDoc;
+    }
+
+    if(readDefinitions)
+        theCatalog.catalogTestModeOnOff(false);
+
+    return relDocArr;
+
+    function compareRelations(a, b) {
+      if(a.getAttributes().length==0 || b.getAttributes().length==0)
+          return 0;
+      if (a.Order < b.Order)
+         return -1;
+      if (a.Order > b.Order)
+        return 1;
+      return 0;
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initTribesSpecification">
+  <group>ui_scripts.Tribes</group>
+  <label>initTribesSpecification</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+        var tribeSpec = cm_spoc.initInnerDS("base_TribeSpecification");
+        /*model= tribeSpec;*/
+        var codeAux =  tribeSpec.specificationCode;
+        model.RegExCode = codeAux.substring(codeAux.length-4, codeAux.length);
+        model.RegExDescription = tribeSpec.specificationCode;
+        model.InfiniteDate = false;
+        model.VoiceTribe = false;
+        model.SMSTribe = false;
+        model.ImpSubsAllFromExToOwn = true;
+        model.ExpSubsAllFromOwnToExt = true;
+        model.StartDate ="1999-01-01T00:00:46Z";
+        model.EndDate ="1999-01-01T00:00:46Z";
+
+    }else{
+      var s = new epc.data.Specification();
+      s.project =  cwa_epc.getDefaultProj();
+
+      s.specificationCode = model;
+      var r = epc.getSpecificationByKey(s);
+      if(!api_common.isFault(r)){
+           model= r;
+      }
+
+    }
+    return model;
+  ]]></script>
+</script>

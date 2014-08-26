@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cw_etltool._import.loadFilestoStageArea">
+  <activity name="start" type="seqActivity">
+    <guid>{9df0f85a-1e25-451c-84ea-25726fdd9044}</guid>
+    <label>Start</label>
+    <x>125.0</x>
+    <y>181.0</y>
+    <childList>
+      <child name="hasMoreFilesToImport" type="switchActivity">
+        <guid>{a55d865d-2bfa-4654-812b-3da52bc96751}</guid>
+        <label>More FilesTo Import</label>
+        <x>372.0</x>
+        <y>161.0</y>
+        <childList>
+          <child name="yes" type="caseActivity">
+            <guid>{6df34ff0-469b-4640-90bd-2989aa8754a8}</guid>
+            <label>Yes</label>
+            <x>366.0</x>
+            <y>41.0</y>
+            <childList>
+              <child name="start" type="seqActivity">
+                <guid>{da6c2aa9-4c1f-4b17-924b-77b4500c4c33}</guid>
+                <label>Start : Read Files</label>
+                <x>502.0</x>
+                <y>179.0</y>
+                <childList>
+                  <child name="readFiles" type="subflowActivity">
+                    <element>proc_cw_etltool._import.readFile</element>
+                    <guid>{4c4d7c67-ea4c-42b5-a858-b3161a08c1dc}</guid>
+                    <label>Read File</label>
+                    <x>643.0</x>
+                    <y>177.0</y>
+                  </child>
+                  <child name="entitiesManagement" type="subflowActivity">
+                    <element>proc_cw_etltool._import.entityManagement</element>
+                    <guid>{56e500c4-ff14-443c-bf3e-a42c6064f5ed}</guid>
+                    <label>Entities Management</label>
+                    <x>633.0</x>
+                    <y>38.0</y>
+                  </child>
+                  <child name="nextFile" type="repeatActivity">
+                    <element>proc_cw_etltool._import.loadFilestoStageArea/seqActivity_start/switchActivity_hasMoreFilesToImport</element>
+                    <guid>{2f640635-a5dd-4772-a53a-02fa4286aa44}</guid>
+                    <label>Next File</label>
+                    <x>368.0</x>
+                    <y>43.0</y>
+                    <methodList>
+                      <method name="cwOnProcActBefore" type="action">
+                        <category>before</category>
+                        <system>true</system>
+                        <script><![CDATA[
+                          Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$ Increment ProcessedFilesCounter $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+
+                          var fileGroup = cw_etltool._import.getCurrentFile(process,document,process.processDocument.CurrentFileID);
+                          fileGroup.fileDoc.FileStatus = cw_etltool._import.$CONSTANT().fileStatus.TOBELOAD;
+                          fileGroup.fileDoc.EndProcessDate = new Date();
+                          fileGroup.fileDoc.save();
+
+                          process.processDocument.incrementProcessedFilesCount();
+                          process.processDocument.resetCurrentFileID();
+                          process.processDocument.setEntitiesCount(0);
+                        ]]></script>
+                      </method>
+                    </methodList>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnProcActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script>return process.processDocument.isThereFileToProcess();</script>
+              </method>
+            </methodList>
+          </child>
+          <child name="no" type="caseActivity">
+            <guid>{a07f8040-36ca-4cab-95c8-6683efff8dfc}</guid>
+            <label>No</label>
+            <x>94.0</x>
+            <y>235.99998</y>
+            <childList>
+              <child name="updateProcessStatus" type="scriptActivity">
+                <guid>{d1f58b41-763f-43dd-91fa-707a52482d38}</guid>
+                <label>Update Process Status and Wait For Manual Action</label>
+                <x>363.0</x>
+                <y>311.0</y>
+                <methodList>
+                  <method name="cwOnProcActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$ Update Process Status and Wait For Manual Action $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+                      var order = process.processOrder;
+                      order.header.EndImportDate      = new Date();
+                      order.header.OrderStatus = cw_etltool._import.$CONSTANT().orderStatus.TOBELOAD;
+                      order.save();
+                      process.processDocument.resetProcessedFilesCount();
+                      process.processDocument.resetProcessedEntitiesCount();
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+      </child>
+    </childList>
+    <methodList>
+      <method name="cwOnProcActBefore" type="action">
+        <category>before</category>
+        <system>true</system>
+        <script><![CDATA[
+          Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$ Set Order Status to Importing $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+          process.processOrder.setStatus(cw_etltool._import.$CONSTANT().orderStatus.IMPORTING);
+          process.processDocument.setFilesCount(process.processOrder.header.FilesCount);
+          //process.processDocument.setEntitiesCount(0);
+        ]]></script>
+      </method>
+    </methodList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{fde1b7e3-6a00-4126-ae28-4a526d1ac2bb}</guid>
+  <label>Load Files to Stage Area (CW Database)</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <revision>2</revision>
+  <type>Sub-flow</type>
+</process>

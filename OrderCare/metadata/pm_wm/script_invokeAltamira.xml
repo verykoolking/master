@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.invokeAltamira">
+  <highlight>32</highlight>
+  <label>invokeAltamira</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+         * Invoking Altamira
+         *
+         * @author  Luis Amorim
+         * @date    201403
+         *
+         * @param {DataStructure}  The Process
+         */
+
+    try {
+        var intSOAPinterface = dtree.pmOperation[0].interfaceName;
+        intSOAPinterface     = pm_wm.getBestInterface(intSOAPinterface);
+        var intSOAPoperation = dtree.pmOperation[0].operationName;
+
+        var header =  new DataStructure ("pm_wm.MessageID");
+        //aaaabbbb-cccc-dddd-eeee-ffffffffffff
+
+        if (eval( "dtree.soapHeaderRequest.MessageID")) {
+            header = dtree.soapHeaderRequest;
+        }
+        else
+        {
+            header.MessageID =
+                   String(dtree.pmOperation[0].pmOperationID).leftPad(4, "0").substr(0,4)
+                  +String(Math.round( Math.random()*10000)).leftPad(4,"0").substr(0,4)
+              +"-"+String(Calendar.formatDate( new Date(), "YYYY")).leftPad(4, "0").substr(0,4)
+              +"-"+String(Calendar.formatDate( new Date(), "MMdd")).leftPad(4, "0").substr(0,4)
+              +"-"+String(Calendar.formatDate( new Date(), "hhmm")).rightPad(4, "0").substr(0,4)
+              +"-"+String(Calendar.formatDate( new Date(), "ssF")).rightPad(6, "0").substr(0,8)
+                  +String(Math.round( Math.random()*10000)).leftPad(4,"0").substr(0,4);
+        }
+
+        if ((intSOAPinterface) && (intSOAPoperation) ) {
+            dtree.altamiraResponse = Global.invokeInterface(intSOAPinterface, intSOAPoperation, [dtree.altamiraRequest, header], null)[0];
+
+            if(dtree.altamiraResponse.isChild('faultcode')){
+                //If there's an faultcode, then it's an error
+                var error     = dtree.altamiraResponse.detail;
+                var errorType = error.has('serverException') ? 'serverException' : 'clientException';
+
+                var errId     = error[errorType].exceptionId != null && error[errorType].exceptionId != '' ? error[errorType].exceptionId : "No error ID";
+                var errDesc   = error[errorType].text != null && error[errorType].text != '' ? error[errorType].text : "No error Description";
+                var errCat    = error[errorType].exceptionCategory != '' ? error[errorType].exceptionCategory : null;
+
+                dtree.errorcode.push(errId);
+                dtree.errortext.push(errDesc);
+                dtree.errorCategory = errCat;
+            }
+            else
+            {
+                //Success
+                return true;
+            }
+        }
+        else
+        {
+            dtree.errorcode.push("ER_WF_600");
+            dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_600", [intSOAPinterface, intSOAPoperation]));
+        }
+
+    }
+    catch (err)
+    {
+        dtree.errorcode.push("ER_WF_699");
+        dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_699", [err]));
+    }
+
+    return false;
+  ]]></script>
+</script>

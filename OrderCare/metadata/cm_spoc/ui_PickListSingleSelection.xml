@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.PickListSingleSelection">
+  <label>PickListSingleSelection</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="labelDescription" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="parentUI" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="modelCallback" type="leaf">
+      <valueType>nmeta_com.conceptwave.system.Object</valueType>
+    </variable>
+    <variable name="availableItems" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dstruct_cm_spoc.PickListDS</valueType>
+    </variable>
+    <variable name="selectedItem" type="leaf">
+      <valueType>dstruct_cm_spoc.PickListDS</valueType>
+    </variable>
+    <variable name="priorityButtonsEnabled" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="showAvailableTable" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="inputIndex" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Integer</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <alignment>center,center</alignment>
+              <height>100%</height>
+              <width>100%</width>
+              <elementList>
+                <element name="LayoutSpace" type="ellsp">
+                  <height>20px</height>
+                </element>
+                <element name="HorizontalLayout" type="elhlt">
+                  <alignment>center,center</alignment>
+                  <edgeSize>2</edgeSize>
+                  <height>90%</height>
+                  <membersMargin>2</membersMargin>
+                  <showEdge>true</showEdge>
+                  <width>90%</width>
+                  <elementList>
+                    <element name="AvailableItems" type="eltabl">
+                      <filterFullData>true</filterFullData>
+                      <height>100%</height>
+                      <noItemsMessage>No items to select</noItemsMessage>
+                      <onSelectChange type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.PickListSingleSelection/uimthd_OneSelection</variablePath>
+                        </variablePathList>
+                      </onSelectChange>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.PickListSingleSelection/leaf_availableItems</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.PickListSingleSelection/permMethod_ShowAvailableTable</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>45%</width>
+                      <elementList>
+                        <element name="description1" type="elfld">
+                          <height>100%</height>
+                          <label>Available</label>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.PickListSingleSelection/leaf_availableItems</variablePath>
+                              <variablePath>dstruct_cm_spoc.PickListDS/dstruct_description</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <width>100%</width>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="ButtonsVL" type="elvlt">
+                      <alignment>center,center</alignment>
+                      <edgeOffset>5</edgeOffset>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.PickListSingleSelection/permMethod_ShowAvailableTable</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>10%</width>
+                      <elementList>
+                        <element name="ButtonRight" type="elbtn">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.PickListSingleSelection/uimthd_addToSelected</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwt/images/16/navigate_right.png</icon>
+                          <width>22px</width>
+                        </element>
+                        <element name="ButtonLeft" type="elbtn">
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.PickListSingleSelection/uimthd_removeFromSelected</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwt/images/16/delete.png</icon>
+                          <width>22px</width>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="description" type="elfld">
+                      <height>100%</height>
+                      <label>Selected</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.PickListSingleSelection/leaf_selectedItem</variablePath>
+                          <variablePath>dstruct_cm_spoc.PickListDS/dstruct_description</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100%</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpace2" type="ellsp">
+                  <height>20px</height>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$labelDescription" type="laction">
+      <path>ui_cm_spoc.PickListSingleSelection/leaf_labelDescription</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        // Init default value
+        return "Description";
+      ]]></script>
+    </method>
+    <method name="addToSelected" type="uimthd">
+      <script><![CDATA[
+        var aVselected = this.availableItems.selected;
+
+        if(aVselected != null){
+
+
+
+            if(this.selectedItem != null) this.availableItems.addLast(this.selectedItem);
+
+
+
+                this.selectedItem=aVselected[0];
+                this.availableItems.remove(aVselected[0]);
+
+
+        }
+        this.availableItems.updateList;
+
+        if(this.modelCallback) this.modelCallback(this.selectedItem);
+      ]]></script>
+    </method>
+    <method name="removeFromSelected" type="uimthd">
+      <script><![CDATA[
+        var selected = this.selectedItem;
+        if(selected){
+
+                this.availableItems.addLast(this.selectedItem);
+                this.selectedItem= null;
+
+
+
+
+            this.availableItems.updateList;
+
+
+
+        if(this.modelCallback) this.modelCallback(this.selectedItems);
+
+        }
+      ]]></script>
+    </method>
+    <method name="getSingleSelectedIndex" type="uimthd">
+      <script><![CDATA[
+        var selected = this.selectedItems.selected;
+
+        if(selected!=null && selected.length==1){
+            for(var i=0; i<this.selectedItems.length;i++){
+                if(selected[0] == this.selectedItems[i]){
+                    return i;
+                }
+            }
+        }
+
+        return -1;
+      ]]></script>
+    </method>
+    <method name="changeItemPos" type="uimthd">
+      <parameterList>
+        <parameter name="item" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+        <parameter name="newPos" type="rifp">
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.Integer</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        if(newPos>this.selectedItems.length-1){
+            newPos=this.selectedItems.length-1;
+        }else if(newPos<0){
+            newPos = 0;
+        }
+
+        this.inputIndex=newPos;
+        this.selectedItems.remove(item);
+        this.selectedItems.add(newPos,item);
+        this.selectedItems.setSelected(item);
+        this.selectedItems.updateList;
+        this.refreshPriorityValues();
+        if(this.modelCallback) this.modelCallback(this.selectedItems);
+      ]]></script>
+    </method>
+    <method name="newIndexValue" type="uimthd">
+      <script><![CDATA[
+        // this method move the selected item to the position entried in the text field
+
+        var pos = this.getSingleSelectedIndex(); // Index of the current selected item
+
+        if(pos>=0){
+            this.changeItemPos(this.selectedItems[pos], this.inputIndex);
+        }
+      ]]></script>
+    </method>
+    <method name="getParentUI" type="uimthd">
+      <script>return this.parentUI;</script>
+    </method>
+    <method name="setParentUI" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <mandatory>true</mandatory>
+          <type>ui_com.conceptwave.system.UserInterface</type>
+        </parameter>
+      </parameterList>
+      <script>this.parentUI = ui;</script>
+    </method>
+    <method name="refreshPriorityValues" type="uimthd">
+      <script><![CDATA[
+        if(this.priorityButtonsEnabled){
+            for(var i=0;i<this.selectedItems.length;i++){
+                this.selectedItems[i].priority = i;
+            }
+
+            this.selectedItems.updateList;
+        }
+      ]]></script>
+    </method>
+    <method name="ShowAvailableTable" type="permMethod">
+      <script><![CDATA[
+        if(this.showAvailableTable==false){
+            return false;
+        }
+        // false - if it is null or false
+        return true;
+      ]]></script>
+    </method>
+    <method name="setDescriptionLabel" type="uimthd">
+      <parameterList>
+        <parameter name="label" type="rifp">
+          <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      Label show in the header of the descritpion column in selected items &#xd;
+      table&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <script>this.labelDescription = label;</script>
+    </method>
+    <method name="DynamicLabelDescription" type="uimthd">
+      <parameterList>
+        <parameter name="label" type="rifp">
+          <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      Label show in the header of the descritpion column in selected items &#xd;
+      table&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+          <mandatory>true</mandatory>
+          <type>dtype_com.conceptwave.system.String</type>
+        </parameter>
+      </parameterList>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script>return this.labelDescription;</script>
+    </method>
+    <method name="orderByPriority" type="uimthd">
+      <script><![CDATA[
+        if(this.selectedItems.length>0){
+            var i=0;
+            do{
+                var item = this.selectedItems[i];
+                if(item.priority!=i){
+                    this.selectedItems.remove(item);
+                    this.selectedItems.add(item.priority,item);
+                }else{
+                    i++;
+                }
+            }while(i<this.selectedItems.length);
+        }
+      ]]></script>
+    </method>
+    <method name="OneSelection" type="uimthd">
+      <script><![CDATA[
+        if(this.availableItems.selected != null){
+        var lastSel= this.availableItems.selected[this.availableItems.selected.length-1];
+        this.availableItems.selected[0]=lastSel;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

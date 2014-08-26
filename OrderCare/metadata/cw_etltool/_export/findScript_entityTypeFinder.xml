@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cw_etltool._export.entityTypeFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <label>Entity Types Finder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_cw_etltool._export.codeTableDoc</output>
+  <type>script</type>
+  <volatility>0</volatility>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        var codes  = Global.getCTCodesAndDescriptions("specificationType");
+
+        var list = new DataObjectList();
+
+        for(var i = 0; codes && i< codes.length; i=i+2 ){
+            var doc = new Document("cw_etltool._export.codeTableDoc");
+            doc.code = codes[i];
+            doc.description = codes[i+1];
+            doc.selected = true ;
+            list.addLast(doc);
+        }
+        return list;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cw_etltool._export.codeTableDoc</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cw_etltool._export.codeTableDoc/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="entityTypeFinderResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cw_etltool._export.entityTypeFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="code" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._export.entityTypeFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._export.codeTableDoc/leaf_code</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="description" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._export.entityTypeFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._export.codeTableDoc/leaf_description</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="select" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cw_etltool._export.entityTypeFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cw_etltool._export.codeTableDoc/leaf_selected</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cw_etltool._export.entityTypeFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="EntityList" type="vform">
+            <label>EntityList</label>
+            <root name="SectionStack" type="elsectnstck">
+              <height>400px</height>
+              <width>430px</width>
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="domainResultTable1" type="eltabl">
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <onSelectChange type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                        </variablePathList>
+                      </onSelectChange>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findScript_cw_etltool._export.entityTypeFinder/ui_UserInterface/uivar_result</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <elementList>
+                        <element name="code" type="elfld">
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>findScript_cw_etltool._export.entityTypeFinder/ui_UserInterface/uivar_result</variablePath>
+                              <variablePath>doc_cw_etltool._export.codeTableDoc/leaf_code</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <visible type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </visible>
+                        </element>
+                        <element name="select" type="elchk">
+                          <editable type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                            </variablePathList>
+                          </editable>
+                          <label>Select</label>
+                          <toggleEdit>true</toggleEdit>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>findScript_cw_etltool._export.entityTypeFinder/ui_UserInterface/uivar_result</variablePath>
+                              <variablePath>doc_cw_etltool._export.codeTableDoc/leaf_selected</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <width>50px</width>
+                        </element>
+                        <element name="description" type="elfld">
+                          <editable type="varPath">
+                            <variablePathList>
+                              <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                            </variablePathList>
+                          </editable>
+                          <label>Domain Name</label>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>findScript_cw_etltool._export.entityTypeFinder/ui_UserInterface/uivar_result</variablePath>
+                              <variablePath>doc_cw_etltool._export.codeTableDoc/leaf_description</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <width>350px</width>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="entityTypeFinderView" type="findVView">
+      <outputOverlay>findScript_cw_etltool._export.entityTypeFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+      <searchImmediately>true</searchImmediately>
+    </view>
+  </viewList>
+</findScript>

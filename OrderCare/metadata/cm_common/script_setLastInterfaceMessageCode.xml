@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.setLastInterfaceMessageCode">
+  <group>utilities</group>
+  <label>setLastInterfaceMessageCode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="relatedCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var msgId = UserProfile.getMsgLogId();
+    if(msgId != null && msgId > 0) {
+        var msg = new Document('cwf_pm.messageLog', msgId);
+        if(msg.userData1 == null || msg.userData1 == '') {
+            msg.userData1 = relatedCode;
+            msg.save();
+        }
+    }
+  ]]></script>
+</script>

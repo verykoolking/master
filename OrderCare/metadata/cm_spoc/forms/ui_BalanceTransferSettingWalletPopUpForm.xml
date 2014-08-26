@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.BalanceTransferSettingWalletPopUpForm">
+  <group>TariffPlan</group>
+  <label>BalanceTransferSettingWalletPopUpForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="TPMWalletArr" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TPMWalletArr</valueType>
+    </variable>
+    <variable name="TPMWalletArrCopy" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TPMWalletArr</valueType>
+    </variable>
+    <variable name="WalletPickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="SectionStack" type="elsectnstck">
+              <height>350px</height>
+              <width>405px</width>
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="FormFrame" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BalanceTransferSettingWalletPopUpForm/leaf_WalletPickList</variablePath>
+                          <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                          <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <height>300px</height>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.BalanceTransferSettingWalletPopUpForm/leaf_WalletPickList</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>395px</width>
+                    </element>
+                    <element name="HorizontalLayout" type="elhlt">
+                      <alignment>right,center</alignment>
+                      <elementList>
+                        <element name="LayoutSpacer" type="ellsp">
+                          <width>170px</width>
+                        </element>
+                        <element name="Button" type="elbtn">
+                          <cellAlignment>left,center</cellAlignment>
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.BalanceTransferSettingWalletPopUpForm/uimthd_onCancelClick</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwt/images/16/delete.png</icon>
+                          <label>Cancel</label>
+                        </element>
+                        <element name="Button1" type="elbtn">
+                          <cellAlignment>left,center</cellAlignment>
+                          <clickMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.BalanceTransferSettingWalletPopUpForm/uimthd_onSaveClick</variablePath>
+                            </variablePathList>
+                          </clickMethod>
+                          <icon>/cwt/images/16/check.png</icon>
+                          <label>Save</label>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$TPMWalletArr" type="laction">
+      <path>ui_cm_spoc.forms.BalanceTransferSettingWalletPopUpForm/leaf_TPMWalletArr</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.BalanceTransferSettingWalletPopUpForm/leaf_TPMWalletArr</valueType>
+      <script>return this.parent.model.TPMWalletArrDS;</script>
+    </method>
+    <method name="cwLeafInitAction$TPMWalletArrCopy" type="laction">
+      <path>ui_cm_spoc.forms.BalanceTransferSettingWalletPopUpForm/leaf_TPMWalletArrCopy</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.BalanceTransferSettingWalletPopUpForm/leaf_TPMWalletArrCopy</valueType>
+      <script>this.TPMWalletArr.copy();</script>
+    </method>
+    <method name="cwLeafInitAction$WalletPickList" type="laction">
+      <path>ui_cm_spoc.forms.BalanceTransferSettingWalletPopUpForm/leaf_WalletPickList</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.BalanceTransferSettingWalletPopUpForm/leaf_WalletPickList</valueType>
+      <script><![CDATA[
+        var itemFinder = new Finder("cwa_epc.catalogItemFinder");
+        itemFinder.searchDocument.baseItemCode = "base_Wallet";
+        var result = itemFinder.search();
+
+        var pl = cm_spoc.initPickList(this,result,this.TPMWalletArr.List,"itemCode","itemCode");
+        pl.modelCallback = this.setWalletPLModel;
+        return pl;
+      ]]></script>
+    </method>
+    <method name="setWalletPLModel" type="uimthd">
+      <parameterList>
+        <parameter name="selectedItems" type="rifp">
+          <type>dstruct_cm_spoc.PickListDS</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        //
+        this.parent.TPMWalletArr.List =null;
+        this.parent.TPMWalletArr.ListDS =null;
+
+        for(var i=0;i<selectedItems.length;i++){
+            this.parent.TPMWalletArr.List[i] = selectedItems[i].id;
+        }
+      ]]></script>
+    </method>
+    <method name="onCancelClick" type="uimthd">
+      <script><![CDATA[
+        //
+        this.parent.owner.model.TPMWalletArrDS = this.TPMWalletArrCopy;
+        //this.TPMWalletArr = this.TPMWalletArrCopy;
+        return this.parent.cwDialogClose();
+      ]]></script>
+    </method>
+    <method name="onSaveClick" type="uimthd">
+      <script><![CDATA[
+        //
+
+        this.parent.owner.model.WalletList=cm_spoc.concatList(this.TPMWalletArr.List,",");
+        return this.parent.cwDialogClose();
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

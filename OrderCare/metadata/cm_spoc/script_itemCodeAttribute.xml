@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.itemCodeAttribute">
+  <label>itemCodeAttribute</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="attributeAndValueList" type="rifp">
+      <array>true</array>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var itemFinder = new Finder ("cm_spoc.ItemCodeAttributeFinder");
+    itemFinder.searchDocument.itemCode = itemCode;
+    var result = itemFinder.search();
+    var arr = new Array();
+    //var jsonObj = {"attributeName" : "", "defaultValue" : ""};
+
+    for ( var i = 0; i < attributeAndValueList.length; i++){
+        for ( var j = 0; j < result.length; j++){
+            if (result[j].itemAttribute == attributeAndValueList[i]){
+                /*jsonObj.attributeName = result[i].itemAttribute;
+                jsonObj.defaultValue = result[i].defaultValue;*/
+                arr.push( {"attributeName" :  result[j].itemAttribute, "defaultValue" :result[j].defaultValue});
+                break;
+            }
+        }
+    }
+    return arr;
+  ]]></script>
+</script>

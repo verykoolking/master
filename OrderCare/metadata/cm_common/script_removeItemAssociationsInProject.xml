@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.removeItemAssociationsInProject">
+  <group>scripts</group>
+  <label>removeItemAssociationsInProject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="item" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cwt_pcmaintapi.item</type>
+    </parameter>
+    <parameter name="status" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cwt_pcmaintapi.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+
+        var response;
+
+        //itemAttachments
+        for(var i=0; i<item.itemAttachments.length; i++){
+            if(item.itemAttachments[i].status == status){
+                response = cwt_pcmaintapi.itemAttachmentDelete(item.itemAttachments[i]);
+                if(cwt_pcmaintapi.isFault(response)){
+                    var fault = api_common.createFault(response.code, response.message);
+                    return fault;
+                }
+            }
+        }
+
+        //itemAttributes
+        for(var i=0; i<item.itemAttributes.length; i++){
+            if(item.itemAttributes[i].status == status){
+                response = cwt_pcmaintapi.itemAttributeDelete(item.itemAttributes[i]);
+                if(cwt_pcmaintapi.isFault(response)){
+                    var fault = api_common.createFault(response.code, response.message);
+                    return fault;
+                }
+            }
+        }
+
+        //itemImages
+        for(var i=0; i<item.itemImages.length; i++){
+            if(item.itemImages[i].status == status){
+                response = cwt_pcmaintapi.itemImageDelete(item.itemImages[i]);
+                if(cwt_pcmaintapi.isFault(response)){
+                    var fault = api_common.createFault(response.code, response.message);
+                    return fault;
+                }
+            }
+        }
+
+        //itemRelations
+        for(var i=0; i<item.itemRelations.length; i++){
+            if(item.itemRelations[i].status == status){
+                response = cwt_pcmaintapi.itemRelationDelete(item.itemRelations[i]);
+                if(cwt_pcmaintapi.isFault(response)){
+                    var fault = api_common.createFault(response.code, response.message);
+                    return fault;
+                }
+            }else if (item.itemRelations[i].relationAttributes.length >0){
+                for (var j=0; i<item.itemRelations[i].relationAttributes.length; j++){
+                    if(item.itemRelations[i].relationAttributes[j].status == status){
+                        response = cwt_pcmaintapi.relationAttributeDelete(item.itemRelations[i].relationAttributes[j]);
+                        if(cwt_pcmaintapi.isFault(response)){
+                            var fault = api_common.createFault(response.code, response.message);
+                            return fault;
+                        }
+                    }
+                }
+            }
+        }
+
+        //itemDescriptions
+        for(var i=0; i<item.itemDescriptions.length; i++){
+            if(item.itemDescriptions[i].status == status){
+                response = cwt_pcmaintapi.itemDescriptionDelete(item.itemDescriptions[i]);
+                if(cwt_pcmaintapi.isFault(response)){
+                    var fault = api_common.createFault(response.code, response.message);
+                    return fault;
+                }
+            }
+        }
+
+        //itemChargeVersions
+        for(var i=0; i<item.itemChargeVersions.length; i++){
+            if(item.itemChargeVersions[i].status == status){
+                response = cwt_pcmaintapi.itemChargeVersionDelete(item.itemChargeVersions[i]);
+                if(cwt_pcmaintapi.isFault(response)){
+                    var fault = api_common.createFault(response.code, response.message);
+                    return fault;
+                }
+            }
+        }
+
+        //itemGroups
+        for(var i=0; i<item.itemGroups.length; i++){
+            if(item.itemGroups[i].status == status){
+                response = cwt_pcmaintapi.itemGroupDelete(item.itemGroups[i]);
+                if(cwt_pcmaintapi.isFault(response)){
+                    var fault = api_common.createFault(response.code, response.message);
+                    return fault;
+                }
+            }else if (item.itemGroups[i].itemGroupTargets.length >0){
+                for (var j=0; i<item.itemGroups[i].itemGroupTargets.length; j++){
+                    if(item.itemGroups[i].itemGroupTargets[j].status == status){
+                        response = cwt_pcmaintapi.itemGroupTargetDelete(item.itemGroups[i].itemGroupTargets[j]);
+                        if(cwt_pcmaintapi.isFault(response)){
+                            var fault = api_common.createFault(response.code, response.message);
+                            return fault;
+                        }
+                    }
+                }
+            }
+        }
+
+        //itemHierarchies
+        for(var i=0; i<item.itemHierarchys.length; i++){
+            if(item.itemHierarchys[i].status == status){
+                response = cwt_pcmaintapi.itemHierarchyDelete(item.itemHierarchys[i]);
+                if(cwt_pcmaintapi.isFault(response)){
+                    var fault = api_common.createFault(response.code, response.message);
+                    return fault;
+                }
+            }
+        }
+
+        //itemRules
+        for(var i=0; i<item.itemRules.length; i++){
+            if(item.itemRules[i].status == status){
+                response = cwt_pcmaintapi.itemRuleDelete(item.itemRules[i]);
+                if(cwt_pcmaintapi.isFault(response)){
+                    var fault = api_common.createFault(response.code, response.message);
+                    return fault;
+                }
+            }
+        }
+
+        //we find all the assignment for this project for the given item, and then delete them one by one
+        //if the performance is not good enough, we have to convert this into an sql function
+
+        var projectAssignmentSearchDS = new cwt_pcmaintapi.projectAssignmentSearchDS();
+        projectAssignmentSearchDS.projectCode = projectCode;
+        projectAssignmentSearchDS.objectCode = item.itemCode;
+        projectAssignmentSearchDS.objectType = "cwt_pc:cwt_item";
+
+        var response = cwt_pcmaintapi.projectAssignmentSearch(projectAssignmentSearchDS);
+        if(cwt_pcmaintapi.isFault(response))
+            api_common.createFault(response.code, response.message);
+
+        var result;
+        for(var i=0; i<response.projectAssignments.length; i++){
+            result = deleteProjectAssignmentById(response.projectAssignments[i].projectAssignmentId);
+            if(cwt_pcmaintapi.isFault(result))
+                api_common.createFault(result.code, result.message);
+        }
+
+        return response;
+
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+
+
+    //*************************************************************
+    function deleteProjectAssignmentById(id)
+    {
+        var doc = Document.readDoc("cwt_pc:cwt_projectAssignment", id);
+        if (doc != null) {
+            doc.deleteFromDB(false);
+        }else{
+            var faultDS = api_common.createFault("DATA_NOT_FOUND", Global.translateText("CWTPC0306"));
+            return faultDS;
+        }
+    }
+  ]]></script>
+</script>

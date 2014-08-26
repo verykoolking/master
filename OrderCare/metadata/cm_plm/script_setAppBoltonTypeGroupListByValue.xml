@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.setAppBoltonTypeGroupListByValue">
+  <group>applicabilityCondition.api</group>
+  <label>setAppBoltonTypeGroupListByValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="AppBoltonTypeGroupList" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.AppBoltonTypeGroupList</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        if(!cm_plm.isModificationAllowed(AppBoltonTypeGroupList))
+            return api_common.createFault("ERR", "This modality is being maintained in another project.");
+
+        if(cm_plm.isProjectActive(AppBoltonTypeGroupList.projectCode))
+            return api_common.createFault("ERR", "Item cannot be created for projects in ACT status.");
+
+        var result;
+        var now = new Date();
+        if(cm_plm.isObjectActive(AppBoltonTypeGroupList)){
+            AppBoltonTypeGroupList.endDate = new Date();
+            result = cm_plm.endDateObject(AppBoltonTypeGroupList);
+            if(api_common.isFault(result))
+                return result;
+
+            //now we create a new version for this object
+            AppBoltonTypeGroupList.endDate = null;
+            AppBoltonTypeGroupList.startDate = now;
+            result = cm_plm.createAppBoltonTypeGroupListByValue(AppBoltonTypeGroupList);
+        }else{
+
+            var doc = Document.readDoc("cm_plm:AppBoltonTypeGroupListDoc", AppBoltonTypeGroupList.id);
+            if(!doc)
+                return api_common.createFault("ERR", "The GroupId was not found: " + AppBoltonTypeGroupList.id);
+
+            AppBoltonTypeGroupList.mapTo(doc);
+            doc.save();
+            doc.mapTo(AppBoltonTypeGroupList);
+
+            result = cm_plm.updateProjectAssignmentForObject(AppBoltonTypeGroupList);
+        }
+
+        if(api_common.isFault(result))
+            return result;
+
+        return AppBoltonTypeGroupList;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

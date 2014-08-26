@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_HBRCReductionValueCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_HBRCReductionValueCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var attr1= data.HappyBoltOnSpecificationDS.ReductionCoefficientDS.ReductionValue ;
+    var attr2= data.HappyBoltOnSpecificationDS.RateOrReductionSwitch;
+
+
+    if(attr2=="RATE" && attr1){
+    errList.addErrorMessage(data,["ReductionValue must be set"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

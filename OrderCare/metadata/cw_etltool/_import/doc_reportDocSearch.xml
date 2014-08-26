@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cw_etltool._import.reportDocSearch">
+  <extends>doc_com.conceptwave.system.Document</extends>
+  <guid>{3c8e0227-5fc9-45a7-b9a5-2991c6c9d5e0}</guid>
+  <label>Report Document Search</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="StartImportDate" type="leaf">
+      <propertyElement type="eldatetime">
+        <displayFormat>dd/MM/yyyy HH:mm</displayFormat>
+        <label>Import Start Date</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.DateTime</valueType>
+    </variable>
+    <variable name="cwOrderId" type="leaf">
+      <valueType>dtype_cwf.cwOrderId</valueType>
+    </variable>
+    <variable name="OrderStatus" type="leaf">
+      <valueType>dtype_cw_etltool._import.orderStatus</valueType>
+    </variable>
+    <variable name="EndImportDate" type="leaf">
+      <propertyElement type="eldatetime">
+        <displayFormat>dd/MM/yyyy HH:mm</displayFormat>
+        <label>Import End Date</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.DateTime</valueType>
+    </variable>
+    <variable name="StartLoadingDate" type="leaf">
+      <propertyElement type="eldatetime">
+        <displayFormat>dd/MM/yyyy HH:mm</displayFormat>
+        <label>Loading Start Date</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.DateTime</valueType>
+    </variable>
+    <variable name="EndLoadingDate" type="leaf">
+      <propertyElement type="eldatetime">
+        <displayFormat>dd/MM/yyyy HH:mm</displayFormat>
+        <label>Loading End Date</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.DateTime</valueType>
+    </variable>
+    <variable name="ProjectName" type="leaf">
+      <propertyElement type="elref">
+        <label>Project Name</label>
+      </propertyElement>
+      <valueType>dtype_cw_etltool._import.projectName</valueType>
+    </variable>
+    <variable name="ProcessId" type="leaf">
+      <propertyElement type="elfld">
+        <label>Process ID</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_com.conceptwave.system.Document/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cw_etltool._import.reportDocSearch</valueType>
+      </variable>
+      <variable name="globalUI" type="leaf">
+        <valueType>ui_cwt_pc.globalUI</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="HorizontalLayout" type="elhlt">
+                <width>100%</width>
+                <elementList>
+                  <element name="SectionStack" type="elsectnstck">
+                    <elementList>
+                      <element name="Section" type="elsect">
+                        <elementList>
+                          <element name="SectionHeader" type="elsecth">
+                            <label>Filter</label>
+                          </element>
+                          <element name="GridLayout" type="elgrd">
+                            <alignment>left,center</alignment>
+                            <colWidths>150px</colWidths>
+                            <labelOrientation>left</labelOrientation>
+                            <numOfCols>8</numOfCols>
+                            <width>700px</width>
+                            <elementList>
+                              <element name="RowSpacer" type="elrsp"/>
+                              <element name="ProjectName" type="elref">
+                                <labelOrientation>left</labelOrientation>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/ui_UserInterface/uivar_model</variablePath>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/leaf_ProjectName</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="ProcessId" type="elfld">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/ui_UserInterface/uivar_model</variablePath>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/leaf_ProcessId</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="cwOrderId" type="elfld">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/ui_UserInterface/uivar_model</variablePath>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/leaf_cwOrderId</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="OrderStatus" type="elslct">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/ui_UserInterface/uivar_model</variablePath>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/leaf_OrderStatus</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="StartImportDate" type="eldate">
+                                <labelOrientation>left</labelOrientation>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/ui_UserInterface/uivar_model</variablePath>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/leaf_StartImportDate</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="EndImportDate" type="eldate">
+                                <labelOrientation>left</labelOrientation>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/ui_UserInterface/uivar_model</variablePath>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/leaf_EndImportDate</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="StartLoadingDate" type="eldate">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/ui_UserInterface/uivar_model</variablePath>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/leaf_StartLoadingDate</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="EndLoadingDate" type="eldate">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/ui_UserInterface/uivar_model</variablePath>
+                                    <variablePath>doc_cw_etltool._import.reportDocSearch/leaf_EndLoadingDate</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="RowSpacer1" type="elrsp"/>
+                            </elementList>
+                          </element>
+                          <element name="FormFrame" type="elovf">
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>doc_cw_etltool._import.reportDocSearch/ui_UserInterface/leaf_globalUI</variablePath>
+                                <variablePath>ui_cwt_pc.globalUI/frmui_Forms</variablePath>
+                                <variablePath>ui_cwt_pc.globalUI/frmui_Forms/vform_SearchMenu</variablePath>
+                              </variablePathList>
+                            </formReference>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>doc_cw_etltool._import.reportDocSearch/ui_UserInterface/leaf_globalUI</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="onInit" type="action">
+        <valueType>nmeta_com.conceptwave.system.Object</valueType>
+        <script><![CDATA[
+          this.cw$super_onInit();
+          this.globalUI = new cwt_pc.globalUI(null, this);
+        ]]></script>
+      </method>
+      <method name="searchAction" type="usrActionMethod">
+        <script>this.parent.searchAction();</script>
+      </method>
+    </methodList>
+  </UserInterface>
+</document>

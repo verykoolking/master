@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getAndUpdateBaseItemCode">
+  <group>ui_scripts.utils</group>
+  <label>getAndUpdateBaseItemCode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+    itemFinder.searchDocument.itemCode = model.specificationCode;
+    var result = itemFinder.search();
+    model.baseSpecificationCode = result[0].baseItemCode;
+    return  model.baseSpecificationCode;
+  ]]></script>
+</script>

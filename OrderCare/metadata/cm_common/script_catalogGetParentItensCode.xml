@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.catalogGetParentItensCode">
+  <group>api</group>
+  <label>Get Parent Itens Code From Catalog</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="relationsType" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="readDefinitions" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(readDefinitions)
+        theCatalog.catalogTestModeOnOff(true);
+
+    var itemCat = theCatalog.getItem(itemCode);
+
+    if(itemCat==null)
+        throw ("No Catalog Item found with code " + itemCode);
+
+    var parItemCodeArr = itemCat.getParentsByType(relationsType);
+
+    if(readDefinitions)
+        theCatalog.catalogTestModeOnOff(false);
+
+    return parItemCodeArr;
+  ]]></script>
+</script>

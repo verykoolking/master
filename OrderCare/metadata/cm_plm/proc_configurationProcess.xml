@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cm_plm.configurationProcess">
+  <activity name="start" type="seqActivity">
+    <guid>{af29ab90-03b0-4ff7-9bb5-ef4ea8f152c2}</guid>
+    <label>Start</label>
+    <x>-11.0</x>
+    <y>213.5357</y>
+    <childList>
+      <child name="CpErrorOnProduction" type="scriptActivity">
+        <guid>{507b2c4b-ee7c-465e-98d4-baf04fa19f23}</guid>
+        <label>CP</label>
+        <x>69.37109</x>
+        <y>210.70117</y>
+        <childList>
+          <child name="errorCP" type="compensateActivity">
+            <compensatesList>
+              <compensates>errorOnConfugurationCP</compensates>
+            </compensatesList>
+            <guid>{5b7b3845-c676-4be1-9015-d8b85c0084fe}</guid>
+            <label>errorCP</label>
+            <x>346.3711</x>
+            <y>270.70117</y>
+            <childList>
+              <child name="cpScript" type="scriptActivity">
+                <guid>{6dc4d62d-f8f0-4c22-ad47-d0736719fac8}</guid>
+                <label>cpScript</label>
+                <x>24.371094</x>
+                <y>330.70117</y>
+                <methodList>
+                  <method name="cwOnProcActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script>return;</script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              var pd = process.processDocument;
+              pd.compPoint = 'errorOnConfugurationCP';
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+      <child name="configurationRequired" type="switchActivity">
+        <guid>{df3e569a-2dd4-464d-9030-e969bf897c8d}</guid>
+        <label>Configuration Required?</label>
+        <x>135.0</x>
+        <y>199.13336</y>
+        <childList>
+          <child name="yes" type="caseActivity">
+            <guid>{aa6f5f6a-6dfe-42ef-9749-d3e2d0abf406}</guid>
+            <label>Yes</label>
+            <x>122.0</x>
+            <y>130.0</y>
+            <childList>
+              <child name="configuration" type="seqActivity">
+                <guid>{0025f30e-8583-429d-a50a-fa9c181966f5}</guid>
+                <label>Configuration</label>
+                <x>277.82733</x>
+                <y>200.93414</y>
+                <childList>
+                  <child name="spocAndComercConf" type="switchActivity">
+                    <guid>{21ea68c1-b046-4706-aac9-0a7b5f70d206}</guid>
+                    <label>SPOC And Comercial Configuration Required?</label>
+                    <x>349.3789</x>
+                    <y>175.95013</y>
+                    <childList>
+                      <child name="yes" type="caseActivity">
+                        <guid>{97aeaa20-4bcf-4656-91e3-51be509d2a58}</guid>
+                        <label>Yes</label>
+                        <x>459.06055</x>
+                        <y>323.9043</y>
+                        <childList>
+                          <child name="comercConf" type="seqActivity">
+                            <guid>{65b035dc-f732-4d62-bcc3-e3eacd0c9351}</guid>
+                            <label>Comercial Configuration</label>
+                            <x>472.20624</x>
+                            <y>205.17123</y>
+                            <childList>
+                              <child name="compComercConf" type="opActivity">
+                                <element>iface_cm_plm.confModelerInt/oper_compComercConf</element>
+                                <guid>{fd3a34dc-03c0-44dc-ae80-faebb13c06d5}</guid>
+                                <label>Complete Comercial Configuration</label>
+                                <participant>part_cm_plm.confComercModelerPart</participant>
+                                <x>563.7578</x>
+                                <y>191.6872</y>
+                                <methodList>
+                                  <method name="cwOnProcActBefore" type="action">
+                                    <category>before</category>
+                                    <system>true</system>
+                                    <script><![CDATA[cm_plm.setProcessOrderState(process, 'COM');]]></script>
+                                  </method>
+                                </methodList>
+                              </child>
+                              <child name="confComercModelerContinue" type="opActivity">
+                                <element>iface_cm_plm.confModelerInt/oper_CommercialConfigurationCompleted</element>
+                                <guid>{1517e9ff-f001-481e-98ec-2c11a2e16e8c}</guid>
+                                <label>Commercial Configuration Completed</label>
+                                <participant>part_cm_plm.confComercModelerPart</participant>
+                                <x>803.1367</x>
+                                <y>200.38837</y>
+                              </child>
+                            </childList>
+                          </child>
+                        </childList>
+                        <methodList>
+                          <method name="cwOnProcActCond" type="action">
+                            <category>cond</category>
+                            <system>true</system>
+                            <script><![CDATA[
+                              var pControl = process.processOrder.plmControl;
+                              return ( pControl.isComercialConfRequired && pControl.caller=='GUI');
+                            ]]></script>
+                          </method>
+                        </methodList>
+                      </child>
+                      <child name="no" type="caseActivity">
+                        <guid>{6a7db25a-0ecb-48a1-a09d-c035b429d515}</guid>
+                        <label>No</label>
+                        <x>695.1367</x>
+                        <y>349.61542</y>
+                      </child>
+                    </childList>
+                  </child>
+                  <child name="techConf" type="switchActivity">
+                    <guid>{78ad4d2b-9946-4dbc-b1c0-2be3ee10f046}</guid>
+                    <label>Tecnhical Configuration Required?</label>
+                    <x>937.1719</x>
+                    <y>191.30072</y>
+                    <childList>
+                      <child name="yes" type="caseActivity">
+                        <guid>{19b384fb-5146-4746-bc72-da56a0c6d9c5}</guid>
+                        <label>Yes</label>
+                        <x>875.06055</x>
+                        <y>154.9043</y>
+                        <childList>
+                          <child name="techConf" type="seqActivity">
+                            <guid>{733f5e79-60d0-4062-92ad-2b91bff44da4}</guid>
+                            <label>Technical Configuration</label>
+                            <x>1058.9993</x>
+                            <y>204.62143</y>
+                            <childList>
+                              <child name="compTechConf" type="opActivity">
+                                <element>iface_cm_plm.confModelerInt/oper_compTechConf</element>
+                                <guid>{68e8980b-f3c1-4786-b771-05cbf703415d}</guid>
+                                <label>Complete Technical Configuration</label>
+                                <participant>part_cm_plm.confTechModelerPart</participant>
+                                <x>1151.5508</x>
+                                <y>201.57764</y>
+                                <methodList>
+                                  <method name="cwOnProcActBefore" type="action">
+                                    <category>before</category>
+                                    <system>true</system>
+                                    <script><![CDATA[cm_plm.setProcessOrderState(process, 'TEC');]]></script>
+                                  </method>
+                                </methodList>
+                              </child>
+                              <child name="confTechModelerContinue" type="opActivity">
+                                <element>iface_cm_plm.confModelerInt/oper_TechnicalConfigurationCompleted</element>
+                                <guid>{87e78342-ced8-453d-9cb3-e4cc835b6469}</guid>
+                                <label>Technical  Configuration Completed</label>
+                                <participant>part_cm_plm.confTechModelerPart</participant>
+                                <x>1381.9297</x>
+                                <y>208.27881</y>
+                              </child>
+                            </childList>
+                          </child>
+                        </childList>
+                        <methodList>
+                          <method name="cwOnProcActCond" type="action">
+                            <category>cond</category>
+                            <system>true</system>
+                            <script><![CDATA[
+                              var pControl = process.processOrder.plmControl;
+                              var pDoc = process.processDocument;
+                              return ( pControl.isTechnicalConfRequired || (!pDoc.isAmendmentRequest && cm_plm.plmESConfigurationRequired(pControl.projectCode)));
+                            ]]></script>
+                          </method>
+                        </methodList>
+                      </child>
+                      <child name="no" type="caseActivity">
+                        <guid>{355afd9f-9df5-408c-a6b2-179f82c9715d}</guid>
+                        <label>No</label>
+                        <x>1277.9297</x>
+                        <y>333.50586</y>
+                      </child>
+                    </childList>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+            <methodList>
+              <method name="cwOnProcActCond" type="action">
+                <category>cond</category>
+                <system>true</system>
+                <script><![CDATA[
+                  var pControl = process.processOrder.plmControl;
+                  var pDoc = process.processDocument;
+                  return ( pControl.isComercialConfRequired || pControl.isTechnicalConfRequired || (!pDoc.isAmendmentRequest && cm_plm.plmESConfigurationRequired(pControl.projectCode)));
+                ]]></script>
+              </method>
+            </methodList>
+          </child>
+          <child name="no" type="caseActivity">
+            <guid>{f707dc78-66af-477f-9eb3-a5a3ef5b31fc}</guid>
+            <label>No</label>
+            <x>1062.1543</x>
+            <y>524.966</y>
+          </child>
+        </childList>
+      </child>
+      <child name="end" type="completeActivity">
+        <guid>{8ad3e458-9dda-47a7-b029-699a4fc2896e}</guid>
+        <label>End</label>
+        <x>1525.9648</x>
+        <y>181.58356</y>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script>process.processDocument.isAmendmentRequest = false;</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="onError" type="onExceptionActivity">
+        <element>excp_cm_plm.errorException</element>
+        <guid>{46c564c6-c26e-489a-b68f-6bccc61c9931}</guid>
+        <label>On Error</label>
+        <x>29.0</x>
+        <y>-20.123535</y>
+        <childList>
+          <child name="handleError" type="subflowActivity">
+            <element>proc_cm_plm.handleErrorSubFlow</element>
+            <guid>{46179007-a2b7-4f51-b783-fbe28507707e}</guid>
+            <label>Handle Error</label>
+            <x>-7.3242188</x>
+            <y>67.535706</y>
+          </child>
+        </childList>
+      </child>
+      <child name="confComercModelerPart" type="participantActivity">
+        <guid>{6ffc688a-82c4-432c-bb2f-2fd5c22efead}</guid>
+        <label>CM-PLM Commercial Configuration Modeler Participant</label>
+        <participant>part_cm_plm.confComercModelerPart</participant>
+        <x>654.0</x>
+        <y>9.0</y>
+      </child>
+      <child name="confTechModelerPart" type="participantActivity">
+        <guid>{affdd4d0-77cf-4092-96e1-16f52c6873ec}</guid>
+        <label>CM-PLM Technical Configuration Modeler Participant</label>
+        <participant>part_cm_plm.confTechModelerPart</participant>
+        <x>1244.0</x>
+        <y>21.0</y>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <document>doc_cm_plm.mainProcessDoc</document>
+  <guid>{a5a49073-ad75-4ee6-99f7-e534de597a5a}</guid>
+  <label>CM-PLM Configuration</label>
+  <metaVersion>4</metaVersion>
+  <parentProcessDoc>true</parentProcessDoc>
+  <priority>8</priority>
+  <type>User</type>
+</process>

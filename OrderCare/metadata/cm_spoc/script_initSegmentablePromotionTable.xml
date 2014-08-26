@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initSegmentablePromotionTable">
+  <group>ui_scripts.Promotion.SegmentablePromotion</group>
+  <label>initSegmentablePromotionTable</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    ui.tableLine = new Array();
+    var model = ui.model.SPSegmPromActRuleArrDS.ListDS;
+
+    if(!ui.model.specificationCode){
+        cm_spoc.addListElement(ui, model,"cm_spoc.forms.SegmentablePromotionTableLineUI","base_SegmentablePromotionActivat","tableLine");
+    }else{
+        cm_spoc.loadListElements(ui, model, "cm_spoc.forms.SegmentablePromotionTableLineUI", "tableLine");
+
+    for(var i=0; i < ui.model.SPSegmPromActRuleArrDS.ListDS.length; i++){
+
+    ui.model.SPSegmPromActRuleArrDS.ListDS[i].SubOperationType=ui.model.SPSegmPromActRuleArrDS.ListDS[i].SubOperation;
+    ui.model.SPSegmPromActRuleArrDS.ListDS[i].DestinationTariffPlanType=ui.model.SPSegmPromActRuleArrDS.ListDS[i].DestinationTariffPlan;
+    }
+
+    }
+  ]]></script>
+</script>

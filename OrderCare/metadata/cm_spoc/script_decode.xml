@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.decode">
+  <group>ui_scripts.UsageControl.HappyPeriod</group>
+  <label>decode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+    <parameter name="code" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var s="";
+    if(code.length == 12){
+
+        if(code == "111111111111") {s= "All"}
+
+        else if(code == "000000000000"){s="None"}
+
+        else{
+            for(var i=0; i< code.length; i++){
+
+                if(code[i]==1){s +=(cm_spoc.getMonthName(i)+" ")}
+
+            }
+
+
+        }
+    }
+    if(code.length ==31){
+
+
+        if(code == "1111111111111111111111111111111") {s= "All"}
+        else if (code == "0000000000000000000000000000000") {s="None"}
+
+        else{
+            for(var i=0; i< code.length; i++){
+
+                if(code[i]==1){s+=i+1+" "}
+
+            }
+        }
+    }
+
+
+    if(code.length== 24){
+
+
+        if(code == "111111111111111111111111") {s= "All"}
+        else if(code == "000000000000000000000000") {s= "None"}
+        else{
+            for(var i=0; i< code.length; i++){
+
+                if(code[i]==1){s+=i+":00"+" "}
+
+
+            }
+
+        }
+
+
+
+    }
+
+    if(code.length== 7){
+
+        if(code == "1111111") {s= "All"}
+        else if(code == "0000000") {s= "None"}
+        else{
+            for(var i=0; i< code.length; i++){
+
+                if(code[i]==1){s+= cm_spoc.getWeekDayName(i)+" "}
+
+
+            }
+        }
+
+    }
+    return s;
+  ]]></script>
+</script>

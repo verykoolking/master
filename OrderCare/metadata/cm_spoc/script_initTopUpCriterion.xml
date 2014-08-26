@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initTopUpCriterion">
+  <group>ui_scripts.Promotion</group>
+  <label>initTopUpCriterion</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+        var tuCriterionArr = cm_spoc.initInnerDS("base_TUCriterionTUOriginArr");
+        model.TUCriterionTUOriginArrDS = tuCriterionArr;
+
+    }
+    else{
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+
+       s.specificationCode =  model.TUCriterionTUOriginArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+           model.TUCriterionTUOriginArrDS=r;
+       }
+
+
+       var tuCriterionRel = model.TUCriterionTUOriginArrDS.List;
+       var tuCriterionDS = model.TUCriterionTUOriginArrDS.ListDS;
+       for(var i=0;i<tuCriterionRel.length;i++){
+           s.specificationCode = tuCriterionRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+              tuCriterionDS[i]=r;
+           }
+       }
+
+    }
+
+    return model;
+  ]]></script>
+</script>

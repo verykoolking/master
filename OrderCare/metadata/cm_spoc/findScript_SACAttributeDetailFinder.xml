@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cm_spoc.SACAttributeDetailFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <group>ui_scripts.UsageControl.AccumulationConditions.SACAttributeDetail</group>
+  <input>doc_cwt_pc.cwt_itemSearch</input>
+  <label>SACAttributeDetailFinder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_cm_spoc.SACAttributeDetailDoc</output>
+  <type>script</type>
+  <volatility>0</volatility>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script>return cm_spoc.jsonFinder(this);</script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="currentSelection" type="leaf">
+        <valueType>doc_cm_spoc.SACAttributeDetailDoc</valueType>
+      </variable>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cm_spoc.SACAttributeDetailDoc</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cwt_pc.cwt_itemSearch/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cm_spoc.SACAttributeDetailDoc/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="IdDescription1" type="elfld">
+                    <label>Current Selection</label>
+                    <labelOrientation>left</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.SACAttributeDetailFinder/ui_UserInterface/leaf_currentSelection</variablePath>
+                        <variablePath>doc_cm_spoc.SACAttributeDetailDoc/leaf_IdDescription</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="Separator" type="elsep"/>
+                  <element name="SACAttributeDetailFinderResultTable" type="eltabl">
+                    <height>400px</height>
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <showFilter>true</showFilter>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.SACAttributeDetailFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>400px</width>
+                    <elementList>
+                      <element name="itemCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.SACAttributeDetailFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_spoc.SACAttributeDetailDoc/leaf_itemCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Id" type="elfld">
+                        <label>Id</label>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.SACAttributeDetailFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_spoc.SACAttributeDetailDoc/leaf_Id</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Description" type="elfld">
+                        <label>Description</label>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.SACAttributeDetailFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_spoc.SACAttributeDetailDoc/leaf_Description</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="IdDescription" type="elfld">
+                        <label>Id+Description</label>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.SACAttributeDetailFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_spoc.SACAttributeDetailDoc/leaf_IdDescription</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="HorizontalLayout" type="elhlt">
+                    <elementList>
+                      <element name="Ok" type="elbtn">
+                        <label>Ok</label>
+                      </element>
+                      <element name="Close" type="elbtn">
+                        <label>Cancel</label>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.SACAttributeDetailFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.SACAttributeDetailFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="SACAttributeDetailFinderView" type="findVView">
+      <outputOverlay>findScript_cm_spoc.SACAttributeDetailFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findScript>

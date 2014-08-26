@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cw_etltool._import.loadToCWEPC">
+  <activity name="start" type="seqActivity">
+    <guid>{74a6c439-6c1e-42be-8264-2fc4fcc9d169}</guid>
+    <label>start</label>
+    <x>173.0</x>
+    <y>-23.0</y>
+    <childList>
+      <child name="waitLaodEvent" type="opActivity">
+        <element>iface_cw_etltool._import.importInterface/oper_waitLoadEvent</element>
+        <guid>{38ab3d9a-4a41-461f-801e-f55e0ff43cff}</guid>
+        <label>Wait for Laod Event</label>
+        <participant>part_cw_etltool._import.etlParticipant</participant>
+        <x>165.0</x>
+        <y>55.0</y>
+        <childList>
+          <child name="waitMaunalAction" type="choiceActivity">
+            <guid>{f0f1d718-129c-489f-ac7c-7cf462f3bc38}</guid>
+            <label>Wait Maunal Action</label>
+            <x>176.0</x>
+            <y>170.0</y>
+            <childList>
+              <child name="abort" type="opActivity">
+                <element>iface_cw_etltool._import.importInterface/oper_abortProcess</element>
+                <guid>{e42c2f2a-ee07-46f2-956b-d0f016548ebe}</guid>
+                <label>Abort Process</label>
+                <participant>part_cw_etltool._import.etlParticipant</participant>
+                <x>54.0</x>
+                <y>304.0</y>
+                <childList>
+                  <child name="abortProcess" type="subflowActivity">
+                    <element>proc_cw_etltool._import.abortProcess</element>
+                    <guid>{f873f667-01fb-40ee-b579-6dee63010e5f}</guid>
+                    <label>Abort Process</label>
+                    <x>54.0</x>
+                    <y>404.0</y>
+                  </child>
+                </childList>
+              </child>
+              <child name="startLoad" type="opActivity">
+                <element>iface_cw_etltool._import.importInterface/oper_startLoad</element>
+                <guid>{15f69494-b0d0-4b93-9843-d7aa5a0df48a}</guid>
+                <label>Start Load</label>
+                <participant>part_cw_etltool._import.etlParticipant</participant>
+                <x>317.0</x>
+                <y>304.0</y>
+                <childList>
+                  <child name="loadEntitiestoEPC" type="subflowActivity">
+                    <element>proc_cw_etltool._import.loadEntities</element>
+                    <guid>{602aec5c-664e-4d13-8974-9dad1102b7a3}</guid>
+                    <label>Load Entities to EPC</label>
+                    <x>318.0</x>
+                    <y>393.0</y>
+                  </child>
+                </childList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+      </child>
+      <child name="etlParticipant" type="participantActivity">
+        <guid>{b21b5fd5-a50c-41c5-8722-96d57ef271a3}</guid>
+        <label>ETL Participant</label>
+        <participant>part_cw_etltool._import.etlParticipant</participant>
+        <x>366.0</x>
+        <y>65.0</y>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{04ad3c89-935d-4b14-9a21-0b75fa23f8be}</guid>
+  <label>Load To CW EPC</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <type>Sub-flow</type>
+</process>

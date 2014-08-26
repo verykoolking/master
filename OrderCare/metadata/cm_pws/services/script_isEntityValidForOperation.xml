@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.isEntityValidForOperation">
+  <label>isEntityValidForOperation</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="entity" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_OCSEntity.v1.types.OCSEntityType</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!entity)
+        return false;
+
+    var result = false;
+    switch (entity.metadataType){
+        case "OCSEntity.v1.types:OCSComponentProdOfferPriceType":
+        case "OCSEntity.v1.types:OCSProductOfferingType":
+        case "OCSEntity.v1.types:OCSProductSpecificationType":
+            result = true;
+            break;
+        default:
+            result = false;
+    }
+
+    return result;
+  ]]></script>
+</script>

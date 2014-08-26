@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ChargingModeGuidingUI">
+  <group>Common.ChargingModeGuiding</group>
+  <label>ChargingModeGuidingUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="ChargingModeGuidingIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_cm_spoc.forms.ChargingModeGuidingRuleUI</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="HorizontalLayout" type="elhlt">
+                  <elementList>
+                    <element name="addButton1" type="elmnu">
+                      <menuAccel type="mAccelP"/>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.ChargingModeGuidingUI/uimthd_addChargingMode</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <icon>/cwt/images/16/notebook_add.png</icon>
+                      <width>40px</width>
+                    </element>
+                    <element name="deleteButton1" type="elmnu">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.ChargingModeGuidingUI/uimthd_delChargingMode</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <icon>/cwt/images/16/delete.png</icon>
+                      <width>40px</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpacer" type="ellsp">
+                  <height>20px</height>
+                </element>
+                <element name="HorizontalLayout1" type="elgrd">
+                  <colWidths>100px</colWidths>
+                  <numOfCols>4</numOfCols>
+                  <elementList>
+                    <element name="Selected" type="ellab">
+                      <columnSpan>0</columnSpan>
+                      <label>Select</label>
+                      <textAlign>center</textAlign>
+                    </element>
+                    <element name="Mode" type="ellab">
+                      <columnSpan>0</columnSpan>
+                      <label>Mode</label>
+                      <textAlign>center</textAlign>
+                    </element>
+                    <element name="Operation" type="ellab">
+                      <columnSpan>0</columnSpan>
+                      <label>Operation</label>
+                      <textAlign>center</textAlign>
+                    </element>
+                    <element name="ChargingMode" type="ellab">
+                      <columnSpan>0</columnSpan>
+                      <label>Charging Mode</label>
+                      <textAlign>center</textAlign>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="ChargingModeIterator" type="eliter">
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ChargingModeGuidingUI/leaf_ChargingModeGuidingIterator</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <elementList>
+                    <element name="ChargingModeHL" type="elhlt">
+                      <width>750px</width>
+                      <elementList>
+                        <element name="ChargingModeFormFrame" type="elovf">
+                          <fillSpace>false</fillSpace>
+                          <formReference type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.ChargingModeGuidingUI/leaf_ChargingModeGuidingIterator</variablePath>
+                              <variablePath>ui_cm_spoc.forms.ChargingModeGuidingRuleUI/frmui_Forms</variablePath>
+                              <variablePath>ui_cm_spoc.forms.ChargingModeGuidingRuleUI/frmui_Forms/exov_Default</variablePath>
+                            </variablePathList>
+                          </formReference>
+                          <width>750px</width>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="addChargingMode" type="uimthd">
+      <script><![CDATA[
+        var baseItemCode = this.model.baseSpecificationCode ? this.model.baseSpecificationCode : this.model.catalogEntity;
+        if (!baseItemCode &&  this.model.specificationCode) baseItemCode = cm_spoc.getAndUpdateBaseItemCode(this.model);
+        var nameArray = cm_spoc.getBaseChargingModeGuidingArrayName(baseItemCode);
+        var nameArrayDS = nameArray+"DS";
+        var listDs= this.model[nameArrayDS].ListDS;
+
+        cm_spoc.addListElement(this,listDs,"cm_spoc.forms.ChargingModeGuidingRuleUI","base_ChargingModeGuiding","ChargingModeGuidingIterator");
+
+        // Initialize mode select Field
+        listDs[listDs.length-1].Mode="E";
+      ]]></script>
+    </method>
+    <method name="delChargingMode" type="uimthd">
+      <script><![CDATA[
+        var baseItemCode = this.model.baseSpecificationCode ? this.model.baseSpecificationCode : this.model.catalogEntity;
+        if (!baseItemCode &&  this.model.specificationCode) baseItemCode = cm_spoc.getAndUpdateBaseItemCode(this.model);
+        var nameArray = cm_spoc.getBaseChargingModeGuidingArrayName(baseItemCode);
+        var nameArrayDS = nameArray+"DS";
+
+        cm_spoc.removeListElements(this,this.model[nameArrayDS],"List","ChargingModeGuidingIterator");
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

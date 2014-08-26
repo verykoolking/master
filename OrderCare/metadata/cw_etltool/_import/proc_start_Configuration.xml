@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process name="cw_etltool._import.start_Configuration">
+  <activity name="start" type="seqActivity">
+    <guid>{de527659-d943-4607-a950-e5ca483cd770}</guid>
+    <label>Start</label>
+    <x>126.0</x>
+    <y>21.0</y>
+    <childList>
+      <child name="startConfiguration" type="scriptActivity">
+        <guid>{2dd19704-728c-419f-b8b8-00b675ab5a09}</guid>
+        <label>Start Configuration</label>
+        <x>113.0</x>
+        <y>131.0</y>
+        <childList>
+          <child name="rollBack" type="compensateActivity">
+            <guid>{853dd1b6-712f-4ce5-9f95-5e39f9e53911}</guid>
+            <label>Roll Back</label>
+            <x>106.0</x>
+            <y>219.0</y>
+            <childList>
+              <child name="rollBackScript" type="scriptActivity">
+                <guid>{1d8fda26-f540-4322-bfce-436b3aee2954}</guid>
+                <label>Roll Back Script</label>
+                <x>385.0</x>
+                <y>130.0</y>
+                <methodList>
+                  <method name="cwOnProcActBefore" type="action">
+                    <category>before</category>
+                    <system>true</system>
+                    <script><![CDATA[
+                      Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$  Start Configuration RollBack Script $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+                      var order =  process.processOrder;
+                      order.header.ErrorMessage = "";
+                      order.save();
+                      process.processDocument.IsError = false;
+                    ]]></script>
+                  </method>
+                </methodList>
+              </child>
+            </childList>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script>cw_etltool._import.startConfiguration(process,null,null);</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="errorValidation" type="subflowActivity">
+        <element>proc_cw_etltool._import.errorValidation</element>
+        <guid>{98e9a118-045e-48a9-92bf-5c9a9a4c32ab}</guid>
+        <label>Error Validation</label>
+        <x>122.0</x>
+        <y>280.0</y>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script>//cw_etltool.common.getConfig().setIsError(false) ;</script>
+          </method>
+        </methodList>
+      </child>
+      <child name="fileReading" type="onExceptionActivity">
+        <element>excp_cw_etltool._import.systemException</element>
+        <guid>{50de0a1a-69f1-4b3e-9887-abcc2e7a9acd}</guid>
+        <label>File Reading Exception</label>
+        <x>109.0</x>
+        <y>119.0</y>
+        <childList>
+          <child name="systemVerification" type="subflowActivity">
+            <element>proc_cw_etltool._import.systemExceptionHandler</element>
+            <guid>{bc19f23c-3766-4f19-840a-8d01d2aea99b}</guid>
+            <label>System Exception Handler</label>
+            <x>379.0</x>
+            <y>15.0</y>
+          </child>
+        </childList>
+        <methodList>
+          <method name="cwOnProcActBefore" type="action">
+            <category>before</category>
+            <system>true</system>
+            <script><![CDATA[
+              Global.logInfo("\n\n $$$$$$$$$$$$$$$$$$$$$$$ On File Reading Exception : Before Script $$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+            ]]></script>
+          </method>
+          <method name="cwOnProcActAfter" type="action">
+            <category>script</category>
+            <system>true</system>
+            <script><![CDATA[
+              Global.logInfo("\n\n $$$$$$$$$$$$$$$$$$$$$$$ On File Reading Exception : After Script $$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+            ]]></script>
+          </method>
+        </methodList>
+      </child>
+    </childList>
+  </activity>
+  <curRevision>true</curRevision>
+  <guid>{166a927c-7ef7-4806-8496-8459ee8e7a51}</guid>
+  <label>Start Configuration</label>
+  <metaVersion>4</metaVersion>
+  <priority>8</priority>
+  <type>Sub-flow</type>
+</process>

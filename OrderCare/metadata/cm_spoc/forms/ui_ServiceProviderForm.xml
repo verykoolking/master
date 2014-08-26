@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ServiceProviderForm">
+  <group>Messages</group>
+  <label>ServiceProviderForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.ServiceProvider</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <width>750px</width>
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <elementList>
+                        <element name="SectionHeader" type="elsecth">
+                          <label>Service Provider</label>
+                        </element>
+                        <element name="GridLayout2" type="elgrd">
+                          <edgeShowCenter>true</edgeShowCenter>
+                          <edgeSize>2</edgeSize>
+                          <labeAlign>left</labeAlign>
+                          <labelOrientation>left</labelOrientation>
+                          <numOfCols>2</numOfCols>
+                          <width>50%</width>
+                          <elementList>
+                            <element name="ServiceProviderId" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <editable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ServiceProviderForm/permMethod_setIsPrimaryKey</variablePath>
+                                </variablePathList>
+                              </editable>
+                              <label>Service Provider Id</label>
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ServiceProviderForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.ServiceProvider/dstruct_ServiceProviderId</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>200px</width>
+                            </element>
+                            <element name="ServiceProviderDescription" type="elfld">
+                              <autoFocusNextField>false</autoFocusNextField>
+                              <label>Service Provider Description</label>
+                              <labelOrientation>left</labelOrientation>
+                              <variable type="varPath">
+                                <variablePathList>
+                                  <variablePath>ui_cm_spoc.forms.ServiceProviderForm/leaf_model</variablePath>
+                                  <variablePath>dstruct_cm_spoc.data.ServiceProvider/dstruct_ServiceProviderDescription</variablePath>
+                                </variablePathList>
+                              </variable>
+                              <width>200px</width>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="setReadOnly" type="uimthd">
+      <script>//return true;</script>
+    </method>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+  </methodList>
+</userInterface>

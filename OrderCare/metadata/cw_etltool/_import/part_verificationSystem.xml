@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<participant name="cw_etltool._import.verificationSystem">
+  <distributionType>Shared</distributionType>
+  <duration type="dur">
+    <length>P0Y0M1DT0H0M0S</length>
+  </duration>
+  <guid>{43811729-3822-45aa-a269-4f49335874a1}</guid>
+  <interface>iface_cw_etltool._import.verficationSystemInterface</interface>
+  <label>Verification System</label>
+  <metaVersion>4</metaVersion>
+  <operationConditionsList>
+    <operationConditions type="opco">
+      <operation>iface_cw_etltool._import.verficationSystemInterface/oper_fixed</operation>
+      <tasksList>
+        <tasks>escalate</tasks>
+      </tasksList>
+      <validateOrder>true</validateOrder>
+    </operationConditions>
+    <operationConditions type="opco">
+      <operation>iface_cw_etltool._import.verficationSystemInterface/oper_cancelOrder</operation>
+      <tasksList>
+        <tasks>escalate</tasks>
+      </tasksList>
+      <validateOrder>true</validateOrder>
+      <methodList>
+        <method name="cwOnPartOpCond" type="action">
+          <system>true</system>
+          <script>return false;</script>
+        </method>
+      </methodList>
+    </operationConditions>
+    <operationConditions type="opco">
+      <operation>iface_cw_etltool._import.verficationSystemInterface/oper_skipCurrentFile</operation>
+      <tasksList>
+        <tasks>escalate</tasks>
+      </tasksList>
+      <validateOrder>true</validateOrder>
+      <methodList>
+        <method name="cwOnPartOpCond" type="action">
+          <system>true</system>
+          <script>return false;</script>
+        </method>
+      </methodList>
+    </operationConditions>
+  </operationConditionsList>
+  <privilege>CWAdminApp</privilege>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.WLTaskUserInterface</extends>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.WLTaskUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Menu" type="exov">
+            <base>ui_com.conceptwave.system.WLTaskUserInterface/frmui_Forms/exov_Menu</base>
+            <extends>ui_com.conceptwave.system.WLTaskUserInterface/frmui_Forms/exov_Menu</extends>
+            <label>Menu</label>
+            <overrideList>
+              <override name="Actions" type="elmnu">
+                <menuAccel type="mAccelP"/>
+                <label>Actions</label>
+                <showDown>true</showDown>
+                <showMenuDropDown>true</showMenuDropDown>
+                <showRollOver>true</showRollOver>
+                <elementList>
+                  <element name="Iterator" type="eliter">
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.WLTaskUserInterface/leaf_opList</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="task" type="elmnu">
+                        <menuAccel type="mAccelP"/>
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_com.conceptwave.system.WLTaskUserInterface/leaf_opList</variablePath>
+                            <variablePath>ui_com.conceptwave.system.WLTaskOperationsUserInterface/usrActionMethod_cwAction</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_com.conceptwave.system.WLTaskOperationsUserInterface/leaf_label</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+</participant>

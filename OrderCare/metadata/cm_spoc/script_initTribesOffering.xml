@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initTribesOffering">
+  <group>ui_scripts.Tribes</group>
+  <label>initTribesOffering</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+       /* var tribe = cm_spoc.initInnerDS("base_Tribe");
+        model= tribe;*/
+
+        /*var tribeSpec = cm_spoc.initInnerDS("base_TribeSpecification");
+        model.TribeSpecification = tribeSpec;
+
+        var tribeCategory = cm_spoc.initInnerDS("base_TribeCategory");
+        model.TribeCategory = tribeCategory;
+
+        var message = cm_spoc.initInnerDS("base_Message");
+        model.Message =  message;*/
+
+
+       var itemFinder = new Finder("cm_spoc.tribeCategoryFinder");
+       var result = itemFinder.search();
+       /*if(result.length>0){
+           var btCode=result[0].itemCode;
+           model.CategoryEnum = btCode;
+           model.TribeCategory = btCode;
+       }*/
+
+       itemFinder = new Finder("cm_spoc.MessageFinder");
+       var result2 = itemFinder.search();
+       /*if(result2.length>0){
+           var btCode=result2[0].itemCode;
+           model.MessageEnum = btCode;
+           model.Message = btCode;
+       }*/
+
+       itemFinder = new Finder("cm_spoc.tribeSpecificationFinder");
+       var result3 = itemFinder.search();
+      /* if(result3.length>0){
+           var btCode=result3[0].itemCode;
+           model.TribeSpecificationEnum=btCode;
+           model.TribeSpecification = btCode;
+       }*/
+
+
+     }else{
+
+      /*var s = new epc.data.Specification();
+      s.project =  cwa_epc.getDefaultProj();
+
+      s.specificationCode = model;
+      var r = epc.getSpecificationByKey(s);
+      if(!api_common.isFault(r)){
+           model= r;
+      }
+
+      s.specificationCode = model.TribeSpecification;
+      var r = epc.getSpecificationByKey(s);
+      if(!api_common.isFault(r)){
+           model.TribeSpecification = r;
+      }
+
+      s.specificationCode = model.TribeCategory;
+      var r = epc.getSpecificationByKey(s);
+      if(!api_common.isFault(r)){
+           model.TribeCategory = r;
+      }
+
+      s.specificationCode = model.Message;
+      var r = epc.getSpecificationByKey(s);
+      if(!api_common.isFault(r)){
+           model.Message = r;
+      }*/
+
+       //Assign the values of the model to the proper select field
+       model.CategoryEnum = model.TribeCategory;
+       model.MessageEnum = model.Message;
+       model.TribeSpecificationEnum = model.TribeSpecification;
+
+
+    }
+    return model;
+  ]]></script>
+</script>

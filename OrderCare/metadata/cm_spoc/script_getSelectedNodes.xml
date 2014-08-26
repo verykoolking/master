@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getSelectedNodes">
+  <group>ui_scripts.RatingTree.BranchUI</group>
+  <label>getSelectedNodes</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var nodes = ui.nodes;
+
+    var model = ui.model; //RatingTreeBranch
+    var rtbarr = model.RTBRTNodeOutputArrDS.List;
+    var rtbarrds =  model.RTBRTNodeOutputArrDS.ListDS;
+
+    var selectedNodes = new DataObjectList();
+
+    for (var i =0;i<rtbarrds.length;i++) {
+
+        var code = rtbarrds[i].NodeName;
+        var sc = rtbarrds[i].specificationCode;
+
+        var pos = getPosition(sc);
+        var node = getNode(code);
+
+        node.position=pos;
+
+        selectedNodes.add(pos,node);
+    }
+
+    return selectedNodes;
+
+    function getPosition(sc) {
+
+        for (var i=0;i<rtbarr.length;i++) {
+            if (rtbarr[i].CW_REFID == sc ) {return rtbarr[i].position; }
+        }
+    }
+
+    function getNode(code) {
+
+        for (var i=0;i<nodes.length;i++) {
+
+            if (nodes[i].code == code ) return nodes[i];
+        }
+
+    }
+
+    /*
+    selectedNodes.sort(function (a, b) {
+        if (a.index > b.index)
+            return 1;
+        if (a.index < b.index)
+            return -1;
+        // a must be equal to b
+        return 0;
+    });
+    */
+  ]]></script>
+</script>

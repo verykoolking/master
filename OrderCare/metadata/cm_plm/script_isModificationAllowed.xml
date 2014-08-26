@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.isModificationAllowed">
+  <group>applicabilityCondition.scripts</group>
+  <label>isModificationAllowed</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="entity" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var entityType = entity.metadataType;
+    var finder = new cm_plm.inProgressProjectsFinder();
+    finder.searchDocument.projectCode = entity.projectCode;
+
+    switch (entityType){
+        case "cm_plm:AppBoltonTypeGroupList":
+            finder.searchDocument.tableName = "NGAA_APPBOLTONTYPEGROUPLIST";
+            finder.searchDocument.modalityColumnName = "APPBOLTONTYPEGROUPMODALITY";
+            finder.searchDocument.modalityValue = entity.AppBoltonTypeGroupModality;
+            break;
+        case "cm_plm:DestTypeAssoTariffClassList":
+            finder.searchDocument.tableName = "NGAA_DESTTYPEASSOTARIFFCLASS";
+            finder.searchDocument.modalityColumnName = "APPBOLTONTYPEMODALITY";
+            finder.searchDocument.modalityValue = entity.AppBoltonTypeModality;
+            break;
+        case "cm_plm:Nx24AppBoltonTypeList":
+            finder.searchDocument.tableName = "NGAA_NX24APPBOLTONTYPELIST";
+            finder.searchDocument.modalityColumnName = "NX24APPBOLTONTYPELISTMODALITY";
+            finder.searchDocument.modalityValue = entity.Nx24AppBoltonTypeListModality;
+            break;
+        default:
+            Global.throwException("The entityType is not supported!");
+    }
+
+    var result = finder.search();
+
+    return result.length == 0;
+  ]]></script>
+</script>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.filterError">
+  <group>ui_scripts.utils</group>
+  <label>filterError</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="eList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var baseItemCode = cm_spoc.getBaseItemCode(model);
+    if(baseItemCode != null){
+        var scriptName = "filterError"+baseItemCode.replace("base_","");
+        if(cm_spoc[scriptName] != null){
+           return cm_spoc[scriptName](model,eList);
+        } else {
+            return eList;
+        }
+    }
+  ]]></script>
+</script>

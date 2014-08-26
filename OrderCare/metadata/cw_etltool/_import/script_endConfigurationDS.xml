@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.endConfigurationDS">
+  <label>End Configuration DS</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="reference" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="sessionId" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwf.guid</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var sc = new DataStructure("OCSConfigurationOperation.v1.types.EndConfiguration");
+    sc.sessionCommonInfo.appId = Global.getAppName();
+    sc.sessionCommonInfo.userCode = UserProfile.userId();
+    sc.sessionCommonInfo.reference = reference;
+    sc.sessionCommonInfo.sessionId = sessionId
+    return sc ;
+  ]]></script>
+</script>

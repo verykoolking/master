@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initCALifeCycleUI">
+  <group>ui_scripts.CyclicActions</group>
+  <label>initCALifeCycleUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //Finder to recover the inactivity status from base_CALifeCycleStatus
+    var list = new DataObjectList();
+    var itemFinder = new Finder("cm_spoc.commonWalletUsageRuleFinder");
+
+    itemFinder.searchDocument.baseItemCode = "base_CALifeCycleStatus";
+    itemFinder.searchDocument.itemFirstAttribute = "InactivityStatus";
+
+
+    var result = itemFinder.search();
+
+
+    ui.CALifeCycleTransitionIterator = new Array();
+    var caLifeCycleIteratorDS=ui.model.CALifCycleTransitionArrDS.ListDS;
+    if(!ui.model.specificationCode){
+        //cm_spoc.addListElement(ui,caLifeCycleIteratorDS,"cm_spoc.forms.CALifeCycleTransitionUI","base_CALifeCycleTransition","CALifeCycleTransitionIterator");
+    }
+    else{
+       cm_spoc.loadListElements(ui, caLifeCycleIteratorDS, "cm_spoc.forms.CALifeCycleTransitionUI", "CALifeCycleTransitionIterator");
+       //Finder to recover the inactivity status from base_CALifeCycleStatus
+       for(var i=0; i<ui.CALifeCycleTransitionIterator.length;i++){
+           var item = new cm_spoc.FinderSelectReferenceDS();
+           for(var j = 0; j < result.length;j++){
+               if(result[j].itemCode == ui.CALifeCycleTransitionIterator[i].model.SourceStatusID){
+                if(result[j].msgToDisp == 1)
+                     ui.CALifeCycleTransitionIterator[i].inactivityChecked = "Inactive";
+                else
+                    ui.CALifeCycleTransitionIterator[i].inactivityChecked = "Active";
+               }
+           }
+
+        }
+    }
+  ]]></script>
+</script>

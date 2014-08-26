@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.setCodeTableName">
+  <label>setCodeTableName</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemSubTypeSearchDoc" type="rifp">
+      <type>doc_com.conceptwave.system.Document</type>
+    </parameter>
+    <parameter name="code" type="rifp">
+      <type>dtype_cwt_pcdd.string128</type>
+    </parameter>
+    <parameter name="groupDescription" type="rifp">
+      <type>dtype_cwt_pcdd.string128</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    itemSubTypeSearchDoc.codeTable=giveCodeTable(code);
+    if(groupDescription!=null)
+        itemSubTypeSearchDoc.groupCodeTable=groupDescription.key;
+    else
+        itemSubTypeSearchDoc.groupCodeTable=false;
+
+
+
+    function giveCodeTable(itemType){
+        if(itemType == "BalanceSpecification")
+            return "BalanceSpecificationType";
+        else if(itemType == "ResourceSpecification")
+            return "ResourceSpecificationType";
+        else if(itemType == "ProductSpecification")
+            return "ProductSpecificationType";
+        else if(itemType == "ConsumptionSpecification")
+            return "ConsumptionSpecificationType";
+        else if(itemType == "PricePlan")
+            return "PricePlanType";
+        else if(itemType == "ProductOffering")
+            return "ProductOfferingType";
+        else if(itemType == "ServiceSpecification")
+            return "ServiceSpecificationType";
+        else{
+            return false;
+        }
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.updateServiceRegistry">
+  <label>updateServiceRegistry</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Update the service registry
+     *
+     * @author  Vitor Brasileiro
+     * @date    20140529
+     */
+
+    //Saving at Service Registry
+    var subscriberId        = dtree.request.subscriberId;
+    var offerType           = dtree.offerType;
+    var productSerialNumber = null;
+    var productOfferingId   = null;
+    var productNumber       = null;
+    var XML                 = null;
+
+    if (dtree.pmOperation[0].inactiveServiceRegistry && dtree.entitiesSR && dtree.entitiesSR.length > 0){
+        var sr = dtree.entitiesSR;
+        var endDate = new Date();
+        endDate.setDate(endDate.getDate() - 1);
+        var endDate = Calendar._formatDate( endDate, "yyyy/MM/dd");
+        pm_sr.updateEntity( sr[0].subscriberId, sr[0].offerType, sr[0].productSerialNumber, endDate);
+    }
+
+    if (dtree.pmOperation[0].activeServiceRegistry) {
+        var msgSR               = new DataStructure ("OCSProvisioning.productProvisioningManagement.v1.types.subscribedProduct");
+        var prodMsgOE           = dtree.response.oCSProductInstance.oCSProduct.oCSProductCharacteristicValue;
+        var prodInstanceOE      = dtree.response.oCSProductInstance.productInstanceId;
+        var actionCommonInfo    = dtree.altamiraRequest.actionCommonInfo;
+
+        //Saving at Service Registry
+        subscriberId = dtree.request.subscriberId;
+        offerType = dtree.offerType;
+        productSerialNumber = prodInstanceOE.productSerialNumber;
+        productOfferingId = dtree.catalogData.oCSProductOfferingItemcode;
+        productNumber = prodInstanceOE.productSpecificationId.productNumber;
+
+        //New productIdAA
+        var productIdAA = new Array();
+        var list = dtree.pmOperation[0].prodIdFieldpathAA ? dtree.pmOperation[0].prodIdFieldpathAA.split(",") : null;
+
+        if(list){
+            if(list[0].toLowerCase() != 'opid'){
+                productIdAA[0] = eval('dtree.altamiraRequest.' + list[0]);
+            }
+            if(productIdAA[0] == null || productIdAA[0] == ""){
+                productIdAA[0] = dtree.altamiraResponse.result.opReference.opId;
+            }
+
+            for (var i=1; i < list.length; i++ ) {
+                productIdAA.push( eval('dtree.altamiraRequest.' + list[i]) );
+            }
+        }
+
+        //Important Locations to fill
+        msgSR.additionalCharacteristics.oCSProductSpecCharacteristic = prodMsgOE;
+        msgSR.oCSSubscriptionCommonInfo.mapFrom(actionCommonInfo, 'pm_wm.actionCommonInfo_TO_oCSSubscriptionCommonInfo');
+        msgSR.productInstanceId = prodInstanceOE;
+
+        XML = msgSR.toXML();
+        pm_sr.createEntity(subscriberId, offerType, productSerialNumber, productOfferingId, productNumber, productIdAA, XML);
+
+        //Mapping the real message to ES, using the existing message as source
+        var newResponseES    = pm_wm.inicializeSuccessResponse(dtree);
+        var oldResponseES    = dtree.response.oCSProductInstance.oCSProduct.oCSProductCharacteristicValue;
+        newResponseES.oCSAccOpResultInfo = dtree.response.oCSAccOpResultInfo;
+        if(newResponseES.isChild('oCSProductInstance')){
+            newResponseES.oCSProductInstance.productInstanceId = dtree.response.oCSProductInstance.productInstanceId;
+
+            var toDS   = newResponseES.oCSProductInstance.oCSProduct.oCSProductCharacteristicValue;
+            var fromDS = dtree.response.oCSProductInstance.oCSProduct.oCSProductCharacteristicValue;
+
+            var path   = dtree.pmOperation[0].prodIdFieldpathAA;
+            path = path.split(',');
+
+            for(var y = 0; y < path.length; y++){
+                oldNewESMapping(fromDS, toDS, path[y], 0);
+            }
+        }
+
+        dtree.response = newResponseES;
+        //Mapping the real message to ES, using the existing message as source (END)
+    }
+
+    return true;
+
+    ///////////////Auxiliar Functions////////////////////
+
+    //We should review this function, because if in the end Characteristic is empty, we send all the already created ComplexCharacteristics anyway. In this case, it's better do nothing.
+    function oldNewESMapping(fromDS, toDS, path, idx){
+        var nodes = path.split('.');
+        for(var cc = 0; cc < fromDS.complexCharacteristic.length; cc++){
+            if(fromDS.complexCharacteristic[cc].name == nodes[idx]){
+                toDS.complexCharacteristic[0].name = nodes[idx];
+                oldNewESMapping(fromDS.complexCharacteristic[cc].item[0], toDS.complexCharacteristic[0].item[0], path, (idx + 1))
+            }
+        }
+        for(var sc = 0; sc < fromDS.characteristic.length; sc++){
+            if(fromDS.characteristic[sc].name == nodes[idx]){
+                var num = toDS.characteristic.length;
+                toDS.characteristic[num].name  = nodes[idx];
+                toDS.characteristic[num].value = fromDS.characteristic[sc].value;
+                return;
+            }
+        }
+
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.beforeSavePromotionalSegment">
+  <group>ui_scripts.Promotion</group>
+  <label>beforeSavePromotionalSegment</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_spoc.data.PromotionalSegment</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*cm_spoc.synchListElements(model,"TPCriterionTPArrDS");
+    cm_spoc.synchListElements(model,"TPSubscCritTPArrDS");
+    cm_spoc.synchListElements(model,"SRINCriterionRinArrDS");
+    cm_spoc.synchListElements(model,"GeographicalTaxAreaCriterioDS");
+    cm_spoc.synchListElements(model,"SPCProvinceArrDS");
+    cm_spoc.synchListElements(model,"SDCodeCriterionArrDS");
+    cm_spoc.synchListElements(model,"PPCPromotionalProfileArrDS");
+    cm_spoc.synchListElements(model,"SModeCriterionArrDS");
+    cm_spoc.synchListElements(model,"SSSCLCSubStatusArrDS");
+    cm_spoc.synchListElements(model,"SPCServiceProviderArrDS");
+    cm_spoc.synchListElements(model,"ActiveSCListArrDS");
+    cm_spoc.synchListElements(model,"ActiveSCBoltOnTypeArrDS");
+    cm_spoc.synchListElements(model,"ActiveSCCyclicActionSpecArrDS");
+    cm_spoc.synchListElements(model,"ActiveSCTribeArrDS");
+    cm_spoc.synchListElements(model,"TUCriterionTUOriginArrDS");
+    cm_spoc.synchListElements(model,"PSTPChangeCriterionArrDS");
+    cm_spoc.synchListElements(model,"PSAssignedPromCriterionArrDS");
+    cm_spoc.synchListElements(model,"PSOtherOpCriterionArrDS");
+    cm_spoc.synchListElements(model,"PSCallConsumpCriterionArrDS");
+    cm_spoc.synchListElements(model,"PSSMSConsumpCriterionArrDS");
+    cm_spoc.synchListElements(model,"PSContentConsumpCriterionArrDS");
+
+
+    if(model.TariffPlanCriterionDS.TPCriterionTPArrDS.ListDS.length==0)
+    {
+           model.TariffPlanCriterionDS.TPCriterionTPArrDS.ListDS.clear();
+           model.TariffPlanCriterionDS.TPCriterionTPArrDS.List.clear();
+    }
+
+    if(model.TariffPlanSubscriptionCriteDS.TPSubscCritTPArrDS.ListDS.length==0)
+    {
+           model.TariffPlanSubscriptionCriteDS.TPSubscCritTPArrDS.ListDS.clear() ;
+           model.TariffPlanSubscriptionCriteDS.TPSubscCritTPArrDS.List.clear() ;
+    }
+
+    if(model.SubscriberRINCriterionDS.SRINCriterionRinArrDS.ListDS.length==0)
+    {
+           model.SubscriberRINCriterionDS.SRINCriterionRinArrDS.ListDS.clear();
+           model.SubscriberRINCriterionDS.SRINCriterionRinArrDS.List.clear();
+    }
+
+    if(model.GeographicalTaxAreaCriterioDS.GTACOpTaxArrDS.ListDS.length==0)
+    {
+           model.GeographicalTaxAreaCriterioDS.GTACOpTaxArrDS.ListDS.clear();
+           model.GeographicalTaxAreaCriterioDS.GTACOpTaxArrDS.List.clear() ;
+    }
+
+    if(model.SubscriptionProvinceCriteriDS.SPCProvinceArrDS.ListDS.length==0)
+    {
+           model.SubscriptionProvinceCriteriDS.SPCProvinceArrDS.ListDS.clear();
+           model.SubscriptionProvinceCriteriDS.SPCProvinceArrDS.List.clear() ;
+    }
+
+
+    if(model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS.ListDS.length==0)
+    {
+           model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS.List.clear();;
+           model.SubscriberDialingCodeCriterDS.SDCodeCriterionArrDS.ListDS.clear();;
+    }
+
+    if(model.PromotionalProfileCriterionDS.PPCPromotionalProfileArrDS.ListDS.length==0)
+    {
+          model.PromotionalProfileCriterionDS.PPCPromotionalProfileArrDS.ListDS.clear() ;
+          model.PromotionalProfileCriterionDS.PPCPromotionalProfileArrDS.List.clear() ;
+    }
+
+    if(model.SellingModeCriterionDS.SModeCriterionArrDS.ListDS.length==0)
+    {
+         model.SellingModeCriterionDS.SModeCriterionArrDS.ListDS.clear();
+         model.SellingModeCriterionDS.SModeCriterionArrDS.List.clear();
+    }
+
+    if(model.SubscriberSubStatusCriterioDS.SSSCLCSubStatusArrDS.ListDS.length==0)
+    {
+        model.SubscriberSubStatusCriterioDS.SSSCLCSubStatusArrDS.ListDS.clear();
+        model.SubscriberSubStatusCriterioDS.SSSCLCSubStatusArrDS.List.clear();
+    }
+
+    if(model.ServiceProviderCriterionDS.SPCServiceProviderArrDS.ListDS.length==0)
+    {
+       model.ServiceProviderCriterionDS.SPCServiceProviderArrDS.ListDS.clear();
+       model.ServiceProviderCriterionDS.SPCServiceProviderArrDS.List.clear();
+    }
+
+    if(model.ActiveSubscriptionCriterionDS.ActiveSCListArrDS.ListDS.length==0)
+    {
+       model.ActiveSubscriptionCriterionDS.ActiveSCListArrDS.ListDS.clear();
+       model.ActiveSubscriptionCriterionDS.ActiveSCListArrDS.List.clear();
+    }
+
+    if(model.ActiveSubscriptionCriterionDS.ActiveSCBoltOnTypeArrDS.ListDS.length==0)
+    {
+      model.ActiveSubscriptionCriterionDS.ActiveSCBoltOnTypeArrDS.ListDS.clear();
+      model.ActiveSubscriptionCriterionDS.ActiveSCBoltOnTypeArrDS.List.clear();
+    }
+
+    if(model.ActiveSubscriptionCriterionDS.ActiveSCCyclicActionSpecArrDS.ListDS.length==0)
+    {
+      model.ActiveSubscriptionCriterionDS.ActiveSCCyclicActionSpecArrDS.ListDS.clear();
+      model.ActiveSubscriptionCriterionDS.ActiveSCCyclicActionSpecArrDS.List.clear();
+    }
+
+    if(model.ActiveSubscriptionCriterionDS.ActiveSCTribeArrDS.ListDS.length==0)
+    {
+      model.ActiveSubscriptionCriterionDS.ActiveSCTribeArrDS.ListDS.clear();
+      model.ActiveSubscriptionCriterionDS.ActiveSCTribeArrDS.List.clear();
+    }
+
+
+    if(model.PSTopUpCriterionArrDS.TopUpCriterionDS.TUCriterionTUOriginArrDS.ListDS.length==0)
+    {
+      model.PSTopUpCriterionArrDS.TopUpCriterionDS.TUCriterionTUOriginArrDS.ListDS.clear();
+      model.PSTopUpCriterionArrDS.TopUpCriterionDS.TUCriterionTUOriginArrDS.List.clear();
+    }
+
+    if (model.PSTPChangeCriterionArrDS.ListDS.length==0)
+    {
+       model.PSTPChangeCriterionArrDS.ListDS.clear();
+       model.PSTPChangeCriterionArrDS.List.clear();
+    }
+
+    if (model.PSAssignedPromCriterionArrDS.ListDS.length==0)
+    {
+       model.PSAssignedPromCriterionArrDS.ListDS.clear();
+       model.PSAssignedPromCriterionArrDS.List.clear();
+    }
+
+
+    if (model.PSOtherOpCriterionArrDS.ListDS.length==0)
+    {
+       model.PSOtherOpCriterionArrDS.ListDS.clear();
+       model.PSOtherOpCriterionArrDS.List.clear();
+    }
+
+    if (model.PSCallConsumpCriterionArrDS.ListDS.length==0)
+    {
+       model.PSCallConsumpCriterionArrDS.ListDS.clear();
+       model.PSCallConsumpCriterionArrDS.List.clear();
+    }
+
+    if (model.PSSMSConsumpCriterionArrDS.ListDS.length==0)
+    {
+       model.PSSMSConsumpCriterionArrDS.ListDS.clear();
+       model.PSSMSConsumpCriterionArrDS.List.clear();
+    }
+
+    if (model.PSContentConsumpCriterionArrDS.ListDS.length==0)
+    {
+       model.PSContentConsumpCriterionArrDS.ListDS.clear();
+       model.PSContentConsumpCriterionArrDS.List.clear();
+    }
+
+    */
+  ]]></script>
+</script>

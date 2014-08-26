@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- PA2 -->
+
+<wsdl:definitions 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/usageControlCounterManagement/v1/services"
+    xmlns:uccns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/usageControlCounterManagement/v1/types"
+    xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+    xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/04/secext"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/usageControlCounterManagement/v1/services">
+    
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+            <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/usageControlCounterManagement/v1/types"
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_usageControlCounterManagement_types_v1_1.xsd"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                schemaLocation="addressing" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2002/04/secext"
+                schemaLocation="secext.xsd" />
+	        <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+  			    schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>	
+        </xsd:schema>
+    </wsdl:types>
+    
+    <!--
+        Header
+    -->
+    <wsdl:message name="OCSHeaderInfo">
+        <wsdl:part name="messageID" element="wsa:MessageID" />
+        <wsdl:part name="replyTo" element="wsa:ReplyTo" />
+        <wsdl:part name="security" element="wsse:Security" />
+    </wsdl:message>
+  
+	<!--
+	    Messages
+	-->
+	
+	<wsdl:message name="SubscribeUsageControlCounterRequest">
+		<wsdl:part name="parameters" element="uccns:subscribeUsageControlCounter" />
+	</wsdl:message>
+	<wsdl:message name="SubscribeUsageControlCounterResponse">
+		<wsdl:part name="parameters" element="uccns:subscribeUsageControlCounterResponse" />
+	</wsdl:message>
+	<wsdl:message name="UnsubscribeUsageControlCounterRequest">
+		<wsdl:part name="parameters" element="uccns:unsubscribeUsageControlCounter" />
+	</wsdl:message>
+	<wsdl:message name="UnsubscribeUsageControlCounterResponse">
+		<wsdl:part name="parameters" element="uccns:unsubscribeUsageControlCounterResponse" />
+	</wsdl:message>
+	<wsdl:message name="ChangeUsageControlCounterRequest">
+		<wsdl:part name="parameters" element="uccns:changeUsageControlCounter" />
+	</wsdl:message>
+	<wsdl:message name="ChangeUsageControlCounterResponse">
+		<wsdl:part name="parameters" element="uccns:changeUsageControlCounterResponse" />
+	</wsdl:message>
+	<wsdl:message name="QueryUsageControlCountersRequest">
+		<wsdl:part name="parameters" element="uccns:queryUsageControlCounters" />
+	</wsdl:message>
+	<wsdl:message name="QueryUsageControlCountersResponse">
+		<wsdl:part name="parameters" element="uccns:queryUsageControlCountersResponse" />
+	</wsdl:message>
+    <wsdl:message name="QueryUsageControlCountersPreviousPeriodsRequest">
+        <wsdl:part name="parametersPreviousPeriods" element="uccns:queryUsageControlCountersPreviousPeriods" />
+    </wsdl:message>
+    <wsdl:message name="QueryUsageControlCountersPreviousPeriodsResponse">
+        <wsdl:part name="parametersPreviousPeriods" element="uccns:queryUsageControlCountersPreviousPeriodsResponse" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeUsageControlConditionGroupsRequest">
+        <wsdl:part name="parameters" element="uccns:subscribeUsageControlConditionGroups" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeUsageControlConditionGroupsResponse">
+        <wsdl:part name="parameters" element="uccns:subscribeUsageControlConditionGroupsResponse" />
+    </wsdl:message>
+    <wsdl:message name="UnsubscribeUsageControlConditionGroupsRequest">
+        <wsdl:part name="parameters" element="uccns:unsubscribeUsageControlConditionGroups" />
+    </wsdl:message>
+    <wsdl:message name="UnsubscribeUsageControlConditionGroupsResponse">
+        <wsdl:part name="parameters" element="uccns:unsubscribeUsageControlConditionGroupsResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryUsageControlConditionGroupsRequest">
+        <wsdl:part name="parameter" element="uccns:queryUsageControlConditionGroups" />
+    </wsdl:message>
+    <wsdl:message name="QueryUsageControlConditionGroupsResponse">
+        <wsdl:part name="parameter" element="uccns:queryUsageControlConditionGroupsResponse" />
+    </wsdl:message>
+
+    <wsdl:message name="ServerException">
+      <wsdl:part name="ServerException" element="uct:serverException"/>
+    </wsdl:message>
+    <wsdl:message name="ClientException">
+      <wsdl:part name="ClientException" element="uct:clientException"/>
+    </wsdl:message>
+	
+	<!--
+	    Port
+	-->
+	
+	<wsdl:portType name="UsageControlCounterManagementPort_v1_1">
+		<wsdl:operation name="subscribeUsageControlCounter">
+			<wsdl:input message="tns:SubscribeUsageControlCounterRequest" />
+			<wsdl:output message="tns:SubscribeUsageControlCounterResponse" />
+			<wsdl:fault name="ClientException" message="tns:ClientException"/>
+			<wsdl:fault name="ServerException" message="tns:ServerException"/>
+		</wsdl:operation>
+		<wsdl:operation name="unsubscribeUsageControlCounter">
+			<wsdl:input message="tns:UnsubscribeUsageControlCounterRequest" />
+			<wsdl:output message="tns:UnsubscribeUsageControlCounterResponse" />
+			<wsdl:fault name="ClientException" message="tns:ClientException"/>
+			<wsdl:fault name="ServerException" message="tns:ServerException"/>
+		</wsdl:operation>
+		<wsdl:operation name="changeUsageControlCounter">
+			<wsdl:input message="tns:ChangeUsageControlCounterRequest" />
+			<wsdl:output message="tns:ChangeUsageControlCounterResponse" />
+			<wsdl:fault name="ClientException" message="tns:ClientException"/>
+			<wsdl:fault name="ServerException" message="tns:ServerException"/>
+		</wsdl:operation>
+		<wsdl:operation name="queryUsageControlCounters">
+			<wsdl:input message="tns:QueryUsageControlCountersRequest" />
+			<wsdl:output message="tns:QueryUsageControlCountersResponse" />
+			<wsdl:fault name="ClientException" message="tns:ClientException"/>
+			<wsdl:fault name="ServerException" message="tns:ServerException"/>
+		</wsdl:operation>
+        <wsdl:operation name="queryUsageControlCountersPreviousPeriods">
+            <wsdl:input message="tns:QueryUsageControlCountersPreviousPeriodsRequest" />
+            <wsdl:output message="tns:QueryUsageControlCountersPreviousPeriodsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="subscribeUsageControlConditionGroups">
+            <wsdl:input message="tns:SubscribeUsageControlConditionGroupsRequest" />
+            <wsdl:output message="tns:SubscribeUsageControlConditionGroupsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="unsubscribeUsageControlConditionGroups">
+            <wsdl:input message="tns:UnsubscribeUsageControlConditionGroupsRequest" />
+            <wsdl:output message="tns:UnsubscribeUsageControlConditionGroupsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryUsageControlConditionGroups">
+            <wsdl:input message="tns:QueryUsageControlConditionGroupsRequest" />
+            <wsdl:output message="tns:QueryUsageControlConditionGroupsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+	</wsdl:portType>
+	
+	<!-- Binding -->
+	
+	<wsdl:binding name="UsageControlCounterManagementServiceSOAPBinding_v1_1" type="tns:UsageControlCounterManagementPort_v1_1">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+	
+		<wsdl:operation name="subscribeUsageControlCounter">
+			<soap:operation soapAction="subscribeUsageControlCounter" style="document" />
+			<wsdl:input>
+				<soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ClientException">
+				<soap:fault name="ClientException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="ServerException">
+				<soap:fault name="ServerException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	
+		<wsdl:operation name="unsubscribeUsageControlCounter">
+			<soap:operation soapAction="unsubscribeUsageControlCounter" style="document" />
+			<wsdl:input>
+				<soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ClientException">
+				<soap:fault name="ClientException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="ServerException">
+				<soap:fault name="ServerException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	
+		<wsdl:operation name="changeUsageControlCounter">
+			<soap:operation soapAction="changeUsageControlCounter" style="document" />
+			<wsdl:input>
+				<soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ClientException">
+				<soap:fault name="ClientException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="ServerException">
+				<soap:fault name="ServerException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	
+		<wsdl:operation name="queryUsageControlCounters">
+			<soap:operation soapAction="queryUsageControlCounters" style="document" />
+			<wsdl:input>
+				<soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ClientException">
+				<soap:fault name="ClientException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="ServerException">
+				<soap:fault name="ServerException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	
+        <wsdl:operation name="queryUsageControlCountersPreviousPeriods">
+            <soap:operation soapAction="queryUsageControlCountersPreviousPeriods" style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    
+        <wsdl:operation name="subscribeUsageControlConditionGroups">
+            <soap:operation soapAction="subscribeUsageControlConditionGroups" style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    
+        <wsdl:operation name="unsubscribeUsageControlConditionGroups">
+            <soap:operation soapAction="unsubscribeUsageControlConditionGroups" style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    
+        <wsdl:operation name="queryUsageControlConditionGroups">
+            <soap:operation soapAction="queryUsageControlConditionGroups" style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID" use="literal"/>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    
+	</wsdl:binding>
+	
+	<!--
+	    Service
+	-->
+	
+	<wsdl:service name="UsageControlCounterManagementService_v1">
+		<wsdl:port name="UsageControlCounterManagement_v1_1" binding="tns:UsageControlCounterManagementServiceSOAPBinding_v1_1">
+			<soap:address location="http://localhost/UNICA/OCSProvisioning/UsageControlCounterManagement_v1"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findSql name="pm_sr.getEntityFinder">
+  <dbSchema>ORDER</dbSchema>
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <input>doc_pm_sr.selectInput</input>
+  <label>getEntityFinder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_pm_sr.selectOutput</output>
+  <type>SQL</type>
+  <volatility>0</volatility>
+  <methodList>
+    <method name="cwOnFinderSQLSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        SELECT
+            subscriberId, offerType, productSerialNumber, opId, productIdAA1, productIdAA2, productIdAA3, productNumber, productOfferingId, xml, validfromdate
+        FROM (
+                        SELECT rownum rnum, subscriberId, offerType, productSerialNumber, opId, productIdAA1, productIdAA2, productIdAA3, productNumber, productOfferingId, xml, validfromdate  FROM
+                        (
+                                        SELECT
+                                          entityapplicationcontext subscriberId
+                                        , entitytype               offerType
+                                        , entitydn                 productSerialNumber
+                                        , MAX(DECODE(characteristic,  'opId',              valueString)) opId
+                                        , MAX(DECODE(characteristic,  'productIdAA1',      valueString)) productIdAA1
+                                        , MAX(DECODE(characteristic,  'productIdAA2',      valueString)) productIdAA2
+                                        , MAX(DECODE(characteristic,  'productIdAA3',      valueString)) productIdAA3
+                                        , MAX(DECODE( characteristic, 'productNumber',     valueString)) productNumber
+                                        , MAX(DECODE( characteristic, 'productOfferingId', valueString)) productOfferingId
+                                        , ( LISTAGG( ( CASE WHEN CHARACTERISTIC LIKE 'XML_%' THEN VALUESTRING END), '') WITHIN GROUP (ORDER BY CHARACTERISTIC) ) xml
+                                        , validfromdate
+
+                                        FROM
+                                        {[11,B]  cwt_sr_entityvalueact }
+                                        {[12,B]  cwt_sr_entityvalue    }
+
+                                        WHERE 1=1
+                                        {[0] and ENTITYAPPLICATIONCONTEXT = ?}
+                                        {[1] and entitytype = ?}
+                                        {[2] and entitydn = ?}
+                                        GROUP BY entityapplicationcontext, entitytype, entitydn, validfromdate
+                                        ORDER BY entityapplicationcontext, validfromdate DESC
+                       )
+                       WHERE 1=1
+                       {[3] and opId = ?}
+                       {[4] and productIdAA1 = ?}
+                       {[5] and productIdAA2 = ?}
+                       {[6] and productIdAA3 = ?}
+                       {[7] and productNumber = ?}
+                       {[8] and productOfferingId = ?}
+                       {[9] and validfromdate >= ?}
+                       {[10] and validfromdate <= ?}
+        )
+        {[13] WHERE rnum >= ? }
+        {[14] AND rnum < ? }
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_pm_sr.selectOutput</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_pm_sr.selectInput/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_pm_sr.selectOutput/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="getEntityResultTable1" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_pm_sr.getEntityFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="subscriberId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_sr.getEntityFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_sr.selectOutput/leaf_subscriberId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="offerType" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_sr.getEntityFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_sr.selectOutput/leaf_offerType</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="productSerialNumber" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_sr.getEntityFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_sr.selectOutput/leaf_productSerialNumber</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="opId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_sr.getEntityFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_sr.selectOutput/leaf_opId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="productIdAA1" type="elfld"/>
+                      <element name="productIdAA2" type="elfld"/>
+                      <element name="productIdAA3" type="elfld"/>
+                      <element name="productNumber" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_sr.getEntityFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_sr.selectOutput/leaf_productNumber</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="productOfferingId" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_sr.getEntityFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_sr.selectOutput/leaf_productOfferingId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="xml" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_sr.getEntityFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_sr.selectOutput/leaf_xml</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_pm_sr.getEntityFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_pm_sr.getEntityFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="getEntityView" type="findVView">
+      <outputOverlay>findSql_pm_sr.getEntityFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findSql>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_DCDebtUseForAdjustmentCausesMandatoryCondRule">
+  <group>rules_scripts.Operation</group>
+  <label>rule_DCDebtUseForAdjustmentCausesMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var ds = data.DebtCausesArrDS.ListDS;
+    //var debt= data.DebtUseForAdjustmentCauses;
+    /*if( ds.length==0 && !(debt=="" || debt==null))
+    {
+     errList.addErrorMessage(data,["IVR Bolt On Language and Description mandatory if set IVR Bolt On Code "],"NGAA_003","E");
+    }*/
+
+    for (var i = 0; i < ds.length; i++)
+    {
+        var item = ds[i];
+        var error = false;
+        /*if( !item.IVRBoltOnDescription ){
+            errList.addErrorMessage(data,["Description mandatory if set IVR Bolt On Code"],"NGAA_003","E");
+            error = true;
+        }*/
+
+        if( !item.DebtUseForAdjustmentCauses ){
+            errList.addErrorMessage(data,["Debt Use For Adjustment Causes mandatory"],"NGAA_003","E");
+            error = true;
+        }
+
+        if(!error){
+            for(var j=i;j<ds.length;j++){
+                if( (j!=i) && (ds[j].DebtUseForAdjustmentCauses == item.DebtUseForAdjustmentCauses) ){
+                        errList.addErrorMessage(data,["Duplicated Debt Use For Adjustment Causes: " + ds[j].DebtUseForAdjustmentCauses],"NGAA_003","E");
+                }
+            }
+        }
+    }
+
+
+    return false;
+  ]]></script>
+</script>

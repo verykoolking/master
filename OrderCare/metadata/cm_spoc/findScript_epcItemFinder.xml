@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cm_spoc.epcItemFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <group>overridden.finders</group>
+  <input>dstruct_epc.data.SpecificationSearch</input>
+  <label>Specification Results</label>
+  <maxRowsLimit>999</maxRowsLimit>
+  <metaVersion>4</metaVersion>
+  <output>doc_cwa_epc.specificationDoc</output>
+  <overrides>findScript_cwa_epc.epcItemFinder</overrides>
+  <type>script</type>
+  <volatility>1</volatility>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        searchData.specification.project = cwa_epc.getDefaultProj();
+        searchData.specification.label = this.searchDocument.specification.label;
+        // temp disable, specificationType not supported yet
+        // searchData.specification.specificationType = cwa_epc.getBaseSpecificationBySubItemType(this.controllerOwner.specificationTypeDoc.code);
+        searchData.specification.specificationType = this.searchDocument.specification.specificationType;
+        searchData.specification.baseSpecificationCode = this.searchDocument.specification.baseSpecificationCode;
+        searchData.specification.specificationCode = this.searchDocument.specification.specificationCode;
+        searchData.specification.state = this.searchDocument.specification.state;
+        searchData.specification.startDate = this.searchDocument.specification.startDate;
+        searchData.specification.endDate = this.searchDocument.specification.endDate;
+        //searchData.orderable = this.searchDocument.orderable;
+        searchData.projectOnly = this.searchDocument.projectOnly;
+        var resList = epc.queryItemSpecification(searchData);
+        if (api_common.isFault(resList)) {
+            return resList;
+        }
+
+        var res = new DataObjectList;
+        var temp;
+        if(resList!=null && resList.specification!=null){
+            //filter results
+            var leafName = "specificationType";
+            var leafValues = ["ProductOffering","ProductSpecification","ResourceSpecification","ServiceSpecification",null];
+            resList = cwa_epc.doFilterListByValue(resList.specification,leafName,leafValues);
+
+            leafName = "baseSpecificationCode";
+            var leafValues = ["base_TreeSpecification"];
+            var treeList = cwa_epc.doFilterListByValue(resList,leafName,leafValues);
+
+            for (var i=0; i<treeList.length; i++){
+                resList.remove(treeList[i]);
+            }
+
+            //NEW
+                    if(this.searchDocument.specification.baseSpecificationCode!=null){
+                        for (var i=0; i<resList.length; i++){
+                            if(!resList[i].baseSpecificationCode.equals(this.searchDocument.specification.baseSpecificationCode.toString()))
+                            resList.remove(resList[i]);
+                        }
+                    }
+
+            res = cwa_epc.getSpecificationDocListFromArray(resList); //input is array of specifications
+        //    res = cwa_epc.getSpecificationDocList(resList); //input is specificationList
+        }
+        return res;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_cwa_epc.baseFinder</extends>
+    <overrides>findScript_cwa_epc.epcItemFinder/ui_UserInterface</overrides>
+    <variableList>
+      <variable name="groupTypeSearchDoc" type="leaf">
+        <valueType>doc_cm_spoc.groupTypeSearchDoc</valueType>
+      </variable>
+      <variable name="isItemGroupEnabled" type="leaf">
+        <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+      </variable>
+      <variable name="groupTypeDoc" type="leaf">
+        <valueType>doc_cm_spoc.groupTypeDoc</valueType>
+      </variable>
+      <variable name="specificationTypeDoc" type="leaf">
+        <valueType>doc_cwa_epc.specificationTypeDoc</valueType>
+      </variable>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cwa_epc.specificationDoc</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cwa_epc.specificationDoc/ui_UserInterface</valueType>
+      </variable>
+      <variable name="search" type="leaf">
+        <valueType>dstruct_epc.data.SpecificationSearch/tree_UserInterface</valueType>
+      </variable>
+      <variable name="specificationCodeDoc" type="leaf">
+        <valueType>doc_cwa_epc.specificationCodeDoc</valueType>
+      </variable>
+      <variable name="itemSubTypeSearchDoc" type="leaf">
+        <initialize>true</initialize>
+        <valueType>doc_cwa_epc.itemSubTypeSearchDoc</valueType>
+      </variable>
+      <variable name="isItemSubtypeEnabled" type="leaf">
+        <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_cwa_epc.baseFinder/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_cwa_epc.baseFinder/frmui_Forms/vform_Result</base>
+            <extends>ui_cwa_epc.baseFinder/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="resultList" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_cwa_epc.baseFinder/frmui_Forms/exov_Default</base>
+            <extends>ui_cwa_epc.baseFinder/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+          </overlay>
+          <overlay name="searchClassicVL" type="exov">
+            <base>ui_cwa_epc.baseFinder/frmui_Forms/vform_searchClassicVL</base>
+            <extends>ui_cwa_epc.baseFinder/frmui_Forms/vform_searchClassicVL</extends>
+            <label>searchClassicVL</label>
+            <overrideList>
+              <override name="fieldGrid" type="elext">
+                <elementList>
+                  <element name="code1" type="elslct">
+                    <columnSpan>2</columnSpan>
+                    <labelOrientation>top</labelOrientation>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/uimthd_itemTypeTrigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_specificationTypeDoc</variablePath>
+                        <variablePath>doc_cwa_epc.specificationTypeDoc/leaf_code</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="groupDescription" type="elslct">
+                    <columnSpan>2</columnSpan>
+                    <label>Group</label>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/uimthd_itemTypeTrigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_groupTypeSearchDoc</variablePath>
+                        <variablePath>doc_cm_spoc.groupTypeSearchDoc/leaf_groupDescription</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="itemSubType" type="elslct">
+                    <columnSpan>2</columnSpan>
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/permMethod_itemSubtypeEnabled</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/uimthd_itemSubTypeTrigger</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <startRow>true</startRow>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_itemSubTypeSearchDoc</variablePath>
+                        <variablePath>doc_cwa_epc.itemSubTypeSearchDoc/leaf_itemSubType</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="code" type="elslct">
+                    <columnSpan>2</columnSpan>
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <label>Base Specification Code</label>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_specificationCodeDoc</variablePath>
+                        <variablePath>doc_cwa_epc.specificationCodeDoc/leaf_code</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="specificationCode" type="elfld">
+                    <columnSpan>2</columnSpan>
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>dstruct_epc.data.SpecificationSearch/tree_UserInterface/uivar_model</variablePath>
+                        <variablePath>dstruct_epc.data.SpecificationSearch/dstruct_specification</variablePath>
+                        <variablePath>dstruct_epc.data.Specification/dstruct_specificationCode</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="label" type="elfld">
+                    <columnSpan>2</columnSpan>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>dstruct_epc.data.SpecificationSearch/tree_UserInterface/uivar_model</variablePath>
+                        <variablePath>dstruct_epc.data.SpecificationSearch/dstruct_specification</variablePath>
+                        <variablePath>dstruct_epc.data.Specification/dstruct_label</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="state" type="elslct">
+                    <columnSpan>2</columnSpan>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>dstruct_epc.data.SpecificationSearch/tree_UserInterface/uivar_model</variablePath>
+                        <variablePath>dstruct_epc.data.SpecificationSearch/dstruct_specification</variablePath>
+                        <variablePath>dstruct_epc.data.Specification/dstruct_state</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="orderable" type="elslct">
+                    <columnSpan>2</columnSpan>
+                    <label>Orderable ??</label>
+                    <labelOrientation>top</labelOrientation>
+                  </element>
+                  <element name="startDate" type="eldatetime">
+                    <columnSpan>2</columnSpan>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>dstruct_epc.data.SpecificationSearch/tree_UserInterface/uivar_model</variablePath>
+                        <variablePath>dstruct_epc.data.SpecificationSearch/dstruct_specification</variablePath>
+                        <variablePath>dstruct_epc.data.Specification/dstruct_startDate</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="endDate" type="eldate">
+                    <columnSpan>2</columnSpan>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>dstruct_epc.data.SpecificationSearch/tree_UserInterface/uivar_model</variablePath>
+                        <variablePath>dstruct_epc.data.SpecificationSearch/dstruct_specification</variablePath>
+                        <variablePath>dstruct_epc.data.Specification/dstruct_endDate</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="projectOnly" type="elchk">
+                    <columnSpan>2</columnSpan>
+                    <labelOrientation>right</labelOrientation>
+                    <removeLabelLine>true</removeLabelLine>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>dstruct_epc.data.SpecificationSearch/tree_UserInterface/uivar_model</variablePath>
+                        <variablePath>dstruct_epc.data.SpecificationSearch/dstruct_projectOnly</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="cwLeafInitAction$groupTypeSearchDoc" type="laction">
+        <path>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_groupTypeSearchDoc</path>
+        <type>initializer</type>
+        <valueType>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_groupTypeSearchDoc</valueType>
+        <script><![CDATA[
+          this.groupTypeSearchDoc=new cm_spoc.groupTypeSearchDoc();
+                    this.groupTypeSearchDoc.codeTable="GroupType";
+                    return this.groupTypeSearchDoc;
+        ]]></script>
+      </method>
+      <method name="cwLeafInitAction$isItemGroupEnabled" type="laction">
+        <path>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_isItemGroupEnabled</path>
+        <type>initializer</type>
+        <script>return false;</script>
+      </method>
+      <method name="cwLeafInitAction$groupTypeDoc" type="laction">
+        <path>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_groupTypeDoc</path>
+        <type>initializer</type>
+        <valueType>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_groupTypeDoc</valueType>
+        <script><![CDATA[
+          var group=new cm_spoc.groupTypeDoc;
+                    group.code="itemGroup";
+                    return group;
+        ]]></script>
+      </method>
+      <method name="cwLeafInitAction$itemSubTypeSearchDoc" type="laction">
+        <path>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_itemSubTypeSearchDoc</path>
+        <type>initializer</type>
+        <valueType>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_itemSubTypeSearchDoc</valueType>
+        <script>return new cwa_epc.itemSubTypeSearchDoc</script>
+      </method>
+      <method name="cwLeafInitAction$specificationTypeDoc" type="laction">
+        <path>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_specificationTypeDoc</path>
+        <type>initializer</type>
+        <valueType>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_specificationTypeDoc</valueType>
+        <script>return new cwa_epc.specificationTypeDoc;</script>
+      </method>
+      <method name="cwLeafInitAction$specificationCodeDoc" type="laction">
+        <path>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_specificationCodeDoc</path>
+        <type>initializer</type>
+        <valueType>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_specificationCodeDoc</valueType>
+        <script>return new cwa_epc.specificationCodeDoc;</script>
+      </method>
+      <method name="cwLeafInitAction$isItemSubtypeEnabled" type="laction">
+        <path>findScript_cm_spoc.epcItemFinder/ui_UserInterface/leaf_isItemSubtypeEnabled</path>
+        <type>initializer</type>
+        <script>return false;</script>
+      </method>
+      <method name="getResultForm" type="uimthd">
+        <description><![CDATA[
+          <p style="margin-top: 0">
+            Finder implementations will override getResultForm() to publish the
+            specific event and return the result.
+          </p>
+        ]]></description>
+        <valueType>dtype_com.conceptwave.system.String</valueType>
+        <script><![CDATA[return "cwa_epc.epcSpecDocResult";]]></script>
+      </method>
+      <method name="getDetailModel" type="uimthd">
+        <description><![CDATA[
+          <p style="margin-top: 0">
+            Override with api call to get detail model
+          </p>
+        ]]></description>
+        <parameterList>
+          <parameter name="selected" type="rifp">
+            <type>nmeta_com.conceptwave.system.Object</type>
+          </parameter>
+        </parameterList>
+        <valueType>ui_cwa_epc.baseComponent</valueType>
+        <script><![CDATA[
+          var spec = new epc.data.Specification;
+          spec.project = cwa_epc.getDefaultProj();
+          spec.specificationType = selected.specificationType;
+          spec.specificationCode = selected.specificationCode;
+          var specification = epc.getItemSpecificationByKey(spec);
+          if(api_common.isFault(specification)){
+              this.setModelStatus(specification,"CWA_EPC_GET_SPECIFICATION_ERR",false, this.model.metadataTypeLabel);
+              return;
+          }
+
+          return specification;
+        ]]></script>
+      </method>
+      <method name="codeTrigger" type="uimthd">
+        <script><![CDATA[
+          this.search.model.specification.baseSpecificationCode = this.specificationCodeDoc.code;
+          this.isNewMenuResultVisible = true;
+          this.isDeleteMenuVisible = true;
+          this.isNewMenuVisible = true;
+          this.resultUI.result = new DataObjectList();
+          this.resultUI.result.updateList;
+
+          var proj = cwt_pc.getDefaultProject();
+
+          if(this.specificationCodeDoc.code == null || proj == null ||
+              (proj != null && proj.status == "ACT")){
+              this.isNewMenuResultVisible = false;
+              this.isDeleteMenuVisible = false;
+              this.isNewMenuVisible = false;
+          }
+        ]]></script>
+      </method>
+      <method name="getNewDetailModel" type="uimthd">
+        <description><![CDATA[
+          <p style="margin-top: 0">
+            To implement for retrieving a new detail model used for new action
+          </p>
+        ]]></description>
+        <valueType>mdl_com.conceptwave.system.Model</valueType>
+        <script><![CDATA[
+          var model = cwa_epc.getSpecificationModel(this.specificationCodeDoc.code);
+          if(model)
+              model.baseSpecificationCode = this.specificationCodeDoc.code;
+          else
+              model = new epc.data.Specification;
+          /*
+          var model;
+          if(this.itemSubTypeSearchDoc.itemSubType != null)
+              model = cwa_epc.getSpecificationModel(this.itemSubTypeSearchDoc.itemSubType.key);
+          else
+              model = new epc.data.Specification;
+              */
+          return model;
+        ]]></script>
+      </method>
+      <method name="getDetailForm" type="uimthd">
+        <description><![CDATA[
+          <p style="margin-top: 0">
+            Override with api call to get stored component form name for detail UI
+          </p>
+        ]]></description>
+        <parameterList>
+          <parameter name="model" type="rifp">
+            <type>nmeta_com.conceptwave.system.Object</type>
+          </parameter>
+        </parameterList>
+        <valueType>dtype_com.conceptwave.system.String</valueType>
+        <script><![CDATA[
+          //if(model.baseSpecificationCode!=null)
+          //    return cwa_epc.getSpecificationForm(model.baseSpecificationCode);
+
+          return "cwa_epc.treeDetailTabComponent";
+        ]]></script>
+      </method>
+      <method name="newAction" type="usrActionMethod">
+        <dialogObject>ui_cwa_epc.epcDialog</dialogObject>
+        <showInPopup>true</showInPopup>
+        <script><![CDATA[
+          this.resetModelStatus();
+          var newDetail = this.onNew();
+          return newDetail;
+        ]]></script>
+      </method>
+      <method name="onShowDetail" type="usrActionMethod">
+        <script><![CDATA[
+          this.cw$super_onShowDetail();
+          if(this.detail){
+              //this.detail.isCancelMenuVisible = false;
+
+          }
+        ]]></script>
+      </method>
+      <method name="onInit" type="action">
+        <valueType>nmeta_com.conceptwave.system.Object</valueType>
+        <script><![CDATA[
+          this.cw$super_onInit();
+
+          //this.isCustomMenuLeftVisible = true;
+          this.isLayoutSpacerVisible = false;
+          this.isRightLayoutSpacerVisible = true;
+          this.isNewMenuResultVisible = false;
+          this.isDeleteMenuVisible = false;
+          this.isExportMenuVisible = false;
+          this.isImportMenuVisible = false;
+          //this.isNewEnabled = false;
+
+          this.search.model.specification.startDate = null;
+          var proj = cwt_pc.getDefaultProject();
+
+          if( proj == null || (proj != null && proj.status == "ACT")){
+              this.isNewMenuVisible = false;
+          }
+        ]]></script>
+      </method>
+      <method name="onDelete" type="uimthd">
+        <script><![CDATA[
+          var finderResults = new Array();
+
+          if (finderResults.length == 0 && this.result != null && this.result.selected != null) {
+          finderResults = this.result.selected;
+          }
+
+          var finder = this.model;
+          if(finderResults == null || finderResults.length == 0){
+              if(this.detail!=null){
+               finder.invoke(this.detail.model, "delete");
+                if (this.detail!= null) {
+                   this.detail = null;
+                }
+                this.result.updateList; //force update
+                this.setModelStatus(null,"CWA_EPC_DEL_002",true);
+              }
+            return;
+          }
+
+          finder = new cwt_pc.cwt_itemFinderNew;
+          finder.setList(this.result);
+          for (var i = 0; i < finderResults.length; i++) {
+            var toDelete = finderResults[i];
+            finder.invoke(toDelete,"delete");
+            if(this.detail!= null) {
+              this.detail = null;
+            }
+          }
+
+          this.result.updateList; //force update
+          this.setModelStatus(null,"CWA_EPC_DEL_002",true, finderResults[0].metadataTypeLabel);
+        ]]></script>
+      </method>
+      <method name="hideDetailAction" type="action">
+        <script>this.cw$super_hideDetailAction();</script>
+      </method>
+      <method name="itemSubtypeEnabled" type="permMethod">
+        <script>return this.isItemSubtypeEnabled;</script>
+      </method>
+      <method name="itemTypeTrigger" type="uimthd">
+        <script><![CDATA[
+          this.isItemSubtypeEnabled = true;
+          this.itemSubTypeSearchDoc.itemSubType = null;
+          this.search.model.specification.baseSpecificationCode = null;
+          var itemType = this.specificationTypeDoc.code;
+          this.search.model.specification.specificationType = itemType;
+
+
+
+          if(!this.itemSubTypeSearchDoc)
+              this.itemSubTypeSearchDoc = new cwa_epc.itemSubTypeSearchDoc.UserInterface();
+
+          this.itemSubTypeSearchDoc.itemType = itemType;
+
+          if(this.specificationTypeDoc.code!=null || this.groupTypeSearchDoc.groupDescription!=null){
+                        this.isItemSubtypeEnabled = true;
+                        cm_spoc.setCodeTableName(this.itemSubTypeSearchDoc,this.specificationTypeDoc.code, this.groupTypeSearchDoc.groupDescription);
+                    }else
+                        this.isItemSubtypeEnabled = false;
+          /*
+          if(itemType == "BalanceSpecification")
+              this.itemSubTypeSearchDoc.codeTable = "BalanceSpecificationType";
+          else if(itemType == "ResourceSpecification")
+              this.itemSubTypeSearchDoc.codeTable = "ResourceSpecificationType";
+          else if(itemType == "ProductSpecification")
+              this.itemSubTypeSearchDoc.codeTable = "ProductSpecificationType";
+          else if(itemType == "ConsumptionSpecification")
+              this.itemSubTypeSearchDoc.codeTable = "ConsumptionSpecificationType";
+          else if(itemType == "PricePlan")
+              this.itemSubTypeSearchDoc.codeTable = "PricePlanType";
+          else if(itemType == "ProductOffering")
+              this.itemSubTypeSearchDoc.codeTable = "ProductOfferingType";
+          else if(itemType == "ServiceSpecification")
+              this.itemSubTypeSearchDoc.codeTable = "ServiceSpecificationType";
+          else{
+              this.isItemSubtypeEnabled = false;
+             // this.isNewEnabled = false;
+          }*/
+        ]]></script>
+      </method>
+      <method name="onNew" type="uimthd">
+        <script><![CDATA[
+          var model = this.getNewDetailModel();
+          var newDetail = new cwa_epc.newItemComponent(model, this);
+
+          if(newDetail!=null){
+              newDetail.parentFinderUI = this;
+              newDetail.isLabeLStatusLayoutVisible = false;
+              newDetail.isActionButtonsVisible = false;
+              newDetail.isdetailFormVLGridVisible = false;
+              if(this.specificationTypeDoc.code != null || this.groupTypeSearchDoc.groupDescription!=null){
+                  //newDetail.model.specificationType = this.specificationTypeDoc.code;
+                  newDetail.specificationTypeDoc.code = this.specificationTypeDoc.code;
+                  newDetail.groupTypeSearchDoc.groupDescription =this.groupTypeSearchDoc.groupDescription;
+                  newDetail.itemTypeTrigger();
+                  if(this.itemSubTypeSearchDoc.itemSubType != null){
+                      newDetail.isItemSubtypeVisible = true;
+                      newDetail.itemSubTypeSearchDoc.model.itemSubType = this.itemSubTypeSearchDoc.itemSubType;
+                      if(this.itemSubTypeSearchDoc.itemSubType == "Service")
+                          newDetail.itemSubtypeTrigger();
+                  }
+              }
+              //newDetail.isCancelMenuVisible = false;
+
+          }
+
+          return newDetail;
+        ]]></script>
+      </method>
+      <method name="itemSubTypeTrigger" type="uimthd">
+        <script><![CDATA[
+          //this.itemSubTypeSearchDoc.itemSubType != null ? this.isNewEnabled = true : this.isNewEnabled = false;
+          var itemSubTypeRef = this.itemSubTypeSearchDoc.itemSubType;
+          if (itemSubTypeRef == null) {
+              this.search.model.specification.baseSpecificationCode = null;
+          } else {
+              this.search.model.specification.baseSpecificationCode = cwa_epc.getBaseSpecificationBySubItemType(itemSubTypeRef.key);
+          }
+        ]]></script>
+      </method>
+      <method name="newMenuVisible" type="permMethod">
+        <privilegesList>
+          <privileges type="ppriv">
+            <privilege>marketingPriv</privilege>
+          </privileges>
+          <privileges type="ppriv">
+            <privilege>technicalPriv</privilege>
+          </privileges>
+        </privilegesList>
+        <privilegesType>SOME</privilegesType>
+        <script><![CDATA[
+          var valueProfile;
+
+          var itemType = this.specificationTypeDoc.code;
+          if(itemType == "ProductSpecification")
+            valueProfile=UserProfile.hasPrivilege('marketingPriv');
+          else if(itemType == "ProductOffering")
+            valueProfile=UserProfile.hasPrivilege('marketingPriv');
+          else if(itemType == "ServiceSpecification")
+            valueProfile=UserProfile.hasPrivilege('technicalPriv');
+          else{
+            valueProfile=false;
+          }
+
+          var notRatingTree = true;
+
+          if(  this.specificationTypeDoc.code== "ServiceSpecification"  && this.itemSubTypeSearchDoc.itemSubType=="base_RatingTree" ) {
+           notRatingTree=false;
+          }
+
+          return this.isEditable && this.isNewMenuVisible && cwt_pc.canView(null,'createEPCSpec') && valueProfile && notRatingTree;
+        ]]></script>
+      </method>
+      <method name="groupItemTypeTrigger" type="uimthd">
+        <script><![CDATA[
+          this.isItemSubtypeEnabled = true;
+                    this.itemSubTypeSearchDoc.itemSubType = null;
+                    this.search.model.specification.baseSpecificationCode = null;
+                    var itemType = this.specificationTypeDoc.code;
+                    this.search.model.specification.specificationType = itemType;
+
+                    if(!this.itemSubTypeSearchDoc)
+                        this.itemSubTypeSearchDoc = new cwa_epc.itemSubTypeSearchDoc.UserInterface();
+
+                    this.itemSubTypeSearchDoc.itemType = itemType;
+                    if(itemType == "BalanceSpecification")
+                        this.itemSubTypeSearchDoc.codeTable = "BalanceSpecificationType";
+                    else if(itemType == "ResourceSpecification")
+                        this.itemSubTypeSearchDoc.codeTable = "ResourceSpecificationType";
+                    else if(itemType == "ProductSpecification")
+                        this.itemSubTypeSearchDoc.codeTable = "ProductSpecificationType";
+                    else if(itemType == "ConsumptionSpecification")
+                        this.itemSubTypeSearchDoc.codeTable = "ConsumptionSpecificationType";
+                    else if(itemType == "PricePlan")
+                        this.itemSubTypeSearchDoc.codeTable = "PricePlanType";
+                    else if(itemType == "ProductOffering")
+                        this.itemSubTypeSearchDoc.codeTable = "ProductOfferingType";
+                    else if(itemType == "ServiceSpecification")
+                        this.itemSubTypeSearchDoc.codeTable = "ServiceSpecificationType";
+                    else{
+                        this.isItemSubtypeEnabled = false;
+                       // this.isNewEnabled = false;
+                    }
+        ]]></script>
+      </method>
+      <method name="itemGroupEnabled" type="permMethod">
+        <script>return this.isItemGroupEnabled;</script>
+      </method>
+    </methodList>
+  </UserInterface>
+  <viewList>
+    <view name="pamFinderView" type="findVView">
+      <outputOverlay>findScript_cm_spoc.epcItemFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findScript>

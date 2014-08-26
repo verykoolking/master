@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.removeConfigSessionByKey">
+  <group>api</group>
+  <label>removeConfigSessionByKey</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="configSession" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_pws.configSession</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try
+    {
+        if(!configSession.id)
+        {
+            var fault = api_common.createFault("E100", "The ConfigSession Entry doesnt exist.");
+        }
+        var configSessionDoc = Document.readDoc("cm_pws:configSessionDoc", configSession.id);
+        configSessionDoc.deleteFromDB();
+
+        return;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

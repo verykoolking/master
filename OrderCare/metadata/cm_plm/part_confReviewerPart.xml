@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<participant name="cm_plm.confReviewerPart">
+  <distributionType>Shared</distributionType>
+  <duration type="dur">
+    <length>P0Y0M1DT0H0M0S</length>
+  </duration>
+  <guid>{44085796-24e3-4408-8003-9bb6f238f62f}</guid>
+  <interface>iface_cm_plm.confReviewerInt</interface>
+  <label>CM-PLM Configuration Reviewer Participant</label>
+  <metaVersion>4</metaVersion>
+  <operationConditionsList>
+    <operationConditions type="opco">
+      <operation>iface_cm_plm.confReviewerInt/oper_Complete</operation>
+      <tasksList>
+        <tasks>evalTestResult</tasks>
+        <tasks>reviewConf</tasks>
+      </tasksList>
+      <validateOrder>true</validateOrder>
+    </operationConditions>
+    <operationConditions type="opco">
+      <operation>iface_cm_plm.confReviewerInt/oper_Restart</operation>
+      <tasksList>
+        <tasks>evalTestResult</tasks>
+        <tasks>reviewConf</tasks>
+      </tasksList>
+      <validateOrder>true</validateOrder>
+      <methodList>
+        <method name="cwOnPartOpConf" type="action">
+          <system>true</system>
+          <script><![CDATA[
+            var popUI = worklistOrder.plmControl;
+            popUI.formNameParant = 'popUpRev';
+            return popUI;
+          ]]></script>
+        </method>
+      </methodList>
+    </operationConditions>
+    <operationConditions type="opco">
+      <operation>iface_cm_plm.confReviewerInt/oper_Reject</operation>
+      <tasksList>
+        <tasks>evalTestResult</tasks>
+        <tasks>reviewConf</tasks>
+      </tasksList>
+      <validateOrder>true</validateOrder>
+      <methodList>
+        <method name="cwOnPartOpConf" type="action">
+          <system>true</system>
+          <script>return cm_plm.addNotePopup(worklistOrder, worklistItem);</script>
+        </method>
+        <method name="cwOnParticipantOpAct" type="action">
+          <system>true</system>
+          <script>cm_plm.addNoteAction(confirmObject, worklistItem);</script>
+        </method>
+      </methodList>
+    </operationConditions>
+  </operationConditionsList>
+  <privilege>revisionPriv</privilege>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.WLTaskUserInterface</extends>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.WLTaskUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Menu" type="exov">
+            <base>ui_com.conceptwave.system.WLTaskUserInterface/frmui_Forms/exov_Menu</base>
+            <extends>ui_com.conceptwave.system.WLTaskUserInterface/frmui_Forms/exov_Menu</extends>
+            <label>Menu</label>
+            <overrideList>
+              <override name="Actions" type="elmnu">
+                <menuAccel type="mAccelP"/>
+                <label>Actions</label>
+                <showDown>true</showDown>
+                <showMenuDropDown>true</showMenuDropDown>
+                <showRollOver>true</showRollOver>
+                <elementList>
+                  <element name="Iterator" type="eliter">
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.WLTaskUserInterface/leaf_opList</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="task" type="elmnu">
+                        <menuAccel type="mAccelP"/>
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_com.conceptwave.system.WLTaskUserInterface/leaf_opList</variablePath>
+                            <variablePath>ui_com.conceptwave.system.WLTaskOperationsUserInterface/usrActionMethod_cwAction</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>ui_com.conceptwave.system.WLTaskOperationsUserInterface/leaf_label</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+</participant>

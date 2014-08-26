@@ -1,0 +1,906 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.CommonTopUpConfigurationForm">
+  <group>TopUp</group>
+  <label>CommonTopUpConfigurationForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.CommonTopUpConfiguration</valueType>
+    </variable>
+    <variable name="TopUpOriginFixedLimitsUI" type="leaf">
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="SelectAllFixedLimitsIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="SelectAllFixAccLimIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="CommonConfiguration" type="vform">
+          <label>CommonConfiguration</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>850px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>General</label>
+                      </element>
+                      <element name="GridLayout2" type="elgrd">
+                        <colWidths>300px</colWidths>
+                        <edgeShowCenter>true</edgeShowCenter>
+                        <edgeSize>2</edgeSize>
+                        <labeAlign>center</labeAlign>
+                        <numOfCols>2</numOfCols>
+                        <width>600px</width>
+                        <elementList>
+                          <element name="MaximumAmount" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Maximum Top Up Amount</label>
+                            <labelOrientation>left</labelOrientation>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="MaximumPeriodTime" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Maximum Period of Time (in minutes) to Cancel a Top Up</label>
+                            <labelOrientation>left</labelOrientation>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="DisaggregatedBalanceInfo" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <label>Store disaggregated balance information after Top Up</label>
+                            <labelOrientation>left</labelOrientation>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="MaximumBalance" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Maximum Balance in any Wallet after Top Up</label>
+                            <labelOrientation>left</labelOrientation>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="Section1" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader1" type="elsecth">
+                        <label>Multiple Top Ups</label>
+                      </element>
+                      <element name="MultipleTopUpsLayout" type="elvlt">
+                        <elementList>
+                          <element name="MaxTimeTopUps" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Maximum time (at seconds) of multiple Top Ups from the request up to its config</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CommonTopUpConfiguration/dstruct_MaxTimeTopUps</variablePath>
+                              </variablePathList>
+                            </variable>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="Origin" type="vform">
+          <label>Origin</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>800px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Top Up Origin</label>
+                      </element>
+                      <element name="GridLayout2" type="elgrd">
+                        <colWidths>300px</colWidths>
+                        <edgeShowCenter>true</edgeShowCenter>
+                        <edgeSize>2</edgeSize>
+                        <labeAlign>center</labeAlign>
+                        <numOfCols>2</numOfCols>
+                        <width>600px</width>
+                        <elementList>
+                          <element name="DefaultOriginForBalanceTransferEnum" type="elslct">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Top Up Origin default for balance transfer funcionality</label>
+                            <labelOrientation>left</labelOrientation>
+                            <multiselect>false</multiselect>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/uimthd_DefaultTopUpOrTrigger</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CommonTopUpConfiguration/dstruct_DefaultOriginForBalanceTransferEnum</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>150px</width>
+                          </element>
+                          <element name="DefaultOriginForPromotionEnum" type="elslct">
+                            <labeAlign>left</labeAlign>
+                            <label>Default promotional Top Up Origin</label>
+                            <labelOrientation>left</labelOrientation>
+                            <multiselect>false</multiselect>
+                            <onChangeMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/uimthd_DefaultTopUpPromoTrigger</variablePath>
+                              </variablePathList>
+                            </onChangeMethod>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CommonTopUpConfiguration/dstruct_DefaultOriginForPromotionEnum</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>150px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="BankRecharges" type="vform">
+          <label>BankRecharges</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>800px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Bank Top Ups</label>
+                      </element>
+                      <element name="GridLayout2" type="elgrd">
+                        <colWidths>300px</colWidths>
+                        <edgeShowCenter>true</edgeShowCenter>
+                        <edgeSize>2</edgeSize>
+                        <labeAlign>center</labeAlign>
+                        <numOfCols>2</numOfCols>
+                        <width>600px</width>
+                        <elementList>
+                          <element name="NumWorkingDaysAccum" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Number of working days in which Top Up accumulations will happen:</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="MaxNumWorkDaysBeforePurge" type="elfld">
+                            <label>Maximum number of working days information is stored in the system before purging:</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="BalanceEnabled" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <label>Balance Express enabled</label>
+                            <labelOrientation>left</labelOrientation>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                          <element name="BalanceExpressFilePath" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>File Path Express Balance:</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="TimeBalanceOffLine" type="eldate">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Time(hhmmss format) to process Express Balance Off Line</label>
+                            <labelOrientation>left</labelOrientation>
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                              </variablePathList>
+                            </visible>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="SOS" type="vform">
+          <label>SOS</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>800px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>SOS TopUp Requests</label>
+                      </element>
+                      <element name="GridLayout2" type="elgrd">
+                        <colWidths>300px</colWidths>
+                        <edgeShowCenter>true</edgeShowCenter>
+                        <edgeSize>2</edgeSize>
+                        <labeAlign>center</labeAlign>
+                        <numOfCols>2</numOfCols>
+                        <width>600px</width>
+                        <elementList>
+                          <element name="Outstanding" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Initial period in &quot;Outstanding&quot; status when a SOS Top Up can still be requested</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="Outstanding1" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Initial period in &quot;Outstanding1&quot; status when a SOS Top Up can still be requested</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="PeriodRequested" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Period of time after last Top Up when a SOS Top Up can still be requested</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="MinimumActivePeriod" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Minimum period of time in Active status required in order to request a SOS Top Up</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="MaximumSubscriberBalance" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Maximum Subscriber Balance to request a SOS Top Up</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="MinimumAmount" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Minimum amount of last Top Up required to request a SOS Top Up</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="SubscriberBalance" type="elchk">
+                            <cellAlignment>left,center</cellAlignment>
+                            <label>Subscriber Balance to make a SOS Top Up will be checked at real time</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="DebtPenaltiesAndCompensations" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader1" type="elsecth">
+                        <label>SOS Debt Penalties &amp; Compensations</label>
+                      </element>
+                      <element name="GridLayout3" type="elgrd">
+                        <colWidths>300px</colWidths>
+                        <edgeShowCenter>true</edgeShowCenter>
+                        <edgeSize>2</edgeSize>
+                        <labeAlign>center</labeAlign>
+                        <numOfCols>2</numOfCols>
+                        <width>600px</width>
+                        <elementList>
+                          <element name="PeriodCompensation" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Period of time to execute a compesation of SOS debt without penalty</label>
+                            <labelOrientation>left</labelOrientation>
+                            <width>200px</width>
+                          </element>
+                          <element name="Minimum" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Minimum Top Up Amount to compensate pending SOS Top Ups</label>
+                            <labelOrientation>left</labelOrientation>
+                            <width>200px</width>
+                          </element>
+                          <element name="DefaultPenalty" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Default penalty (after period of time without penalty)</label>
+                            <labelOrientation>left</labelOrientation>
+                            <width>200px</width>
+                          </element>
+                          <element name="CompensationRule" type="elslct">
+                            <cellAlignment>left,center</cellAlignment>
+                            <height>65px</height>
+                            <labeAlign>left</labeAlign>
+                            <label>Compensation Rule</label>
+                            <labelOrientation>left</labelOrientation>
+                            <multiselect>false</multiselect>
+                            <width>200px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="CommonConfiguration" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/frmui_Forms/vform_CommonConfiguration</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Common Configuration</label>
+                </element>
+                <element name="Origin" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/frmui_Forms/vform_Origin</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Origin</label>
+                </element>
+                <element name="BankRecharges" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/frmui_Forms/vform_BankRecharges</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>Bank Recharges</label>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+                <element name="Sos" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/frmui_Forms/vform_SOS</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>SOS</label>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="TopUpOriginLimits" type="vform">
+          <label>TopUpOriginLimits</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <elementList>
+                  <element name="fixedLimitsSection" type="elsect">
+                    <elementList>
+                      <element name="fixedLimitsHeader" type="elsecth">
+                        <label>Fixed Limits</label>
+                      </element>
+                      <element name="buttonsLayout" type="elhlt">
+                        <elementList>
+                          <element name="addFixedLimitsButton" type="elmnu"/>
+                          <element name="deleteFixedLimitsButton" type="elmnu"/>
+                        </elementList>
+                      </element>
+                      <element name="fixedLimitsHeaders" type="elgrd">
+                        <numOfCols>4</numOfCols>
+                        <elementList>
+                          <element name="SelectAllFixedLimits" type="elchk">
+                            <label>SelectAllFixedLimits</label>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/leaf_SelectAllFixedLimitsIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>30px</width>
+                          </element>
+                          <element name="TariffPlanFixedLimits" type="ellab">
+                            <label>Tariff Plan </label>
+                            <width>150px</width>
+                          </element>
+                          <element name="MinimumLimit" type="ellab">
+                            <label>Minimum Limit</label>
+                            <width>200px</width>
+                          </element>
+                          <element name="MaximumLimit" type="ellab">
+                            <label>Maximum Limit</label>
+                            <width>250px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="FIxedLimitsVL" type="elvlt">
+                        <elementList>
+                          <element name="FixedLimitsIterator" type="eliter">
+                            <elementList>
+                              <element name="FixedLimitsIteratorHL" type="elhlt">
+                                <elementList>
+                                  <element name="FixedLimitsFormFrame" type="elovf"/>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+              <element name="SectionStack1" type="elsectnstck">
+                <elementList>
+                  <element name="temporaryAccumulationLimits" type="elsect">
+                    <elementList>
+                      <element name="temporaryAccumulationLimitsHeader" type="elsecth">
+                        <elementList>
+                          <element name="HorizontalLayout" type="elhlt">
+                            <elementList>
+                              <element name="addTempAccLimButton" type="elmnu"/>
+                              <element name="deleteTempAccLimButton" type="elmnu"/>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="temporaryAccumulationLimitsHeaders" type="elgrd">
+                        <numOfCols>5</numOfCols>
+                        <elementList>
+                          <element name="SelectAllFixAccLim" type="elchk">
+                            <label>SelectAllFixAccLim</label>
+                            <showLabel>false</showLabel>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CommonTopUpConfigurationForm/leaf_SelectAllFixAccLimIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>30px</width>
+                          </element>
+                          <element name="TariffPlanFixAccLim" type="ellab">
+                            <label>Tariff Plan</label>
+                            <width>150px</width>
+                          </element>
+                          <element name="DailyLimit" type="ellab">
+                            <label>Daily Limit</label>
+                            <width>90px</width>
+                          </element>
+                          <element name="MonthlyLimit" type="ellab">
+                            <label>Monthly Limit</label>
+                            <width>110px</width>
+                          </element>
+                          <element name="ResetDay" type="ellab">
+                            <label>Reset Day</label>
+                            <width>250px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="SosPropertiesForOrigin" type="vform">
+          <label>SosPropertiesForOrigin</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>left,center</alignment>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>850px</width>
+                <elementList>
+                  <element name="SOSPropSO1Sect" type="elsect">
+                    <canCollapse>false</canCollapse>
+                    <cellAlignment>left,center</cellAlignment>
+                    <removeLabelLine>true</removeLabelLine>
+                    <elementList>
+                      <element name="SOSPropSO1Header" type="elsecth">
+                        <label>SOS Properties for origin SO1</label>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <width>100%</width>
+                        <elementList>
+                          <element name="VerticalLayout2" type="elvlt">
+                            <width>100%</width>
+                            <elementList>
+                              <element name="VerticalLayout4" type="elhlt">
+                                <width>100%</width>
+                                <elementList>
+                                  <element name="GridLayout2" type="elgrd">
+                                    <edgeShowCenter>true</edgeShowCenter>
+                                    <edgeSize>2</edgeSize>
+                                    <labeAlign>center</labeAlign>
+                                    <numOfCols>2</numOfCols>
+                                    <width>400px</width>
+                                    <elementList>
+                                      <element name="MinAmountAllowed" type="elfld">
+                                        <cellAlignment>left,center</cellAlignment>
+                                        <labeAlign>left</labeAlign>
+                                        <label>Minimum amount allowed:</label>
+                                        <labelOrientation>left</labelOrientation>
+                                        <width>100px</width>
+                                      </element>
+                                      <element name="MaxAmountAllowed" type="elfld">
+                                        <cellAlignment>left,center</cellAlignment>
+                                        <labeAlign>left</labeAlign>
+                                        <label>Maximum amount allowed:</label>
+                                        <labelOrientation>left</labelOrientation>
+                                        <width>100px</width>
+                                      </element>
+                                      <element name="DefAmount" type="elfld">
+                                        <cellAlignment>left,center</cellAlignment>
+                                        <labeAlign>left</labeAlign>
+                                        <label>Default amount:</label>
+                                        <labelOrientation>left</labelOrientation>
+                                        <width>100px</width>
+                                      </element>
+                                      <element name="MinAmountSOS" type="elfld">
+                                        <cellAlignment>left,center</cellAlignment>
+                                        <labeAlign>left</labeAlign>
+                                        <label>Minimum amount last non SOS top up:</label>
+                                        <labelOrientation>left</labelOrientation>
+                                        <width>100px</width>
+                                      </element>
+                                      <element name="MaxAmountSOS" type="elfld">
+                                        <cellAlignment>left,center</cellAlignment>
+                                        <labeAlign>left</labeAlign>
+                                        <label>Maximum number of days since last non SOS top up:</label>
+                                        <labelOrientation>left</labelOrientation>
+                                        <width>100px</width>
+                                      </element>
+                                      <element name="NumDaysActivation" type="elfld">
+                                        <cellAlignment>left,center</cellAlignment>
+                                        <labeAlign>left</labeAlign>
+                                        <label>Number of days since activation:</label>
+                                        <labelOrientation>left</labelOrientation>
+                                        <width>100px</width>
+                                      </element>
+                                    </elementList>
+                                  </element>
+                                  <element name="GridLayout" type="elgrd">
+                                    <alignment>left,center</alignment>
+                                    <cellPadding>3</cellPadding>
+                                    <colWidths>400px</colWidths>
+                                    <width>150px</width>
+                                    <elementList>
+                                      <element name="RowSpacer" type="elrsp"/>
+                                      <element name="RowSpacer1" type="elrsp"/>
+                                      <element name="RowSpacer2" type="elrsp"/>
+                                      <element name="RowSpacer3" type="elrsp"/>
+                                      <element name="Image" type="elimg">
+                                        <cellAlignment>left,center</cellAlignment>
+                                        <imageUrl>/cwt/images/16/edit.png</imageUrl>
+                                        <label>List of non SOS origin</label>
+                                        <labelOrientation>left</labelOrientation>
+                                      </element>
+                                    </elementList>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="LayoutSpacer" type="ellsp">
+                            <height>10px</height>
+                          </element>
+                          <element name="VerticalLayout3" type="elvlt">
+                            <alignment>right,center</alignment>
+                            <width>100%</width>
+                            <elementList>
+                              <element name="HorizontalLayout" type="elhlt">
+                                <edgeSize>1</edgeSize>
+                                <width>20%</width>
+                                <elementList>
+                                  <element name="OkButton" type="elbtn">
+                                    <icon>/cwt/images/16/check.png</icon>
+                                    <label>ok</label>
+                                    <padding>5</padding>
+                                  </element>
+                                  <element name="CancelButton" type="elbtn">
+                                    <icon>/cwt/images/16/delete.png</icon>
+                                    <label>Cancel</label>
+                                    <padding>5</padding>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="SOSFilterConfiguartion" type="vform">
+          <label>SOSFilterConfiguartion</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>center,center</alignment>
+            <width>80%</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <elementList>
+                  <element name="SOSFilterConfSection" type="elsect">
+                    <cellAlignment>left,center</cellAlignment>
+                    <elementList>
+                      <element name="SOSFilterConfHeader" type="elsecth">
+                        <label>SOS Filter Configuration</label>
+                      </element>
+                      <element name="VerticalLayout1" type="elvlt">
+                        <alignment>left,center</alignment>
+                        <width>100%</width>
+                        <elementList>
+                          <element name="GridLayout" type="elgrd">
+                            <numOfCols>2</numOfCols>
+                            <width>50%</width>
+                            <elementList>
+                              <element name="SOSSourceOrigin" type="elslct">
+                                <labeAlign>left</labeAlign>
+                                <label>Maximun Number of top ups</label>
+                                <labelOrientation>left</labelOrientation>
+                              </element>
+                              <element name="CellSpacer" type="elcsp"/>
+                            </elementList>
+                          </element>
+                          <element name="LayoutSpacer" type="ellsp"/>
+                        </elementList>
+                      </element>
+                      <element name="HorizontalLayout" type="elhlt">
+                        <alignment>center,center</alignment>
+                        <width>100%</width>
+                        <elementList>
+                          <element name="LayoutSpacer2" type="ellsp">
+                            <width>40px</width>
+                          </element>
+                          <element name="SectionStack1" type="elsectnstck">
+                            <elementList>
+                              <element name="Section" type="elsect">
+                                <elementList>
+                                  <element name="GridLayout2" type="elgrd">
+                                    <width>70%</width>
+                                    <elementList>
+                                      <element name="SOSSourceRelativePeriod" type="elslct"/>
+                                      <element name="RowSpacer" type="elrsp"/>
+                                    </elementList>
+                                  </element>
+                                  <element name="GridLayout3" type="elgrd">
+                                    <width>50%</width>
+                                    <elementList>
+                                      <element name="startDate" type="eldate">
+                                        <labeAlign>left</labeAlign>
+                                        <labelOrientation>left</labelOrientation>
+                                      </element>
+                                      <element name="endDate" type="eldate">
+                                        <labeAlign>left</labeAlign>
+                                        <labelOrientation>left</labelOrientation>
+                                      </element>
+                                    </elementList>
+                                  </element>
+                                  <element name="SectionHeader" type="elsecth">
+                                    <label>Analysis time period</label>
+                                  </element>
+                                  <element name="GridLayout5" type="elgrd">
+                                    <elementList>
+                                      <element name="SOSSourceRelativeTemp" type="elslct"/>
+                                      <element name="SOSSourceRelativeFromDay" type="elslct">
+                                        <label>From Day:</label>
+                                      </element>
+                                    </elementList>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="LayoutSpacer1" type="ellsp"/>
+                        </elementList>
+                      </element>
+                      <element name="GridLayout4" type="elgrd">
+                        <alignment>left,center</alignment>
+                        <numOfCols>2</numOfCols>
+                        <width>50%</width>
+                        <elementList>
+                          <element name="RowSpacer1" type="elrsp"/>
+                          <element name="TopUpsNumberTextField" type="elfld">
+                            <labeAlign>left</labeAlign>
+                            <label>Maximun Number of top ups</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="FooterVerticalLayout" type="elvlt">
+                        <alignment>right,center</alignment>
+                        <width>100%</width>
+                        <elementList>
+                          <element name="FooterHorizontalLayout" type="elhlt">
+                            <edgeSize>1</edgeSize>
+                            <width>20%</width>
+                            <elementList>
+                              <element name="OkButton" type="elbtn">
+                                <icon>/cwt/images/16/check.png</icon>
+                                <label>ok</label>
+                                <padding>5</padding>
+                              </element>
+                              <element name="CancelButton" type="elbtn">
+                                <icon>/cwt/images/16/delete.png</icon>
+                                <label>Cancel</label>
+                                <padding>5</padding>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="SOSProperties" type="vform">
+          <label>SOSProperties</label>
+          <root name="VerticalLayout" type="elvlt">
+            <width>100%</width>
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <width>850px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="GridLayout" type="elgrd">
+                        <numOfCols>3</numOfCols>
+                        <width>50%</width>
+                        <elementList>
+                          <element name="Checkbox" type="elchk">
+                            <label>The top up origin will be a SOS top up origin</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="CellSpacer" type="elcsp"/>
+                          <element name="Checkbox1" type="elchk">
+                            <label>The SOS top up of this origin require invitation</label>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="Image" type="elimg">
+                            <canSort>false</canSort>
+                            <cellAlignment>left,center</cellAlignment>
+                            <imageUrl>/cwt/images/16/message.png</imageUrl>
+                            <showLabel>false</showLabel>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>SOS Properties</label>
+                      </element>
+                      <element name="LayoutSpacer" type="ellsp"/>
+                      <element name="GridLayout1" type="elgrd">
+                        <numOfCols>3</numOfCols>
+                        <width>50%</width>
+                        <elementList>
+                          <element name="Label" type="ellab">
+                            <label>Maximum number SOS uncompensated or partially compensated over a period of time</label>
+                            <wrap>false</wrap>
+                          </element>
+                          <element name="Image1" type="elimg">
+                            <imageUrl>/cwt/images/16/edit.png</imageUrl>
+                            <labelOrientation>left</labelOrientation>
+                          </element>
+                          <element name="Label3" type="ellab">
+                            <label>SOS Properties</label>
+                            <wrap>false</wrap>
+                          </element>
+                          <element name="Image2" type="elimg">
+                            <cellAlignment>left,center</cellAlignment>
+                            <imageUrl>/cwt/images/16/edit.png</imageUrl>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.CommonTopUpConfigurationForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initCommonTopUpConfiguration(this.model);
+        return m;
+      ]]></script>
+    </method>
+    <method name="cwLeafTriggerAction$SelectAllFixedLimitsIterator" type="laction">
+      <path>ui_cm_spoc.forms.CommonTopUpConfigurationForm/leaf_SelectAllFixedLimitsIterator</path>
+      <type>trigger</type>
+      <script><![CDATA[
+        if(this.SelectAllFixedLimits){
+
+        for (var i = 0;i<this.WalletUsageRuleIterator.length; i++){
+           // if(!this.WalletUsageRuleIterator[i].Selected)
+                this.WalletUsageRuleIterator[i].Selected = true;
+        }
+        }
+        else {
+            for (var i = 0;i<this.WalletUsageRuleIterator.length; i++){
+           // if(!this.WalletUsageRuleIterator[i].Selected)
+                this.WalletUsageRuleIterator[i].Selected = false;
+            }
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="DefaultTopUpOrTrigger" type="uimthd">
+      <script>this.model.DefaultOriginForBalanceTransfer = this.model.DefaultOriginForBalanceTransferEnum;</script>
+    </method>
+    <method name="DefaultTopUpPromoTrigger" type="uimthd">
+      <script>this.model.DefaultOriginForPromotion = this.model.DefaultOriginForPromotionEnum;</script>
+    </method>
+  </methodList>
+</userInterface>

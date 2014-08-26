@@ -1,0 +1,1181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- PA9 -->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:tns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/accountManagement/v1/types" 
+            xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"             
+            xmlns:apt="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types"
+            targetNamespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/accountManagement/v1/types" 
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/v1/types" 
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_types_v1_1.xsd" />
+    <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2" 
+    			schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>
+    
+    <!-- ************************************* activateSubscriber ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ActivateSubscriberType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="activateSubscriber" type="tns:ActivateSubscriberType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ActivateSubscriberResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="activateSubscriberResponse" type="tns:ActivateSubscriberResponseType" />
+
+    <!-- ************************************* cancelSubscriberDeletion ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="CancelSubscriberDeletionType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cancelSubscriberDeletion" type="tns:CancelSubscriberDeletionType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="CancelSubscriberDeletionResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cancelSubscriberDeletionResponse" type="tns:CancelSubscriberDeletionResponseType" />
+
+    <!-- ************************************* cancelSubscriberSuspension ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="CancelSubscriberSuspensionType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cancelSubscriberSuspension" type="tns:CancelSubscriberSuspensionType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="CancelSubscriberSuspensionResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="cancelSubscriberSuspensionResponse" type="tns:CancelSubscriberSuspensionResponseType" />
+
+    <!-- ************************************* createSubscriber ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="CreateSubscriberType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:accountProfileId" />
+            <xsd:element ref="apt:serviceProviderId" />
+            <xsd:element ref="apt:hlrId" minOccurs="0" />
+            <xsd:element ref="apt:networkCardInfo" />
+            <xsd:element ref="apt:messageNotificationEventFlag" />
+            <xsd:element ref="apt:initialBalance" minOccurs="0" />
+            <xsd:element ref="apt:negativeBalanceUsageFlag" />
+            <xsd:element ref="apt:subscriberExtendedInfo" minOccurs="0" />
+            <xsd:element name="extension">
+                <xsd:complexType>
+                    <xsd:sequence> <!--  Added due to NGAA 14B PA7 -->
+                    <xsd:element ref="apt:cycleSpendControlFlag"/>
+                    <xsd:element ref="apt:spendLimitsInfo" minOccurs="0"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="createSubscriber" type="tns:CreateSubscriberType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="CreateSubscriberResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="createSubscriberResponse" type="tns:CreateSubscriberResponseType" />
+
+    <!-- ************************************* changeAccountProfileId ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeAccountProfileIdType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:accountProfileId" />
+            <xsd:element ref="apt:initialBalance" minOccurs="0" />
+            <xsd:element ref="apt:subscriberExtendedInfo" minOccurs="0" />
+            <xsd:element ref="apt:cycleSpendControlFlag" />
+            <xsd:element ref="apt:spendAttributesInfoList" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeAccountProfileId" type="tns:ChangeAccountProfileIdType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeAccountProfileIdResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeAccountProfileIdResponse" type="tns:ChangeAccountProfileIdResponseType" />
+
+    <!-- ************************************* changeHlr ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeHlrType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:hlrId" minOccurs="0" />
+            <xsd:element ref="apt:IMSI" minOccurs="0" /> <!--  NGAA V14B PA7 -->
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeHlr" type="tns:ChangeHlrType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeHlrResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeHlrResponse" type="tns:ChangeHlrResponseType" />
+
+    <!-- ************************************* changeSubscriber ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeSubscriberType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:networkCardInfo" minOccurs="0" />
+            <xsd:element ref="apt:messageNotificationEventFlag" minOccurs="0" />
+            <xsd:element ref="apt:negativeBalanceUsageFlag" minOccurs="0" />
+            <xsd:element ref="apt:subscriberExtendedInfo"  minOccurs="0" />
+            <xsd:element ref="apt:actionCauseCode" minOccurs="0" />
+            <xsd:element name="extension">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="apt:langCode" minOccurs="0"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeSubscriber" type="tns:ChangeSubscriberType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeSubscriberResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeSubscriberResponse" type="tns:ChangeSubscriberResponseType" />
+
+    <!-- ************************************* changeSubscriberBillingCycle ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeSubscriberBillingCycleType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:billingCycleCode" />
+            <xsd:element ref="apt:immediateFlag" minOccurs="0" />
+            <xsd:element ref="apt:chargingModality" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeSubscriberBillingCycle" type="tns:ChangeSubscriberBillingCycleType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeSubscriberBillingCycleResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeSubscriberBillingCycleResponse" type="tns:ChangeSubscriberBillingCycleResponseType" />
+
+    <!-- ************************************* changeSubscriberId ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeSubscriberIdType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:newSubscriberId" />
+            <xsd:element ref="apt:portabilityRoutingPrefix" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeSubscriberId" type="tns:ChangeSubscriberIdType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeSubscriberIdResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeSubscriberIdResponse" type="tns:ChangeSubscriberIdResponseType" />
+
+    <!-- ************************************* changeSubscriberSpendLimits ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeSubscriberSpendLimitsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:cycleSpendControlFlag" />
+            <xsd:element ref="apt:spendLimitsInfo" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeSubscriberSpendLimits" type="tns:ChangeSubscriberSpendLimitsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeSubscriberSpendLimitsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeSubscriberSpendLimitsResponse" type="tns:ChangeSubscriberSpendLimitsResponseType" />
+
+    <!-- ************************************* changeTariffPlanId ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeTariffPlanIdType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:tariffPlanId" />
+            <xsd:element ref="apt:timeInterval" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeTariffPlanId" type="tns:ChangeTariffPlanIdType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeTariffPlanIdResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeTariffPlanIdResponse" type="tns:ChangeTariffPlanIdResponseType" />
+
+    <!-- ************************************* deleteSubscriber ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="DeleteSubscriberType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:cancellableFlag" />
+            <xsd:element ref="apt:actionCauseCode"  minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deleteSubscriber" type="tns:DeleteSubscriberType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="DeleteSubscriberResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deleteSubscriberResponse" type="tns:DeleteSubscriberResponseType" />
+
+    <!-- ************************************* querySegments ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QuerySegmentsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:timeInterval" minOccurs="0" />
+            <xsd:element ref="apt:statusFlagFilter" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySegments" type="tns:QuerySegmentsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QuerySegmentsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element ref="apt:token" minOccurs="0" />
+            <xsd:element ref="apt:segmentInfoList" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySegmentsResponse" type="tns:QuerySegmentsResponseType" />
+
+    <!-- ************************************* querySubscriberBasics ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QuerySubscriberBasicsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySubscriberBasics" type="tns:QuerySubscriberBasicsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QuerySubscriberBasicsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:subscriberBasicInfo" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySubscriberBasicsResponse" type="tns:QuerySubscriberBasicsResponseType" />
+
+    <!-- ************************************* subscribeSegment ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SubscribeSegmentType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:segmentId" />
+            <xsd:element ref="apt:timeInterval" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeSegment" type="tns:SubscribeSegmentType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SubscribeSegmentResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element ref="apt:segmentReference" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeSegmentResponse" type="tns:SubscribeSegmentResponseType" />
+
+    <!-- ************************************* suspendSubscriber ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SuspendSubscriberType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:actionCauseCode" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="suspendSubscriber" type="tns:SuspendSubscriberType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SuspendSubscriberResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="suspendSubscriberResponse" type="tns:SuspendSubscriberResponseType" />
+
+    <!-- ************************************* suspendScheduledSubscriber ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SuspendScheduledSubscriberType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:actionCauseCode" minOccurs="0" />
+            <xsd:element ref="apt:suspensionTime" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="suspendScheduledSubscriber" type="tns:SuspendScheduledSubscriberType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SuspendScheduledSubscriberResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="suspendScheduledSubscriberResponse" type="tns:SuspendScheduledSubscriberResponseType" />
+
+    <!-- ************************************* unsubscribeSegment ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="UnsubscribeSegmentType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:choice>
+                <xsd:element ref="apt:segmentId" />
+                <xsd:element ref="apt:segmentReference" />
+            </xsd:choice>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeSegment" type="tns:UnsubscribeSegmentType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="UnsubscribeSegmentResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeSegmentResponse" type="tns:UnsubscribeSegmentResponseType" />
+
+    <!-- ************************************* queryCustomer ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryCustomerType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:subscribedAfterDate" minOccurs="0"/>
+            <xsd:element ref="apt:subscribedBeforeDate" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCustomer" type="tns:QueryCustomerType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryCustomerResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element ref="apt:subscriberDetailedInfo"/>
+            <xsd:element ref="apt:walletInfoList" minOccurs="0"/>
+            <xsd:element ref="apt:boltonDetailedInfoList" minOccurs="0"/>
+            <xsd:element ref="apt:uccBasicInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCustomerResponse" type="tns:QueryCustomerResponseType" />
+
+    <!-- ************************************* notifyPortability ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="NotifyPortabilityType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:opPortabilityId" />
+            <xsd:element ref="apt:originNetworkCode" minOccurs="0" />
+            <xsd:element ref="apt:destinationNetworkCode" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="notifyPortability" type="tns:NotifyPortabilityType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="NotifyPortabilityResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="notifyPortabilityResponse" type="tns:NotifyPortabilityResponseType" />
+
+    <!-- ************************************* querySubscriberDetails ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QuerySubscriberDetailsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo" />
+            <xsd:element ref="apt:subscriberId" minOccurs="0"       />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySubscriberDetails" type="tns:QuerySubscriberDetailsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QuerySubscriberDetailsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:subscriberDetailedInfo" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySubscriberDetailsResponse" type="tns:QuerySubscriberDetailsResponseType" />
+
+    <!-- ************************************* querySubscriptions ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QuerySubscriptionsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo" />
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:serviceClass" minOccurs="0"/>
+            <xsd:element ref="apt:orderNumber" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySubscriptions" type="tns:QuerySubscriptionsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QuerySubscriptionsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:orderNumber" />
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:subscriptionInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySubscriptionsResponse" type="tns:QuerySubscriptionsResponseType" />
+
+    <!-- ************************************* querySubscriberExpirationDate ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QuerySubscriberExpirationDateType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySubscriberExpirationDate" type="tns:QuerySubscriberExpirationDateType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QuerySubscriberExpirationDateResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:nextState" minOccurs="0" />
+            <xsd:element ref="apt:expirationDate" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySubscriberExpirationDateResponse" type="tns:QuerySubscriberExpirationDateResponseType" />
+
+    <!-- ************************************* querySIMCardData ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QuerySIMCardDataType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySIMCardData" type="tns:QuerySIMCardDataType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QuerySIMCardDataResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:iccNumber" minOccurs="0" />
+            <xsd:element ref="apt:tariffPlanId" minOccurs="0" />
+            <xsd:element ref="apt:pukNumber" minOccurs="0" />
+            <xsd:element ref="apt:puk2Number" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySIMCardDataResponse" type="tns:QuerySIMCardDataResponseType" />
+
+    <!-- ************************************* queryIncOrPendOperations ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryIncOrPendOperationsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:opCode"/>
+            <xsd:element ref="apt:cancellationFlag"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryIncOrPendOperations" type="tns:QueryIncOrPendOperationsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryIncOrPendOperationsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:pendingOperations" />
+            <xsd:element ref="apt:incompatibleOperationsFlag" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryIncOrPendOperationsResponse" type="tns:QueryIncOrPendOperationsResponseType" />
+
+    <!-- ************************************* queryServicePlansAllowed ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryServicePlansAllowedType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:serviceClass"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryServicePlansAllowed" type="tns:QueryServicePlansAllowedType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryServicePlansAllowedResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:allowedPlansInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryServicePlansAllowedResponse" type="tns:QueryServicePlansAllowedResponseType" />
+
+    <!-- ************************************* queryExpirationThreshold ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryExpirationThresholdType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:orderNumber" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryExpirationThreshold" type="tns:QueryExpirationThresholdType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryExpirationThresholdResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:expirationThreshold" minOccurs="0"/>
+            <xsd:element ref="apt:modifiableFlag" minOccurs="0"/>
+            <xsd:element ref="apt:pendingFlag" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryExpirationThresholdResponse" type="tns:QueryExpirationThresholdResponseType" />
+
+    <!-- ************************************* changeExpirationThreshold ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeExpirationThresholdType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:expirationThreshold"/>
+            <xsd:element ref="apt:causeCode"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeExpirationThreshold" type="tns:ChangeExpirationThresholdType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeExpirationThresholdResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeExpirationThresholdResponse" type="tns:ChangeExpirationThresholdResponseType" />
+
+    <!-- ************************************* queryBalanceThreshold ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryBalanceThresholdType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:orderNumber" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryBalanceThreshold" type="tns:QueryBalanceThresholdType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryBalanceThresholdResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:threshold" minOccurs="0"/>
+            <xsd:element ref="apt:numNotices" minOccurs="0"/>
+            <xsd:element ref="apt:modifiableFlag" minOccurs="0"/>
+            <xsd:element ref="apt:pendingFlag" minOccurs="0"/>
+            <xsd:element ref="apt:availableBalanceFlag" minOccurs="0"/>
+            </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryBalanceThresholdResponse" type="tns:QueryBalanceThresholdResponseType" />
+
+    <!-- ************************************* changeBalanceThreshold ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeBalanceThresholdType">
+        <xsd:sequence>
+           <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:thresholdAmount" minOccurs="0"/>
+            <xsd:element ref="apt:thresholdId" minOccurs="0"/>
+            <xsd:element ref="apt:numNotices" minOccurs="0"/>
+            <xsd:element ref="apt:causeCode"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeBalanceThreshold" type="tns:ChangeBalanceThresholdType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeBalanceThresholdResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeBalanceThresholdResponse" type="tns:ChangeBalanceThresholdResponseType" />
+
+    <!-- ************************************* queryHomeZone ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryHomeZoneType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:opReference"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryHomeZone" type="tns:QueryHomeZoneType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryHomeZoneResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:homeZoneLocationNumberInfoList" minOccurs="0"/>
+            <xsd:element ref="apt:ZIPCode" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryHomeZoneResponse" type="tns:QueryHomeZoneResponseType" />
+
+    <!-- ************************************* changeHomeZone ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeHomeZoneType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:ZIPCode" minOccurs="0"/>
+            <xsd:element ref="apt:homeZoneLocationNumberInfoList"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeHomeZone" type="tns:ChangeHomeZoneType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeHomeZoneResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeHomeZoneResponse" type="tns:ChangeHomeZoneResponseType" />
+
+    <!-- ************************************* subscribeHomeZone ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SubscribeHomeZoneType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:choice>
+                <xsd:element ref="apt:ZIPCode" />
+                <xsd:element ref="apt:homeZoneLocationNumberInfoList" />
+            </xsd:choice>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeHomeZone" type="tns:SubscribeHomeZoneType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SubscribeHomeZoneResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeHomeZoneResponse" type="tns:SubscribeHomeZoneResponseType" />
+
+    <!-- ************************************* unsubscribeHomeZone ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="UnsubscribeHomeZoneType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeHomeZone" type="tns:UnsubscribeHomeZoneType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="UnsubscribeHomeZoneResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeHomeZoneResponse" type="tns:UnsubscribeHomeZoneResponseType" />
+
+    <!-- ************************************* querySMSSubscriptions ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QuerySMSSubscriptionsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:langCode" minOccurs="0"/>
+            <xsd:element ref="apt:orderNumber" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySMSSubscriptions" type="tns:QuerySMSSubscriptionsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QuerySMSSubscriptionsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:smsSubscriptionsInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySMSSubscriptionsResponse" type="tns:QuerySMSSubscriptionsResponseType" />
+
+    <!-- ************************************* subscribeSMS ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SubscribeSMSType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:smsSubscriptionId"/>
+            <xsd:element ref="apt:cancellationFlag" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeSMS" type="tns:SubscribeSMSType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SubscribeSMSResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeSMSResponse" type="tns:SubscribeSMSResponseType" />
+
+    <!-- ************************************* queryIncOrPendOperationsPlus ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryIncOrPendOperationsPlusType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:opCode"/>
+            <xsd:element ref="apt:subOpCode" minOccurs="0"/>
+            <xsd:element ref="apt:cancellationFlag"/>
+            <xsd:element ref="apt:keyCode" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryIncOrPendOperationsPlus" type="tns:QueryIncOrPendOperationsPlusType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryIncOrPendOperationsPlusResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:pendingOperations" minOccurs="0"/>
+            <xsd:element ref="apt:incompatibleOperationsFlag" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryIncOrPendOperationsPlusResponse" type="tns:QueryIncOrPendOperationsPlusResponseType" />
+
+    <!-- ************************************* queryServicePlansBasics ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QueryServicePlansBasicsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:serviceClass"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryServicePlansBasics" type="tns:QueryServicePlansBasicsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QueryServicePlansBasicsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:token" minOccurs="0"/>
+            <xsd:element ref="apt:servicePlansBasicInfoList" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryServicePlansBasicsResponse" type="tns:QueryServicePlansBasicsResponseType" />
+
+    <!-- ************************************* changeServicePlans ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeServicePlansType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo"/>
+            <xsd:element ref="apt:subscriberId"/>
+            <xsd:element ref="apt:serviceClass"/>
+            <xsd:element ref="apt:servicePlansInfoList"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeServicePlans" type="tns:ChangeServicePlansType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeServicePlansResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeServicePlansResponse" type="tns:ChangeServicePlansResponseType" />
+
+    <!-- ************************************* assignInternalSubscriberId ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="AssignInternalSubscriberIdType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="assignInternalSubscriberId" type="tns:AssignInternalSubscriberIdType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="AssignInternalSubscriberIdResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element ref="apt:subscriberId" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="assignInternalSubscriberIdResponse" type="tns:AssignInternalSubscriberIdResponseType" />
+
+    <!-- ************************************* changeExternalSubscriberIds ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeExternalSubscriberIdsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:currentExternalSubscriberId" minOccurs="0"/>
+            <xsd:element ref="apt:newExternalSubscriberId" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeExternalSubscriberIds" type="tns:ChangeExternalSubscriberIdsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeExternalSubscriberIdsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeExternalSubscriberIdsResponse" type="tns:ChangeExternalSubscriberIdsResponseType" />
+
+    <!-- ************************************* changeSegment ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="ChangeSegmentType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:segmentId" />
+            <xsd:element ref="apt:segmentReference" />
+            <xsd:element ref="apt:timeInterval" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeSegment" type="tns:ChangeSegmentType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="ChangeSegmentResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="changeSegmentResponse" type="tns:ChangeSegmentResponseType" />
+
+    <!-- ************************************* querySubscriberIds ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="QuerySubscriberIdsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:queryCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:externalSubscriberId" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySubscriberIds" type="tns:QuerySubscriberIdsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="QuerySubscriberIdsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:externalSubscriberIdList" minOccurs="0" />
+            <xsd:element ref="apt:subscriberId" minOccurs="0"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="querySubscriberIdsResponse" type="tns:QuerySubscriberIdsResponseType" />
+
+    <!-- ************************************* subscribeExternalNotifications ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="SubscribeExternalNotificationsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:extNotServer" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeExternalNotifications" type="tns:SubscribeExternalNotificationsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="SubscribeExternalNotificationsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="subscribeExternalNotificationsResponse" type="tns:SubscribeExternalNotificationsResponseType" />
+
+    <!-- ************************************* unsubscribeExternalNotifications ************************************* -->
+
+    <!-- Request -->
+
+    <xsd:complexType name="UnsubscribeExternalNotificationsType">
+        <xsd:sequence>
+            <xsd:element ref="apt:actionCommonInfo" />
+            <xsd:element ref="apt:subscriberId" />
+            <xsd:element ref="apt:extNotServer" minOccurs="0" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeExternalNotifications" type="tns:UnsubscribeExternalNotificationsType" />
+
+    <!-- Response -->
+
+    <xsd:complexType name="UnsubscribeExternalNotificationsResponseType">
+        <xsd:sequence>
+            <xsd:element ref="apt:result" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="extension" type="uct:ExtensionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unsubscribeExternalNotificationsResponse" type="tns:UnsubscribeExternalNotificationsResponseType" />
+
+</xsd:schema>
+

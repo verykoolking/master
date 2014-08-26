@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.EditDefaultTariffClassDialog">
+  <group>RatingTree</group>
+  <label>EditDefaultTariffClassDialog</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="RTTariffClass" type="leaf">
+      <valueType>dstruct_cm_spoc.RTTariffClass</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.RatingTree</valueType>
+    </variable>
+    <variable name="nodes" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>doc_cm_spoc.RatingTreeNodeTypes</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <fillSpace>false</fillSpace>
+              <height>600px</height>
+              <width>460px</width>
+              <elementList>
+                <element name="NodesTable" type="eltabl">
+                  <autoFit>Vertical</autoFit>
+                  <cellWidth>225</cellWidth>
+                  <editable type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                    </variablePathList>
+                  </editable>
+                  <height>600px</height>
+                  <showDetailColumn>false</showDetailColumn>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.EditDefaultTariffClassDialog/leaf_nodes</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>460px</width>
+                  <elementList>
+                    <element name="description" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <canFilter>false</canFilter>
+                      <canSort>false</canSort>
+                      <label>Nodes</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.EditDefaultTariffClassDialog/leaf_nodes</variablePath>
+                          <variablePath>doc_cm_spoc.RatingTreeNodeTypes/leaf_description</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                    <element name="tariffClass" type="elslct">
+                      <canFilter>false</canFilter>
+                      <canSort>false</canSort>
+                      <enumRefDataType>dtype_cm_spoc.data.UCTariffClassEnum</enumRefDataType>
+                      <label>Tariff Class</label>
+                      <multiselect>false</multiselect>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.EditDefaultTariffClassDialog/uimthd_onChangeTariffClass</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.EditDefaultTariffClassDialog/leaf_nodes</variablePath>
+                          <variablePath>doc_cm_spoc.RatingTreeNodeTypes/leaf_tariffClass</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$nodes" type="laction">
+      <path>ui_cm_spoc.forms.EditDefaultTariffClassDialog/leaf_nodes</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var nodes = cm_spoc.getAllNodesTypes();
+
+        nodes = cm_spoc.loadDefaultTariffClassPerNode(this,nodes);
+
+        return nodes;
+      ]]></script>
+    </method>
+    <method name="onChangeTariffClass" type="uimthd">
+      <script>cm_spoc.onChangeTariffClass(this);</script>
+    </method>
+  </methodList>
+</userInterface>

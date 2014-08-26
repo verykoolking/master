@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findSql name="cm_spoc.cwtProjectFinder">
+  <dbSchema>CATALOG</dbSchema>
+  <doubleClickSelect>true</doubleClickSelect>
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <getOutput>doc_cm_spoc.cwl_project</getOutput>
+  <group>overridden.UI.RatingCatalogApp.overridden</group>
+  <input>doc_cwt_pc.cwt_projectSearch</input>
+  <label>Project Finder</label>
+  <maxRowsLimit>9999</maxRowsLimit>
+  <metaVersion>4</metaVersion>
+  <output>doc_cm_spoc.cwl_project</output>
+  <type>SQL</type>
+  <vDetailForm>doc_cm_spoc.cwl_project/ui_UserInterface/frmui_Forms/exov_Default</vDetailForm>
+  <methodList>
+    <method name="cwOnFinderSQLSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        select distinct
+            u.PROJECTID,
+            u.PROJECTCODE,
+            u.NAME,
+            u.LABEL,
+            u.DESCRIPTION,
+            u.STATUS,
+            u.OWNERID,
+            u.LASTUPDATEDDATE,
+            u.UPDATEDBY,
+            u.CWCREATEDBY,
+            u.CWCREATED,
+            u.CWDOCSTAMP,
+            u.EFFECTIVEDATE,
+            u.PARENTPROJECTID,
+            null as uiname,
+            null as imagePath      ,
+            c.STATUS as plmOrderStatus
+        from CWPC_PROJECT u, CWPL_CHANGEREQUEST c
+        where u.projectCode = c.projectCode(+)
+        {[0] and u.projectcode like ? || '%'}
+        {[1] and u.name = ?}
+        and ((
+        {[2] 'ACT' = ? and } u.status = 'ACT'
+        ) or (
+        {[2] 'ACT' <> ? and } u.status <> 'ACT'
+        ))
+        {[3] and u.projectId = ?}
+        {[4] and u.projectCode = ?}
+        {[5] and u.PARENTPROJECTID = ?}
+        {[6] and u.PARENTPROJECTID is null}
+        {[8] and u.name like ? || '%'}
+      ]]></script>
+    </method>
+    <method name="cwOnFinderSQLGet" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        select
+            u.PROJECTID,
+            u.PROJECTCODE,
+            u.NAME,
+            u.LABEL,
+            u.DESCRIPTION,
+            u.STATUS,
+            u.OWNERID,
+            u.LASTUPDATEDDATE,
+            u.UPDATEDBY,
+            u.CWCREATEDBY,
+            u.CWCREATED,
+            u.CWDOCSTAMP,
+            u.EFFECTIVEDATE,
+            u.PARENTPROJECTID,
+            null as uiname,
+            null as imagePath      ,
+            c.STATUS as plmOrderStatus
+        from CWPC_PROJECT u, CWPL_CHANGEREQUEST c
+        where u.projectId = c.projectID(+)
+        and u.projectId = ?
+      ]]></script>
+    </method>
+    <method name="editablePerm" type="permMethod">
+      <script><![CDATA[
+        if (this.refFinderDocument!=null) {
+              return true;
+        } else {
+              return this.cw$super_editablePerm($psCondition);
+        }
+      ]]></script>
+    </method>
+    <method name="cwOnFilter" type="action">
+      <system>true</system>
+      <script>return cwt_pc.domainsFilter( input );</script>
+    </method>
+    <method name="cwOnFinderCompleteSearch" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        for (var i=0; i<this.list.length; i++) {
+              var doc = this.list[i];
+              this.list[i].uiname = this.getParentName(doc);
+              this.list[i].imagePath = cwt_pc.getImageURL(doc.status);
+        }
+      ]]></script>
+    </method>
+    <method name="getParentName" type="uimthd">
+      <parameterList>
+        <parameter name="projectDoc" type="rifp">
+          <type>doc_cm_spoc.cwl_project</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        var name = projectDoc.name;
+        var parentProjectId = projectDoc.parentProjectId;
+
+        while (parentProjectId) {
+              var dol = Document.searchByFieldContent("cm_spoc:cwl_project", ["projectId", parentProjectId], 1);
+              if (dol.size > 0) {
+                    var res = dol[0];
+                    name = res.name + " / " + name;
+                    parentProjectId = res.parentProjectId;
+              } else {
+                    parentProjectId = null;
+              }
+        }
+
+        return name;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <label>cwt_project</label>
+        <propertyElement type="elovf"/>
+        <valueType>doc_cm_spoc.cwl_project</valueType>
+      </variable>
+      <variable name="globalUI" type="leaf">
+        <label>globalUI</label>
+        <valueType>ui_cwt_pc.globalUI</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cwt_pc.cwt_projectSearch/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cm_spoc.cwl_project/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="projectCode" type="elfld">
+                <label>projectCode</label>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_result</variablePath>
+                    <variablePath>doc_cwt_pc.cwt_project/leaf_projectCode</variablePath>
+                  </variablePathList>
+                </variable>
+              </override>
+              <override name="table" type="elvlt">
+                <width>650px</width>
+                <elementList>
+                  <element name="SectionStack" type="elsectnstck">
+                    <visibilityMode>multiple</visibilityMode>
+                    <elementList>
+                      <element name="Section" type="elsect">
+                        <elementList>
+                          <element name="SectionHeader" type="elsecth">
+                            <label>Results</label>
+                          </element>
+                          <element name="Table1" type="eltabl">
+                            <doubleClickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/action_showDetailAction</variablePath>
+                              </variablePathList>
+                            </doubleClickMethod>
+                            <height>400px</height>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_result</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>650px</width>
+                            <elementList>
+                              <element name="status" type="elslct">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cwt_pc.cwt_project/leaf_status</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </visible>
+                                <width>20%</width>
+                              </element>
+                              <element name="plmOrderStatus" type="elslct">
+                                <label>Order Status</label>
+                                <multiselect>false</multiselect>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.cwl_project/leaf_plmOrderStatus</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </visible>
+                                <width>30%</width>
+                              </element>
+                              <element name="getStatus" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Status</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.cwl_project/uimthd_getStatus</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>50%</width>
+                              </element>
+                              <element name="uilabel" type="elfld">
+                                <label>Name</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cwt_pc.cwt_project/leaf_uiname</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>80%</width>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="HorizontalLayout" type="elhlt">
+                            <visible type="varPath">
+                              <variablePathList>
+                                <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/permMethod_referenceFinderPermission</variablePath>
+                              </variablePathList>
+                            </visible>
+                            <elementList>
+                              <element name="FormFrame" type="elovf">
+                                <formReference type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/leaf_globalUI</variablePath>
+                                    <variablePath>ui_cwt_pc.globalUI/frmui_Forms</variablePath>
+                                    <variablePath>ui_cwt_pc.globalUI/frmui_Forms/vform_FinderMainCopyMenu</variablePath>
+                                  </variablePathList>
+                                </formReference>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/leaf_globalUI</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="NavTreeMenu" type="vform">
+            <label>NavTreeMenu</label>
+            <root name="HorizontalLayout" type="elhlt">
+              <elementList>
+                <element name="addNode" type="elmnu">
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/action_addAction</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <icon>/cwf/MenuIconAdd.gif</icon>
+                  <label>Add Node</label>
+                  <style>CwMenuBtnBlack</style>
+                </element>
+                <element name="deleteNode" type="elmnu">
+                  <menuAccel type="mAccelP"/>
+                  <icon>/cwt/images/24/delete.png</icon>
+                  <label>Delete Node</label>
+                  <style>CwMenuBtnBlack</style>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="topStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>650px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="FormFrame" type="elovf">
+                        <formReference type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_search</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_projectSearch/ui_UserInterface/frmui_Forms</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_projectSearch/ui_UserInterface/frmui_Forms/exov_Default</variablePath>
+                          </variablePathList>
+                        </formReference>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_search</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Menu" type="exov">
+            <base>ui_com.conceptwave.system.BaseFinderUserInterface/frmui_Forms/exov_Menu</base>
+            <extends>ui_com.conceptwave.system.BaseFinderUserInterface/frmui_Forms/exov_Menu</extends>
+            <label>Menu</label>
+            <overrideList>
+              <override name="finderMenuLayout" type="elhlt">
+                <alignment>left,center</alignment>
+                <width>100%</width>
+                <elementList>
+                  <element name="cwfSearch" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/action_searchAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconSearch.gif</icon>
+                    <label>Search</label>
+                    <showFocused>true</showFocused>
+                    <style>selectedMenu</style>
+                    <tooltip>Search</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfSelect" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/action_showDetailAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconSelect.gif</icon>
+                    <label>Select</label>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/permMethod_cwfSelectView</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfAdd" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/action_addAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconAdd.gif</icon>
+                    <tooltip>Add</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.UserInterface/uivar_model</variablePath>
+                        <variablePath>mdl_com.conceptwave.system.Model/permMethod_addPerm</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfCopy" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/action_copyAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconCopy.gif</icon>
+                    <tooltip>Copy</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.UserInterface/uivar_model</variablePath>
+                        <variablePath>mdl_com.conceptwave.system.Model/permMethod_addPerm</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfUpdate" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/action_updateAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconEdit.gif</icon>
+                    <label>Detail</label>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.UserInterface/uivar_model</variablePath>
+                        <variablePath>mdl_com.conceptwave.system.Model/permMethod_editablePerm</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfDelete" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/usrActionMethod_deleteAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwt/images/24/delete.png</icon>
+                    <tooltip>Delete</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/permMethod_canDelete</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="detailMenu" type="elovf">
+                    <formReference type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_detail</variablePath>
+                        <variablePath>doc_cm_spoc.cwl_project/ui_UserInterface/frmui_Forms</variablePath>
+                        <variablePath>doc_cm_spoc.cwl_project/ui_UserInterface/frmui_Forms/exov_Default</variablePath>
+                      </variablePathList>
+                    </formReference>
+                    <overflow>visible</overflow>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_detail</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>1px</width>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="homePageView" type="vform">
+            <label>homePageView</label>
+            <root name="table" type="elvlt">
+              <height>100%</height>
+              <width>430px</width>
+              <elementList>
+                <element name="Table2" type="eltabl">
+                  <doubleClickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/usrActionMethod_displayProject</variablePath>
+                    </variablePathList>
+                  </doubleClickMethod>
+                  <height>100%</height>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_result</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="getStatus" type="elfld">
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <label>Status</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cm_spoc.cwl_project/uimthd_getStatus</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>50%</width>
+                    </element>
+                    <element name="uiname" type="elfld">
+                      <label>Label</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_result</variablePath>
+                          <variablePath>doc_cwt_pc.cwt_project/leaf_uiname</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>50%</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="backup" type="vform">
+            <label>backup</label>
+            <root name="GridLayout" type="elgrd">
+              <elementList>
+                <element name="statusIcon" type="elimg">
+                  <label>Status</label>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/uivar_detail</variablePath>
+                      <variablePath>doc_cm_spoc.cwl_project/ui_UserInterface/uivar_model</variablePath>
+                      <variablePath>doc_cwt_pc.cwt_project/leaf_imagePath</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="showDetailAction" type="action">
+        <script><![CDATA[
+          //if this finder is being displayed as a reference finder, return the currently selected
+          //document instead of displaying the detail document.
+          var leafName = this.model.parentLeafName;
+          if(this.result.selected==null) {
+                this.setReferenceData(null);
+                return;
+          }
+          if(this.model.refFinderDocument!=null && !this.model.refFinderDocument.isTranslation(leafName)){
+             this.setReferenceData(this.result.selected[0]);
+          }else if (this.result.selected != null && this.result.selected.length == 1 && this.detailForm!=null){
+                      if(this.result.selected[0].metadata!=null){
+                            this.detail = new this.result.selected[0].metadata.UserInterface(this.result.selected[0]);
+                            this.detail.initSearch();
+                            this.isSearchFormVisible = false;
+                       }
+          } else {
+            this.detail = null;
+          }
+
+          if(this.cwSelectCallback!=null){
+                var args = new Array();
+                this.parent.owner[this.cwSelectCallback](this.result.selected, this.result.selected!=null?this.result.selected[0]:null);
+                this.parent.parent.cwChildDialogClose();
+          }
+        ]]></script>
+      </method>
+      <method name="addAction" type="action">
+        <parameterList>
+          <parameter name="addParam" type="rifp">
+            <type>doc_com.conceptwave.system.Document</type>
+          </parameter>
+        </parameterList>
+        <script><![CDATA[
+          var finder = this.model.metadata;
+          var toAdd = addParam ? addParam : new finder.operations.add.input.UserInterface(null, this);
+          this.isSearchFormVisible = false;
+          this.isSearchButtonVisible = false;
+          this.addInit(toAdd);
+          //if(this.isEditable){
+            //   this.result.put(this.result.length, new this.result.selected[0].metadata.UserInterface(this.result.selected[0]));
+          //}else{
+                this.detail = toAdd;
+          //}
+          //this.detail.parent = this;
+        ]]></script>
+      </method>
+      <method name="onInit" type="action">
+        <script><![CDATA[
+          this.cw$super_onInit();
+
+          this.globalUI = new cwt_pc.globalUI(null, this);
+        ]]></script>
+      </method>
+      <method name="menuPerm" type="permMethod">
+        <script><![CDATA[return cwt_pc.canEdit(null,"project");]]></script>
+      </method>
+      <method name="displayMenu" type="permMethod">
+        <script><![CDATA[
+          if (this.parent && this.parent.owner && (this.parent.owner.model instanceof Finder))
+                return false;
+          else
+                return true;
+        ]]></script>
+      </method>
+      <method name="referenceFinderPermission" type="permMethod">
+        <script><![CDATA[
+          if( this.model.refFinderDocument != null ) {
+                return false;
+          }else {
+                return true;
+          }
+        ]]></script>
+      </method>
+      <method name="updateAction" type="action">
+        <script><![CDATA[
+          this.cw$super_updateAction();
+
+          if (this.detail) {
+                this.detail.initSearch();
+          }
+        ]]></script>
+      </method>
+      <method name="displayProject" type="usrActionMethod">
+        <script><![CDATA[
+          if (this.result.selected != null && this.result.selected.length == 1)
+                return this.parent.displayProject(this.result.selected[0]);
+        ]]></script>
+      </method>
+      <method name="searchAction" type="action">
+        <parameterList>
+          <parameter name="doValidate" type="rifp">
+            <type>dtype_com.conceptwave.system.Boolean</type>
+          </parameter>
+        </parameterList>
+        <script><![CDATA[
+          //this.cw$super_searchAction(doValidate);
+
+          var finder = this.model.metadata;
+
+          var searchDoc = this.search==null?(this.model.searchDocument==null?null:this.model.searchDocument):this.search.model;
+          //initialize isRoot based on displayChild value
+          if(searchDoc.displayChild == true){
+                searchDoc.isRoot = null;
+          }else{
+                searchDoc.isRoot = true;
+          }
+
+          this.model.cwOnInitSearch(searchDoc);
+          if(this.search!=null && this.searchForm!=null && (doValidate==true || doValidate==null)){
+                var searchValidation = this.search.validate(5);
+                if(searchValidation==null || searchValidation.size() == 0){
+                      this.result = finder.operations.select.invoke(searchDoc, this.invokeContext);
+                }else{
+                      Global.throwException("UU0208");
+                }
+          }else{
+                this.result = finder.operations.select.invoke(searchDoc, this.invokeContext);
+          }
+        ]]></script>
+      </method>
+    </methodList>
+  </UserInterface>
+  <viewList>
+    <view name="cwt_projectFinderView" type="findVView">
+      <inputOverlay>doc_cwt_pc.cwt_projectSearch/ui_UserInterface/frmui_Forms/exov_Default</inputOverlay>
+      <outputOverlay>findSql_cm_spoc.cwtProjectFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+      <showSearchForm>true</showSearchForm>
+      <sortListList>
+        <sortList type="stitem">
+          <path>doc_cwt_pc.cwt_project/leaf_uiname</path>
+        </sortList>
+      </sortListList>
+    </view>
+  </viewList>
+</findSql>

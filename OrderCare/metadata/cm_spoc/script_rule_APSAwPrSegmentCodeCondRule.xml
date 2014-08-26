@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_APSAwPrSegmentCodeCondRule">
+  <group>rules_scripts.Promotions</group>
+  <label>rule_APSAwPrSegmentCodeCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //MC
+    if (data.AwardedTopUpPromotionType=="PT")
+        return false;
+
+    if(data.AwardedByPermanentTopUpDS){
+        var promotionSegment = false;
+        for (var i=0;i<data.AwardedByPermanentTopUpDS.ABPTUATUPromPerSegmArrDS.ListDS.length;i++){
+            if (data.AwardedByPermanentTopUpDS.ABPTUATUPromPerSegmArrDS.ListDS[i].AwardedPromotionSegment){
+                promotionSegment = true;
+                break;
+            }
+        }
+
+        if (promotionSegment)
+            errList.addErrorMessage(data,["Impossible to save AwaredPromotionSegment, AwardedTopUpPromotionType must be set to PT."],"NGAA_003","E");
+    }
+
+    return false;
+  ]]></script>
+</script>

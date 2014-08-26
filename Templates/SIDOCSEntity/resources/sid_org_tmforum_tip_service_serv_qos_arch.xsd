@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/arch" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/arch" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.service.serv.qos.arch
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 5
+ Association Classes: 0
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="aFService" type="tns:AFService"/>
+   <xsd:complexType name="AFService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class defines how to forward network traffic by adding specific semantics that characterize the operation of the Assured Forwarding (AF) Service (RFC2597).
+
+This RFC defines four different AF classes to represent four different treatments of traffic (e.g., a different amount of forwarding resources, such as buffer space and bandwidth, are allocated). This RFC defines three different drop probabilities for each AF class, though clearly additional drop probabilities can be defined.
+
+The idea of AFService is to mark IP packets with one of three possible drop precedence values. The drop precedence of a packet determines the relative importance of that packet compared to other packets within the same AF class if congestion occurs. A congested interface will try to avoid dropping packets with a lower drop precedence value by instead discarding packets with a higher drop precedence value. Of course, if there is no congestion on the DeviceInterface, then nothing will happen.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="afClassNumber" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is a string that defines the number of AF classes that this AF implementation uses.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="afDropProbabilityNumber" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is a string that defines the number of drop precedence values that this AF implementation uses. Each AF class has exactly this number of drop precedence values - no more, no less.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfAFService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:AFService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="diffServService" type="tns:DiffServService"/>
+   <xsd:complexType name="DiffServService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>DiffServService contains semantics that define how traffic is forwarded based on the value of the DSCP (DiffServ Code Point) of a packet.
+
+This class is used to enable different types of QoSServices, such as 802Service and DiffServService, to exchange traffic with each other. Each of these different types of QoSServices has its own means of indicating that one type of traffic should be treated in a different manner from other types of traffic. Thus, without the ability to define mappings between these different marking methods, interoperability is not possible.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="dscpValue" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is a string that defines the Differentiated Services Code Point (DSCP) that this interface uses to represent various types of differentiated services through device-specific configuration commands.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="phbID" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is a string that identifies a particular Per Hop Behavior (PHB). The value of this string is the Per Hop Behavior Identification Code, as defined in RFC3140.
+
+PHB identification codes define how traffic belonging to a particular behavior aggregate is treated at an individual network node. In IP packet headers, PHBs are not indicated as such; instead DSCP values are used. There are only 64 possible DSCP values, but there is no such limit on the number of PHBs. In a given network domain, there is a locally defined mapping between DSCP values and PHBs. Standardized PHBs recommend a DSCP mapping, but network operators may choose alternative mappings.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="queuingRecommended" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the type of queuing that is recommended for this particular PHB. Values include:
+
+0: not specified
+1: PQ (priority queuing)
+2: WFQ (weighted fair queuing)
+3: CBWFQ (class-based weighted fair queuing)
+4: PQ-CBWFQ (PQ and CBWFQ)
+5: other</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="queuingUsed" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the type of queuing that is actually used in this instance for this particular PHB. Values include:
+
+0: not specified
+1: PQ (priority queuing)
+2: WFQ (weighted fair queuing)
+3: CBWFQ (class-based weighted fair queuing)
+4: PQ-CBWFQ (PQ and CBWFQ)
+5: other</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfDiffServService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:DiffServService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="eFService" type="tns:EFService"/>
+   <xsd:complexType name="EFService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class defines how to forward network traffic by adding specific semantics that characterize the operation of the Expedited Forwarding (EF) Service (RFC3246 and RFC3247).
+
+The recommended DSCP for defining EF is 101110. called expedited forwarding (EF). The EF PHB can be used to build a low loss, low latency, low jitter, assured bandwidth, end-to-end service through DiffServ-compliant domains. Such a service appears to the endpoints like a point-to-point connection or a "virtual leased line".
+
+The PHB for this class and its DSCP value come from DiffServService. However, this class defines attributes that can be used as "implementation hints" to the rest of the network to ensure that interoperability is achieved even if heterogeneous devices are being used.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="usesLimiting" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, indicates that this particular EF PHB implementation has a limiting mechanism to protect the rest of the network from the effects of EF traffic.
+
+Various mechanisms can be used to implement the EF PHB. If the particular mechanism chosen allows unlimited preemption of other traffic (e.g., a priority queue), this implementation must include some means to limit the damage EF traffic could inflict on other traffic (e.g., a token bucket rate limiter).
+
+Traffic that exceeds this limit must be discarded.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfEFService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:EFService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="toSService" type="tns:ToSService"/>
+   <xsd:complexType name="ToSService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>ToSService contains semantics that define how traffic is forwarded based on the value of the ToS byte of a packet.
+
+This class is used to enable different types of QoSServices, such as 802Service and DiffServService, to exchange traffic with each other. Each of these different types of QoSServices has its own means of indicating that one type of traffic should be treated in a different manner from other types of traffic. Thus, without the ability to define mappings between these different marking methods, interoperability is not possible.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="tosPrecedenceValue" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is a string that contains the 3-bit marking in the ToS byte.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfToSService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ToSService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="_802Service" type="tns:_802Service"/>
+   <xsd:complexType name="_802Service">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>802Service contains semantics that define how traffic is forwarded based on the value of the priority field in the 802.1P header.
+
+This class is used to enable different types of QoSServices, such as 802Service and DiffServService, to exchange traffic with each other. Each of these different types of QoSServices has its own means of indicating that one type of traffic should be treated in a different manner from other types of traffic. Thus, without the ability to define mappings between these different marking methods, interoperability is not possible.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="_802PriorityValue" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is a string that defines the priority of this packet according to an 802.1P specification. The 802.1P header includes a three-bit field for prioritization, which allows packets to be grouped into various traffic classes.
+
+This String refers to the signaling technique defined in IEEE 802.1P. This is an IEEE endorsed specification for prioritizing network traffic at the data-link/MAC sublayer. The 802.1P standard also offers provisions to filter multicast traffic to ensure it does not proliferate over layer 2-switched networks.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="_802QValue" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a String that can be used to identify a VLAN.
+
+The IEEE 802.1Q standard defines the operation of VLAN Bridges that permit the definition, operation and administration of Virtual LAN topologies within a Bridged LAN infrastructure.
+
+The standard also helps provide a higher level of security between segments of internal networks. The 802.1Q specification establishes a standard method for inserting VLAN membership information into Ethernet frames.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOf_802Service">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:_802Service" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

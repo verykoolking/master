@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.TransformationRulesForm">
+  <group>Numbering</group>
+  <label>TransformationRulesForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TransformationRules</valueType>
+    </variable>
+    <variable name="transformationRulesUIDoc" type="leaf">
+      <valueType>doc_cm_spoc.data.transformationRulesUIDoc</valueType>
+    </variable>
+    <variable name="transformationRulesIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>1000px</width>
+              <elementList>
+                <element name="TabFrame" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.TransformationRulesForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.TransformationRulesForm/frmui_Forms/vform_general</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                  <width>100px</width>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+        <overlay name="general" type="vform">
+          <label>general</label>
+          <root name="VerticalLayout" type="elvlt">
+            <alignment>left,center</alignment>
+            <elementList>
+              <element name="VerticalLayout2" type="elvlt">
+                <alignment>right,center</alignment>
+                <elementList>
+                  <element name="Service" type="elslct">
+                    <labeAlign>left</labeAlign>
+                    <label>Service</label>
+                    <labelOrientation>left</labelOrientation>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TransformationRulesForm/usrActionMethod_TypeEnumUpdate</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TransformationRulesForm/leaf_model</variablePath>
+                        <variablePath>dstruct_cm_spoc.data.TransformationRules/dstruct_Service</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="type" type="elslct">
+                    <labeAlign>left</labeAlign>
+                    <label>Type</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TransformationRulesForm/usrActionMethod_RuleEnumUpdate</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TransformationRulesForm/leaf_transformationRulesUIDoc</variablePath>
+                        <variablePath>doc_cm_spoc.data.transformationRulesUIDoc/leaf_type</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="scenario" type="elslct">
+                    <editable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TransformationRulesForm/permMethod_setIsPrimaryKey</variablePath>
+                      </variablePathList>
+                    </editable>
+                    <labeAlign>left</labeAlign>
+                    <label>Scenario</label>
+                    <labelOrientation>left</labelOrientation>
+                    <multiselect>false</multiselect>
+                    <onChangeMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TransformationRulesForm/usrActionMethod_applyChanges</variablePath>
+                      </variablePathList>
+                    </onChangeMethod>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_cm_spoc.forms.TransformationRulesForm/leaf_transformationRulesUIDoc</variablePath>
+                        <variablePath>doc_cm_spoc.data.transformationRulesUIDoc/leaf_scenario</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                </elementList>
+              </element>
+              <element name="LayoutSpacer" type="ellsp">
+                <height>10px</height>
+              </element>
+              <element name="VerticalLayout1" type="elvlt">
+                <width>1000px</width>
+                <elementList>
+                  <element name="SectionStack" type="elsectnstck">
+                    <visibilityMode>multiple</visibilityMode>
+                    <width>1050px</width>
+                    <elementList>
+                      <element name="transformationRules" type="elsect">
+                        <removeLabelLine>true</removeLabelLine>
+                        <elementList>
+                          <element name="SectionHeader" type="elsecth"/>
+                          <element name="buttonsLayout" type="elhlt">
+                            <elementList>
+                              <element name="addButton" type="elmnu">
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.TransformationRulesForm/uimthd_addTransformationRule</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <icon>/cwt/images/16/notebook_add.png</icon>
+                                <width>40px</width>
+                              </element>
+                              <element name="deleteButton" type="elmnu">
+                                <clickMethod type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.TransformationRulesForm/uimthd_deleteTransformationRule</variablePath>
+                                  </variablePathList>
+                                </clickMethod>
+                                <icon>/cwt/images/16/delete.png</icon>
+                                <width>40px</width>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="TransformationRulesHeaders" type="elgrd">
+                            <colWidths>50px</colWidths>
+                            <fixedColWidths>true</fixedColWidths>
+                            <numOfCols>11</numOfCols>
+                            <width>1000px</width>
+                            <elementList>
+                              <element name="Select" type="ellab">
+                                <columnSpan>1</columnSpan>
+                                <width>30px</width>
+                              </element>
+                              <element name="RuleId" type="ellab">
+                                <canSort>false</canSort>
+                                <columnSpan>1</columnSpan>
+                                <label>Rule Id</label>
+                                <width>60px</width>
+                              </element>
+                              <element name="NumberingLength" type="ellab">
+                                <columnSpan>1</columnSpan>
+                                <label>Numb Length</label>
+                                <width>60px</width>
+                              </element>
+                              <element name="NumberingPatterns" type="ellab">
+                                <columnSpan>1</columnSpan>
+                                <label>Numb Pattern</label>
+                                <width>60px</width>
+                              </element>
+                              <element name="Ton" type="ellab">
+                                <columnSpan>1</columnSpan>
+                                <label>Ton</label>
+                                <width>60px</width>
+                              </element>
+                              <element name="AddPrefixToNumbering" type="ellab">
+                                <columnSpan>1</columnSpan>
+                                <label>Add Prefix to Num</label>
+                                <width>60px</width>
+                              </element>
+                              <element name="RemoveDigitsFromNumbering" type="ellab">
+                                <columnSpan>1</columnSpan>
+                                <label>Remove Digits from Num</label>
+                                <width>60px</width>
+                              </element>
+                              <element name="SetTonToNumbering" type="ellab">
+                                <columnSpan>1</columnSpan>
+                                <label>Set Ton to Numb</label>
+                                <width>60px</width>
+                              </element>
+                              <element name="SetCarrier" type="ellab">
+                                <columnSpan>1</columnSpan>
+                                <label>Set Carrier</label>
+                                <width>60px</width>
+                              </element>
+                              <element name="FullfilingRule" type="ellab">
+                                <columnSpan>1</columnSpan>
+                                <label>Fullfilling Rule</label>
+                                <width>60px</width>
+                              </element>
+                              <element name="NotFullfillingRule" type="ellab">
+                                <columnSpan>1</columnSpan>
+                                <label>Not Fullfilling Rule</label>
+                                <width>60px</width>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="ConditionsVL" type="elvlt">
+                            <height>200px</height>
+                            <overflow>auto</overflow>
+                            <width>1050px</width>
+                            <elementList>
+                              <element name="ConditionsIterator" type="eliter">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>ui_cm_spoc.forms.TransformationRulesForm/leaf_transformationRulesIterator</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <elementList>
+                                  <element name="ConditionsHL" type="elhlt">
+                                    <width>1050px</width>
+                                    <elementList>
+                                      <element name="ConditionsFormFrame" type="elovf">
+                                        <formReference type="varPath">
+                                          <variablePathList>
+                                            <variablePath>ui_cm_spoc.forms.TransformationRulesForm/leaf_transformationRulesIterator</variablePath>
+                                            <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                            <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                          </variablePathList>
+                                        </formReference>
+                                        <showResizeBar>true</showResizeBar>
+                                        <width>1050px</width>
+                                      </element>
+                                    </elementList>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$transformationRulesUIDoc" type="laction">
+      <path>ui_cm_spoc.forms.TransformationRulesForm/leaf_transformationRulesUIDoc</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.TransformationRulesForm/leaf_transformationRulesUIDoc</valueType>
+      <script><![CDATA[return new Document("cm_spoc.data.transformationRulesUIDoc");]]></script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.TransformationRulesForm/leaf_model</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.TransformationRulesForm/leaf_model</valueType>
+      <script><![CDATA[
+        var m = cm_spoc.initTransformationRules(this.model);
+        cm_spoc.initTransformationRulesUi(this);
+
+        return m;
+      ]]></script>
+    </method>
+    <method name="TypeEnumUpdate" type="usrActionMethod">
+      <script><![CDATA[
+        this.transformationRulesUIDoc.service = this.model.Service;
+        this.transformationRulesUIDoc.type = null;
+        this.transformationRulesUIDoc.scenario = null;
+        return;
+      ]]></script>
+    </method>
+    <method name="RuleEnumUpdate" type="usrActionMethod">
+      <script><![CDATA[
+        this.transformationRulesUIDoc.scenario = null;
+        return;
+      ]]></script>
+    </method>
+    <method name="addTransformationRule" type="uimthd">
+      <script><![CDATA[
+        var model=this.model.TransformationRuleOutputArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.TransformationRulesUI","base_TransformationRuleOutput","transformationRulesIterator");
+      ]]></script>
+    </method>
+    <method name="deleteTransformationRule" type="uimthd">
+      <script><![CDATA[
+        this.model.TransformationRuleOutputArrDS = cm_spoc.removeListElements(this ,this.model.TransformationRuleOutputArrDS,"List", "transformationRulesIterator");
+      ]]></script>
+    </method>
+    <method name="applyChanges" type="usrActionMethod">
+      <script><![CDATA[
+        this.model.Service  = this.transformationRulesUIDoc.service;
+        this.model.Type     = this.transformationRulesUIDoc.type;
+        this.model.Scenario = this.transformationRulesUIDoc.scenario;
+        return;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd">
+      <script><![CDATA[
+        for(var i=0;i<this.transformationRulesIterator.length;i++){
+            this.transformationRulesIterator[i].model.readonly = this.model.readonly;
+        }
+      ]]></script>
+    </method>
+    <method name="setIsPrimaryKey" type="permMethod">
+      <script>return !this.parent.parentFinderUI.isStored;</script>
+    </method>
+  </methodList>
+</userInterface>

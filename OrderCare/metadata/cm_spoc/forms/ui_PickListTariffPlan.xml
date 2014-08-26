@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.PickListTariffPlan">
+  <group>Promotion</group>
+  <label>PickListTariffPlan</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.PromotionalSegment</valueType>
+    </variable>
+    <variable name="pickList" type="leaf">
+      <valueType>ui_cm_spoc.PickList</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <elementList>
+                <element name="FormFrame" type="elovf">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PickListTariffPlan/leaf_pickList</variablePath>
+                      <variablePath>ui_cm_spoc.PickList/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.PickList/frmui_Forms/exov_Default</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <height>175px</height>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PickListTariffPlan/leaf_pickList</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>500px</width>
+                </element>
+                <element name="Separator" type="elsep">
+                  <width>500px</width>
+                </element>
+                <element name="ButtonsHL" type="elhlt">
+                  <alignment>center,center</alignment>
+                  <fillSpace>false</fillSpace>
+                  <snapOnMouseOver>false</snapOnMouseOver>
+                  <width>500px</width>
+                  <elementList>
+                    <element name="LayoutSpacer2" type="ellsp">
+                      <width>55px</width>
+                    </element>
+                    <element name="OK" type="elbtn">
+                      <cellAlignment></cellAlignment>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.PickListTariffPlan/uimthd_onClickOk</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Accept</label>
+                    </element>
+                    <element name="LayoutSpacer1" type="ellsp">
+                      <width>50px</width>
+                    </element>
+                    <element name="Cancel" type="elbtn">
+                      <canSort>false</canSort>
+                      <cellAlignment>center,center</cellAlignment>
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.PickListTariffPlan/uimthd_onClickCancel</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Cancel</label>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$pickList" type="laction">
+      <path>ui_cm_spoc.forms.PickListTariffPlan/leaf_pickList</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        /*var pl = new cm_spoc.PickList(null,this);
+        var itemFinder = new Finder("cm_spoc.tariffPlanPickListFinder");
+        pl.availableItems = itemFinder.search();
+
+        return pl;*/
+
+
+        var itemFinder = new Finder("cm_spoc.catalogItemFilteredFinder");
+        itemFinder.searchDocument.baseItemCode = "base_TariffPlan";
+        var result = itemFinder.search();
+        return cm_spoc.initPickList(this,result, this.parent.model.TariffPlanCriterionDS.TPCriterionTPArrDS.List,"itemCode","itemCode");
+      ]]></script>
+    </method>
+    <method name="onClickCancel" type="uimthd">
+      <script>this.parent.cwDialogClose();</script>
+    </method>
+    <method name="onClickOk" type="uimthd">
+      <script><![CDATA[
+        //this.model.TariffPlanCriterionDS.TPCriterionTPArrDS = cm_spoc.initInnerDS("base_TPCriterionTPArr");
+        for(var i=0;i<this.pickList.selectedItems.length;i++){
+            var item = this.pickList.selectedItems[i];
+            this.model.TariffPlanCriterionDS.TPCriterionTPArrDS.List[i] = this.pickList.selectedItems[i].id;
+        }
+        this.parent.owner.model.TariffPlanCriterionDS.TPCriterionTPArrDS = this.model.TariffPlanCriterionDS.TPCriterionTPArrDS;
+
+        if(this.pickList.selectedItems.length>0){
+            if(this.parent.owner.ListSelected==null)
+                this.parent.owner.ListSelected = new DataObjectList();
+            //Check if the label was added
+            var exist = false;
+            for(var j=0; j< this.parent.owner.ListSelected.length; j++){
+                if( this.parent.owner.ListSelected[j].description == "Tariff Plan"){
+                     exist=true;
+                }
+            }
+            if(!exist){
+                var item = new cm_spoc.FinderSelectReferenceDS();
+                item.description = "Tariff Plan";
+                this.parent.owner.ListSelected.addLast(item);
+                this.parent.owner.ListSelected.updateList;
+            }
+        }else{
+            if(this.parent.owner.ListSelected==null)
+                this.parent.owner.ListSelected = new DataObjectList();
+            for(var k=0; k< this.parent.owner.ListSelected.length; k++){
+                if( this.parent.owner.ListSelected[k].description == "Tariff Plan")
+                     this.parent.owner.ListSelected.delete(k);
+            }
+            this.parent.owner.ListSelected.updateList;
+        }
+        this.parent.cwDialogClose();
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

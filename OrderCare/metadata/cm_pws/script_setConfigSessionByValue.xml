@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.setConfigSessionByValue">
+  <group>api</group>
+  <label>setConfigSessionByValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="configSession" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_pws.configSession</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cm_pws.configSession</valueType>
+  <script><![CDATA[
+    try
+    {
+        if(!configSession.id)
+        {
+            var fault = api_common.createFault("E100", "The ConfigSession Entry was not found.");
+        }
+        var configSessionDoc = Document.readDoc("cm_pws:configSessionDoc", configSession.id);
+        configSession.mapTo(configSessionDoc);
+        configSessionDoc.save();
+
+        return configSession;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

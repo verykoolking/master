@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.ModalityDestinationListForm">
+  <group>TariffPlan</group>
+  <label>ModalityDestinationListForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <propertyElement type="elovf"/>
+      <valueType>dstruct_cm_spoc.data.ModalityDestinationList</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="backupCase" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="GridLayout" type="elgrd">
+              <alignment>center,center</alignment>
+              <colWidths>100px</colWidths>
+              <fixedColWidths>true</fixedColWidths>
+              <height>32px</height>
+              <numOfCols>8</numOfCols>
+              <redrawOnResize>true</redrawOnResize>
+              <width>100%</width>
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <cellAlignment>center,center</cellAlignment>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ModalityDestinationListForm/uimthd_isAllSelected</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ModalityDestinationListForm/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>32px</width>
+                </element>
+                <element name="DesModalityIDEnum" type="elslct">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>2</columnSpan>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ModalityDestinationListForm/usrActionMethod_onComboChange</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <removeLabelLine>true</removeLabelLine>
+                  <rowSpan>0</rowSpan>
+                  <searchSelectType>true</searchSelectType>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ModalityDestinationListForm/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.ModalityDestinationList/dstruct_DesModalityIDEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="CustomerProfileEnum" type="elslct">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>2</columnSpan>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ModalityDestinationListForm/usrActionMethod_onComboChange</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <removeLabelLine>true</removeLabelLine>
+                  <rowSpan>0</rowSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ModalityDestinationListForm/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.ModalityDestinationList/dstruct_CustomerProfileEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="CauseEnum" type="elslct">
+                  <cellAlignment>center,center</cellAlignment>
+                  <columnSpan>2</columnSpan>
+                  <multiselect>false</multiselect>
+                  <onChangeMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ModalityDestinationListForm/usrActionMethod_onComboChange</variablePath>
+                    </variablePathList>
+                  </onChangeMethod>
+                  <removeLabelLine>true</removeLabelLine>
+                  <rowSpan>0</rowSpan>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ModalityDestinationListForm/leaf_model</variablePath>
+                      <variablePath>dstruct_cm_spoc.data.ModalityDestinationList/dstruct_CauseEnum</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <visible type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.ModalityDestinationListForm/permMethod_Visibility_CauseEnum</variablePath>
+                    </variablePathList>
+                  </visible>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.ModalityDestinationListForm/leaf_model</path>
+      <type>initializer</type>
+      <script>return cm_spoc.initModalityDestinationListForm(this);</script>
+    </method>
+    <method name="ReadOnly" type="permMethod">
+      <script>return this.model.readonly;</script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+    <method name="isAllSelected" type="uimthd">
+      <script><![CDATA[
+        if (this.Selected==false){
+            this.parent.SelectAll = false;
+            return;
+        }
+
+        if (this.parent.ModalityDestinationListForm){
+            for (var i=0; i<this.parent.ModalityDestinationListForm.length; i++)
+                if (!this.parent.ModalityDestinationListForm[i].Selected){
+                    this.parent.SelectAll = false;
+                    return;
+                }
+        }
+      ]]></script>
+    </method>
+    <method name="Visibility_CauseEnum" type="permMethod">
+      <script><![CDATA[
+        //backup e ripristino del valore case in teerza colonna
+        if (this.parent.optionBetweenSameTechnology) {
+            if (this.backupCase) this.model.CauseEnum=this.backupCase;
+        } else{
+            this.backupCase=this.model.CauseEnum;
+            this.model.CauseEnum=null;
+        }
+
+        return this.parent.optionBetweenSameTechnology;
+      ]]></script>
+    </method>
+    <method name="updateModel" type="uimthd">
+      <parameterList>
+        <parameter name="newModel" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        //
+        this.model=newModel;
+        this.model.DesModalityIDEnum=this.model.DesModalityID;
+        this.model.CustomerProfileEnum=this.model.CustomerProfile;
+        this.model.CauseEnum=this.model.Cause;
+      ]]></script>
+    </method>
+    <method name="onComboChange" type="usrActionMethod">
+      <script><![CDATA[
+        var elementName = Global.getCurrentElementActionCulprit();
+        this.model[elementName.substring(0,elementName.length-4)]=this.model[elementName];
+
+        //back up del case in caso BetweenThecnology cambi nella stessa sessione
+        if(elementName=="CauseEnum") {
+            this.backupCase=this.model.CauseEnum;
+        }
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initRecurrentTopUp">
+  <group>ui_scripts.CyclicActions</group>
+  <label>initRecurrentTopUp</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+        var RechargedAmountArr = cm_spoc.initInnerDS("base_RechargedAmountArr");
+        model.RechargedAmountArrDS = RechargedAmountArr;
+
+        return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        var RechargedAmountRel = model.RechargedAmountArr;
+        s.specificationCode = RechargedAmountRel;
+        var a = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(a)){
+            model.RechargedAmountArrDS = a;
+            RechargedAmountRel = a.List;
+        }
+        var RechargedAmountDS = model.RechargedAmountArrDS.ListDS;
+        for(var i=0;i<RechargedAmountRel.length;i++){
+            s.specificationCode = RechargedAmountRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+               RechargedAmountDS[i]=r;
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

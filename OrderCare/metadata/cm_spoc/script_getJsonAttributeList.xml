@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getJsonAttributeList">
+  <group>ui_scripts.UsageControl.AccumulationConditions.SACAttributeDetail</group>
+  <label>getJsonAttributeList</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="code" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    //for the finder this json provides a mapping between the output document fields (key) and the catalog item attributes (value)
+
+    var json = {
+                "elements" : [
+                                { "base" : "base_Ton" , "attributes":       [
+                                                                        {       "key" : "itemCode" , "value" : "specificationCode"},
+                                                                        {       "key" : "baseItemCode" , "value" : "baseItemCode"},
+                                                                        {       "key" : "Id" , "value" : "TonCode"},
+                                                                        {       "key" : "Description" , "value" : "TonDescription"}
+                                                                      ]
+                                },
+                                 { "base" : "base_TariffClass" , "attributes":       [
+                                                                        {       "key" : "itemCode" , "value" : "specificationCode"},
+                                                                        {       "key" : "baseItemCode" , "value" : "baseItemCode"},
+                                                                        {       "key" : "Id" , "value" : "TariffClassCode"},
+                                                                        {       "key" : "Description" , "value" : "Description"}
+                                                                      ]
+                                },
+                                 { "base" : "base_Price" , "attributes":       [
+                                                                        {       "key" : "itemCode" , "value" : "itemCode"},
+                                                                        {       "key" : "baseItemCode" , "value" : "baseItemCode"},
+                                                                        {       "key" : "Id" , "value" : "Amount"},
+                                                                        {       "key" : "Description" , "value" : "Amount"}
+                                                                      ]
+                                },
+                                 { "base" : "base_DestinationType" , "attributes":       [
+                                                                        {       "key" : "itemCode" , "value" : "itemCode"},
+                                                                        {       "key" : "baseItemCode" , "value" : "baseItemCode"},
+                                                                        {       "key" : "Id" , "value" : "Amount"},
+                                                                        {       "key" : "Description" , "value" : "Amount"}
+                                                                      ]
+                                },
+                                 { "base" : "base_List" , "attributes":       [
+                                                                        {       "key" : "itemCode" , "value" : "itemCode"},
+                                                                        {       "key" : "baseItemCode" , "value" : "baseItemCode"},
+                                                                        {       "key" : "Id" , "value" : "ListCodeSDP"},
+                                                                        {       "key" : "Description" , "value" : "ListDescription"}
+                                                                      ]
+                                },
+                                 { "base" : "base_ServiceProvider" , "attributes":       [
+                                                                        {       "key" : "itemCode" , "value" : "itemCode"},
+                                                                        {       "key" : "baseItemCode" , "value" : "baseItemCode"},
+                                                                        {       "key" : "Id" , "value" : "ServiceProviderId"},
+                                                                        {       "key" : "Description" , "value" : "ServiceProviderDescription"}
+                                                                      ]
+                                },
+                                 { "base" : "base_ServiceTariffPlanGroup" , "attributes":       [
+                                                                        {       "key" : "itemCode" , "value" : "itemCode"},
+                                                                        {       "key" : "baseItemCode" , "value" : "baseItemCode"},
+                                                                        {       "key" : "Id" , "value" : "ServiceTariffPlanGroupId"},
+                                                                        {       "key" : "Description" , "value" : "ServiceTariffPlanGroupDescriptio"}
+                                                                      ]
+                                }
+                            ]
+                };
+
+    var len = json.elements.length;
+
+    for (var i=0;i<len;i++) {
+
+        if (json.elements[i].base==code) return json.elements[i].attributes;
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findSql name="cm_plm.configurationEntitiesFinder">
+  <dbSchema>CATALOG</dbSchema>
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <label>configurationEntitiesFinder</label>
+  <maxRowsLimit>9999</maxRowsLimit>
+  <metaVersion>4</metaVersion>
+  <output>doc_cwt_pc.cwt_itemNew</output>
+  <type>SQL</type>
+  <vDetailForm>doc_cwt_pc.cwt_itemNew/ui_UserInterface/frmui_Forms/exov_Default</vDetailForm>
+  <methodList>
+    <method name="cwOnFinderSQLSel" type="action">
+      <system>true</system>
+      <script><![CDATA[select {+i+} from CWPC_ITEM i where baseitemcode = 'base_OCSConfigurationSpec']]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cwt_pc.cwt_itemNew</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cwt_pc.cwt_itemNew/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="cwt_configurationEntitiesFinderResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="itemCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_itemCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="type" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_type</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="baseItemCode" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_baseItemCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="itemType" type="elslct">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_itemType</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="name" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_name</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="status" type="elslct">
+                        <multiselect>false</multiselect>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_status</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="label" type="eltrnsltion">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_label</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="description" type="eltxtArea">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_description</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="orderable" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_orderable</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="ownerId" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_ownerId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="updatedBy" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_updatedBy</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="lastUpdatedDate" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_lastUpdatedDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwCreatedBy" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_cwCreatedBy</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwCreated" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_cwCreated</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwDocStamp" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_cwDocStamp</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="oldItemCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_oldItemCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="projectRef" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_projectRef</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="startDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_startDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="endDate" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_endDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="configurationEntitiesFinderView" type="findVView">
+      <outputOverlay>findSql_cm_plm.configurationEntitiesFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findSql>

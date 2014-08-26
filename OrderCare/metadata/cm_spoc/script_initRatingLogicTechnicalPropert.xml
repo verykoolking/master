@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initRatingLogicTechnicalPropert">
+  <group>ui_scripts.RatingLogicTechnicalPropert</group>
+  <label>initRatingLogicTechnicalPropert</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+
+        var RLTPDestinationTypeArr = cm_spoc.initInnerDS("base_RLTPDestinationTypeArr");
+        model.RLTPDestinationTypeArrDS = RLTPDestinationTypeArr;
+
+        var CadenceModelId = cm_spoc.initInnerDS("base_TechnicalCadenceSpec");
+        model.CadenceModelIdDS = CadenceModelId;
+
+       // var DataCadence = cm_spoc.initInnerDS("base_TechnicalCadenceSpec");
+      //  model.DataCadenceDS = DataCadence;
+
+    }
+    else{
+        var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+       s.specificationCode = model.RLTPDestinationTypeArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.RLTPDestinationTypeArrDS=r;
+       }
+
+       var finalDestinationsRel = model.RLTPDestinationTypeArrDS.List;
+       var finalDestinationsDS= model.RLTPDestinationTypeArrDS.ListDS;
+       for(var i=0;i<finalDestinationsRel.length;i++){
+           s.specificationCode = finalDestinationsRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               finalDestinationsDS[i]=r;
+           }
+       }
+
+       s.specificationCode = model.CadenceModelId;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.CadenceModelIdDS=r;
+       }
+    }
+
+
+        return model;
+  ]]></script>
+</script>

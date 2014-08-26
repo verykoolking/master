@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.updateTable">
+  <group>ui_scripts.RatingTree.RTFinder</group>
+  <label>updateTable</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*model = RatingTree; ui = RatingTreeForm*/
+    var ratingTreeBranchNodeArrDS = model.RTRatingTreeBranchArrDS;
+    var arrDS = ratingTreeBranchNodeArrDS["ListDS"];
+    var arrRel = ratingTreeBranchNodeArrDS["List"];
+    var result = ui.RTFinder.result;
+    var emptyRes = new DataObjectList();
+    var arrDSLen = arrDS.length;
+
+    for ( var i = 0; i <arrDSLen; i++ ) {
+        var doc = new cm_spoc.RatingTreeDoc();
+        doc.specificationCode = arrDS[i].specificationCode;
+        emptyRes[i] = arrDS[i];
+        emptyRes[i]= emptyRes[i].mapTo(doc,"cm_spoc.RatingTreeCM")[0];
+
+    }
+
+    ui.RTFinder.model.updateUI();
+    ui.RTFinder.model.setList(emptyRes);
+
+    var stateObj = ui.RTFinder.getTableState();
+
+    ui.RTFinder.setTableState(cm_spoc.initTState(ui.RTFinder,null));
+  ]]></script>
+</script>

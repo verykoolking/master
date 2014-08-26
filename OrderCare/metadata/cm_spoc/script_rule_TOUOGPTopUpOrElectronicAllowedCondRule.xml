@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_TOUOGPTopUpOrElectronicAllowedCondRule">
+  <group>rules_scripts.TopUp</group>
+  <label>rule_TOUOGPTopUpOrElectronicAllowedCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //The attribute must be saved in the catalog only if the related attribute assumes the value shown in the column H.
+    //TopUpOriginGeneralParameters
+    //TopUpOrElectronicAllowed
+    //TopUpOriginGeneralParameters
+    //TopUpOrType
+    //Not Promotional
+
+    var entity=data.TopUpOriginGeneralParameterDS;
+
+    if(entity.TopUpOrElectronicAllowed && entity.TopUpOrType!= "N")
+    {
+    errList.addErrorMessage(data,["TopUpOrElectronicAllowed can be saved only if TopUpOrType = Not Promotional"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

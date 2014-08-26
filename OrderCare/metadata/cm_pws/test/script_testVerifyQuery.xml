@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.testVerifyQuery">
+  <group>testScripts</group>
+  <label>testVerifyQuery</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="xmlFileName" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="owner" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var log = cm_pws.test.clsLog();var testCaseInfo =  eval("arguments.callee.name") + " - ";log.newLine();log.setCheckPoint("STARTED");log.writeLn(testCaseInfo+ log.getCheckPoint());
+    /////////////////////////////////////////////////////////////
+    try{
+
+        log.writeLn("running for: " + xmlFileName);
+        var entity = cm_pws.test.createDSFromResource("/PWS/" + xmlFileName, "OCSEntity.v1.types.OCSEntityType");
+        var itemSearchDS = new cwt_pcmaintapi.itemSearchDS();
+        var sessionId = owner.getProperty("sessionId");
+
+        var innerItem = cm_pws.getInnerDataStructure(entity);
+        var itemCode =  innerItem.identifier.dn.scheme;
+        if(itemCode && itemCode != "ALL") {
+            itemSearchDS.itemCode = itemCode;
+        }
+        else {
+            itemSearchDS.itemCode = "";
+        }
+
+        var itemType = innerItem.identifier.entityType;
+        itemSearchDS.itemType = itemType;
+
+        var response = cwt_pcmaintapi.itemRead(itemSearchDS);
+        log.setCheckPoint("Search finished.");
+
+        var input = cm_pws.test.createRequest(xmlFileName, "OCSConfigurationOperation.v1.types.QueryEntity",  sessionId);
+        log.setCheckPoint("Request Created.");
+
+        var result = Global.invokeInterface("cm_pws.services.OCSConfigurationPort", "queryEntity", input);
+        log.setCheckPoint("Response received.");
+
+        assertFalse(!(result[0] instanceof OCSConfigurationOperation.v1.types.QueryEntityResponse), "Error!");
+
+    }
+    catch(exp){
+        var chkpntmsg = "[LastCheckPosition:"+log.getCheckPoint()+"]";log.writeLn(log.FAIL +"\t"+exp);log.setFailed(true);log.flush();
+        // to have a valid server log for test cases since it is supposed to fail
+        assertTrue(false, testCaseInfo+":"+chkpntmsg);
+    }
+    finally{
+        if(!log.isFailed())log.writeLn(log.SUCCESS);
+    }
+
+
+
+
+
+
+
+    /*
+        var log = cm_pws.test.clsLog();var testCaseInfo =  eval("arguments.callee.name") + " - ";log.newLine();log.setCheckPoint("STARTED");log.writeLn(testCaseInfo+ log.getCheckPoint());
+    /////////////////////////////////////////////////////////////
+    try{
+        log.writeLn("running for: " + xmlFileName);
+        var sessionId = owner.getProperty("sessionId");
+        sessionId = sessionId != null ? sessionId : Global.getSessionParameter("SESSION_ID");;
+        var input = cm_pws.test.createRequest(xmlFileName, "OCSConfigurationOperation.v1.types.CreateEntity",  sessionId);
+        log.setCheckPoint("Request Created.");
+
+        var result = Global.invokeInterface("cm_pws.services.OCSConfigurationPort", "createEntity", input);
+        log.setCheckPoint("Response received.");
+
+        assertFalse(!(result[0] instanceof OCSConfigurationOperation.v1.types.CreateEntityResponse), "Error!");
+
+    }
+    catch(exp){
+        var chkpntmsg = "[LastCheckPosition:"+log.getCheckPoint()+"]";log.writeLn(log.FAIL +"\t"+exp);log.setFailed(true);log.flush();
+        // to have a valid server log for test cases since it is supposed to fail
+        assertTrue(false, testCaseInfo+":"+chkpntmsg);
+    }
+    finally{
+        if(!log.isFailed())log.writeLn(log.SUCCESS);
+    }*/
+  ]]></script>
+</script>

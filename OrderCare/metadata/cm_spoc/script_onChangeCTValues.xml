@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.onChangeCTValues">
+  <group>ui_scripts.RatingTree.EditNodeDialogUI</group>
+  <label>onChangeCTValues</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+    <parameter name="selectedItems" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //ui.model Rating Tree Node Output
+
+    ui.parent.model.RTNodeOutputArrDS.List=null;
+    ui.parent.model.RTNodeOutputArrDS.ListDS=null;
+
+    var values="";
+
+    for (var i = 0;i<selectedItems.length;i++) {
+        var rtno =  cm_spoc.initInnerDS("base_RTNodeOutput");
+        rtno = cm_spoc.initModelForCreation(rtno);
+        rtno.NodeValue = selectedItems[i].id;
+
+        ui.parent.model.RTNodeOutputArrDS.List[i]=rtno.specificationCode;
+        ui.parent.model.RTNodeOutputArrDS.ListDS[i]=rtno;
+
+        values = values ? values+", "+selectedItems[i].id : selectedItems[i].id;
+
+    }
+
+
+    ui.parent.parent.owner.values = values;
+  ]]></script>
+</script>

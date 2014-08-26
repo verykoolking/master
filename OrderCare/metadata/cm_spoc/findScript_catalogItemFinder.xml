@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cm_spoc.catalogItemFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <group>overridden.finders</group>
+  <input>doc_cwa_epc.itemSearch</input>
+  <label>Catalog Results</label>
+  <maxRowsLimit>999</maxRowsLimit>
+  <metaVersion>4</metaVersion>
+  <output>doc_cwt_pc.cwt_itemNew</output>
+  <overrides>findScript_cwa_epc.catalogItemFinder</overrides>
+  <type>script</type>
+  <volatility>0</volatility>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        var finder = new cwt_pc.cwt_itemFinderNew;
+        finder.searchDocument.name = this.searchDocument.name;
+        finder.searchDocument.itemType = this.searchDocument.itemType;
+        finder.searchDocument.itemCode = this.searchDocument.itemCode;
+        finder.searchDocument.status = this.searchDocument.status;
+        finder.searchDocument.baseItemCode = this.searchDocument.baseItemCode;
+        finder.searchDocument.orderable = this.searchDocument.orderable;
+        //finder.searchDocument.startDate = this.searchDocument.startDate;
+        //finder.searchDocument.endDate = this.searchDocument.endDate;
+        var result = finder.search();
+        return result;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_cwa_epc.baseFinder</extends>
+    <overrides>findScript_cwa_epc.catalogItemFinder/ui_UserInterface</overrides>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cwt_pc.cwt_itemNew</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cwt_pc.cwt_itemNew/ui_UserInterface</valueType>
+      </variable>
+      <variable name="search" type="leaf">
+        <valueType>doc_cwa_epc.itemSearch/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_cwa_epc.baseFinder/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_cwa_epc.baseFinder/frmui_Forms/vform_Result</base>
+            <extends>ui_cwa_epc.baseFinder/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="resultList" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="catalogItemFinderResultTable1" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="itemCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_itemCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="type" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_type</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="baseItemCode" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_baseItemCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="itemType" type="elslct">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_itemType</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="name" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_name</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="status" type="elslct">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_status</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="label" type="eltrnsltion">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_label</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="description" type="eltxtArea">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_description</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="orderable" type="elchk">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_orderable</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="ownerId" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_ownerId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="updatedBy" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_updatedBy</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="lastUpdatedDate" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_lastUpdatedDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwCreatedBy" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_cwCreatedBy</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwCreated" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_cwCreated</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="cwDocStamp" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_cwDocStamp</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="oldItemCode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_oldItemCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="projectRef" type="elref">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_projectRef</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="startDate" type="eldatetime">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_startDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="endDate" type="eldate">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cwt_pc.cwt_itemNew/leaf_endDate</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="searchClassicVL" type="exov">
+            <base>ui_cwa_epc.baseFinder/frmui_Forms/vform_searchClassicVL</base>
+            <extends>ui_cwa_epc.baseFinder/frmui_Forms/vform_searchClassicVL</extends>
+            <label>searchClassicVL</label>
+            <overrideList>
+              <override name="fieldGrid" type="elext">
+                <elementList>
+                  <element name="itemType" type="elslct">
+                    <columnSpan>2</columnSpan>
+                    <label>Type</label>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>doc_cwa_epc.itemSearch/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cwt_pc.cwt_itemSearch/leaf_itemType</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="itemCode" type="elfld">
+                    <columnSpan>2</columnSpan>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>doc_cwa_epc.itemSearch/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cwt_pc.cwt_itemSearch/leaf_itemCode</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="name" type="elfld">
+                    <columnSpan>2</columnSpan>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>doc_cwa_epc.itemSearch/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cwt_pc.cwt_itemSearch/leaf_name</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="status" type="elslct">
+                    <columnSpan>2</columnSpan>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>doc_cwa_epc.itemSearch/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cwt_pc.cwt_itemSearch/leaf_status</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="baseItemCode" type="elfld">
+                    <columnSpan>2</columnSpan>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>doc_cwa_epc.itemSearch/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cwt_pc.cwt_itemSearch/leaf_baseItemCode</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="orderable" type="elslct">
+                    <columnSpan>2</columnSpan>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>doc_cwa_epc.itemSearch/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cwt_pc.cwt_itemSearch/leaf_orderable</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="startDate" type="eldatetime">
+                    <columnSpan>2</columnSpan>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>doc_cwa_epc.itemSearch/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cwa_epc.itemSearch/leaf_startDate</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="endDate" type="eldate">
+                    <columnSpan>2</columnSpan>
+                    <labelOrientation>top</labelOrientation>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/leaf_search</variablePath>
+                        <variablePath>doc_cwa_epc.itemSearch/ui_UserInterface/uivar_model</variablePath>
+                        <variablePath>doc_cwa_epc.itemSearch/leaf_endDate</variablePath>
+                      </variablePathList>
+                    </variable>
+                  </element>
+                  <element name="projectOnly" type="elchk"/>
+                </elementList>
+              </override>
+              <override name="searchButtonLayout" type="elext"/>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_cwa_epc.baseFinder/frmui_Forms/exov_Default</base>
+            <extends>ui_cwa_epc.baseFinder/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="getResultForm" type="uimthd">
+        <description><![CDATA[
+          <p style="margin-top: 0">
+            Finder implementations will override getResultForm() to publish the
+            specific event and return the result.
+          </p>
+        ]]></description>
+        <valueType>dtype_com.conceptwave.system.String</valueType>
+        <script><![CDATA[return "cwa_epc.catalogItemResult";]]></script>
+      </method>
+      <method name="getDetailForm" type="uimthd">
+        <description><![CDATA[
+          <p style="margin-top: 0">
+            Override with api call to get stored component form name for detail UI
+          </p>
+        ]]></description>
+        <parameterList>
+          <parameter name="model" type="rifp">
+            <type>nmeta_com.conceptwave.system.Object</type>
+          </parameter>
+        </parameterList>
+        <valueType>dtype_com.conceptwave.system.String</valueType>
+        <script><![CDATA[
+          if(model instanceof epc.data.Specification)
+              //return "cwa_epc.epcItem";
+              return "cwa_epc.treeDetailTabComponent";
+          else
+              return "cwa_epc.catalogItem";
+        ]]></script>
+      </method>
+      <method name="getDetailModel" type="uimthd">
+        <description><![CDATA[
+          <p style="margin-top: 0">
+            Override with api call to get detail model
+          </p>
+        ]]></description>
+        <parameterList>
+          <parameter name="selected" type="rifp">
+            <type>nmeta_com.conceptwave.system.Object</type>
+          </parameter>
+        </parameterList>
+        <valueType>ui_cwa_epc.baseComponent</valueType>
+        <script><![CDATA[
+          var spec = new epc.data.Specification;
+          spec.project = cwa_epc.getDefaultProj();
+          spec.specificationCode = selected.itemCode;
+
+          var specification = null;
+          if(selected.itemType == "SPCI"){
+              specification = epc.getItemSpecificationByKey(spec);
+              if(api_common.isFault(specification)){
+                  this.setModelStatus(specification,"CWA_EPC_GET_SPECIFICATION_ERR",false, this.model.metadataTypeLabel);
+                  return;
+              }
+          }
+          if(specification)
+              return specification;
+          else
+              return selected;
+        ]]></script>
+      </method>
+      <method name="getNewDetailModel" type="uimthd">
+        <description><![CDATA[
+          <p style="margin-top: 0">
+            To implement for retrieving a new detail model used for new action
+          </p>
+        ]]></description>
+        <valueType>mdl_com.conceptwave.system.Model</valueType>
+        <script><![CDATA[
+          return new cwt_pc.cwt_itemNew;
+
+          /*var model = cwa_epc.getSpecificationModel(this.specificationCodeDoc.code);
+          if(model)
+              model.baseSpecificationCode = this.specificationCodeDoc.code;
+          else
+              model = new epc.data.specification;
+          return model;
+
+          */
+        ]]></script>
+      </method>
+      <method name="onNew" type="uimthd">
+        <script><![CDATA[
+          var model = this.getNewDetailModel();
+          var newDetail = new cwa_epc.newItemComponent(model, this);
+
+          if(newDetail!=null){
+              newDetail.parentFinderUI = this;
+              newDetail.isLabeLStatusLayoutVisible = false;
+              newDetail.isActionButtonsVisible = false;
+              newDetail.isdetailFormVLGridVisible = false;
+              //newDetail.isCancelMenuVisible = false;
+
+          }
+
+          return newDetail;
+        ]]></script>
+      </method>
+      <method name="newAction" type="usrActionMethod">
+        <dialogObject>ui_cwa_epc.epcDialog</dialogObject>
+        <showInPopup>true</showInPopup>
+        <script><![CDATA[
+          this.resetModelStatus();
+          var newDetail = this.onNew();
+          return newDetail;
+        ]]></script>
+      </method>
+      <method name="onShowDetail" type="usrActionMethod">
+        <script><![CDATA[
+          this.cw$super_onShowDetail();
+          if(this.detail){
+              //this.detail.isCancelMenuVisible = false;
+
+          }
+        ]]></script>
+      </method>
+      <method name="onInit" type="action">
+        <valueType>nmeta_com.conceptwave.system.Object</valueType>
+        <script><![CDATA[
+          this.cw$super_onInit();
+
+          this.isCustomMenuLeftVisible = true;
+          this.isLayoutSpacerVisible = false;
+          this.isRightLayoutSpacerVisible = true;
+          this.isNewMenuResultVisible = false;
+          this.isDeleteMenuVisible = false;
+          this.isExportMenuVisible = false;
+          this.isImportMenuVisible = false;
+        ]]></script>
+      </method>
+      <method name="onDelete" type="uimthd">
+        <script><![CDATA[
+          var finderResults = new Array();
+
+          if (finderResults.length == 0 && this.result != null && this.result.selected != null) {
+          finderResults = this.result.selected;
+          }
+
+          var finder = this.model;
+          if(finderResults == null || finderResults.length == 0){
+              if(this.detail!=null){
+               finder.invoke(this.detail.model, "delete");
+                if (this.detail!= null) {
+                   this.detail = null;
+                }
+                this.result.updateList; //force update
+                this.setModelStatus(null,"CWA_EPC_DEL_002",true);
+              }
+            return;
+          }
+
+          finder = new cwt_pc.cwt_itemFinderNew;
+          finder.setList(this.result);
+          for (var i = 0; i < finderResults.length; i++) {
+            var toDelete = finderResults[i];
+            finder.invoke(toDelete,"delete");
+            if(this.detail!= null) {
+              this.detail = null;
+            }
+          }
+
+          this.result.updateList; //force update
+          this.setModelStatus(null,"CWA_EPC_DEL_002",true, finderResults[0].metadataTypeLabel);
+        ]]></script>
+      </method>
+      <method name="hideDetailAction" type="action">
+        <script>this.cw$super_hideDetailAction();</script>
+      </method>
+    </methodList>
+  </UserInterface>
+  <viewList>
+    <view name="catalogItemFinderView" type="findVView">
+      <outputOverlay>findScript_cm_spoc.catalogItemFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findScript>

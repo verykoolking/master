@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/ss" xmlns:qs="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/qs" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/ss" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.service.serv.qos.nfs.tc.ss
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 7
+ Association Classes: 0
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/qs" schemaLocation="sid_org_tmforum_tip_service_serv_qos_nfs_tc_qs.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="deficitRoundRobinSchedulingService" type="tns:DeficitRoundRobinSchedulingService"/>
+   <xsd:complexType name="DeficitRoundRobinSchedulingService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This scheduling algorithm is designed to address the limitations of WRR and WFQ. Its main goal is to provide weighted fair distribution of bandwidth for multiple Queues that contain variable-length packets.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="deficitCounter" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This specifies the total number of units that this particular Queue is allowed to transmit each time the Scheduler visits it. Units are most often bytes, but could conceivably be other metrics as well.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="bandwidthPercentage" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the percentage of bandwidth that is allocated to a particular Queue.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="serviceQuantum" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an amount that is added to the deficitCounter to determine if the Queue is allowed to transmit. If the value of the deficitCounter is greater than the size of the unit (e.g., packet, cell, etc.) waiting in the Queue, then the Scheduler moves to the next Queue. If the value of the deficitCounter is less than or equal to the size of the unit waiting in the Queue, then the deficitCounter is reduced by the size of the transmitted unit, and the unit is transmitted.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfDeficitRoundRobinSchedulingService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:DeficitRoundRobinSchedulingService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="roundRobinSchedulingService" type="tns:RoundRobinSchedulingService"/>
+   <xsd:complexType name="RoundRobinSchedulingService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is a popular type of Scheduler, mainly because it is relatively easy to implement in hardware. Basically, it serves each active Queue, one after another. A Queue is defined to be active if it has any packets that are enqueued.
+
+This scheduler provides fair distribution for packets that are fixed-size. However, it doesn't provide fair behavior if there are variable-size packets.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="isFlowBased" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean that, if TRUE, defines this instance as a flow-based scheduler. If it is false, it is a class-based scheduler.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="metricValue" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the number of metric units to allocate per Queue vist. The metric is defined in the schedulingMetric attribute.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="schedulingMetric" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the metric used to schedule flows in the RoundRobinScehduler. Values include:
+
+0: custom implementation
+1: packets
+2: bytes
+3: cells
+4: frames
+5: flows</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfRoundRobinSchedulingService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:RoundRobinSchedulingService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="schedulingService" type="tns:SchedulingService"/>
+   <xsd:complexType name="SchedulingService" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A Scheduler is used in the network forwarding path to determine how output queues are serviced. This service uses the QueuingService to store packets and then services these queues according to a pre-defined algorithm.
+
+Note that when there is no congestion, the net effect is simply FIFO. However, when there is congestion, scheduling is the primary QoS action component.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="schedulingFrequency" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines how frequently the SchedulingService visits each Queue. This attribute is important for SchedulingServices that don't handle variable-length packets well, such as the RoundRobin Scheduler.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isWorkConserving" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, defines this Scheduler to be a work-conserving scheduler.
+
+A work-conserving scheduler will always transmit one packet provided that there is at least one packet inside the router buffers. A non-work-conserving scheduler may defer the transmission of packets on the output link even if some packets are waiting inside the device to be dequeued.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="schedulingServiceComposite" type="tns:SchedulingServiceComposite" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association HasSchedulingSubServices</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="queueService" type="qs:ArrayOfQueueService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..*</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association QueueToSchedule</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfSchedulingService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:SchedulingService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="schedulingServiceAtomic" type="tns:SchedulingServiceAtomic"/>
+   <xsd:complexType name="SchedulingServiceAtomic">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A SchedulingServiceAtomic object models a SchedulingService as an independent (i.e., stand-alone) TrafficConditioningService. This is fundamentally different than the SchedulingServiceComposite object, which is used to model a SchedulingService as the combination of other existing SchedulingServices (as well as providing its own extensions).</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="canShare" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, means that resources (e.g., bandwidth) can be shared across different Queue instances.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfSchedulingServiceAtomic">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:SchedulingServiceAtomic" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="schedulingServiceComposite" type="tns:SchedulingServiceComposite"/>
+   <xsd:complexType name="SchedulingServiceComposite">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>A SchedulingServiceComposite object models a SchedulingService as a set of coordinated SchedulingServices. This is fundamentally different than the SchedulingServiceAtomic object, which is used to model a SchedulingService as a stand-alone TrafficConditioningService.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="schedulingService" type="tns:ArrayOfSchedulingService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association HasSchedulingSubServices</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfSchedulingServiceComposite">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:SchedulingServiceComposite" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="strictSchedulingService" type="tns:StrictSchedulingService"/>
+   <xsd:complexType name="StrictSchedulingService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>The simplest type of Scheduler is a Priority scheduler. This type of Scheduler assigns each Queue a priority, and then visits each Queue in priority order. However, as long as a Queue of a higher priority has traffic enqueued, Queues of lower priority are starved.
+
+Still, there are advantages to this type of Scheduler, especially when dealing with voice traffic.
+
+Other types of Schedulers that provide strict rules about Queue servicing can be derived from this class.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="prioritySchedulingValue" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the priority of the associated Queue.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="bandwidthLimit" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the upper limit on the amount of traffic that can be handled by the associated Queue instance.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfStrictSchedulingService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:StrictSchedulingService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="weightedRoundRobinSchedulingService" type="tns:WeightedRoundRobinSchedulingService"/>
+   <xsd:complexType name="WeightedRoundRobinSchedulingService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This algorithm uses weighting to make up for the inability of a RoundRobinScheduler to accommodate variable packet sizes. Most WeightedRoundRobinSchedulers also have the ability to prioritize their treatment of certain special Queues. For example, an instance of this Scheduler may control multiple Queues, where some are dedicated for serving real-time traffic and others are to be used for all other types of traffic. The simplest way to accommodate this is to use a priority and a weight.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="weightingValue" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the actual value of the weight used for a particular Queue.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="wrrPriority" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the absolute priority of a particular Queue. This ensures that this Queue will always be able to be serviced, and hence can be used to provide a guaranteed service.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfWeightedRoundRobinSchedulingService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:WeightedRoundRobinSchedulingService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* --><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

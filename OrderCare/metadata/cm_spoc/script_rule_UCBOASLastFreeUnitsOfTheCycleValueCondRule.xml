@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_UCBOASLastFreeUnitsOfTheCycleValueCondRule">
+  <group>rules_scripts.UsageControl</group>
+  <label>rule_UCBOASLastFreeUnitsOfTheCycleValueCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var listDS = data.UCBOASUCBoltOnTypeAssArrDS.ListDS;
+    var s = new epc.data.Specification();
+    s.project =  cwa_epc.getDefaultProj();
+    var arrLen = listDS.length;
+
+    for ( var i = 0; i<listDS.length; i++ ) {
+       // s.specificationCode = listDS[i].BoltOnType;
+       // var r = epc.getSpecificationByKey(s);
+       // if(!api_common.isFault(r)){
+            if ( listDS[i].UnitsOrPercentageThreshold == "D" && listDS[i].LastFreeUnitsOfTheCycle != -1 )
+
+            errList.addErrorMessage(data,["Invalid value for Last Free Units Of The Cycle","For this Units Or Percentage"],"NGAA_EPC_002","E");
+       // }
+    }
+    return false;
+  ]]></script>
+</script>

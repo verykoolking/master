@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.test.testVerifyDelete">
+  <group>testScripts</group>
+  <label>testVerifyDelete</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="xmlFileName" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="isActive" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="shouldExist" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="isEndDated" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+    <parameter name="owner" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var log = cm_pws.test.clsLog();var testCaseInfo =  eval("arguments.callee.name") + " - ";log.newLine();log.setCheckPoint("STARTED");log.writeLn(testCaseInfo+ log.getCheckPoint());
+    /////////////////////////////////////////////////////////////
+    try{
+        log.writeLn("running for: " + xmlFileName);
+
+        var entity = cm_pws.test.createDSFromResource("/PWS/" + xmlFileName, "OCSEntity.v1.types.OCSEntityType");
+        var sessionId = owner.getProperty("sessionId");
+        var innerItem = cm_pws.getInnerDataStructure(entity);
+        var itemCode =  innerItem.identifier.dn.scheme;
+
+        verifyItem(itemCode);
+
+        var relatedItems = owner.getProperty("RELATED_ITEMS");
+        if(relatedItems){
+            for (var i =0; i<relatedItems.items.length; i++)
+                verifyItem(relatedItems.items[i].itemCode);
+        }
+
+    }
+    catch(exp){
+        var chkpntmsg = "[LastCheckPosition:"+log.getCheckPoint()+"]";log.writeLn(log.FAIL +"\t"+exp);log.setFailed(true);log.flush();
+        // to have a valid server log for test cases since it is supposed to fail
+        assertTrue(false, testCaseInfo+":"+chkpntmsg);
+    }
+    finally{
+        if(!log.isFailed())log.writeLn(log.SUCCESS);
+    }
+
+        function verifyItem(itemCode)
+    {
+
+        var itemSearchDS = new cwt_pcmaintapi.itemSearchDS();
+        itemSearchDS.itemCode = itemCode;
+
+        var response = cwt_pcmaintapi.itemRead(itemSearchDS);
+        log.setCheckPoint("Search finished.");
+
+        if(isActive){
+
+            if(cwt_pcmaintapi.isFault(response)){
+                log.writeLn("Error finding the active item: " + response.toXML());
+                assertTrue(false);
+            } else if(isEndDated){
+                //
+                var projectAssignmentSearchDS = new cwt_pcmaintapi.projectAssignmentSearchDS();
+                projectAssignmentSearchDS.objectCode = itemCode;
+                projectAssignmentSearchDS.projectCode = sessionId;
+                projectAssignmentSearchDS.objectType = "cwt_pc:cwt_item";
+                var result = cwt_pcmaintapi.projectAssignmentSearch(projectAssignmentSearchDS);
+                if(cwt_pcmaintapi.isFault(result)){
+                    log.writeLn("Error finding the active item: " + response.toXML());
+                    assertTrue(false);
+                }
+                //
+                for(var i=0; i<result.projectAssignments.length;i++){
+                    if(result.projectAssignments[i].objectCode==itemCode){
+                        if(!result.projectAssignments[i].endDate){
+                            log.writeLn("The end date is not set for the active item.");
+                            assertTrue(false);
+                        }else
+                        return;
+                    }
+                }
+
+                log.writeLn("The end date is not set for the active item.");
+                assertTrue(false);
+            }
+        }else{
+            if(shouldExist){
+                if(cwt_pcmaintapi.isFault(response)){
+                    log.writeLn("Error finding the existing item: " + response.toXML());
+                    assertTrue(false);
+
+                }
+            }else{
+                if(!cwt_pcmaintapi.isFault(response)){
+                    log.writeLn("The item was found!");
+                    assertTrue(false);
+                }else if(response.code != "DATA_NOT_FOUND"){
+                    log.writeLn("Error finding the non-existing item: " + response.toXML());
+                    assertTrue(false);
+                }
+
+            }
+
+
+        }
+
+
+    }
+  ]]></script>
+</script>

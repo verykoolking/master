@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.costEstimation">
+  <group>ui_scripts.Rate</group>
+  <label>costEstimation</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var inputDuration = ui.inputCostEstimation;
+    var EstimatedCost = 0;
+    var costPerSecond = 0;
+    var component = ui.model.RateRateComponentArrDS.ListDS;
+    var residualTimeToCharge = inputDuration ;
+    var period = 0;
+    var timeToCharge = 0;
+
+        for(var k =0; k< component.length;k++) {
+
+            var phase = component[k].RCRatePriceEventPhaseArrDS.ListDS;
+
+            for(var i =0; i< phase.length;i++) {
+
+                if (phase[i].RatePriceDS.Q0 > 0){ //This is Call Setup cost
+                    EstimatedCost = EstimatedCost+phase[i].RatePriceDS.Q0;
+                }
+
+
+                if (phase[i].RatePriceDS.Price > 0 && phase[i].RatePriceDS.Denominator > 0){
+                    costPerSecond = phase[i].RatePriceDS.Price/phase[i].RatePriceDS.Denominator;
+                }
+                else{
+                    costPerSecond = 0;
+                }
+
+                if (phase[i].PhaseNumber == 1){//is initialCost
+                    period = phase[i].StartUnit;
+                }
+                else{//is Pulse Train
+                    period = phase[i].RatePriceDS.unitOfMeasure;
+                }
+
+                if (residualTimeToCharge <= period){
+                    timeToCharge= residualTimeToCharge;
+                }
+                else{
+                    timeToCharge= period;
+                }
+
+                EstimatedCost = EstimatedCost +(timeToCharge*costPerSecond);
+
+                residualTimeToCharge = residualTimeToCharge - timeToCharge;
+
+                if (residualTimeToCharge <= 0 ){
+                   return EstimatedCost;
+                }
+            }
+        }
+    return EstimatedCost;
+  ]]></script>
+</script>

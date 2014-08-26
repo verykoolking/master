@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.removeNx24AppBoltonTypeListByKey">
+  <group>applicabilityCondition.api</group>
+  <label>removeNx24AppBoltonTypeListByKey</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="Nx24AppBoltonTypeList" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.Nx24AppBoltonTypeList</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        if(!cm_plm.isModificationAllowed(Nx24AppBoltonTypeList))
+            return api_common.createFault("ERR", "This modality is being maintained in another project.");
+
+        if(cm_plm.isProjectActive(Nx24AppBoltonTypeList.projectCode))
+            return api_common.createFault("ERR", "Item cannot be created for projects in ACT status.");
+
+        var result;
+        if(cm_plm.isObjectActive(Nx24AppBoltonTypeList)){
+            Nx24AppBoltonTypeList.endDate = new Date();
+            result = cm_plm.endDateObject(Nx24AppBoltonTypeList);
+        }else
+            result = cm_plm.deleteObject(Nx24AppBoltonTypeList, "cm_plm.Nx24AppBoltonTypeListDoc");
+
+        if(api_common.isFault(result))
+            return result;
+
+        //remove the rows
+        var tmpNx24 = new cm_plm.Nx24AppBoltonType();
+        tmpNx24.Nx24AppBoltonTypeListId = Nx24AppBoltonTypeList.Nx24AppBoltonTypeListId;
+        var list = cm_plm.queryNx24AppBoltonType(tmpNx24);
+        if(api_common.isFault(list))
+            return list;
+
+        for(var i=0; list.length; i++){
+            result = cm_plm.removeNx24AppBoltonTypeByKey(list[i]);
+            if(api_common.isFault(result))
+                return result;
+        }
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

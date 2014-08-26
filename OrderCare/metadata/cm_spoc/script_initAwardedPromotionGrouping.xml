@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initAwardedPromotionGrouping">
+  <group>ui_scripts.Promotion</group>
+  <label>initAwardedPromotionGrouping</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+        var awPrSegmentArr = cm_spoc.initInnerDS("base_APGAwPromSegmArr");
+        model.APGAwPromSegmArrDS = awPrSegmentArr;
+
+
+        return model;
+    }
+    else{
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+       s.specificationCode = model.APGAwPromSegmArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.APGAwPromSegmArrDS=r;
+             }
+
+       var awPrSegmentRel= model.APGAwPromSegmArrDS.List;
+       var awPrSegmentDS= model.APGAwPromSegmArrDS.ListDS;
+       for(var i=0;i<awPrSegmentRel.length;i++){
+           s.specificationCode = awPrSegmentRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               awPrSegmentDS[i]=r;
+           }
+       }
+
+       return model;
+    }
+  ]]></script>
+</script>

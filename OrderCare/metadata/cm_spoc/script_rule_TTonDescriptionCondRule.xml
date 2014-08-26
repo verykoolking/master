@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_TTonDescriptionCondRule">
+  <group>rules_scripts.Numbering</group>
+  <label>rule_TTonDescriptionCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var result = false;
+
+    var SERVER_VERSION = Global.getConfigVariable('SERVER_VERSION');
+    var TonDescriptionSize = data.TonDescription ? data.TonDescription.length : 0;
+
+    if(TonDescriptionSize > 25 && SERVER_VERSION == "v11")
+        result = true;
+
+    if(result != false)
+    {
+        errList.addErrorMessage(data,["The maximum length for the attribute TonDescription is 25 characters as the AA version is v11"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

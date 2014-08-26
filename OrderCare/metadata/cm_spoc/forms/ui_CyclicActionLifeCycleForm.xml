@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.CyclicActionLifeCycleForm">
+  <group>CyclicActions</group>
+  <label>CyclicActionLifeCycleForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="CALifeCycleTransitionIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.CyclicActionLifeCycle</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="LifeCycleGeneralParameters" type="vform">
+          <label>LifeCycleGeneralParameters</label>
+          <root name="VerticalLayout" type="elvlt">
+            <elementList>
+              <element name="SectionStack" type="elsectnstck">
+                <visibilityMode>multiple</visibilityMode>
+                <width>1300px</width>
+                <elementList>
+                  <element name="Section" type="elsect">
+                    <elementList>
+                      <element name="SectionHeader" type="elsecth">
+                        <label>Status properties</label>
+                      </element>
+                      <element name="GridLayout2" type="elgrd">
+                        <colWidths>300px</colWidths>
+                        <edgeShowCenter>true</edgeShowCenter>
+                        <edgeSize>2</edgeSize>
+                        <labeAlign>center</labeAlign>
+                        <numOfCols>2</numOfCols>
+                        <width>600px</width>
+                        <elementList>
+                          <element name="CyclicActionsLifeCycleId" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Code</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CyclicActionLifeCycleForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CyclicActionLifeCycle/dstruct_CyclicActionsLifeCycleId</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>150px</width>
+                          </element>
+                          <element name="Description" type="elfld">
+                            <cellAlignment>left,center</cellAlignment>
+                            <labeAlign>left</labeAlign>
+                            <label>Description</label>
+                            <labelOrientation>left</labelOrientation>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CyclicActionLifeCycleForm/leaf_model</variablePath>
+                                <variablePath>dstruct_cm_spoc.data.CyclicActionLifeCycle/dstruct_Description</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <width>150px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                  <element name="CALifeCycleSection" type="elsect">
+                    <removeLabelLine>true</removeLabelLine>
+                    <elementList>
+                      <element name="SectionHeader1" type="elsecth">
+                        <label>CALifeCycleTransition</label>
+                      </element>
+                      <element name="ValueLayout" type="elhlt">
+                        <elementList>
+                          <element name="addButton" type="elmnu">
+                            <menuAccel type="mAccelP"/>
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CyclicActionLifeCycleForm/uimthd_addCALifeCycleIterator</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/notebook_add.png</icon>
+                            <width>40px</width>
+                          </element>
+                          <element name="deleteButton" type="elmnu">
+                            <clickMethod type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CyclicActionLifeCycleForm/uimthd_deleteCALifeCycleStatus</variablePath>
+                              </variablePathList>
+                            </clickMethod>
+                            <icon>/cwt/images/16/delete.png</icon>
+                            <width>40px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="CALifeCycleValueHeaders" type="elgrd">
+                        <cellPadding>3</cellPadding>
+                        <colWidths>120px,150px,25px,100px,190px,100px,200px,100px,300px,100px</colWidths>
+                        <fixedColWidths>true</fixedColWidths>
+                        <numOfCols>20</numOfCols>
+                        <elementList>
+                          <element name="Select" type="ellab"/>
+                          <element name="CALifeCycleStatus" type="ellab">
+                            <columnSpan>1</columnSpan>
+                            <fontProperties type="pfnt">
+                              <bold>true</bold>
+                            </fontProperties>
+                            <label>CALifeCycleStatus*</label>
+                          </element>
+                          <element name="InitialStatus" type="ellab">
+                            <label>Initial Status</label>
+                          </element>
+                          <element name="AfterOK" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <fontProperties type="pfnt">
+                              <bold>true</bold>
+                            </fontProperties>
+                            <label>After OK, this status is set:*</label>
+                          </element>
+                          <element name="AfterNoOk" type="ellab">
+                            <columnSpan>2</columnSpan>
+                            <fontProperties type="pfnt">
+                              <bold>true</bold>
+                            </fontProperties>
+                            <label>After NO OK, this status is set: *</label>
+                          </element>
+                          <element name="StatusTransition" type="ellab">
+                            <label>The status transition will just be made &lt;br&gt; for some error codes</label>
+                            <width>300px</width>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="CALifeCycleVL" type="elvlt">
+                        <width>750px</width>
+                        <elementList>
+                          <element name="CALifeCycleIterator" type="eliter">
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_cm_spoc.forms.CyclicActionLifeCycleForm/leaf_CALifeCycleTransitionIterator</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="CALifeCycleHL" type="elhlt">
+                                <width>750px</width>
+                                <elementList>
+                                  <element name="CALifeCycleFormFrame" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>ui_cm_spoc.forms.CyclicActionLifeCycleForm/leaf_CALifeCycleTransitionIterator</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </element>
+            </elementList>
+          </root>
+        </overlay>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="Tabset" type="eltset">
+              <width>750px</width>
+              <elementList>
+                <element name="TabFrame" type="eltab">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.CyclicActionLifeCycleForm/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.CyclicActionLifeCycleForm/frmui_Forms/vform_LifeCycleGeneralParameters</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <label>General Parameters</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.CyclicActionLifeCycleForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initCyclicActionLifeCycle(this.model);
+        cm_spoc.initCALifeCycleUI(this);
+        return m;
+      ]]></script>
+    </method>
+    <method name="SourceStatusIDTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode=this.CALifCycleTransitionArrDS.ListDS.model.SourceStatusIDEnum;
+        this.model.CALifCycleTransitionArrDS.ListDS.SourceStatusID = btCode;
+      ]]></script>
+    </method>
+    <method name="AfterOkStatusIsSetTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode=this.model.CALifCycleTransitionArrDS.ListDS.AfterOkStatusIsSetEnum;
+        this.model.CALifCycleTransitionArrDS.ListDS.AfterOkStatusIsSet = btCode;
+      ]]></script>
+    </method>
+    <method name="AfterNoOkStatusIsSetTrigger" type="uimthd">
+      <script><![CDATA[
+        var btCode=this.model.CALifCycleTransitionArrDS.ListDS.AfterNoOkStatusIsSetEnum;
+        this.model.CALifCycleTransitionArrDS.ListDS.AfterNoOkStatusIsSet = btCode;
+      ]]></script>
+    </method>
+    <method name="addCALifeCycleIterator" type="uimthd">
+      <script><![CDATA[
+        if(this.model.CALifCycleTransitionArrDS.ListDS.length==0){
+            var CALifeCycleArr = cm_spoc.initInnerDS("base_CALifCycleTransitionArr");
+            this.model.CALifCycleTransitionArrDS = CALifeCycleArr;
+        }
+        var model=this.model.CALifCycleTransitionArrDS.ListDS;
+        cm_spoc.addListElement(this, model,"cm_spoc.forms.CALifeCycleTransitionUI","base_CALifeCycleTransition","CALifeCycleTransitionIterator");
+        model[model.length-1].InitialStatus = false;
+        model[model.length-1].NokTransitionDependErrorCode = false;
+      ]]></script>
+    </method>
+    <method name="deleteCALifeCycleStatus" type="uimthd">
+      <script><![CDATA[
+        cm_spoc.removeListElements(this, this.model.CALifCycleTransitionArrDS,"List", "CALifeCycleTransitionIterator");
+        if(this.model.CALifCycleTransitionArrDS.ListDS.length==0)
+        {
+            this.model.CALifCycleTransitionArrDS=null;
+        }
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+  </methodList>
+</userInterface>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.SimpleAwardOperationOnCyclicActionIteratorUI">
+  <group>Promotion</group>
+  <label>SimpleAwardOperationOnCyclicActionIteratorUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.SimpleAwardOperationOnCycli</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <width>1000px</width>
+              <elementList>
+                <element name="Headers" type="elgrd">
+                  <numOfCols>8</numOfCols>
+                  <width>1000px</width>
+                  <elementList>
+                    <element name="Selected" type="elchk">
+                      <columnSpan>1</columnSpan>
+                      <labelAsTitle>false</labelAsTitle>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.SimpleAwardOperationOnCyclicActionIteratorUI/leaf_Selected</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>30px</width>
+                    </element>
+                    <element name="CellSpacer" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="PromotedOpOnCyclicAction" type="elslct">
+                      <columnSpan>1</columnSpan>
+                      <label>Operation</label>
+                      <labelOrientation>top</labelOrientation>
+                      <removeLabelLine>true</removeLabelLine>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.SimpleAwardOperationOnCyclicActionIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.SimpleAwardOperationOnCycli/dstruct_PromotedOpOnCyclicAction</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100px</width>
+                    </element>
+                    <element name="CellSpacer1" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="ServiceAdvance" type="elslct">
+                      <columnSpan>1</columnSpan>
+                      <label>Service advance</label>
+                      <labelOrientation>top</labelOrientation>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.SimpleAwardOperationOnCyclicActionIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.SimpleAwardOperationOnCycli/dstruct_ServiceAdvance</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100px</width>
+                    </element>
+                    <element name="CellSpacer5" type="elcsp">
+                      <width>5px</width>
+                    </element>
+                    <element name="CyclicActionSpecification" type="elfld">
+                      <autoFocusNextField>false</autoFocusNextField>
+                      <columnSpan>1</columnSpan>
+                      <label>Cyclic action</label>
+                      <labelOrientation>top</labelOrientation>
+                      <showLabel>false</showLabel>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.SimpleAwardOperationOnCyclicActionIteratorUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.SimpleAwardOperationOnCycli/dstruct_CyclicActionSpecification</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100px</width>
+                    </element>
+                    <element name="CodeButton" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.SimpleAwardOperationOnCyclicActionIteratorUI/usrActionMethod_FinderCyclicActionSpecificationReferenceDialog</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <icon>/cwf/finder.gif</icon>
+                      <showLabel>false</showLabel>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>22px</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="FinderCyclicActionSpecificationReferenceDialog" type="usrActionMethod">
+      <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var newDetail = new cm_spoc.FinderSelectReference(null,this);
+        newDetail.setBaseItemCode("base_CyclicActionSpecification");
+        newDetail.parentUI = this;
+        newDetail.modelCallback = this.setCyclicActionSpecification;
+        return newDetail;
+      ]]></script>
+    </method>
+    <method name="setCyclicActionSpecification" type="uimthd">
+      <parameterList>
+        <parameter name="selected" type="rifp">
+          <mandatory>true</mandatory>
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <script>this.parentUI.model.CyclicActionSpecification = selected.itemCode;</script>
+    </method>
+  </methodList>
+</userInterface>

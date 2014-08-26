@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.validateDs">
+  <group>utilities</group>
+  <label>validateDs</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var err;
+    //cm_common.cleanDs(model);
+    var md = cm_common.getMandatoryFieldsErrors(model);
+    var maxfl = cm_common.getFieldLengthErrors(model);
+    var mincd = cm_common.getMinCardinalityErrors(model);
+    var maxcd = cm_common.getMaxCardinalityErrors(model);
+    var minval = cm_common.getMinValueErrors(model);
+    var maxval = cm_common.getMaxValueErrors(model);
+    var enumErr = cm_common.getInvalidValueErrors(model);
+
+    err=md.concat(maxfl,mincd , maxcd ,minval, maxval, enumErr);
+    //err = filterErrorByRelevance(model,err);
+
+    return err;
+  ]]></script>
+</script>

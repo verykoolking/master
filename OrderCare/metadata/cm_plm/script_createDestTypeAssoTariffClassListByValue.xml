@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.createDestTypeAssoTariffClassListByValue">
+  <group>applicabilityCondition.api</group>
+  <label>createDestTypeAssoTariffClassListByValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="DestTypeAssoTariffClassList" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.DestTypeAssoTariffClassList</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        if(!cm_plm.isModificationAllowed(DestTypeAssoTariffClassList))
+            return api_common.createFault("ERR", "This modality is being maintained in another project.");
+
+        if(cm_plm.isProjectActive(DestTypeAssoTariffClassList.projectCode))
+            return api_common.createFault("ERR", "Item cannot be created for projects in ACT status.");
+
+        DestTypeAssoTariffClassList.startDate = DestTypeAssoTariffClassList.startDate ? DestTypeAssoTariffClassList.startDate : new Date();
+        var doc = new cm_plm.DestTypeAssoTariffClassListDoc();
+        DestTypeAssoTariffClassList.mapTo(doc);
+        doc.save();
+        doc.mapTo(DestTypeAssoTariffClassList);
+
+        var result = cm_plm.createProjectAssignmentForObject(DestTypeAssoTariffClassList);
+        if(api_common.isFault(result))
+            return result;
+
+        return DestTypeAssoTariffClassList;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

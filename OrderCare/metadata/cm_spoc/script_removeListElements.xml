@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.removeListElements">
+  <group>ui_scripts.utils</group>
+  <label>removeListElements</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="parentUi" type="rifp"/>
+    <parameter name="parentModelObj" type="rifp"/>
+    <parameter name="modelStr" type="rifp"/>
+    <parameter name="iteratorName" type="rifp"/>
+    <parameter name="delObjectsList" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var tmpIterator = parentUi[iteratorName];
+    var model = modelStr;
+    var modelDS = model+"DS";
+    var tmpModel = parentModelObj[modelDS];
+    var tmpRelations = parentModelObj[model];
+    var spec;
+    var currSel;
+    var targets = new Array();
+
+    /*
+    if(tmpRelations.length == 0 && tmpModel.length != 0){
+        for(var x = 0 ; x < tmpModel.length; x++){
+            tmpRelations[x] = tmpModel[x].specificationCode;
+        }
+    }*/
+
+    for(var i=0; i<parentUi[iteratorName].length; i++)
+    {
+        if(parentUi[iteratorName][i].Selected)
+        {
+            currSel = parentUi[iteratorName][i];
+            tmpIterator[i] = null;
+
+            for (var j=0; j<tmpRelations.length; j++)
+            {
+                if(tmpRelations[j] == currSel.model.id)
+                {
+                    spec = tmpRelations[j];
+                }
+            }
+
+            if(spec && cm_spoc.getExistingItem(spec))
+            {
+                targets.push(spec);
+                spec = null;
+            }
+        }
+    }
+
+    parentUi[iteratorName] = new Array();
+    parentModelObj[modelDS] = null;
+    parentModelObj[model] = null;
+
+    var count=0;
+    for(var i=0; i<tmpIterator.length; i++)
+    {
+        if(tmpIterator[i])
+        {
+            parentUi[iteratorName][count] = tmpIterator[i];
+            parentModelObj[modelDS][count] =  tmpIterator[i].model;
+            count++;
+        }
+    }
+
+    var c=0;
+    var len = tmpRelations.length;
+
+    var toDelete = false;
+    for (var j=0; j<len; j++){
+        if(tmpRelations[j]){
+            for(var l=0; l<targets.length; l++){
+                if(tmpRelations[j] == targets[l]){
+                    toDelete = true;
+                    break;
+                }
+            }
+            if (!toDelete){
+                parentModelObj[model][c] = tmpRelations[j];
+                c++;
+                toDelete = false;
+            }
+        }
+    }
+
+    return parentModelObj;
+  ]]></script>
+</script>

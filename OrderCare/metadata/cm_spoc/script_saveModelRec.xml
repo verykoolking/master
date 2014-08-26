@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.saveModelRec">
+  <group>ui_scripts.utils</group>
+  <label>saveModelRec</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="project" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="createMainItem" type="rifp">
+      <type>dtype_com.conceptwave.system.Boolean</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    // Do some actions and prepare the model DS before save
+    cm_spoc.beforeSaveModelRec(model);
+
+    var res=null;
+    var existingItem = cm_spoc.getExistingItem(model.specificationCode);
+
+    if(existingItem && !createMainItem)
+        res = cm_common.plmUpdateItem(model, project);
+    else
+        res = cm_common.plmCreateItem(model, project);
+
+    return res;
+  ]]></script>
+</script>

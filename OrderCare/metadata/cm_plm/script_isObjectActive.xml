@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.isObjectActive">
+  <group>applicabilityCondition.scripts</group>
+  <label>isObjectActive</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="object" type="rifp">
+      <type>dstruct_cm_plm.baseObject</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var tmpObject = object.copy();
+    tmpObject = cm_plm.getObjectByKey(tmpObject);
+    if(api_common.isFault(tmpObject))
+        Global.throwException(tmpObject.toXML());
+
+    return cm_plm.isProjectActive(tmpObject.projectCode);
+  ]]></script>
+</script>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.fileReaderRollBack">
+  <label>File Reader Roll Back</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="process" type="rifp">
+      <mandatory>true</mandatory>
+      <type>doc_cwf_pm.CWPROCESS</type>
+    </parameter>
+    <parameter name="document" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    Global.logInfo(" \n\n $$$$$$$$$$$$$$$$$$$$$  Read File RollBack Script $$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
+    var order =  process.processOrder;
+    order.header.OrderStatus = cw_etltool._import.$CONSTANT().orderStatus.IMPORTING;
+
+
+    for (var i=0; order.files && i < order.files.length; i++){
+        if(order.files[i].fileDoc.FileID ==  process.processDocument.CurrentFileID){
+
+            while(order.files[i].entities && order.files[i].entities.length > 0 ){
+                order.files[i].entities[0].deleteItem();
+            }
+        }
+    }
+    order.header.ErrorMessage = "";
+    order.save();
+    process.processDocument.IsError = false;
+  ]]></script>
+</script>

@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.HappyPeriodPopUp">
+  <group>UsageControl</group>
+  <label>HappyPeriodPopUp</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.UCSApConHappyPeriodArr</valueType>
+    </variable>
+    <variable name="yearsUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.HappyPeriodPopUpYearSelectionButton</valueType>
+    </variable>
+    <variable name="daysCtrlUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.HappyPeriodPopUpCtrlButton</valueType>
+    </variable>
+    <variable name="hoursCtrlUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.HappyPeriodPopUpCtrlButton</valueType>
+    </variable>
+    <variable name="weekDaysCtrlUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.HappyPeriodPopUpCtrlButton</valueType>
+    </variable>
+    <variable name="monthsCtrlUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.HappyPeriodPopUpCtrlButton</valueType>
+    </variable>
+    <variable name="HPDvar" type="leaf">
+      <valueType>ui_cm_spoc.forms.HappyPeriodDetailForm</valueType>
+    </variable>
+    <variable name="monthIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="dayRow1Iterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="dayRow2Iterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="dayRow3Iterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="hourRow1Iterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="hourRow2Iterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="weekDayIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+    <variable name="allMonthsSel" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="allDaysSel" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="allHoursSel" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="allWeekDaysSel" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="allYearSel" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="tableIterator" type="leaf">
+      <flags enum-type="metadataFlag">ARRAY</flags>
+      <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <height>100%</height>
+              <width>100%</width>
+              <elementList>
+                <element name="SectionStack" type="elsectnstck">
+                  <height>100%</height>
+                  <width>100%</width>
+                  <elementList>
+                    <element name="Section" type="elsect">
+                      <elementList>
+                        <element name="SectionHeader" type="elsecth">
+                          <label>Happy Period</label>
+                        </element>
+                        <element name="VerticalLayout1" type="elvlt">
+                          <width>100%</width>
+                          <elementList>
+                            <element name="HorizontalLayout" type="elhlt">
+                              <elementList>
+                                <element name="AddButton" type="elmnu">
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/uimthd_addNew</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/16/notebook_add.png</icon>
+                                </element>
+                                <element name="RemoveButton" type="elmnu">
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/uimthd_removeLine</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <icon>/cwt/images/16/delete.png</icon>
+                                </element>
+                              </elementList>
+                            </element>
+                            <element name="GridLayout" type="elgrd">
+                              <cellBorderStyle>CgCellDark</cellBorderStyle>
+                              <cellPadding>10</cellPadding>
+                              <colWidths>50px</colWidths>
+                              <fixedColWidths>true</fixedColWidths>
+                              <numOfCols>12</numOfCols>
+                              <width>1200px</width>
+                              <elementList>
+                                <element name="CellSpacer" type="elcsp">
+                                  <columnSpan>1</columnSpan>
+                                  <width>25px</width>
+                                </element>
+                                <element name="Year" type="ellab">
+                                  <cellAlignment>center,center</cellAlignment>
+                                  <columnSpan>2</columnSpan>
+                                  <label>Year</label>
+                                </element>
+                                <element name="Month" type="ellab">
+                                  <cellAlignment>center,center</cellAlignment>
+                                  <columnSpan>2</columnSpan>
+                                  <label>Month</label>
+                                </element>
+                                <element name="Day" type="ellab">
+                                  <cellAlignment>center,center</cellAlignment>
+                                  <columnSpan>2</columnSpan>
+                                  <label>Day</label>
+                                </element>
+                                <element name="Hour" type="ellab">
+                                  <cellAlignment>center,center</cellAlignment>
+                                  <columnSpan>2</columnSpan>
+                                  <label>Hour</label>
+                                </element>
+                                <element name="WeekDay" type="ellab">
+                                  <cellAlignment>center,center</cellAlignment>
+                                  <columnSpan>2</columnSpan>
+                                  <label>Week Day</label>
+                                </element>
+                                <element name="CellSpacer1" type="elcsp">
+                                  <columnSpan>1</columnSpan>
+                                  <width>50px</width>
+                                </element>
+                              </elementList>
+                            </element>
+                            <element name="TableVL" type="elvlt">
+                              <width>1200px</width>
+                              <elementList>
+                                <element name="TableIterator" type="eliter">
+                                  <variable type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_tableIterator</variablePath>
+                                    </variablePathList>
+                                  </variable>
+                                  <elementList>
+                                    <element name="HorizontalLayout1" type="elhlt">
+                                      <elementList>
+                                        <element name="FormFrame6" type="elovf">
+                                          <formReference type="varPath">
+                                            <variablePathList>
+                                              <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_tableIterator</variablePath>
+                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                            </variablePathList>
+                                          </formReference>
+                                        </element>
+                                      </elementList>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                            <element name="LayoutSpacer" type="ellsp"/>
+                            <element name="HorizontalLayout3" type="elhlt">
+                              <elementList>
+                                <element name="Button" type="elbtn">
+                                  <clickMethod type="varPath">
+                                    <variablePathList>
+                                      <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/uimthd_onClickSave</variablePath>
+                                    </variablePathList>
+                                  </clickMethod>
+                                  <label>OK</label>
+                                </element>
+                              </elementList>
+                            </element>
+                            <element name="VerticalLayout2" type="elvlt">
+                              <height>100%</height>
+                              <width>100%</width>
+                              <elementList>
+                                <element name="SectionStack1" type="elsectnstck">
+                                  <height>100%</height>
+                                  <width>100%</width>
+                                  <elementList>
+                                    <element name="Section1" type="elsect">
+                                      <elementList>
+                                        <element name="SectionHeader1" type="elsecth">
+                                          <label>Happy Period Detail</label>
+                                        </element>
+                                        <element name="VerticalLayout11" type="elvlt">
+                                          <elementList>
+                                            <element name="HorizontalLayout6" type="elhlt">
+                                              <elementList>
+                                                <element name="FormFrameYear" type="elovf">
+                                                  <fillSpace>false</fillSpace>
+                                                  <formReference type="varPath">
+                                                    <variablePathList>
+                                                      <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_yearsUI</variablePath>
+                                                      <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpYearSelectionButton/frmui_Forms</variablePath>
+                                                      <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpYearSelectionButton/frmui_Forms/exov_Default</variablePath>
+                                                    </variablePathList>
+                                                  </formReference>
+                                                  <variable type="varPath">
+                                                    <variablePathList>
+                                                      <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_yearsUI</variablePath>
+                                                    </variablePathList>
+                                                  </variable>
+                                                </element>
+                                              </elementList>
+                                            </element>
+                                            <element name="LayoutSpacer4" type="ellsp"/>
+                                            <element name="VerticalLayout21" type="elvlt">
+                                              <elementList>
+                                                <element name="HorizontalLayout2" type="elhlt">
+                                                  <elementList>
+                                                    <element name="FormFrameMonths" type="elovf">
+                                                      <formReference type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_monthsCtrlUI</variablePath>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpCtrlButton/frmui_Forms</variablePath>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpCtrlButton/frmui_Forms/exov_Default</variablePath>
+                                                        </variablePathList>
+                                                      </formReference>
+                                                      <variable type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_monthsCtrlUI</variablePath>
+                                                        </variablePathList>
+                                                      </variable>
+                                                    </element>
+                                                  </elementList>
+                                                </element>
+                                                <element name="MonthHL" type="elhlt">
+                                                  <elementList>
+                                                    <element name="Iterator" type="eliter">
+                                                      <variable type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_monthIterator</variablePath>
+                                                        </variablePathList>
+                                                      </variable>
+                                                      <elementList>
+                                                        <element name="FormFrame" type="elovf">
+                                                          <formReference type="varPath">
+                                                            <variablePathList>
+                                                              <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_monthIterator</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                                            </variablePathList>
+                                                          </formReference>
+                                                        </element>
+                                                      </elementList>
+                                                    </element>
+                                                  </elementList>
+                                                </element>
+                                              </elementList>
+                                            </element>
+                                            <element name="LayoutSpacer1" type="ellsp"/>
+                                            <element name="VerticalLayout3" type="elvlt">
+                                              <alignment>left,center</alignment>
+                                              <elementList>
+                                                <element name="HorizontalLayout21" type="elhlt">
+                                                  <elementList>
+                                                    <element name="FormFrameDays" type="elovf">
+                                                      <formReference type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_daysCtrlUI</variablePath>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpCtrlButton/frmui_Forms</variablePath>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpCtrlButton/frmui_Forms/exov_Default</variablePath>
+                                                        </variablePathList>
+                                                      </formReference>
+                                                      <variable type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_daysCtrlUI</variablePath>
+                                                        </variablePathList>
+                                                      </variable>
+                                                    </element>
+                                                  </elementList>
+                                                </element>
+                                                <element name="DayRow1HL" type="elhlt">
+                                                  <alignment>left,center</alignment>
+                                                  <elementList>
+                                                    <element name="Iterator1" type="eliter">
+                                                      <variable type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_dayRow1Iterator</variablePath>
+                                                        </variablePathList>
+                                                      </variable>
+                                                      <elementList>
+                                                        <element name="FormFrame1" type="elovf">
+                                                          <fillSpace>false</fillSpace>
+                                                          <formReference type="varPath">
+                                                            <variablePathList>
+                                                              <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_dayRow1Iterator</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                                            </variablePathList>
+                                                          </formReference>
+                                                        </element>
+                                                      </elementList>
+                                                    </element>
+                                                  </elementList>
+                                                </element>
+                                                <element name="DayRow2HL" type="elhlt">
+                                                  <alignment>left,center</alignment>
+                                                  <elementList>
+                                                    <element name="Iterator2" type="eliter">
+                                                      <variable type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_dayRow2Iterator</variablePath>
+                                                        </variablePathList>
+                                                      </variable>
+                                                      <elementList>
+                                                        <element name="FormFrame2" type="elovf">
+                                                          <formReference type="varPath">
+                                                            <variablePathList>
+                                                              <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_dayRow2Iterator</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                                            </variablePathList>
+                                                          </formReference>
+                                                        </element>
+                                                      </elementList>
+                                                    </element>
+                                                  </elementList>
+                                                </element>
+                                                <element name="DayRow3HL" type="elhlt">
+                                                  <alignment>left,center</alignment>
+                                                  <elementList>
+                                                    <element name="Iterator3" type="eliter">
+                                                      <variable type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_dayRow3Iterator</variablePath>
+                                                        </variablePathList>
+                                                      </variable>
+                                                      <elementList>
+                                                        <element name="FormFrame3" type="elovf">
+                                                          <formReference type="varPath">
+                                                            <variablePathList>
+                                                              <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_dayRow3Iterator</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                                            </variablePathList>
+                                                          </formReference>
+                                                        </element>
+                                                      </elementList>
+                                                    </element>
+                                                  </elementList>
+                                                </element>
+                                              </elementList>
+                                            </element>
+                                            <element name="LayoutSpacer2" type="ellsp"/>
+                                            <element name="VerticalLayout4" type="elvlt">
+                                              <elementList>
+                                                <element name="HorizontalLayout211" type="elhlt">
+                                                  <elementList>
+                                                    <element name="FormFrameHours" type="elovf">
+                                                      <formReference type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_hoursCtrlUI</variablePath>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpCtrlButton/frmui_Forms</variablePath>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpCtrlButton/frmui_Forms/exov_Default</variablePath>
+                                                        </variablePathList>
+                                                      </formReference>
+                                                      <variable type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_hoursCtrlUI</variablePath>
+                                                        </variablePathList>
+                                                      </variable>
+                                                    </element>
+                                                  </elementList>
+                                                </element>
+                                                <element name="HourRow1HL" type="elhlt">
+                                                  <alignment>left,center</alignment>
+                                                  <elementList>
+                                                    <element name="Iterator4" type="eliter">
+                                                      <variable type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_hourRow1Iterator</variablePath>
+                                                        </variablePathList>
+                                                      </variable>
+                                                      <elementList>
+                                                        <element name="FormFrame4" type="elovf">
+                                                          <formReference type="varPath">
+                                                            <variablePathList>
+                                                              <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_hourRow1Iterator</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                                            </variablePathList>
+                                                          </formReference>
+                                                        </element>
+                                                      </elementList>
+                                                    </element>
+                                                  </elementList>
+                                                </element>
+                                                <element name="HourRow2HL" type="elhlt">
+                                                  <alignment>left,center</alignment>
+                                                  <elementList>
+                                                    <element name="Iterator5" type="eliter">
+                                                      <variable type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_hourRow2Iterator</variablePath>
+                                                        </variablePathList>
+                                                      </variable>
+                                                      <elementList>
+                                                        <element name="FormFrame41" type="elovf">
+                                                          <formReference type="varPath">
+                                                            <variablePathList>
+                                                              <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_hourRow2Iterator</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                                            </variablePathList>
+                                                          </formReference>
+                                                        </element>
+                                                      </elementList>
+                                                    </element>
+                                                  </elementList>
+                                                </element>
+                                              </elementList>
+                                            </element>
+                                            <element name="LayoutSpacer3" type="ellsp"/>
+                                            <element name="VerticalLayout5" type="elvlt">
+                                              <elementList>
+                                                <element name="HorizontalLayout22" type="elhlt">
+                                                  <elementList>
+                                                    <element name="FormFrameWeekDays" type="elovf">
+                                                      <formReference type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_weekDaysCtrlUI</variablePath>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpCtrlButton/frmui_Forms</variablePath>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUpCtrlButton/frmui_Forms/exov_Default</variablePath>
+                                                        </variablePathList>
+                                                      </formReference>
+                                                      <variable type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_weekDaysCtrlUI</variablePath>
+                                                        </variablePathList>
+                                                      </variable>
+                                                    </element>
+                                                  </elementList>
+                                                </element>
+                                                <element name="weekHL" type="elhlt">
+                                                  <elementList>
+                                                    <element name="Iterator6" type="eliter">
+                                                      <variable type="varPath">
+                                                        <variablePathList>
+                                                          <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_weekDayIterator</variablePath>
+                                                        </variablePathList>
+                                                      </variable>
+                                                      <elementList>
+                                                        <element name="FormFrame5" type="elovf">
+                                                          <formReference type="varPath">
+                                                            <variablePathList>
+                                                              <variablePath>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_weekDayIterator</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                                                              <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                                                            </variablePathList>
+                                                          </formReference>
+                                                        </element>
+                                                      </elementList>
+                                                    </element>
+                                                  </elementList>
+                                                </element>
+                                              </elementList>
+                                            </element>
+                                          </elementList>
+                                        </element>
+                                      </elementList>
+                                    </element>
+                                  </elementList>
+                                </element>
+                              </elementList>
+                            </element>
+                          </elementList>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$allYearSel" type="laction">
+      <path>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_allYearSel</path>
+      <type>initializer</type>
+      <script>return false;</script>
+    </method>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        var m = cm_spoc.initUCSApConHappyPeriodArr(this,this.model);
+
+
+
+        return m;
+      ]]></script>
+    </method>
+    <method name="cwLeafInitAction$HPDvar" type="laction">
+      <path>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_HPDvar</path>
+      <type>initializer</type>
+      <script>return cm_spoc.initHappyPeriodDetail(this);</script>
+    </method>
+    <method name="cwLeafInitAction$allWeekDaysSel" type="laction">
+      <path>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_allWeekDaysSel</path>
+      <type>initializer</type>
+      <script>return false;</script>
+    </method>
+    <method name="cwLeafInitAction$allMonthsSel" type="laction">
+      <path>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_allMonthsSel</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_allMonthsSel</valueType>
+      <script>return false;</script>
+    </method>
+    <method name="cwLeafInitAction$allHoursSel" type="laction">
+      <path>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_allHoursSel</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_allHoursSel</valueType>
+      <script>return false;</script>
+    </method>
+    <method name="cwLeafInitAction$allDaysSel" type="laction">
+      <path>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_allDaysSel</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.HappyPeriodPopUp/leaf_allDaysSel</valueType>
+      <script>return false</script>
+    </method>
+    <method name="selectAllYear" type="uimthd">
+      <script>return cm_spoc.selectAllYearsScript(this);</script>
+    </method>
+    <method name="addNew" type="uimthd">
+      <script>cm_spoc.initHappyPeriod(this,null,true);</script>
+    </method>
+    <method name="removeLine" type="uimthd">
+      <script><![CDATA[
+        var removeFlag= false;
+        for(var i=0;i< this.tableIterator.length; i++){
+            if(this.tableIterator[i].Selected ==true){ removeFlag= true;}
+        }
+            if(removeFlag){
+                cm_spoc.removeLine(this);
+
+                cm_spoc.flush(this);
+            }else{
+                //nothing to remove
+            }
+      ]]></script>
+    </method>
+    <method name="onClickSave" type="uimthd">
+      <parameterList>
+        <parameter name="event" type="rifp">
+          <type>ui_com.conceptwave.system.Event</type>
+        </parameter>
+      </parameterList>
+      <script><![CDATA[
+        this.parent.owner.model.UCSimAppConditStaticRelEnum=null;
+        return this.parent.cwDialogClose();
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

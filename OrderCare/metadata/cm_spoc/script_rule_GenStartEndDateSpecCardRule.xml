@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_GenStartEndDateSpecCardRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_GenStartEndDateSpecCardRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>dstruct_cm_spoc.data.BoltOnType</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var ds=data.GeneralStartEndDateSpecDS;
+
+    if ( ( ds.StartDateTime || ds.EndDateTime ) && !ds.GeneralForBoltOn) {
+         errList.addErrorMessage(data,["Start Date Time, End Date Time" ,"Cannot be set if General For BoltOn is not set"],"NGAA_EPC_002","E");
+     return false;
+    } else {
+        return false;
+    }
+  ]]></script>
+</script>

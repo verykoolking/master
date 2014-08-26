@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initAwardedByLastTimeReceived">
+  <group>ui_scripts.Promotion.AwardedTopUpPromotion</group>
+  <label>initAwardedByLastTimeReceived</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!model.specificationCode)
+    {
+        model = cm_spoc.initModelForCreation(model);
+    }
+    else
+    {
+        model = cm_spoc.initModelForModification(model);
+
+        var listRelATUConnectionPhase = model.ABLTRATUConnectionPhaseArrDS.ListDS;
+        for ( var i = 0; i<listRelATUConnectionPhase.length; i++)
+        {
+            listRelATUConnectionPhase[i].BoltOnEnum = listRelATUConnectionPhase[i].BoltOn;
+        }
+
+        var listRelATUPhasePerSegment = model.ABLTRATUPhasePerSegmArrDS.ListDS;
+        for ( var i = 0; i<listRelATUPhasePerSegment.length; i++)
+        {
+            listRelATUPhasePerSegment[i].BoltOnEnum = listRelATUPhasePerSegment[i].BoltOn;
+            listRelATUPhasePerSegment[i].AwardedPromotionSegmentEnum = listRelATUPhasePerSegment[i].AwardedPromotionSegment;
+        }
+    }
+
+    return model;
+  ]]></script>
+</script>

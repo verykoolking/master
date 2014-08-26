@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.inicializeSuccessResponse">
+  <highlight>32</highlight>
+  <label>inicializeSuccessResponse</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Inicialize Success Response (dtree.response)
+     *
+     * @author  Luis Amorim
+     * @date    201403
+     *
+     * @param {DataStructure}  dtree
+     */
+
+    switch(dtree.operation)
+    {
+    case "queryProduct":
+        var response = new DataStructure("OCSProvisioning.productProvisioningManagement.v1.types.QueryProductResponse");
+        break;
+    case "queryProductSubscription":
+        var response = new DataStructure("OCSProvisioning.productProvisioningManagement.v1.types.QueryProductSubscriptionResponse");
+        break;
+    case "subscribeProductOffering":
+        var response = new DataStructure("OCSProvisioning.productProvisioningManagement.v1.types.SubscribeProductOfferingResponse");
+        break;
+    case "unsubscribeProduct":
+        if(dtree.pmOperation[0].activeServiceRegistry && dtree.pmOperation[0].updateServiceRegistry && dtree.response == null)
+            var response = new DataStructure("OCSProvisioning.productProvisioningManagement.v1.types.SubscribeProductOfferingResponse");
+        else
+            var response = new DataStructure("OCSProvisioning.productProvisioningManagement.v1.types.UnsubscribeProductResponse");
+        break;
+    case "updateProduct":
+        var response = new DataStructure("OCSProvisioning.productProvisioningManagement.v1.types.UpdateProductResponse");
+        break;
+    }
+
+    return response;
+  ]]></script>
+</script>

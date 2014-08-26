@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_MATOThresholdTopUpCondRule">
+  <group>rules_scripts.Messages</group>
+  <label>rule_MATOThresholdTopUpCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    //if((data.Operation=="RA" || data.Operation=="RC") && data.ThresholdTopUp==null)
+    if((data.Operation=="OperationTopUp" || data.Operation=="OperationMultipleTopUp") && data.ThresholdTopUp==null)
+    {
+         errList.addErrorMessage(data,["Threshold Top Up is mandatory for this Operation"],"NGAA_003","E");
+    }
+    return false;
+  ]]></script>
+</script>

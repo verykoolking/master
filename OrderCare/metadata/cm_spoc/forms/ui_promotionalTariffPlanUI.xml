@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.promotionalTariffPlanUI">
+  <group>Promotion</group>
+  <label>promotionalTariffPlanUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="parentUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.PromotionalSegmentForm</valueType>
+    </variable>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.TariffPlan</valueType>
+    </variable>
+    <variable name="Selected" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="HorizontalLayout2" type="elhlt">
+              <elementList>
+                <element name="Selected" type="elchk">
+                  <columnSpan>1</columnSpan>
+                  <removeLabelLine>true</removeLabelLine>
+                  <showLabel>false</showLabel>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.promotionalTariffPlanUI/leaf_Selected</variablePath>
+                    </variablePathList>
+                  </variable>
+                  <width>20px</width>
+                </element>
+                <element name="HorizontalLayout" type="elhlt">
+                  <alignment>center,center</alignment>
+                  <width>340px</width>
+                  <elementList>
+                    <element name="TariffPlanIdentifier" type="ellab">
+                      <columnSpan>2</columnSpan>
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <removeLabelLine>true</removeLabelLine>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>ui_cm_spoc.forms.promotionalTariffPlanUI/leaf_model</variablePath>
+                          <variablePath>dstruct_cm_spoc.data.TariffPlan/dstruct_TariffPlanIdentifier</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>280px</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="setParentUI" type="uimthd">
+      <parameterList>
+        <parameter name="ui" type="rifp">
+          <mandatory>true</mandatory>
+          <type>ui_com.conceptwave.system.UserInterface</type>
+        </parameter>
+      </parameterList>
+      <script>this.parentUI = ui;</script>
+    </method>
+    <method name="getParentUI" type="uimthd">
+      <valueType>ui_cm_spoc.forms.BoltOnForm</valueType>
+      <script>return this.parentUI;</script>
+    </method>
+    <method name="getTariffPlan" type="uimthd">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        if(this.model.TariffPlanIdentifier!=null){
+            return this.model.TariffPlanIdentifier;
+        }
+        return "";
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

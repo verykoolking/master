@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findSql name="pm_wm.readAttributesHierarchyFromCatalogFinder">
+  <dbSchema>ORDER</dbSchema>
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <input>doc_pm_wm.readAttributesHierarchyFromCatalogFinderData</input>
+  <label>readAttributesHierarchyFromCatalogFinder</label>
+  <maxRowsLimit>9999</maxRowsLimit>
+  <metaVersion>4</metaVersion>
+  <output>doc_pm_wm.readAttributesHierarchyFromCatalogFinderData</output>
+  <type>SQL</type>
+  <methodList>
+    <method name="cwOnFinderSQLSel" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        SELECT
+            attributepath
+          , itemcode
+          , itemattributecode
+          , type
+          , length
+          , precision
+          , defaultvalue
+        FROM (
+          WITH ir AS
+            ( SELECT
+                LEVEL
+              , ir0.itemrelationtarget
+              , LTRIM(SYS_CONNECT_BY_PATH( REPLACE( i.baseitemcode, 'base_'), '.'), '.') itempath
+              , LTRIM(SYS_CONNECT_BY_PATH( ir0.associationtype, '.'),'.')                associationpath
+              FROM
+                  cwpc_item           i
+                , cwpc_itemrelation_v ir0
+              WHERE
+                  ir0.status = 'ACT'
+              AND i.status   = 'ACT'
+              AND i.itemcode = ir0.itemrelationtarget
+              and i.startdate         <= sysdate
+              and (i.enddate is null or i.enddate > sysdate)
+              and ir0.startdate         <= sysdate
+              and (ir0.enddate is null or ir0.enddate > sysdate)
+              AND EXISTS (
+                  select 1
+                    from
+                        cwpc_projectcommand         cr
+                    WHERE CR.CATALOGOBJECTCODE = ir0.itemcode
+                    AND   cr.objecttype IN ( 'cwt_pc:cwt_itemRelation', 'cwa_epc:cwt_itemRelation')
+                    AND   cr.catalogobjectid = ir0.ITEMRELATIONVERSIONID
+                    AND (cr.enddate is null or cr.enddate > sysdate) )
+              AND EXISTS (
+                  select 1
+                    from
+                        cwpc_projectcommand         ci
+                    where
+                        i.itemcode  = ci.catalogobjectcode
+                    AND ci.objecttype = 'cwt_pc:cwt_item'
+                    and (ci.enddate is null or ci.enddate > sysdate)
+                    AND ci.catalogobjectid IS NULL )
+              CONNECT BY ir0.itemcode = PRIOR ir0.itemrelationtarget
+              START WITH ir0.itemcode =
+                ( SELECT ita0.itemcode
+                  FROM cwpc_itemattribute_v ita0
+                  WHERE
+                      {[1] ita0.itemcode          = ?}
+                      AND ita0.itemattributecode = 'specificationType'
+                      {[7,B] AND ita0.defaultvalue      = 'ProductOffering'}
+                      {[8,B] AND ita0.defaultvalue      = 'ProductSpecification'}
+                      and ita0.startdate         <= sysdate
+                      and (ita0.enddate is null or ita0.enddate > sysdate)
+                  INTERSECT
+                  SELECT itaCEDT.itemcode
+                  FROM cwpc_itemattribute_v itaCEDT
+                  WHERE
+                      {[1] itaCEDT.itemcode          = ?}
+                      and itaCEDT.itemattributecode = 'commercialEndDate'
+                      and itaCEDT.startdate         <= sysdate
+                      and (itaCEDT.enddate is null or itaCEDT.enddate > sysdate)
+                      AND (itaCEDT.defaultvalue is null OR to_timestamp_tz( REPLACE(itaCEDT.defaultvalue, 'T'), 'YYYY-MM-DD HH24:MI:SS.FF TZH:TZM') > sysdate )
+                )
+              UNION
+              SELECT
+                0
+              , i0.itemcode
+              , replace( baseitemcode, 'base_') itempath
+              , '' associationpath
+              FROM
+                  cwpc_itemattribute_v itaCEDT
+                , cwpc_itemattribute_v ita0
+                , cwpc_item            i0
+              WHERE
+                  i0.status = 'ACT'
+                  {[1] AND i0.itemcode     = ?}
+                  AND ita0.itemcode          = i0.itemcode
+                  AND ita0.status = 'ACT'
+                  AND ita0.itemattributecode = 'specificationType'
+                  {[7,B] AND ita0.defaultvalue      = 'ProductOffering'}
+                  {[8,B] AND ita0.defaultvalue      = 'ProductSpecification'}
+                  and i0.startdate         <= sysdate
+                  and (i0.enddate is null or i0.enddate > sysdate)
+                  AND EXISTS (
+                      select 1
+                        from
+                            cwpc_projectcommand         ci
+                        where
+                            i0.itemcode  = ci.catalogobjectcode
+                        AND ci.objecttype = 'cwt_pc:cwt_item'
+                        and (ci.enddate is null or ci.enddate > sysdate)
+                        AND ci.catalogobjectid IS NULL )
+                  and ita0.startdate         <= sysdate
+                  and (ita0.enddate is null or ita0.enddate > sysdate)
+                  AND EXISTS (
+                      select 1
+                        from
+                            cwpc_projectcommand         ca
+                        where
+                            ita0.itemcode  = ca.catalogobjectcode
+                        AND ca.objecttype           = 'cwt_pc:cwt_itemAttribute'
+                        AND ita0.ITEMATTRVERSIONID  = ca.catalogobjectid
+                        and (ca.enddate is null or ca.enddate > sysdate) )
+                  AND itaCEDT.itemcode           = i0.itemcode
+                  and itaCEDT.itemattributecode = 'commercialEndDate'
+                  and itaCEDT.startdate         <= sysdate
+                  and (itaCEDT.enddate is null or itaCEDT.enddate > sysdate)
+                  AND (itaCEDT.defaultvalue is null OR to_timestamp_tz( REPLACE(itaCEDT.defaultvalue, 'T'), 'YYYY-MM-DD HH24:MI:SS.FF TZH:TZM') > sysdate )
+              )
+          SELECT
+            itempath || '.' || ita.itemattributecode attributepath
+          , ita.itemcode
+          , ita.itemattributecode
+          , ita.attributecode
+          , a.type
+          , a.length
+          , a.precision
+          , ita.defaultvalue
+          FROM
+              cwpc_item            i
+            , cwpc_attribute       a
+            , cwpc_itemattribute_v ita
+            , ir
+          WHERE
+              a.status        = 'ACT'
+          AND ita.status      = 'ACT'
+          AND i.status        = 'ACT'
+          AND a.attributecode = ita.attributecode
+          AND i.itemcode      = ita.itemcode
+          AND ita.itemcode    = ir.itemrelationtarget
+          and ita.startdate         <= sysdate
+          and (ita.enddate is null or ita.enddate > sysdate)
+          AND EXISTS (
+              select 1
+                from
+                    cwpc_projectcommand         ca
+                where
+                    ita.itemcode  = ca.catalogobjectcode
+                AND ca.objecttype          = 'cwt_pc:cwt_itemAttribute'
+                AND ita.ITEMATTRVERSIONID  = ca.catalogobjectid
+                and (ca.enddate is null or ca.enddate > sysdate) )
+          ) aa
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_pm_wm.readAttributesHierarchyFromCatalogFinderData</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_pm_wm.readAttributesHierarchyFromCatalogFinderData/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_pm_wm.readAttributesHierarchyFromCatalogFinderData/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="readAttributesHierarchyFromCatalogFinderResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findSql_pm_wm.readAttributesHierarchyFromCatalogFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="attributepath" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_wm.readAttributesHierarchyFromCatalogFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_wm.readAttributesHierarchyFromCatalogFinderData/leaf_attributepath</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="itemcode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_wm.readAttributesHierarchyFromCatalogFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_wm.readAttributesHierarchyFromCatalogFinderData/leaf_itemcode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="itemattributecode" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_wm.readAttributesHierarchyFromCatalogFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_wm.readAttributesHierarchyFromCatalogFinderData/leaf_itemattributecode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="type" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_wm.readAttributesHierarchyFromCatalogFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_wm.readAttributesHierarchyFromCatalogFinderData/leaf_type</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="length" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_wm.readAttributesHierarchyFromCatalogFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_wm.readAttributesHierarchyFromCatalogFinderData/leaf_length</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="precision" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_wm.readAttributesHierarchyFromCatalogFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_wm.readAttributesHierarchyFromCatalogFinderData/leaf_precision</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="defaultvalue" type="elfld">
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findSql_pm_wm.readAttributesHierarchyFromCatalogFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_pm_wm.readAttributesHierarchyFromCatalogFinderData/leaf_defaultvalue</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_pm_wm.readAttributesHierarchyFromCatalogFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findSql_pm_wm.readAttributesHierarchyFromCatalogFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="readAttributesHierarchyFromCatalogFinderView" type="findVView">
+      <outputOverlay>findSql_pm_wm.readAttributesHierarchyFromCatalogFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findSql>

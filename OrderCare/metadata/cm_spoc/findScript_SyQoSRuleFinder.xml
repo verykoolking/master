@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findScript name="cm_spoc.SyQoSRuleFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <group>ui_scripts.QoS</group>
+  <input>doc_cwt_pc.cwt_itemSearch</input>
+  <label>SyQoSRuleFinder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_cm_spoc.SyQoSRuleDocument</output>
+  <type>script</type>
+  <volatility>0</volatility>
+  <methodList>
+    <method name="cwOnFinderSel" type="action">
+      <system>true</system>
+      <script>return;</script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cm_spoc.SyQoSRuleDocument</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cwt_pc.cwt_itemSearch/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cm_spoc.SyQoSRuleDocument/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="VerticalLayout" type="elvlt">
+                    <alignment>center,center</alignment>
+                    <height>100%</height>
+                    <width>100%</width>
+                    <elementList>
+                      <element name="HorizontalLayout2" type="elhlt">
+                        <elementList>
+                          <element name="GridLayout" type="elgrd">
+                            <numOfCols>3</numOfCols>
+                            <elementList>
+                              <element name="Add" type="elbtn">
+                                <label>Add New</label>
+                              </element>
+                              <element name="Delete" type="elbtn">
+                                <label>Delete</label>
+                              </element>
+                              <element name="UCDisplayEnum" type="elslct">
+                                <canSort>false</canSort>
+                                <iconHeight>16</iconHeight>
+                                <iconWidth>16</iconWidth>
+                                <label> Display:</label>
+                                <padding>0</padding>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                      <element name="HorizontalLayout" type="elhlt">
+                        <alignment>center,center</alignment>
+                        <edgeSize>2</edgeSize>
+                        <height>90%</height>
+                        <membersMargin>2</membersMargin>
+                        <showEdge>true</showEdge>
+                        <width>100%</width>
+                        <elementList>
+                          <element name="PriorityButtonsVL" type="elvlt">
+                            <elementList>
+                              <element name="ButtonUpDouble" type="elbtn">
+                                <icon>/cwt/images/16/navigate_up2.png</icon>
+                                <width>22px</width>
+                              </element>
+                              <element name="ButtonUp" type="elbtn">
+                                <icon>/cwt/images/16/navigate_up.png</icon>
+                                <width>22px</width>
+                              </element>
+                              <element name="ButtonDown" type="elbtn">
+                                <icon>/cwt/images/16/navigate_down.png</icon>
+                                <width>22px</width>
+                              </element>
+                              <element name="ButtonDownDouble" type="elbtn">
+                                <icon>/cwt/images/16/navigate_down2.png</icon>
+                                <width>22px</width>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="SACFinderResultTable" type="eltabl">
+                            <canReOrder type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                              </variablePathList>
+                            </canReOrder>
+                            <cellWidth>150</cellWidth>
+                            <editable type="varPath">
+                              <variablePathList>
+                                <variablePath>dtype_com.conceptwave.system.Boolean/leaf_TRUE</variablePath>
+                              </variablePathList>
+                            </editable>
+                            <filterFullData>true</filterFullData>
+                            <onSelectChange type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                              </variablePathList>
+                            </onSelectChange>
+                            <showFilter>true</showFilter>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>findScript_cm_spoc.SyQoSRuleFinder/ui_UserInterface/uivar_result</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="selected" type="elchk">
+                                <label>Select</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SyQoSRuleFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.SyQoSRuleDocument/leaf_selected</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="walletCond" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Wallet conditions</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SyQoSRuleFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.SyQoSRuleDocument/leaf_walletCond</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="usageControlCond" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Usage Control conditions</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SyQoSRuleFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.SyQoSRuleDocument/leaf_usageControlCond</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="boltOnTypesCond" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Bolt on Types conditions</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SyQoSRuleFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.SyQoSRuleDocument/leaf_boltOnTypesCond</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="spendLimitCond" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Spend limit conditions</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SyQoSRuleFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.SyQoSRuleDocument/leaf_spendLimitCond</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="debtCounterCond" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Debt counter conditions</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SyQoSRuleFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.SyQoSRuleDocument/leaf_debtCounterCond</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="status" type="elfld">
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <label>Status</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SyQoSRuleFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.SyQoSRuleDocument/leaf_status</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="tariffPlansGroup" type="elfld">
+                                <label>Tariff Plans Group</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findScript_cm_spoc.SyQoSRuleFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cm_spoc.SyQoSRuleDocument/leaf_tariffPlansGroup</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.SyQoSRuleFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findScript_cm_spoc.SyQoSRuleFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="SyQoSRuleFinderView" type="findVView">
+      <outputOverlay>findScript_cm_spoc.SyQoSRuleFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+    </view>
+  </viewList>
+</findScript>

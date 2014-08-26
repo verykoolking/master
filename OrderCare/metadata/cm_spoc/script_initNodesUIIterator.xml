@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initNodesUIIterator">
+  <group>ui_scripts.RatingTree.NodesUI</group>
+  <label>initNodesUIIterator</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var nodes = ui.selectedNodes;
+
+    if (! ui.nodesIterator)  ui.nodesIterator = [];
+
+    if (nodes && nodes.length>0) {
+
+        for (var i=0;i<nodes.length;i++) {
+
+           var model = getModelByCode(nodes[i].code);
+
+           var nui;
+           if (nodes[i].nodeType == 'att') {nui =  new cm_spoc.forms.attNodeUI(model,ui)}
+           else {nui = new cm_spoc.forms.ctNttNodeUI(model,ui)}
+
+           nui.code = nodes[i].code;
+           nui.description = nodes[i].description;
+           nui.nodeType= nodes[i].nodeType;
+           nui.nodeTypeValue= nodes[i].nodeTypeValue;
+           nui.values = cm_spoc.getNodeUIValue(ui,nodes[i].code);
+           nui.position = nodes[i].position;
+
+           ui.nodesIterator[ ui.nodesIterator.length ]=nui;
+
+        }
+
+    }
+
+
+    function getModelByCode(code){
+
+
+        var model = ui.model; //RatingTreeBranch
+        var rtbarr = model.RTBRTNodeOutputArrDS.List;
+        var rtbarrds =  model.RTBRTNodeOutputArrDS.ListDS;
+
+        for (var i=0;i< rtbarrds.length;i++) {
+
+                if ( rtbarrds[i].NodeName == code ) return rtbarrds[i];
+        }
+
+    }
+  ]]></script>
+</script>

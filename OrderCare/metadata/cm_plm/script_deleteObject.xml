@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.deleteObject">
+  <group>applicabilityCondition.scripts</group>
+  <label>deleteObject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="object" type="rifp">
+      <type>dstruct_cm_plm.baseObject</type>
+    </parameter>
+    <parameter name="modelType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        //we first remove the projectAssignment recorde for this object
+        var PA = new cm_plm.projectAssignment();
+        PA.objectId = object.objectId;
+        var list = cm_plm.queryProjectAssignment(PA);
+        if(api_common.isFault(list))
+            return list;
+
+        var result;
+        for(var i=0; i<list.length; i++){
+            result = cm_plm.removeProjectAssignmentByKey(list[i]);
+            if(api_common.isFault(result))
+                return result;
+        }
+
+        //now we remove the object itself
+        var doc = Document.readDoc(modelType, object.id);
+        if(!doc)
+            return api_common.createFault("ERR", "The object was not found: " + object.id + "[" + modelType + "]");
+
+        doc.deleteFromDB();
+
+        return object;
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

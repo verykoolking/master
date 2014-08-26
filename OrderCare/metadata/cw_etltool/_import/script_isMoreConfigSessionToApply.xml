@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.isMoreConfigSessionToApply">
+  <group>services</group>
+  <highlight>66</highlight>
+  <label>isMoreConfigSessionToApply</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="sessionId" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var configSessionFinder = new cm_pws.configSessionFinder();
+    var configSessionQuery = new cm_pws.configSessionQuery();
+    configSessionQuery.configSession.sessionId = sessionId;
+    configSessionQuery.configSession.isExecuted = false;
+    //query will return the items (excluding the ones which are executed (isExecuted=false)) ordered by 'requestTime' in ascending order
+
+    configSessionQuery.configSession.mapTo(configSessionFinder.searchDocument);
+    configSessionQuery.maxRows = 1;
+    var searchResults = configSessionFinder.search();
+
+    if(searchResults && searchResults.length > 0 )
+        return true
+    else
+    return false;
+  ]]></script>
+</script>

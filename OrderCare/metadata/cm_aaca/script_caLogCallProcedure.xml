@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.caLogCallProcedure">
+  <label>caLogCallProcedure</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="sendData" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="receiveData" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="sendTime" type="rifp">
+      <type>dtype_com.conceptwave.system.Date</type>
+    </parameter>
+    <parameter name="dbConnection" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="operation" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="itemCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="processId" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="errorCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    Global.beginTransaction("ORDER");
+    var sDate = new Date();
+    var msgId = [
+        '9',
+        sDate.getFullYear().toString().substr(2),
+        sDate.getMonth().toString().length==1?'0'+sDate.getMonth().toString():sDate.getMonth().toString(),
+        sDate.getDate().toString().length==1?'0'+sDate.getDate().toString():sDate.getDate().toString(),
+        sDate.getHours().toString().length==1?'0'+sDate.getHours().toString():sDate.getHours().toString(),
+        sDate.getMinutes().toString().length==1?'0'+sDate.getMinutes().toString():sDate.getMinutes().toString(),
+        sDate.getSeconds().toString().length==1?'0'+sDate.getSeconds().toString():sDate.getSeconds().toString(),
+        sDate.getMilliseconds().toString().length==1?'00'+sDate.getMilliseconds().toString():sDate.getMilliseconds().toString().length==2?'0'+sDate.getMilliseconds().toString():sDate.getMilliseconds().toString()
+    ].join("");
+
+    var aaProcMsg = new cwf_pm.messageLog();
+    aaProcMsg.messageID      = msgId;
+    aaProcMsg.avm            = theAVM.AVMId;
+    aaProcMsg.interType      = Global.getMetadataIndexByNames('cm_aaca:AAProcedureDefinition');
+    aaProcMsg.operation      = operation;
+    aaProcMsg.userId         = 'Caller Process: ' + processId;
+    aaProcMsg.creationTime   = sDate;
+    aaProcMsg.sendTime       = sendTime;
+    aaProcMsg.receiveTime    = sDate;
+    aaProcMsg.receiveCharset = 'utf-8';
+    aaProcMsg.userData1      = projectCode;
+    aaProcMsg.userData2      = dbConnection;
+    aaProcMsg.userData3      = itemCode;
+    aaProcMsg.save();
+
+    if(sendData!=null) {
+        aaProcMsg.writeLOB('SEND_DATA', sendData, false);
+        aaProcMsg.save();
+    }
+    if(receiveData!=null) {
+        aaProcMsg.writeLOB('RECEIVE_DATA', receiveData, false);
+        aaProcMsg.save();
+    }
+    Global.commitTransaction("ORDER");
+  ]]></script>
+</script>

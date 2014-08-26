@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.generateDestTypeAssoTariffClassListForAA">
+  <group>ApplicabilityCondition</group>
+  <label>generateDestTypeAssoTariffClassListForAA</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="DestTypeAssoTariffClassList" type="rifp">
+      <array>true</array>
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.DestTypeAssoTariffClassList</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cm_aaca.AAItemType</valueType>
+  <script><![CDATA[
+    try{
+
+        var item = new cm_aaca.AAItemType();
+        item.name = "DestTypeAssoTariffClassArr";
+        item.AAArrayOpe[0] = cm_aaca.createArrayOpe(item.name);
+        var rowNum = 0;
+        for(var i=0; i<DestTypeAssoTariffClassList.length; i++)
+        {
+            if(!(DestTypeAssoTariffClassList[i] instanceof cm_plm.DestTypeAssoTariffClassList))
+                continue;
+
+            var row = cm_aaca.createRow(rowNum+1, DestTypeAssoTariffClassList[i].ArrayOperation);
+            var rowItem = cm_aaca.addItem(row, "DestTypeAssoToTariffClass");
+
+            cm_aaca.addGenericAtt(cm_aaca.addItem(rowItem, "TariffClass"), "TariffClassCode", DestTypeAssoTariffClassList[i].TariffClassCode);
+            cm_aaca.addGenericAtt(cm_aaca.addItem(rowItem, "DestinationType"), "DestTypeId", DestTypeAssoTariffClassList[i].DestTypeId);
+            cm_aaca.addGenericAtt(cm_aaca.addItem(rowItem, "Nx24Rate"), "Nx24RateId", DestTypeAssoTariffClassList[i].Nx24RateId);
+            cm_aaca.addGenericAtt(cm_aaca.addItem(rowItem, "Nx24AppBoltonTypeList"), "Nx24AppBoltonTypeListId", DestTypeAssoTariffClassList[i].Nx24AppBoltonTypeListId);
+            cm_aaca.addGenericAtt(cm_aaca.addItem(rowItem, "AppBoltonTypeModality"), "AppBoltonTypeModality", DestTypeAssoTariffClassList[i].AppBoltonTypeModality);
+
+            item.AAArrayOpe[0].AAArrayRow[rowNum] = row;
+            rowNum++;
+        }
+
+        //constructing the response
+        var configItem = cm_aaca.createConfigurableItem("DestTypeAssoTariffClassList", projectCode);
+        configItem.AAAttributeList.AAItem[0] = item;
+        return configItem;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cw_etltool._export.ConfigurationInstancesExport">
+  <extends>doc_com.conceptwave.system.Document</extends>
+  <guid>{8bade739-a97f-4601-8b6c-5ae420fe6a80}</guid>
+  <label>Configuration Instances Export</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="modality" type="leaf">
+      <propertyElement type="elrgrp"/>
+      <valueType>dtype_cw_etltool._export.modality</valueType>
+    </variable>
+    <variable name="exportPath" type="leaf">
+      <propertyElement type="elfld">
+        <label>Export Path</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="cwLeafInitAction$modality" type="laction">
+      <path>doc_cw_etltool._export.ConfigurationInstancesExport/leaf_modality</path>
+      <type>initializer</type>
+      <script><![CDATA[return "F";]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_com.conceptwave.system.Document/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cw_etltool._export.ConfigurationInstancesExport</valueType>
+      </variable>
+      <variable name="entityTypeFinderUI" type="leaf">
+        <valueType>findScript_cw_etltool._export.entityTypeFinder/ui_UserInterface</valueType>
+      </variable>
+      <variable name="domianFinderUI" type="leaf">
+        <valueType>findScript_cw_etltool._export.domainFinder/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="VerticalLayout" type="elvlt">
+                <alignment>left,center</alignment>
+                <width>100%</width>
+                <elementList>
+                  <element name="SectionStack" type="elsectnstck">
+                    <height>125px</height>
+                    <width>902px</width>
+                    <elementList>
+                      <element name="Section" type="elsect">
+                        <elementList>
+                          <element name="SectionHeader" type="elsecth">
+                            <label>Export Template</label>
+                          </element>
+                          <element name="GridLayout" type="elgrd">
+                            <numOfCols>4</numOfCols>
+                            <elementList>
+                              <element name="modality" type="elrgrp">
+                                <labelOrientation>left</labelOrientation>
+                                <removeLabelLine>true</removeLabelLine>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/uivar_model</variablePath>
+                                    <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/leaf_modality</variablePath>
+                                  </variablePathList>
+                                </variable>
+                              </element>
+                              <element name="exportPath" type="elfld">
+                                <columnSpan>0</columnSpan>
+                                <editable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </editable>
+                                <labeAlign>right</labeAlign>
+                                <labelOrientation>left</labelOrientation>
+                                <startRow>true</startRow>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/uivar_model</variablePath>
+                                    <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/leaf_exportPath</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>400px</width>
+                              </element>
+                              <element name="RowSpacer" type="elrsp"/>
+                            </elementList>
+                          </element>
+                          <element name="FormFrame" type="elovf">
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/frmui_Forms</variablePath>
+                                <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/frmui_Forms/vform_PartialExportOption</variablePath>
+                              </variablePathList>
+                            </formReference>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="EntityTypes" type="vform">
+            <label>EntityTypes</label>
+            <root name="SectionStack" type="elsectnstck">
+              <height>400px</height>
+              <width>432px</width>
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="SectionHeader" type="elsecth">
+                      <label>Entity Types</label>
+                    </element>
+                    <element name="FormFrame" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/leaf_entityTypeFinderUI</variablePath>
+                          <variablePath>findScript_cw_etltool._export.entityTypeFinder/ui_UserInterface/frmui_Forms</variablePath>
+                          <variablePath>findScript_cw_etltool._export.entityTypeFinder/ui_UserInterface/frmui_Forms/vform_EntityList</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/leaf_entityTypeFinderUI</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="DomainList" type="vform">
+            <label>DomainList</label>
+            <root name="SectionStack" type="elsectnstck">
+              <height>400px</height>
+              <width>432px</width>
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="SectionHeader" type="elsecth">
+                      <label>Domain List</label>
+                    </element>
+                    <element name="FormFrame" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/leaf_domianFinderUI</variablePath>
+                          <variablePath>findScript_cw_etltool._export.domainFinder/ui_UserInterface/frmui_Forms</variablePath>
+                          <variablePath>findScript_cw_etltool._export.domainFinder/ui_UserInterface/frmui_Forms/vform_DomianList</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/leaf_domianFinderUI</variablePath>
+                        </variablePathList>
+                      </variable>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="PartialExportOption" type="vform">
+            <label>PartialExportOption</label>
+            <root name="SectionStack" type="elsectnstck">
+              <height>500px</height>
+              <width>900px</width>
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="SectionHeader" type="elsecth">
+                      <label>Export Partial Portion</label>
+                    </element>
+                    <element name="GridLayout" type="elgrd">
+                      <alignment>left,center</alignment>
+                      <numOfCols>10</numOfCols>
+                      <elementList>
+                        <element name="DateField" type="eldate">
+                          <cellAlignment>left,center</cellAlignment>
+                          <columnSpan>3</columnSpan>
+                          <labeAlign>right</labeAlign>
+                          <label>From Date</label>
+                          <labelOrientation>left</labelOrientation>
+                          <width>130px</width>
+                        </element>
+                      </elementList>
+                    </element>
+                    <element name="FormFrame" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/frmui_Forms</variablePath>
+                          <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/frmui_Forms/vform_Lists</variablePath>
+                        </variablePathList>
+                      </formReference>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="Lists" type="vform">
+            <label>Lists</label>
+            <root name="VerticalLayout" type="elhlt">
+              <height>300px</height>
+              <width>100%</width>
+              <elementList>
+                <element name="LayoutSpacer1" type="ellsp">
+                  <width>10px</width>
+                </element>
+                <element name="HorizontalLayout" type="elhlt">
+                  <elementList>
+                    <element name="FormFrame" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/frmui_Forms</variablePath>
+                          <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/frmui_Forms/vform_EntityTypes</variablePath>
+                        </variablePathList>
+                      </formReference>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="LayoutSpacer" type="ellsp">
+                  <width>10px</width>
+                </element>
+                <element name="HorizontalLayout1" type="elhlt">
+                  <elementList>
+                    <element name="FormFrame1" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/frmui_Forms</variablePath>
+                          <variablePath>doc_cw_etltool._export.ConfigurationInstancesExport/ui_UserInterface/frmui_Forms/vform_DomainList</variablePath>
+                        </variablePathList>
+                      </formReference>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="Menu" type="exov">
+            <base>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms/exov_Menu</base>
+            <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms/exov_Menu</extends>
+            <label>Menu</label>
+            <overrideList>
+              <override name="hl1" type="elhlt">
+                <alignment>left,center</alignment>
+                <elementList>
+                  <element name="cwfSave" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.DocumentUserInterface/usrActionMethod_save</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconSave.gif</icon>
+                    <label>Save</label>
+                    <showDown>true</showDown>
+                    <tooltip>Save</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="Reset" type="elmnu">
+                    <icon>/cwf/procNew.gif</icon>
+                    <label>Reset</label>
+                  </element>
+                  <element name="StartProcess" type="elmnu">
+                    <icon>/cwf/MenuIconGo.gif</icon>
+                    <label>Start Process</label>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="onInit" type="action">
+        <valueType>nmeta_com.conceptwave.system.Object</valueType>
+        <script><![CDATA[
+          this.cw$super_onInit();
+
+          this.domianFinderUI = new cw_etltool._export.domainFinder.UserInterface(null,this);
+          this.entityTypeFinderUI = new cw_etltool._export.entityTypeFinder.UserInterface(null,this);
+        ]]></script>
+      </method>
+      <method name="isPartialExportPortionEditable" type="permMethod">
+        <script><![CDATA[return (this.model.modality == "P")]]></script>
+      </method>
+    </methodList>
+  </UserInterface>
+</document>

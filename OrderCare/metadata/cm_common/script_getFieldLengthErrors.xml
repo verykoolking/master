@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.getFieldLengthErrors">
+  <group>utilities</group>
+  <label>getFieldLengthErrors</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dataStructure" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var err = dataStructure.validate(100, true, true);
+    var ret = [];
+    if (err) {
+
+        var fem = cm_common.filterErrorMessages(err, 'DE0034', '"([^"]+)"');
+
+        for (var i=0; i<fem.length; i++) {
+             ret.push("NGAA_EPC_002");
+             ret.push(fem[i]);
+
+        }
+
+        return ret;
+    }
+    else {
+        return ret;
+    }
+  ]]></script>
+</script>

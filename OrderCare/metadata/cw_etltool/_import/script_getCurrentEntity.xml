@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cw_etltool._import.getCurrentEntity">
+  <label>Get Current Entity</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="process" type="rifp">
+      <mandatory>true</mandatory>
+      <type>doc_cwf_pm.CWPROCESS</type>
+    </parameter>
+    <parameter name="filesGroup" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="entityId" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var entityDoc = null;
+    for (var i=0; filesGroup.entities && i < filesGroup.entities.length; i++){
+
+        if(entityId != null && entityId != "" ){
+
+            if(filesGroup.entities[i].entityDoc.EntityID ==  entityId){
+                entityDoc = filesGroup.entities[i].entityDoc;
+                break;
+            }
+
+        }
+        else {
+            if(filesGroup.entities[i].entityDoc.Sequence ==  process.processDocument.ProcessedEntitiesCount){
+                entityDoc = filesGroup.entities[i].entityDoc;
+                process.processDocument.CurrentEntityID = entityDoc.EntityID;
+                break;
+            }
+        }
+    }
+
+    return entityDoc;
+  ]]></script>
+</script>

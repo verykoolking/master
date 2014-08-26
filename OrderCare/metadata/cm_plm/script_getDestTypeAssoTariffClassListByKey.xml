@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.getDestTypeAssoTariffClassListByKey">
+  <group>applicabilityCondition.api</group>
+  <label>getDestTypeAssoTariffClassListByKey</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="DestTypeAssoTariffClassList" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.DestTypeAssoTariffClassList</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        var doc = Document.readDoc("cm_plm:DestTypeAssoTariffClassListDoc", DestTypeAssoTariffClassList.id);
+        if(!doc)
+            return api_common.createFault("ERR", "The DestTypeAssoTariffClassListId was not found: [" + DestTypeAssoTariffClassList.id+ "]");
+
+        doc.mapTo(DestTypeAssoTariffClassList)
+        return DestTypeAssoTariffClassList;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

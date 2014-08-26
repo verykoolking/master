@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.validateRequest">
+  <highlight>32</highlight>
+  <label>validateRequest</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+     * Maps and Validates The Request with the Catalog
+     *
+     * @author  Luis Amorim
+     * @date    201403
+     *
+     * @param {DataStructure}  dtree
+     */
+
+    try {
+        var requestAtt = dtree.requestAttributesHierarchy;
+
+        if (!pm_wm.validateRequestID(dtree)){
+            return false;
+        }
+
+        switch(dtree.operation)
+        {
+        case "queryProduct":
+        case "unsubscribeProduct":
+        case "updateProduct":  // 20140813 LA
+        case "subscribeProductOffering":
+            // dtree.operation subscribeProductOffering //////////////////////////////////
+            // dtree.catalogData.attributesHierarchy - done with Fetch script
+            /*if (!(dtree.catalogData.oCSProductOfferingItemcode)) {
+                   dtree.errorcode.push("ER_WF_400"); // unknown attribute
+                   dtree.errortext.push(pm_wm.getAttributeFromArray(
+                                          requestAtt
+                                        , dtree.catalogData.oCSProductOfferingCodeName).value + "(unknown " + dtree.catalogData.oCSProductOfferingCodeName + ")");
+                   return false;
+            }*/
+
+            // validate array of attributes from Request - known and overridden
+            for ( var kk = 0; (kk < requestAtt.length) ; kk++ ) {
+
+                var fieldfullpath = requestAtt[kk].attributepath;
+                var at = pm_wm.getAttributeFromAttributesHierarchy( dtree.pmOperationFieldToAA, "sourceField", fieldfullpath ); // looking
+
+                // known
+                if (!(at) || (!(at.sourceField))) {
+                   dtree.errorcode.push("ER_WF_401");
+                   dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_401", [fieldfullpath]));
+                   dtree.errorVariable = requestAtt[kk].itemattributecode;
+                   return false;
+                }
+
+                // overridden
+                if ( at.fromExternalRequest != "1" ) {
+                    dtree.errorcode.push("ER_WF_402");
+                    dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_402", [fieldfullpath]));
+                    dtree.errorVariable = requestAtt[kk].itemattributecode;
+                    return false;
+                }
+            }
+
+            // validating mandatory, copying the needed default values and deleting the not overridable
+            for ( var kk = 0; (kk < dtree.pmOperationFieldToAA.length ) ; kk++ ) {
+
+                var field =  dtree.pmOperationFieldToAA[kk];
+                var fieldfullpath = dtree.pmOperationFieldToAA[kk].sourceField;
+                if ( (field.fromExternalRequest == "1") ) {
+                    var at = pm_wm.getAttributeFromAttributesHierarchy( requestAtt, "attributepath", fieldfullpath );
+                    // mandatory
+                    if ( field.mandatory == "1"  && !field.defaultValue && field.overridden == '0') {
+                        if (!at || !at.attributepath) {
+                           dtree.errorcode.push("ER_WF_403");
+                           dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_403", [fieldfullpath]));
+                           //dtree.errorVariable = requestAtt[kk].itemattributecode;
+                           dtree.errorVariable = fieldfullpath;
+                           return false;
+                        }
+                    }
+                    // adding default values
+                    /*if ( ( field.mandatory == "1" ) && ( field.overridden != "1" ) && ( field.defaultValue ) ) {
+                        if (!(at) || (!(at.attributepath))) {
+                            requestAtt[requestAtt.length] = new Document( "pm_wm.hierarchicalAttribute");
+                            requestAtt[requestAtt.length-1].attributepath = fieldfullpath;
+                            requestAtt[requestAtt.length-1].defaultvalue  = field.defaultValue;
+                            //requestAtt[requestAtt.length-1].other3  = requestAtt[requestAtt.length-1].attributepath;
+                            requestAtt[requestAtt.length-1].other3 = "";
+                            var arr = fieldfullpath.split(".");
+                            if ( (arr) && (arr.length > 0 ) ) {
+                                requestAtt[requestAtt.length-1].other3 = arr[0] + "[0]";
+                                for ( var i = 1; i < arr.length; i++)
+                                    requestAtt[requestAtt.length-1].other3 = requestAtt[requestAtt.length-1].other3 + "." + arr[i] + "[0]";
+                            }
+                            else
+                                requestAtt[requestAtt.length-1].other3  = fieldfullpath;
+                        }
+                    }*/
+
+                    // "deleting" (all) unneeded attributes from the request attributes array
+                    if ( ( field.ignoreToAA == "1" ) ) {
+                        for ( var zz=0; (zz < 1000) && (at) && (at.attributepath); zz++) {
+                            var at = pm_wm.getAttributeFromAttributesHierarchy( requestAtt, "attributepath", fieldfullpath );
+                            if ((at) && ((at.attributepath))) {
+                              at.attributepath = "";
+                              at.defaultvalue  = "";
+                              at.exponent      = "";
+                            }
+                        }
+                    }
+                }
+            }
+            // cleaning request attributes array
+            var ah2 = new Array();
+            for ( var kk = 0; (kk < requestAtt.length) ; kk++ )
+               if ( requestAtt[kk].attributepath ) ah2[ah2.length] = requestAtt[kk];
+
+            // LA 20140516ah = ah2;
+
+            dtree.requestAttributesHierarchy = ah2; // LA 20140516
+
+            break;
+
+        case "queryProductSubscription":
+            break;
+        }
+      }
+
+    catch(err)
+    {
+        dtree.errorcode.push("ER_WF_499");
+        dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_499", [err]));
+        return false;
+    }
+
+    return true;
+  ]]></script>
+</script>

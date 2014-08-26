@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.inicializeMainProcess">
+  <highlight>32</highlight>
+  <label>inicializeMainProcess</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Inicialize Main Process (Decision Tree)
+     *
+     * @author  Luis Amorim
+     * @date    201403
+     *
+     * @param {DataStructure}  dtree
+     */
+    dtree.isAllOK           = true; // for now it's all OK
+    dtree.isQueryRequest    = dtree.request.metadataTypeLabel.toLowerCase().startsWith("query");
+    if (!dtree.operation) dtree.operation         = dtree.request.metadataTypeLabel;
+    dtree.catalogData       = new DataStructure ("pm_wm.catalogData");
+    dtree.errorcode         = new Array();
+    dtree.errortext         = new Array();
+    Global.logDebug("dtree.request=" + dtree.request.toXML());
+
+    dtree.requestAttributesHierarchy = [];
+
+    if ( dtree.request) {
+        var oper = dtree.request;
+        var atts;
+        (oper.has("queryOperationId")) ? dtree.operationId = oper.queryOperationId : null;
+        (oper.has("updateOperationId")) ? dtree.operationId = oper.updateOperationId : null;
+
+        if ( (oper.has("productOfferingId")) && (oper.productOfferingId.has("id")) ) {
+            dtree.catalogData.oCSProductOfferingItemcode = oper.productOfferingId.id;
+        }
+        if (oper.has("productId")) {
+            if ( (oper.productId.has("productOfferingId")) && (oper.productId.productOfferingId.has("id")) ) {
+                dtree.catalogData.oCSProductOfferingItemcode = oper.productId.productOfferingId.id;
+            }
+            if ( (oper.productId.has("productSpecificationId")) && (oper.productId.productSpecificationId.has("productNumber")) ) {
+                dtree.catalogData.oCSProductSpecificationItemcode = oper.productId.productSpecificationId.productNumber;
+            }
+            if ( (oper.productId.has("productInstanceId")) && (oper.productId.productInstanceId.has("productSerialNumber"))) {
+                if ( (oper.productId.productInstanceId.has("productSpecificationId")) && (oper.productId.productInstanceId.productSpecificationId.has("productNumber")) ) {
+                    dtree.catalogData.oCSProductSpecificationItemcode = oper.productId.productInstanceId.productSpecificationId.productNumber;
+                }
+                dtree.catalogData.oCSProductInstanceProductSerialNumber =  oper.productId.productInstanceId.productSerialNumber;
+            }
+            if (oper.productId.has("type")) {
+                dtree.catalogData.oCSProductOfferingType = oper.productId.type;
+                dtree.offerType =  dtree.catalogData.oCSProductOfferingType;
+            }
+        }
+
+        if ( (!( dtree.isQueryRequest )) && (oper.has("additionalCharacteristics") && (oper.additionalCharacteristics.has("oCSProductSpecCharacteristic"))))
+            atts = oper.additionalCharacteristics.oCSProductSpecCharacteristic;
+
+        if ( ( dtree.isQueryRequest ) && (oper.has("filterCharacteristics") && (oper.filterCharacteristics.has("oCSProductSpecCharacteristic"))))
+            atts = oper.filterCharacteristics.oCSProductSpecCharacteristic;
+
+        if ( (atts) && ((atts.has( "complexCharacteristic")) || (atts.has( "characteristic")) || (atts.has( "choiceCharacteristic")) || (atts.has( "item")) )){
+            dtree.requestAttributesHierarchy = pm_wm.readAttributesHierarchyFromRequest( atts );
+        }
+        else{
+            dtree.requestAttributesHierarchy = new Array(); // Array of pm_wm.hierarchicalAttribute
+        }
+    }
+  ]]></script>
+</script>

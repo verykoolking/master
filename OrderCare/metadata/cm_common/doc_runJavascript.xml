@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cm_common.runJavascript">
+  <extends>doc_com.conceptwave.system.Document</extends>
+  <group>UI</group>
+  <guid>{1ba48ec5-12ae-4f41-835e-eed28259ffca}</guid>
+  <label>Run JavaScript</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="javascript" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="feedBack" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="example" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="cwOnDocInit" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        this.feedBack = "";
+        this.javascript = "";
+        this.example = "var x=\"Hello\"; (x + \" world\")";
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_com.conceptwave.system.Document/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cm_common.runJavascript</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="runJavascriptGrid_vCentering" type="elvlt">
+                <height>100%</height>
+                <membersMargin>5</membersMargin>
+                <width>100%</width>
+                <elementList>
+                  <element name="runJavascriptGrid" type="elgrd">
+                    <colWidths>195px,195px,195px,195px</colWidths>
+                    <numOfCols>4</numOfCols>
+                    <useDefaultHeight>true</useDefaultHeight>
+                    <width>780px</width>
+                    <elementList>
+                      <element name="Javascript" type="eltxtArea">
+                        <canSort>false</canSort>
+                        <height>380px</height>
+                        <labelOrientation>top</labelOrientation>
+                        <removeLabelLine>true</removeLabelLine>
+                        <rowSpan>4</rowSpan>
+                        <showLabel>false</showLabel>
+                        <startRow>true</startRow>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cm_common.runJavascript/ui_UserInterface/uivar_model</variablePath>
+                            <variablePath>doc_cm_common.runJavascript/leaf_javascript</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>100%</width>
+                      </element>
+                      <element name="example" type="elfld">
+                        <editable type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </editable>
+                        <label>Example</label>
+                        <labelOrientation>top</labelOrientation>
+                        <rowSpan>2</rowSpan>
+                        <startRow>true</startRow>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cm_common.runJavascript/ui_UserInterface/uivar_model</variablePath>
+                            <variablePath>doc_cm_common.runJavascript/leaf_example</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="Eval1" type="elbtn">
+                        <clickMethod type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cm_common.runJavascript/ui_UserInterface/usrActionMethod_cwOnFormFieldBefore_runJavascriptEval1</variablePath>
+                          </variablePathList>
+                        </clickMethod>
+                        <iconOrientation>top</iconOrientation>
+                        <label>Run</label>
+                        <startRow>true</startRow>
+                      </element>
+                      <element name="Output" type="eltxtArea">
+                        <editable type="varPath">
+                          <variablePathList>
+                            <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                          </variablePathList>
+                        </editable>
+                        <height>120px</height>
+                        <label>Output</label>
+                        <labelOrientation>top</labelOrientation>
+                        <rowSpan>4</rowSpan>
+                        <startRow>true</startRow>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>doc_cm_common.runJavascript/ui_UserInterface/uivar_model</variablePath>
+                            <variablePath>doc_cm_common.runJavascript/leaf_feedBack</variablePath>
+                          </variablePathList>
+                        </variable>
+                        <width>100%</width>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="runTrigger" type="usrActionMethod">
+        <script><![CDATA[
+          this.cw$super_runTrigger();
+          Global.runContentDisplayScript(this, "displayScript");
+        ]]></script>
+      </method>
+      <method name="cwOnFormFieldAfter_runJavascriptEval1" type="usrActionMethod">
+        <parameterList>
+          <parameter name="selectList" type="rifp">
+            <mandatory>true</mandatory>
+            <type>nmeta_com.conceptwave.system.Object</type>
+          </parameter>
+          <parameter name="selectData" type="rifp">
+            <mandatory>true</mandatory>
+            <type>nmeta_com.conceptwave.system.Object</type>
+          </parameter>
+        </parameterList>
+        <script><![CDATA[
+          var value = "";
+
+          var hackDetect = false;
+
+          var spaceless = this.model.javascript.replace(' ','');
+
+          if(spaceless.indexOf("eval(")!=-1)
+              hackDetect = true;
+
+          if(hackDetect){
+              this.model.feedBack = "CAN'T USE EVAL!";
+              this.model.dirty = false;
+              return;
+          }
+
+
+          var script = this.model.javascript;
+
+
+          try
+          {
+              value += eval(script);
+          }
+          catch(e)
+          {
+              value += e;
+          }
+
+          this.model.feedBack = value.toString();
+          this.model.dirty = false;
+        ]]></script>
+      </method>
+      <method name="cwOnFormFieldBefore_runJavascriptEval1" type="usrActionMethod">
+        <script><![CDATA[
+          function funcReturnsValCallDisplayScript(scriptReturnsValToCallDisplayScriptThis) {
+
+          scriptReturnsValToCallDisplayScriptThis.cwOnFormFieldAfter_runJavascriptEval1();
+
+          }
+
+          var funcReturnsValCallDisplayScriptRes = funcReturnsValCallDisplayScript(this);
+          if(funcReturnsValCallDisplayScriptRes != null && funcReturnsValCallDisplayScriptRes instanceof Document &&
+              funcReturnsValCallDisplayScriptRes.hasMethod("displayScript"))
+            funcReturnsValCallDisplayScriptRes.displayScript();
+          return funcReturnsValCallDisplayScriptRes;
+        ]]></script>
+      </method>
+    </methodList>
+  </UserInterface>
+</document>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.generateAppBoltonTypeGroupListForAA">
+  <group>ApplicabilityCondition</group>
+  <label>generateAppBoltonTypeGroupListForAA</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="AppBoltonTypeGroupList" type="rifp">
+      <array>true</array>
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.AppBoltonTypeGroupList</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_cm_aaca.AAItemType</valueType>
+  <script><![CDATA[
+    try{
+
+        var item = new cm_aaca.AAItemType();
+        item.name = "AppBoltonTypeGroupArr";
+        item.AAArrayOpe[0] = cm_aaca.createArrayOpe(item.name);
+        var rowNum = 0;
+
+        for(var i=0; i<AppBoltonTypeGroupList.length; i++)
+        {
+            if(!(AppBoltonTypeGroupList[i] instanceof cm_plm.AppBoltonTypeGroupList))
+                continue;
+            var row = cm_aaca.createRow(rowNum+1, AppBoltonTypeGroupList[i].ArrayOperation);
+
+            var rowItem = cm_aaca.addItem(row, "AppBoltonTypeGroup");
+            cm_aaca.addGenericAtt(rowItem, "AppBoltonTypeGroupId", AppBoltonTypeGroupList[i].AppBoltonTypeGroupId);
+            cm_aaca.addGenericAtt(rowItem, "AppBoltonTypeGroupDescription", AppBoltonTypeGroupList[i].AppBoltonTypeGroupDescription);
+            cm_aaca.addGenericAtt(rowItem, "AppBoltonTypeGroupModality", AppBoltonTypeGroupList[i].AppBoltonTypeGroupModality);
+
+            var BTAItem = cm_aaca.addItem(rowItem, "BoltonTypeArr");
+            BTAItem.AAArrayOrd[0] = cm_aaca.createArrayOrd(BTAItem.name);
+            for(var j=0; j<AppBoltonTypeGroupList[i].BoltonTypeArr.length; j++){
+                var BTARow = cm_aaca.createRow(j+1);
+                cm_aaca.addGenericAtt(cm_aaca.addItem(BTARow, "BoltOnType"), "BoltOnTypeID", AppBoltonTypeGroupList[i].BoltonTypeArr[j]);
+                BTAItem.AAArrayOrd[0].AAArrayRow[j] = BTARow;
+            }
+            item.AAArrayOpe[0].AAArrayRow[rowNum] = row;
+            rowNum++;
+        }
+
+        //constructing the response
+        var configItem = cm_aaca.createConfigurableItem("AppBoltonTypeGroupList", projectCode);
+        configItem.AAAttributeList.AAItem[0] = item;
+        return configItem;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

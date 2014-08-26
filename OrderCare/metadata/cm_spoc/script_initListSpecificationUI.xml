@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initListSpecificationUI">
+  <group>ui_scripts.Lists</group>
+  <label>initListSpecificationUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="model" type="rifp">
+      <type>dstruct_cm_spoc.data.ListSpecification</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.restrictionIterator = new Array();
+    var DS=model.LSDestGrAndNumSpecArrDS.ListDS;
+
+    if(!model.specificationCode){
+    //    cm_spoc.addListElement(ui, DS,"cm_spoc.forms.RestrictionsItemsListUI","base_DestinationTypeGroup","restrictionIterator");
+       var itemFinder = new Finder("cm_spoc.TonFinder");
+       var result = itemFinder.search();
+       if(result.length>0){
+           model.ListAreApplicableBy=result[0].itemCode;
+       }
+    }
+    else{
+         model.TonEnum = model.ListAreApplicableBy;
+         model.DuoDS.DuoNumberTonEnum = model.DuoDS.DuoNumberTON ;
+         for(var i =0; i< DS.length;i++) {
+           DS[i].DestinationGroupTypeEnum = DS[i].DestinationTypeGroup;
+         }
+         cm_spoc.loadListElements(ui, DS, "cm_spoc.forms.RestrictionsItemsListUI", "restrictionIterator");
+    }
+  ]]></script>
+</script>

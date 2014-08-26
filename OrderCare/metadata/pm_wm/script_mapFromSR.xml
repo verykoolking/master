@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.mapFromSR">
+  <highlight>64</highlight>
+  <label>mapFromSR</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Fill from SR
+     * @author  Daniel Gomes
+     * @date    2014/06
+     */
+
+    Global.logDebug("fillFromSR");
+
+    var subscribedProduct = null;
+    var idx = 0;
+
+    try{
+        for(var i = 0; dtree.entitiesSR && i < dtree.entitiesSR.length; i++){ //Can it have more than one product?
+            subscribedProduct = dtree.entitiesSR[i].xml;
+            if(subscribedProduct){
+                idx = dtree.response.subscribedProductList.subscribedProduct.length;
+                subscribedProduct = Global.getItemsFromXML(subscribedProduct, 'OCSProvisioning.productProvisioningManagement.v1.types.subscribedProduct')[0];
+                dtree.response.subscribedProductList.subscribedProduct[idx] = subscribedProduct;
+            }
+        }
+    }catch(err){
+        dtree.errorcode.push("ER_WF_799");
+        dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_799", [err]));
+        return false;
+    }
+
+    return true;
+  ]]></script>
+</script>

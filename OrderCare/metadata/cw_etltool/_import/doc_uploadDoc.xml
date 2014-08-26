@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cw_etltool._import.uploadDoc">
+  <extends>doc_com.conceptwave.system.Document</extends>
+  <guid>{9d143246-c64f-4cb1-bdb9-ac159f1021de}</guid>
+  <label>Upload Document</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="projectName" type="leaf">
+      <valueType>dtype_cwt_pcdd.descriptionNoTranslation</valueType>
+    </variable>
+    <variable name="FileDirectoryPath" type="leaf">
+      <propertyElement type="elfld">
+        <label>File Directory Path</label>
+      </propertyElement>
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="IsNeedUpdateAA" type="leaf">
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="cwLeafInitAction$IsNeedUpdateAA" type="laction">
+      <path>doc_cw_etltool._import.uploadDoc/leaf_IsNeedUpdateAA</path>
+      <type>initializer</type>
+      <script>return false;</script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_com.conceptwave.system.Document/ui_UserInterface</extends>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cw_etltool._import.uploadDoc</valueType>
+      </variable>
+      <variable name="filesListFinderUI" type="leaf">
+        <valueType>findScript_cw_etltool._import.filesListFinder/ui_UserInterface</valueType>
+      </variable>
+      <variable name="btnStartProcessEditable" type="leaf">
+        <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="UploadFile" type="vform">
+            <label>UploadFile</label>
+            <root name="SectionStack" type="elsectnstck">
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="GridLayout" type="elgrd">
+                      <alignment>left,center</alignment>
+                      <labelOrientation>left</labelOrientation>
+                      <numOfCols>4</numOfCols>
+                      <useDefaultHeight>true</useDefaultHeight>
+                      <elementList>
+                        <element name="RowSpacer" type="elrsp"/>
+                        <element name="projectName" type="elfld">
+                          <columnSpan>1</columnSpan>
+                          <label>Project Description</label>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>doc_cw_etltool._import.uploadDoc/ui_UserInterface/uivar_model</variablePath>
+                              <variablePath>doc_cw_etltool._import.uploadDoc/leaf_projectName</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <width>450px</width>
+                        </element>
+                        <element name="FileDirectoryPath" type="elfld">
+                          <cellAlignment>right,center</cellAlignment>
+                          <columnSpan>1</columnSpan>
+                          <labelOrientation>left</labelOrientation>
+                          <startRow>true</startRow>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>doc_cw_etltool._import.uploadDoc/ui_UserInterface/uivar_model</variablePath>
+                              <variablePath>doc_cw_etltool._import.uploadDoc/leaf_FileDirectoryPath</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <width>450px</width>
+                        </element>
+                        <element name="IsNeedUpdateAA" type="elchk">
+                          <label>Update Altamira</label>
+                          <labelOrientation>left</labelOrientation>
+                          <startRow>true</startRow>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>doc_cw_etltool._import.uploadDoc/ui_UserInterface/uivar_model</variablePath>
+                              <variablePath>doc_cw_etltool._import.uploadDoc/leaf_IsNeedUpdateAA</variablePath>
+                            </variablePathList>
+                          </variable>
+                        </element>
+                        <element name="CellSpacer" type="elcsp"/>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.DocumentUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="VerticalLayout" type="elvlt">
+                <width>580px</width>
+                <elementList>
+                  <element name="SectionStack" type="elsectnstck">
+                    <width>598px</width>
+                    <elementList>
+                      <element name="Section" type="elsect">
+                        <elementList>
+                          <element name="SectionHeader" type="elsecth">
+                            <label>Upload File</label>
+                          </element>
+                          <element name="FormFrame" type="elovf">
+                            <formReference type="varPath">
+                              <variablePathList>
+                                <variablePath>doc_cw_etltool._import.uploadDoc/ui_UserInterface/frmui_Forms</variablePath>
+                                <variablePath>doc_cw_etltool._import.uploadDoc/ui_UserInterface/frmui_Forms/vform_UploadFile</variablePath>
+                              </variablePathList>
+                            </formReference>
+                          </element>
+                          <element name="HorizontalLayout" type="elhlt">
+                            <useDefaultHeight>true</useDefaultHeight>
+                            <elementList>
+                              <element name="VerticalLayout1" type="elvlt">
+                                <useDefaultHeight>true</useDefaultHeight>
+                                <elementList>
+                                  <element name="FormFrame1" type="elovf">
+                                    <formReference type="varPath">
+                                      <variablePathList>
+                                        <variablePath>doc_cw_etltool._import.uploadDoc/ui_UserInterface/leaf_filesListFinderUI</variablePath>
+                                        <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/frmui_Forms</variablePath>
+                                        <variablePath>findScript_cw_etltool._import.filesListFinder/ui_UserInterface/frmui_Forms/vform_FilesList</variablePath>
+                                      </variablePathList>
+                                    </formReference>
+                                    <variable type="varPath">
+                                      <variablePathList>
+                                        <variablePath>doc_cw_etltool._import.uploadDoc/ui_UserInterface/leaf_filesListFinderUI</variablePath>
+                                      </variablePathList>
+                                    </variable>
+                                  </element>
+                                  <element name="LayoutSpacer" type="ellsp">
+                                    <height>1%</height>
+                                  </element>
+                                  <element name="GridLayout" type="elgrd">
+                                    <alignment>center,center</alignment>
+                                    <numOfCols>5</numOfCols>
+                                    <visible type="varPath">
+                                      <variablePathList>
+                                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                      </variablePathList>
+                                    </visible>
+                                    <elementList>
+                                      <element name="CellSpacer" type="elcsp"/>
+                                      <element name="CellSpacer1" type="elcsp"/>
+                                      <element name="startProcess" type="elbtn">
+                                        <clickMethod type="varPath">
+                                          <variablePathList>
+                                            <variablePath>doc_cw_etltool._import.uploadDoc/ui_UserInterface/uimthd_startImportProcess</variablePath>
+                                          </variablePathList>
+                                        </clickMethod>
+                                        <label>Start Process</label>
+                                      </element>
+                                    </elementList>
+                                  </element>
+                                  <element name="LayoutSpacer1" type="ellsp">
+                                    <height>10px</height>
+                                  </element>
+                                </elementList>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Menu" type="exov">
+            <base>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms/exov_Menu</base>
+            <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms/exov_Menu</extends>
+            <label>Menu</label>
+            <overrideList>
+              <override name="hl1" type="elhlt">
+                <alignment>left,center</alignment>
+                <elementList>
+                  <element name="cwfSave" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.DocumentUserInterface/usrActionMethod_save</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconSave.gif</icon>
+                    <label>Save</label>
+                    <showDown>true</showDown>
+                    <tooltip>Save</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="Reset" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cw_etltool._import.uploadDoc/ui_UserInterface/uimthd_reset</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/procNew.gif</icon>
+                    <label>Reset</label>
+                  </element>
+                  <element name="StartProcess" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cw_etltool._import.uploadDoc/ui_UserInterface/uimthd_startImportProcess</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <enable type="varPath">
+                      <variablePathList>
+                        <variablePath>doc_cw_etltool._import.uploadDoc/ui_UserInterface/permMethod_startProcessEditable</variablePath>
+                      </variablePathList>
+                    </enable>
+                    <icon>/cwf/MenuIconGo.gif</icon>
+                    <label>Start Process</label>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="onInit" type="action">
+        <valueType>nmeta_com.conceptwave.system.Object</valueType>
+        <script><![CDATA[
+          this.btnStartProcessEditable = true ;
+          this.filesListFinderUI = new cw_etltool._import.filesListFinder.UserInterface(null,this);
+          //return this.cw$super_onInit();
+        ]]></script>
+      </method>
+      <method name="startImportProcess" type="uimthd">
+        <script><![CDATA[
+          var msgs = this.validate();
+
+          if(cw_etltool.common.isNullOrEmptyString(msgs)){
+
+              var list =  this.filesListFinderUI.model.search();
+              var order = new Order("cw_etltool._import.importOrder");
+
+              //var helper = new Array();
+              //helper["filesList"] = new DataObjectList();
+              order.header.ProjectName     = this.model.projectName ;
+              order.header.IsNeedUpdateAA  = this.model.IsNeedUpdateAA;
+              order.header.StartImportDate = new Date();
+              order.header.OrderStatus     = cw_etltool._import.$CONSTANT().orderStatus.INITIATE;
+              order.header.FilesCount      = list.length;
+
+
+              var files = order.addItem('files');
+              for( var i = 0 ; list && i < list.length; i++) {
+
+                  var fileIns =  files.newInstance();
+
+                  fileIns.fileDoc.FileName   = list[i].FileName;
+                  fileIns.fileDoc.PathFileName  =  list[i].FilePath;
+                  fileIns.fileDoc.FileStatus   = cw_etltool._import.$CONSTANT().fileStatus.INITIATE;
+                  fileIns.fileDoc.ImportSequence   = list[i].RowIndex ;
+                  fileIns.fileDoc.CreationDate   = new Date() ;
+              }
+              order.save();
+              var pId = Process.startProcess("cw_etltool._import.importProcess",order.id);
+              Global.showUserMessage("Importing process started successfully.\nProcess Id : "+ pId +"\nOrder Id : "+order.id);
+              this.btnStartProcessEditable = false;
+
+          }else{
+              Global.showUserMessage(msgs);
+          }
+        ]]></script>
+      </method>
+      <method name="validate" type="uimthd">
+        <script><![CDATA[
+          var msgs ="";
+
+          if(cw_etltool.common.isNullOrEmptyString(this.model.projectName))
+              msgs = "Project Description is mandatory.\n";
+          if(this.filesListFinderUI.model.list.length < 1)
+              msgs = msgs + "Files List must have at least one file";
+
+          return msgs;
+        ]]></script>
+      </method>
+      <method name="startProcessEditable" type="permMethod">
+        <script>return this.btnStartProcessEditable;</script>
+      </method>
+      <method name="reset" type="uimthd">
+        <script><![CDATA[
+          this.btnStartProcessEditable = true;
+          this.model.projectName = null;
+          this.model.FileDirectoryPath = null;
+          this.filesListFinderUI.deleteAll();
+        ]]></script>
+      </method>
+    </methodList>
+  </UserInterface>
+</document>

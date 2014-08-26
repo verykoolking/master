@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.UCSimpleApplicabilityConditForm">
+  <group>UsageControl</group>
+  <label>UCSimpleApplicabilityConditForm</label>
+  <metaVersion>4</metaVersion>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <fillSpace>false</fillSpace>
+              <height>400px</height>
+              <width>750px</width>
+              <elementList>
+                <element name="Button" type="elbtn">
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.UCSimpleApplicabilityConditForm/usrActionMethod_openDialogHappyPeriod</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <label>showPopUp</label>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="openDialogHappyPeriod" type="usrActionMethod">
+      <dialogHeight>10000</dialogHeight>
+      <dialogWidth>10000</dialogWidth>
+      <showInPopup>true</showInPopup>
+      <script><![CDATA[
+        var  model =  cm_spoc.initInnerDS("base_UCSimpleApplicabilityCondit");
+
+
+        return new cm_spoc.forms.HappyPeriodPopUp(model,this);
+      ]]></script>
+    </method>
+  </methodList>
+</userInterface>

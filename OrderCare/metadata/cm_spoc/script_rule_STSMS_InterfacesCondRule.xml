@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_STSMS_InterfacesCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_STSMS_InterfacesCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var array= ["ME", "MG", "XN"];
+
+    var modality = data.BoltOnTypeModality;
+    var interf= data.SessionSpecificationDS.SessionTechnicalSpecDS.MS_Interfaces;
+
+    //se interf non esiste c'è errore
+    if(interf==null && !cm_spoc.checkInclusion(modality, array)){//se ci vuole la vecchia regola: cm_spoc.checkInclusion(modality, array, true)
+         errList.addErrorMessage(data,["Session Technical Spec", "MS_Interfaces must not be set"],"NGAA_EPC_002","E");
+    }
+    return false;
+  ]]></script>
+</script>

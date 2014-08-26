@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.endDateObject">
+  <group>scripts</group>
+  <label>endDateObject</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="itemCode" type="rifp">
+      <description>&lt;html&gt;&#xd;
+  &lt;head&gt;&#xd;
+&#xd;
+  &lt;/head&gt;&#xd;
+  &lt;body&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      Could be any other catalog item too.&#xd;
+    &lt;/p&gt;&#xd;
+    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;
+      Such as ItemRule, ItemDescription ....&#xd;
+    &lt;/p&gt;&#xd;
+  &lt;/body&gt;&#xd;
+&lt;/html&gt;&#xd;
+</description>
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="itemDocType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="endDate" type="rifp">
+      <type>dtype_cwt_pcdd.endDate</type>
+    </parameter>
+    <parameter name="startDate" type="rifp">
+      <type>dtype_cwt_pcdd.startDate</type>
+    </parameter>
+    <parameter name="itemDescriptionCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="itemRelationCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="itemAttributeCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="catalogObjectType" type="rifp">
+      <type>dtype_cwt_pcdd.itemChargeType</type>
+    </parameter>
+    <parameter name="itemChargeVersionCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+    <parameter name="targetItemChargeCode" type="rifp">
+      <type>dtype_cwt_pcdd.catalogCode</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try{
+        var response;
+        var endDateObjectDS = new cwt_pcmaintapi.endDateObjectDS();
+        endDateObjectDS.docType = itemDocType;
+        endDateObjectDS.projectCode = projectCode;
+        endDateObjectDS.endDate = endDate ? endDate : new Date();
+
+        switch(itemDocType){
+            case "cwt_pc:cwt_item":
+                endDateObjectDS.objectCode = itemCode;
+            break;
+            case "cwt_pc:cwt_itemDescription":
+                endDateObjectDS.parentCode = itemCode;
+                endDateObjectDS.startDate = startDate;
+                endDateObjectDS.objectCode = itemDescriptionCode;
+            break;
+            case "cwt_pc:cwt_itemRelation":
+                endDateObjectDS.parentCode = itemCode;
+                endDateObjectDS.startDate = startDate;
+                endDateObjectDS.objectCode = itemRelationCode;
+            break;
+            case "cwt_pc:cwt_itemAttribute":
+                endDateObjectDS.parentCode = itemCode;
+                endDateObjectDS.startDate = startDate;
+                endDateObjectDS.objectCode = itemAttributeCode;
+                endDateObjectDS.targetObjectType = catalogObjectType;
+            break;
+            case "cwt_pc:cwt_itemChargeVersion":
+                endDateObjectDS.parentCode = itemCode;
+                endDateObjectDS.startDate = startDate;
+                endDateObjectDS.objectCode = itemChargeVersionCode;
+                endDateObjectDS.targetObjectCode =targetItemChargeCode;
+            break;
+
+        }
+        response = cwt_pcmaintapi.endDateObject(endDateObjectDS);
+
+        if(cwt_pcmaintapi.isFault(response)){
+            var fault = api_common.createFault(response.code, response.message);
+            return fault;
+        }
+
+        return response;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

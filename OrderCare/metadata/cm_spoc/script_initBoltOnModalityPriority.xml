@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initBoltOnModalityPriority">
+  <group>ui_scripts.Configuration</group>
+  <label>initBoltOnModalityPriority</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!model.specificationCode){
+        model.BOMPriorityArrDS = cm_spoc.initInnerDS("base_BOMPriorityArr");
+        model.BOMPTariffPlanArrDS = cm_spoc.initInnerDS("base_BOMPTariffPlanArr");
+
+        var itemFinder = new Finder("cm_spoc.boltOnModalityPriorityFinder");
+        var result = itemFinder.search();
+        if(result.length==0){
+            model.DefaultPriority=true;
+        }
+    }else{
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+       s.specificationCode = model.BOMPriorityArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.BOMPriorityArrDS =r;
+       }
+
+       var BOMPriorityRel=model.BOMPriorityArrDS.List;
+       var BOMPriorityDS=model.BOMPriorityArrDS.ListDS;
+       for(var i=0;i<BOMPriorityRel.length;i++){
+           s.specificationCode = BOMPriorityRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               BOMPriorityDS[i]=r;
+           }
+       }
+
+       s.specificationCode = model.BOMPTariffPlanArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.BOMPTariffPlanArrDS =r;
+       }
+    }
+
+    return model;
+  ]]></script>
+</script>

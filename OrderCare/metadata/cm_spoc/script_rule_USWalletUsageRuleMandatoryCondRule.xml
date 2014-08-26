@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_USWalletUsageRuleMandatoryCondRule">
+  <group>rules_scripts.Wallets</group>
+  <label>rule_USWalletUsageRuleMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var ds = data.UsageRuleListArray.ListDS;
+    var ds2 = data.WalletUsageRule;
+
+    if ( !ds2.RuleIdentifier || !ds2.RuleDescription || !ds2.ConditionType ) {
+       errList.addErrorMessage(data,["Wallet Usage Rule must be mandatory"],"NGAA_003","E");
+    }
+    else
+    {
+      for (var i = 0; i < ds.length; i++)
+      {
+        if ( !ds[i].LongDistance )
+        {
+            errList.addErrorMessage(data,["Long Distance must be mandatory"],"NGAA_003","E");
+        }
+        else if ( !ds[i].Processes )
+        {
+            errList.addErrorMessage(data,["Processes must be mandatory"],"NGAA_003","E");
+        }
+        else if ( !ds[i].RoamingZone )
+        {
+            errList.addErrorMessage(data,["Roaming Zone must be mandatory"],"NGAA_003","E");
+        }
+        else if ( !ds[i].UnitsType )
+        {
+            errList.addErrorMessage(data,["Units Type must be mandatory"],"NGAA_003","E");
+        }
+        else if ( !ds[i].TribeCategoryDS )
+        {
+            errList.addErrorMessage(data,["Tribe Category must be mandatory"],"NGAA_003","E");
+        }
+        else if ( !ds[i].TariffPlanDS )
+        {
+            errList.addErrorMessage(data,["Tariff Plan must be mandatory"],"NGAA_003","E");
+        }
+        else if ( !ds[i].ListDS )
+        {
+            errList.addErrorMessage(data,["List must be mandatory"],"NGAA_003","E");
+        }
+        else if ( !ds[i].OperationDS )
+        {
+            errList.addErrorMessage(data,["Operation must be mandatory"],"NGAA_003","E");
+        }
+        else if ( !ds[i].TribeDS )
+        {
+            errList.addErrorMessage(data,["Tribe must be mandatory"],"NGAA_003","E");
+        }
+        else if ( !ds[i].tariffPlanEnum )
+        {
+            errList.addErrorMessage(data,["Tariff Plan Enum must be mandatory"],"NGAA_003","E");
+        }
+      }
+    }
+    return false;
+  ]]></script>
+</script>

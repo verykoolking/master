@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ *  Generated with Tigerstripe Workbench 0.7.0.201207021234 and 
+ *  Plugin Nortel Networks, Hewlett-Packard Company, Optare Solutions/TIP_Soap_Generator(1.2) (1.2)
+ *
+ *  DO NOT EDIT THIS CODE WHICH WAS AUTOMATICALLY GENERATED
+--><!--
+Copyright (C) TeleManagement Forum 2012. All Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to TM FORUM, except as needed for the purpose of developing any document or deliverable produced by a TM FORUM Collaboration Project Team (in which case the rules applicable to copyrights, as set forth in the TM FORUM IPR Policy, must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by TM FORUM or its successors or assigns. 
+
+This document and the information contained herein is provided on an "AS IS" basis and TM FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+
+Direct inquiries to the TM Forum office: 
+ 
+240 Headquarters Plaza,
+East Tower - 10th Floor,
+Morristown, NJ  07960 USA
+Tel No.  +1 973 944 5100
+Fax No.  +1 973 944 5110
+TM Forum Web Page: www.tmforum.org
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/qs" xmlns:ss="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/ss" xmlns:ds="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/ds" xmlns:entity="http://www.tmforum.org/xml/tip/internal/entity" targetNamespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/qs" attributeFormDefault="unqualified" elementFormDefault="qualified" version="13.0">
+   <xsd:annotation>
+      <xsd:documentation>
+         <pre>TMF XML Schema Definitions from Tigerstripe model
+                      project name: SID_Model
+                        at version: 13.0
+      for all artifacts in package: org.tmforum.tip.service.serv.qos.nfs.tc.qs
+      Model Description:
+      Model Project for SID xsd generation
+      Package Description:
+      
+      Package data summary information:
+            entities: 6
+ Association Classes: 1
+           datatypes: 0
+        enumerations: 0
+              events: 0
+          exceptions: 0
+      </pre>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/ss" schemaLocation="sid_org_tmforum_tip_service_serv_qos_nfs_tc_ss.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/sid/org/tmforum/tip/service/serv/qos/nfs/tc/ds" schemaLocation="sid_org_tmforum_tip_service_serv_qos_nfs_tc_ds.xsd"/>
+   <xsd:import namespace="http://www.tmforum.org/xml/tip/internal/entity" schemaLocation="internal_entity.xsd"/><!-- ******************************* --><!-- Package Enumeration definitions --><!-- ******************************* --><!-- **************************** --><!-- Package Datatype definitions --><!-- **************************** --><!-- ************************** --><!-- package Entity definitions --><!-- ************************** -->
+   <xsd:element name="classBasedWeightedFairQueuingService" type="tns:ClassBasedWeightedFairQueuingService"/>
+   <xsd:complexType name="ClassBasedWeightedFairQueuingService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>CBWFQ is a class-based algorithm that schedules packets in queues and guarantees a certain transmission rate. If a queue is not in use, the bandwidth is made available to other queues.
+
+CBWFQ sorts traffic into flows, or classes, and then allocates bandwidth to those flows or classes via sophisticated packet scheduling. The weight assignments drive the bandwidth allocation. Each class can have its own dropping, policing and/or shaping mechanisms, which in effect enables each class to be tied to a particular SLA.
+
+Thus, CBWFQ is more than a queuing scheme. It is also a QoS scheme that identifies different types of traffic and queues the traffic according to predefined parameters.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="numberOfQueueClasses" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the number of classes that can be defined.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfClassBasedWeightedFairQueuingService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ClassBasedWeightedFairQueuingService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="customQueuingService" type="tns:CustomQueuingService"/>
+   <xsd:complexType name="CustomQueuingService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>Custom Queueing enables the designer to specify a particular number of bytes, packets, or flows to forward from a specific Queue each time the Queue is serviced. This is most often used to enable network resources (e.g., bandwidth) to be shared among applications with specific minimum requirements for that metric (or set of metrics).</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="queueServiceValue" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the number of units that are forwarded from a CustomQueue instance each time it is serviced. The units are defined by the countMetric attribute.
+
+Note that if it is desired to evenly split the bandwidth among three Protocols which have different packet sizes, this attribute enables each Queue instance to forward a different number of bytes each time it is serviced. This can be used to provide even bandwidth for each Protocol, even though the Protocols use different sized packets.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="queueServiceMetric" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This attribute is an enumerated integer, and specifies the metric used for servicing a queue. Values include:
+
+0: custom implementation
+1: bytes
+2: packets
+3: cells
+4: frames
+5: flows</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfCustomQueuingService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:CustomQueuingService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="fairQueuingService" type="tns:FairQueuingService"/>
+   <xsd:complexType name="FairQueuingService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This method helps solve the problem where some Queues may not get serviced because high-priority Queues are being serviced. A round-robin approach is used to service all Queues in a fair way. This prevents any one source from overusing its share of network capacity. Ultimately, the goal of this algorithm is to ensure that each Queue receives a fair share of the set of applicable metrics (e.g., bandwidth) that are divided among the different Queue instances.
+
+Problems can occur when packets are variable in length and each Queue is allowed to release one packet at a time. Some Queues will take more time. A byte-oriented scheme may be used to equalize the Queues. In addition, some Queues may be fuller than others and naturally need more service, but a strict, fair Queuing scheme will service each queue equally.
+
+A better alternative is most likely one of its derivative algorithms, such as weighted fair queuing or possibly class-based weighted fair queuing.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="messagesPerQueue" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the maximum number of conversations that are allowed in this particular Queue instance.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="sortingMethod" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the sorting mechanism used by this QueuingService. Values include:
+
+0: custom implementation
+1: by flows
+2: by traffic classes</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfFairQueuingService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:FairQueuingService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="priorityQueuingService" type="tns:PriorityQueuingService"/>
+   <xsd:complexType name="PriorityQueuingService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This technique uses multiple queues, but queues are serviced with different levels of priority, with the highest priority queues being serviced first. Packets are classified and placed into queues according to information in the packets. When congestion occurs, packets are dropped from lower-priority queues in order to service higher-priority queues.
+
+The main problem with this method is that lower-priority queues may not get serviced at all if high-priority traffic is excessive. Therefore, the use of Admission Control mechanisms to monitor PriorityQueues and ensure that they are used properly is recommended by the DEN-ng QoS model.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="relativePriorityValue" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the priority of this Queue instance compared to all other Queue instances that are of the same type.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfPriorityQueuingService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:PriorityQueuingService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="queueService" type="tns:QueueService"/>
+   <xsd:complexType name="QueueService" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>Queuing can be thought of as the act of delaying of packets inside a device before they are transmitted to the next device. This is often called congestion management in the literature. There are many different algorithms to do this task, each having different purposes, different implementation (and therefore programming) complexities, and different uses. Since the semantics of these algorithms are very different, DEN-ng models each algorithm as a subclass of QueueService.
+
+Queues are not infinite in size, and therefore can fill to capacity. So, what happens when a new packet arrives if the queue is filled? Either the new packet is inserted into the queue, and the existing contents of the queue are dropped, or the new packet is inserted and a packet is removed from the queue to make room for the new packet. The details of how a packet is inserted and removed are examples of the differences in queuing algorithms.
+
+Queuing is designed to accommodate temporary congestion on a network device's interface by storing excess packets in buffers until bandwidth becomes available. This can be used in order to meet the varying bandwidth, jitter, and delay requirements of different applications.</p>
+            <p>This entity  is  abstract</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="isTransmitQueue" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, defines this queue as a transmit queue (i.e., this queue is used to transmit traffic from the device to the external world). If the value of this attribute is FALSE, then this queue doesn't transmit traffic to the outside world and is instead used for buffering only.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="currentQueueDepth" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the current depth of this queue. Units are specified by the queueDepthUnits attribute of this class.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="queueID" type="xsd:string" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a string attribute that uniquely identifies this Queue. This enables a device having multiple instances of the same type of Queue to identify each Queue instance.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isFIFOqueuing" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, defines this queue to be a FIFO queue.
+
+This is the simplest of all queuing mechanisms, and represents a basic first-in, first-out queuing technique in which the first packet in the queue is the first packet that is processed. When queues become full, congestion occurs and incoming packets are dropped. FIFO relies on end systems to control congestion via congestion control mechanisms.
+
+Even with its limitations, FIFO queuing is often the default queuing mechanism installed on a DeviceInterface.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="queueDepthUnits" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is an enumerated integer that defines the units for the currentQueueDepth attribute. Values include:
+
+0: custom implementation
+1: bytes
+2: packets
+3: cells
+4: frames
+5: flows</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isIngressQueue" type="xsd:boolean" minOccurs="0" maxOccurs="1" default="false">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a Boolean attribute that, if TRUE, defines this to be a queue on the ingress side of the device. Otherwise, it is an egress queue.
+
+The default value of this attribute is set to FALSE, because many devices and line cards support non-blocking inputs (i.e., there is no input queuing present).</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="dropperService" type="ds:DropperService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association QueueCalculatedDropping</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="queueService" type="tns:ArrayOfQueueService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity *</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association RelatedQueueDetails</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="queueService1" type="tns:QueueService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation shared</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association RelatedQueueDetails</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="schedulingService" type="ss:SchedulingService" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p/>
+                        <p>This element is generated from an association end.</p>
+                        <p>This association end  has  multiplicity 0..1</p>
+                        <p>This association end  has  aggregation none</p>
+                        <p>This association end  is  navigable</p>
+                        <p>This association end  is  an end of association QueueToSchedule</p>
+                        <p>This association end  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfQueueService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:QueueService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="weightedFairQueuingService" type="tns:WeightedFairQueuingService"/>
+   <xsd:complexType name="WeightedFairQueuingService">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This is a cross between priority queuing and fair queuing, seeking to garner the best from both algorithms. All queues are serviced so that none are starved, but some queues are serviced more than others. A portion of the bandwidth of a DeviceInterface is allocated to each active flow.
+
+A weight is applied to each queue to give some queues higher priority than other queues. For example, one queue may get half the available bandwidth and other queues will get a varying percentage of the remaining bandwidth. Traffic may be prioritized according to many different mechanisms, such as packet markings, source and destination IP address fields, source and destination port numbers, and so forth.
+
+WFQ weights traffic so that low-bandwidth traffic gets a fair level of priority. If high-priority queues are not in use, lower-priority traffic uses its queues. This prevents high-bandwidth traffic from grabbing an unfair share of resources.A unique feature is that it moves real-time interactive traffic to the front of queues and fairly shares the remaining bandwidth among other flows.</p>
+            <p>This entity  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="entity:EntityBase">
+            <xsd:sequence>
+               <xsd:element name="numberFlowCategories" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the number of different types of conversation categories that traffic flows are grouped into. Typically, this is 2 (low-bandwidth vs. high-bandwidth), enabling control messages to always be serviced while applications are serviced according to a service policy.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="queueWeight" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the weight that this flow gets relative to all other flows. The sum of all weights must add up to 99.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="numberQueuesPerFlow" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This is a non-negative integer that defines the number of Queues that support a particular flow.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="numberReservedQueues" type="xsd:int" minOccurs="0" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation>
+                        <p>This defines the number of Queues that can be used for special, or reserved, traffic. If any Queue can be used for any traffic, then the value of this attribute should be set to 0.</p>
+                        <p>This element is generated from an attribute.</p>
+                        <p>This attribute  is  optional</p>
+                     </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfWeightedFairQueuingService">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:WeightedFairQueuingService" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************************* --><!-- Package Association Class definitions --><!-- ************************************* -->
+   <xsd:element name="relatedQueueDetails" type="tns:RelatedQueueDetails"/>
+   <xsd:complexType name="RelatedQueueDetails">
+      <xsd:annotation>
+         <xsd:documentation>
+            <p>This class implements the details of the RelatedQueue aggregation. This enables different Queue instances to be treated as a single atomic QueuingService.This association defines the set of Queues that make up a QueueService. Note that for complicated mechanisms, different types of Queues (e.g., Priority and CBWFQ) can be combined to form a higher-level Queue Service.
+
+The semantics of this class are implemented by the RelatedQueueDetails association class.</p>
+            <p>This association class  is  optional</p>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="numberOfRelatedQueues" type="xsd:int" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This is a non-negative integer that defines the number of related Queues that form this particular QueuingService.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="hasDifferentQueueTypes" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This is a Boolean attribute that, if TRUE, defines this overall QueuingService to be made up of heterogeneous types of Queue instances. For example, Cisco's LLQ service would have this value set to TRUE, whereas a simpler QueuingService, such as PriorityQueuing, would have this value set to FALSE.</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="absoluteQueuePriority" type="xsd:int" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>
+                  <p>This is a non-negative integer that defines the absolute priority of this Queue relative to all other instances (whether they are of the same type of Queue or not).</p>
+                  <p>This element is generated from an attribute.</p>
+                  <p>This attribute  is  optional</p>
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfRelatedQueueDetails">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:RelatedQueueDetails" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType><!-- ************************** --><!-- package Event definitions --><!-- ************************** --><!-- ************************** --><!-- package Exception definitions --><!-- ************************** -->
+</xsd:schema>

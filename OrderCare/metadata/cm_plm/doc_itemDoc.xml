@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document name="cm_plm.itemDoc">
+  <extends>doc_cwl_plm.itemDoc</extends>
+  <generatedKey>true</generatedKey>
+  <guid>{3e67e838-86a4-49e7-bb8f-22180428c2b8}</guid>
+  <label>CM-PLM Item Doc</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="associationMandatory" type="leaf">
+      <dontMap>true</dontMap>
+      <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+    </variable>
+    <variable name="configurationEntity" type="leaf">
+      <column>CONFIGURATIONENTITY</column>
+      <table>EPC_ITEMDOC</table>
+      <valueType>dtype_cm_plm.plmConfigurationEntity</valueType>
+    </variable>
+    <variable name="projectCode" type="leaf">
+      <column>PROJECTCODE</column>
+      <table>EPC_ITEMDOC</table>
+      <valueType>dtype_cwt_pcdd.string32</valueType>
+    </variable>
+    <variable name="itemStatus" type="leaf">
+      <column>ITEMSTATUS</column>
+      <table>EPC_ITEMDOC</table>
+      <valueType>dtype_cm_plm.itemPLMStatus</valueType>
+    </variable>
+  </variableList>
+  <methodList>
+    <method name="cwOnDocStore" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        if(this.associationMandatory) {
+            var relationName = "NGAAConfigurationSpecification";
+            // Create top item association with its base item
+            var itemRelation = new DataStructure("cwt_pcmaintapi.itemRelation");
+            itemRelation.itemRelationTarget = this.configurationEntity;
+            itemRelation.relationTypeCode = relationName;
+            itemRelation.itemCode = this.itemCode;
+            itemRelation.itemRelationCode = relationName;
+            itemRelation.startDate = new Date();
+            itemRelation.status = "DEF";
+            itemRelation.projectCode = this.projectCode;
+            itemRelation.name = relationName;
+            itemRelation.type = relationName;
+            var resp = cwt_pcmaintapi.itemRelationCreate( itemRelation );
+            if (resp.isBasedOn("cwt_pcmaintapi.Fault")) {
+                return cwl_epc.createCommonFault(resp);
+            }
+            this.associationMandatory = false;
+        }
+      ]]></script>
+    </method>
+    <method name="cwOnDocLoad" type="action">
+      <system>true</system>
+      <script><![CDATA[
+        if(this.configurationEntity == null)
+            this.associationMandatory = true;
+        else
+            this.associationMandatory = false;
+      ]]></script>
+    </method>
+    <method name="assignRelationPerm" type="permMethod"/>
+  </methodList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>doc_cwl_plm.itemDoc/ui_UserInterface</extends>
+    <variableList>
+      <variable name="content" type="leaf">
+        <valueType>ui_com.conceptwave.system.UserInterface</valueType>
+      </variable>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>doc_cm_plm.itemDoc</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>doc_cwl_plm.itemDoc/ui_UserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="EPC" type="vform">
+            <label>EPC</label>
+            <root name="VerticalLayout" type="elvlt">
+              <height>100%</height>
+              <width>100%</width>
+              <elementList>
+                <element name="GridLayout" type="elgrd">
+                  <numOfCols>2</numOfCols>
+                  <width>500px</width>
+                  <elementList>
+                    <element name="catalogCode" type="elfld">
+                      <label>Item Code</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.itemDoc/ui_UserInterface/uivar_model</variablePath>
+                          <variablePath>doc_cwl_plm.itemDoc/leaf_itemCode</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>200px</width>
+                    </element>
+                    <element name="publishedStatus" type="elslct">
+                      <label>Published Status</label>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.itemDoc/ui_UserInterface/uivar_model</variablePath>
+                          <variablePath>doc_cwl_plm.itemDoc/leaf_publishedStatus</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>200px</width>
+                    </element>
+                    <element name="configurationEntity" type="elslct">
+                      <editable type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.itemDoc/ui_UserInterface/permMethod_assignRelationPerm</variablePath>
+                        </variablePathList>
+                      </editable>
+                      <emptyValueText>Please select a configuration...</emptyValueText>
+                      <label>Configuration Entity</label>
+                      <multiselect>false</multiselect>
+                      <onChangeMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.itemDoc/ui_UserInterface/usrActionMethod_setDirty</variablePath>
+                        </variablePathList>
+                      </onChangeMethod>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.itemDoc/ui_UserInterface/uivar_model</variablePath>
+                          <variablePath>doc_cm_plm.itemDoc/leaf_configurationEntity</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>200px</width>
+                    </element>
+                    <element name="note" type="eltxtArea">
+                      <columnSpan>2</columnSpan>
+                      <height>100px</height>
+                      <startRow>true</startRow>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.itemDoc/ui_UserInterface/uivar_model</variablePath>
+                          <variablePath>doc_cwl_plm.itemDoc/leaf_note</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>450px</width>
+                    </element>
+                    <element name="Button" type="elbtn">
+                      <clickMethod type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.itemDoc/ui_UserInterface/usrActionMethod_openSpecUI</variablePath>
+                        </variablePathList>
+                      </clickMethod>
+                      <label>Open Item</label>
+                      <visible type="varPath">
+                        <variablePathList>
+                          <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                        </variablePathList>
+                      </visible>
+                      <width>150px</width>
+                    </element>
+                  </elementList>
+                </element>
+                <element name="HorizontalLayout" type="elhlt">
+                  <width>100%</width>
+                  <elementList>
+                    <element name="Content" type="elovf">
+                      <formReference type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.itemDoc/ui_UserInterface/leaf_content</variablePath>
+                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                          <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</variablePath>
+                        </variablePathList>
+                      </formReference>
+                      <height>100%</height>
+                      <padding>0</padding>
+                      <variable type="varPath">
+                        <variablePathList>
+                          <variablePath>doc_cm_plm.itemDoc/ui_UserInterface/leaf_content</variablePath>
+                        </variablePathList>
+                      </variable>
+                      <width>100%</width>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>doc_cwl_plm.itemDoc/ui_UserInterface/frmui_Forms/exov_Default</base>
+            <extends>doc_cwl_plm.itemDoc/ui_UserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="GridLayout" type="elovf">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>doc_cm_plm.itemDoc/ui_UserInterface/frmui_Forms</variablePath>
+                    <variablePath>doc_cm_plm.itemDoc/ui_UserInterface/frmui_Forms/vform_EPC</variablePath>
+                  </variablePathList>
+                </formReference>
+                <height>100%</height>
+                <width>100%</width>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Menu" type="exov">
+            <base>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms/exov_Menu</base>
+            <extends>doc_com.conceptwave.system.Document/ui_UserInterface/frmui_Forms/exov_Menu</extends>
+            <label>Menu</label>
+            <overrideList>
+              <override name="cwfSave" type="eldel"/>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="onInit" type="action">
+        <valueType>nmeta_com.conceptwave.system.Object</valueType>
+        <script>this.content = this.getContentUi();</script>
+      </method>
+      <method name="openSpecUI" type="usrActionMethod">
+        <dialogObject>ui_com.conceptwave.system.Dialog</dialogObject>
+        <showInPopup>true</showInPopup>
+        <script>return this.getContentUi();</script>
+      </method>
+      <method name="getContentUi" type="uimthd">
+        <script><![CDATA[
+          var req = new DataStructure("epc.data.Specification");
+          req.specificationCode = this.model.itemCode;
+          req.project = this.model.projectCode;
+          var spec = epc.getSpecificationByKey(req);
+          var specUI = cwa_epc.getEpcUIByModel(spec);
+          specUI.parent=this;
+          return specUI;
+        ]]></script>
+      </method>
+      <method name="setDirty" type="usrActionMethod">
+        <script>this.model.dirty = true;</script>
+      </method>
+      <method name="assignRelationPerm" type="permMethod">
+        <script><![CDATA[return this.model.associationMandatory && !this.model.readonly;]]></script>
+      </method>
+    </methodList>
+  </UserInterface>
+</document>

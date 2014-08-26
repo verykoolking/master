@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="cm_spoc.data.DayDefinition">
+  <container>true</container>
+  <extends>dstruct_cm_spoc.data.OCSCustFacingServiceSpec</extends>
+  <group>Calendars</group>
+  <guid>{486bae1e-238b-43c3-9930-b821d4eb35b1}</guid>
+  <jsonMap type="jmap"/>
+  <label>DayDefinition</label>
+  <metaVersion>4</metaVersion>
+  <childList>
+    <child name="dayOfTheWeek" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.dayOfTheWeekEnum</element>
+      <guid>{2e835fe1-98bf-416b-ba8f-85e3d9abea7e}</guid>
+      <jsonMap type="jmap"/>
+      <label>dayOfTheWeek</label>
+    </child>
+    <child name="TypeOfDay" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{6879fbe3-d3fc-4c6b-8d0f-597e723c5411}</guid>
+      <jsonMap type="jmap"/>
+      <label>TypeOfDay</label>
+    </child>
+    <child name="TypeOfDayEnum" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.TypeOfDayEnum</element>
+      <guid>{57cbe817-9dee-4a24-9c3a-6395640ce034}</guid>
+      <jsonMap type="jmap"/>
+    </child>
+    <child name="DayLabel" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_com.conceptwave.system.String</element>
+      <guid>{7a890dea-e0f1-4d29-a746-2acc90118a2b}</guid>
+      <jsonMap type="jmap"/>
+      <label>DayLabel</label>
+    </child>
+  </childList>
+  <methodList>
+    <method name="setLabelStyle" type="action">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+      <script><![CDATA[
+        var style;
+        var defaultTypeOfDayArr = cm_spoc.getTypeOfDayWeekDayDDefault();
+
+        if(defaultTypeOfDayArr.length > 0)
+        {
+            if( (!this.TypeOfDay) || (defaultTypeOfDayArr[this.dayOfTheWeek-1].itemRelationTarget != this.TypeOfDay) )
+            {
+                style = 'defaultStyle';
+            }
+
+            if( (this.TypeOfDay) && (defaultTypeOfDayArr[this.dayOfTheWeek-1].itemRelationTarget == this.TypeOfDay) )
+            {
+                style =  'blueStyle';
+            }
+        }
+        else
+        style = 'defaultStyle';
+
+        return style;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_cm_spoc.data.DayDefinition</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_cm_spoc.data.DayDefinition</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.getLastUpdatedTime">
+  <group>scripts</group>
+  <label>getLastUpdatedTime</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="entity" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_OCSEntity.v1.types.OCSEntityType</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var result = cm_pws.getInnerDataStructure(entity);
+
+    if(result && result.lastUpdatedTime && result.lastUpdatedTime != "")
+        return result.lastUpdatedTime;
+    else
+        return new Date();
+
+    //return result? result.lastUpdatedTime : new Date();
+  ]]></script>
+</script>

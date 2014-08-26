@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.services.inOut_createEntity">
+  <highlight>32</highlight>
+  <label>inOut_createEntity</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="input" type="rifp">
+      <type>dstruct_OCSConfigurationOperation.v1.types.CreateEntity</type>
+    </parameter>
+  </parameterList>
+  <valueType>dstruct_OCSConfigurationOperation.v1.types.CreateEntityResponse</valueType>
+  <script><![CDATA[
+    try {
+
+        var OP_REFERENCE = 'CREATE_ENTITY';
+
+        var inputError = cm_pws.services.validateRequest(OP_REFERENCE, input);
+        if(api_common.isFault(inputError)) {
+            throw inputError;
+        }
+
+        var configSession = new cm_pws.configSession();
+        configSession.operation = OP_REFERENCE;
+        configSession.request = input.toXML();
+        configSession.requestTime = cm_pws.getLastUpdatedTime(input.oCSEntity);
+        input.actionCommonInfo.mapTo(configSession);
+        var innerDS = cm_pws.getInnerDataStructure(input.oCSEntity);
+        //validate the session
+        if(!cm_pws.services.validateSession(configSession.sessionId))
+        {
+            var fault = api_common.createFault("E101", "Invalid SessionId.");    //TODO: correct code
+            return fault;
+        }
+        if(!cm_pws.services.isEntityValidForOperation(innerDS)){
+            var fault = api_common.createFault("E102", "Operation is not allowed for this type of entity.");    //TODO: correct code
+            return fault;
+        }
+        var response = cm_pws.services.validateEntity(innerDS);
+        if(api_common.isFault(response[0]))
+            return response[0];
+
+        response = cm_pws.createConfigSessionByValue(configSession);
+        if (api_common.isFault(response)){
+            return response;
+        }
+        var output = new OCSConfigurationOperation.v1.types.CreateEntityResponse();
+        cm_pws.services.pwsMap_ActionCommonInfoResult(output.actionCommonInfoResult, configSession.operation, configSession.sessionId);
+
+        return output;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

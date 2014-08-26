@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_IVRBODIVRBoltOnDescriptionsCondRule">
+  <group>rules_scripts.MixedBoltOn</group>
+  <label>rule_IVRBODIVRBoltOnDescriptionsCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var attr1= data.IVRBoltOnDescriptionArrDS.ListDS;
+    var attr2= data.IVRBoltOnCode;
+    if ((attr2==null ||attr2=="") && attr1.length > 0)
+        errList.addErrorMessage(data,["IVR BoltOnDescription must be set"],"NGAA_003","E");
+
+    return false;
+  ]]></script>
+</script>

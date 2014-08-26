@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.caApplyREConfigurations">
+  <highlight>34</highlight>
+  <label>CM-AACA Apply RE&apos;s Configurations</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="pDoc" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="pData" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var resNumber = cm_aaca.caGetAvaiableRatingEngines(pDoc);
+    var curEntityIdx = pDoc.currentREEntityIndex;
+    var aaData = pData.reData.aaData[curEntityIdx];
+    var xmlData = aaData.aaItem;
+    var procedures = aaData.procedureName;
+    var reNumber = resNumber[pDoc.currentREIndex];
+    var env = cm_aaca.caGetEnvironment(pDoc);
+    var resCode = "AACA_" + env + "_RE" + reNumber;
+    var addInfo = env + ' - ' + reNumber + ' - ' + xmlData.name;
+    var phId = cm_plm.startPlmControlPhase(pDoc.projectCode, 'RECF', addInfo);
+
+    for(var j=0; j<procedures.length; j++) {
+        var outPar = cm_aaca.caCallProcedure(resCode, procedures[j], xmlData, pDoc.projectCode, pDoc.processId);
+        Global.logDebug("RE database response: " + outPar);
+        if(outPar.RESULT_CODE != 0) {
+            pDoc.errorOccurred = true;
+            pDoc.errorCode = outPar.RESULT_CODE;
+            pDoc.errorDescription = outPar.RESULT_TEXT;
+
+            //TODO: Error managment
+
+            return;
+        }
+
+        var ret = Global.getItemsFromXML(outPar.RESULT_TEXT, "cm_aaca.outXML");
+        if(ret!=null && ret.length>0 && ret[0].SERVICE.length>0)
+            for(var i=0; i<ret[0].SERVICE.length; i++)
+                mergeService(ret[0].SERVICE[i]);
+    }
+
+    cm_plm.endPlmControlPhase(phId);
+
+
+    function mergeService(serv) {
+        var servList = pData.reData.nodes[pDoc.currentREIndex].SERVICE;
+        var foundServ = false;
+        for(var i=0; i<servList.length; i++) {
+            if(servList[i].ID == serv.ID) {
+                foundServ = true;
+                var foundTable = false;
+                var tableListTo = servList[i].TABLE;
+                var tableListFrom = serv.TABLE;
+
+                for(var f=0; f<tableListFrom.length; f++) {
+                    var foundTable = false;
+                    for(var t=0; t<tableListTo.length; t++) {
+                        if(tableListFrom[f] == tableListTo[t]) {
+                            foundTable = true;
+                            break;
+                        }
+                    }
+                    if(!foundTable)
+                        tableListTo[tableListTo.length] = tableListFrom[f];
+                }
+            }
+        }
+
+        if(!foundServ)
+            servList[servList.length] = serv;
+    }
+  ]]></script>
+</script>

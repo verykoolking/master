@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.PriceGuidingContainerUI">
+  <group>Common.Price</group>
+  <label>PriceGuidingContainerUI</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="PriceGuidingUI" type="leaf">
+      <valueType>ui_cm_spoc.forms.PriceGuidingUI</valueType>
+    </variable>
+    <variable name="price" type="leaf">
+      <flags enum-type="metadataFlag">VALIDATE</flags>
+      <valueType>dstruct_cm_spoc.data.Price</valueType>
+    </variable>
+    <variable name="PriceEvent" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+    <variable name="BaseEvent" type="leaf">
+      <valueType>dtype_com.conceptwave.system.String</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="VerticalLayout" type="elvlt">
+              <width>750px</width>
+              <elementList>
+                <element name="Separator1" type="elsep"/>
+                <element name="PriceEvent" type="ellab">
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PriceGuidingContainerUI/leaf_PriceEvent</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+                <element name="PriceGuidingFrame" type="elovf">
+                  <formReference type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PriceGuidingContainerUI/leaf_PriceGuidingUI</variablePath>
+                      <variablePath>ui_cm_spoc.forms.PriceGuidingUI/frmui_Forms</variablePath>
+                      <variablePath>ui_cm_spoc.forms.PriceGuidingUI/frmui_Forms/exov_Default</variablePath>
+                    </variablePathList>
+                  </formReference>
+                  <variable type="varPath">
+                    <variablePathList>
+                      <variablePath>ui_cm_spoc.forms.PriceGuidingContainerUI/leaf_PriceGuidingUI</variablePath>
+                    </variablePathList>
+                  </variable>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$PriceGuidingUI" type="laction">
+      <path>ui_cm_spoc.forms.PriceGuidingContainerUI/leaf_PriceGuidingUI</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.PriceGuidingContainerUI/leaf_PriceGuidingUI</valueType>
+      <script>return cm_spoc.initPriceGuidingFormUI(this);</script>
+    </method>
+    <method name="cwLeafInitAction$price" type="laction">
+      <path>ui_cm_spoc.forms.PriceGuidingContainerUI/leaf_price</path>
+      <type>initializer</type>
+      <valueType>ui_cm_spoc.forms.PriceGuidingContainerUI/leaf_price</valueType>
+      <script><![CDATA[
+        var m = cm_spoc.initPriceModel(this);
+
+        return m;
+      ]]></script>
+    </method>
+    <method name="onSelectPriceEventTrigger" type="uimthd">
+      <script>cm_spoc.onSelectPriceEvent(this);</script>
+    </method>
+  </methodList>
+</userInterface>

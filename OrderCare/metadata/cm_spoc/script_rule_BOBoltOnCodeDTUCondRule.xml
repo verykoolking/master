@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_BOBoltOnCodeDTUCondRule">
+  <group>rules_scripts.Promotions</group>
+  <label>rule_BOBoltOnCodeDTUCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (data.AwardedTopUpPromotionType=="LT" || data.AwardedTopUpPromotionType=="LO")
+        return false;
+    //LT -> ATUConnectionPhase
+    var boltOnLT_ConnPhase = false;
+    if (data.AwardedByLastTimeReceivedDS){
+        for (var i=0; i<data.AwardedByLastTimeReceivedDS.ABLTRATUConnectionPhaseArrDS.ListDS.length; i++){
+            if (data.AwardedByLastTimeReceivedDS.ABLTRATUConnectionPhaseArrDS.ListDS[i].BoltOn){
+                boltOnLT_ConnPhase = true;
+                break;
+            }
+        }
+    }
+    //LT -> ATUPhasePerSegment
+    var boltOnLT_PhaseSegment = false;
+    if (data.AwardedByLastTimeReceivedDS){
+        for (var i=0; i<data.AwardedByLastTimeReceivedDS.ABLTRATUPhasePerSegmentArrDS.ListDS.length; i++){
+            if (data.AwardedByLastTimeReceivedDS.ABLTRATUPhasePerSegmentArrDS.ListDS[i].BoltOn){
+                boltOnLT_PhaseSegment = true;
+                break;
+            }
+        }
+    }
+    //LO
+    var boltOnLO = false;
+    if (data.AwardedByLoyaltyDS){
+        for (var i=0; i<data.AwardedByLoyaltyDS.ABLTRATUPhasePerSegmentArrDS.ListDS.length; i++){
+            if (data.AwardedByLoyaltyDS.ABLTRATUPhasePerSegmentArrDS.ListDS[i].BoltOn){
+                boltOnLO = true;
+                break;
+            }
+        }
+    }
+
+    if(boltOnLT_ConnPhase || boltOnLT_PhaseSegment || boltOnLO)
+        errList.addErrorMessage(data,["Impossible to save BoltOnCode, AwardedTopUpPromotionType must be set to LT or LO."],"NGAA_003","E");
+
+    return false;
+  ]]></script>
+</script>

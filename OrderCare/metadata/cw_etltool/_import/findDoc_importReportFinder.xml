@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findDoc name="cw_etltool._import.importReportFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <input>doc_cw_etltool._import.importOrderHeaderSearch</input>
+  <label>Import Report Finder</label>
+  <maxRowsLimit>9999</maxRowsLimit>
+  <metaVersion>4</metaVersion>
+  <output>doc_cw_etltool._import.importOrderHeader</output>
+  <type>document</type>
+  <vDetailForm>doc_cw_etltool._import.importOrderHeader/ui_UserInterface/frmui_Forms/vform_ImportReport</vDetailForm>
+  <volatility>0</volatility>
+  <searchList>
+    <search type="sitem">
+      <document>doc_cw_etltool._import.importOrderHeaderSearch</document>
+      <mappedDocument>doc_cw_etltool._import.importOrderHeader</mappedDocument>
+      <mappedPath>doc_cw_etltool._import.importOrderHeader/leaf_cwOrderId</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cw_etltool._import.importOrderHeaderSearch/leaf_cwOrderId</path>
+    </search>
+    <search type="sitem">
+      <document>doc_cw_etltool._import.importOrderHeaderSearch</document>
+      <mappedDocument>doc_cw_etltool._import.importOrderHeader</mappedDocument>
+      <mappedPath>doc_cw_etltool._import.importOrderHeader/leaf_EndImportDate</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cw_etltool._import.importOrderHeaderSearch/leaf_EndImportDate</path>
+    </search>
+    <search type="sitem">
+      <document>doc_cw_etltool._import.importOrderHeaderSearch</document>
+      <mappedDocument>doc_cw_etltool._import.importOrderHeader</mappedDocument>
+      <mappedPath>doc_cw_etltool._import.importOrderHeader/leaf_EndLoadingDate</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cw_etltool._import.importOrderHeaderSearch/leaf_EndLoadingDate</path>
+    </search>
+    <search type="sitem">
+      <document>doc_cw_etltool._import.importOrderHeaderSearch</document>
+      <mappedDocument>doc_cw_etltool._import.importOrderHeader</mappedDocument>
+      <mappedPath>doc_cw_etltool._import.importOrderHeader/leaf_OrderStatus</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cw_etltool._import.importOrderHeaderSearch/leaf_OrderStatus</path>
+    </search>
+    <search type="sitem">
+      <document>doc_cw_etltool._import.importOrderHeaderSearch</document>
+      <mappedDocument>doc_cw_etltool._import.importOrderHeader</mappedDocument>
+      <mappedPath>doc_cw_etltool._import.importOrderHeader/leaf_ProcessId</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cw_etltool._import.importOrderHeaderSearch/leaf_ProcessId</path>
+    </search>
+    <search type="sitem">
+      <document>doc_cw_etltool._import.importOrderHeaderSearch</document>
+      <mappedDocument>doc_cw_etltool._import.importOrderHeader</mappedDocument>
+      <mappedPath>doc_cw_etltool._import.importOrderHeader/leaf_ProjectName</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cw_etltool._import.importOrderHeaderSearch/leaf_ProjectName</path>
+    </search>
+    <search type="sitem">
+      <document>doc_cw_etltool._import.importOrderHeaderSearch</document>
+      <mappedDocument>doc_cw_etltool._import.importOrderHeader</mappedDocument>
+      <mappedPath>doc_cw_etltool._import.importOrderHeader/leaf_StartImportDate</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cw_etltool._import.importOrderHeaderSearch/leaf_StartImportDate</path>
+    </search>
+    <search type="sitem">
+      <document>doc_cw_etltool._import.importOrderHeaderSearch</document>
+      <mappedDocument>doc_cw_etltool._import.importOrderHeader</mappedDocument>
+      <mappedPath>doc_cw_etltool._import.importOrderHeader/leaf_StartLoadingDate</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cw_etltool._import.importOrderHeaderSearch/leaf_StartLoadingDate</path>
+    </search>
+  </searchList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.FinderUserInterface</extends>
+    <variableList>
+      <variable name="isViewReportButtonVisible" type="leaf">
+        <valueType>dtype_com.conceptwave.system.Boolean</valueType>
+      </variable>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cw_etltool._import.importOrderHeader</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cw_etltool._import.importOrderHeader/ui_UserInterface</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cw_etltool._import.importOrderHeaderSearch/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="SectionStack" type="elsectnstck">
+                    <height>100%</height>
+                    <elementList>
+                      <element name="Section" type="elsect">
+                        <elementList>
+                          <element name="SectionHeader" type="elsecth">
+                            <label>ETL Import Orders</label>
+                          </element>
+                          <element name="importReportFinderResultTable" type="eltabl">
+                            <onSelectChange type="varPath">
+                              <variablePathList>
+                                <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                              </variablePathList>
+                            </onSelectChange>
+                            <variable type="varPath">
+                              <variablePathList>
+                                <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uivar_result</variablePath>
+                              </variablePathList>
+                            </variable>
+                            <elementList>
+                              <element name="ProjectName" type="elref">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cw_etltool._import.importOrderHeader/leaf_ProjectName</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>150px</width>
+                              </element>
+                              <element name="ProcessId" type="elref">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cw_etltool._import.importOrderHeader/leaf_ProcessId</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>120px</width>
+                              </element>
+                              <element name="cwOrderId" type="elfld">
+                                <label>Order ID</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cw_etltool._import.importOrderHeader/leaf_cwOrderId</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>120px</width>
+                              </element>
+                              <element name="OrderStatus" type="elslct">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cw_etltool._import.importOrderHeader/leaf_OrderStatus</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>150px</width>
+                              </element>
+                              <element name="StartImportDate" type="eldate">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cw_etltool._import.importOrderHeader/leaf_StartImportDate</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>130px</width>
+                              </element>
+                              <element name="EndImportDate" type="eldate">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cw_etltool._import.importOrderHeader/leaf_EndImportDate</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>130px</width>
+                              </element>
+                              <element name="StartLoadingDate" type="eldate">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cw_etltool._import.importOrderHeader/leaf_StartLoadingDate</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>130px</width>
+                              </element>
+                              <element name="EndLoadingDate" type="eldate">
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cw_etltool._import.importOrderHeader/leaf_EndLoadingDate</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <width>130px</width>
+                              </element>
+                              <element name="cwOrderCreationDate" type="eldate">
+                                <label>Order Creation Date</label>
+                                <variable type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uivar_result</variablePath>
+                                    <variablePath>doc_cw_etltool._import.importOrderHeader/leaf_cwOrderCreationDate</variablePath>
+                                  </variablePathList>
+                                </variable>
+                                <visible type="varPath">
+                                  <variablePathList>
+                                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                                  </variablePathList>
+                                </visible>
+                                <width>150px</width>
+                              </element>
+                            </elementList>
+                          </element>
+                          <element name="VerticalLayout" type="elvlt">
+                            <elementList>
+                              <element name="FormFrame" type="elovf">
+                                <formReference type="varPath">
+                                  <variablePathList>
+                                    <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/frmui_Forms</variablePath>
+                                    <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/frmui_Forms/vform_MenuViewReport</variablePath>
+                                  </variablePathList>
+                                </formReference>
+                              </element>
+                            </elementList>
+                          </element>
+                        </elementList>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Menu" type="exov">
+            <base>ui_com.conceptwave.system.BaseFinderUserInterface/frmui_Forms/exov_Menu</base>
+            <extends>ui_com.conceptwave.system.BaseFinderUserInterface/frmui_Forms/exov_Menu</extends>
+            <label>Menu</label>
+            <overrideList>
+              <override name="finderMenuLayout" type="elhlt">
+                <alignment>left,center</alignment>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                  </variablePathList>
+                </visible>
+                <width>100%</width>
+                <elementList>
+                  <element name="cwfSearch" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/usrActionMethod_searchAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconSearch.gif</icon>
+                    <label>Search</label>
+                    <showDown>true</showDown>
+                    <showFocused>true</showFocused>
+                    <tooltip>Search</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfSelect" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_showDetailAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconSelect.gif</icon>
+                    <label>Select</label>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfDetail" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uimthd_viewReport</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwt/images/24/data_view.png</icon>
+                    <label>View Report</label>
+                    <tooltip>Edit</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfAdd" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/action_addAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconAdd.gif</icon>
+                    <tooltip>Add</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfCopy" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/action_copyAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconCopy.gif</icon>
+                    <tooltip>Copy</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfUpdate" type="elmnu">
+                    <menuAccel type="mAccelP"/>
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/action_updateAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconEdit.gif</icon>
+                    <tooltip>Edit</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="cwfDelete" type="elmnu">
+                    <clickMethod type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/usrActionMethod_deleteAction</variablePath>
+                      </variablePathList>
+                    </clickMethod>
+                    <icon>/cwf/MenuIconDelete.gif</icon>
+                    <tooltip>Delete</tooltip>
+                    <visible type="varPath">
+                      <variablePathList>
+                        <variablePath>dtype_com.conceptwave.system.Boolean/leaf_FALSE</variablePath>
+                      </variablePathList>
+                    </visible>
+                  </element>
+                  <element name="detailMenu" type="elovf">
+                    <formReference type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detail</variablePath>
+                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms</variablePath>
+                        <variablePath>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Menu</variablePath>
+                      </variablePathList>
+                    </formReference>
+                    <overflow>visible</overflow>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detail</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <width>1px</width>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="MenuViewReport" type="vform">
+            <label>MenuViewReport</label>
+            <root name="finderMenuLayout" type="elhlt">
+              <alignment>left,center</alignment>
+              <height>10px</height>
+              <width>100%</width>
+              <elementList>
+                <element name="cwfDetail" type="elmnu">
+                  <menuAccel type="mAccelP"/>
+                  <clickMethod type="varPath">
+                    <variablePathList>
+                      <variablePath>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/uimthd_viewReport</variablePath>
+                    </variablePathList>
+                  </clickMethod>
+                  <icon>/cwt/images/24/data_view.png</icon>
+                  <label>View Report</label>
+                  <tooltip>Edit</tooltip>
+                </element>
+              </elementList>
+            </root>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+    <methodList>
+      <method name="cwLeafInitAction$isViewReportButtonVisible" type="laction">
+        <path>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/leaf_isViewReportButtonVisible</path>
+        <type>initializer</type>
+        <script>return true;</script>
+      </method>
+      <method name="showDetailAction" type="action">
+        <script><![CDATA[
+          //if this finder is being displayed as a reference finder, return the currently selected
+          //document instead of displaying the detail document.
+          var leafName = this.model.parentLeafName;
+          if(this.result.selected==null){
+              this.setReferenceData(null);
+          }else{
+              if(this.model.refFinderDocument!=null && !this.model.refFinderDocument.isTranslation(leafName)){
+                  this.setReferenceData(this.result.selected);
+              }else if (this.result.selected != null && this.result.selected.length == 1 && this.detailForm!=null){
+                  this.detail = new this.result.selected[0].UserInterface(this.result.selected[0], this);
+                  this.detail.parent = this;
+                  this.detail.loadFilesList();
+                  var order = Order.getOrderById(this.detail.model.cwOrderId);
+                  this.detail.initOrderUI(order);
+                  if(cw_etltool.common.getConfig().isDefaultReportView)
+                      this.detailForm = "orderUI";
+                  else
+                  this.detailForm = "ImportReport";
+
+                  //this.detail.OrderUserInterface.model = Order.getOrderById(this.detail.model.cwOrderId);
+                  this.isSearchButtonVisible = false;
+                  this.isViewReportButtonVisible = false;
+              } else {
+                  this.detail = null;
+              }
+          }
+
+          if(this.cwSelectCallback!=null){
+              var args = new Array();
+              this.parent.owner[this.cwSelectCallback](this.result.selected, this.result.selected!=null?this.result.selected[0]:null);
+              this.parent.parent.cwChildDialogClose();
+          }
+        ]]></script>
+      </method>
+      <method name="viewReport" type="uimthd">
+        <script>this.showDetailAction();</script>
+      </method>
+      <method name="viewReportButtonVisible" type="permMethod">
+        <script>return !this.detailVisible($psCondition);</script>
+      </method>
+    </methodList>
+  </UserInterface>
+  <viewList>
+    <view name="importReportFinderView" type="findVView">
+      <inputOverlay>doc_cw_etltool._import.importOrderHeaderSearch/ui_UserInterface/frmui_Forms/exov_Default</inputOverlay>
+      <label>ETL Import Report</label>
+      <outputOverlay>findDoc_cw_etltool._import.importReportFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+      <searchImmediately>true</searchImmediately>
+      <showSearchForm>true</showSearchForm>
+    </view>
+  </viewList>
+</findDoc>

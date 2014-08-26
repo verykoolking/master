@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<findOrder name="cm_plm.plmOrderFinder">
+  <extends>find_com.conceptwave.system.Finder</extends>
+  <input>doc_cm_plm.plmOrderSearch</input>
+  <itemTypeList>
+    <itemType>order_cm_plm.plmOrder</itemType>
+  </itemTypeList>
+  <label>plmOrderFinder</label>
+  <metaVersion>4</metaVersion>
+  <output>doc_cm_plm.plmOrderSearch</output>
+  <type>order</type>
+  <vDetailForm>tree_com.conceptwave.system.OrderUserInterface/frmui_Forms/exov_Default</vDetailForm>
+  <searchList>
+    <search type="sitem">
+      <document>doc_cm_plm.plmOrderSearch</document>
+      <mappedDocument>doc_cm_plm.changeRequest</mappedDocument>
+      <mappedPath>doc_cm_plm.changeRequest/leaf_projectCode</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cm_plm.plmOrderSearch/leaf_projectCode</path>
+    </search>
+  </searchList>
+  <selectResultList>
+    <selectResult type="sitem">
+      <document>doc_cm_plm.plmOrderSearch</document>
+      <mappedDocument>doc_cm_plm.changeRequest</mappedDocument>
+      <mappedOrder>order_cm_plm.plmOrder/order_change</mappedOrder>
+      <mappedPath>doc_cm_plm.changeRequest/leaf_cwOrderId</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cm_plm.plmOrderSearch/leaf_cwOrderId</path>
+    </selectResult>
+    <selectResult type="sitem">
+      <document>doc_cm_plm.plmOrderSearch</document>
+      <mappedDocument>doc_cm_plm.changeRequest</mappedDocument>
+      <mappedOrder>order_cm_plm.plmOrder/order_change</mappedOrder>
+      <mappedPath>doc_cm_plm.changeRequest/leaf_projectCode</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cm_plm.plmOrderSearch/leaf_projectCode</path>
+    </selectResult>
+    <selectResult type="sitem">
+      <document>doc_cm_plm.plmOrderSearch</document>
+      <mappedDocument>doc_cm_plm.changeRequest</mappedDocument>
+      <mappedOrder>order_cm_plm.plmOrder/order_change</mappedOrder>
+      <mappedPath>doc_cm_plm.changeRequest/leaf_orderStatus</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cm_plm.plmOrderSearch/leaf_orderStatus</path>
+    </selectResult>
+    <selectResult type="sitem">
+      <document>doc_cm_plm.plmOrderSearch</document>
+      <mappedDocument>doc_cm_plm.plmControlDoc</mappedDocument>
+      <mappedOrder>order_cm_plm.plmOrder/order_plmControl</mappedOrder>
+      <mappedPath>doc_cm_plm.plmControlDoc/leaf_caller</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cm_plm.plmOrderSearch/leaf_caller</path>
+    </selectResult>
+    <selectResult type="sitem">
+      <document>doc_cm_plm.plmOrderSearch</document>
+      <mappedDocument>doc_cm_plm.plmControlDoc</mappedDocument>
+      <mappedOrder>order_cm_plm.plmOrder/order_plmControl</mappedOrder>
+      <mappedPath>doc_cm_plm.plmControlDoc/leaf_isComercialConfRequired</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cm_plm.plmOrderSearch/leaf_isComercialConfRequired</path>
+    </selectResult>
+    <selectResult type="sitem">
+      <document>doc_cm_plm.plmOrderSearch</document>
+      <mappedDocument>doc_cm_plm.plmControlDoc</mappedDocument>
+      <mappedOrder>order_cm_plm.plmOrder/order_plmControl</mappedOrder>
+      <mappedPath>doc_cm_plm.plmControlDoc/leaf_isTechnicalConfRequired</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cm_plm.plmOrderSearch/leaf_isTechnicalConfRequired</path>
+    </selectResult>
+    <selectResult type="sitem">
+      <document>doc_cm_plm.plmOrderSearch</document>
+      <mappedDocument>doc_cm_plm.plmControlDoc</mappedDocument>
+      <mappedOrder>order_cm_plm.plmOrder/order_plmControl</mappedOrder>
+      <mappedPath>doc_cm_plm.plmControlDoc/leaf_isReviewRequired</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cm_plm.plmOrderSearch/leaf_isReviewRequired</path>
+    </selectResult>
+    <selectResult type="sitem">
+      <document>doc_cm_plm.plmOrderSearch</document>
+      <mappedDocument>doc_cm_plm.plmControlDoc</mappedDocument>
+      <mappedOrder>order_cm_plm.plmOrder/order_plmControl</mappedOrder>
+      <mappedPath>doc_cm_plm.plmControlDoc/leaf_isTestingRequired</mappedPath>
+      <operation>equal</operation>
+      <path>doc_cm_plm.plmOrderSearch/leaf_isTestingRequired</path>
+    </selectResult>
+    <selectResult type="sitem">
+      <document>doc_cm_plm.plmOrderSearch</document>
+      <operation>equal</operation>
+      <path>doc_cm_plm.plmOrderSearch/leaf_cwDocId</path>
+    </selectResult>
+  </selectResultList>
+  <UserInterface name="UserInterface" type="ui">
+    <extends>ui_com.conceptwave.system.OrderFinderUserInterface</extends>
+    <variableList>
+      <variable name="result" type="uivar">
+        <flags enum-type="metadataFlag">ARRAY</flags>
+        <valueType>doc_cm_plm.plmOrderSearch</valueType>
+      </variable>
+      <variable name="search" type="uivar">
+        <valueType>doc_cm_plm.plmOrderSearch/ui_UserInterface</valueType>
+      </variable>
+      <variable name="detail" type="uivar">
+        <flags enum-type="metadataFlag">VALIDATE</flags>
+        <valueType>doc_cm_plm.plmOrderSearch/ui_UserInterface</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>ui_com.conceptwave.system.OrderFinderUserInterface/frmui_Forms</extends>
+        <overlayList>
+          <overlay name="Result" type="exov">
+            <base>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</base>
+            <extends>ui_com.conceptwave.system.FinderUserInterface/frmui_Forms/vform_Result</extends>
+            <label>Result</label>
+            <overrideList>
+              <override name="table" type="elvlt">
+                <height>100%</height>
+                <width>100%</width>
+                <elementList>
+                  <element name="plmOrderFinderResultTable" type="eltabl">
+                    <onSelectChange type="varPath">
+                      <variablePathList>
+                        <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/action_OnSelChanged</variablePath>
+                      </variablePathList>
+                    </onSelectChange>
+                    <variable type="varPath">
+                      <variablePathList>
+                        <variablePath>findOrder_cm_plm.plmOrderFinder/ui_UserInterface/uivar_result</variablePath>
+                      </variablePathList>
+                    </variable>
+                    <elementList>
+                      <element name="cwOrderId" type="elfld">
+                        <label>Order ID</label>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findOrder_cm_plm.plmOrderFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.plmOrderSearch/leaf_cwOrderId</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="projectCode" type="elfld">
+                        <label>Project Code</label>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findOrder_cm_plm.plmOrderFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.plmOrderSearch/leaf_projectCode</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="orderStatus" type="elslct">
+                        <label>Order Status</label>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findOrder_cm_plm.plmOrderFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.plmOrderSearch/leaf_orderStatus</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="caller" type="elslct">
+                        <label>PLM Caller</label>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findOrder_cm_plm.plmOrderFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.plmOrderSearch/leaf_caller</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="isComercialConfRequired" type="elchk">
+                        <label>Comercial Configuration</label>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findOrder_cm_plm.plmOrderFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.plmOrderSearch/leaf_isComercialConfRequired</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="isTechnicalConfRequired" type="elchk">
+                        <label>Technical Configuration</label>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findOrder_cm_plm.plmOrderFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.plmOrderSearch/leaf_isTechnicalConfRequired</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="isReviewRequired" type="elchk">
+                        <label>Review</label>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findOrder_cm_plm.plmOrderFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.plmOrderSearch/leaf_isReviewRequired</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                      <element name="isTestingRequired" type="elchk">
+                        <label>Testing</label>
+                        <variable type="varPath">
+                          <variablePathList>
+                            <variablePath>findOrder_cm_plm.plmOrderFinder/ui_UserInterface/uivar_result</variablePath>
+                            <variablePath>doc_cm_plm.plmOrderSearch/leaf_isTestingRequired</variablePath>
+                          </variablePathList>
+                        </variable>
+                      </element>
+                    </elementList>
+                  </element>
+                </elementList>
+              </override>
+            </overrideList>
+          </overlay>
+          <overlay name="Default" type="exov">
+            <base>ui_com.conceptwave.system.OrderFinderUserInterface/frmui_Forms/exov_Default</base>
+            <extends>ui_com.conceptwave.system.OrderFinderUserInterface/frmui_Forms/exov_Default</extends>
+            <label>Default</label>
+            <overrideList>
+              <override name="detailSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/uivar_detailForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findOrder_cm_plm.plmOrderFinder/ui_UserInterface/uivar_detail</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.MasterDetailUserInterface/permMethod_detailVisible</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+              <override name="searchFormSection" type="elsect">
+                <formReference type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.BaseFinderUserInterface/uivar_searchForm</variablePath>
+                  </variablePathList>
+                </formReference>
+                <variable type="varPath">
+                  <variablePathList>
+                    <variablePath>findOrder_cm_plm.plmOrderFinder/ui_UserInterface/uivar_search</variablePath>
+                  </variablePathList>
+                </variable>
+                <visible type="varPath">
+                  <variablePathList>
+                    <variablePath>ui_com.conceptwave.system.FinderUserInterface/permMethod_showSearchForm</variablePath>
+                  </variablePathList>
+                </visible>
+              </override>
+            </overrideList>
+          </overlay>
+        </overlayList>
+      </vform>
+    </vformList>
+  </UserInterface>
+  <viewList>
+    <view name="plmOrderFinderView" type="findVView">
+      <inputOverlay>doc_cm_plm.plmOrderSearch/ui_UserInterface/frmui_Forms/vform_search</inputOverlay>
+      <outputOverlay>findOrder_cm_plm.plmOrderFinder/ui_UserInterface/frmui_Forms/exov_Result</outputOverlay>
+      <showSearchForm>true</showSearchForm>
+    </view>
+  </viewList>
+</findOrder>

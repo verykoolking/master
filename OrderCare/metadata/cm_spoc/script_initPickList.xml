@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initPickList">
+  <group>ui_scripts.utils</group>
+  <label>initPickList</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+    <parameter name="allItems" type="rifp">
+      <array>true</array>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="selectedItems" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="itemCodeAttribute" type="rifp"/>
+    <parameter name="itemDescriptionAttribute" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var pl = new cm_spoc.PickList(null,ui);
+    /*
+    pl.availableItems = new DataObjectList();
+    pl.availableItemsNoFilter = new DataObjectList();
+    pl.selectedItemsNoFilter = new DataObjectList();
+    */
+
+    var listSel=selectedItems;
+
+    for(var i=0;i<allItems.length;i++){
+
+        var item = new cm_spoc.PickListDS();
+        item.id = allItems[i][itemCodeAttribute];
+        item.description = allItems[i][itemDescriptionAttribute];
+
+        if(listSel==null)
+        {
+            pl.availableItems.addLast(item);
+            pl.availableItemsNoFilter.addLast(item);//e.cozzuto 14/07/2014
+        }
+        else
+        {
+            var found = false;
+            for(var j=0;j<listSel.length;j++)
+                if(listSel[j].equals(allItems[i][itemCodeAttribute]))
+            {
+                found = true;
+            }
+
+            if( found){
+                pl.selectedItems.addLast(item);
+                pl.selectedItemsNoFilter.addLast(item);//e.cozzuto 14/07/2014
+
+            }else{
+
+                pl.availableItems.addLast(item);
+                pl.availableItemsNoFilter.addLast(item);//e.cozzuto 14/07/2014
+            }
+        }
+    }
+    pl.showsSearchBars=false; //ecozzuto 15/07/2014
+    pl.showsButtonListSearch=true; //ecozzuto 15/07/2014
+    return pl;
+  ]]></script>
+</script>

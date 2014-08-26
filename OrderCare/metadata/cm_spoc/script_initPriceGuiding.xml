@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initPriceGuiding">
+  <group>ui_scripts.Common.Price.Init</group>
+  <label>initPriceGuiding</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="baseItemCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="nameArray" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="nameArrayDS" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    // model = cm_spoc.data. Entity
+
+
+
+    if(!model.specificationCode){
+
+        var PriceGuiding = cm_spoc.initInnerDS("base_"+nameArray);
+
+        model[nameArrayDS] = PriceGuiding;
+
+
+
+    } else {
+
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+       s.specificationCode = model[nameArray];
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model[nameArrayDS]=r;
+       }
+
+
+       var pgRuleList =  model[nameArrayDS].List;
+       var pgRuleListDS= model[nameArrayDS].ListDS;
+       for(var i=0;i<pgRuleList.length;i++){
+           s.specificationCode = pgRuleList[i];
+
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+                pgRuleListDS[i]=r;
+                 pgRuleListDS[i].CustomerProfile=r.CustomerProfile;
+                 //Assign values to enums
+                 pgRuleListDS[i].ServiceProviderEnum=r.ServiceProvider;
+                 pgRuleListDS[i].TariffPlanEnum=r.TariffPlan;
+                 pgRuleListDS[i].ProvinceEnum=r.Province;
+
+
+               s.specificationCode = pgRuleListDS[i].Price;
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    pgRuleListDS[i].PriceDS=r;
+                    pgRuleListDS[i].EventPriceEnum=r.specificationCode;
+
+               }
+
+    /*
+               s.specificationCode = pgRuleListDS[i].Operation;
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    pgRuleListDS.OperationDS=r;
+               }
+
+               s.specificationCode = pgRuleListDS[i].Province;
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                    pgRuleListDS[i].ProvinceDS=r;
+                    pgRuleListDS[i].ProvinceEnum=r.specificationCode;
+               }
+
+               s.specificationCode = pgRuleListDS[i].TariffPlan;
+               var r = epc.getSpecificationByKey(s);
+               if(!api_common.isFault(r)){
+                   pgRuleListDS[i].TariffPlanDS=r;
+                    pgRuleListDS[i].TariffPlanEnum=r.specificationCode;
+               }
+
+    */
+           }
+       }
+    }
+
+
+    return model;
+  ]]></script>
+</script>

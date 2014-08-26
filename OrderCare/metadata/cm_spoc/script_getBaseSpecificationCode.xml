@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.getBaseSpecificationCode">
+  <group>overridden.scripts</group>
+  <label>getBaseSpecificationCode</label>
+  <metaVersion>4</metaVersion>
+  <overrides>script_cwa_epc.getBaseSpecificationCode</overrides>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <valueType>dtype_com.conceptwave.system.String</valueType>
+  <script><![CDATA[
+    //NGAA
+    if(model.has("catalogEntity"))
+        return model.catalogEntity;
+
+    var metaType = model.metadataTypeName;
+    metaType = metaType.split('.')[metaType.split('.').length-1];
+    return ('base_' + metaType);
+  ]]></script>
+</script>

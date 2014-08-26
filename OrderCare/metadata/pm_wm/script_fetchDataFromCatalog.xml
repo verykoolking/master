@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.fetchDataFromCatalog">
+  <label>fetchDataFromCatalog</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <type>dstruct_api_common.data.object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+     * Fetch Data From Catalog
+     *
+     * @author  Luis Amorim
+     * @date    201405
+     *
+     * @param {String}         decision tree data
+     */
+
+    try {
+            var isProductOfferingId = false;
+            var oper   = dtree.request;
+            var itcode;
+            if ( dtree.catalogData.oCSProductSpecificationItemcode ) {
+                itcode = dtree.catalogData.oCSProductSpecificationItemcode;
+            }
+            if ( dtree.catalogData.oCSProductOfferingItemcode ) {
+                itcode = dtree.catalogData.oCSProductOfferingItemcode;
+                isProductOfferingId = true;
+            }
+            else if (  !dtree.isQueryRequest // synchronization with SR - for Product Instance the Ids will come from SR
+                    && ( dtree.entitiesSR )
+                    && ( dtree.entitiesSR.length == 1 )
+                    && ( dtree.entitiesSR[0].productOfferingId ) ) {
+                    itcode = dtree.entitiesSR[0].productOfferingId;
+                    isProductOfferingId = true;
+                 }
+
+
+            if (dtree.catalogData.oCSProductOfferingType) {
+                dtree.offerType =  dtree.catalogData.oCSProductOfferingType;
+            }
+
+            if (itcode) {
+                var fnd = null;
+                fnd = new Finder('pm_wm.readOfferNameFromCatalogFinder');
+                fnd.searchDocument.itemcode = itcode;
+                fnd.search();
+                dtree.offerType = fnd.list.length > 0 ? fnd.list[0].offerName : "";
+                dtree.catalogData.oCSProductOfferingType = dtree.offerType;
+                fnd = new Finder('pm_wm.readAttributesHierarchyFromCatalogFinder');
+                fnd.searchDocument.itemcode                     = itcode;
+                fnd.searchDocument.isProductOfferingId          = isProductOfferingId;
+                fnd.searchDocument.isProductSpecificationId     = !isProductOfferingId;
+                var ahC = fnd.search();
+                for (var k=0; k < ahC.length; k++) {
+                     dtree.catalogData.attributesHierarchy[k] = ahC[k];
+                }
+                if ((!(ahC)) || (ahC.length == 0)) {
+                    dtree.errorcode.push("ER_WF_301");
+                    dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_301"));
+                    return false;
+                }
+
+                if ( (!(dtree.catalogData.oCSProductSpecificationItemcode)) && (dtree.catalogData.oCSProductOfferingItemcode) ) {
+                    var att = getattC( dtree.offerType + "Type.specificationType", 0 );
+                    dtree.catalogData.oCSProductSpecificationItemcode = att.itemcode;
+                }
+                if ( (!(dtree.catalogData.oCSProductSpecificationItemcode)) && (dtree.catalogData.oCSProductOfferingItemcode) ) {
+                    var att = getattC( dtree.offerType + "Specification.specificationType", 0 );
+                    dtree.catalogData.oCSProductSpecificationItemcode = att.itemcode;
+                }
+            }
+            /*
+            else {
+                dtree.errorcode.push("ER_WF_300");
+                dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_300"));
+                return false;
+            }
+            */
+            return true;
+    }catch(err){
+        dtree.errorcode.push("ER_WF_399");
+        dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_399", [err]));
+        return false;
+    }
+
+    // get hierarquic attribute from catalog array
+    function getattC( attributepath, ignore ) {
+        return pm_wm.getAttributeFromAttributesHierarchy( dtree.catalogData.attributesHierarchy, "attributepath", attributepath, ignore );
+    }
+  ]]></script>
+</script>

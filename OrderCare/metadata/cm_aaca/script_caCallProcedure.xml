@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_aaca.caCallProcedure">
+  <highlight>32</highlight>
+  <label>CM-AACA Call Stored Procedure For configuration</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="conn" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="procName" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="xmlData" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="projectCode" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+    <parameter name="processId" type="rifp">
+      <type>dtype_com.conceptwave.system.String</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var query = "CALL " + procName + "(?, ?, ?)";
+    var xmlDataStr = xmlData.toXML();
+
+    var xmlDataStr = '<AAConfigurableItem xsi:noNamespaceSchemaLocation="AAConfiguration.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+                     xmlDataStr.substr(19);
+    var outPar = null;
+    var sendTime = new Date();
+    try {
+        outPar = Global.runDBStoredProcedure(conn, query, xmlDataStr, null, false, true, 'cm_aaca.caProcedureOutParameters', 'I-O-O');
+        outPar = outPar[0];
+    }
+    catch(exp) {
+        outPar = new cm_aaca.caProcedureOutParameters();
+        outPar.RESULT_CODE = '99';
+        outPar.RESULT_TEXT = exp.toString();
+        Global.logError(exp);
+        return outPar;
+    }
+
+    cm_aaca.caLogCallProcedure(xmlDataStr, outPar.RESULT_TEXT, sendTime, conn, procName, projectCode, xmlData.cwCode, processId, outPar.RESULT_CODE);
+    return outPar;
+  ]]></script>
+</script>

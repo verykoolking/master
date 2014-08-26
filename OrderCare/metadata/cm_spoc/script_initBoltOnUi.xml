@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initBoltOnUi">
+  <group>ui_scripts.BoltOn</group>
+  <label>initBoltOnUi</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.SubLimitsIterator = new Array();
+    var subsLimitsDS=ui.model.SubscriptionOfferingDS.SubscriptionLimitArrDS.ListDS;
+    var uiArr= new Array();
+    ui.SubsIncompatibilitiesIterator = new Array();
+    var subsIncompDS=ui.model.BoltOnSubscriptionArrDS.ListDS;
+    var uiArr= new Array();
+    if(!ui.model.specificationCode){
+     /*   cm_spoc.addListElement(ui, subsLimitsDS,"cm_spoc.forms.SubscriptionLimitsUI","base_SubscriptionLimit","SubLimitsIterator");
+        subsLimitsDS[0].Period="DAY";
+        cm_spoc.addListElement(ui, subsIncompDS,"cm_spoc.forms.BoltOnSubscriptionUI","base_BoltOnSubscription","SubsIncompatibilitiesIterator"); */
+    }
+    else{
+        cm_spoc.loadListElements(ui, subsLimitsDS, "cm_spoc.forms.SubscriptionLimitsUI", "SubLimitsIterator");
+        cm_spoc.loadListElements(ui, subsIncompDS, "cm_spoc.forms.BoltOnSubscriptionUI", "SubsIncompatibilitiesIterator");
+    }
+
+    //cm_spoc.initPriceGuidingUI(ui);
+  ]]></script>
+</script>

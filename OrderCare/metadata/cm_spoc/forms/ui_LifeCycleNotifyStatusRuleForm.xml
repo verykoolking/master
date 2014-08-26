@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<userInterface name="cm_spoc.forms.LifeCycleNotifyStatusRuleForm">
+  <group>LifeCycles</group>
+  <label>LifeCycleNotifyStatusRuleForm</label>
+  <metaVersion>4</metaVersion>
+  <variableList>
+    <variable name="model" type="leaf">
+      <valueType>dstruct_cm_spoc.data.LifeCycleNotifyStatusRule</valueType>
+    </variable>
+  </variableList>
+  <vformList>
+    <vform name="Forms" type="frmui">
+      <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms</extends>
+      <overlayList>
+        <overlay name="Default" type="exov">
+          <base>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</base>
+          <extends>ui_com.conceptwave.system.UserInterface/frmui_Forms/vform_Default</extends>
+          <label>Default</label>
+          <overrideList>
+            <override name="SectionStack" type="elsectnstck">
+              <width>750px</width>
+              <elementList>
+                <element name="Section" type="elsect">
+                  <elementList>
+                    <element name="SectionHeader" type="elsecth">
+                      <label>Notify subscriber status changes to OCS-RE</label>
+                    </element>
+                    <element name="GridLayout" type="elgrd">
+                      <cellPadding>10</cellPadding>
+                      <numOfCols>2</numOfCols>
+                      <width>180px</width>
+                      <elementList>
+                        <element name="RowSpacer1" type="elrsp">
+                          <height>0px</height>
+                          <rowSpan>0px</rowSpan>
+                        </element>
+                        <element name="InitialLifeCycleSubStatus" type="elslct">
+                          <label>Initial status (status - substatus)</label>
+                          <labelOrientation>left</labelOrientation>
+                          <multiselect>false</multiselect>
+                          <onChangeMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleNotifyStatusRuleForm/uimthd_setInitialStatus</variablePath>
+                            </variablePathList>
+                          </onChangeMethod>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleNotifyStatusRuleForm/leaf_model</variablePath>
+                              <variablePath>dstruct_cm_spoc.data.LifeCycleNotifyStatusRule/dstruct_InitialLifeCycleSubStatusEnum</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <width>200px</width>
+                        </element>
+                        <element name="FinalLifeCycleSubStatusEnum" type="elslct">
+                          <label>Final status (status - substatus)</label>
+                          <labelOrientation>left</labelOrientation>
+                          <multiselect>false</multiselect>
+                          <onChangeMethod type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleNotifyStatusRuleForm/uimthd_setFinalStatus</variablePath>
+                            </variablePathList>
+                          </onChangeMethod>
+                          <variable type="varPath">
+                            <variablePathList>
+                              <variablePath>ui_cm_spoc.forms.LifeCycleNotifyStatusRuleForm/leaf_model</variablePath>
+                              <variablePath>dstruct_cm_spoc.data.LifeCycleNotifyStatusRule/dstruct_FinalLifeCycleSubStatusEnum</variablePath>
+                            </variablePathList>
+                          </variable>
+                          <width>200px</width>
+                        </element>
+                        <element name="RowSpacer" type="elrsp">
+                          <height>0px</height>
+                          <rowSpan>0px</rowSpan>
+                        </element>
+                      </elementList>
+                    </element>
+                  </elementList>
+                </element>
+              </elementList>
+            </override>
+          </overrideList>
+        </overlay>
+      </overlayList>
+    </vform>
+  </vformList>
+  <methodList>
+    <method name="cwLeafInitAction$model" type="laction">
+      <path>ui_cm_spoc.forms.LifeCycleNotifyStatusRuleForm/leaf_model</path>
+      <type>initializer</type>
+      <script><![CDATA[
+        //
+        var m = cm_spoc.initLifeCycleNotifyStatusRule(this.model);
+        return m;
+      ]]></script>
+    </method>
+    <method name="setInitialStatus" type="uimthd">
+      <script><![CDATA[
+        //
+        this.model.RuleSetsAnInitialSubStatus = this.model.InitialLifeCycleSubStatusEnum;
+      ]]></script>
+    </method>
+    <method name="setFinalStatus" type="uimthd">
+      <script><![CDATA[
+        //
+        this.model.RuleSetsAFinalSubStatus = this.model.FinalLifeCycleSubStatusEnum;
+      ]]></script>
+    </method>
+    <method name="setReadOnly" type="uimthd"/>
+  </methodList>
+</userInterface>

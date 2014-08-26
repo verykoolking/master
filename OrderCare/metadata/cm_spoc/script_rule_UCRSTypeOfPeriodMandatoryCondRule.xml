@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_UCRSTypeOfPeriodMandatoryCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_UCRSTypeOfPeriodMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+     * UCRSTypeOfPeriodCondRule.TypeOfPeriod is mandatory if the following are met:
+        UCRelatedSpecification      ValidBoltOnForUsageControl       Exists
+        GeneralStartEndDateSpec      StartDateTime       is EMPTY
+        GeneralStartEndDateSpec      EndDateTime       is EMPTY
+     *
+     */
+
+     var top = data.UCRelatedSpecificationDS.TypeOfPeriod;
+     var vbuc = data.UCRelatedSpecificationDS.ValidBoltOnForUsageControl;
+     var gdsDS = data.GeneralStartEndDateSpecDS;
+
+     if(vbuc && !(gdsDS.StartDateTime || gdsDS.EndDateTime)) {
+        if (!top) {
+             errList.addErrorMessage(data,["Type of period is mandatory if Valid Bolt On For Usage Control is set and Start and End date aren't set"],"NGAA_003","E");
+        }
+     }
+
+     return false;
+  ]]></script>
+</script>

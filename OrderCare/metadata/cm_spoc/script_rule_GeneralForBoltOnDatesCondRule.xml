@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_GeneralForBoltOnDatesCondRule">
+  <group>rules_scripts.BoltOnType</group>
+  <label>rule_GeneralForBoltOnDatesCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (data.BoltOnGenericSpecificationDS.BoltOnMustBeParticular)
+    {
+        return false;
+
+    } else {
+
+       if (data.GeneralStartEndDateSpecDS.StartDateTime && data.GeneralStartEndDateSpecDS.EndDateTime && data.GeneralStartEndDateSpecDS.GeneralForBoltOn )
+           return false;
+
+    }
+
+
+
+    errList.addErrorMessage(data,["General For BoltOn" ] , "SVR_1050010004","E");
+    return false;
+  ]]></script>
+</script>

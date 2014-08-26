@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initSOSTopUpInvitationUI">
+  <group>ui_scripts.TopUp</group>
+  <label>initSOSTopUpInvitationUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.EventsIterator = new Array();
+    if(ui.model.SOSTUISOSTUInvTimerArrDS){
+        var str = "";
+        var SOSTUI = ui.model.SOSTUISOSTUInvTimerArrDS.ListDS;
+        cm_spoc.loadListElements(ui,SOSTUI, "cm_spoc.forms.SOSTopUpInvitationTimer", "EventsIterator");
+        for (var i=0; i<ui.EventsIterator.length; i++){
+            str = "";
+            var resValue = cm_spoc.itemCodeAttribute(ui.model.SOSTUISOSTUInvTimerArrDS.List[i] , ["Name","Description"]);
+            if(resValue.length > 0 ){
+                for( var j = 0; j < resValue.length; j++){
+                    if( j > 0 )
+                        str = str + " - ";
+                    str = str + resValue[j].defaultValue;
+                }
+            }else{
+                str = ui.model.SOSTUISOSTUInvTimerArrDS.List[i];
+            }
+            ui.EventsIterator[i].model.SOSTimerEnum=str;
+
+            //SubOperation
+            var subOp = cm_spoc.findSubOperationByTimer(ui.model.SOSTUISOSTUInvTimerArrDS.List[i]);
+            if (subOp)
+                ui.EventsIterator[i].model.OperationEnumTopUp=subOp;
+        }
+    }
+    if(ui.model.Message){
+        ui.model.SMSMessageEnum = ui.model.Message;
+    }
+  ]]></script>
+</script>

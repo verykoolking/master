@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/voucherManagement/v1/services"
+    xmlns:vns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/voucherManagement/v1/types"
+    xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+    xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/04/secext"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    targetNamespace="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/voucherManagement/v1/services">
+    
+    <wsdl:import namespace="http://www.telefonica.com/wsdl/UNICA/SOAP/common/v2/faults"
+        location="UNICA_API_SOAP_common_faults_v2_1.wsdl" />
+        
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+            <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/voucherManagement/v1/types"
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_voucherManagement_types_v1_1.xsd"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                schemaLocation="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2002/04/secext"
+                schemaLocation="http://schemas.xmlsoap.org/ws/2002/04/secext/secext.xsd" />
+            <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+                schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/> 
+        </xsd:schema>
+    </wsdl:types>
+    
+    
+    <!--
+        Header
+    -->
+    <wsdl:message name="OCSHeaderInfo">
+        <wsdl:part name="messageID" element="wsa:MessageID" />
+        <wsdl:part name="replyTo" element="wsa:ReplyTo" />
+        <wsdl:part name="security" element="wsse:Security" />
+    </wsdl:message>
+  
+    <!--
+        Messages
+    -->
+	<wsdl:message name="VoucherCardAccountRequest">
+		<wsdl:part name="parameters" element="vns:voucherCardAccount" />
+	</wsdl:message>
+	<wsdl:message name="VoucherCardAccountResponse">
+		<wsdl:part name="parameters" element="vns:voucherCardAccountResponse" />
+	</wsdl:message>
+    
+    <wsdl:message name="ServerException">
+      <wsdl:part name="ServerException" element="uct:serverException"/>
+    </wsdl:message>
+    <wsdl:message name="ClientException">
+      <wsdl:part name="ClientException" element="uct:clientException"/>
+    </wsdl:message>
+
+    <!--
+        Port
+    -->
+    <wsdl:portType name="VoucherManagementPort_v1_1">
+        <wsdl:operation name="voucherCardAccount">
+            <wsdl:input message="tns:VoucherCardAccountRequest" />
+            <wsdl:output message="tns:VoucherCardAccountResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+    </wsdl:portType>    
+
+    <!-- Binding -->
+
+	<!-- Voucher Management -->
+	<wsdl:binding name="VoucherManagementServiceSOAPBinding_v1_1" 
+				type="tns:VoucherManagementPort_v1_1">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+
+		<wsdl:operation name="voucherCardAccount">
+			<soap:operation soapAction="voucherCardAccount" style="document" />
+			<wsdl:input>
+				<soap:header message="tns:OCSHeaderInfo" part="messageID"
+					use="literal" wsdl:required="true" />
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="tns:OCSHeaderInfo" part="messageID"
+					use="literal" wsdl:required="true" />
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="ClientException">
+				<soap:fault name="ClientException" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="ServerException">
+				<soap:fault name="ServerException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+				
+	</wsdl:binding>
+    
+    <!--
+        Service
+    -->
+
+    <wsdl:service name="VoucherManagementService_v1">
+        <wsdl:port name="VoucherManagement_v1_1" binding="tns:VoucherManagementServiceSOAPBinding_v1_1">
+            <soap:address location="http://localhost/UNICA/OCSProvisioning/VoucherManagement_v1"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

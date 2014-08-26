@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.onDblClickSpecialDay">
+  <group>ui_scripts.Calendars.FinderScript</group>
+  <label>onDblClickSpecialDay</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var ds = ui.result.selected;
+
+    var m = cm_spoc.initSpecialDay(ds[0]);
+    ui.parent.parent.parent.parent.model = m;
+    ui.parent.parent.parent.model = m;
+    var newUi = new cm_spoc.forms.SpecialDayForm(m,ui.parent.parent.parent);
+    //var newUi =  new cm_spoc.epcItemFinder(m,ui.parent.parent.parent.parent.parent)
+
+    /*newUi.parent.initFrames(m.specificationCode);
+    newUi.parent.onInit();*/
+
+    ui.parent.parent.parent.epcItemFormUI = newUi;
+
+    //ui.parent.parent.parent.parent.parent.detail = newUi;
+  ]]></script>
+</script>

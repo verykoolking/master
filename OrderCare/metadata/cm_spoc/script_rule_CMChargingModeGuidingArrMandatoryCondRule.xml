@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.rule_CMChargingModeGuidingArrMandatoryCondRule">
+  <group>rules_scripts.Common.ChargingMode</group>
+  <label>rule_CMChargingModeGuidingArrMandatoryCondRule</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="data" type="rifp">
+      <type>dstruct_cm_spoc.data.BoltOn</type>
+    </parameter>
+    <parameter name="errList" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var baseItemCode = data.baseSpecificationCode ? data.baseSpecificationCode : data.catalogEntity;
+    var nameArrayDS = cm_spoc.getBaseChargingModeGuidingArrayName(baseItemCode)+"DS";
+    var ds = data[nameArrayDS].ListDS;
+
+    for (var i = 0; i < ds.length; i++)
+    {
+        var item = ds[i];
+        var error = false;
+        if( !item.Operation ){
+            errList.addErrorMessage(data,["Operation must be mandatory"],"NGAA_003","E");
+            error = true;
+        }
+
+        if( !item.ChargingMode ){
+            errList.addErrorMessage(data,["Charging Mode must be mandatory"],"NGAA_003","E");
+            error = true;
+        }
+
+        if( !item.Mode ){
+            errList.addErrorMessage(data,["Mode must be mandatory"],"NGAA_003","E");
+            error = true;
+        }
+
+        if(!error){
+            for(var j=i;j<ds.length;j++){
+                if( (j!=i) && (ds[j].Operation==item.Operation) && (ds[j].Mode==item.Mode) ){
+
+                    if(ds[j].ChargingMode==item.ChargingMode){
+                        errList.addErrorMessage(data,["Duplicated row"],"NGAA_003","E");
+                    }else{
+                        errList.addErrorMessage(data,["There cannot be some rows with the same Mode and Operation"],"NGAA_003","E");
+                    }
+
+                }
+            }
+        }
+    }
+    return false;
+  ]]></script>
+</script>

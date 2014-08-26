@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.beforeSaveModelRec">
+  <group>ui_scripts.utils</group>
+  <label>beforeSaveModelRec</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var baseItemCode = cm_spoc.getBaseItemCode(model);
+    if(baseItemCode != null){
+        var scriptName = "beforeSave"+baseItemCode.replace("base_","");
+        if(cm_spoc[scriptName] != null){
+           cm_spoc[scriptName](model);
+        }
+    }
+  ]]></script>
+</script>

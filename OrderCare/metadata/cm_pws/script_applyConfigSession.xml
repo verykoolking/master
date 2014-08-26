@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_pws.applyConfigSession">
+  <group>scripts</group>
+  <label>applyConfigSession</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="sessionId" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dtype_api_common.data.ID</type>
+    </parameter>
+    <parameter name="maxRows" type="rifp">
+      <type>dtype_com.conceptwave.system.Integer</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    try
+    {
+        var configSessionQuery = new cm_pws.configSessionQuery();
+        configSessionQuery.configSession.sessionId = sessionId;
+        configSessionQuery.configSession.isExecuted = false;
+        configSessionQuery.maxRows = maxRows ? maxRows : 9999;
+        //query will return the items (excluding the ones which are executed (isExecuted=false)) ordered by 'requestTime' in ascending order
+        var configSessionList = cm_pws.queryConfigSession(configSessionQuery);
+        if(api_common.isFault(configSessionList))
+            return configSessionList;
+        else if (configSessionList.configSession.length == 0 )
+        {
+            var fault = api_common.createFault("E2345", "The session is empty and no action can be taken at this point.");    //Correct error code
+            return fault;
+        }
+
+        var response;
+        var request;
+        var configSession;
+
+        var createEntityType = "OCSConfigurationOperation.v1.types:CreateEntity";
+        var deleteEntityType = "OCSConfigurationOperation.v1.types:DeleteEntity";
+        var changeEntityType = "OCSConfigurationOperation.v1.types:ChangeEntity";
+
+        for (var i=0; i< configSessionList.configSession.length; i++)
+        {
+            response = null;
+            configSession = configSessionList.configSession[i];
+            request = configSession.request;
+            var input;
+            switch (configSession.operation){
+                case 'CREATE_ENTITY':
+                input = Global.getItemsFromXML(request, createEntityType);
+                if(input && input.length == 1)
+                    response = cm_pws.createEntity(input[0]);
+                else
+                    response = api_common.createFault("E979732", "Error executing the command: '" + configSession.id + "'"); //Correct error code
+                break;
+                case 'CHANGE_ENTITY':
+                input = Global.getItemsFromXML(request, changeEntityType);
+                if(input && input.length == 1)
+                    response = cm_pws.changeEntity(input[0]);
+                else
+                    response = api_common.createFault("E979732", "Error executing the command: '" + configSession.id + "'"); //Correct error code
+                break;
+                case 'DELETE_ENTITY':
+                input = Global.getItemsFromXML(request, deleteEntityType);
+                if(input && input.length == 1)
+                    response = cm_pws.deleteEntity(input[0]);
+                else
+                    response = api_common.createFault("E979732", "Error executing the command: '" + configSession.id + "'"); //Correct error code
+                break;
+                case 'START_CONFIGURATION':
+                case 'END_CONFIGURATION':
+                break;
+                default:
+                response = api_common.createFault("E979732", "Operation not recognised."); //Correct error code
+                break;
+            }
+
+            if(api_common.isFault(response)){
+                if(input && input.length > 0)
+                    response.addFault("INPUT", input[0].toXML());
+                return response;
+            }
+
+            configSession.isExecuted = true;
+            response = cm_pws.setConfigSessionByValue(configSession);
+
+            if(api_common.isFault(response))
+                return response;
+        }
+
+        return;
+    }
+    catch (exp)
+    {
+        var code = eval("arguments.callee.name");
+        var fault = api_common.createException(exp, code);    //TODO: correct error code
+        return fault;
+    }
+  ]]></script>
+</script>

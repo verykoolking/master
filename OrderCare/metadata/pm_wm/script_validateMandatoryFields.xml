@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="pm_wm.validateMandatoryFields">
+  <label>validateMandatoryFields</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="dtree" type="rifp">
+      <type>dtype_com.conceptwave.system.Void</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /**
+         * Validate Mandatory (first validation, before using Catalog)
+         *
+         * @author  Ramon Barrasa
+         * @date    20140423
+         *
+         * @param {DataStructure}        The Process DataStructure
+         */
+
+        Global.logDebug("validateRequestMandatory");
+
+        try {
+            var msgID     = dtree.soapHeaderRequest && dtree.soapHeaderRequest.MessageID ? dtree.soapHeaderRequest.MessageID : null;
+            if(!msgID){ //MessageID is Null
+                dtree.errorcode.push("ER_WF_000");
+                dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_000"));
+                return false;
+            }
+            var patt      = new RegExp("[a-f|A-F|0-9|-]{8}-[a-f|A-F|0-9|-]{4}-[a-f|A-F|0-9|-]{4}-[a-f|A-F|0-9|-]{4}-[a-f|A-F|0-9|-]{12}");
+            if(msgID.replace(patt, "").length != 0){
+                dtree.errorcode.push("ER_WF_005");
+                dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_005", [msgID]));
+                return false;
+            }
+            // common validation ////////////////////////////////////////////////////////
+            // subscriberId
+            var ids = dtree.request.subscriberId;
+            //var idr = dtree.request.
+            /* 201405 LA NEWXSD
+            if (!(( ids.e164Number) ^
+                  ( ids.userName) ^
+                  ( ids.anyURI) ^ (ids.ipAddress.ipv4Address) ^
+                  ( ids.ipAddress.ipv6Address))){
+            */
+            if (!(ids)){
+                dtree.errorcode.push("ER_WF_001");
+                dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_001"));
+                return false;
+            }
+
+            if  (!(((dtree.request.has("productOfferingId")) && (dtree.request.productOfferingId.has("id")) &&  (dtree.request.productOfferingId.id)) ||
+                ((dtree.request.has("productId")) && (dtree.request.productId.has("productOfferingId"))  && (dtree.request.productId.productOfferingId.has("id")) && (dtree.request.productId.productOfferingId.id)) ||
+                ((dtree.request.has("productId")) && (dtree.request.productId.has("productSpecificationId"))  && (dtree.request.productId.productSpecificationId.has("productNumber")) && (dtree.request.productId.productSpecificationId.productNumber)) ||
+                ((dtree.request.has("productId")) && (dtree.request.productId.has("productInstanceId")) && (dtree.request.productId.productInstanceId.has("productSpecificationId")) && (dtree.request.productId.productInstanceId.productSpecificationId.has("productNumber")) && (dtree.request.productId.productInstanceId.productSpecificationId.productNumber)) ||
+                ((dtree.request.has("productId")) && (dtree.request.productId.has("type")) && (dtree.request.productId.type)))){
+                    dtree.errorcode.push("ER_WF_002");
+                    dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_002"));
+                    return false;
+            }
+
+            // 201405 LA NEWXSD - structure changed
+            switch (dtree.operation)
+            {
+            case "queryProduct":
+            case "queryProductSubscription":
+                // queryCommonInfo
+                if (!dtree.request.queryCommonInfo) {
+                    dtree.errorcode.push("ER_WF_003");
+                    dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_003", [dtree.operation]));
+                    return false;
+                }
+                break;
+            case "subscribeProductOffering":
+            case "unsubscribeProduct":
+            case "updateProduct":
+                // oCSActionCommonInfo
+                if (!(dtree.request.oCSActionCommonInfo)){
+                    dtree.errorcode.push("ER_WF_004");
+                    dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_004", [dtree.operation]));
+                    return false;
+                }
+            break;
+            }
+        }
+
+        catch(err)
+        {
+            dtree.errorcode.push("ER_WF_099");
+            dtree.errortext.push(pm_wm.getErrorDescription("ER_WF_099", [err]));
+            return false;
+        }
+
+        return true;
+  ]]></script>
+</script>

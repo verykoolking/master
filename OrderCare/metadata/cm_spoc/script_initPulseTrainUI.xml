@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initPulseTrainUI">
+  <group>ui_scripts.Rate</group>
+  <label>initPulseTrainUI</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="model" type="rifp">
+      <type>dstruct_cm_spoc.data.Rate</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.componentIterator = new Array();
+
+    var currDS1= ui.model.RateRateComponentArrDS.ListDS;
+
+    for(var k =0; k< currDS1.length;k++) {
+        var currUIcomp = new cm_spoc.forms.ComponentUI(currDS1[k],ui);
+        currUIcomp.initialCost =  currDS1[k].RCRatePriceEventPhaseArrDS.ListDS[0];
+        currUIcomp.pulseTrainIterator = new Array();
+        currUIcomp.pulseTrainIteratorPhase7 = new Array();
+        ui.componentIterator.push(currUIcomp);
+
+        if(model.specificationCode){
+           //var DS =  currDS1[k].RCRatePriceEventPhaseArrDS.ListDS;
+           //cm_spoc.loadListElements(currUIcomp, DS, "cm_spoc.forms.PulseTrainUI", "pulseTrainIterator");
+           for(var i =1; i<  currDS1[k].RCRatePriceEventPhaseArrDS.ListDS.length;i++) {
+               var currDS2 =  currDS1[k].RCRatePriceEventPhaseArrDS.ListDS[i];
+               if (i==6){
+                   var currUI = new cm_spoc.forms.PulseTrainUIPhase7(currDS2,currUIcomp); //model, parent
+                   ui.componentIterator[k].pulseTrainIterator.push(currUI);
+               }
+               else {
+                   var currUI = new cm_spoc.forms.PulseTrainUI(currDS2,currUIcomp); //model, parent
+                   ui.componentIterator[k].pulseTrainIterator.push(currUI);
+               }
+           }
+        }
+    }
+  ]]></script>
+</script>

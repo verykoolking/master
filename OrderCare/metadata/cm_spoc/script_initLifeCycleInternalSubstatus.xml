@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initLifeCycleInternalSubstatus">
+  <group>ui_scripts.LifeCycles</group>
+  <label>initLifeCycleInternalSubstatus</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+
+        var LCSSLifeCycleArr = cm_spoc.initInnerDS("base_LCSSLifeCycleArr");
+        model.LCSSLifeCycleArrDS = LCSSLifeCycleArr;
+
+        return model;
+    }
+    else{
+       var s = new epc.data.Specification();
+       s.project =  cwa_epc.getDefaultProj();
+
+       s.specificationCode = model.LCSSLifeCycleArr;
+       var r = epc.getSpecificationByKey(s);
+       if(!api_common.isFault(r)){
+            model.LCSSLifeCycleArrDS=r;
+             }
+
+       var LCSSLifeCycleArrRel= model.LCSSLifeCycleArrDS.List;
+       var LCSSLifeCycleArrDS= model.LCSSLifeCycleArrDS.ListDS;
+       for(var i=0;i<LCSSLifeCycleArrRel.length;i++){
+           s.specificationCode = LCSSLifeCycleArrRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               LCSSLifeCycleArrDS[i]=r;
+           }
+       }
+
+       return model;
+    }
+  ]]></script>
+</script>

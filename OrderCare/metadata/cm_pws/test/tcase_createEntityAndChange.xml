@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testCase name="cm_pws.test.createEntityAndChange">
+  <duration>0.0</duration>
+  <functionsList>
+    <functions name="startConfig" type="tf">
+      <isTest>true</isTest>
+      <script>cm_pws.test.testStartConfiguration(this);</script>
+    </functions>
+    <functions name="createEntity_1" type="tf">
+      <isTest>true</isTest>
+      <script><![CDATA[cm_pws.test.testCreateEntity("Entity_1.xml", this);]]></script>
+    </functions>
+    <functions name="createEntity_2" type="tf">
+      <isTest>true</isTest>
+      <script><![CDATA[cm_pws.test.testCreateEntity("Entity_2.xml", this);]]></script>
+    </functions>
+    <functions name="createEntity_3" type="tf">
+      <isTest>true</isTest>
+      <script><![CDATA[cm_pws.test.testCreateEntity("Entity_3.xml", this);]]></script>
+    </functions>
+    <functions name="changeEntity_3_No_Relation" type="tf">
+      <isTest>true</isTest>
+      <script><![CDATA[cm_pws.test.testChangeEntity("Entity_3_No_Relations.xml", this);]]></script>
+    </functions>
+    <functions name="endConfig" type="tf">
+      <isTest>true</isTest>
+      <script>cm_pws.test.testEndConfiguration(this);</script>
+    </functions>
+    <functions name="verifyChange" type="tf">
+      <script><![CDATA[
+        /*
+        '===================================================
+        'File Name          :
+        'Sr. #              :
+        'Date               :
+        'Author             :
+        'Description        :
+
+        'Special Note       : N/A
+        'Revision History   : 1
+        '===================================================
+        */
+
+        //Global.resetAutoTransaction("ORDER");
+        //Global.beginTransaction("ORDER");
+
+        var selenium = this.getProperty("selenium");
+        var pass = false;
+        var testcase = " ";
+        var testdesc = " ";
+        var text= " ";
+
+        try
+        {
+          //code
+
+          sel.logging(testcase,testdesc,pass);
+        } catch (ex) {
+          sel.logging(testcase,testdesc + ex ,false);
+          selenium.captureEntirePageScreenshot("D:\\temp\\" + Global.getSystemVersion() + "-" + Calendar.formatDate(new Date(),"ddMMMyyyy") + "-<MetadataName>-<TestCaseName>.png");
+        }
+
+        //Global.commitTransaction("ORDER");
+      ]]></script>
+    </functions>
+  </functionsList>
+  <group>testCases.generic</group>
+  <label>createEntityAndChange</label>
+  <metaVersion>4</metaVersion>
+  <setupJS>cm_pws.test.startTestCase(&quot;createEntityAndChange&quot;);</setupJS>
+  <teardownJS>cm_pws.test.endTestCase(&quot;createEntityAndChange&quot;);</teardownJS>
+</testCase>

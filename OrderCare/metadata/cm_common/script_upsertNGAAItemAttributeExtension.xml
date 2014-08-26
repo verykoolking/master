@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_common.upsertNGAAItemAttributeExtension">
+  <group>overridden.itemAttributeChanges</group>
+  <label>upsertNGAAItemAttributeExtension</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ds" type="rifp">
+      <mandatory>true</mandatory>
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+    <parameter name="option" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(ds == null || ds.itemCode==null){
+          return false;
+    }
+
+    //find doc
+    var fnd = new Finder('cm_common.ngaaItemAttributeExtensionFinder');
+    fnd.searchDocument.itemAttributeCode = ds.itemAttributeCode;
+    fnd.searchDocument.itemCode = ds.itemCode;
+    fnd.searchDocument.parentItemCode = ds.parentItemCode;
+    var fndRs = fnd.search();
+    var currentDoc = null;
+    var key = ds.itemAttributeCode+' - '+ds.itemCode+' - '+ds.parentItemCode;
+
+    if(fndRs && fndRs.length >0)
+    {//ROW ALREADY EXIST
+        if( fndRs.length >1)
+        {//Should Return ERROR it must exist only one of it's kind
+            cwt_pcmaintapi.importXlsCounting(option, "FAIL");
+            cwt_pcmaintapi.storeInEventLog(option, "ERROR",  Global.translateText("CWTPC0327", null ,["NGAA CATALOG EXTENSION",key ]));
+        }
+        else
+        {
+            currentDoc = fndRs[0];
+        }
+
+    }
+    else
+    {//NEW ROW
+        currentDoc = new Document('cm_common.cwt_ngaaItemAttributeExtension');
+    }
+
+    ds.mapStructureToDoc(currentDoc, "cm_common.ngaaItemAttributeDSToDoc");
+    currentDoc.save();
+    cwt_pcmaintapi.importXlsCounting(option, "SUCCESS");
+    cwt_pcmaintapi.storeInEventLog(option, null,  Global.translateText("CWTPC0327", null ,["NGAA CATALOG EXTENSION",key]));
+
+    Global.commitTransaction("CATALOG");
+  ]]></script>
+</script>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initRate">
+  <group>ui_scripts.Rate</group>
+  <label>initRate</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!model.specificationCode){
+        model = cm_spoc.initModelForCreation(model);
+        model.RateRateComponentArrDS.ListDS[0] = cm_spoc.initInnerDS("base_RateComponent");
+        model.RateRateComponentArrDS.ListDS[1] = cm_spoc.initInnerDS("base_RateComponent");
+
+        model.RateRateComponentArrDS.ListDS[0].ComponentId = "1";
+        model.RateRateComponentArrDS.ListDS[0].ComponentLabel = "Component 1";
+        model.RateRateComponentArrDS.ListDS[0].DeferredToSubscriberCycleStart = false;
+        model.RateRateComponentArrDS.ListDS[1].ComponentId = "2";
+        model.RateRateComponentArrDS.ListDS[1].ComponentLabel = "Component 2";
+        model.RateRateComponentArrDS.ListDS[1].DeferredToSubscriberCycleStart = false;
+
+        var currDS1= model.RateRateComponentArrDS.ListDS;
+
+        for(var k =0; k< currDS1.length;k++) {
+            currDS1[k].RCRatePriceEventPhaseArrDS = cm_spoc.initInnerDS("base_RCRatePriceEventPhaseArr");
+            for(var i =0; i< 1;i++) {//Initialization for InitialCost (array[0])
+                currDS1[k].RCRatePriceEventPhaseArrDS.ListDS[i] = cm_spoc.initInnerDS("base_RatePriceEventPhase");
+                currDS1[k].RCRatePriceEventPhaseArrDS.ListDS[i].PhaseNumber = i+1;
+                currDS1[k].RCRatePriceEventPhaseArrDS.ListDS[i].PulseTrainLabel = i;
+                currDS1[k].RCRatePriceEventPhaseArrDS.ListDS[i].MinutesSecondsEnum = "sec";
+                currDS1[k].RCRatePriceEventPhaseArrDS.ListDS[i].RatePriceDS = cm_spoc.initInnerDS("base_RatePrice");
+            }
+        }
+    }else{
+        model = cm_spoc.initModelForModification(model);
+        model.CurrencyEnum = model.Currency;
+        model.RateRateComponentArrDS.ListDS[0].ComponentLabel = "Component 1";
+        model.RateRateComponentArrDS.ListDS[1].ComponentLabel = "Component 2";
+
+        var currDS1= model.RateRateComponentArrDS.ListDS;
+        for(var k =0; k< currDS1.length;k++) {
+            var currDS2 = currDS1[k].RCRatePriceEventPhaseArrDS.ListDS;
+            for(var i =0; i< currDS2.length;i++) {
+                model.RateRateComponentArrDS.ListDS[k].RCRatePriceEventPhaseArrDS.ListDS[i].MinutesSecondsEnum = "sec"; //StartUnit is always saved in seconds
+                model.RateRateComponentArrDS.ListDS[k].RCRatePriceEventPhaseArrDS.ListDS[i].PulseTrainLabel = i;
+                }
+            }
+    }
+    return model;
+  ]]></script>
+</script>

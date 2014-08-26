@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initAPNCode">
+  <group>ui_scripts.Numbering</group>
+  <label>initAPNCode</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if(!model.specificationCode){
+        var APNCodeArr = cm_spoc.initInnerDS("base_APNCodeArr");
+        model.APNCodeArrDS = APNCodeArr;
+
+        return model;
+    }
+    else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        s.specificationCode = model.APNCodeArr;
+        var r = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(r)){
+           model.APNCodeArrDS=r;
+        }
+
+        var APNCodeRel =  model.APNCodeArrDS.List;
+        var APNCodeDS =  model.APNCodeArrDS.ListDS;
+        for(var i=0;i<APNCodeRel.length;i++){
+            s.specificationCode = APNCodeRel[i];
+            var r = epc.getSpecificationByKey(s);
+            if(!api_common.isFault(r)){
+                APNCodeDS[i]=r;
+            }
+        }
+        return model;
+    }
+  ]]></script>
+</script>

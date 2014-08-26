@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initCALifeCycleStatus">
+  <group>ui_scripts.CyclicActions</group>
+  <label>initCALifeCycleStatus</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!model.specificationCode)
+    {
+        model = cm_spoc.initModelForCreation(model);
+        model.PeriodicRetries = false;
+        model.ModifyRenewalDateAfterRetryOK = false;
+        model.ChangeOfStatusNotifiedViaASN1 = false;
+        model.ChangeOfReactDateNotifiedViaASN1 = false;
+        model.AfterOperationRetries = false;
+        model.OutstandingExecutionsAreRecovere = false;
+        model.InactivityStatus = false;
+    }
+    else
+    {
+        model = cm_spoc.initModelForModification(model);
+    }
+    return model;
+  ]]></script>
+</script>

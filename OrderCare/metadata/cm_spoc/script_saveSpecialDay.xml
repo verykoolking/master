@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.saveSpecialDay">
+  <group>ui_scripts.Calendars.Dialog</group>
+  <label>saveSpecialDay</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>ui_com.conceptwave.system.UserInterface</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    var fault = api_common.createFault();
+    var model =  ui.model;
+    var eList = cm_common.validateDs(model);
+    var saveResp;
+    for (var i = 0; eList != null && i < eList.length; i+=2) {
+          fault.addFault(model,[ eList[i+1],null],eList[i],"E");
+    }
+
+    if(!fault || fault.message.length==0) {
+       saveResp = cm_spoc.epcOnSaveModelRec(model,ui); //recursively Saves or Modify the catalog entities
+
+
+       if(saveResp!=null && !api_common.isFault(saveResp) ){
+       Global.showUserMessage(Global.translateText("NGAA_003",null,"Special Day Saved Succesfully"));
+       }
+
+
+    } else {
+       // var output = cm_pws.services.pws_faultResponse(fault);
+        // return output;
+    }
+  ]]></script>
+</script>

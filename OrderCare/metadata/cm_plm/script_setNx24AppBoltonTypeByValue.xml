@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_plm.setNx24AppBoltonTypeByValue">
+  <group>applicabilityCondition.api</group>
+  <label>setNx24AppBoltonTypeByValue</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="Nx24AppBoltonType" type="rifp">
+      <mandatory>true</mandatory>
+      <type>dstruct_cm_plm.Nx24AppBoltonType</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    /*
+    try{
+        if(!cm_plm.isModificationAllowed(Nx24AppBoltonType))
+            return api_common.createFault("ERR", "This modality is being maintained by another project.");
+
+        var doc = Document.readDoc("cm_plm:Nx24AppBoltonTypeListDoc", [Nx24AppBoltonType.Nx24AppBoltonTypeListId, Nx24AppBoltonType.TypeOfDayID]);
+        if(!doc)
+            return api_common.createFault("ERR", "The Nx24AppBoltonTypeListId was not found: [" + Nx24AppBoltonType.Nx24AppBoltonTypeListId +","+ Nx24AppBoltonType.TypeOfDayID+ "]");
+
+        Nx24AppBoltonType.mapTo(doc);
+        doc.save();
+        doc.mapTo(Nx24AppBoltonType);
+
+        return Nx24AppBoltonType;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+    */
+
+
+    try{
+        if(!cm_plm.isModificationAllowed(Nx24AppBoltonType))
+            return api_common.createFault("ERR", "This modality is being maintained in another project.");
+
+        if(cm_plm.isProjectActive(Nx24AppBoltonType.projectCode))
+            return api_common.createFault("ERR", "Item cannot be created for projects in ACT status.");
+
+        var result;
+
+        if(cm_plm.isObjectActive(Nx24AppBoltonType)){
+            Nx24AppBoltonType.endDate = new Date();
+            result = cm_plm.endDateObject(Nx24AppBoltonType);
+            if(api_common.isFault(result))
+                return result;
+
+            //now we create a new version for this object
+            Nx24AppBoltonType.endDate = null;
+            Nx24AppBoltonType.startDate = new Date();
+            result = cm_plm.createNx24AppBoltonTypeByValue(Nx24AppBoltonType);
+        }else{
+
+            var doc = Document.readDoc("cm_plm:Nx24AppBoltonTypeDoc", Nx24AppBoltonType.id);
+            if(!doc)
+                return api_common.createFault("ERR", "The GroupId was not found: " + Nx24AppBoltonType.Nx24AppBoltonType);
+
+            Nx24AppBoltonType.mapTo(doc);
+            doc.save();
+            doc.mapTo(Nx24AppBoltonType);
+
+            result = cm_plm.updateProjectAssignmentForObject(Nx24AppBoltonType);
+        }
+
+        if(api_common.isFault(result))
+            return result;
+
+        return Nx24AppBoltonType;
+
+    }catch(exp){
+        return api_common.createException(exp, "ERR");
+    }
+  ]]></script>
+</script>

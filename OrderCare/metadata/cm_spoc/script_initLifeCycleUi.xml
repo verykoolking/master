@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initLifeCycleUi">
+  <group>ui_scripts.LifeCycles</group>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="ui" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    ui.RecoveryConditionIterator = new Array();
+    var DS = ui.model.RecoveryConditionArrDS.ListDS;
+
+
+    if(!ui.model.specificationCode){
+    //    cm_spoc.addListElement(ui, DS,"cm_spoc.forms.RecoveryConditionForm","base_DestinationTypeGroup","RecoveryConditionIterator");
+    }
+    else{
+        var lc = ui.model;
+        ui.model.SaveTotalBalanceMessageEnum= lc.SaveTotalBalanceMessage;
+        ui.model.SaveBalanceMessageEnum = lc.SaveBalanceMessage;
+        ui.model.RecoveredBalanceMessageEnum = lc.RecoveredBalanceMessage;
+
+
+
+            cm_spoc.loadListElements(ui, DS, "cm_spoc.forms.RecoveryConditionForm", "RecoveryConditionIterator");
+           ui.model.OutstandingStatRetrievedTUWallet = lc.OutstandingStatRetrievedTUWallet;
+
+
+             for (var i=0; i< DS.length; i++)
+            {
+                ui.model.RecoveryConditionArrDS.ListDS[i].WalletEnum = DS[i].Wallet;
+            }
+
+            for (var i=0; i< DS.length; i++)
+            {
+                DS[i].WalletEnum=DS[i].Wallet;
+            }
+
+
+        }
+  ]]></script>
+</script>

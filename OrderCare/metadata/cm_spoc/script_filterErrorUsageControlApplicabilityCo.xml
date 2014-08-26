@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.filterErrorUsageControlApplicabilityCo">
+  <group>ui_scripts.UsageControl</group>
+  <label>filterErrorUsageControlApplicabilityCo</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp"/>
+    <parameter name="err" type="rifp"/>
+  </parameterList>
+  <script><![CDATA[
+    var nodes = model.getNodeNames();
+
+    var newErr = [];
+
+    for (var i=0;i<nodes.length;i++) {
+
+        for (var k=0;k<err.length;k++) {
+
+            if(err[k].indexOf(nodes[i]) > 0 ) {
+
+                newErr.push(err[k-1]);
+                newErr.push(err[k]);
+            }
+
+
+        }
+
+    }
+
+
+
+
+    return newErr.concat(cm_spoc.filterErrorUCPositiveConditions(model.UCPositiveConditionsDS, err),cm_spoc.filterErrorUCNegativeConditions(model.UCNegativeConditionsDS, err));
+  ]]></script>
+</script>

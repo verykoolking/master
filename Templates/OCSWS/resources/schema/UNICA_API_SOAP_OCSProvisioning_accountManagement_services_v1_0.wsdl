@@ -1,0 +1,1292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- PA7 -->
+
+<wsdl:definitions 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/accountManagement/v1/services"
+    xmlns:amns="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/accountManagement/v1/types"
+    xmlns:uct="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+    xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/04/secext"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    targetNamespace="http://www.telefonica.com/wsdl/UNICA/SOAP/OCSProvisioning/accountManagement/v1/services">
+      
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+            <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/OCSProvisioning/accountManagement/v1/types"
+                schemaLocation="UNICA_API_SOAP_OCSProvisioning_accountManagement_types_v1_0.xsd"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                schemaLocation="addressing" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/ws/2002/04/secext"
+                schemaLocation="secext.xsd" />
+	        <xsd:import namespace="http://www.telefonica.com/schemas/UNICA/SOAP/common/v2"
+  			    schemaLocation="UNICA_API_SOAP_common_types_v2_1.xsd"/>	
+		</xsd:schema>
+    </wsdl:types>
+    
+    <!--
+        Header
+    -->
+    <wsdl:message name="OCSHeaderInfo">
+        <wsdl:part name="messageID" element="wsa:MessageID" />
+        <wsdl:part name="replyTo" element="wsa:ReplyTo" />
+        <wsdl:part name="security" element="wsse:Security" />
+    </wsdl:message>
+  
+    <!--
+        Messages
+    -->
+
+    <wsdl:message name="ActivateSubscriberRequest">
+        <wsdl:part name="parameters" element="amns:activateSubscriber" />
+    </wsdl:message>
+    <wsdl:message name="ActivateSubscriberResponse">
+        <wsdl:part name="parameters" element="amns:activateSubscriberResponse" />
+    </wsdl:message>
+    <wsdl:message name="CancelSubscriberDeletionRequest">
+        <wsdl:part name="parameters" element="amns:cancelSubscriberDeletion" />
+    </wsdl:message>
+    <wsdl:message name="CancelSubscriberDeletionResponse">
+        <wsdl:part name="parameters" element="amns:cancelSubscriberDeletionResponse" />
+    </wsdl:message>
+    <wsdl:message name="CancelSubscriberSuspensionRequest">
+        <wsdl:part name="parameters" element="amns:cancelSubscriberSuspension" />
+    </wsdl:message>
+    <wsdl:message name="CancelSubscriberSuspensionResponse">
+        <wsdl:part name="parameters" element="amns:cancelSubscriberSuspensionResponse" />
+    </wsdl:message>
+    <wsdl:message name="CreateSubscriberRequest">
+        <wsdl:part name="parameters" element="amns:createSubscriber" />
+    </wsdl:message>
+    <wsdl:message name="CreateSubscriberResponse">
+        <wsdl:part name="parameters" element="amns:createSubscriberResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeAccountProfileIdRequest">
+        <wsdl:part name="parameters" element="amns:changeAccountProfileId" />
+    </wsdl:message>
+    <wsdl:message name="ChangeAccountProfileIdResponse">
+        <wsdl:part name="parameters" element="amns:changeAccountProfileIdResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeHlrRequest">
+        <wsdl:part name="parameters" element="amns:changeHlr" />
+    </wsdl:message>
+    <wsdl:message name="ChangeHlrResponse">
+        <wsdl:part name="parameters" element="amns:changeHlrResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeSubscriberRequest">
+        <wsdl:part name="parameters" element="amns:changeSubscriber" />
+    </wsdl:message>
+    <wsdl:message name="ChangeSubscriberResponse">
+        <wsdl:part name="parameters" element="amns:changeSubscriberResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeSubscriberBillingCycleRequest">
+        <wsdl:part name="parameters" element="amns:changeSubscriberBillingCycle" />
+    </wsdl:message>
+    <wsdl:message name="ChangeSubscriberBillingCycleResponse">
+        <wsdl:part name="parameters" element="amns:changeSubscriberBillingCycleResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeSubscriberIdRequest">
+        <wsdl:part name="parameters" element="amns:changeSubscriberId" />
+    </wsdl:message>
+    <wsdl:message name="ChangeSubscriberIdResponse">
+        <wsdl:part name="parameters" element="amns:changeSubscriberIdResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeTariffPlanIdRequest">
+        <wsdl:part name="parameters" element="amns:changeTariffPlanId" />
+    </wsdl:message>
+    <wsdl:message name="ChangeTariffPlanIdResponse">
+        <wsdl:part name="parameters" element="amns:changeTariffPlanIdResponse" />
+    </wsdl:message>
+    <wsdl:message name="DeleteSubscriberRequest">
+        <wsdl:part name="parameters" element="amns:deleteSubscriber" />
+    </wsdl:message>
+    <wsdl:message name="DeleteSubscriberResponse">
+        <wsdl:part name="parameters" element="amns:deleteSubscriberResponse" />
+    </wsdl:message>
+    <wsdl:message name="QuerySegmentsRequest">
+        <wsdl:part name="parameters" element="amns:querySegments" />
+    </wsdl:message>
+    <wsdl:message name="QuerySegmentsResponse">
+        <wsdl:part name="parameters" element="amns:querySegmentsResponse" />
+    </wsdl:message>
+    <wsdl:message name="QuerySubscriberBasicsRequest">
+        <wsdl:part name="parameters" element="amns:querySubscriberBasics" />
+    </wsdl:message>
+    <wsdl:message name="QuerySubscriberBasicsResponse">
+        <wsdl:part name="parameters" element="amns:querySubscriberBasicsResponse" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeSegmentRequest">
+        <wsdl:part name="parameters" element="amns:subscribeSegment" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeSegmentResponse">
+        <wsdl:part name="parameters" element="amns:subscribeSegmentResponse" />
+    </wsdl:message>
+    <wsdl:message name="SuspendSubscriberRequest">
+        <wsdl:part name="parameters" element="amns:suspendSubscriber" />
+    </wsdl:message>
+    <wsdl:message name="SuspendSubscriberResponse">
+        <wsdl:part name="parameters" element="amns:suspendSubscriberResponse" />
+    </wsdl:message>
+    <wsdl:message name="SuspendScheduledSubscriberRequest">
+        <wsdl:part name="parameters" element="amns:suspendScheduledSubscriber" />
+    </wsdl:message>
+    <wsdl:message name="SuspendScheduledSubscriberResponse">
+        <wsdl:part name="parameters" element="amns:suspendScheduledSubscriberResponse" />
+    </wsdl:message>
+    <wsdl:message name="UnsubscribeSegmentRequest">
+        <wsdl:part name="parameters" element="amns:unsubscribeSegment" />
+    </wsdl:message>
+    <wsdl:message name="UnsubscribeSegmentResponse">
+        <wsdl:part name="parameters" element="amns:unsubscribeSegmentResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryCustomerRequest">
+        <wsdl:part name="parameters" element="amns:queryCustomer" />
+    </wsdl:message>
+    <wsdl:message name="QueryCustomerResponse">
+        <wsdl:part name="parameters" element="amns:queryCustomerResponse" />
+    </wsdl:message>
+    <wsdl:message name="NotifyPortabilityRequest">
+        <wsdl:part name="parameters" element="amns:notifyPortability" />
+    </wsdl:message>
+    <wsdl:message name="NotifyPortabilityResponse">
+        <wsdl:part name="parameters" element="amns:notifyPortabilityResponse" />
+    </wsdl:message>
+    <wsdl:message name="QuerySubscriberDetailsRequest">
+        <wsdl:part name="parameters" element="amns:querySubscriberDetails" />
+    </wsdl:message>
+    <wsdl:message name="QuerySubscriberDetailsResponse">
+        <wsdl:part name="parameters" element="amns:querySubscriberDetailsResponse" />
+    </wsdl:message>
+    <wsdl:message name="QuerySubscriptionsRequest">
+        <wsdl:part name="parameters" element="amns:querySubscriptions" />
+    </wsdl:message>
+    <wsdl:message name="QuerySubscriptionsResponse">
+        <wsdl:part name="parameters" element="amns:querySubscriptionsResponse" />
+    </wsdl:message>
+    <wsdl:message name="QuerySubscriberExpirationDateRequest">
+        <wsdl:part name="parameters" element="amns:querySubscriberExpirationDate" />
+    </wsdl:message>
+    <wsdl:message name="QuerySubscriberExpirationDateResponse">
+        <wsdl:part name="parameters" element="amns:querySubscriberExpirationDateResponse" />
+    </wsdl:message>
+    <wsdl:message name="QuerySIMCardDataRequest">
+        <wsdl:part name="parameters" element="amns:querySIMCardData" />
+    </wsdl:message>
+    <wsdl:message name="QuerySIMCardDataResponse">
+        <wsdl:part name="parameters" element="amns:querySIMCardDataResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryIncOrPendOperationsRequest">
+        <wsdl:part name="parameters" element="amns:queryIncOrPendOperations" />
+    </wsdl:message>
+    <wsdl:message name="QueryIncOrPendOperationsResponse">
+        <wsdl:part name="parameters" element="amns:queryIncOrPendOperationsResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryServicePlansAllowedRequest">
+        <wsdl:part name="parameters" element="amns:queryServicePlansAllowed" />
+    </wsdl:message>
+    <wsdl:message name="QueryServicePlansAllowedResponse">
+        <wsdl:part name="parameters" element="amns:queryServicePlansAllowedResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryExpirationThresholdRequest">
+        <wsdl:part name="parameters" element="amns:queryExpirationThreshold" />
+    </wsdl:message>
+    <wsdl:message name="QueryExpirationThresholdResponse">
+        <wsdl:part name="parameters" element="amns:queryExpirationThresholdResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeExpirationThresholdRequest">
+        <wsdl:part name="parameters" element="amns:changeExpirationThreshold" />
+    </wsdl:message>
+    <wsdl:message name="ChangeExpirationThresholdResponse">
+        <wsdl:part name="parameters" element="amns:changeExpirationThresholdResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryBalanceThresholdRequest">
+        <wsdl:part name="parameters" element="amns:queryBalanceThreshold" />
+    </wsdl:message>
+    <wsdl:message name="QueryBalanceThresholdResponse">
+        <wsdl:part name="parameters" element="amns:queryBalanceThresholdResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeBalanceThresholdRequest">
+        <wsdl:part name="parameters" element="amns:changeBalanceThreshold" />
+    </wsdl:message>
+    <wsdl:message name="ChangeBalanceThresholdResponse">
+        <wsdl:part name="parameters" element="amns:changeBalanceThresholdResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryHomeZoneRequest">
+        <wsdl:part name="parameters" element="amns:queryHomeZone" />
+    </wsdl:message>
+    <wsdl:message name="QueryHomeZoneResponse">
+        <wsdl:part name="parameters" element="amns:queryHomeZoneResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeHomeZoneRequest">
+        <wsdl:part name="parameters" element="amns:changeHomeZone" />
+    </wsdl:message>
+    <wsdl:message name="ChangeHomeZoneResponse">
+        <wsdl:part name="parameters" element="amns:changeHomeZoneResponse" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeHomeZoneRequest">
+        <wsdl:part name="parameters" element="amns:subscribeHomeZone" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeHomeZoneResponse">
+        <wsdl:part name="parameters" element="amns:subscribeHomeZoneResponse" />
+    </wsdl:message>
+    <wsdl:message name="UnsubscribeHomeZoneRequest">
+        <wsdl:part name="parameters" element="amns:unsubscribeHomeZone" />
+    </wsdl:message>
+    <wsdl:message name="UnsubscribeHomeZoneResponse">
+        <wsdl:part name="parameters" element="amns:unsubscribeHomeZoneResponse" />
+    </wsdl:message>
+    <wsdl:message name="QuerySMSSubscriptionsRequest">
+        <wsdl:part name="parameters" element="amns:querySMSSubscriptions" />
+    </wsdl:message>
+    <wsdl:message name="QuerySMSSubscriptionsResponse">
+        <wsdl:part name="parameters" element="amns:querySMSSubscriptionsResponse" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeSMSRequest">
+        <wsdl:part name="parameters" element="amns:subscribeSMS" />
+    </wsdl:message>
+    <wsdl:message name="SubscribeSMSResponse">
+        <wsdl:part name="parameters" element="amns:subscribeSMSResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryIncOrPendOperationsPlusRequest">
+        <wsdl:part name="parameters" element="amns:queryIncOrPendOperationsPlus" />
+    </wsdl:message>
+    <wsdl:message name="QueryIncOrPendOperationsPlusResponse">
+        <wsdl:part name="parameters" element="amns:queryIncOrPendOperationsPlusResponse" />
+    </wsdl:message>
+    <wsdl:message name="QueryServicePlansBasicsRequest">
+        <wsdl:part name="parameters" element="amns:queryServicePlansBasics" />
+    </wsdl:message>
+    <wsdl:message name="QueryServicePlansBasicsResponse">
+        <wsdl:part name="parameters" element="amns:queryServicePlansBasicsResponse" />
+    </wsdl:message>
+    <wsdl:message name="ChangeServicePlansRequest">
+        <wsdl:part name="parameters" element="amns:changeServicePlans" />
+    </wsdl:message>
+    <wsdl:message name="ChangeServicePlansResponse">
+        <wsdl:part name="parameters" element="amns:changeServicePlansResponse" />
+    </wsdl:message>
+
+    <wsdl:message name="ServerException">
+      <wsdl:part name="ServerException" element="uct:serverException"/>
+    </wsdl:message>
+    <wsdl:message name="ClientException">
+      <wsdl:part name="ClientException" element="uct:clientException"/>
+    </wsdl:message>
+
+    <!--
+        Port
+    -->
+    
+    <wsdl:portType name="AccountManagementPort_v1_0">
+        <wsdl:operation name="activateSubscriber">
+            <wsdl:input message="tns:ActivateSubscriberRequest" />
+            <wsdl:output message="tns:ActivateSubscriberResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="cancelSubscriberDeletion">
+            <wsdl:input message="tns:CancelSubscriberDeletionRequest" />
+            <wsdl:output message="tns:CancelSubscriberDeletionResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="cancelSubscriberSuspension">
+            <wsdl:input message="tns:CancelSubscriberSuspensionRequest" />
+            <wsdl:output message="tns:CancelSubscriberSuspensionResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="createSubscriber">
+            <wsdl:input message="tns:CreateSubscriberRequest" />
+            <wsdl:output message="tns:CreateSubscriberResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="changeAccountProfileId">
+            <wsdl:input message="tns:ChangeAccountProfileIdRequest" />
+            <wsdl:output message="tns:ChangeAccountProfileIdResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="changeHlr">
+            <wsdl:input message="tns:ChangeHlrRequest" />
+            <wsdl:output message="tns:ChangeHlrResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="changeSubscriber">
+            <wsdl:input message="tns:ChangeSubscriberRequest" />
+            <wsdl:output message="tns:ChangeSubscriberResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="changeSubscriberBillingCycle">
+            <wsdl:input message="tns:ChangeSubscriberBillingCycleRequest" />
+            <wsdl:output message="tns:ChangeSubscriberBillingCycleResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="changeSubscriberId">
+            <wsdl:input message="tns:ChangeSubscriberIdRequest" />
+            <wsdl:output message="tns:ChangeSubscriberIdResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="changeTariffPlanId">
+            <wsdl:input message="tns:ChangeTariffPlanIdRequest" />
+            <wsdl:output message="tns:ChangeTariffPlanIdResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="deleteSubscriber">
+            <wsdl:input message="tns:DeleteSubscriberRequest" />
+            <wsdl:output message="tns:DeleteSubscriberResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="querySegments">
+            <wsdl:input message="tns:QuerySegmentsRequest" />
+            <wsdl:output message="tns:QuerySegmentsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="querySubscriberBasics">
+            <wsdl:input message="tns:QuerySubscriberBasicsRequest" />
+            <wsdl:output message="tns:QuerySubscriberBasicsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="subscribeSegment">
+            <wsdl:input message="tns:SubscribeSegmentRequest" />
+            <wsdl:output message="tns:SubscribeSegmentResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="suspendSubscriber">
+            <wsdl:input message="tns:SuspendSubscriberRequest" />
+            <wsdl:output message="tns:SuspendSubscriberResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="suspendScheduledSubscriber">
+            <wsdl:input message="tns:SuspendScheduledSubscriberRequest" />
+            <wsdl:output message="tns:SuspendScheduledSubscriberResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="unsubscribeSegment">
+            <wsdl:input message="tns:UnsubscribeSegmentRequest" />
+            <wsdl:output message="tns:UnsubscribeSegmentResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryCustomer">
+            <wsdl:input message="tns:QueryCustomerRequest" />
+            <wsdl:output message="tns:QueryCustomerResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="notifyPortability">
+            <wsdl:input message="tns:NotifyPortabilityRequest" />
+            <wsdl:output message="tns:NotifyPortabilityResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="querySubscriberDetails">
+            <wsdl:input message="tns:QuerySubscriberDetailsRequest" />
+            <wsdl:output message="tns:QuerySubscriberDetailsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="querySubscriptions">
+            <wsdl:input message="tns:QuerySubscriptionsRequest" />
+            <wsdl:output message="tns:QuerySubscriptionsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="querySubscriberExpirationDate">
+            <wsdl:input message="tns:QuerySubscriberExpirationDateRequest" />
+            <wsdl:output message="tns:QuerySubscriberExpirationDateResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="querySIMCardData">
+            <wsdl:input message="tns:QuerySIMCardDataRequest" />
+            <wsdl:output message="tns:QuerySIMCardDataResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryIncOrPendOperations">
+            <wsdl:input message="tns:QueryIncOrPendOperationsRequest" />
+            <wsdl:output message="tns:QueryIncOrPendOperationsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryServicePlansAllowed">
+            <wsdl:input message="tns:QueryServicePlansAllowedRequest" />
+            <wsdl:output message="tns:QueryServicePlansAllowedResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryExpirationThreshold">
+            <wsdl:input message="tns:QueryExpirationThresholdRequest" />
+            <wsdl:output message="tns:QueryExpirationThresholdResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="changeExpirationThreshold">
+            <wsdl:input message="tns:ChangeExpirationThresholdRequest" />
+            <wsdl:output message="tns:ChangeExpirationThresholdResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryBalanceThreshold">
+            <wsdl:input message="tns:QueryBalanceThresholdRequest" />
+            <wsdl:output message="tns:QueryBalanceThresholdResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="changeBalanceThreshold">
+            <wsdl:input message="tns:ChangeBalanceThresholdRequest" />
+            <wsdl:output message="tns:ChangeBalanceThresholdResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryHomeZone">
+            <wsdl:input message="tns:QueryHomeZoneRequest" />
+            <wsdl:output message="tns:QueryHomeZoneResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="changeHomeZone">
+            <wsdl:input message="tns:ChangeHomeZoneRequest" />
+            <wsdl:output message="tns:ChangeHomeZoneResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="subscribeHomeZone">
+            <wsdl:input message="tns:SubscribeHomeZoneRequest" />
+            <wsdl:output message="tns:SubscribeHomeZoneResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="unsubscribeHomeZone">
+            <wsdl:input message="tns:UnsubscribeHomeZoneRequest" />
+            <wsdl:output message="tns:UnsubscribeHomeZoneResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="querySMSSubscriptions">
+            <wsdl:input message="tns:QuerySMSSubscriptionsRequest" />
+            <wsdl:output message="tns:QuerySMSSubscriptionsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="subscribeSMS">
+            <wsdl:input message="tns:SubscribeSMSRequest" />
+            <wsdl:output message="tns:SubscribeSMSResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryIncOrPendOperationsPlus">
+            <wsdl:input message="tns:QueryIncOrPendOperationsPlusRequest" />
+            <wsdl:output message="tns:QueryIncOrPendOperationsPlusResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryServicePlansBasics">
+            <wsdl:input message="tns:QueryServicePlansBasicsRequest" />
+            <wsdl:output message="tns:QueryServicePlansBasicsResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+        <wsdl:operation name="changeServicePlans">
+            <wsdl:input message="tns:ChangeServicePlansRequest" />
+            <wsdl:output message="tns:ChangeServicePlansResponse" />
+            <wsdl:fault name="ClientException" message="tns:ClientException"/>
+            <wsdl:fault name="ServerException" message="tns:ServerException"/>
+        </wsdl:operation>
+
+    </wsdl:portType>
+    
+    <!-- Binding -->
+
+    <wsdl:binding name="AccountManagementServiceSOAPBinding_v1_0" type="tns:AccountManagementPort_v1_0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+
+        <wsdl:operation name="activateSubscriber">
+            <soap:operation soapAction="activateSubscriber" style="document" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="cancelSubscriberDeletion">
+            <soap:operation soapAction="cancelSubscriberDeletion" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="cancelSubscriberSuspension">
+            <soap:operation soapAction="cancelSubscriberSuspension" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="createSubscriber">
+            <soap:operation soapAction="createSubscriber" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeAccountProfileId">
+            <soap:operation soapAction="changeAccountProfileId" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeHlr">
+            <soap:operation soapAction="changeHlr" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeSubscriber">
+            <soap:operation soapAction="changeSubscriber" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeSubscriberBillingCycle">
+            <soap:operation soapAction="changeSubscriberBillingCycle" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeSubscriberId">
+            <soap:operation soapAction="changeSubscriberId" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeTariffPlanId">
+            <soap:operation soapAction="changeTariffPlanId" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="deleteSubscriber">
+            <soap:operation soapAction="deleteSubscriber" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="querySegments">
+            <soap:operation soapAction="querySegments" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="querySubscriberBasics">
+            <soap:operation soapAction="querySubscriberBasics" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="subscribeSegment">
+            <soap:operation soapAction="subscribeSegment" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="suspendSubscriber">
+            <soap:operation soapAction="suspendSubscriber" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="suspendScheduledSubscriber">
+            <soap:operation soapAction="suspendScheduledSubscriber" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="unsubscribeSegment">
+            <soap:operation soapAction="unsubscribeSegment" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryCustomer">
+            <soap:operation soapAction="queryCustomer" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="notifyPortability">
+            <soap:operation soapAction="notifyPortability" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="querySubscriberDetails">
+            <soap:operation soapAction="querySubscriberDetails" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="querySubscriptions">
+            <soap:operation soapAction="querySubscriptions" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="querySubscriberExpirationDate">
+            <soap:operation soapAction="querySubscriberExpirationDate" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="querySIMCardData">
+            <soap:operation soapAction="querySIMCardData" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryIncOrPendOperations">
+            <soap:operation soapAction="queryIncOrPendOperations" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryServicePlansAllowed">
+            <soap:operation soapAction="queryServicePlansAllowed" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryExpirationThreshold">
+            <soap:operation soapAction="queryExpirationThreshold" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeExpirationThreshold">
+            <soap:operation soapAction="changeExpirationThreshold" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryBalanceThreshold">
+            <soap:operation soapAction="queryBalanceThreshold" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeBalanceThreshold">
+            <soap:operation soapAction="changeBalanceThreshold" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryHomeZone">
+            <soap:operation soapAction="queryHomeZone" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeHomeZone">
+            <soap:operation soapAction="changeHomeZone" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="subscribeHomeZone">
+            <soap:operation soapAction="subscribeHomeZone" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="unsubscribeHomeZone">
+            <soap:operation soapAction="unsubscribeHomeZone" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="querySMSSubscriptions">
+            <soap:operation soapAction="querySMSSubscriptions" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="subscribeSMS">
+            <soap:operation soapAction="subscribeSMS" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryIncOrPendOperationsPlus">
+            <soap:operation soapAction="queryIncOrPendOperationsPlus" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="queryServicePlansBasics">
+            <soap:operation soapAction="queryServicePlansBasics" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="changeServicePlans">
+            <soap:operation soapAction="changeServicePlans" />
+            <wsdl:input>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:header message="tns:OCSHeaderInfo" part="messageID"
+                    use="literal" wsdl:required="true" />
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="ClientException">
+                <soap:fault name="ClientException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ServerException">
+                <soap:fault name="ServerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+    </wsdl:binding>
+
+    <!--
+        Service
+    -->
+
+    <wsdl:service name="AccountManagementService_v1">
+        <wsdl:port name="AccountManagement_v1_0" binding="tns:AccountManagementServiceSOAPBinding_v1_0">
+            <soap:address location="http://localhost/UNICA/OCSProvisioning/AccountManagement_v1"/>
+        </wsdl:port>
+    </wsdl:service>
+    
+</wsdl:definitions>
+    

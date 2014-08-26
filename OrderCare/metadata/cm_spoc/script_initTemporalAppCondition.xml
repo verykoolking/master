@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<script name="cm_spoc.initTemporalAppCondition">
+  <group>ui_scripts.Common.ApplicabilityCondition</group>
+  <label>initTemporalAppCondition</label>
+  <metaVersion>4</metaVersion>
+  <parameterList>
+    <parameter name="model" type="rifp">
+      <type>nmeta_com.conceptwave.system.Object</type>
+    </parameter>
+  </parameterList>
+  <script><![CDATA[
+    if (!model.specificationCode){
+        var simpleTemporalAppCondArr = cm_spoc.initInnerDS("base_SimpleTemporalAppCondArr");
+        model.SimpleTemporalAppCondArrDS = simpleTemporalAppCondArr;
+    }else{
+        var s = new epc.data.Specification();
+        s.project =  cwa_epc.getDefaultProj();
+
+        s.specificationCode = model.SimpleTemporalAppCondArr;
+        var r = epc.getSpecificationByKey(s);
+        if(!api_common.isFault(r)){
+           model.SimpleTemporalAppCondArrDS=r;
+        }
+
+       var subsLimitsRel = model.SimpleTemporalAppCondArrDS.List;
+       var subsLimitsDS  = model.SimpleTemporalAppCondArrDS.ListDS;
+       for (var i=0;i<subsLimitsRel.length;i++){
+           s.specificationCode = subsLimitsRel[i];
+           var r = epc.getSpecificationByKey(s);
+           if(!api_common.isFault(r)){
+               r.TypeOfDayEnum = r.TypeOfDay;
+               var start = r.Hours.indexOf("1");
+               var end = r.Hours.lastIndexOf("1");
+               r.StartHourEnum = start;
+               r.EndHourEnum = end;
+
+               subsLimitsDS[i]=r;
+           }
+       }
+    }
+    return model;
+  ]]></script>
+</script>

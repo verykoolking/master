@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataStructure name="cm_spoc.data.AllowedChangeDefinition">
+  <container>true</container>
+  <extends>dstruct_cm_spoc.data.OCSInternalProdOffering</extends>
+  <group>TariffPlan</group>
+  <guid>{abcd3c4f-366f-4a9e-bb94-d9430f031318}</guid>
+  <jsonMap type="jmap"/>
+  <label>AllowedChangeDefinition</label>
+  <metaVersion>4</metaVersion>
+  <childList>
+    <child name="AllowedThroughIVR" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSBooleanAttribute</element>
+      <guid>{14522c25-e74c-4f72-b023-6d7ca9e75687}</guid>
+      <jsonMap type="jmap"/>
+      <label>AllowedThroughIVR</label>
+    </child>
+    <child name="AllowedThroughMS" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSBooleanAttribute</element>
+      <guid>{d498d12b-e173-4a67-9a80-1dc6b1cbc1fd}</guid>
+      <jsonMap type="jmap"/>
+      <label>AllowedThroughMS</label>
+    </child>
+    <child name="ScriptHLR" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.ScriptHLREnum</element>
+      <guid>{777b4f4e-424e-4e03-a88c-dae5305c2a2e}</guid>
+      <jsonMap type="jmap"/>
+    </child>
+    <child name="IsSameTechnology" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.OCSBooleanAttribute</element>
+      <guid>{5fe8543b-b210-4f3e-92ea-8d436a9c2d84}</guid>
+      <jsonMap type="jmap"/>
+      <label>IsSameTechnology</label>
+      <mandatory>true</mandatory>
+    </child>
+    <child name="CustomerProfile" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cm_spoc.data.CustomerProfileEnum</element>
+      <guid>{ad16ce30-f227-414b-bce1-20786d229b31}</guid>
+      <jsonMap type="jmap"/>
+    </child>
+    <child name="TariffPlanAllowedPer" type="dstruct">
+      <datatype>true</datatype>
+      <element>dtype_cwt_pcdd.catalogCode</element>
+      <guid>{6a08a904-485d-40cc-ad5a-4200137b379e}</guid>
+      <jsonMap type="jmap"/>
+      <label>TariffPlanAllowedPer</label>
+    </child>
+  </childList>
+  <methodList>
+    <method name="onInit" type="action">
+      <parameterList>
+        <parameter name="document" type="rifp">
+          <type>nmeta_com.conceptwave.system.Object</type>
+        </parameter>
+      </parameterList>
+      <system>true</system>
+      <script><![CDATA[
+        this.cw$super_onInit(document);
+
+        this.AllowedThroughIVR = false;
+        this.AllowedThroughMS = false;
+        this.IsSameTechnology = false;
+      ]]></script>
+    </method>
+  </methodList>
+  <UserInterface name="UserInterface" type="tree">
+    <defaultFolderImage>undefined</defaultFolderImage>
+    <defaultLeafImage>undefined</defaultLeafImage>
+    <element>dstruct_cm_spoc.data.AllowedChangeDefinition</element>
+    <extends>tree_com.conceptwave.system.DataStructureUserInterface</extends>
+    <tableDoc>doc_com.conceptwave.system.TreeDocument</tableDoc>
+    <variableList>
+      <variable name="model" type="uivar">
+        <label>model</label>
+        <valueType>dstruct_cm_spoc.data.AllowedChangeDefinition</valueType>
+      </variable>
+    </variableList>
+    <vformList>
+      <vform name="Forms" type="frmui">
+        <extends>tree_com.conceptwave.system.DataStructureUserInterface/frmui_Forms</extends>
+      </vform>
+    </vformList>
+  </UserInterface>
+</dataStructure>

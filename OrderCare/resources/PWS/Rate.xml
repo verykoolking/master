@@ -1,0 +1,124 @@
+<OCSEntityType>
+		<oCSProductSpecification>
+			<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+			<!-- Attributes inherited from SID EntityBase: identifier -->
+			<!-- Attributes inherited from SID ProductSpecification: name; description; productNumber; validFor; lifeCycleStatus -->
+			<!-- Compulsory SID attributes -->
+			<identifier>
+				<context>
+					<valuePairs/>
+					<scheme>Testing</scheme>
+				</context>
+				<dn>
+					<valuePairs/>
+					<scheme>Rate_TC</scheme>
+				</dn>
+				<entityType>Rate</entityType>
+			</identifier>
+			<!-- NGAA attributes -->
+			<type>Rate</type>
+			<oCSProductSpecCharacteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>Rate</annotation> -->
+				<characteristic  type="xsd:long" minValue="1" maxValue="99999">
+					<name>RateID</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>Rate Description</annotation> -->
+				<characteristic  type="xsd:string" maxLength="100">
+					<name>Description</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>Service</annotation> -->
+				<characteristic  type="xsd:string" enumValues="1;2;3;4;5">
+					<name>Service</name>
+				</characteristic>
+				<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+				<characteristic  type="xsd:string" enumValues="0;1;2;3">
+					<name>Model</name>
+				</characteristic>
+				<complexCharacteristic minOccurs="1" maxOccurs="unbounded" individualItemUpdate="true">
+					<name>RateComponent</name>
+					<item operation="A">
+						<!-- <xsd:annotation> <xsd:documentation><p>Start date of validity</annotation> -->
+						<characteristic  type="xsd:dateTime">
+							<name>StartDate</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>Deferred to subscriber cycle start</annotation> -->
+						<characteristic  type="xsd:boolean" defaultValue="0">
+							<name>DeferredToSubscriberCycleStart</name>
+						</characteristic>
+						<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+						<characteristic  type="xsd:string" enumValues="1;2">
+							<name>ComponentId</name>
+						</characteristic>
+						<complexCharacteristic minOccurs="1" maxOccurs="7" individualItemUpdate="true">
+							<name>RatePriceEventPhase</name>
+							<item operation="A">
+								<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+								<characteristic  type="xsd:long" minValue="1" maxValue="7">
+									<name>PhaseNumber</name>
+								</characteristic>
+								<!-- <xsd:annotation> <xsd:documentation><p>Charge Time
+Time Period from</annotation> -->
+								<characteristic  type="xsd:long" minValue="0" maxValue="9999999">
+									<name>StartUnit</name>
+								</characteristic>
+
+								<relations>
+									<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+									<relation name="RatePrice" oCSTargetEntityType="RatePrice_TC" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+										<item>
+											<target>
+												<context>
+													<valuePairs/>
+													<scheme>String</scheme>
+												</context>
+												<dn>
+													<valuePairs/>
+													<scheme>RatePrice_TC</scheme>
+												</dn>
+												<entityType>RatePrice</entityType>
+											</target>
+										</item>
+									</relation>
+								</relations>
+							</item>
+						</complexCharacteristic>
+
+					</item>
+				</complexCharacteristic>
+			</oCSProductSpecCharacteristic>
+			<relations>
+				<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+				<relation name="ApplicabilityCondition" oCSTargetEntityType="ApplicabilityCondition_TC" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+					<item>
+						<target>
+							<context>
+								<valuePairs/>
+								<scheme>String</scheme>
+							</context>
+							<dn>
+								<valuePairs/>
+								<scheme>ApplicabilityCondition_TC</scheme>
+							</dn>
+							<entityType>ApplicabilityCondition</entityType>
+						</target>
+					</item>
+				</relation>
+				<!-- <xsd:annotation> <xsd:documentation><p>null</annotation> -->
+				<relation name="Currency" oCSTargetEntityType="Currency" minOccurs="1" maxOccurs="1" individualItemUpdate="false">
+					<item>
+						<target>
+							<context>
+								<valuePairs/>
+								<scheme>String</scheme>
+							</context>
+							<dn>
+								<valuePairs/>
+								<scheme>Currency</scheme>
+							</dn>
+							<entityType>Currency</entityType>
+						</target>
+					</item>
+				</relation>
+			</relations>
+		</oCSProductSpecification>
+</OCSEntityType>
